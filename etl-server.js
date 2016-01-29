@@ -1,3 +1,4 @@
+//#region Module Imports
 var Hapi = require('hapi');
 var mysql = require('mysql');
 var Good = require('good');
@@ -11,7 +12,7 @@ var tls = require('tls');
 var fs = require('fs');
 var routes = require('./etl-routes');
 var elasticRoutes = require('./elastic/routes/care.treatment.routes');
-
+//#endregion
 
 var httpsServer = tls.createServer({
   key: fs.readFileSync(settings.sslSettings.key),
