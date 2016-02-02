@@ -594,9 +594,14 @@
         "expression": ""
     },
     {
+        "name":"not_attended",
+        "label": "not_attended",
+        "expression": "date(t1.rtc_date)<>date(t2.next_clinic_datetime)"
+    },
+    {
         "name":"has_not_returned",
         "label": "has_not_returned",
-        "expression": ""
+        "expression": "date(t1.rtc_date)< date(now()) and t2.next_clinic_datetime is null and death_date is null and transfer_out is null"
     },
     {
         "name":"virally_suppressed_in_past_year",
