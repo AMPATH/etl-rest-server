@@ -9,7 +9,7 @@ var reportList = [];
 reportList.push.apply(reportList, require('./reports/hiv-summary-report.json'));
 reportList.push.apply(reportList, require('./reports/moh-731-report.json'));
 reportList.push.apply(reportList, require('./reports/patient-register-report.json'));
-reportList.push.apply(reportList, require('./reports/clinic-calander.report.json'));
+reportList.push.apply(reportList, require('./reports/clinic-calander-report-v2.json'));
 reportList.push.apply(reportList, require('./reports/daily-visits-appointment.report.json'));
 
 
@@ -359,7 +359,7 @@ module.exports = function () {
             _.each(whereParams, function (whereParam) {
                 //checks whether param value is set, if not set the filter is not pushed.
                 //also checks if report filter parameter passed is eq to where param
-                if (whereParam["name"] === reportFilter["parameter"] && whereParam["value"] || reportFilter["processForce"] == true) {
+                if (whereParam["name"] === reportFilter["parameter"] && whereParam["value"] || reportFilter["processForce"] === true) {
                     expression += reportFilter["expression"];
                     expression += ' and ';
                     _.each(reportParams, function (reportParam) {
