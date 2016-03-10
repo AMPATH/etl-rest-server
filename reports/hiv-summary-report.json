@@ -44,6 +44,12 @@
                 "sql":"count(distinct person_id)"
             },
             {
+                "label":"currently_in_care",
+                "expression":"currently_in_care_total",
+                "sql":"count(distinct if($expression,person_id,null))"
+
+            },
+            {
                 "label":"on_arvs",
                 "expression":"on_arvs",
                 "sql":"count(distinct if($expression,person_id,null))"
