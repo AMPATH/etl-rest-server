@@ -41,9 +41,7 @@
 {
  "name": "scheduled",
  "table":{"schema":"etl","tableName":"flat_hiv_summary","alias":"t1"},
- "joins":[
-     {"joinType":"INNER JOIN","schema":"etl","tableName":"derived_encounter","alias":"t2","joinExpression":"t1.encounter_id = t2.encounter_id"}
- ],
+ "joins":[],
  "parameters": [
      {"name":"groupByRtcDate", "defaultValue":[
          {"label":"scheduled_date","expression":"scheduled_date"}
