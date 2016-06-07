@@ -208,7 +208,7 @@ module.exports = function () {
         _.each(queryParts['group'], function (col) {
             s.group(col);
         });
-        console.log('Having stuff', queryParts['having'][0]);
+       // console.log('Having stuff', queryParts['having'][0]);
         if(queryParts['having'][0] !== '') s.having(queryParts['having'][0]);
 
         return s;
