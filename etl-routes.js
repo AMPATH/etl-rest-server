@@ -542,15 +542,16 @@ module.exports = function() {
 
           if (asyncRequests === 0)
             dao.getDataEntryIndicators(request.params.sub, request, reply);
+          
+                if (request.query.formUuids) {
+                    dao.getIdsByUuidAsyc('amrs.form', 'form_id', 'uuid', request.query.formUuids,
+                        function (results) {
+                            request.query.formIds = results;
+                        }).onResolved = onResolvedPromise;
+                }
+               // console.log('uuids ',request.query.encounterTypeUuids)
+                if (request.query.encounterTypeUuids) {
 
-          if (request.query.formUuids) {
-            dao.getIdsByUuidAsyc('amrs.form', 'form_id', 'uuid', request.query.formUuids,
-              function(results) {
-                request.query.formIds = results;
-              }).onResolved = onResolvedPromise;
-          }
-          console.log('uuids ', request.query.encounterTypeUuids)
-          if (request.query.encounterTypeUuids) {
 
             dao.getIdsByUuidAsyc('amrs.encounter_type', 'encounter_type_id', 'uuid', request.query.encounterTypeUuids,
               function(results) {

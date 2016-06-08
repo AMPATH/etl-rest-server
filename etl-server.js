@@ -14,6 +14,7 @@ var Inert = require('inert');
 var Vision = require('vision');
 var HapiSwagger = require('hapi-swagger');
 var Pack = require('./package');
+var user ='';
 var server = new Hapi.Server({
   connections: {
     //routes: {cors:{origin:["https://amrs.ampath.or.ke:8443"]}}
@@ -59,8 +60,8 @@ var validate = function(username, password, callback) {
       body += chunk;
     });
     res.on('end', function() {
-      var result = JSON.parse(body);
-      console.log(result);
+      var  result = JSON.parse(body);
+      user = result.user.username;
       callback(null, result.authenticated, {});
     });
   }).on('error', function(error) {
@@ -69,7 +70,9 @@ var validate = function(username, password, callback) {
   });
 
 
+
 };
+
 var HapiSwaggerOptions = {
   info: {
     'title': 'REST API Documentation',
@@ -95,13 +98,7 @@ server.register([
     }, {
       register: Good,
       options: {
-        reporters: [{
-          reporter: require('good-console'),
-          events: {
-            response: '*',
-            log: '*'
-          }
-        }]
+        reporters: []
       }
     }
   ],
@@ -127,5 +124,21 @@ server.register([
     server.start(function() {
       server.log('info', 'Server running at: ' + server.info.uri);
     });
+    server.on('response', function (request) {
+      if (request.response === undefined || request.response.statusCode != 200){
+        console.log("there is a problem");
+      }else{
+        console.log(
+            'Username:',
+            user +'\n'+
+            server.info.uri + ': '
+            + request.method.toUpperCase() + ' '
+            + request.url.path + ' \n '
+            + request.response.statusCode
+        );
+
+      }
+
+     })
   });
 module.exports = server;
