@@ -1,19 +1,15 @@
 [
   {
-    "name": "moh-731-monthly-indicator-report",
+    "name": "moh-731-monthly-indicator-allsites-report",
     "table":{"schema":"etl","tableName":"flat_hiv_summary","alias":"t1"},
     "joins":[
       {"joinType":"INNER JOIN","schema":"amrs","tableName":"location","alias":"t2","joinExpression":"t1.location_uuid = t2.uuid"},
       {"joinType":"INNER JOIN","schema":"amrs","tableName":"person","alias":"t3","joinExpression":"t1.person_id = t3.person_id"}
     ],
     "parameters": [
-      {"name":"startDate", "defaultValue":"2015-10-01"},
-      {"name":"endDate", "defaultValue":"2015-10-31"},
       {"name":"locations","defaultValue":[]},
-      {"name":"groupByLocation", "defaultValue":[
-        {"label":"location","expression":"t1.location_id"}
-      ]
-      }
+      {"name":"startDate", "defaultValue":"2015-10-01"},
+      {"name":"endDate", "defaultValue":"2015-10-31"}
     ],
     "filters": [
       {"expression":"t1.location_id in ?","parameter":"locations"},
@@ -21,14 +17,21 @@
       {"expression":"date(t1.encounter_datetime) <= ?", "parameter":"endDate"},
       {"expression":"t1.is_clinical_encounter = 1", "processForce":true}
     ],
-    "groupClause":[
-      {"parameter":"groupByLocation"},
-      {"parameter":"groupByMonth"}
-    ],
+    "groupClause":[],
     "indicators": [
+      {
+        "label":"unscheduled_visits",
+        "expression":"scheduled_visit",
+        "sql":"count(distinct if($expression,t1.person_id,null))"
+      },
       {
         "label":"on_art",
         "expression":"on_art",
+        "sql":"count(distinct if($expression,t1.person_id,null))"
+      },
+      {
+        "label":"revisits_on_art",
+        "expression":"revisits_on_art",
         "sql":"count(distinct if($expression,t1.person_id,null))"
       },
       {
@@ -136,16 +139,6 @@
         "expression":"on_pcp_prophylaxis_females_15_and_above",
         "sql":"count(distinct if($expression,t1.person_id,null))"
       },
-       {
-        "label":"hiv_exposed_infants_below_2_months",
-        "expression":"hiv_exposed_infants_below_2_months",
-        "sql":"count(distinct if($expression,t1.person_id,null))"
-      },
-       {
-        "label":"hiv_exposed_infants_on_pcp_prophylaxis_2_months_and_below",
-        "expression":"hiv_exposed_infants_on_pcp_prophylaxis_2_months_and_below",
-        "sql":"count(distinct if($expression,t1.person_id,null))"
-      },
       {
         "label":"enrolled_in_care_total",
         "expression":"enrolled_in_care_total",
@@ -182,6 +175,16 @@
         "sql":"count(distinct if($expression,t1.person_id,null))"
       },
       {
+        "label":"starting_art",
+        "expression":"starting_art",
+        "sql":"count(distinct if($expression,t1.person_id,null))"
+      },
+      {
+        "label":"starting_art_and_has_tb",
+        "expression":"starting_art_and_has_tb",
+        "sql":"count(distinct if($expression,t1.person_id,null))"
+      },
+      {
         "label":"ever_on_art_males_below_15",
         "expression":"ever_on_art_males_below_15",
         "sql":"count(distinct if($expression, t1.person_id,null))"
@@ -200,16 +203,6 @@
         "label":"ever_on_art_females_15_and_older",
         "expression":"ever_on_art_females_15_and_older",
         "sql":"count(distinct if($expression, t1.person_id,null))"
-      },
-      {
-        "label":"starting_art",
-        "expression":"starting_art",
-        "sql":"count(distinct if($expression,t1.person_id,null))"
-      },
-      {
-        "label":"starting_art_and_has_tb",
-        "expression":"starting_art_and_has_tb",
-        "sql":"count(distinct if($expression,t1.person_id,null))"
       },
       {
         "label":"screened_for_tb",
@@ -249,17 +242,17 @@
       {
         "label":"female_gte_18yo_visits",
         "expression":"female_gte_18yo_visits",
-        "sql":"count(distinct if($expression,t1.visit_id,null))"
+        "sql":"count(distinct if($expression,t1.person_id,null))"
       },
       {
         "label":"scheduled_visits",
         "expression":"scheduled_visits",
-        "sql":"count(distinct if($expression,t1.visit_id,null))"
+        "sql":"count(distinct if($expression,t1.person_id,null))"
       },
       {
         "label":"unscheduled_visits",
         "expression":"unscheduled_visits",
-        "sql":"count(distinct if($expression,t1.visit_id,null))"
+        "sql":"count(distinct if($expression,t1.person_id,null))"
       },
       {
         "label":"total_visits",
@@ -269,6 +262,11 @@
       {
         "label":"on_art_total",
         "expression":"on_art_total",
+        "sql":"count(distinct if($expression,t1.person_id,null))"
+      },
+      {
+        "label":"on_art",
+        "expression":"on_art",
         "sql":"count(distinct if($expression,t1.person_id,null))"
       },
       {
@@ -341,35 +339,22 @@
       {
         "label":"location",
         "type":"single",
-        "sql":"t2.name"
-      },
-      {
-        "label":"location_uuid",
-        "type":"single",
-        "sql":"t1.location_uuid"
+        "sql":"'All Ampath Facilities'"
       },
       {
         "label":"location_id",
         "type":"single",
-        "sql":"t1.location_id"
+        "sql":"'location_id'"
       }
     ]
   },
   {
-    "name": "moh-731-12month-indicator-report",
-    "table":{"schema":"","tableName":"","alias":"t1", "dynamicDataset":"moh-731-12month-cohort"},
+    "name": "moh-731-12month-indicator-allsites-report",
+    "table":{"schema":"","tableName":"","alias":"t1", "dynamicDataset":"moh-731-12month-allsites-cohort"},
     "joins":[],
-    "parameters": [
-        {"name":"groupByLocation", "defaultValue":[
-        {"label":"location_id","expression":"t1.location_id"}
-      ]
-    }
-    ],
+    "parameters": [],
     "filters": [],
-    "groupClause":[
-      {"parameter":"groupByLocation"},
-      {"parameter":"groupByMonth"}
-    ],
+    "groupClause":[],
     "indicators": [
       {
         "label":"on_alternative_first_line",
@@ -397,52 +382,6 @@
           "sql": "count(distinct if($expression, t1.person_id,null))"
       }
     ],
-    "supplementColumns":[
-
-      {
-        "label":"location_id",
-        "type":"single",
-        "sql":"t1.location_id"
-      }]
-  },
-  {
-    "name": "moh-731-cummulative-indicator-report",
-    "table":{"schema":"","tableName":"","alias":"t1", "dynamicDataset":"moh-731-cummulative-cohort"},
-    "joins":[],
-    "parameters": [
-        {"name":"groupByLocation", "defaultValue":[
-        {"label":"location_id","expression":"t1.location_id"}
-      ]
-    }
-    ],
-    "filters": [],
-    "groupClause":[
-      {"parameter":"groupByLocation"},
-      {"parameter":"groupByMonth"}
-    ],
-    "indicators": [
-      {
-        "label":"ever_on_art",
-        "expression":"ever_on_art",
-        "sql":"count(distinct if($expression, t1.person_id,null))"
-      },
-      {
-        "label":"ever_on_art_below_15",
-        "expression":"ever_on_art_below_15",
-        "sql":"count(distinct if($expression, t1.person_id,null))"
-      },
-      {
-        "label":"ever_on_art_15_and_older",
-        "expression":"ever_on_art_15_and_older",
-        "sql":"count(distinct if($expression, t1.person_id,null))"
-      }
-    ],
-    "supplementColumns":[
-
-      {
-        "label":"location_id",
-        "type":"single",
-        "sql":"t1.location_id"
-      }]
+    "supplementColumns":[]
   }
 ]
