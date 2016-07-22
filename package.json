@@ -41,6 +41,7 @@
     "moment": "^2.13.0",
     "multer": "^1.1.0",
     "mysql": "^2.6.2",
+    "newrelic": "^1.28.3",
     "request": "^2.65.0",
     "request-promise": "^3.0.0",
     "squel": "^4.3.3",
