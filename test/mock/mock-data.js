@@ -3,6 +3,16 @@
 module.exports = function ()
 {
 	return {
+		getLabCohortSyncMockData: function() {
+			return [
+				{
+					"uuid":"d5fb1b91-f270-4d46-8f2d-6cad759507f9"
+				},
+				{
+					"uuid":"ada313d8-ab92-41f1-a7a0-1c191bf2f756"
+				}
+			]
+		},
 		getPatientMockData:function getPatientMockData() {
 			return [
 			{

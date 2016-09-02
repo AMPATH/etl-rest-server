@@ -6,7 +6,10 @@ var _ = require('underscore');
 var reportFactory = require('../../etl-factory');
 var Boom = require('boom'); //extends Hapi Error Reporting. Returns HTTP-friendly error objects: github.com/hapijs/boom
 var helpers = require('../../etl-helpers');
-module.exports = function() {
+module.exports.dao = function(App) {
+
+  db.setPool(App);
+
   return {
     getClinicEncounterData: function getClinicEncounterData(request, callback) {
       var uuid = request.params.uuid;
@@ -269,4 +272,4 @@ module.exports = function() {
       });
     }
   };
-}();
+};

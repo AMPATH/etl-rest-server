@@ -14,7 +14,10 @@ var Promise=require('bluebird');
 var rp = require('../../request-config');
 var config = require('../../conf/config');
 var moment=require('moment');
-module.exports = function() {
+module.exports.dao = function(App) {
+
+  db.setPool(App);
+
   function getPatientHivSummary(request, callback) {
       var uuid = request.params.uuid;
       var order = helpers.getSortOrder(request.query.order);
@@ -363,4 +366,4 @@ module.exports = function() {
     getPatientListByIndicator: getPatientListByIndicator,
     getPatientByIndicatorAndLocation: getPatientByIndicatorAndLocation
     }
-}();
+};

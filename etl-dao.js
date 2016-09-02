@@ -1,20 +1,23 @@
 /*jshint -W003, -W097, -W117, -W026 */
 'use strict';
-var _ = require('underscore');
-var analytics = require('./dao/analytics/etl-analytics-dao');
-var clinic = require('./dao/clinic/etl-clinic-dao');
-var patient = require('./dao/patient/etl-patient-dao');
-var eid = require('./dao/eid/etl-eid-dao');
-var session = require('./dao/session/session');
-var labCohorts = require('./dao/lab-cohorts/lab-cohorts-dao');
+var
+  _ = require('underscore')
+  , clinic = require('./dao/clinic/etl-clinic-dao')
+  , analytics = require('./dao/analytics/etl-analytics-dao')
+  , patient = require('./dao/patient/etl-patient-dao')
+  , eid = require('./dao/eid/etl-eid-dao')
+  , session = require('./dao/session/session')
+  , labCohorts = require('./dao/lab-cohorts/lab-cohorts-dao');
 
-module.exports = function() {
+module.exports.dao = function(App) {
+
   var dao ={};
-    _.extend(dao,analytics);
-    _.extend(dao,clinic);
-    _.extend(dao,patient);
-    _.extend(dao,eid);
-    _.extend(dao,session);
-    _.extend(dao,labCohorts);
+    _.extend(dao, analytics.dao(App));
+    _.extend(dao, clinic.dao(App));
+    _.extend(dao, patient.dao(App));
+    _.extend(dao, eid.dao(App));
+    _.extend(dao, session.dao(App));
+    _.extend(dao, labCohorts.dao(App));
+
   return dao;
-}();
+};
