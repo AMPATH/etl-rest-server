@@ -76,7 +76,7 @@ module.exports = function () {
           });
         });
     };
-    
+
     function loadOrderJustifications(request, reply) {
 
       var uuid = request.query.uuid;
