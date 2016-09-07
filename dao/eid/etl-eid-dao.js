@@ -11,7 +11,9 @@ var rp = require('../../request-config');
 var eidService = require('../../service/eid/eid.service');
 
 
-module.exports = function () {
+module.exports.dao = function (App) {
+
+  db.setPool(App);
 
     function postLabOrderToEid(request, callback) {
 
@@ -123,4 +125,4 @@ module.exports = function () {
         loadOrderJustifications: loadOrderJustifications,
         getEidOrder: getEidOrder
     }
-}();
+};

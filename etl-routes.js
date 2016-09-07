@@ -1,20 +1,27 @@
 /*jshint -W003, -W098, -W117, -W026 */
 "use strict";
-// var dao = require('./etl-dao');
-var dao = require('./etl-dao');
-var preRequest = require('./pre-request-processing');
-var pack = require('./package');
-var winston = require('winston');
-var path = require('path');
-var _ = require('underscore');
-var Joi = require('joi');
-var eidLabData = require('./eid-data-synchronization/eid-lab-results')
-var Boom = require('boom');
-var authorizer = require('./authorization/etl-authorizer');
-var config = require('./conf/config');
-var privileges = authorizer.getAllPrivileges();
 
-module.exports = function () {
+var
+  etlDao = require('./etl-dao')
+  , preRequest = require('./pre-request-processing')
+  , pack = require('./package')
+  , winston = require('winston')
+  , path = require('path')
+  , _ = require('underscore')
+  , Joi = require('joi')
+  , eidLabData = require('./eid-data-synchronization/eid-lab-results')
+  , Boom = require('boom')
+  , authorizer = require('./authorization/etl-authorizer')
+  , config = require('./conf/config')
+  , privileges = authorizer.getAllPrivileges();
+
+  module.exports = {
+    getRoutes: getRoutes
+  }
+
+  function getRoutes(App) {
+    
+    var dao = etlDao.dao(App);
 
     return [
         {
@@ -1068,4 +1075,4 @@ module.exports = function () {
               }
           }
     ];
-} ();
+};

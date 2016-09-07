@@ -20,8 +20,11 @@ var errorHandler = function (errorType, error) {
 };
 
 module.exports = function () {
-    var pool = mysql.createPool(config.mysql);
+    var pool = null;
     var getServerConnection = function (connectHandler) {
+
+        if(pool == null) pool = mysql.createPool(config.mysql);
+
         pool.getConnection(function (err, connection) {
             if (err) {
                 errorHandler('exports:Database connection error', err);
@@ -416,6 +419,13 @@ module.exports = function () {
           });
       });
     }
+
+    function setPool(App) {
+
+      if(App && App.db_pool)
+        pool = App.db_pool;
+    }
+
     return {
       queryReportServer: queryReportServer,
       queryServer: queryServer,
@@ -428,6 +438,7 @@ module.exports = function () {
       insertQueryServer: insertQueryServer,
       saveRecord: saveRecord,
       saveQueryServer: saveQueryServer,
-      updateQueryServer: updateQueryServer
+      updateQueryServer: updateQueryServer,
+      setPool: setPool
     };
 }();

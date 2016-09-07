@@ -1,6 +1,6 @@
 var chai = require('chai');
 var db = require('../../../etl-db');
-var dao = require('../../../etl-dao');
+var dao = require('../../../etl-dao').dao();
 var request = require('request');
 var sinon = require('sinon'); //for creating spies, mocks and stubs
 var sinonChai = require('sinon-chai'); //expection engine for sinion

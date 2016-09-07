@@ -1,11 +1,9 @@
 /*jshint -W003, -W097, -W117, -W026 */
 'use strict';
-var db = require('../../etl-db');
 var _ = require('underscore');
 var cache = require('../../session-cache');
 
-
-module.exports = function () {
+module.exports.dao = function (App) {
 
     function invalidateUserSession(request, callback) {
         if(request.headers.authorization) {
@@ -26,4 +24,4 @@ module.exports = function () {
     return {
         invalidateUserSession: invalidateUserSession
     }
-}();
+};
