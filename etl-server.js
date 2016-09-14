@@ -1,3 +1,4 @@
+require('newrelic');
 var Hapi = require('hapi');
 var mysql = require('mysql');
 var Good = require('good');
