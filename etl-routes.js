@@ -189,6 +189,36 @@ module.exports = function () {
   },
   {
     method: 'GET',
+    path: '/etl/clinical-reminder/{referenceDate}',
+    config: {
+      plugins: {
+        'hapiAuthorization': {
+          role: privileges.canViewClinicDashBoard
+        },
+        'openmrsLocationAuthorizer': {
+          locationParameter: [{
+            type: 'params', //can be in either query or params so you have to specify
+            name: 'uuid' //name of the location parameter
+          }]
+        }
+      },
+      handler: function (request, reply) {
+
+        let compineRequestParams = Object.assign({}, request.query, request.params);
+        let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['referenceDate', 'patientUuid', 'indicators'], compineRequestParams);
+        dao.runReport(reportParams).then((result) => {
+          reply(result);
+        }).catch((error) => {
+          reply(error);
+        })
+      },
+      description: 'Get a list of reminders for selected patient and indicators',
+      notes: 'Returns a  list of reminders for selected patient and indicators on a given reference date',
+      tags: ['api'],
+    }
+  },
+  {
+    method: 'GET',
     path: '/etl/clinic-lab-orders/{dateActivated}',
     config: {
       plugins: {
@@ -1462,4 +1492,4 @@ module.exports = function () {
   }];
 
   return routes;
-}();
+} ();
