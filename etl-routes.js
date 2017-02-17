@@ -97,9 +97,11 @@ module.exports = function () {
             function (results) {
               request.query.locations = [results];
             }).onResolved = (promise) => {
+              // setting default group by
+              request.query.groupBy = 'groupByPerson,groupByd';
               let compineRequestParams = Object.assign({}, request.query, request.params);
               let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations', 'groupBy'], compineRequestParams);
-
+              reportParams
               dao.runReport(reportParams).then((result) => {
                 reply(result);
               }).catch((error) => {
@@ -134,6 +136,8 @@ module.exports = function () {
             function (results) {
               request.query.locations = [results];
             }).onResolved = (promise) => {
+              // setting default group by
+              request.query.groupBy = 'groupByPerson,groupByd';
               let compineRequestParams = Object.assign({}, request.query, request.params);
               let reportParams = etlHelpers.getReportParams('daily-attendance', ['startDate', 'locations', 'groupBy'], compineRequestParams);
 
@@ -171,6 +175,8 @@ module.exports = function () {
             function (results) {
               request.query.locations = [results];
             }).onResolved = (promise) => {
+              // setting default group by
+              request.query.groupBy = 'groupByPerson,groupByd';
               let compineRequestParams = Object.assign({}, request.query, request.params);
               let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations', 'groupBy'], compineRequestParams);
 
@@ -1457,4 +1463,4 @@ module.exports = function () {
   }];
 
   return routes;
-}();
+} ();
