@@ -19,6 +19,7 @@ var etlHelpers = require('./etl-helpers.js');
 var crypto = require('crypto');
 var MonthlyScheduleService = {}; // require('./service/monthly-schedule-service');
 // import { MonthlyScheduleService } from './service/monthly-schedule-service'
+var patientReminderService = require('./service/patient-reminder.service.js');
 module.exports = function () {
 
   var routes = [{
@@ -203,11 +204,21 @@ module.exports = function () {
         }
       },
       handler: function (request, reply) {
-
         let compineRequestParams = Object.assign({}, request.query, request.params);
-        let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['referenceDate', 'patientUuid', 'indicators'], compineRequestParams);
-        dao.runReport(reportParams).then((result) => {
-          reply(result);
+        let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['@referenceDate', 'patientUuid', 'indicators'], compineRequestParams);
+        if (reportParams.whereParams[0].name === '@referenceDate') {
+          reportParams.whereParams[0].value = request.params.referenceDate;
+        }
+        dao.runReport(reportParams).then((results) => {
+
+          try {
+            let processedResults = patientReminderService.generateReminders(results.result);
+            results.result = processedResults;
+            reply(results);
+          } catch (err) {
+            console.log('Error occurred while processing reminders', err)
+          }
+
         }).catch((error) => {
           reply(error);
         })
