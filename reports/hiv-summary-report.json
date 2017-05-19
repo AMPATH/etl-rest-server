@@ -242,6 +242,11 @@
                 "expression":"transfer_in_patients",
                 "sql": "count(distinct if($expression,t1.person_id,0))"
 
+            },
+            {
+                "label": "patients_under_differentiated_care",
+                "expression": "patients_under_differentiated_care",
+                "sql": "count(distinct if($expression,t1.person_id,0))"
             }
 
         ],
