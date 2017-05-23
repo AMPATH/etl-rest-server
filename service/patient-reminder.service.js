@@ -164,21 +164,20 @@ function generateReminders(results) {
         person_uuid: results[0].person_uuid
     }
 
-    _.each(results, (data) => {
-        let new_vl = newViralLoadPresent(data);
-        let vl_Errors = viralLoadErrors(data);
-        let pending_vl_orders = pendingViralOrder(data);
-        let inh_reminders = inhReminders(data);
-        let vl_reminders = viralLoadReminders(data);
-        let currentReminder = new_vl.concat(
-            vl_Errors,
-            pending_vl_orders,
-            inh_reminders,
-            vl_reminders
-        );
-        reminders = reminders.concat(currentReminder);
+    let data = results[0];
+    let new_vl = newViralLoadPresent(data);
+    let vl_Errors = viralLoadErrors(data);
+    let pending_vl_orders = pendingViralOrder(data);
+    let inh_reminders = inhReminders(data);
+    let vl_reminders = viralLoadReminders(data);
+    let currentReminder = new_vl.concat(
+        vl_Errors,
+        pending_vl_orders,
+        inh_reminders,
+        vl_reminders);
 
-    });
+    reminders = reminders.concat(currentReminder);
+
     patientReminder.reminders = reminders;
     return patientReminder;
 }
