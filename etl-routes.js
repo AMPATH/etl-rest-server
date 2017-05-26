@@ -297,10 +297,8 @@ module.exports = function () {
             },
             handler: function (request, reply) {
                 let compineRequestParams = Object.assign({}, request.query, request.params);
-                let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['@referenceDate', 'patientUuid', 'indicators'], compineRequestParams);
-                if (reportParams.whereParams[0].name === '@referenceDate') {
-                    reportParams.whereParams[0].value = request.params.referenceDate;
-                }
+                let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['referenceDate', 'patientUuid', 'indicators'], compineRequestParams);
+
                 dao.runReport(reportParams).then((results) => {
 
                     try {
