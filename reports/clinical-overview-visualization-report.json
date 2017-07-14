@@ -37,6 +37,12 @@
                 ]
             },
             {
+                "name": "cohortStartDate",
+                "defaultValue": [
+                    "01-01-1990"
+                ]
+            },
+            {
                 "name": "locations",
                 "defaultValue": []
             },
@@ -58,6 +64,10 @@
             {
                 "expression": "t2.endDate <= date(?)",
                 "parameter": "endDate"
+            },
+            {
+                "expression": "t1.encounter_datetime >= date(?)",
+                "parameter": "cohortStartDate"
             },
             {
                 "expression": "t1.location_id in ?",

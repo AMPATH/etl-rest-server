@@ -633,7 +633,7 @@ module.exports = function () {
                     function () {
                         let compineRequestParams = Object.assign({}, request.query, request.params);
                         let reportParams = etlHelpers.getReportParams(request.query.reportName,
-                            ['startDate', 'endDate', 'indicator', 'locationUuids', 'locations', 'order', 'gender'], compineRequestParams);
+                            ['startDate', 'endDate','cohortStartDate', 'indicator', 'locationUuids', 'locations', 'order', 'gender'], compineRequestParams);
 
                         let service = new hivComparativeOverviewService();
                         service.getAggregateReport(reportParams).then((result) => {
