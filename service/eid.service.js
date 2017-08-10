@@ -524,8 +524,6 @@ function _getSynchronizedPatientLabResults(server, patientUuId) {
     });
 }
 
-<<<<<<< HEAD
-=======
 function getPendingEIDTestResultsByPatientIdentifiers(patientIdentifiers, referenceDate, server) {
   
   var pending = {
@@ -623,7 +621,6 @@ function getPendingEIDTestResultsByPatientIdentifiers(patientIdentifiers, refere
   });
 }
 
->>>>>>> 305ea00... winstone-misuse: ensured all file-handlers are closed
 function getEIDTestResultsByPatientIdentifier(patientIdentifier, server) {
 
   var results = {
