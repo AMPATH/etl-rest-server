@@ -496,7 +496,10 @@ function _getSynchronizedPatientLabResults(server, patientUuId) {
           err_msg = 'Unable to convert object into response content';
 
         //log error
-        etlLogger.logger(config.logging.eidPath + '/' + config.logging.eidFile).error('sync failure: %s', err.message);
+        var loggger = 
+        etlLogger.logger(config.logging.eidPath + '/' + config.logging.eidFile);
+        loggger.error('sync failure: %s', err.message);
+        loggger.close();
 
         fields[0].status = 1;
         fields[0].message = err_msg.substring(0, 100);
@@ -521,6 +524,106 @@ function _getSynchronizedPatientLabResults(server, patientUuId) {
     });
 }
 
+<<<<<<< HEAD
+=======
+function getPendingEIDTestResultsByPatientIdentifiers(patientIdentifiers, referenceDate, server) {
+  
+  var pending = {
+    viralLoad: [],
+    pcr: [],
+    cd4Panel: []
+  };
+  
+  var conf = server;
+  
+  pending[server.name] = {};
+  var location_name = server.name;
+  
+  var logAndGetFilteredResults = function(results) {
+    //let _referenceDate = moment(referenceDate).format('DD-MMM-YYYY');
+    let complete = [];
+    let inprocess = [];
+    var logger = etlLogger.logger(config.logging.eidPath + '/' + config.logging.eidFile);
+    _.each(results, function (row) {
+      logger.info('viral load result: %s', JSON.stringify(row));
+      if (row && row.SampleStatus) {
+        if (['Completed', 'Rejected', 'Complete'].indexOf(row.SampleStatus) != -1) {
+          complete.push(row);
+        }
+        if ('Inprocess' === row.SampleStatus) {
+          inprocess.push(row);
+        }
+      }
+    });
+    logger.close();
+    // remove duplicate dates for complete and inprocess
+    let completeByDay = complete.length > 0 ?
+    _.uniq(complete, (result) => { return result.DateCollected; }) : [];
+    let inProcessByDay = inprocess.length > 0 ?
+    _.uniq(inprocess, (result) => { return result.DateCollected; }) : [];
+    
+    // check if we have a pending on same day as complete
+    let hasInprocessAndCompleteByDay = [];
+    if(completeByDay.length > 0 && inProcessByDay.length> 0){
+      hasInprocessAndCompleteByDay = _.filter(completeByDay, function (_row) {
+        return _row.DateCollected === _.last(inProcessByDay).DateCollected;
+      });
+    };
+    
+    return hasInprocessAndCompleteByDay.length === 0 ? inProcessByDay : [];
+  };
+  
+  return new Promise(function (resolve, reject) {
+    
+    getViralLoadTestResultsByPatientIdentifier(patientIdentifiers, conf.host, conf.generalApiKey)
+      .then(function (response) {
+        if (response.posts instanceof Array) {
+          let inProcessOnSameDay = logAndGetFilteredResults(response.posts);
+          pending.viralLoad = inProcessOnSameDay;
+        } else
+          pending[location_name].viralLoadErrorMsg = response;
+        
+        return getPcrTestResultsByPatientIdentifier(patientIdentifiers, conf.host, conf.generalApiKey);
+      }).then(function (response) {
+        
+        if (response.posts instanceof Array) {
+          let inProcessOnSameDay = logAndGetFilteredResults(response.posts);
+              pending.pcr = inProcessOnSameDay;
+        } else
+          pending[location_name].pcrErrorMsg = response;
+        
+        if (conf.loadCd4)
+          return getCd4TestResultsByPatientIdentifier(patientIdentifiers, conf.host, conf.cd4ApiKey);
+        else {
+          return new Promise(function (resolve, reject) {
+            resolve({
+              fetched: false,
+              posts: []
+            });
+          });
+        }
+      })
+      .then(function (response) {
+        if (response.posts instanceof Array) {
+          let inProcessOnSameDay = logAndGetFilteredResults(response.posts);
+              pending.cd4Panel = inProcessOnSameDay;
+        } else
+          pending[location_name].cd4ErrorMsg = response;
+        
+        resolve(pending);
+      })
+      .catch(function (err) {
+        
+        reject({
+          message: err.message,
+          results: pending,
+          uuid: patientIdentifiers
+        });
+      });
+  });
+}
+
+>>>>>>> 305ea00... winstone-misuse: ensured all file-handlers are closed
 function getEIDTestResultsByPatientIdentifier(patientIdentifier, server) {
 
   var results = {
@@ -540,14 +643,15 @@ function getEIDTestResultsByPatientIdentifier(patientIdentifier, server) {
       .then(function (response) {
 
         if (response.posts instanceof Array) {
+          var logger = etlLogger.logger(config.logging.eidPath + '/' + config.logging.eidFile);
           _.each(response.posts, function (row) {
-
-            etlLogger.logger(config.logging.eidPath + '/' + config.logging.eidFile).info('viral load result: %s', JSON.stringify(row));
+            logger.info('viral load result: %s', JSON.stringify(row));
 
             if (row && row.SampleStatus && ['Completed', 'Rejected', 'Complete'].indexOf(row.SampleStatus) != -1) {
               results.viralLoad.push(row);
             }
           });
+          logger.close();
         } else
           results[location_name].viralLoadErrorMsg = response;
 
