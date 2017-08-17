@@ -392,14 +392,6 @@ module.exports = function () {
                     reply({
                         message: 'ok'
                     });
-<<<<<<< HEAD
-                    logger.add(require('winston-daily-rotate-file'), {
-                        filename: path.join(__dirname, 'logs', 'client-logs.log')
-                    });
-                    logger.info(request.payload);
-                    logger.close();
-=======
->>>>>>> ERS-203: Added end-point for fetching all programs config
                 }
 
             }
@@ -442,53 +434,6 @@ module.exports = function () {
                     }
                 }
             }
-<<<<<<< HEAD
-        }
-    },
-    {
-        method: 'GET',
-        path: '/etl/patient/{patientUuid}/program/{programUuid}/enrollment/{enrollmentUuid}/visit-types',
-        config: {
-            auth: 'simple',
-            plugins: {
-                'hapiAuthorization': {
-                    role: privileges.canViewPatient
-                }
-            },
-            handler: function (request, reply) {
-                var requestParams = Object.assign({}, request.query, request.params);
-                var patientUuid = requestParams.patientUuid;
-                var programUuid = requestParams.programUuid;
-                var enrollment = requestParams.enrollmentUuid;
-                var locationUuid = requestParams.intendedLocationUuid || '';
-
-                patientProgramService
-                .getPatientProgramEnrollmentVisits(patientUuid,programUuid, enrollment,locationUuid)
-                .then(function(programVisits){
-                    reply(programVisits);
-                })
-                .catch(function(error){
-                    reply(Boom.badImplementation('An internal error occurred'));
-                })
-            },
-            description: 'Get program config of a patient',
-            notes: 'Returns program config  of a patient',
-            tags: ['api'],
-            validate: {
-                options: {
-                    allowUnknown: true
-                },
-                params: {
-                    patientUuid: Joi.string()
-                        .required()
-                        .description("The patient's uuid(universally unique identifier)."),
-                    programUuid: Joi.string()
-                        .required()
-                        .description("program Uuid (universally unique identifier)."),
-                    enrollmentUuid: Joi.string()
-                        .required()
-                        .description("program enrollment Uuid (universally unique identifier).")
-=======
         },
         {
             method: 'GET',
@@ -534,7 +479,6 @@ module.exports = function () {
                             .required()
                             .description("program enrollment Uuid (universally unique identifier).")
                     }
->>>>>>> ERS-203: Added end-point for fetching all programs config
                 }
             }
         },
