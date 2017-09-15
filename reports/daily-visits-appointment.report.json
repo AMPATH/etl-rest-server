@@ -129,7 +129,8 @@
       "indexExpression": "FORCE INDEX (location_id_rtc_date)"
     },
     "joins": [
-      {
+      { 
+        
         "joinType": "INNER JOIN",
         "schema": "amrs",
         "tableName": "person_name",
