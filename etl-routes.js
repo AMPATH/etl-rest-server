@@ -288,14 +288,21 @@ module.exports = function () {
                         preRequest.resolveLocationIdsToLocationUuids(request,
                             function () {
                                 request.query.groupBy = 'groupByPerson,groupByd';
-                                let compineRequestParams = Object.assign({}, request.query, request.params);
-                                let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations', 'groupBy'], compineRequestParams);
+                                resolveEncounterUuidToId.resolveToEncounterIds(request.query)
+                                      .then((resolve) => {
+                                            let encounterIds = resolve;
+                                            request.query.encounterIds = encounterIds;
+                                            let compineRequestParams = Object.assign({}, request.query, request.params);
+                                            let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations','encounterIds', 'groupBy'], compineRequestParams);
 
-                                dao.runReport(reportParams).then((result) => {
-                                    reply(result);
-                                }).catch((error) => {
-                                    reply(error);
-                                })
+                                            dao.runReport(reportParams).then((result) => {
+                                                reply(result);
+                                            }).catch((error) => {
+                                                reply(error);
+                                            })
+                                      }).catch((error) => {
+                                          console.log(error);
+                                      });
                             });
                     }
                 },
