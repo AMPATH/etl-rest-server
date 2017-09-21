@@ -20,6 +20,7 @@ function buildScope(dataDictionary) {
 
     if (dataDictionary.intendedVisitLocationUuid) {
         scope.intendedVisitLocationUuid = dataDictionary.intendedVisitLocationUuid;
+        console.log('scope.intendedVisitLocationUuid ', scope.intendedVisitLocationUuid );
     }
 
     // add other methods to build the scope objects
@@ -41,7 +42,9 @@ function buildHivScopeMembers(scope, lastTenHivSummary) {
     if (Array.isArray(lastTenHivSummary) && lastTenHivSummary.length > 0) {
         scope.isFirstAMPATHHIVVisit = false;
         scope.previousHIVClinicallocation = lastTenHivSummary[0].location_uuid;
+        console.log('scope111111', scope);
     } else {
         scope.isFirstAMPATHHIVVisit = true;
     }
+    console.log('scope', scope);
 }

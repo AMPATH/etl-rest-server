@@ -42,7 +42,7 @@
         ]
       },
       {
-        "uuid": "d4ac2aa5-2899-42fb-b08a-d40161815b48",
+        "uuid": "d164c76c-cc91-4ac2-89e9-ab7c29152ee0",
         "name": "Adult HIV Return Visit ",
         "allowedIf": "age >= 20 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "encounterTypes": [
