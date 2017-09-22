@@ -72,7 +72,8 @@ function resolveToEncounterIds(request){
 
            var checkAsyncState = function(){
           if(totalAsyncRequests === 0){
-              resolve(resolvedEncounterUUids);
+              console.log('Resolved', _.uniq(resolvedEncounterUUids));
+              resolve(_.uniq(resolvedEncounterUUids));
             }
            }
 
