@@ -1,20 +1,36 @@
 sudo: required
 language: node_js
 node_js:
-- '6'
-- node
+  - '6'
+  - node
+
+services:
+  - docker
+
 before_install:
   - export TZ=Africa/Nairobi
   - date
   - npm install -g node-gyp
   - cp $TRAVIS_BUILD_DIR/conf/config.example.json $TRAVIS_BUILD_DIR/conf/config.json
+
 addons:
   apt:
     sources:
-    - ubuntu-toolchain-r-test
+      - ubuntu-toolchain-r-test
     packages:
-    - g++-5
+      - g++-5
+      - sshpass
+
 script:
-- npm test
+  - npm test
+
 env:
   - CXX=g++-5
+  
+after_success:
+  - echo "BUILD IMAGE"
+  - docker build -t $DOCKER_IMAGE/test .
+  - docker save $DOCKER_IMAGE/test-build > etlbuild.tar.gz
+  - export SSHPASS=$DEPLOY_PASS
+  - sshpass -e scp -o stricthostkeychecking=no etlbuild.tar.gz $DEPLOY_USER@$DEPLOY_HOST:./
+  - sshpass -e ssh -o stricthostkeychecking=no $DEPLOY_USER@$DEPLOY_HOST ./deploy-etl.sh
