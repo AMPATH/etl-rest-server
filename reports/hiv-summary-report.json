@@ -53,7 +53,11 @@
                 "label":"on_arvs",
                 "expression":"on_arvs",
                 "sql":"count(distinct if($expression,t1.person_id,null))"
-
+            },
+            {
+                "label":"starting_art_total",
+                "expression":"starting_art_total",
+                "sql":"count(distinct if($expression,t1.person_id,null))"
             },
             {
                 "label":"on_arvs_first_line",
