@@ -8,8 +8,7 @@ let serviceDef = {
 
 module.exports = serviceDef;
 
-function pendingEIDReminders(params, config) {
-  
+function pendingEIDReminders(params, config) {  
   const reflect = (promise) => {
     return promise.then(result => ({ success: true, result })).catch(error => ({ success: false, error }));
   };

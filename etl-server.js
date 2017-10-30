@@ -68,6 +68,7 @@ var validate = function (username, password, callback) {
         var authBuffer = new Buffer(username + ":" + password).toString("base64");
         var options = {
             hostname: config.openmrs.host,
+            rejectUnauthorized: false,
             port: config.openmrs.port,
             path: '/' + openmrsAppName + '/ws/rest/v1/session',
             headers: {
@@ -110,7 +111,7 @@ var validate = function (username, password, callback) {
                         }
                     });
                 }).on('error', function (error) {
-                    //console.log(error);
+                    console.log(error);
                     callback(null, false);
                 });
             } else {

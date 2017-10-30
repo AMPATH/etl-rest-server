@@ -64,6 +64,9 @@ import {
 import {
     patientCareCascadeService
 } from './service/patient-care-cascade-report.service';
+import {
+    NotificationsService
+} from './service/notifications/notification.service';
 var patientReminderService = require('./service/patient-reminder.service.js');
 import {
     patientMedicationHistService
@@ -479,6 +482,35 @@ module.exports = function () {
                         allowUnknown: true
                     }
                 }
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/patient/{patientUuid}/patient-notifications/{referenceDate}',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewPatient
+                    }
+                },
+                handler: function (request, reply) {
+
+                    let notificationsService = new NotificationsService(request);
+                    notificationsService.getNotifications().then((notifications) => {
+
+                        reply(notifications);
+                    }).catch((error) => {
+                        console.error(error);
+                        reply({
+                            error: 'An error occured please check server logs'
+                        });
+                    })
+
+                },
+                description: 'Get a list of reminders for selected patient and indicators',
+                notes: 'Returns a  list of reminders for selected patient and indicators on a given reference date',
+                tags: ['api'],
             }
         },
         {
@@ -3040,7 +3072,7 @@ module.exports = function () {
                 }
             }
 
-    }, {
+        }, {
             method: 'GET',
             path: '/etl/indicator-disaggregation-filter-options',
             config: {
