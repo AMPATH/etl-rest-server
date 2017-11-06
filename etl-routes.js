@@ -68,6 +68,9 @@ var patientReminderService = require('./service/patient-reminder.service.js');
 import {
     patientMedicationHistService
 } from './service/patient-medication-history.service';
+import {
+    ClinicScheduleService
+} from './service/clinic-schedule.service';
 
 module.exports = function () {
 
@@ -99,9 +102,9 @@ module.exports = function () {
                 },
                 auth: false,
                 handler: function (request, reply) {
-                var message = request.payload;
-                let service = new SlackService();
-                    service.postFeedbackToPoc(message).then((success) =>{
+                    var message = request.payload;
+                    let service = new SlackService();
+                    service.postFeedbackToPoc(message).then((success) => {
                         reply(success);
                     }).catch((err) => {
                         reply(Boom.badData(error));
@@ -116,20 +119,20 @@ module.exports = function () {
             method: 'GET',
             path: '/etl/poc-user-feedback/{count*2}',
             config: {
-                    auth: false,
-                    handler: function (request, reply) {
-                        let service = new SlackService();
-                        const urlparts = request.params.count.split('/');
-                        service.getPocMessages(encodeURIComponent(urlparts[0]),encodeURIComponent(urlparts[1]))
+                auth: false,
+                handler: function (request, reply) {
+                    let service = new SlackService();
+                    const urlparts = request.params.count.split('/');
+                    service.getPocMessages(encodeURIComponent(urlparts[0]), encodeURIComponent(urlparts[1]))
                         .then((res) => {
                             reply(res);
                         }).catch((error) => {
                             reply(Boom.badData(error));
-                        });                           
-                    },
-                    description: 'Endpoint that gets user feedback from poc',
-                    notes: 'Specify message count and oldest timestamp in the url parameters',
-                    tags: ['api', 'feedback'],
+                        });
+                },
+                description: 'Endpoint that gets user feedback from poc',
+                notes: 'Specify message count and oldest timestamp in the url parameters',
+                tags: ['api', 'feedback'],
             }
         },
         {
@@ -144,7 +147,7 @@ module.exports = function () {
                     var message = request.payload;
                     var channel = request.payload.channel;
                     let service = new SlackService();
-                    service.postToChannels(message, channel).then(function(success) {
+                    service.postToChannels(message, channel).then(function (success) {
                         reply(success);
                     }).catch((err) => {
                         reply(Boom.badData(error));
@@ -155,7 +158,7 @@ module.exports = function () {
                 tags: ['api', 'feedback'],
             }
         },
-          {
+        {
             method: 'POST',
             path: '/etl/posttogroup',
             config: {
@@ -167,7 +170,7 @@ module.exports = function () {
                     var message = request.payload;
                     var channel = request.payload.group;
                     let service = new SlackService();
-                    service.postToGroups(message, channel).then(function(success) {
+                    service.postToGroups(message, channel).then(function (success) {
                         reply(success);
                     }).catch((err) => {
                         reply(Boom.badData(error));
@@ -177,66 +180,69 @@ module.exports = function () {
                 notes: 'Specify the private channel name in the payload',
                 tags: ['api', 'feedback'],
             }
-        },   
+        },
 
         {
             method: 'GET',
-            path: '/etl/channel-user-feedback/{count*2}',  /*  /etl/channel-user-feedback/10/1504081732.000145   */
+            path: '/etl/channel-user-feedback/{count*2}',
+            /*  /etl/channel-user-feedback/10/1504081732.000145   */
             config: {
-                    auth: false,
-                    handler: function (request, reply) {
-                        let service = new SlackService();
-                        const urlparts = request.params.count.split('/');
-                        service.getChannelMessages(encodeURIComponent(urlparts[0]),encodeURIComponent(urlparts[1]))
+                auth: false,
+                handler: function (request, reply) {
+                    let service = new SlackService();
+                    const urlparts = request.params.count.split('/');
+                    service.getChannelMessages(encodeURIComponent(urlparts[0]), encodeURIComponent(urlparts[1]))
                         .then((res) => {
                             reply(res);
                         }).catch((error) => {
                             reply(Boom.badData(error));
-                        });                           
-                    },
-                    description: 'Endpoint that receives feedback from a public channel',
-                    notes: 'Specify message  count and oldest timestamp in the url parameters',
-                    tags: ['api', 'feedback'],
+                        });
+                },
+                description: 'Endpoint that receives feedback from a public channel',
+                notes: 'Specify message  count and oldest timestamp in the url parameters',
+                tags: ['api', 'feedback'],
             }
         },
         {
             method: 'GET',
-            path: '/etl/channel-user-feedback/{count*3}', /*  /etl/channel-user-feedback/poc-user-feedback/10/1504081732.000145   */
+            path: '/etl/channel-user-feedback/{count*3}',
+            /*  /etl/channel-user-feedback/poc-user-feedback/10/1504081732.000145   */
             config: {
-                    auth: false,
-                    handler: function (request, reply) {
-                        let service = new SlackService();
-                        const urlparts = request.params.count.split('/');
-                        service.getFromChannel(encodeURIComponent(urlparts[0]),encodeURIComponent(urlparts[1]),encodeURIComponent(urlparts[2]))
+                auth: false,
+                handler: function (request, reply) {
+                    let service = new SlackService();
+                    const urlparts = request.params.count.split('/');
+                    service.getFromChannel(encodeURIComponent(urlparts[0]), encodeURIComponent(urlparts[1]), encodeURIComponent(urlparts[2]))
                         .then((res) => {
                             reply(res);
                         }).catch((error) => {
                             reply(Boom.badData(error));
-                        });                           
-                    },
-                    description: 'Endpoint that receives feedback from a public channel',
-                    notes: 'Specify the public channel name,message  count and oldest timestamp in the url parameters',
-                    tags: ['api', 'feedback'],
+                        });
+                },
+                description: 'Endpoint that receives feedback from a public channel',
+                notes: 'Specify the public channel name,message  count and oldest timestamp in the url parameters',
+                tags: ['api', 'feedback'],
             }
         },
         {
             method: 'GET',
-            path: '/etl/group-user-feedback/{count*3}', /*  /etl/channel-user-feedback/poc-user-feedback/10/1504081732.000145   */
+            path: '/etl/group-user-feedback/{count*3}',
+            /*  /etl/channel-user-feedback/poc-user-feedback/10/1504081732.000145   */
             config: {
-                    auth: false,
-                    handler: function (request, reply) {
-                        let service = new SlackService();
-                        const urlparts = request.params.count.split('/');
-                        service.getFromGroup(encodeURIComponent(urlparts[0]),encodeURIComponent(urlparts[1]),encodeURIComponent(urlparts[2]))
+                auth: false,
+                handler: function (request, reply) {
+                    let service = new SlackService();
+                    const urlparts = request.params.count.split('/');
+                    service.getFromGroup(encodeURIComponent(urlparts[0]), encodeURIComponent(urlparts[1]), encodeURIComponent(urlparts[2]))
                         .then((res) => {
                             reply(JSON.parse(res));
                         }).catch((error) => {
                             reply(Boom.badData(error));
-                        });                           
-                    },
-                    description: 'Endpoint that receives feedback from a private channel',
-                    notes: 'Specify the private channel name,message  count and oldest timestamp in the url parameters',
-                    tags: ['api', 'feedback'],
+                        });
+                },
+                description: 'Endpoint that receives feedback from a private channel',
+                notes: 'Specify the private channel name,message  count and oldest timestamp in the url parameters',
+                tags: ['api', 'feedback'],
             }
         },
         {
@@ -256,33 +262,231 @@ module.exports = function () {
                 },
                 handler: function (request, reply) {
                     if (request.query.locationUuids) {
-                         console.log('Request', request.query);
-                         resolveClinicDashboardFilterParams.resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                                    .then((resolve) => {
-                                        let encounterIds = resolve.encounterTypeIds;
-                                        let visitTypeIds = resolve.visitTypesIds;
-                                        let programTypeIds = resolve.programTypeIds;
-                                        request.query.encounterIds = encounterIds;
-                                        request.query.visitTypeIds = visitTypeIds;
-                                        request.query.programTypeIds = programTypeIds;
-                                        let reportParams = etlHelpers.getReportParams('name', ['startDate', 'endDate', 'encounterIds','visitTypeIds' , 'programTypeIds' ,'locationUuids'], request.query);
-                                        console.log('Monthly report params', reportParams);
-                                        let service = new MonthlyScheduleService();
-                                        service.getMonthlyScheduled(reportParams).then((result) => {
-                                            reply(result);
-                                        }).catch((error) => {
-                                            reply(error);
-                                        })
+                        resolveEncounterUuidToId.getEncounterIdsFromRequestUuids(request.query)
+                            .then((resolve) => {
+                                let encounterIds = resolve;
+                                request.query.encounterIds = encounterIds;
+                                let reportParams = etlHelpers.getReportParams('name', ['startDate', 'endDate',
+                                    'encounterIds', 'locationUuids'
+                                ], request.query);
+                                let service = new MonthlyScheduleService();
+                                service.getMonthlyScheduled(reportParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    reply(error);
+                                })
 
-                                    }).then((error) => {
-                                        console.log(error);
-                                    });
+                            }).then((error) => {
+                                console.log(error);
+                            });
 
                     }
                 },
                 description: 'Get monthly schedule',
                 notes: 'Returns a list of appointments,visits and has not returned',
                 tags: ['api'],
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/program-monthly-schedule',
+            config: {
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    if (request.query.locationUuids) {
+                        let clinicScheduleService = new ClinicScheduleService();
+                        clinicScheduleService.getMonthlySchedule(request).then((result) => {
+                            reply(result);
+                        }).catch((error) => {
+                            console.log('Got error', error);
+                            reply(error);
+                        });
+                    }
+                },
+                description: 'Get monthly schedule',
+                notes: 'Returns a list of appointments,visits and has not returned',
+                tags: ['api'],
+                validate: {
+                    options: {
+                        allowUnknown: true
+                    },
+                    query: {
+                        encounterTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated encounter Type Uuids"),
+                        startDate: Joi.string().required()
+                            .description("The start date for the data set"),
+                        endDate: Joi.string().required()
+                            .description("The end date fro the data set"),
+                        locationUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated location uuids"),
+                        visitTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated visit uuids"),
+                        programUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated program uuids"),
+                    }
+                }
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/program-daily-appointments/{startDate}',
+            config: {
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    let clinicScheduleService = new ClinicScheduleService();
+                    clinicScheduleService.getDailyAppointments(request).then((result) => {
+                        console.log('Got result', result);
+                        reply(result);
+                    }).catch((error) => {
+                        console.log('Got error', error);
+                        reply(error);
+                    });
+
+                },
+                description: 'Get daily appointments list',
+                notes: 'Returns a list of patients with appointments',
+                tags: ['api'],
+                validate: {
+                    params: {
+                        startDate: Joi.string().required()
+                            .description("The date for to fetch data for"),
+                    },
+                    query: {
+                        encounterTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated encounter Type Uuids"),
+                        locationUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated location uuids"),
+                        visitTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated visit uuids"),
+                        programUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated program uuids"),
+                    }
+                }
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/program-daily-visits/{startDate}',
+            config: {
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    let clinicScheduleService = new ClinicScheduleService();
+                    clinicScheduleService.getDailyVisits(request).then((result) => {
+                        reply(result);
+                    }).catch((error) => {
+                        reply(error);
+                    });
+                },
+                description: 'Get daily appointments list',
+                notes: 'Returns a list of patients with appointments',
+                tags: ['api'],
+                validate: {
+                    params: {
+                        startDate: Joi.string().required()
+                            .description("The date for to fetch data for"),
+                    },
+                    query: {
+                        encounterTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated encounter Type Uuids"),
+                        locationUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated location uuids"),
+                        visitTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated visit uuids"),
+                        programUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated program uuids"),
+                    }
+                }
+                
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/program-daily-has-not-returned/{startDate}',
+            config: {
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    let clinicScheduleService = new ClinicScheduleService();
+                    clinicScheduleService.getDailyHasNotReturned(request).then((result) => {
+                        reply(result);
+                    }).catch((error) => {
+                        reply(error);
+                    });
+                },
+                description: 'Get daily appointments list',
+                notes: 'Returns a list of patients with appointments',
+                tags: ['api'],
+                validate: {
+                    params: {
+                        startDate: Joi.string().required()
+                            .description("The date for to fetch data for"),
+                    },
+                    query: {
+                        encounterTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated encounter Type Uuids"),
+                        locationUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated location uuids"),
+                        visitTypeUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated visit uuids"),
+                        programUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated program uuids"),
+                    }
+                }
             }
         },
         {
@@ -305,25 +509,22 @@ module.exports = function () {
                         preRequest.resolveLocationIdsToLocationUuids(request,
                             function () {
                                 request.query.groupBy = 'groupByPerson,groupByd';
-                                resolveClinicDashboardFilterParams.resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                                      .then((resolve) => {
-                                            let encounterIds = resolve.encounterTypeIds;
-                                            let visitTypeIds = resolve.visitTypesIds;
-                                            let programTypeIds = resolve.programTypeIds;
-                                            request.query.encounterIds = encounterIds;
-                                            request.query.visitTypeIds = visitTypeIds;
-                                            request.query.programTypeIds = programTypeIds;
-                                            let compineRequestParams = Object.assign({}, request.query, request.params);
-                                            let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations','encounterIds','visitTypeIds', 'programTypeIds' ,'groupBy'], compineRequestParams);
+                                resolveEncounterUuidToId.getEncounterIdsFromRequestUuids(request.query)
+                                    .then((resolve) => {
+                                        console.log('Resolved daily-attendance', resolve);
+                                        let encounterIds = resolve;
+                                        request.query.encounterIds = encounterIds;
+                                        let compineRequestParams = Object.assign({}, request.query, request.params);
+                                        let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations', 'encounterIds', 'groupBy'], compineRequestParams);
 
-                                            dao.runReport(reportParams).then((result) => {
-                                                reply(result);
-                                            }).catch((error) => {
-                                                reply(error);
-                                            })
-                                      }).catch((error) => {
-                                          console.log(error);
-                                      });
+                                        dao.runReport(reportParams).then((result) => {
+                                            reply(result);
+                                        }).catch((error) => {
+                                            reply(error);
+                                        })
+                                    }).catch((error) => {
+                                        console.log(error);
+                                    });
                             });
                     }
                 },
@@ -352,24 +553,20 @@ module.exports = function () {
                         preRequest.resolveLocationIdsToLocationUuids(request,
                             function () {
                                 request.query.groupBy = 'groupByPerson,groupByd';
-                                resolveClinicDashboardFilterParams.resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                                      .then((resolve) => {
-                                            let encounterIds = resolve.encounterTypeIds;
-                                            let visitTypeIds = resolve.visitTypesIds;
-                                            let programTypeIds = resolve.programTypeIds;
-                                            request.query.encounterIds = encounterIds;
-                                            request.query.visitTypeIds = visitTypeIds;
-                                            request.query.programTypeIds = programTypeIds;
-                                            let compineRequestParams = Object.assign({}, request.query, request.params);
-                                            let reportParams = etlHelpers.getReportParams('daily-attendance', ['startDate', 'locations' , 'encounterIds','visitTypeIds' ,'programTypeIds' ,'groupBy'], compineRequestParams);
-                                            dao.runReport(reportParams).then((result) => {
-                                                reply(result);
-                                            }).catch((error) => {
-                                                reply(error);
-                                            })
-                                       }).catch((error) => {
-                                            console.log(error);
-                                       });
+                                resolveEncounterUuidToId.getEncounterIdsFromRequestUuids(request.query)
+                                    .then((resolve) => {
+                                        let encounterIds = resolve;
+                                        request.query.encounterIds = encounterIds;
+                                        let compineRequestParams = Object.assign({}, request.query, request.params);
+                                        let reportParams = etlHelpers.getReportParams('daily-attendance', ['startDate', 'locations', 'encounterIds', , 'groupBy'], compineRequestParams);
+                                        dao.runReport(reportParams).then((result) => {
+                                            reply(result);
+                                        }).catch((error) => {
+                                            reply(error);
+                                        })
+                                    }).catch((error) => {
+                                        console.log(error);
+                                    });
                             });
                     }
                 },
@@ -398,28 +595,24 @@ module.exports = function () {
                         preRequest.resolveLocationIdsToLocationUuids(request,
                             function () {
                                 request.query.groupBy = 'groupByPerson,groupByd';
-                                resolveClinicDashboardFilterParams.resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                                      .then((resolve) => {
-                                            let encounterIds = resolve.encounterTypeIds;
-                                            let visitTypeIds = resolve.visitTypesIds;
-                                            let programTypeIds = resolve.programTypeIds;
-                                            request.query.encounterIds = encounterIds;
-                                            request.query.visitTypeIds = visitTypeIds;
-                                            request.query.programTypeIds = programTypeIds;
-                                            let compineRequestParams = Object.assign({}, request.query, request.params);
-                                            let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations','encounterIds','visitTypeIds','programTypeIds','groupBy'], compineRequestParams);
-                                            reportParams.limit = 100000;
-                                            dao.runReport(reportParams).then((result) => {
-                                                reply(result);
-                                            }).catch((error) => {
-                                                reply(error);
-                                            })
+                                resolveEncounterUuidToId.getEncounterIdsFromRequestUuids(request.query)
+                                    .then((resolve) => {
+                                        let encounterIds = resolve;
+                                        request.query.encounterIds = encounterIds;
+                                        let compineRequestParams = Object.assign({}, request.query, request.params);
+                                        let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations', 'encounterIds', 'groupBy'], compineRequestParams);
+                                        reportParams.limit = 100000;
+                                        dao.runReport(reportParams).then((result) => {
+                                            reply(result);
+                                        }).catch((error) => {
+                                            reply(error);
+                                        })
 
-                                      })
-                                      .catch((error) => {
-                                           console.log('Error');
-                                      });
-                               
+                                    })
+                                    .catch((error) => {
+                                        console.log('Error');
+                                    });
+
                             });
                     }
                 },
@@ -3055,7 +3248,7 @@ module.exports = function () {
                 }
             }
 
-    }, {
+        }, {
             method: 'GET',
             path: '/etl/indicator-disaggregation-filter-options',
             config: {
@@ -3074,7 +3267,7 @@ module.exports = function () {
             }
 
         },
-      {
+        {
             method: 'GET',
             path: '/etl/patient/{patientUuid}/medical-history-report',
             config: {
@@ -3089,9 +3282,9 @@ module.exports = function () {
                     let requestParams = Object.assign({}, request.query, request.params);
                     let reportParams = etlHelpers.getReportParams('medical-history-report', ['patientUuid'],
                         requestParams);
-                    dao.runReport(reportParams).then((result) => {                        
-                       let medicalHist=new patientMedicationHistService();
-                       let processedResults= medicalHist.processMedicationHistory(result);
+                    dao.runReport(reportParams).then((result) => {
+                        let medicalHist = new patientMedicationHistService();
+                        let processedResults = medicalHist.processMedicationHistory(result);
                         reply(processedResults);
                     }).catch((error) => {
                         reply(error);
@@ -3099,16 +3292,16 @@ module.exports = function () {
                 },
                 description: "Get the medical history report",
                 notes: "Returns the the medical history of the selected patient",
-                 tags: ['api'],
-                 validate: {
-                     options: {
-                         allowUnknown: true
-                     },
-                     params: {}
-                 }
-             }
-          },
-         {
+                tags: ['api'],
+                validate: {
+                    options: {
+                        allowUnknown: true
+                    },
+                    params: {}
+                }
+            }
+        },
+        {
             method: 'GET',
             path: '/etl/departments-programs-config',
             config: {
@@ -3125,7 +3318,7 @@ module.exports = function () {
                         allowUnknown: true
                     },
                     params: {
-                       
+
                     }
                 }
             }

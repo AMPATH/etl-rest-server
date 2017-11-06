@@ -37,6 +37,11 @@ var reportPrivileges = {
     'clinic-lab-orders-report': [PRIVILEGES.canViewClinicDashBoard, PRIVILEGES.canViewPatient],
     'patient-status-change-tracker-report':  [PRIVILEGES.canViewDataAnalytics],
     'patient-care-cascade-report':  [PRIVILEGES.canViewDataAnalytics],
+    'hiv-daily-appointments':  [PRIVILEGES.canViewDataAnalytics],
+    'hiv-daily-attendance':  [PRIVILEGES.canViewDataAnalytics],
+    'hiv-daily-has-not-returned':  [PRIVILEGES.canViewDataAnalytics],
+    'program-attended':  [PRIVILEGES.canViewDataAnalytics],
+    'program-appointments':  [PRIVILEGES.canViewDataAnalytics],
     'cohort-report':  [PRIVILEGES.canViewPatient]
 };
 
