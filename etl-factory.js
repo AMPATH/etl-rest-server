@@ -814,6 +814,13 @@ module.exports = function () {
                     joinExpression: 't1.person_id = person.person_id',
                     joinType: 'INNER JOIN'
                 });
+                join.push({
+                    schema: 'amrs',
+                    tableName: 'person_attribute',
+                    alias: 'person_attribute',
+                    joinExpression: 't1.person_id = person_attribute.person_id AND person_attribute.person_attribute_type_id = 10 ',
+                    joinType: 'LEFT OUTER JOIN'
+                });
                 //remove dynamic datasets from joins
                 join = _.filter(join, function (j) {
                     return _.isUndefined(j.joinedQuerParts);
@@ -830,6 +837,7 @@ module.exports = function () {
                     concatColumns: [
                         "concat(COALESCE(person_name.given_name,''),' ',COALESCE(person_name.middle_name,''),' ',COALESCE(person_name.family_name,'')) as person_name",
                         "group_concat(distinct id.identifier separator ', ') as identifiers",
+                        " person_attribute.value as phone_number",
                     ],
                     table: schema + '.' + tableName,
                     alias: report.table['alias'],

@@ -36,7 +36,14 @@
         "alias": "t5",
         "joinExpression": "t1.visit_id  = t5.visit_id"
       },
-       {
+      {
+        "joinType": "LEFT OUTER JOIN",
+        "schema": "amrs",
+        "tableName": "person_attribute",
+        "alias": "t7",
+        "joinExpression": "t1.person_id  = t7.person_id AND t7.person_attribute_type_id = 10"
+      },
+      {
         "joinType": "INNER JOIN",
         "schema": "etl",
         "tableName": "program_visit_map",
@@ -126,6 +133,16 @@
         "sql": "t1.person_id"
       },
       {
+        "label": "vl_1",
+        "type": "single",
+        "sql": "t1.vl_1"
+      },
+      {
+        "label": "vl_1_date",
+        "type": "single",
+        "sql": "t1.vl_1_date"
+      },
+      {
         "label": "uuid",
         "type": "single",
         "sql": "t1.uuid"
@@ -159,6 +176,11 @@
         "label": "gender",
         "type": "single",
         "sql": "t4.gender"
+      },
+      {
+        "label": "phone_number",
+        "type": "single",
+        "sql": "t7.value"
       },
       {
         "label": "age",
@@ -215,6 +237,13 @@
         "tableName": "program_visit_map",
         "alias": "t6",
         "joinExpression": "t5.visit_type_id  = t6.visit_type_id"
+      },
+      {
+        "joinType": "LEFT OUTER JOIN",
+        "schema": "amrs",
+        "tableName": "person_attribute",
+        "alias": "t7",
+        "joinExpression": "t1.person_id  = t7.person_id AND t7.person_attribute_type_id = 10"
       }
     ],
     "parameters": [
@@ -328,6 +357,21 @@
         "label": "gender",
         "type": "single",
         "sql": "t4.gender"
+      },
+      {
+        "label": "phone_number",
+        "type": "single",
+        "sql": "t7.value"
+      },
+      {
+        "label": "vl_1",
+        "type": "single",
+        "sql": "t1.vl_1"
+      },
+      {
+        "label": "vl_1_date",
+        "type": "single",
+        "sql": "t1.vl_1_date"
       },
       {
         "label": "age",
