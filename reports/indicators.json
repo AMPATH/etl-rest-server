@@ -336,6 +336,12 @@
         "expression": "date(t1.rtc_date) < DATE(NOW()) and t1.rtc_date = max_rtc_date AND COALESCE(t1.death_date) IS NULL AND t1.transfer_out IS NULL AND t1.next_clinical_datetime_hiv IS NULL AND t8.person_id is null"
     },
     {
+        "name": "p_has_not_returned",
+        "label": "has not returned",
+        "description": "has not returned",
+        "expression": "date(t1.rtc_date) < DATE(NOW()) and t1.rtc_date = max_rtc_date  AND t1.next_clinical_datetime IS NULL AND t8.person_id is null"
+    },
+    {
         "name": "virally_suppressed_in_past_year",
         "label": "virally suppressed in past year",
         "description": "# of patient(s) who are virally suppressed in the past one year",

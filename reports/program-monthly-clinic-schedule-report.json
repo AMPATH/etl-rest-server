@@ -1,0 +1,350 @@
+[
+    {
+        "name": "program-attended",
+        "table": {
+            "schema": "etl",
+            "tableName": "appointment",
+            "alias": "t1"
+        },
+        "joins": [],
+        "parameters": [
+            {
+                "name": "groupByAttendedDate",
+                "defaultValue": [
+                    {
+                        "label": "attended_date",
+                        "expression": "attended_date"
+                    }
+                ]
+            },
+            {
+                "name": "startDate",
+                "defaultValue": [
+                    "10-10-2015"
+                ]
+            },
+            {
+                "name": "endDate",
+                "defaultValue": [
+                    "defaultValue"
+                ]
+            },
+            {
+                "name": "locations",
+                "defaultValue": []
+            },
+            {
+                "name": "encounter_types",
+                "defaultValue": 0
+            }
+        ],
+        "filters": [
+            {
+                "expression": "t1.encounter_datetime >= ?",
+                "parameter": "startDate"
+            },
+            {
+                "expression": "t1.encounter_datetime <= ?",
+                "parameter": "endDate"
+            },
+            {
+                "expression": "t1.location_id in (?) ",
+                "parameter": "locations"
+            },
+            {
+                "expression": "t1.encounter_type in (?) ",
+                "parameter": "encounter_types"
+            },
+            {
+                "expression": "encounter_type not in (21,99999)",
+                "processForce": true
+            }
+        ],
+        "groupClause": [
+            {
+                "parameter": "groupByAttendedDate"
+            },
+            {
+                "parameter": "groupByw"
+            }
+        ],
+        "indicators": [],
+        "supplementColumns": [
+            {
+                "label": "attended_date",
+                "type": "single",
+                "sql": "date(t1.encounter_datetime)"
+            },
+            {
+                "label": "attended",
+                "type": "single",
+                "sql": "count(distinct person_id)"
+            }
+        ]
+    },
+    {
+        "name": "program-has-not-returned-report",
+        "table": {
+            "schema": "etl",
+            "tableName": "appointment",
+            "alias": "t1"
+        },
+        "joins": [
+            {
+                "joinType": "INNER JOIN",
+                "schema": "",
+                "alias": "t7",
+                "joinExpression": "t1.person_id = t7.person_id",
+                "dynamicDataset": "program-has-not-returned-cohort"
+            },
+            {
+                "joinType": "LEFT OUTER JOIN",
+                "schema": "etl",
+                "tableName": "appointment",
+                "alias": "t8",
+                "joinExpression": "(t1.person_id = t8.person_id AND t8.encounter_type = 116 AND t1.encounter_datetime < t8.encounter_datetime)"
+            }
+        ],
+        "parameters": [
+            {
+                "name": "startDate",
+                "defaultValue": [
+                    "10-10-2015"
+                ]
+            },
+            {
+                "name": "endDate",
+                "defaultValue": [
+                    "30-10-2015"
+                ]
+            },
+            {
+                "name": "locations",
+                "defaultValue": []
+            },
+            {
+                "name": "encounter_types",
+                "defaultValue": 0
+            },
+            {
+                "name": "groupByDate",
+                "defaultValue": [
+                    {
+                        "label": "d",
+                        "expression": "d"
+                    }
+                ]
+            }
+        ],
+        "filters": [
+            {
+                "expression": "t1.rtc_date >= ?",
+                "parameter": "startDate"
+            },
+            {
+                "expression": "t1.rtc_date <= ?",
+                "parameter": "endDate"
+            },
+            {
+                "expression": "t1.encounter_type in (?)",
+                "parameter": "encounter_types"
+            },
+            {
+                "expression": "t1.location_id in (?)",
+                "parameter": "locations"
+            },
+            {
+                "expression": "t1.next_clinical_datetime IS NULL",
+                "processForce": true
+            },
+            {
+                "expression": "t1.encounter_type != 110",
+                "processForce": true
+            },
+            {
+                "expression": "DATE(max_rtc_date) < DATE(NOW())",
+                "processForce": true
+            },
+            {
+                "expression": "t1.rtc_date = max_rtc_date",
+                "processForce": true
+            }
+        ],
+        "groupClause": [
+            {
+                "parameter": "groupByDate",
+                "processForce": true
+            }
+        ],
+        "indicators": [
+            {
+                "label": "p_has_not_returned",
+                "expression": "p_has_not_returned",
+                "sql": "count(distinct if($expression, t1.person_id, null))"
+            }
+        ],
+        "supplementColumns": [
+            {
+                "label": "d",
+                "type": "single",
+                "sql": "date_format(t1.rtc_date,'%Y-%m-%d')"
+            }
+        ]
+    },
+    {
+        "name": "program-has-not-returned-cohort",
+        "table": {
+            "schema": "etl",
+            "tableName": "appointment",
+            "alias": "t2"
+        },
+        "joins": [],
+        "parameters": [
+            {
+                "name": "startDate",
+                "defaultValue": [
+                    "10-10-2015"
+                ]
+            },
+            {
+                "name": "endDate",
+                "defaultValue": [
+                    "10-10-2015"
+                ]
+            },
+            {
+                "name": "locations",
+                "defaultValue": []
+            },
+            {
+                "name": "groupByPerson",
+                "defaultValue": [
+                    {
+                        "label": "person_id",
+                        "expression": "person_id"
+                    }
+                ]
+            }
+        ],
+        "filters": [
+            {
+                "expression": "t2.rtc_date >= ?",
+                "parameter": "startDate"
+            },
+            {
+                "expression": "t2.rtc_date <= ?",
+                "parameter": "endDate"
+            },
+            {
+                "expression": "t2.location_id in (?)",
+                "parameter": "locations"
+            }
+        ],
+        "groupClause": [
+            {
+                "parameter": "groupByPerson"
+            }
+        ],
+        "indicators": [],
+        "supplementColumns": [
+            {
+                "label": "person_id",
+                "type": "single",
+                "sql": "person_id"
+            },
+            {
+                "label": "max_rtc_date",
+                "type": "single",
+                "sql": "MAX(rtc_date)"
+            }
+        ]
+    },
+    {
+        "name": "program-scheduled",
+        "table": {
+            "schema": "etl",
+            "tableName": "appointment",
+            "alias": "t1"
+        },
+        "joins": [],
+        "parameters": [
+            {
+                "name": "groupByRtcDate",
+                "defaultValue": [
+                    {
+                        "label": "scheduled_date",
+                        "expression": "scheduled_date"
+                    }
+                ]
+            },
+            {
+                "name": "startDate",
+                "defaultValue": [
+                    "10-10-2015"
+                ]
+            },
+            {
+                "name": "endDate",
+                "defaultValue": [
+                    "30-10-2015"
+                ]
+            },
+            {
+                "name": "locations",
+                "defaultValue": []
+            },
+            {
+                "name": "encounter_types",
+                "defaultValue": 0
+            }
+        ],
+        "filters": [
+            {
+                "expression": "t1.rtc_date >= ?",
+                "parameter": "startDate"
+            },
+            {
+                "expression": "t1.rtc_date <= ?",
+                "parameter": "endDate"
+            },
+            {
+                "expression": "t1.location_id in (?)",
+                "parameter": "locations"
+            },
+            {
+                "expression": "t1.encounter_type in (?)",
+                "parameter": "encounter_types"
+            },
+            {
+                "expression": "encounter_type not in (99999)",
+                "processForce": true
+            }
+        ],
+        "groupClause": [
+            {
+                "parameter": "groupByRtcDate"
+            },
+            {
+                "parameter": "groupByw"
+            }
+        ],
+        "indicators": [],
+        "supplementColumns": [
+            {
+                "label": "scheduled_date",
+                "type": "single",
+                "sql": "date_format(t1.rtc_date,'%Y-%m-%d')"
+            },
+            {
+                "label": "scheduled",
+                "type": "single",
+                "sql": "count(distinct t1.person_id)"
+            },
+            {
+                "label": "followed_up_by_outreach",
+                "type": "single",
+                "sql": "if(next_encounter_type =21, 1,0)"
+            }
+        ]
+    }
+]
