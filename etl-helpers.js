@@ -38,6 +38,30 @@ module.exports = function () {
                 queryParams.locationUuids = locationUuids;
             }
 
+            // format programUuids
+            var programUuids = [];
+            if (queryParams.programUuids) {
+                _.each(queryParams.programUuids.split(','), function (program) {
+                    programUuids.push(String(program));
+                });
+                queryParams.programUuids = programUuids;
+            }
+            var stateUuids = [];
+            if (queryParams.stateUuids) {
+                _.each(queryParams.stateUuids.split(','), function (state) {
+                    stateUuids.push(String(state));
+                });
+                queryParams.stateUuids = stateUuids;
+            }
+
+            var providerUuids = [];
+            if (queryParams.providerUuids) {
+                _.each(queryParams.providerUuids.split(','), function (provider) {
+                    providerUuids.push(String(provider));
+                });
+                queryParams.providerUuids = providerUuids;
+            }
+
             //
             for (let filter of whereClause) {
                 whereParams.push({
