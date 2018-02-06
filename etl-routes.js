@@ -2168,7 +2168,7 @@ module.exports = function () {
                 validate: {
                     query: {
                         locationUuids: Joi.string()
-                            .required()
+                            .optional()
                             .description("A list of comma separated location uuids"),
                         startDate: Joi.string()
                             .optional()
@@ -2216,7 +2216,7 @@ module.exports = function () {
 
                     request.query.reportName = 'referral-patient-list';
                     let requestParams = Object.assign({}, request.query, request.params);
-                    let reportParams = etlHelpers.getReportParams('referral-patient-list', ['startDate', 'endDate', 'locationUuids', 'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids'], requestParams);
+                    let reportParams = etlHelpers.getReportParams('referral-patient-list', ['startDate', 'endDate', 'locationUuids','providerUuids',  'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids'], requestParams);
 
                    // let requestParams = Object.assign({}, request.query, request.params);
                     let service = new PatientReferralService();
@@ -2231,20 +2231,23 @@ module.exports = function () {
                 tags: ['api'],
                 validate: {
                     query: {
+                        providerUuids: Joi.string()
+                            .optional()
+                            .description("A list of comma separated provider uuids"),
                         locationUuids: Joi.string()
-                            .required()
+                            .optional()
                             .description("A list of comma separated location uuids"),
                         startDate: Joi.string()
-                            .required()
+                            .optional()
                             .description("The start date to filter by"),
                         endDate: Joi.string()
                             .required()
                             .description("The end date to filter by"),
                         startIndex: Joi.number()
-                            .required()
+                            .optional()
                             .description("The startIndex to control pagination"),
                         limit: Joi.number()
-                            .required()
+                            .optional()
                             .description("The offset to control pagination"),
                         startAge: Joi.string()
                             .optional()

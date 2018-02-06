@@ -276,6 +276,34 @@
         "tableName": "location",
         "alias": "t9",
         "joinExpression": "t1.location_id = t9.location_id"
+      },
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "encounter_provider",
+        "alias": "t10",
+        "joinExpression": "t10.encounter_id = t8.encounter_id"
+      },
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "provider",
+        "alias": "t11",
+        "joinExpression": "t11.provider_id = t10.provider_id"
+      },
+       {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "person_name",
+        "alias": "t12",
+        "joinExpression": "t12.person_id = t11.person_id"
+      },
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "concept_name",
+        "alias": "t13",
+        "joinExpression": "t13.concept_id = t7.concept_id"
       }
     ],
     "parameters": [
@@ -284,6 +312,7 @@
       {"name":"locationUuids","defaultValue":[]},
       {"name":"programUuids","defaultValue":[]},
       {"name":"stateUuids","defaultValue":[]},
+      {"name":"providerUuids","defaultValue":[]},
       {"name":"startAge", "defaultValue":[]},
       {"name":"endAge", "defaultValue":[]},
       {"name":"gender", "defaultValue":[]},
@@ -343,6 +372,10 @@
       {
         "expression": "t7.uuid in ?",
         "parameter": "stateUuids"
+      },
+      {
+        "expression": "t11.uuid in ?",
+        "parameter": "providerUuids"
       }
     ],
     "groupClause": [
@@ -391,6 +424,26 @@
         "label": "age",
         "type": "single",
         "sql": "extract(year from (from_days(datediff(now(),t4.birthdate))))"
+      },
+     {
+        "label": "program_name",
+        "type": "single",
+        "sql": "t5.name"
+      },
+       {
+        "label": "location_name",
+        "type": "single",
+        "sql": "t9.name"
+      },
+      {
+        "label": "state_name",
+        "type": "single",
+        "sql": "t13.name"
+      },
+       {
+        "label": "provider_name",
+        "type": "single",
+        "sql": "concat(COALESCE(t12.given_name,''),' ',COALESCE(t12.middle_name,''),' ',COALESCE(t12.family_name,''))"
       }
     ]
   }

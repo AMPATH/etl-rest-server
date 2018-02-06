@@ -54,6 +54,14 @@ module.exports = function () {
                 queryParams.stateUuids = stateUuids;
             }
 
+            var providerUuids = [];
+            if (queryParams.providerUuids) {
+                _.each(queryParams.providerUuids.split(','), function (provider) {
+                    providerUuids.push(String(provider));
+                });
+                queryParams.providerUuids = providerUuids;
+            }
+
             //
             for (let filter of whereClause) {
                 whereParams.push({
