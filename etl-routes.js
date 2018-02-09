@@ -27,6 +27,9 @@ import {
     MonthlyScheduleService
 } from './service/monthly-schedule-service';
 import {
+    PatientReferralService
+} from './service/patient-referral.service';
+import {
     PatientStatusChangeTrackerService
 } from './service/patient-status-change-tracker-service';
 import {
@@ -2144,6 +2147,151 @@ module.exports = function () {
                 description: "Get the Patient Register report",
                 notes: "Api endpoint that returns Patient Register report.",
                 tags: ['api'],
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/patient-referrals',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }],
+                        aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
+                            {
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'reportName', //name of the parameter
+                                value: 'patient-referral-report' //parameter value
+                            }
+                        ]
+                    }
+                },
+                handler: function (request, reply) {
+                    //security check
+                    request.query.reportName = 'patient-referral-report';
+                    if (!authorizer.hasReportAccess(request.query.reportName)) {
+                        return reply(Boom.forbidden('Unauthorized'));
+                    }
+                    preRequest.resolveLocationIdsToLocationUuids(request,
+                        function () {
+                            let requestParams = Object.assign({}, request.query, request.params);
+                            let reportParams = etlHelpers.getReportParams('patient-referral-report', ['startDate', 'endDate', 'locationUuids', 'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids'], requestParams);
+
+                            let service = new PatientReferralService();
+                            service.getAggregateReport(reportParams).then((result) => {
+                                reply(result);
+                            }).catch((error) => {
+                                reply(error);
+                            });
+                        });
+                },
+                description: "Get patient referral for selected clinic",
+                notes: "Returns patient referral for the selected clinic(s),start date, end date",
+                tags: ['api'],
+                validate: {
+                    query: {
+                        locationUuids: Joi.string()
+                            .optional()
+                            .description("A list of comma separated location uuids"),
+                        startDate: Joi.string()
+                            .optional()
+                            .description("The start date to filter by"),
+                        endDate: Joi.string()
+                            .optional()
+                            .description("The end date to filter by"),
+                        gender: Joi.string()
+                            .optional()
+                            .description("The gender to filter by"),
+                        startAge: Joi.string()
+                            .optional()
+                            .description("The start age to filter by"),
+                        endAge: Joi.string()
+                            .optional()
+                            .description("The end age to filter by"),
+                        programUuids: Joi.string()
+                            .optional()
+                            .description("The program to filter by"),
+                        stateUuids: Joi.string()
+                            .optional()
+                            .description("The stateUuids to filter by")
+
+                    }
+                }
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/referral-patient-list',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewPatient
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+
+                    request.query.reportName = 'referral-patient-list';
+                    let requestParams = Object.assign({}, request.query, request.params);
+                    let reportParams = etlHelpers.getReportParams('referral-patient-list', ['startDate', 'endDate', 'locationUuids','providerUuids',  'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids'], requestParams);
+
+                   // let requestParams = Object.assign({}, request.query, request.params);
+                    let service = new PatientReferralService();
+                    service.getPatientListReport(reportParams).then((result) => {
+                        reply(result);
+                    }).catch((error) => {
+                        reply(error);
+                    });
+                },
+                description: "Get patient referral patient list for selected clinic",
+                notes: "Returns patient referral patient list for the selected clinic,start date, end date",
+                tags: ['api'],
+                validate: {
+                    query: {
+                        providerUuids: Joi.string()
+                            .optional()
+                            .description("A list of comma separated provider uuids"),
+                        locationUuids: Joi.string()
+                            .optional()
+                            .description("A list of comma separated location uuids"),
+                        startDate: Joi.string()
+                            .optional()
+                            .description("The start date to filter by"),
+                        endDate: Joi.string()
+                            .required()
+                            .description("The end date to filter by"),
+                        startIndex: Joi.number()
+                            .optional()
+                            .description("The startIndex to control pagination"),
+                        limit: Joi.number()
+                            .optional()
+                            .description("The offset to control pagination"),
+                        startAge: Joi.string()
+                            .optional()
+                            .description("The start age to filter by"),
+                        endAge: Joi.string()
+                            .optional()
+                            .description("The end age to filter by"),
+                        gender: Joi.string()
+                            .optional()
+                            .description("The gender to filter by"),
+                        programUuids: Joi.string()
+                            .optional()
+                            .description("The program to filter by"),
+                        stateUuids: Joi.string()
+                            .optional()
+                            .description("The stateUuids to filter by")
+                    }
+                }
             }
         },
         {
