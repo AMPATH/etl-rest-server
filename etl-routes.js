@@ -2292,7 +2292,7 @@ module.exports = function () {
                             .required()
                             .description("The end date to filter by"),
                         startIndex: Joi.number()
-                            .required()
+                            .optional()
                             .description("The startIndex to control pagination"),
                         limit: Joi.number()
                             .required()

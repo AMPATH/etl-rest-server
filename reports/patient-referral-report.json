@@ -216,11 +216,18 @@
   {
     "name": "referral-patient-list",
     "table": {
-      "schema": "amrs",
-      "tableName": "patient_program",
-      "alias": "t1"
+      "schema": "etl",
+      "tableName": "patient_referral",
+      "alias": "t10"
     },
     "joins": [
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "patient_program",
+        "alias": "t1",
+        "joinExpression": "t10.patient_program_id  = t1.patient_program_id"
+      },
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
