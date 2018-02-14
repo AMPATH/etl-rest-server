@@ -1025,7 +1025,6 @@ module.exports = function () {
                 auth: 'simple',
                 plugins: {},
                 handler: function (request, reply) {
-                    console.log('xxxxxxxxxxxx',request)
                     patientReferralDao.updatePatientReferralNotification(request.params['patientReferralId'], request.payload)
                         .then(function (updatedPatientReferral) {
                             reply(updatedPatientReferral);
