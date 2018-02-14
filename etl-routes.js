@@ -3,6 +3,7 @@
 // var dao = require('./etl-dao');
 var dao = require('./etl-dao');
 var patientList = require('./dao/patient-list/patient-list-dao');
+var patientReferralDao = require('./dao/patient-referral/patient-referral-dao');
 var preRequest = require('./pre-request-processing');
 var pack = require('./package');
 var winston = require('winston');
@@ -993,6 +994,56 @@ module.exports = function () {
                             .description("The offset to control pagination")
                     }
                 }
+            }
+        },
+        {
+            method: 'POST',
+            path: '/etl/patient-referral',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    patientReferralDao.createPatientReferral(request.payload)
+                        .then(function (newCohortReferral) {
+                            reply(newCohortReferral);
+                        })
+                        .catch(function (error) {
+                            if (error && error.isValid === false) {
+                                reply(Boom.badRequest('Validation errors:' + JSON.stringify(error)));
+                            } else {
+                                console.error(error);
+                                reply(Boom.create(500, 'Internal server error.', error));
+                            }
+                        });
+                },
+                description: "Post patient referrals for a given referral",
+                notes: "Api endpoint that posts patient referrals",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'POST',
+            path: '/etl/patient-referral/{patientReferralId}',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    console.log('xxxxxxxxxxxx',request)
+                    patientReferralDao.updatePatientReferralNotification(request.params['patientReferralId'], request.payload)
+                        .then(function (updatedPatientReferral) {
+                            reply(updatedPatientReferral);
+                        })
+                        .catch(function (error) {
+                            if (error && error.isValid === false) {
+                                reply(Boom.badRequest('Validation errors:' + JSON.stringify(error)));
+                            } else {
+                                reply(Boom.create(500, 'Internal server error.', error));
+                            }
+                        });
+                },
+                description: "Update patient referral notification status",
+                notes: "Api endpoint that updates patient referral of by the provided id",
+                tags: ['api'],
             }
         },
         {
