@@ -33,7 +33,7 @@
         "schema": "amrs",
         "tableName": "patient_state",
         "alias": "t5",
-        "joinExpression": "t4.patient_program_id = t5.patient_program_id"
+        "joinExpression": "t4.patient_program_id = t5.patient_program_id and t5.end_date is null"
       },
       {
         "joinType": "INNER JOIN",
@@ -49,7 +49,13 @@
         "alias": "t7",
         "joinExpression": "t4.location_id = t7.location_id"
       },
-
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "concept",
+        "alias": "t8",
+        "joinExpression": "t6.concept_id = t8.concept_id"
+      },
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
@@ -57,6 +63,7 @@
         "alias": "t9",
         "joinExpression": "t6.concept_id = t9.concept_id"
       },
+
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
@@ -73,6 +80,7 @@
       {"name":"locationUuids","defaultValue":[]},
       {"name":"programUuids","defaultValue":[]},
       {"name":"stateUuids","defaultValue":[]},
+      {"name":"conceptUuids","defaultValue":[]},
       {"name":"startAge", "defaultValue":[]},
       {"name":"endAge", "defaultValue":[]},
       {"name":"gender", "defaultValue":[]},
@@ -110,10 +118,6 @@
         "parameter": "programUuids"
       },
       {
-        "expression": "t6.uuid in ?",
-        "parameter": "stateUuids"
-      },
-      {
         "expression": "t7.uuid in ?",
         "parameter": "locationUuids"
       },
@@ -121,12 +125,18 @@
       {
         "expression":"t10.gender in ?",
         "parameter":"gender"
+      },
+      {
+        "expression": "t8.uuid in ?",
+        "parameter": "stateUuids"
       }
+
 
 
 
     ],
     "groupClause": [
+      {"parameter":"groupByLocation"},
       {"parameter":"groupByProgram"},
       {"parameter":"groupByState"}
 
@@ -137,7 +147,7 @@
       {
         "label": "counts",
         "type": "single",
-        "sql": "count(t5.state)"
+        "sql": "count(distinct t4.patient_id)"
       },
       {
         "label": "state",
@@ -170,15 +180,20 @@
         "sql": "t4.location_id"
       },
       {
-        "label": "stateUuids",
+        "label": "conceptUuids",
         "type": "single",
-        "sql": "t6.uuid"
+        "sql": "t8.uuid"
       },
 
       {
         "label": "state_name",
         "type": "single",
         "sql": "t9.name"
+      },
+      {
+        "label": "program",
+        "type": "single",
+        "sql": "t2.name"
       },
       {
         "label": "person_id",
@@ -261,7 +276,7 @@
         "schema": "amrs",
         "tableName": "patient_state",
         "alias": "t6",
-        "joinExpression": "t1.patient_program_id = t6.patient_program_id"
+        "joinExpression": "t1.patient_program_id = t6.patient_program_id and t6.end_date is null"
       },
       {
         "joinType": "INNER JOIN",
@@ -273,16 +288,16 @@
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
-        "tableName": "encounter",
-        "alias": "t8",
-        "joinExpression": "t1.patient_id = t8.patient_id"
+        "tableName": "location",
+        "alias": "t9",
+        "joinExpression": "t1.location_id = t9.location_id"
       },
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
-        "tableName": "location",
-        "alias": "t9",
-        "joinExpression": "t1.location_id = t9.location_id"
+        "tableName": "concept",
+        "alias": "t11",
+        "joinExpression": "t7.concept_id = t11.concept_id"
       }
     ],
     "parameters": [
@@ -332,14 +347,6 @@
     ],
     "filters": [
       {
-        "expression":"t8.encounter_datetime >= ?",
-        "parameter":"startDate"
-      },
-      {
-        "expression":"t8.encounter_datetime <= ?",
-        "parameter":"endDate"
-      },
-      {
         "expression": "t9.uuid in ?",
         "parameter": "locationUuids"
       },
@@ -348,7 +355,7 @@
         "parameter": "programUuids"
       },
       {
-        "expression": "t7.uuid in ?",
+        "expression": "t11.uuid in ?",
         "parameter": "stateUuids"
       }
     ],

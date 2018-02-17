@@ -7,7 +7,7 @@ export class PatientReferralService {
     getAggregateReport(reportParams) {
         let self = this;
         return new Promise(function (resolve, reject) {
-            reportParams.groupBy = 'groupByProgram,groupByProgram,groupByState';
+            reportParams.groupBy = 'groupByLocation,groupByProgram,groupByState';
             reportParams.countBy = 'num_persons';
             Promise.join(dao.runReport(reportParams),
                 (results) => {
