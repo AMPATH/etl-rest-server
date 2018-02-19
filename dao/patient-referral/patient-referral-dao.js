@@ -241,7 +241,6 @@ function validateCreateReferralPayload(patientReferralPayload) {
 
     }).catch(function (error) {
         console.log('An error occured while trying to validate patient referral payload',error);
-
     });
 }
 
@@ -261,11 +260,7 @@ function hasRequiredReferralFields(newPatientReferralPayload) {
     }
 
     if (_.isEmpty(newPatientReferralPayload.encounter)) {
-        validationResult.isValid = false;
-        validationResult.errors.push({
-            field: 'encounter',
-            message: 'Encounter is required'
-        });
+        validationResult.isValid = true;
     }
 
     if (_.isEmpty(newPatientReferralPayload.referredToLocation)) {

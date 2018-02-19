@@ -2,7 +2,7 @@
 const Promise = require("bluebird");
 const Moment = require('moment');
 const _ = require('lodash');
-const programsConfig = require('./program-visits-config');
+const programsConfig = require('./patient-program-config');
 const programVisits = require('./program-visit-types.service');
 
 var serviceDefinition = {

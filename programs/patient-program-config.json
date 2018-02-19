@@ -615,6 +615,44 @@
   },
   "781d8768-1359-11df-a1f1-0026b9348838": {
     "name": "OVC PROGRAM",
+    "enrollmentOptions": {
+      "allowMultipleEnrollment": true,
+      "requiredProgramEnrollment": []
+    },
+    "stateChangeForms": {
+      "referredIn": {
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "inCare":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":false
+      },
+      "pendingTransfer": {
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "transferOut":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "discharge":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "switchProgram":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "referredBack":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "referredOut":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      }
+    },
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -1230,6 +1268,44 @@
   },
   "781d8880-1359-11df-a1f1-0026b9348838": {
     "name": "EXPRESS CARE PROGRAM",
+    "enrollmentOptions": {
+      "allowMultipleEnrollment": false,
+      "requiredProgramEnrollment": []
+    },
+    "stateChangeForms": {
+      "referredIn": {
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "inCare":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":false
+      },
+      "pendingTransfer": {
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "transferOut":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "discharge":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "switchProgram":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "referredBack":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      },
+      "referredOut":{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "required":true
+      }
+    },
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -1249,6 +1325,30 @@
       "96ba279b-b23b-4e78-aba9-dcbd46a96b7b"
     ],
     "visitTypes": [
+      {
+        "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
+        "name": "Express Care Program Referral Visit",
+        "allowedIf": "inCareUuid === 'e517d6e2-6236-42db-9f71-0b6270c6cfa9'",
+        "message": "Patient must be `in care` state",
+        "encounterTypes": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          },
+          {
+            "uuid": "df554398-1350-11df-a1f1-0026b9348838",
+            "display": "ECSTABLE"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          }
+        ]
+      },
       {
         "uuid": "e2c37c46-3ee9-4cff-9af6-aa5c41fb30da",
         "name": "Express Care Visit ",
