@@ -619,40 +619,78 @@
       "allowMultipleEnrollment": true,
       "requiredProgramEnrollment": []
     },
-    "stateChangeForms": {
-      "referredIn": {
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+    "stateChangeForms": [
+      {
+        "type": "inCare",
+        "uuid": "e517d6e2-6236-42db-9f71-0b6270c6cfa9",
+        "forms": []
       },
-      "inCare":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":false
+      {
+        "type": "switchProgram",
+        "uuid": "a68566e2-67f9-49e8-b81e-2e5af7ffa9ac",
+        "forms": []
       },
-      "pendingTransfer": {
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+      {
+        "type": "discharge",
+        "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       },
-      "transferOut":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+      {
+        "type": "referred",
+        "uuid": "98d8131e-973d-4082-9115-2a848daee5a2",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       },
-      "discharge":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+      {
+        "type": "referredBack",
+        "uuid": "631ebf7a-e000-4220-9038-e70079ceafca",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       },
-      "switchProgram":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+      {
+        "type": "pendingTransfer",
+        "uuid": "56003eb5-d300-457d-badb-371e030e2580",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       },
-      "referredBack":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+      {
+        "type": "transferOut",
+        "uuid": "5d488b21-d08e-4e5f-b195-1ea1b5bb9c28",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       },
-      "referredOut":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+      {
+        "type": "referIn",
+        "uuid": "78526af3-ef12-4f53-94de-51c455ef0a88",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       }
-    },
+    ],
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -1272,40 +1310,28 @@
       "allowMultipleEnrollment": false,
       "requiredProgramEnrollment": []
     },
-    "stateChangeForms": {
-      "referredIn": {
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+    "stateChangeForms": [
+      {
+        "type": "discharge",
+        "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       },
-      "inCare":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":false
-      },
-      "pendingTransfer": {
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
-      },
-      "transferOut":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
-      },
-      "discharge":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
-      },
-      "switchProgram":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
-      },
-      "referredBack":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
-      },
-      "referredOut":{
-        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-        "required":true
+      {
+        "type": "referredBack",
+        "uuid": "98d8131e-973d-4082-9115-2a848daee5a2",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
       }
-    },
+    ],
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -1313,7 +1339,7 @@
     ],
     "transferCare": {
       "AMPATH": ["cbe2d31d-2201-44ce-b52e-fbd5dc7cff33"],
-      "DISCHARGE": ["9765992c-6279-46cc-915b-452a73e7dab5"],
+      "DISCHARGE": ["cbe2d31d-2201-44ce-b52e-fbd5dc7cff33"],
       "NON-AMPATH": ["cbe2d31d-2201-44ce-b52e-fbd5dc7cff33"]
     },
     "incompatibleWith": [
@@ -1456,7 +1482,7 @@
     "visitTypes": [
       {
         "uuid": "b8516e6e-17c6-4f28-bc3d-ec58d591e455",
-        "name": "ACTG Visit ",
+        "name": "ACTG Visit",
         "encounterTypes": [
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
