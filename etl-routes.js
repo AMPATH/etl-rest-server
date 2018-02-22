@@ -2244,7 +2244,10 @@ module.exports = function () {
                             .description("The stateUuids to filter by"),
                         conceptUuids: Joi.string()
                             .optional()
-                            .description("The conceptUuids to filter by")
+                            .description("The conceptUuids to filter by"),
+                        providerUuids: Joi.string()
+                            .optional()
+                            .description("A list of comma separated provider uuids")
 
                     }
                 }

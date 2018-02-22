@@ -70,6 +70,27 @@
         "tableName": "person",
         "alias": "t10",
         "joinExpression": "t4.patient_id = t10.person_id"
+      },
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "encounter",
+        "alias": "t12",
+        "joinExpression": "t12.encounter_id = t1.encounter_id"
+      },
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "encounter_provider",
+        "alias": "t13",
+        "joinExpression": "t13.encounter_id = t12.encounter_id"
+      },  
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "provider",
+        "alias": "t14",
+        "joinExpression": "t14.provider_id = t13.provider_id"
       }
 
 
@@ -129,6 +150,10 @@
       {
         "expression": "t8.uuid in ?",
         "parameter": "stateUuids"
+      },
+      {
+        "expression": "t14.uuid in ?",
+        "parameter": "providerUuids"
       }
 
 
@@ -288,16 +313,44 @@
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
+        "tableName": "concept_name",
+        "alias": "t8",
+        "joinExpression": "t8.concept_id = t7.concept_id"
+      },
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
         "tableName": "location",
         "alias": "t9",
         "joinExpression": "t1.location_id = t9.location_id"
-      },
+      }, 
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
         "tableName": "concept",
         "alias": "t11",
-        "joinExpression": "t7.concept_id = t11.concept_id"
+        "joinExpression": "t11.concept_id = t7.concept_id"
+      }, 
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "encounter",
+        "alias": "t12",
+        "joinExpression": "t12.encounter_id = t10.encounter_id"
+      },
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "encounter_provider",
+        "alias": "t13",
+        "joinExpression": "t13.encounter_id = t12.encounter_id"
+      },  
+      {
+        "joinType": "INNER JOIN",
+        "schema": "amrs",
+        "tableName": "provider",
+        "alias": "t14",
+        "joinExpression": "t14.provider_id = t1.provider_id"
       }
     ],
     "parameters": [
@@ -347,6 +400,14 @@
     ],
     "filters": [
       {
+        "expression":"t12.encounter_datetime >= ?",
+        "parameter":"startDate"
+      },
+      {
+        "expression":"t12.encounter_datetime <= ?",
+        "parameter":"endDate"
+      },
+      {
         "expression": "t9.uuid in ?",
         "parameter": "locationUuids"
       },
@@ -357,6 +418,10 @@
       {
         "expression": "t11.uuid in ?",
         "parameter": "stateUuids"
+      },
+      {
+        "expression": "t14.uuid in ?",
+        "parameter": "providerUuids"
       }
     ],
     "groupClause": [
@@ -405,6 +470,21 @@
         "label": "age",
         "type": "single",
         "sql": "extract(year from (from_days(datediff(now(),t4.birthdate))))"
+      },
+     {
+        "label": "program_name",
+        "type": "single",
+        "sql": "t5.name"
+      },
+       {
+        "label": "location_name",
+        "type": "single",
+        "sql": "t9.name"
+      },
+      {
+        "label": "state_name",
+        "type": "single",
+        "sql": "t8.name"
       }
     ]
   }

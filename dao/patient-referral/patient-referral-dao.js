@@ -158,7 +158,7 @@ function getPatientReferral(patientReferralId) {
                     .field('pr.notification_status') 
 					.field('pr.referral_reason')  
                     .from('etl.patient_referral', 'pr')
-                    .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
+                    // .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
                     .join('amrs.provider', 'ap', 'ap.provider_id = pr.provider_id')
                     .join('amrs.location', 'lr', 'pr.referred_to_location_id = lr.location_id')
                     .join('amrs.location', 'lt', 'pr.referred_from_location_id = lt.location_id')
@@ -257,10 +257,6 @@ function hasRequiredReferralFields(newPatientReferralPayload) {
             field: 'provider',
             message: 'Provider is required'
         });
-    }
-
-    if (_.isEmpty(newPatientReferralPayload.encounter)) {
-        validationResult.isValid = true;
     }
 
     if (_.isEmpty(newPatientReferralPayload.referredToLocation)) {
