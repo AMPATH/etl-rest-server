@@ -681,8 +681,23 @@
         ]
       },
       {
+        "type": "transferIn",
+        "uuid": "e293229b-4e74-445c-bfd2-602bbe4a91fb",
+        "forms": []
+      },
+      {
         "type": "referIn",
         "uuid": "78526af3-ef12-4f53-94de-51c455ef0a88",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referOut",
+        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
         "forms": [
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
@@ -1307,10 +1322,20 @@
   "781d8880-1359-11df-a1f1-0026b9348838": {
     "name": "EXPRESS CARE PROGRAM",
     "enrollmentOptions": {
-      "allowMultipleEnrollment": false,
+      "allowMultipleEnrollment": true,
       "requiredProgramEnrollment": []
     },
     "stateChangeForms": [
+      {
+        "type": "inCare",
+        "uuid": "e517d6e2-6236-42db-9f71-0b6270c6cfa9",
+        "forms": []
+      },
+      {
+        "type": "switchProgram",
+        "uuid": "a68566e2-67f9-49e8-b81e-2e5af7ffa9ac",
+        "forms": []
+      },
       {
         "type": "discharge",
         "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
@@ -1322,8 +1347,63 @@
         ]
       },
       {
-        "type": "referredBack",
+        "type": "referred",
         "uuid": "98d8131e-973d-4082-9115-2a848daee5a2",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referredBack",
+        "uuid": "631ebf7a-e000-4220-9038-e70079ceafca",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "pendingTransfer",
+        "uuid": "56003eb5-d300-457d-badb-371e030e2580",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "transferOut",
+        "uuid": "5d488b21-d08e-4e5f-b195-1ea1b5bb9c28",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "transferIn",
+        "uuid": "e293229b-4e74-445c-bfd2-602bbe4a91fb",
+        "forms": []
+      },
+      {
+        "type": "referIn",
+        "uuid": "78526af3-ef12-4f53-94de-51c455ef0a88",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referOut",
+        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
         "forms": [
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",

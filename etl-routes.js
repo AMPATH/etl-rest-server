@@ -2203,7 +2203,7 @@ module.exports = function () {
                         function () {
                             let requestParams = Object.assign({}, request.query, request.params);
                             let reportParams = etlHelpers.getReportParams('patient-referral-report', ['startDate', 'endDate', 'locationUuids',
-                                'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids','conceptUuids'], requestParams);
+                                'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids','conceptUuids','providerUuids'], requestParams);
 
                             let service = new PatientReferralService();
                             service.getAggregateReport(reportParams).then((result) => {
@@ -2273,7 +2273,7 @@ module.exports = function () {
 
                     request.query.reportName = 'referral-patient-list';
                     let requestParams = Object.assign({}, request.query, request.params);
-                    let reportParams = etlHelpers.getReportParams('referral-patient-list', ['startDate', 'endDate', 'locationUuids', 'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids'], requestParams);
+                    let reportParams = etlHelpers.getReportParams('referral-patient-list', ['startDate', 'endDate', 'locationUuids', 'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids', 'providerUuids'], requestParams);
 
                    // let requestParams = Object.assign({}, request.query, request.params);
                     let service = new PatientReferralService();
@@ -2317,7 +2317,10 @@ module.exports = function () {
                             .description("The program to filter by"),
                         stateUuids: Joi.string()
                             .optional()
-                            .description("The stateUuids to filter by")
+                            .description("The stateUuids to filter by"),
+                      providerUuids: Joi.string()
+                        .optional()
+                        .description("The providerUuids to filter by")
                     }
                 }
             }

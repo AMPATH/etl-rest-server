@@ -258,7 +258,7 @@ function hasRequiredReferralFields(newPatientReferralPayload) {
             message: 'Provider is required'
         });
     }
-
+  
     if (_.isEmpty(newPatientReferralPayload.referredToLocation)) {
         validationResult.isValid = false;
         validationResult.errors.push({
@@ -403,6 +403,55 @@ function findPatientReferral(encounterId, providerId,referredToLocationId,referr
         });
     
     
+}
+function getPatientReferralStats(providerId,startDate,endDate) {
+   
+    return new Promise(function (resolve, reject) {
+        connection.getServerConnection()
+            .then(function (conn) {
+                var query = squel.select()
+                    .field('pr.patient_referral_id')
+                    .field('pr.encounter_id')
+                    .field('pr.provider_id')
+                    .field('pr.referred_to_location_id') 
+                    .field('pr.referred_from_location_id') 
+                    .field('pr.patient_program_id') 
+                    .field('pr.notification_status') 
+                    .field('pr.referral_reason') 
+                    .from('etl.patient_referral', 'pr')
+                    .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
+                    .join('amrs.provider', 'apr', 'apr.provider_id = pr.provider_id')
+                    .join('amrs.location', 'lr', 'pr.referred_to_location_id = lr.location_id')
+                    .join('amrs.location', 'lt', 'pr.referred_from_location_id = lt.location_id')
+                    .join('amrs.patient_program', 'p', 'pr.patient_program_id = p.patient_program_id')
+                    .join('amrs.program_workflow_state', 'ps', 'pr.program_workflow_state_id = ps.program_workflow_state_id')
+                    .where('pr.provider_id = ?', providerId)
+                    .where('pr.encounter_id = ?', encounterId)
+                    .where('pr.referred_to_location_id = ?', referredToLocationId)
+                    .where('pr.referred_from_location_id = ?', referredFromLocationId)
+                    .where('pr.program_workflow_state_id = ?', programWorkflowStateId)
+                    .where('pr.voided = ?', voided)
+                    .toString();
+
+                conn.query(query, {}, function (err, rows, fields) {
+                    console.log(err)
+                    if (err) {
+                        reject('Error querying to find if duplicate record exists server');
+                    }
+                    else {
+                        resolve(rows);
+                    }
+                    conn.release();
+                });
+            })
+            .catch(function (err) {
+                console.log(err)
+                reject('Error establishing connection to MySql Server find duplicate');
+
+            });
+    });
+
+
 }
     
     
@@ -578,11 +627,7 @@ function checkResolvedReferralFields(newPatientReferralPayload) {
     }
 
     if (_.isEmpty(newPatientReferralPayload.encounterId) && newPatientReferralPayload.encounterId===undefined) {
-        validationResult.isValid = false;
-        validationResult.errors.push({
-            field: 'encounter',
-            message: 'Encounter is Not Found'
-        });
+        validationResult.isValid = true;
     }
 
     if (_.isEmpty(newPatientReferralPayload.referredToLocationId) && newPatientReferralPayload.referredToLocationId===undefined) {

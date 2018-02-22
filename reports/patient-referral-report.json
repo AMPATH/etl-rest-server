@@ -74,23 +74,9 @@
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
-        "tableName": "encounter",
-        "alias": "t12",
-        "joinExpression": "t12.encounter_id = t1.encounter_id"
-      },
-      {
-        "joinType": "INNER JOIN",
-        "schema": "amrs",
-        "tableName": "encounter_provider",
-        "alias": "t13",
-        "joinExpression": "t13.encounter_id = t12.encounter_id"
-      },  
-      {
-        "joinType": "INNER JOIN",
-        "schema": "amrs",
         "tableName": "provider",
         "alias": "t14",
-        "joinExpression": "t14.provider_id = t13.provider_id"
+        "joinExpression": "t14.provider_id = t1.provider_id"
       }
 
 
@@ -100,6 +86,7 @@
       {"name":"endDate", "defaultValue":["defaultValue"]},
       {"name":"locationUuids","defaultValue":[]},
       {"name":"programUuids","defaultValue":[]},
+      {"name":"providerUuids","defaultValue":[]},
       {"name":"stateUuids","defaultValue":[]},
       {"name":"conceptUuids","defaultValue":[]},
       {"name":"startAge", "defaultValue":[]},
@@ -330,27 +317,13 @@
         "tableName": "concept",
         "alias": "t11",
         "joinExpression": "t11.concept_id = t7.concept_id"
-      }, 
-      {
-        "joinType": "INNER JOIN",
-        "schema": "amrs",
-        "tableName": "encounter",
-        "alias": "t12",
-        "joinExpression": "t12.encounter_id = t10.encounter_id"
-      },
-      {
-        "joinType": "INNER JOIN",
-        "schema": "amrs",
-        "tableName": "encounter_provider",
-        "alias": "t13",
-        "joinExpression": "t13.encounter_id = t12.encounter_id"
       },  
       {
         "joinType": "INNER JOIN",
         "schema": "amrs",
         "tableName": "provider",
         "alias": "t14",
-        "joinExpression": "t14.provider_id = t1.provider_id"
+        "joinExpression": "t14.provider_id = t10.provider_id"
       }
     ],
     "parameters": [
@@ -362,6 +335,7 @@
       {"name":"startAge", "defaultValue":[]},
       {"name":"endAge", "defaultValue":[]},
       {"name":"gender", "defaultValue":[]},
+      {"name":"providerUuids", "defaultValue":[]},
       {"name":"groupByLocation", "defaultValue":[
         {
           "label": "location",
@@ -400,11 +374,11 @@
     ],
     "filters": [
       {
-        "expression":"t12.encounter_datetime >= ?",
+        "expression":"t10.date_created >= ?",
         "parameter":"startDate"
       },
       {
-        "expression":"t12.encounter_datetime <= ?",
+        "expression":"t10.date_created <= ?",
         "parameter":"endDate"
       },
       {
@@ -485,6 +459,17 @@
         "label": "state_name",
         "type": "single",
         "sql": "t8.name"
+
+      },
+      {
+        "label": "current_state_date",
+        "type": "single",
+        "sql": "t6.date_created"
+      },
+      {
+        "label": "initial_referral_date",
+        "type": "single",
+        "sql":  "t10.date_created"
       }
     ]
   }
