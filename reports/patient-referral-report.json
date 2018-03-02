@@ -141,6 +141,14 @@
       {
         "expression": "t14.uuid in ?",
         "parameter": "providerUuids"
+      },
+      {
+        "expression":"DATE_FORMAT(t5.date_created, '%Y-%m-%d') >= ?",
+        "parameter":"startDate"
+      },
+      {
+        "expression":" DATE_FORMAT(t5.date_created, '%Y-%m-%d') <= ?",
+        "parameter":"endDate"
       }
 
 
@@ -374,11 +382,11 @@
     ],
     "filters": [
       {
-        "expression":"t10.date_created >= ?",
+        "expression":"DATE_FORMAT(t6.date_created, '%Y-%m-%d') >= ?",
         "parameter":"startDate"
       },
       {
-        "expression":"t10.date_created <= ?",
+        "expression":" DATE_FORMAT(t6.date_created, '%Y-%m-%d') <= ?",
         "parameter":"endDate"
       },
       {

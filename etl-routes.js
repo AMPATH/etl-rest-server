@@ -2219,7 +2219,7 @@ module.exports = function () {
                 validate: {
                     query: {
                         locationUuids: Joi.string()
-                            .required()
+                            .optional()
                             .description("A list of comma separated location uuids"),
                         startDate: Joi.string()
                             .optional()
@@ -2289,7 +2289,7 @@ module.exports = function () {
                 validate: {
                     query: {
                         locationUuids: Joi.string()
-                            .required()
+                            .optional()
                             .description("A list of comma separated location uuids"),
                         startDate: Joi.string()
                             .required()

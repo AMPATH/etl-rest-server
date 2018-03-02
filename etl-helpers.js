@@ -33,11 +33,21 @@ module.exports = function () {
             var locationUuids = [];
             if (queryParams.locationUuids) {
                 _.each(queryParams.locationUuids.split(','), function (loc) {
-                    locationUuids.push(String(loc));
+                    if(loc =='' || loc=='undefined' || loc == undefined){
+                       console.log(loc);
+                    } else{
+                        locationUuids.push(String(loc));
+                    }
+                    
                 });
-                queryParams.locationUuids = locationUuids;
-            }
 
+               if(locationUuids.length>0){
+                  queryParams.locationUuids = locationUuids;
+               }else{
+                  delete queryParams['locationUuids'];
+               }             
+                               
+            }
             // format programUuids
             var programUuids = [];
             if (queryParams.programUuids) {
@@ -57,9 +67,20 @@ module.exports = function () {
             var providerUuids = [];
             if (queryParams.providerUuids) {
                 _.each(queryParams.providerUuids.split(','), function (provider) {
-                    providerUuids.push(String(provider));
+                    if(provider =='' || provider=='undefined' || provider == undefined){
+                        console.log(provider);
+                     } else{
+                        providerUuids.push(String(provider));
+                     }
+                   
                 });
-                queryParams.providerUuids = providerUuids || ["*"];
+
+                if(providerUuids.length>0){
+                    queryParams.providerUuids = providerUuids
+                 }else{
+                    delete queryParams['providerUuids'];
+                 }
+                
                 
             }
             // format conceptUuid
