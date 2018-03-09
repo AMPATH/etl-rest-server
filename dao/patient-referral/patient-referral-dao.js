@@ -10,7 +10,8 @@ var authorizer = require('../../authorization/etl-authorizer');
 
 var def = {
     createPatientReferral: createPatientReferral,
-    updatePatientReferralNotification:updatePatientReferralNotification
+    updatePatientReferralNotification:updatePatientReferralNotification,
+    getPatientReferralByEnrollmentUuid:getPatientReferralByEnrollmentUuid
 };
 
 module.exports = def;
@@ -170,6 +171,50 @@ function getPatientReferral(patientReferralId) {
                     if (err) {
                         console.log(err)
                         reject('Error querying to get patient referral by Id server');
+                    }
+                    else {
+                        if (rows.length > 0) {
+                            resolve(rows[0]);
+                        } else {
+                            resolve(null);
+                        }
+                    }
+                    conn.release();
+                });
+            })
+            .catch(function (err) {
+                reject('Error establishing connection to MySql Server');
+            });
+    });
+}
+function getPatientReferralByEnrollmentUuid(programEnrollmentUuid) {
+    return new Promise(function (resolve, reject) {
+        connection.getServerConnection()
+            .then(function (conn) {
+                var query = squel.select()
+                    .field('pr.patient_referral_id')
+                    .field('pr.voided')
+                    .field('pr.encounter_id')
+                    .field('pr.provider_id')
+                    .field('pr.referred_to_location_id') 
+                    .field('pr.referred_from_location_id') 
+                    .field('pr.patient_program_id')
+                    .field('pr.notification_status') 
+					.field('pr.referral_reason')  
+					.field('lr.name as referred_to_location')  
+					.field('lt.name as referred_from_location')  
+                    .from('etl.patient_referral', 'pr')
+                    .join('amrs.provider', 'ap', 'ap.provider_id = pr.provider_id')
+                    .join('amrs.location', 'lr', 'pr.referred_to_location_id = lr.location_id')
+                    .join('amrs.location', 'lt', 'pr.referred_from_location_id = lt.location_id')
+                    .join('amrs.patient_program', 'p', 'pr.patient_program_id = p.patient_program_id')
+                    .where('p.uuid = ?', programEnrollmentUuid)
+                    .toString();
+
+                conn.query(query, {}, function (err, rows, fields) {
+                    if (err) {
+                        console.log(err)
+                        reject('Error querying to get patient referral details by enrollment server');
                     }
                     else {
                         if (rows.length > 0) {

@@ -61,7 +61,7 @@
         "schema": "amrs",
         "tableName": "concept_name",
         "alias": "t9",
-        "joinExpression": "t6.concept_id = t9.concept_id"
+        "joinExpression": "t6.concept_id = t9.concept_id and t9.voided = 0"
       },
 
       {
@@ -310,7 +310,7 @@
         "schema": "amrs",
         "tableName": "concept_name",
         "alias": "t8",
-        "joinExpression": "t8.concept_id = t7.concept_id"
+        "joinExpression": "t8.concept_id = t7.concept_id and t8.voided = 0"
       },
       {
         "joinType": "INNER JOIN",

@@ -2327,6 +2327,30 @@ module.exports = function () {
         },
         {
             method: 'GET',
+            path: '/etl/patient-referral-details/{enrollmentUuid}',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    patientReferralDao.getPatientReferralByEnrollmentUuid(request.params['enrollmentUuid'])
+                        .then(function (referralLocation) {
+                            if (referralLocation === null) {
+                                reply(Boom.notFound('Resource does not exist'));
+                            } else {
+                                reply(referralLocation);
+                            }
+                        })
+                        .catch(function (error) {
+                            reply(Boom.create(500, 'Internal server error.', error));
+                        });
+                },
+                description: "Get patient referral details by program enrollment uuid",
+                notes: "Api endpoint that returns additional patient referral details by program enrollement uuid",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'GET',
             path: '/etl/hiv-summary-indicators',
             config: {
                 auth: 'simple',
