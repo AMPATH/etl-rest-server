@@ -23,6 +23,11 @@ var motd = require('./dao/motd_notification/motd_notification-dao');
 var patientProgramService = require('./programs/patient-program-base.service.js');
 var resolveClinicDashboardFilterParams = require('./resolve-program-visit-encounter-Ids/resolve-program-visit-encounter-Ids');
 var departmentProgramsService = require('./departments/departments-programs.service');
+var reportStoreService = require('./app/reporting-framework/report-store-service');
+var clobResource = require('./app/openmrs-api-access/clob-resource');
+var fs = require('fs');
+const NodeCache = require( "node-cache" );
+const myCache = new NodeCache();
 import {
     MonthlyScheduleService
 } from './service/monthly-schedule-service';
@@ -3202,28 +3207,299 @@ module.exports = function () {
             }
         }
     },
-    {
-        method: 'GET',
-        path: '/etl/departments-programs-config',
-        config: {
-            auth: 'simple',
-            plugins: {},
-            handler: function (request, reply) {
-                reply(departmentProgramsService.getAllDepartmentsConfig());
-            },
-            description: 'Get a list of Departments and their programs ',
-            notes: 'Returns a  list of Departments and their programs',
-            tags: ['api'],
-            validate: {
-                options: {
-                    allowUnknown: true
+        {
+            method: 'GET',
+            path: '/etl/departments-programs-config',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    reply(departmentProgramsService.getAllDepartmentsConfig());
                 },
-                params: {
-
+                description: 'Get a list of Departments and their programs ',
+                notes: 'Returns a  list of Departments and their programs',
+                tags: ['api'],
+                validate: {
+                    options: {
+                        allowUnknown: true
+                    },
+                    params: {}
                 }
             }
-        }
-    }
+        },
+        {
+            method: 'GET',
+            path: '/etl/report-store/{reportStoreId}',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    let requestParams = request.params['reportStoreId'];
+                    reportStoreService.getReportStore(requestParams)
+                        .then(function (reportStore) {
+                            if (reportStore === null) {
+                                reply(Boom.notFound('Resource does not exist'));
+                            } else {
+                                reply(reportStore);
+                            }
+                        })
+                        .catch(function (error) {
+                            reply(Boom.create(500, 'Internal server error.', error));
+                        });
+                },
+                description: "Get get report store for a given report",
+                notes: "Api endpoint that returns report store based on the report store id",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/report-store-by-name/{name}',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    let requestParams = request.params['name'];
+                    reportStoreService.getReportStoreByName(requestParams)
+                        .then(function (reportStore) {
+                            if (reportStore === null) {
+                                reply(Boom.notFound('Resource does not exist'));
+                            } else {
+                                reply(reportStore);
+                            }
+                        })
+                        .catch(function (error) {
+                            reply(Boom.create(500, 'Internal server error.', error));
+                        });
+                },
+                description: "Get get report store for a given report",
+                notes: "Api endpoint that returns report store based on the report store id",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/report-store-by-name-version',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    let requestParamName = request.query['name'];
+                    let requestParamVersion = request.query['version'];
+                    reportStoreService.getReportStoreByNameAndVersion(requestParamName,requestParamVersion)
+                        .then(function (reportStore) {
+                            if (reportStore === null) {
+                                reply(Boom.notFound('Resource does not exist'));
+                            } else {
+                                reply(reportStore);
+                            }
+                        })
+                        .catch(function (error) {
+                            reply(Boom.create(500, 'Internal server error.', error));
+                        });
+                },
+                description: "Get get report store for a given report",
+                notes: "Api endpoint that returns report store based on the report store id",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/report-store-schema',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+
+                    let requestParamName = request.query['name'];
+                    let requestParamVersion = request.query['version'];
+                    myCache.get( "myKey", function( err, value ){
+                        if( !err ){
+                            if(value === undefined) {
+                                reportStoreService.fetchReportSchema(requestParamName,requestParamVersion)
+                                    .then(function (reportStore) {
+                                        if (reportStore === null) {
+                                            reply(Boom.notFound('Resource does not exist'));
+                                        } else {
+                                            myCache.set( "myKey", reportStore, function( err, success ){
+                                                if( !err && success ){
+                                                    console.log('success setting caching for the first time');
+                                                    reply(reportStore);
+                                                }
+                                            });
+                                        }
+                                    })
+                                    .catch(function (error) {
+                                        reply(Boom.create(500, 'Internal server error.', error));
+                                    });
+
+                                // key not found
+                            }else{
+                                console.log('fetching data cached===not hitting the server' );
+                                reply(value);
+
+                            }
+                        }
+                    });
+
+                },
+                description: "Get get report store for a given report",
+                notes: "Api endpoint that returns report store based on the report store id",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'DELETE',
+            path: '/etl/report-store/{reportStoreId}',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    let requestParams = request.params['reportStoreId'];
+                    reportStoreService.voidReportStore(requestParams)
+                        .then(function (message) {
+                            reply(message);
+                        })
+                        .catch(function (error) {
+                            reply(Boom.create(500, 'Internal server error.', error));
+                        });
+                },
+                description: "void report store for a given report",
+                notes: "Api endpoint that voids a report store based on the report store id",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'POST',
+            path: '/etl/report-store',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+
+                    let payload = request.payload;
+                    reportStoreService.createReportStore(payload)
+                        .then(function (newReportStore) {
+                            reply(newReportStore);
+                        })
+                        .catch(function (error) {
+                            if (error && error.isValid === false) {
+                                reply(Boom.badRequest('Validation errors:' + JSON.stringify(error)));
+                            } else {
+                                console.error(error);
+                                reply(Boom.create(500, 'Internal server error.', error));
+                            }
+                        });
+                },
+                description: "Create a report store of any report",
+                notes: "Api endpoint that creates report stores",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'POST',
+            path: '/etl/report-store/{reportStoreId}',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    let requestParams = request.params['reportStoreId'];
+                    let payload = request.payload;
+                    reportStoreService.updateReportStore(requestParams,payload )
+                        .then(function (updatedReportStore) {
+                            reply(updatedReportStore);
+                        })
+                        .catch(function (error) {
+                            if (error && error.isValid === false) {
+                                reply(Boom.badRequest('Validation errors:' + JSON.stringify(error)));
+                            } else {
+                                reply(Boom.create(500, 'Internal server error.', error));
+                            }
+                        });
+                },
+                description: "Update report store for a certain report",
+                notes: "Api endpoint that updates report store based on the reportStoreId",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'POST',
+            path: '/etl/clob-data',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+
+
+
+                    reportStoreService.createReportStoreVersionIds()
+                        .then(function (version) {
+                            request.payload['version'] = version.insertId;
+                            let payload = JSON.stringify(request.payload);
+                            let buffer = Buffer.from(payload);
+                            fs.writeFileSync('buffer',buffer, "binary");
+                        clobResource.uploadReportSchemaToAMRS()
+                            .then(function (newReportStore) {
+                                fs.unlink("buffer"); //delete buffer file
+                                console.log('newReportStore', newReportStore);
+                                request.payload['clob_uuid'] = newReportStore;
+                                reportStoreService.createReportStore(request.payload)
+                                    .then(function (success) {
+                                        reply(success);
+                                    })
+                                    .catch(function (error) {
+                                        reply(Boom.badRequest('Error  has been encountered' + JSON.stringify(error)));
+                                    })
+
+                               // reply(newReportStore);
+                            })
+
+                            .catch(function (error) {
+                                if (error && error.isValid === false) {
+                                    reply(Boom.badRequest('Validation errors:' + JSON.stringify(error)));
+                                } else {
+                                    console.error(error);
+                                    reply(Boom.create(500, 'Internal server error.', error));
+                                }
+                            });
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+
+                        })
+
+                },
+                description: "Create a report store of any report",
+                notes: "Api endpoint that creates report stores",
+                tags: ['api'],
+            }
+        },
+        {
+            method: 'GET',
+            path: '/etl/clob-data/{uuid}',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    let requestParams = request.params['uuid'];
+                    clobResource.getReportStoreClobDataByUuid(requestParams)
+                        .then(function (reportStore) {
+                            if (reportStore === null) {
+                                reply(Boom.notFound('Resource does not exist'));
+                            } else {
+                                reply(reportStore);
+                            }
+                        })
+                        .catch(function (error) {
+                            reply(Boom.create(500, 'Internal server error.', error));
+                        });
+                },
+                description: "Get get report store for a given report",
+                notes: "Api endpoint that returns report store based on the report store id",
+                tags: ['api'],
+            }
+        },
+
     ];
 
     return routes;

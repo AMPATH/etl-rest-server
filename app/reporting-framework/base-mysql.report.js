@@ -6,24 +6,10 @@ import {
 } from 'bluebird';
 import QueryService from '../database-access/query.service';
 import ReportProcessorHelpersService from './report-processor-helpers.service';
+var reportStoreService = require('./report-store-service');
 
 // TODO: Move to data store
-import * as moh_731 from './json-reports/moh-731-bluecard.json';
-import * as main_dataset_aggregate from './json-reports/main-dataset-aggregate.json';
-import * as main_dataset_aggregate_age_disaggregation from './json-reports/main-dataset-aggregate-age-disaggregation';
-import * as main_dataset_aggregate_no_disaggregation from './json-reports/main-dataset-aggregate-no-disaggregation';
-import * as main_dataset_aggregate_age15_disaggregation from './json-reports/main-dataset-aggregate-age15-disaggregation';
-import * as main_dataset_aggregate_age18_disaggregation from './json-reports/main-dataset-aggregate-age18-disaggregation';
-import * as main_dataset_base from './json-reports/main-dataset-base.json';
-import * as main_dataset_base_age15 from './json-reports/main-dataset-base-age15.json';
-import * as main_dataset_base_age18 from './json-reports/main-dataset-base-age18.json';
-import * as regimen_dataset_aggregate from './json-reports/regimen-dataset-aggregate.json';
-import * as regimen_dataset_base from './json-reports/regimen-dataset-base.json';
-import * as retention_dataset_aggregate from './json-reports/retention-dataset-aggregate.json';
-import * as retention_dataset_base from './json-reports/retention-dataset-base.json';
-import * as pep_dataset_aggregate from './json-reports/pep-dataset-aggregate.json';
-import * as pep_dataset_base from './json-reports/pep-dataset-base.json';
-import * as patient_list_template from './json-reports/patient-list-template.json';
+
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -38,7 +24,7 @@ export class BaseMysqlReport {
         const that = this;
         return new Promise((resolve, error) => {
             // fetch reports
-            that.fetchReportSchema(that.reportName)
+            reportStoreService.fetchReportSchema(that.reportName)
                 .then((reportSchemas) => {
                     that.reportSchemas = reportSchemas;
 
@@ -73,75 +59,6 @@ export class BaseMysqlReport {
                 .catch((err) => {
                     error(err);
                 })
-        });
-    }
-
-    fetchReportSchema(reportName, version) {
-        return new Promise((resolve, error) => {
-            switch (reportName) {
-                case 'MOH-731-greencard':
-                    resolve({
-                        main: moh_731
-                    });
-                    break;
-                case 'patient-list-template':
-                    resolve({
-                        main: patient_list_template
-                    });
-                    break;
-                case 'mainDatasetAggregate':
-                    resolve({
-                        main: main_dataset_aggregate,
-                        mainDataSetBase: main_dataset_base
-                    });
-                    break;
-                case 'regimenDataSetAggregate':
-                    resolve({
-                        main: regimen_dataset_aggregate,
-                        regimenDataSetbase: regimen_dataset_base
-                    });
-                    break;
-                case 'retentionDataSetAggregate':
-                    resolve({
-                        main: retention_dataset_aggregate,
-                        retentionDataSetbase: retention_dataset_base
-                    });
-                    break;
-                case 'mainDatasetAggregateAgeDisaggregation':
-                    resolve({
-                        main: main_dataset_aggregate_age_disaggregation,
-                        mainDataSetBase: main_dataset_base
-                    });
-                    break;
-                case 'mainDatasetAggregateNoDisaggregation':
-                    resolve({
-                        main: main_dataset_aggregate_no_disaggregation,
-                        mainDataSetBase: main_dataset_base
-                    });
-                    break;
-                case 'mainDatasetAggregateAge15Disaggregation':
-                    resolve({
-                        main: main_dataset_aggregate_age15_disaggregation,
-                        mainDataSetBaseAge15: main_dataset_base_age15
-                    });
-                    break;
-                case 'mainDatasetAggregateAge18Disaggregation':
-                    resolve({
-                        main: main_dataset_aggregate_age18_disaggregation,
-                        mainDataSetBaseAge18: main_dataset_base_age18
-                    });
-                    break;
-                case 'pepDatasetAggregate':
-                    resolve({
-                        main: pep_dataset_aggregate,
-                        pepDataSetbase: pep_dataset_base
-                    });
-                    break;
-                default:
-                    reject('Unknown report ', reportName);
-                    break;
-            }
-
         });
     }
 
