@@ -27,6 +27,9 @@ import {
     MonthlyScheduleService
 } from './service/monthly-schedule-service';
 import {
+    PatientReferralService
+} from './service/patient-referral.service';
+import {
     PatientStatusChangeTrackerService
 } from './service/patient-status-change-tracker-service';
 import {
@@ -553,123 +556,129 @@ module.exports = function () {
             }
         }
     },
-    {
+      {
         method: 'POST',
-        path: '/javascript-errors',
+        path  : '/javascript-errors',
         config: {
-            handler: function (request, reply) {
-                if (request.payload) {
-                    var logger = new winston.Logger({
-                        transports: [
-                            new winston.transports.File({
-                                level: 'info',
-                                filename: 'client-logs.log',
-                                handleExceptions: true,
-                                json: true,
-                                colorize: false,
-                            }),
-                        ],
-                        exitOnError: false,
-                    });
-                    logger.add(require('winston-daily-rotate-file'), {
-                        filename: path.join(__dirname, 'logs', 'client-logs.log')
-                    });
-                    logger.info(request.payload);
-                }
-
-                reply({
-                    message: 'ok'
-                });
+          handler: function (request, reply) {
+            if (request.payload) {
+              var logger = new winston.Logger({
+                transports : [
+                  new winston.transports.File({
+                    level           : 'info',
+                    filename        : 'client-logs.log',
+                    handleExceptions: true,
+                    json            : true,
+                    colorize        : false,
+                  }),
+                ],
+                exitOnError: false,
+              });
+              logger.add(require('winston-daily-rotate-file'), {
+                filename: path.join(__dirname, 'logs', 'client-logs.log')
+              });
+              logger.info(request.payload);
             }
-
+        
+            reply({
+              message: 'ok'
+            });
+          }
+      
         }
-    }, {
+      }, {
         method: 'GET',
-        path: '/etl/patient/{uuid}',
+        path  : '/etl/patient/{uuid}',
         config: {
-            auth: 'simple',
-            plugins: {
-                'hapiAuthorization': {
-                    role: privileges.canViewPatient
-                }
-            },
-            handler: function (request, reply) {
-                dao.getPatient(request, reply);
+          auth   : 'simple',
+          plugins: {
+            'hapiAuthorization': {
+              role: privileges.canViewPatient
             }
+          },
+          handler: function (request, reply) {
+            dao.getPatient(request, reply);
+          }
         }
-    },
-    {
+      },
+      {
         method: 'GET',
-        path: '/etl/program-visit-configs',
+        path  : '/etl/program-visit-configs',
         config: {
-            auth: 'simple',
-            plugins: {},
-            handler: function (request, reply) {
-                // var requestParams = Object.assign({}, request.query, request.params);
-                reply(patientProgramService.getAllProgramsConfig());
-            },
-            description: 'Get a list of programs ',
-            notes: 'Returns a  list of programs',
-            tags: ['api'],
-            validate: {
-                options: {
-                    allowUnknown: true
-                },
-                params: {
-                    // patientUuid: Joi.string()
-                    //     .required()
-                    //     .description("The patient's uuid(universally unique identifier)."),
-                }
+          auth       : 'simple',
+          plugins    : {},
+          handler    : function (request, reply) {
+            var requestParams = Object.assign({}, request.query);
+            if (!requestParams.patientUuid) {
+              reply(Boom.badImplementation('The patient\'s uuid(universally unique ' +
+                'identifier must be provided as a query param'));
             }
+            patientProgramService.validateEnrollmentOptions(requestParams.patientUuid)
+              .then(function (programConfigs) {
+                reply(programConfigs);
+              }).catch(function (err) {
+              console.log('there is an error', err);
+              reply(Boom.badImplementation(err));
+            });
+          },
+          description: 'Get a list of programs ',
+          notes      : 'Returns a  list of programs',
+          tags       : ['api'],
+          validate   : {
+            options: {
+              allowUnknown: true
+            },
+            params : {}
+          }
         }
-    },
-    {
+      },
+      {
         method: 'GET',
-        path: '/etl/patient/{patientUuid}/program/{programUuid}/enrollment/{enrollmentUuid}',
+        path  : '/etl/patient/{patientUuid}/program/{programUuid}/enrollment/{enrollmentUuid}',
         config: {
-            auth: 'simple',
-            plugins: {
-                'hapiAuthorization': {
-                    role: privileges.canViewPatient
-                }
-            },
-            handler: function (request, reply) {
-                var requestParams = Object.assign({}, request.query, request.params);
-                var patientUuid = requestParams.patientUuid;
-                var programUuid = requestParams.programUuid;
-                var enrollment = requestParams.enrollmentUuid;
-                var locationUuid = requestParams.intendedLocationUuid || '';
-
-                patientProgramService
-                    .getPatientProgramEnrollmentVisits(patientUuid, programUuid, enrollment, locationUuid)
-                    .then(function (programVisits) {
-                        reply(programVisits);
-                    })
-                    .catch(function (error) {
-                        reply(Boom.badImplementation('An internal error occurred'));
-                    })
-            },
-            description: 'Get program config of a patient',
-            notes: 'Returns program config  of a patient',
-            tags: ['api'],
-            validate: {
-                options: {
-                    allowUnknown: true
-                },
-                params: {
-                    patientUuid: Joi.string()
-                        .required()
-                        .description("The patient's uuid(universally unique identifier)."),
-                    programUuid: Joi.string()
-                        .required()
-                        .description("program Uuid (universally unique identifier)."),
-                    enrollmentUuid: Joi.string()
-                        .required()
-                        .description("program enrollment Uuid (universally unique identifier).")
-                }
+          auth       : 'simple',
+          plugins    : {
+            'hapiAuthorization': {
+              role: privileges.canViewPatient
             }
+          },
+          handler    : function (request, reply) {
+            var requestParams = Object.assign({}, request.query, request.params);
+            var patientUuid   = requestParams.patientUuid;
+            var programUuid   = requestParams.programUuid;
+            var enrollment    = requestParams.enrollmentUuid;
+            var locationUuid  = requestParams.intendedLocationUuid || '';
+        
+            patientProgramService
+              .getPatientProgramEnrollmentVisits(patientUuid, programUuid, enrollment, locationUuid)
+              .then(function (programVisits) {
+                reply(programVisits);
+              })
+              .catch(function (error) {
+                reply(Boom.badImplementation('An internal error occurred'));
+              })
+          },
+          description: 'Get program config of a patient',
+          notes      : 'Returns program config  of a patient',
+          tags       : ['api'],
+          validate   : {
+            options: {
+              allowUnknown: true
+            },
+            params : {
+              patientUuid   : Joi.string()
+                .required()
+                .description("The patient's uuid(universally unique identifier)."),
+              programUuid   : Joi.string()
+                .required()
+                .description("program Uuid (universally unique identifier)."),
+              enrollmentUuid: Joi.string()
+                .required()
+                .description("program enrollment Uuid (universally unique identifier).")
+            }
+          }
         }
-    },
+      },
     {
         method: 'GET',
         path: '/etl/patient/{uuid}/clinical-notes',
