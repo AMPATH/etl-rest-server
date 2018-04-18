@@ -868,6 +868,13 @@
       {
         "type": "discharge",
         "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
+        "type": "transferIn",
+        "uuid": "e293229b-4e74-445c-bfd2-602bbe4a91fb",
+        "forms": []
+      },
+      {
+        "type": "referIn",
+        "uuid": "78526af3-ef12-4f53-94de-51c455ef0a88",
         "forms": [
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
@@ -901,19 +908,14 @@
         "forms": []
       },
       {
-        "type": "transferOut",
-        "uuid": "5d488b21-d08e-4e5f-b195-1ea1b5bb9c28",
+        "type": "referOut",
+        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
         "forms": [
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "required":true
           }
         ]
-      },
-      {
-        "type": "referOut",
-        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
-        "forms": []
       }
     ],
     "dataDependencies": [
@@ -1595,6 +1597,22 @@
       {
         "type": "transferOut",
         "uuid": "5d488b21-d08e-4e5f-b195-1ea1b5bb9c28",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+
+        "type": "transferIn",
+        "uuid": "e293229b-4e74-445c-bfd2-602bbe4a91fb",
+        "forms": []
+      },
+      {
+        "type": "referIn",
+        "uuid": "78526af3-ef12-4f53-94de-51c455ef0a88",
         "forms": [
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
