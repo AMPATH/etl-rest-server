@@ -586,7 +586,8 @@ module.exports = function () {
           }
       
         }
-      }, {
+      },
+      {
         method: 'GET',
         path  : '/etl/patient/{uuid}',
         config: {
@@ -679,35 +680,35 @@ module.exports = function () {
           }
         }
       },
-    {
-        method: 'GET',
-        path: '/etl/patient/{uuid}/clinical-notes',
-        config: {
-            auth: 'simple',
-            plugins: {
-                'hapiAuthorization': {
-                    role: privileges.canViewPatient
-                }
-            },
-            handler: function (request, reply) {
-                dao.getClinicalNotes(request, reply);
-            },
-            description: 'Get patient clinical notes',
-            notes: 'Returns a list of notes constructed from several ' +
-                'patient information sources, particularly encounters',
-            tags: ['api'],
-            validate: {
-                options: {
-                    allowUnknown: true
-                },
-                params: {
-                    uuid: Joi.string()
-                        .required()
-                        .description("The patient's uuid(universally unique identifier)."),
-                }
-            }
-        }
-    }, {
+      {
+          method: 'GET',
+          path: '/etl/patient/{uuid}/clinical-notes',
+          config: {
+              auth: 'simple',
+              plugins: {
+                  'hapiAuthorization': {
+                      role: privileges.canViewPatient
+                  }
+              },
+              handler: function (request, reply) {
+                  dao.getClinicalNotes(request, reply);
+              },
+              description: 'Get patient clinical notes',
+              notes: 'Returns a list of notes constructed from several ' +
+                  'patient information sources, particularly encounters',
+              tags: ['api'],
+              validate: {
+                  options: {
+                      allowUnknown: true
+                  },
+                  params: {
+                      uuid: Joi.string()
+                          .required()
+                          .description("The patient's uuid(universally unique identifier)."),
+                  }
+              }
+          }
+      }, {
         method: 'GET',
         path: '/etl/patient/{uuid}/hiv-patient-clinical-summary',
         config: {
@@ -722,7 +723,8 @@ module.exports = function () {
             }
 
         }
-    }, {
+    },
+    {
         method: 'GET',
         path: '/etl/location/{id}/hiv-patient-clinical-summary',
         config: {
@@ -791,7 +793,8 @@ module.exports = function () {
                 }
             }
         }
-    }, {
+    },
+    {
         method: 'GET',
         path: '/etl/patient/{uuid}/hiv-summary',
         config: {
@@ -906,7 +909,8 @@ module.exports = function () {
                 }
             }
         }
-    },
+    }
+    ,
     {
         method: 'GET',
         path: '/etl/clinical-hiv-comparative-overview',
@@ -946,7 +950,8 @@ module.exports = function () {
             tags: ['api'],
             validate: {}
         }
-    },
+    }
+    ,
         {
             method: 'POST',
             path: '/etl/patient-referral/{patientReferralId}',
@@ -996,7 +1001,8 @@ module.exports = function () {
                 }
             }
         }
-    },
+    }
+    ,
     {
         method: 'POST',
         path: '/etl/patient-referral',
@@ -1021,7 +1027,8 @@ module.exports = function () {
             notes: "Api endpoint that posts patient referrals",
             tags: ['api'],
         }
-    },
+    }
+    ,
     {
         method: 'GET',
         path: '/etl/clinical-patient-care-status-overview',
@@ -1461,7 +1468,8 @@ module.exports = function () {
                 }
             }
         }
-    }, {
+    }
+    , {
         method: 'GET',
         path: '/etl/location/{uuid}/monthly-visits',
         config: {
@@ -1527,7 +1535,8 @@ module.exports = function () {
                 }
             }
         }
-    }, {
+    }
+    , {
         method: 'OPTIONS',
         path: '/{param*}',
         handler: function (request, reply) {
@@ -1592,7 +1601,8 @@ module.exports = function () {
                 }
             }
         }
-    }, {
+    }
+    , {
         method: 'GET',
         path: '/etl/location/{location}/patient/creation/statistics',
         config: {
@@ -1726,7 +1736,8 @@ module.exports = function () {
             }
 
         }
-    },
+    }
+    ,
     {
         method: 'GET',
         path: '/etl/MOH-731-report',
@@ -1957,7 +1968,8 @@ module.exports = function () {
                 }
             }
         }
-    },
+    }
+    ,
     {
         method: 'GET',
         path: '/etl/patient-status-change-tracking/patient-list',
@@ -2041,7 +2053,7 @@ module.exports = function () {
             notes: "Api endpoint that returns cohort(s) based on the user uuid",
             tags: ['api'],
         }
-    },
+    }    ,
     {
         method: 'GET',
         path: '/etl/cohort-user/{cohortUserId}',
@@ -2135,336 +2147,292 @@ module.exports = function () {
             tags: ['api'],
         }
        },
-        {
-            method: 'GET',
-            path: '/etl/patient-register-report',
-            config: {
-                plugins: {
-                    'hapiAuthorization': {
-                        role: privileges.canViewClinicDashBoard
-                    },
-                    'openmrsLocationAuthorizer': {
-                        locationParameter: [{
-                            type: 'params', //can be in either query or params so you have to specify
-                            name: 'uuid' //name of the location parameter
-                        }]
-                    }
-                },
-                handler: function (request, reply) {
-                    if (request.query.locationUuids) {
-                        preRequest.resolveLocationIdsToLocationUuids(request,
-                            function () {
-                                let requestParams = Object.assign({}, request.query, request.params);
-                                let reportParams = etlHelpers.getReportParams(request.query.reportName, ['startDate', 'endDate', 'indicators', 'locationUuids', 'groupBy',
-                                    'limit', 'startAge', 'endAge', 'order', 'gender', 'countBy'
-                                ], requestParams);
+       {
+           method: 'GET',
+           path: '/etl/patient-register-report',
+           config: {
+               plugins: {
+                   'hapiAuthorization': {
+                       role: privileges.canViewClinicDashBoard
+                   },
+                   'openmrsLocationAuthorizer': {
+                       locationParameter: [{
+                           type: 'params', //can be in either query or params so you have to specify
+                           name: 'uuid' //name of the location parameter
+                       }]
+                   }
+               },
+               handler: function (request, reply) {
+                   if (request.query.locationUuids) {
+                       preRequest.resolveLocationIdsToLocationUuids(request,
+                           function () {
+                               let requestParams = Object.assign({}, request.query, request.params);
+                               let reportParams = etlHelpers.getReportParams(request.query.reportName, ['startDate', 'endDate', 'indicators', 'locationUuids', 'groupBy',
+                                   'limit', 'startAge', 'endAge', 'order', 'gender', 'countBy'
+                               ], requestParams);
 
-                                let service = new PatientRegisterReportService();
-                                service.getAggregateReport(reportParams).then((result) => {
-                                    reply(result);
-                                }).catch((error) => {
-                                    reply(error);
-                                });
-                            });
-                    }
-                },
-                description: "Get the Patient Register report",
-                notes: "Api endpoint that returns Patient Register report.",
-                tags: ['api'],
-            }
-        },
-        {
-            method: 'GET',
-            path: '/etl/patient-referrals',
-            config: {
-                auth: 'simple',
-                plugins: {
-                    'openmrsLocationAuthorizer': {
-                        locationParameter: [{
-                            type: 'query', //can be in either query or params so you have to specify
-                            name: 'locationUuids' //name of the location parameter
-                        }],
-                        aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
-                            {
-                                type: 'query', //can be in either query or params so you have to specify
-                                name: 'reportName', //name of the parameter
-                                value: 'patient-referral-report' //parameter value
-                            }
-                        ]
-                    }
-                },
-                handler: function (request, reply) {
-                    //security check
-                    request.query.reportName = 'patient-referral-report';
-                    if (!authorizer.hasReportAccess(request.query.reportName)) {
-                        return reply(Boom.forbidden('Unauthorized'));
-                    }
-                    preRequest.resolveLocationIdsToLocationUuids(request,
-                        function () {
-                            let requestParams = Object.assign({}, request.query, request.params);
-                            let reportParams = etlHelpers.getReportParams('patient-referral-report', ['startDate', 'endDate', 'locationUuids',
-                                'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids','conceptUuids','providerUuids'], requestParams);
+                               let service = new PatientRegisterReportService();
+                               service.getAggregateReport(reportParams).then((result) => {
+                                   reply(result);
+                               }).catch((error) => {
+                                   reply(error);
+                               });
+                           });
+                   }
+               },
+               description: "Get the Patient Register report",
+               notes: "Api endpoint that returns Patient Register report.",
+               tags: ['api'],
+           }
+       },
+       {
+           method: 'GET',
+           path: '/etl/patient-referrals',
+           config: {
+               auth: 'simple',
+               plugins: {
+                   'openmrsLocationAuthorizer': {
+                       locationParameter: [{
+                           type: 'query', //can be in either query or params so you have to specify
+                           name: 'locationUuids' //name of the location parameter
+                       }],
+                       aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
+                           {
+                               type: 'query', //can be in either query or params so you have to specify
+                               name: 'reportName', //name of the parameter
+                               value: 'patient-referral-report' //parameter value
+                           }
+                       ]
+                   }
+               },
+               handler: function (request, reply) {
+                   //security check
+                   request.query.reportName = 'patient-referral-report';
+                   if (!authorizer.hasReportAccess(request.query.reportName)) {
+                       return reply(Boom.forbidden('Unauthorized'));
+                   }
+                   preRequest.resolveLocationIdsToLocationUuids(request,
+                       function () {
+                           let requestParams = Object.assign({}, request.query, request.params);
+                           let reportParams = etlHelpers.getReportParams('patient-referral-report', ['startDate', 'endDate', 'locationUuids',
+                               'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids','conceptUuids','providerUuids'], requestParams);
 
-                            let service = new PatientReferralService();
-                            service.getAggregateReport(reportParams).then((result) => {
-                                reply(result);
-                            }).catch((error) => {
-                                reply(error);
-                            });
-                        });
-                },
-                description: "Get patient referral for selected clinic",
-                notes: "Returns patient referral for the selected clinic(s),start date, end date",
-                tags: ['api'],
-                validate: {
-                    query: {
-                        locationUuids: Joi.string()
-                            .optional()
-                            .description("A list of comma separated location uuids"),
-                        startDate: Joi.string()
-                            .optional()
-                            .description("The start date to filter by"),
-                        endDate: Joi.string()
-                            .optional()
-                            .description("The end date to filter by"),
-                        gender: Joi.string()
-                            .optional()
-                            .description("The gender to filter by"),
-                        startAge: Joi.string()
-                            .optional()
-                            .description("The start age to filter by"),
-                        endAge: Joi.string()
-                            .optional()
-                            .description("The end age to filter by"),
-                        programUuids: Joi.string()
-                            .optional()
-                            .description("The program to filter by"),
-                        stateUuids: Joi.string()
-                            .optional()
-                            .description("The stateUuids to filter by"),
-                        conceptUuids: Joi.string()
-                            .optional()
-                            .description("The conceptUuids to filter by"),
-                        providerUuids: Joi.string()
-                            .optional()
-                            .description("A list of comma separated provider uuids")
+                           let service = new PatientReferralService();
+                           service.getAggregateReport(reportParams).then((result) => {
+                               reply(result);
+                           }).catch((error) => {
+                               reply(error);
+                           });
+                       });
+               },
+               description: "Get patient referral for selected clinic",
+               notes: "Returns patient referral for the selected clinic(s),start date, end date",
+               tags: ['api'],
+               validate: {
+                   query: {
+                       locationUuids: Joi.string()
+                           .optional()
+                           .description("A list of comma separated location uuids"),
+                       startDate: Joi.string()
+                           .optional()
+                           .description("The start date to filter by"),
+                       endDate: Joi.string()
+                           .optional()
+                           .description("The end date to filter by"),
+                       gender: Joi.string()
+                           .optional()
+                           .description("The gender to filter by"),
+                       startAge: Joi.string()
+                           .optional()
+                           .description("The start age to filter by"),
+                       endAge: Joi.string()
+                           .optional()
+                           .description("The end age to filter by"),
+                       programUuids: Joi.string()
+                           .optional()
+                           .description("The program to filter by"),
+                       stateUuids: Joi.string()
+                           .optional()
+                           .description("The stateUuids to filter by"),
+                       conceptUuids: Joi.string()
+                           .optional()
+                           .description("The conceptUuids to filter by"),
+                       providerUuids: Joi.string()
+                           .optional()
+                           .description("A list of comma separated provider uuids")
 
-                    }
-                }
-            }
-        },
-        {
-            method: 'GET',
-            path: '/etl/referral-patient-list',
-            config: {
-                auth: 'simple',
-                plugins: {
-                    'hapiAuthorization': {
-                        role: privileges.canViewPatient
-                    },
-                    'openmrsLocationAuthorizer': {
-                        locationParameter: [{
-                            type: 'query', //can be in either query or params so you have to specify
-                            name: 'locationUuids' //name of the location parameter
-                        }]
-                    }
-                },
-                handler: function (request, reply) {
+                   }
+               }
+           }
+       }        ,
+       {
+           method: 'GET',
+           path: '/etl/referral-patient-list',
+           config: {
+               auth: 'simple',
+               plugins: {
+                   'hapiAuthorization': {
+                       role: privileges.canViewPatient
+                   },
+                   'openmrsLocationAuthorizer': {
+                       locationParameter: [{
+                           type: 'query', //can be in either query or params so you have to specify
+                           name: 'locationUuids' //name of the location parameter
+                       }]
+                   }
+               },
+               handler: function (request, reply) {
 
-                    request.query.reportName = 'referral-patient-list';
-                    let requestParams = Object.assign({}, request.query, request.params);
-                    let reportParams = etlHelpers.getReportParams('referral-patient-list', ['startDate', 'endDate', 'locationUuids', 'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids', 'providerUuids'], requestParams);
+                   request.query.reportName = 'referral-patient-list';
+                   let requestParams = Object.assign({}, request.query, request.params);
+                   let reportParams = etlHelpers.getReportParams('referral-patient-list', ['startDate', 'endDate', 'locationUuids', 'gender', 'startAge', 'endAge', 'programUuids', 'stateUuids', 'providerUuids'], requestParams);
 
-                   // let requestParams = Object.assign({}, request.query, request.params);
-                    let service = new PatientReferralService();
-                    service.getPatientListReport(reportParams).then((result) => {
-                        reply(result);
-                    }).catch((error) => {
-                        reply(error);
-                    });
-                },
-                description: "Get patient referral patient list for selected clinic",
-                notes: "Returns patient referral patient list for the selected clinic,start date, end date",
-                tags: ['api'],
-                validate: {
-                    query: {
-                        locationUuids: Joi.string()
-                            .optional()
-                            .description("A list of comma separated location uuids"),
-                        startDate: Joi.string()
-                            .required()
-                            .description("The start date to filter by"),
-                        endDate: Joi.string()
-                            .required()
-                            .description("The end date to filter by"),
-                        startIndex: Joi.number()
-                            .optional()
-                            .description("The startIndex to control pagination"),
-                        limit: Joi.number()
-                            .required()
-                            .description("The offset to control pagination"),
-                        startAge: Joi.string()
-                            .optional()
-                            .description("The start age to filter by"),
-                        endAge: Joi.string()
-                            .optional()
-                            .description("The end age to filter by"),
-                        gender: Joi.string()
-                            .optional()
-                            .description("The gender to filter by"),
-                        programUuids: Joi.string()
-                            .optional()
-                            .description("The program to filter by"),
-                        stateUuids: Joi.string()
-                            .optional()
-                            .description("The stateUuids to filter by"),
-                      providerUuids: Joi.string()
-                        .optional()
-                        .description("The providerUuids to filter by")
-                    }
-                }
-            }
-        },
-        {
-            method: 'GET',
-            path: '/etl/patient-referral-details/{enrollmentUuid}',
-            config: {
-                auth: 'simple',
-                plugins: {},
-                handler: function (request, reply) {
-                    patientReferralDao.getPatientReferralByEnrollmentUuid(request.params['enrollmentUuid'])
-                        .then(function (referralLocation) {
-                            if (referralLocation === null) {
-                                reply(Boom.notFound('Resource does not exist'));
-                            } else {
-                                reply(referralLocation);
-                            }
-                        })
-                        .catch(function (error) {
-                            reply(Boom.create(500, 'Internal server error.', error));
-                        });
-                },
-                description: "Get patient referral details by program enrollment uuid",
-                notes: "Api endpoint that returns additional patient referral details by program enrollement uuid",
-                tags: ['api'],
-            }
-        },
-        {
-            method: 'GET',
-            path: '/etl/hiv-summary-indicators',
-            config: {
-                auth: 'simple',
-                plugins: {
-                    'openmrsLocationAuthorizer': {
-                        locationParameter: [{
-                            type: 'query', //can be in either query or params so you have to specify
-                            name: 'locationUuids' //name of the location parameter
-                        }],
-                        aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
-                            {
-                                type: 'query', //can be in either query or params so you have to specify
-                                name: 'reportName', //name of the parameter
-                                value: 'hiv-summary-report' //parameter value
-                            }
-                        ]
-                    }
-                },
-                handler: function (request, reply) {
-                    //security check
-                    request.query.reportName = 'hiv-summary-report';
-                    if (!authorizer.hasReportAccess(request.query.reportName)) {
-                        return reply(Boom.forbidden('Unauthorized'));
-                    }
-                    preRequest.resolveLocationIdsToLocationUuids(request,
-                        function () {
-                            let requestParams = Object.assign({}, request.query, request.params);
-                            let reportParams = etlHelpers.getReportParams(request.query.reportName, ['startDate', 'endDate', 'indicators', 'locationUuids', 'groupBy',
-                                'limit', 'startAge', 'endAge', 'order', 'gender', 'countBy'
-                            ], requestParams);
-
-                            let service = new PatientRegisterReportService();
-                            service.getAggregateReport(reportParams).then((result) => {
-                                reply(result);
-                            }).catch((error) => {
-                                reply(error);
-                            });
-                        });
-                }
-            },
-            description: "Get the Patient Register report",
-            notes: "Api endpoint that returns Patient Register report.",
-            tags: ['api'],
-    },
-    {
-        method: 'GET',
-        path: '/etl/hiv-summary-indicators',
-        config: {
-            auth: 'simple',
-            plugins: {
-                'openmrsLocationAuthorizer': {
-                    locationParameter: [{
-                        type: 'query', //can be in either query or params so you have to specify
-                        name: 'locationUuids' //name of the location parameter
-                    }],
-                    aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
-                        {
-                            type: 'query', //can be in either query or params so you have to specify
-                            name: 'reportName', //name of the parameter
-                            value: 'hiv-summary-report' //parameter value
-                        }
-                    ]
-                }
-            },
-            handler: function (request, reply) {
-                //security check
-                request.query.reportName = 'hiv-summary-report';
-                if (!authorizer.hasReportAccess(request.query.reportName)) {
-                    return reply(Boom.forbidden('Unauthorized'));
-                }
-                preRequest.resolveLocationIdsToLocationUuids(request,
-                    function () {
-                        let requestParams = Object.assign({}, request.query, request.params);
-                        let reportParams = etlHelpers.getReportParams('hiv-summary-report', ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], requestParams);
-
-                        let service = new HivSummaryIndicatorsService();
-                        service.getAggregateReport(reportParams).then((result) => {
-                            reply(result);
-                        }).catch((error) => {
-                            reply(error);
-                        });
-                    });
-            },
-            description: "Get hiv summary indicators for selected clinic",
-            notes: "Returns hiv summary indicators for the selected clinic(s),start date, end date",
-            tags: ['api'],
-            validate: {
-                query: {
-                    indicators: Joi.string()
-                        .required()
-                        .description("A list of comma separated indicators"),
-                    locationUuids: Joi.string()
-                        .required()
-                        .description("A list of comma separated location uuids"),
-                    startDate: Joi.string()
-                        .required()
-                        .description("The start date to filter by"),
-                    endDate: Joi.string()
-                        .required()
-                        .description("The end date to filter by"),
-                    gender: Joi.string()
-                        .optional()
-                        .description("The gender to filter by"),
-                    startAge: Joi.string()
-                        .optional()
-                        .description("The start age to filter by"),
-                    endAge: Joi.string()
-                        .optional()
-                        .description("The end age to filter by")
-
-                }
-            }
-        }
-    },
+                  // let requestParams = Object.assign({}, request.query, request.params);
+                   let service = new PatientReferralService();
+                   service.getPatientListReport(reportParams).then((result) => {
+                       reply(result);
+                   }).catch((error) => {
+                       reply(error);
+                   });
+               },
+               description: "Get patient referral patient list for selected clinic",
+               notes: "Returns patient referral patient list for the selected clinic,start date, end date",
+               tags: ['api'],
+               validate: {
+                   query: {
+                       locationUuids: Joi.string()
+                           .optional()
+                           .description("A list of comma separated location uuids"),
+                       startDate: Joi.string()
+                           .required()
+                           .description("The start date to filter by"),
+                       endDate: Joi.string()
+                           .required()
+                           .description("The end date to filter by"),
+                       startIndex: Joi.number()
+                           .optional()
+                           .description("The startIndex to control pagination"),
+                       limit: Joi.number()
+                           .required()
+                           .description("The offset to control pagination"),
+                       startAge: Joi.string()
+                           .optional()
+                           .description("The start age to filter by"),
+                       endAge: Joi.string()
+                           .optional()
+                           .description("The end age to filter by"),
+                       gender: Joi.string()
+                           .optional()
+                           .description("The gender to filter by"),
+                       programUuids: Joi.string()
+                           .optional()
+                           .description("The program to filter by"),
+                       stateUuids: Joi.string()
+                           .optional()
+                           .description("The stateUuids to filter by"),
+                     providerUuids: Joi.string()
+                       .optional()
+                       .description("The providerUuids to filter by")
+                   }
+               }
+           }
+       },
+       {
+           method: 'GET',
+           path: '/etl/patient-referral-details/{enrollmentUuid}',
+           config: {
+               auth: 'simple',
+               plugins: {},
+               handler: function (request, reply) {
+                   patientReferralDao.getPatientReferralByEnrollmentUuid(request.params['enrollmentUuid'])
+                       .then(function (referralLocation) {
+                           if (referralLocation === null) {
+                               reply(Boom.notFound('Resource does not exist'));
+                           } else {
+                               reply(referralLocation);
+                           }
+                       })
+                       .catch(function (error) {
+                           reply(Boom.create(500, 'Internal server error.', error));
+                       });
+               },
+               description: "Get patient referral details by program enrollment uuid",
+               notes: "Api endpoint that returns additional patient referral details by program enrollement uuid",
+               tags: ['api'],
+           }
+       }
+       ,
+       {
+           method: 'GET',
+           path: '/etl/hiv-summary-indicators',
+           config: {
+               auth: 'simple',
+               plugins: {
+                   'openmrsLocationAuthorizer': {
+                       locationParameter: [{
+                           type: 'query', //can be in either query or params so you have to specify
+                           name: 'locationUuids' //name of the location parameter
+                       }],
+                       aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
+                           {
+                               type: 'query', //can be in either query or params so you have to specify
+                               name: 'reportName', //name of the parameter
+                               value: 'hiv-summary-report' //parameter value
+                           }
+                       ]
+                   }
+               },
+               handler: function (request, reply) {
+                   //security check
+                   request.query.reportName = 'hiv-summary-report';
+                   if (!authorizer.hasReportAccess(request.query.reportName)) {
+                       return reply(Boom.forbidden('Unauthorized'));
+                   }
+                   preRequest.resolveLocationIdsToLocationUuids(request,
+                       function () {
+                           let requestParams = Object.assign({}, request.query, request.params);
+                           let reportParams = etlHelpers.getReportParams('hiv-summary-report', ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], requestParams);
+   
+                           let service = new HivSummaryIndicatorsService();
+                           service.getAggregateReport(reportParams).then((result) => {
+                               reply(result);
+                           }).catch((error) => {
+                               reply(error);
+                           });
+                       });
+               },
+               description: "Get hiv summary indicators for selected clinic",
+               notes: "Returns hiv summary indicators for the selected clinic(s),start date, end date",
+               tags: ['api'],
+               validate: {
+                   query: {
+                       indicators: Joi.string()
+                           .required()
+                           .description("A list of comma separated indicators"),
+                       locationUuids: Joi.string()
+                           .required()
+                           .description("A list of comma separated location uuids"),
+                       startDate: Joi.string()
+                           .required()
+                           .description("The start date to filter by"),
+                       endDate: Joi.string()
+                           .required()
+                           .description("The end date to filter by"),
+                       gender: Joi.string()
+                           .optional()
+                           .description("The gender to filter by"),
+                       startAge: Joi.string()
+                           .optional()
+                           .description("The start age to filter by"),
+                       endAge: Joi.string()
+                           .optional()
+                           .description("The end age to filter by")
+   
+                   }
+               }
+           }
+       }
+       ,
     {
         method: 'GET',
         path: '/etl/hiv-summary-indicators/patient-list',
@@ -2527,7 +2495,7 @@ module.exports = function () {
                 }
             }
         }
-    },
+    }   ,
     {
         method: 'GET',
         path: '/etl/hiv-summary-monthly-indicators',
@@ -2742,7 +2710,7 @@ module.exports = function () {
                 }
             }
         }
-    }, {
+    } , {
         method: 'GET',
         path: '/etl/data-entry-statistics/{sub}',
         config: {
@@ -2810,7 +2778,8 @@ module.exports = function () {
                 }
             }
         }
-    }, {
+    } 
+    , {
         /**
          endpoint  to  get  Reports Indicators
          @todo Rename  to get-report-indicators by  report  name
@@ -2847,7 +2816,8 @@ module.exports = function () {
                 }
             }
         }
-    }, {
+    }
+    , {
 
 
         method: 'GET',
@@ -2879,7 +2849,8 @@ module.exports = function () {
             }
 
         }
-    }, {
+    }
+    , {
         method: 'POST',
         path: '/etl/compare-patient-lists',
         config: {
@@ -3382,7 +3353,8 @@ module.exports = function () {
                 params: {}
             }
         }
-    },
+    }
+    ,
     {
         method: 'GET',
         path: '/etl/departments-programs-config',
