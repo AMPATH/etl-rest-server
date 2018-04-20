@@ -18,6 +18,8 @@ var Sync = {
 
   start: function () {
     console.log('Starting EID sync');
+      Sync.sendMail('Starting EID sync',
+          'EID syn started', 'ampath-developers@ampath.or.ke');
     if (!config.eidSyncCredentials) {
       console.log('openmrs sync user credentials should be provided');
       process.exit(1);
@@ -72,12 +74,16 @@ var Sync = {
 
           Sync.sync(data)
             .then(function () {
+              Sync.sendMail('Success',
+                  'syncing record is successful', 'ampath-developers@ampath.or.ke');
 
               return Sync.deleteProcessed(data);
             })
             .then(function (deleted) {
 
               Sync.process();
+              Sync.sendMail('Success',
+                  'syncing record is successful', 'ampath-developers@ampath.or.ke');
             })
             .catch(function (err) {
 
@@ -159,6 +165,8 @@ var Sync = {
             });
         } else {
           console.log('syncing single record done. ' + patientUuId);
+            Sync.sendMail('Success',
+                'syncing single record is successful', 'ampath-developers@ampath.or.ke');
           resolve('str');
         }
 
