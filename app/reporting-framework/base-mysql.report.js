@@ -27,6 +27,7 @@ import * as retention_dataset_base from './json-reports/retention-dataset-base.j
 import * as pep_dataset_aggregate from './json-reports/pep-dataset-aggregate.json';
 import * as pep_dataset_base from './json-reports/pep-dataset-base.json';
 import * as patient_list_template from './json-reports/patient-list-template.json';
+import * as patient_daily_care_status from './json-reports/patient-daily-care-status.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -49,7 +50,7 @@ export class BaseMysqlReport {
                     that.generateReportQuery(that.reportSchemas, that.params)
                         .then((sqlQuery) => {
                             that.reportQuery = sqlQuery;
-
+                            
                             // run query
                             that.executeReportQuery(that.reportQuery)
                                 .then((result) => {
@@ -149,6 +150,11 @@ export class BaseMysqlReport {
                     resolve({
                         main: pep_dataset_aggregate,
                         pepDataSetbase: pep_dataset_base
+                    });
+                    break;
+                case 'patientDailyCareStatus':
+                    resolve({
+                        main: patient_daily_care_status
                     });
                     break;
                 default:

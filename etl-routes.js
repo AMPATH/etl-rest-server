@@ -73,7 +73,9 @@ import {
 import {
     Moh731Report
 } from './app/reporting-framework/hiv/moh-731.report'
-
+import {
+    BaseMysqlReport
+} from './app/reporting-framework/base-mysql.report';
 module.exports = function () {
 
     var routes = [{
@@ -1370,9 +1372,12 @@ module.exports = function () {
                 let requestParams = Object.assign({}, request.query, request.params);
                 let reportParams = etlHelpers.getReportParams('patient-daily-care-status', ['referenceDate', 'patient_uuid'],
                     requestParams);
-                dao.runReport(reportParams).then((result) => {
-                    reply(result);
-                }).catch((error) => {
+                    let report = new BaseMysqlReport('patientDailyCareStatus',reportParams.requestParams);
+                    report.generateReport().then((results) => {
+                        results.result=results.results.results;
+                        delete results['results'];
+                        reply(results);
+                    }).catch((error) => {
                     reply(error);
                 });
             },
