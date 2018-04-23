@@ -73,6 +73,9 @@ import {
 import {
     Moh731Report
 } from './app/reporting-framework/hiv/moh-731.report'
+import {
+    BaseMysqlReport
+} from './app/reporting-framework/base-mysql.report'
 
 module.exports = function () {
 
@@ -455,12 +458,14 @@ module.exports = function () {
                             request.query.groupBy = 'groupByPerson,groupByd';
                             let compineRequestParams = Object.assign({}, request.query, request.params);
                             let reportParams = etlHelpers.getReportParams('clinic-lab-orders-report', ['dateActivated', 'locations', 'groupBy'], compineRequestParams);
-
-                            dao.runReport(reportParams).then((result) => {
-                                _.each(result.result, (row) => {
+                            let report = new BaseMysqlReport('clinicLabOrdersReport',reportParams.requestParams);
+                            report.generateReport().then((results) => {
+                                _.each(results.results.results, (row) => {
                                     row.order_type = etlHelpers.getTestsOrderedNames(row.order_type);
                                 });
-                                reply(result);
+                                results.result=results.results.results;
+                                delete results['results'];
+                                reply(results);
                             }).catch((error) => {
                                 reply(error);
                             })
