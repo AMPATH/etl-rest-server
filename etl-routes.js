@@ -856,6 +856,18 @@ module.exports = function () {
         },
         {
             method: 'POST',
+
+            path: '/etl/forms/error',
+            config: {
+                auth: 'simple',
+                handler: function (request, reply) {
+
+                    dao.logError(request, reply);
+                }
+            }
+        },
+        {
+            method: 'POST',
             path: '/javascript-errors',
             config: {
                 handler: function (request, reply) {
