@@ -6,6 +6,82 @@
       "enrollment",
       "hivLastTenClinicalEncounters"
     ],
+    "enrollmentOptions": {
+      "allowMultipleEnrollment": false,
+      "requiredProgramEnrollment": []
+    },
+    "stateChangeForms": [
+      {
+        "type": "inCare",
+        "uuid": "e517d6e2-6236-42db-9f71-0b6270c6cfa9",
+        "forms": []
+      },
+      {
+        "type": "switchProgram",
+        "uuid": "a68566e2-67f9-49e8-b81e-2e5af7ffa9ac",
+        "forms": []
+      },
+      {
+        "type": "discharge",
+        "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referred",
+        "uuid": "98d8131e-973d-4082-9115-2a848daee5a2",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referredBack",
+        "uuid": "631ebf7a-e000-4220-9038-e70079ceafca",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "pendingTransfer",
+        "uuid": "56003eb5-d300-457d-badb-371e030e2580",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "transferOut",
+        "uuid": "5d488b21-d08e-4e5f-b195-1ea1b5bb9c28",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referOut",
+        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      }
+    ],
     "incompatibleWith": [
       "781d897a-1359-11df-a1f1-0026b9348838",
       "96047aaf-7ab3-45e9-be6a-b61810fe617d",
@@ -23,6 +99,18 @@
       "NON-AMPATH": ["cbe2d31d-2201-44ce-b52e-fbd5dc7cff33"]
     },
     "visitTypes": [
+      {
+        "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
+        "name": "Referral Test Visit",
+        "allowedIf": "inCareUuid === 'e517d6e2-6236-42db-9f71-0b6270c6cfa9'",
+        "message": "Patient must be `in care` state",
+        "encounterTypes": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          }
+        ]
+      },
       {
         "uuid": "33d13ffb-5f0e-427e-ab80-637491fb6526",
         "name": "Adult HIV Initial Visit ",
@@ -617,6 +705,219 @@
   },
   "781d8768-1359-11df-a1f1-0026b9348838": {
     "name": "OVC PROGRAM",
+    "enrollmentOptions": {
+      "allowMultipleEnrollment": true,
+      "requiredProgramEnrollment": []
+    },
+    "stateChangeForms": [
+      {
+        "type": "inCare",
+        "uuid": "e517d6e2-6236-42db-9f71-0b6270c6cfa9",
+        "forms": []
+      },
+      {
+        "type": "switchProgram",
+        "uuid": "a68566e2-67f9-49e8-b81e-2e5af7ffa9ac",
+        "forms": []
+      },
+      {
+        "type": "discharge",
+        "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referred",
+        "uuid": "98d8131e-973d-4082-9115-2a848daee5a2",
+        "forms": [
+          {
+            "uuid": "4587a5ab-0aad-4312-9eaa-b57151599729",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referredBack",
+        "uuid": "631ebf7a-e000-4220-9038-e70079ceafca",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "pendingTransfer",
+        "uuid": "56003eb5-d300-457d-badb-371e030e2580",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "transferOut",
+        "uuid": "5d488b21-d08e-4e5f-b195-1ea1b5bb9c28",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referOut",
+        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
+        "forms": [
+          {
+            "uuid": "4587a5ab-0aad-4312-9eaa-b57151599729",
+            "required":true
+          }
+        ]
+      }
+    ],
+    "dataDependencies": [
+      "patient",
+      "enrollment",
+      "hivLastTenClinicalEncounters"
+    ],
+    "incompatibleWith": [],
+    "visitTypes": [
+      {
+        "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
+        "name": "OVC Referral Visit",
+        "allowedIf": "inCareUuid === 'e517d6e2-6236-42db-9f71-0b6270c6cfa9'",
+        "message": "Patient must be `in care` state",
+        "encounterTypes": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          },
+          {
+            "uuid": "df554398-1350-11df-a1f1-0026b9348838",
+            "display": "ECSTABLE"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          }
+        ]
+      },
+      {
+        "uuid": "e2c37c46-3ee9-4cff-9af6-aa5c41fb30da",
+        "name": "OVC Visit ",
+        "encounterTypes": [
+          {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          },
+          {
+            "uuid": "df554398-1350-11df-a1f1-0026b9348838",
+            "display": "ECSTABLE"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+            "display": "FAMILYSTATUS"
+          }
+        ]
+      }
+    ]
+  },
+  "781d8768-1359-11df-a1f1-0026b9348837": {
+    "name": "DERMATOLOGY PROGRAM",
+    "enrollmentOptions": {
+      "allowMultipleEnrollment": false,
+      "requiredProgramEnrollment": []
+    },
+    "stateChangeForms": [
+      {
+        "type": "inCare",
+        "uuid": "e517d6e2-6236-42db-9f71-0b6270c6cfa9",
+        "forms": []
+      },
+      {
+        "type": "switchProgram",
+        "uuid": "a68566e2-67f9-49e8-b81e-2e5af7ffa9ac",
+        "forms": []
+      },
+      {
+        "type": "discharge",
+        "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
+        "type": "transferIn",
+        "uuid": "e293229b-4e74-445c-bfd2-602bbe4a91fb",
+        "forms": []
+      },
+      {
+        "type": "referIn",
+        "uuid": "78526af3-ef12-4f53-94de-51c455ef0a88",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referred",
+        "uuid": "98d8131e-973d-4082-9115-2a848daee5a2",
+        "forms": [
+          {
+            "uuid": "4587a5ab-0aad-4312-9eaa-b57151599729",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referredBack",
+        "uuid": "631ebf7a-e000-4220-9038-e70079ceafca",
+        "forms": [
+          {
+            "uuid": "4587a5ab-0aad-4312-9eaa-b57151599729",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "pendingTransfer",
+        "uuid": "56003eb5-d300-457d-badb-371e030e2580",
+        "forms": []
+      },
+      {
+        "type": "referOut",
+        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      }
+    ],
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -1037,10 +1338,11 @@
   "cad71628-692c-4d8f-8dac-b2e20bece27f": {
     "name": "CERVICAL CANCER SCREENING PROGRAM",
     "dataDependencies": [
-      "patient",
-      "enrollment",
-      "hivLastTenClinicalEncounters"
+      "patient"
     ],
+    "enrollmentOptions": {
+      "enrollIf": "gender != 'M'"
+    },
     "incompatibleWith": [],
     "visitTypes": [
       {
@@ -1078,10 +1380,11 @@
   "43b42170-b3ce-4e03-9390-6bd78384ac06": {
     "name": "GYN-ONCOLOGY TREATMENT PROGRAM",
     "dataDependencies": [
-      "patient",
-      "enrollment",
-      "hivLastTenClinicalEncounters"
+      "patient"
     ],
+    "enrollmentOptions": {
+      "enrollIf": "gender != 'M'"
+    },
     "incompatibleWith": [],
     "visitTypes": [
       {
@@ -1271,6 +1574,98 @@
   },
   "781d8880-1359-11df-a1f1-0026b9348838": {
     "name": "EXPRESS CARE PROGRAM",
+    "enrollmentOptions": {
+      "allowMultipleEnrollment": true,
+      "requiredProgramEnrollment": []
+    },
+    "stateChangeForms": [
+      {
+        "type": "inCare",
+        "uuid": "e517d6e2-6236-42db-9f71-0b6270c6cfa9",
+        "forms": []
+      },
+      {
+        "type": "switchProgram",
+        "uuid": "a68566e2-67f9-49e8-b81e-2e5af7ffa9ac",
+        "forms": []
+      },
+      {
+        "type": "discharge",
+        "uuid": "4e6d4fd4-d923-439e-9b6e-6baaffd20bfa",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referred",
+        "uuid": "98d8131e-973d-4082-9115-2a848daee5a2",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referredBack",
+        "uuid": "631ebf7a-e000-4220-9038-e70079ceafca",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "pendingTransfer",
+        "uuid": "56003eb5-d300-457d-badb-371e030e2580",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "transferOut",
+        "uuid": "5d488b21-d08e-4e5f-b195-1ea1b5bb9c28",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+
+        "type": "transferIn",
+        "uuid": "e293229b-4e74-445c-bfd2-602bbe4a91fb",
+        "forms": []
+      },
+      {
+        "type": "referIn",
+        "uuid": "78526af3-ef12-4f53-94de-51c455ef0a88",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      },
+      {
+        "type": "referOut",
+        "uuid": "9872d3e8-0a31-459d-b160-1a393a055894",
+        "forms": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "required":true
+          }
+        ]
+      }
+    ],
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -1278,7 +1673,7 @@
     ],
     "transferCare": {
       "AMPATH": ["cbe2d31d-2201-44ce-b52e-fbd5dc7cff33"],
-      "DISCHARGE": ["9765992c-6279-46cc-915b-452a73e7dab5"],
+      "DISCHARGE": ["cbe2d31d-2201-44ce-b52e-fbd5dc7cff33"],
       "NON-AMPATH": ["cbe2d31d-2201-44ce-b52e-fbd5dc7cff33"]
     },
     "incompatibleWith": [
@@ -1291,6 +1686,30 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [
+      {
+        "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
+        "name": "Express Care Program Referral Visit",
+        "allowedIf": "inCareUuid === 'e517d6e2-6236-42db-9f71-0b6270c6cfa9'",
+        "message": "Patient must be `in care` state",
+        "encounterTypes": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          },
+          {
+            "uuid": "df554398-1350-11df-a1f1-0026b9348838",
+            "display": "ECSTABLE"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          }
+        ]
+      },
       {
         "uuid": "e2c37c46-3ee9-4cff-9af6-aa5c41fb30da",
         "name": "Express Care Visit ",
@@ -1399,7 +1818,7 @@
     "visitTypes": [
       {
         "uuid": "b8516e6e-17c6-4f28-bc3d-ec58d591e455",
-        "name": "ACTG Visit ",
+        "name": "ACTG Visit",
         "encounterTypes": [
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
