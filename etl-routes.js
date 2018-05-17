@@ -76,6 +76,9 @@ import {
 import {
     Moh731Report
 } from './app/reporting-framework/hiv/moh-731.report'
+import {
+    BaseMysqlReport
+} from './app/reporting-framework/base-mysql.report';
 
 module.exports = function () {
 
@@ -504,7 +507,7 @@ module.exports = function () {
             }
         }
     },
-    {
+{
         method: 'GET',
         path: '/etl/patient/{patientUuid}/hiv-clinical-reminder/{referenceDate}',
         config: {
@@ -519,18 +522,22 @@ module.exports = function () {
                 EIDLabReminderService.pendingEIDReminders(request.params, config.eid)
                     .then((eidReminders) => {
                         let combineRequestParams = Object.assign({}, request.query, request.params);
-                        combineRequestParams.limit = 1;
-                        let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['referenceDate', 'patientUuid', 'indicators'], combineRequestParams);
+                        combineRequestParams.limitParam = 1;
+                        let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['referenceDate', 'patientUuid','offSetParam','limitParam'], combineRequestParams);
 
-                        dao.runReport(reportParams).then((results) => {
-                            try {
-                                let processedResults = patientReminderService.generateReminders(results.result, eidReminders);
-                                results.result = processedResults;
-                                reply(results);
-                            } catch (err) {
-                                console.log('Error occurred while processing reminders', err)
+                        let report = new BaseMysqlReport('clinicalReminderReport',reportParams.requestParams);
+                        report.generateReport().then((results) => {
+                            try{
+                            let processedResults = patientReminderService.generateReminders(results.results.results, eidReminders);
+                            results.result = processedResults;
+                            } catch(error){
+                                console.log(error)
                             }
+                            reply(results);
 
+
+
+        
                         }).catch((error) => {
                             reply(error);
                         });
@@ -544,7 +551,7 @@ module.exports = function () {
             notes: 'Returns a  list of reminders for selected patient and indicators on a given reference date',
             tags: ['api'],
         }
-    },
+    },    
     {
         method: 'POST',
         path: '/etl/forms/error',
