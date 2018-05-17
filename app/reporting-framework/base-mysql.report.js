@@ -27,6 +27,7 @@ import * as retention_dataset_base from './json-reports/retention-dataset-base.j
 import * as pep_dataset_aggregate from './json-reports/pep-dataset-aggregate.json';
 import * as pep_dataset_base from './json-reports/pep-dataset-base.json';
 import * as patient_list_template from './json-reports/patient-list-template.json';
+import * as medical_history_dataset_base from './json-reports/medical-history-dataset-base.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -149,6 +150,11 @@ export class BaseMysqlReport {
                     resolve({
                         main: pep_dataset_aggregate,
                         pepDataSetbase: pep_dataset_base
+                    });
+                    break;
+                case 'medicalHistoryReport':
+                    resolve({
+                        main: medical_history_dataset_base
                     });
                     break;
                 default:
