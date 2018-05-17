@@ -27,6 +27,8 @@ import * as retention_dataset_base from './json-reports/retention-dataset-base.j
 import * as pep_dataset_aggregate from './json-reports/pep-dataset-aggregate.json';
 import * as pep_dataset_base from './json-reports/pep-dataset-base.json';
 import * as patient_list_template from './json-reports/patient-list-template.json';
+import * as patint_change_status_tracker_aggregate from './json-reports/patint-change-status-tracker-aggregate.json';
+import * as patint_change_status_tracker_base from './json-reports/patint-change-status-tracker-base.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -149,6 +151,12 @@ export class BaseMysqlReport {
                     resolve({
                         main: pep_dataset_aggregate,
                         pepDataSetbase: pep_dataset_base
+                    });
+                    break;  
+                case 'patintChangeStatusTrackerAggregate':
+                    resolve({
+                        main: patint_change_status_tracker_aggregate,
+                        patintChangeStatusTrackerDataSetbase: patint_change_status_tracker_base
                     });
                     break;
                 default:
