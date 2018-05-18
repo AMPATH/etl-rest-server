@@ -68,11 +68,6 @@ import * as daily_appointments_aggregate from './json-reports/daily-appointments
 import * as daily_appointments_base from './json-reports/daily-appointments-base.json';
 import * as daily_attendance_aggregate from './json-reports/daily-attendance-aggregate.json';
 import * as daily_attendance_base from './json-reports/daily-attendance-base.json';
-<<<<<<< HEAD
-
-=======
-import * as patint_change_status_tracker_aggregate from './json-reports/patint-change-status-tracker-aggregate.json';
->>>>>>> Migrate the reports for tickets ERS-217,ERS-219,ERS-222,ERS-223,ERS-224,ERS-225,ERS-228,ERS-234
 
 export class BaseMysqlReport {
     constructor(reportName, params) {

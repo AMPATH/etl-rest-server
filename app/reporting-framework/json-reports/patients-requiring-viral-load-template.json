@@ -1,0 +1,117 @@
+{
+    "name": "patient_requiring_viral_load_template",
+    "version": "1.0",
+    "tag": "patient_requiring_viral_load_template",
+    "description": "Patient list template",
+    "sources": [
+        {
+            "table": "amrs.person",
+            "alias": "t1"
+        },
+        {
+            "table": "amrs.person_name",
+            "alias": "person_name",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "t1.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0)"
+            }
+        },
+        {
+            "table": "amrs.patient_identifier",
+            "alias": "id",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "t1.person_id = id.patient_id AND (id.voided IS NULL || id.voided = 0)"
+            }
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias": "patient_uuid",
+            "column": "t1.uuid"
+        },
+        {
+            "type": "simple_column",
+            "alias": "person_id",
+            "column": "t1.person_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "gender",
+            "column": "t1.gender"
+        },
+        {
+            "type": "simple_column",
+            "alias": "birthdate",
+            "column": "t1.birthdate"
+        },
+        {
+            "type": "derived_column",
+            "alias": "age",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "extract(year from (from_days(datediff(now(),t1.birthdate))))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "person_name",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": " CONCAT(COALESCE(person_name.given_name, ''), ' ', COALESCE(person_name.middle_name, ''), ' ', COALESCE(person_name.family_name, ''))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "identifiers",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": " GROUP_CONCAT(DISTINCT id.identifier SEPARATOR ', ')"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "has_pending_vl_test",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "case when (timestampdiff(day,t2.vl_order_date,now()) between 0 and 14) and (t2.vl_1_date is null or t2.vl_order_date > t2.vl_1_date) then true else false end"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "current_vl",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "t2.vl_1 "
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "current_vl_date",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "date_format(t2.vl_1_date,'%d-%m-%Y')"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "last_vl_order_date",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "date_format(t2.vl_order_date,'%d-%m-%Y')"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "days_since_last_order",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "timestampdiff(day, vl_order_date, now())"
+            }
+        }
+    ],
+    "groupBy":{
+        "columns":["t1.person_id"]
+    }
+}
