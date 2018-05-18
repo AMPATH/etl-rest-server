@@ -27,6 +27,8 @@ import * as retention_dataset_base from './json-reports/retention-dataset-base.j
 import * as pep_dataset_aggregate from './json-reports/pep-dataset-aggregate.json';
 import * as pep_dataset_base from './json-reports/pep-dataset-base.json';
 import * as patient_list_template from './json-reports/patient-list-template.json';
+import * as hiv_monthly_summary_dataset_base from './json-reports/hiv-monthly-summary-dataset-base.json';
+import * as hiv_monthly_summary_dataset_aggregation from './json-reports/hiv-monthly-summary-aggregate.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -49,7 +51,7 @@ export class BaseMysqlReport {
                     that.generateReportQuery(that.reportSchemas, that.params)
                         .then((sqlQuery) => {
                             that.reportQuery = sqlQuery;
-
+                            
                             // run query
                             that.executeReportQuery(that.reportQuery)
                                 .then((result) => {
@@ -149,6 +151,12 @@ export class BaseMysqlReport {
                     resolve({
                         main: pep_dataset_aggregate,
                         pepDataSetbase: pep_dataset_base
+                    });
+                    break; 
+                case 'hivMonthlySummaryReportAggregate':
+                    resolve({
+                        main: hiv_monthly_summary_dataset_aggregation,
+                        hivMonthlySummaryDataSetBase: hiv_monthly_summary_dataset_base
                     });
                     break;
                 default:
