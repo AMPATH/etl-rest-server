@@ -79,6 +79,9 @@ import {
 import {
     Moh731Report
 } from './app/reporting-framework/hiv/moh-731.report'
+import { 
+    CdmSummaryMonthlyIndicatorsService 
+} from './service/cdm-summary-monthly-indicators.service';
 
 module.exports = function () {
 
@@ -2883,8 +2886,19 @@ module.exports = function () {
                 if (!authorizer.hasReportAccess(request.query.report)) {
                     return reply(Boom.forbidden('Unauthorized'));
                 }
-
+                // console.log('request', request.query);
+                
                 dao.getIndicatorsSchema(request, reply);
+                /*
+                if(request.query.report === 'cdm-summary-monthly-report'){
+                    console.log('CDM rEPORT');
+                    dao.getIndicatorsFromReport(request, reply);
+                }else{
+                    dao.getIndicatorsSchema(request, reply);
+                }
+                */
+
+                
             },
             description: 'Get HIV monthly summary indicator schema',
             notes: 'Returns HIV monthly summary indicator schema. ',
@@ -3422,6 +3436,7 @@ module.exports = function () {
                 let requestParams = Object.assign({}, request.query, request.params);
                 let reportParams = etlHelpers.getReportParams('medical-history-report', ['patientUuid'],
                     requestParams);
+                
                 dao.runReport(reportParams).then((result) => {
                     let medicalHist = new patientMedicationHistService();
                     let processedResults = medicalHist.processMedicationHistory(result);
@@ -3563,6 +3578,78 @@ module.exports = function () {
                 notes: 'Returns a list of active patients enrolled',
                 tags: ['api'],
             }
+        },
+        {
+
+            method: 'GET',
+            path: '/etl/cdm-summary-monthly-indicators',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }],
+                        aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
+                            {
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'reportName', //name of the parameter
+                                value: 'cdm-summary-monthly-report' //parameter value
+                            }
+                        ]
+                    }
+                },
+                handler: function (request, reply) {
+                    //security check
+                    request.query.reportName = 'cdm-summary-monthly-report';
+                    if (!authorizer.hasReportAccess(request.query.reportName)) {
+                        return reply(Boom.forbidden('Unauthorized'));
+                    }
+                    preRequest.resolveLocationIdsToLocationUuids(request,
+                        function () {
+                            let requestParams = Object.assign({}, request.query, request.params);
+                            let reportParams = etlHelpers.getReportParams('cdm-summary-monthly-report', ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], requestParams);
+    
+                            let service = new CdmSummaryMonthlyIndicatorsService();
+                            service.getAggregateReport(reportParams).then((result) => {
+                                reply(result);
+                            }).catch((error) => {
+                                reply(error);
+                            });
+                        });
+                },
+                description: "Get cdm summary monthly indicators for  selected clinic",
+                notes: "Returns cdm summary monthly indicators for the selected clinic(s),start date, end date",
+                tags: ['api'],
+                validate: {
+                    query: {
+                        indicators: Joi.string()
+                            .required()
+                            .description("A list of comma separated indicators"),
+                        locationUuids: Joi.string()
+                            .required()
+                            .description("A list of comma separated location uuids"),
+                        startDate: Joi.string()
+                            .required()
+                            .description("The start date to filter by"),
+                        endDate: Joi.string()
+                            .required()
+                            .description("The end date to filter by"),
+                        gender: Joi.string()
+                            .optional()
+                            .description("The gender to filter by"),
+                        startAge: Joi.string()
+                            .optional()
+                            .description("The start age to filter by"),
+                        endAge: Joi.string()
+                            .optional()
+                            .description("The end age to filter by")
+    
+                    }
+                }
+            }
+
         }
     ];
 

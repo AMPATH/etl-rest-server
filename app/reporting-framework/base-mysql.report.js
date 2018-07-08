@@ -33,6 +33,9 @@ import * as ever_on_art_base from './json-reports/ever-on-art-base.json';
 import * as referral_patient_list_template from './json-reports/referral-patient-list-template.json';
 import * as referral_dataset_base from './json-reports/referral-dataset-base.json';
 import * as referral_aggregate from './json-reports/referral-aggregate.json';
+import * as cdm_monthly_indicator from './json-reports/cdm-monthly-summary.report.json';
+import * as cdm_monthly_summary_dataset_base from './json-reports/cdm-monthly-summary-dataset-base.json';
+import * as cdm_monthly_summary_dataset_aggregation from './json-reports/cdm-monthly-summary-aggregate.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -50,10 +53,12 @@ export class BaseMysqlReport {
             that.fetchReportSchema(that.reportName)
                 .then((reportSchemas) => {
                     that.reportSchemas = reportSchemas;
+                    // console.log('Report Schemas', JSON.stringify(reportSchemas));
 
                     // generate query
                     that.generateReportQuery(that.reportSchemas, that.params)
                         .then((sqlQuery) => {
+                            console.log('sqlQuery', sqlQuery);
                             
                             // allow user to use 'null' as parameter values
                             sqlQuery=sqlQuery.replace(/\'null\'/g,"null");
@@ -78,6 +83,7 @@ export class BaseMysqlReport {
 
                         })
                         .catch((err) => {
+                            console.error('sqlQueryError', err);
                             error(err);
                         });
                 })
@@ -182,6 +188,13 @@ export class BaseMysqlReport {
                         referralDatasetbase: referral_dataset_base
                     });
                     break;
+                case 'cdmMonthlySummaryDataSetAggregate':
+                    resolve({
+                        main: cdm_monthly_summary_dataset_aggregation,
+                        cdmMonthlySummaryDataSetBase: cdm_monthly_summary_dataset_base
+
+                    });
+                break;
                 default:
                     reject('Unknown report ', reportName);
                     break;

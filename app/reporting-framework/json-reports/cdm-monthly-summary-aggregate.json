@@ -1,0 +1,138 @@
+{
+    "name": "cdmMonthlySummaryDataSetAggregate",
+    "version": "1.0",
+    "tag": "",
+    "description": "",
+    "uses": [
+        {
+            "name": "cdmMonthlySummaryDataSetBase",
+            "version": "1.0",
+            "type": "dataset_def"
+        }
+    ],
+    "sources": [
+        {
+            "dataSet": "cdmMonthlySummaryDataSetBase",
+            "alias": "cmsd"
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias":"reporting_month",
+            "column":"cmsd.reporting_month"
+        },
+        {
+            "type": "derived_column",
+            "alias": "patients",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"count(distinct hmsd.person_id)"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias":"location",
+            "column":"cmsd.location"
+        },
+        {
+            "type": "simple_column",
+            "alias":"encounter_year",
+            "column":"cmsd.encounter_year"
+        },
+        {
+            "type": "simple_column",
+            "alias":"encounter_month",
+            "column":"cmsd.encounter_month"
+        },
+        {
+            "type": "derived_column",
+            "alias": "patients_in_month",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"COUNT(cmsd.person_id)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "active_in_care",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"COUNT(cmsd.active_in_care)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "defaulters",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"COUNT(cmsd.defaulters)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "htn_total",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"COUNT(cmsd.htn_total)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "dm_total",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"COUNT(cmsd.dm_total)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "htn_only",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"COUNT(cmsd.htn_only)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "dm_only",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"COUNT(cmsd.dm_only)"
+            }
+        }
+    ],
+    "groupBy": {
+        "groupParam": "groupByParam",
+        "columns": [           
+            "encounter_year",
+            "encounter_month"
+        ],
+        "excludeParam": "excludeParam"
+    },
+    "orderBy": {
+        "orderByParam": "orderByParam",
+        "columns": [{
+          "column": "encounter_year",
+          "order": "asc"
+    },
+    {
+          "column": "encounter_month",
+          "order": "asc"
+    }]
+   },
+   "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+        "useTemplate": "patient-list-template",
+        "useTemplateVersion": "1.0",
+        "generatingDirectives": {
+            "joinDirectives": {
+                "joinType": "INNER",
+                "joinCondition": "<<base_column>> = <<template_column>>",
+                "baseColumn": "t4.person_id",
+                "templateColumn": "person_id"
+            }
+        }
+    }
+}
+}

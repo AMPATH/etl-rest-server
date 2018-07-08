@@ -127,7 +127,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                 aggregate: agg,
                 base: schemas[agg.uses[0].name]
             };
-            console.log('added base agg pair', agg);
+            // console.log('added base agg pair', agg);
             found.push(s);
         });
         return found;
