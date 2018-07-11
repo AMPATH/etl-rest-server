@@ -29,6 +29,7 @@ reportList.push.apply(reportList, require('./reports/clinical-reminder-report.js
 reportList.push.apply(reportList, require('./reports/dataentry-statistics.json'));
 reportList.push.apply(reportList, require('./reports/clinical-overview-visualization-report.json'));
 reportList.push.apply(reportList, require('./reports/hiv-summary-monthly-report.json'));
+reportList.push.apply(reportList, require('./reports/cdm-summary-monthly-report.json'));
 reportList.push.apply(reportList, require('./reports/patient-flow-report.json'));
 reportList.push.apply(reportList, require('./reports/clinic-comparator-report.json'));
 reportList.push.apply(reportList, require('./reports/labs-report.json'));
@@ -51,6 +52,7 @@ module.exports = function () {
     return {
         buildPatientListExpression: buildPatientListExpression,
         buildIndicatorsSchema: buildIndicatorsSchema,
+        getIndicatorsFromReport: getIndicatorsFromReport,
         buildIndicatorsSchemaWithSections: buildIndicatorsSchemaWithSections,
         singleReportToSql: singleReportToSql,
         resolveIndicators: resolveIndicators,
@@ -142,6 +144,29 @@ module.exports = function () {
                 });
             }
         });
+        successCallback(result);
+    }
+
+    function getIndicatorsFromReport(queryParams, successCallback) {
+        console.log('getIndicatorsFromReport ...');
+        //Check for undefined params
+        if (queryParams === null || queryParams === undefined) return "";
+        var result = [];
+        //Load json schema into the query builder
+        _.each(reports, function (report) {
+            if (report.name === queryParams.reportName) {
+                console.log('Report QueryParams', queryParams );
+                console.log('Report Indicators', report.indicators );
+                _.each(report.indicators, function (reportIndicator) {
+                    _.each(indicatorsSchema, function (indicator) {
+                        if (indicator.name === reportIndicator.expression) {
+                            result.push(indicator);
+                        }
+                    });
+                });
+            }
+        });
+        console.log('Report result', result );
         successCallback(result);
     }
 

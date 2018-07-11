@@ -270,6 +270,22 @@ module.exports = function () {
                 callback(schema);
             });
         },
+        getIndicatorsFromReport: function getIndicatorsSchema(request, callback) {
+            var reportName = request.query.report;
+            //Check for undefined query field
+            if (reportName === undefined)
+                callback(Boom.badRequest('report (Report Name) is missing from your request query'));
+            //build query params
+            var queryParams = {
+                reportName: reportName
+            };
+            //retrieve jsin
+            reportFactory.getIndicatorsFromReport(queryParams, function (result) {
+                var indicators = {};
+                indicators.result = result;
+                callback(indicators);
+            });
+        },
         getIdsByUuidAsyc: function getIdsByUuidAsyc(fullTableName, idColumnName, uuidColumnName, arrayOfUuids, callback) {
             var uuids = [];
             _.each(arrayOfUuids.split(','), function (uuid) {

@@ -1,0 +1,131 @@
+[
+    {
+     "name": "cdm-summary-monthly-report",
+     "table":{"schema":"etl","tableName":"dates","alias":"d"},
+     "joins":[
+        {
+            "joinType": "INNER JOIN",
+            "schema": "etl",
+            "tableName": "flat_cdm",
+            "alias": "c",
+            "joinExpression": "is_clinical_encounter=1 and encounter_datetime <= d.endDate and c.death_date is null"
+          },
+          {
+            "joinType": "INNER JOIN",
+            "schema": "amrs",
+            "tableName": "location",
+            "alias": "t3",
+            "joinExpression": "c.location_uuid = t3.uuid"
+          },
+          {
+            "joinType": "INNER JOIN",
+            "schema": "amrs",
+            "tableName": "person",
+            "alias": "t4",
+            "joinExpression": "c.person_id = t4.person_id"
+          }
+        
+     ],
+     "parameters": [
+     ],
+     "filters": [
+     ],
+     "groupClause":[
+     ],
+     "indicators": [
+         {
+             "label":"htn_only",
+             "expression":"htn_only",
+             "sql":""
+         },
+         {
+            "label":"htn_total",
+            "expression":"htn_total",
+            "sql":""
+        },
+        {
+            "label":"dm_only",
+            "expression":"dm_only",
+            "sql":""
+        },
+        {
+            "label":"dm_total",
+            "expression":"dm_total",
+            "sql":""
+        },
+        {
+            "label":"htm_and_dm",
+            "expression":"htm_and_dm",
+            "sql":""
+        },
+        {
+            "label":"breast_cancer_total",
+            "expression":"breast_cancer_total",
+            "sql":""
+        },
+        {
+            "label":"referrals_total",
+            "expression":"referrals_total",
+            "sql":""
+        },
+        {
+            "label":"referrals_total",
+            "expression":"referrals_total",
+            "sql":""
+        },
+        {
+            "label":"referrals_total_out_of_facility",
+            "expression":"referrals_total_out_of_facility",
+            "sql":""
+        },
+        {
+            "label":"referrals_to_facility",
+            "expression":"referrals_to_facility",
+            "sql":""
+        },
+        {
+            "label":"referred_not_seen_30_days",
+            "expression":"referred_not_seen_30_days",
+            "sql":""
+        },
+        {
+            "label":"patients_in_month",
+            "expression":"patients_in_month",
+            "sql":""
+        },
+        {
+            "label":"new_cases",
+            "expression":"new_cases",
+            "sql":""
+        },
+        {
+            "label":"cumulative_patients_ever",
+            "expression":"cumulative_patients_ever",
+            "sql":""
+        },
+        {
+            "label":"returning_htn_current_month",
+            "expression":"returning_htn_current_month",
+            "sql":""
+        },
+        {
+            "label":"returning_dm_current_month",
+            "expression":"returning_dm_current_month",
+            "sql":""
+        },
+        {
+            "label":"active_in_care",
+            "expression":"active_in_care",
+            "sql":""
+        },
+        {
+            "label":"defaulters",
+            "expression":"defaulters",
+            "sql":""
+        }
+
+     ],
+     "supplementColumns":[
+        ]
+ }
+]

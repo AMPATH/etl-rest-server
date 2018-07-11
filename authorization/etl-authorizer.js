@@ -30,6 +30,8 @@ var reportPrivileges = {
     'hiv-summary-report': [PRIVILEGES.canViewDataAnalytics],
     'clinic-comparator-report': [PRIVILEGES.canViewDataAnalytics],
     'hiv-summary-monthly-report': [PRIVILEGES.canViewDataAnalytics],
+    'cdm-summary-monthly-report': [PRIVILEGES.canViewDataAnalytics],
+    'cdm-summary-report': [PRIVILEGES.canViewDataAnalytics],
     'clinical-reminder-report': [PRIVILEGES.canViewPatient],
     'labs-report': [PRIVILEGES.canViewPatient, PRIVILEGES.canViewDataAnalytics],
     'viral-load-monitoring-report': [PRIVILEGES.canViewPatient, PRIVILEGES.canViewDataAnalytics],

@@ -9,7 +9,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
     }
 
     generatePatientListReport(indicators) {
-        // 1. Fetch report schema
+        // 1. Fetch report schemaz
         // 2. Determine the aggregate, base
         // 3. Fetch the template report
         // 4. Generate patient list json query
@@ -22,6 +22,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
             that.fetchReportSchema(that.reportName)
                 .then((reportSchemas) => {
                     that.reportSchemas = reportSchemas;
+                    console.log('Schemas', reportSchemas);
 
                     // consolidate params and indicators
                     indicators = that.consolidateParamsAndIndicators(that.params, indicators);
@@ -41,6 +42,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
 
                                 let generated =
                                     that.generatePatientListJsonQuery(that.plSchemasRaw.aggregate, that.plSchemasRaw.base, that.plTemplate, that.params);
+                                console.log('Generated', generated);
                                     
                                 // console.log('GENERATED', generated.generated.filters, that.params);
                                 // if (this.hasEmptyDynamicExpressions(generated) && aggs.length > 1) {
@@ -68,6 +70,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                                         //allow 'null' as parameter value
                                         sqlQuery=sqlQuery.replace(/\'null\'/g,"null");
                                         that.reportQuery = sqlQuery;
+                                        console.log('Report query', sqlQuery);
                                         
                                         // run query
                                         that.executeReportQuery(that.reportQuery)
@@ -127,7 +130,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                 aggregate: agg,
                 base: schemas[agg.uses[0].name]
             };
-            console.log('added base agg pair', agg);
+            // console.log('added base agg pair', agg);
             found.push(s);
         });
         return found;

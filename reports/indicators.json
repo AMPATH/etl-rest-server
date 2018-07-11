@@ -1271,6 +1271,108 @@
         "label": "perc virally suppressed since oct",
         "description": "The denominator includes those patients (both active and LTFU) who have had a VL since October 1. The numerator includes those patients (both active and LTFU) who have had a VL since October 1 and had Vl < 100",
         "expression": ""
-    }
+    },
+    {
+        "name":"htn_only",
+        "label":"HTN only",
+        "description":"",
+        "expression": ""
+    },
+    {
+       "name":"htn_total",
+       "label": "HTN Total",
+       "description" : "",
+       "expression":"htn_total"
+   },
+   {
+       "name":"dm_only",
+       "label": "DM only",
+       "description":"",
+       "expression":""
+   },
+   {
+       "name":"dm_total",
+       "label":"DM Total",
+       "description":"",
+       "expression":""
+   },
+   {
+       "name":"htn_and_dm",
+       "label":"HTN and DM",
+       "description":"",
+       "expression":""
+   },
+   {
+       "name":"breast_cancer_total",
+       "label":"Breast Cancer",
+       "description":"",
+       "expression":""
+   },
+   {
+       "name":"referrals_total",
+       "label":"Referrals Total",
+       "description":"",
+       "expression":""
+   },
+   {
+       "name":"referrals_total_out_of_facility",
+       "label": "Referrals total out of facility",
+       "description":"referrals_total_out_of_facility",
+       "expression": ""
+   },
+   {
+       "name":"referrals_to_facility",
+       "label":"referrals_to_facility",
+       "description":"",
+       "expression" : ""
+   },
+   {
+       "name":"referred_not_seen_30_days",
+       "label": "Refferred not seen 30 Days",
+       "description":"referred_not_seen_30_days",
+       "expression":""
+   },
+   {
+       "name":"patients_in_month",
+       "label":"Patients in month",
+       "description": "",
+       "expression": ""
+   },
+   {
+       "name":"New Cases",
+       "label":"New Cases",
+       "descritpion": "",
+       "expression": ""
+   },
+   {
+       "name":"cumulative_patients_ever",
+       "label":"Cumulative Patients Ever",
+       "description":"",
+       "expression": ""
+   },
+   {
+       "name":"returning_htn_current_month",
+       "label":"Returning HTN Current month",
+       "description": "",
+       "expression" : ""
+   },
+   {
+       "name":"returning_dm_current_month",
+       "label":"Returning DM Current month",
+       "description": "",
+       "expression": ""
+   },
+   {
+       "name":"active_in_care",
+       "label":"Active in Care",
+       "description": "",
+       "expression": ""
+   },
+   {
+       "name":"defaulters",
+       "label":"Defaulters",
+       "description": "",
+       "expression": ""
+   }
 
 ]

@@ -1,0 +1,203 @@
+{
+    "name": "cdmMonthlySummaryDataSetBase",
+    "version": "1.0",
+    "tag": "cdm_monthly_summary_dataset_base",
+    "description": "",
+    "uses": [],
+    "sources": [
+        {
+            "table": "etl.flat_cdm",
+            "alias": "c"
+        },
+        {
+            "table": "etl.dates",
+            "alias": "d",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "is_clinical_encounter=1 and encounter_datetime <= d.endDate and c.death_date is null"
+            }
+        },
+        {
+            "table": "amrs.location",
+            "alias": "t3",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "c.location_uuid = t3.uuid"
+            }
+        },
+        {
+            "table": "amrs.person", 
+            "alias": "t4",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "c.person_id = t4.person_id"
+            }
+        }
+    ],
+    "columns": [
+
+        {
+            "type": "simple_column",
+            "alias": "person_id",
+            "column": "c.person_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "location",
+            "column": "t3.name"
+        },
+        {
+            "type": "derived_column",
+            "alias": "reporting_month",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "DATE_FORMAT(d.endDate,'%d-%m-%Y')"
+            }
+        },
+        {
+            "type": "derived_column",
+             "alias":"encounter_month",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                 "expression": "MONTH(c.encounter_datetime)"
+                }
+        },
+        {
+            "type": "derived_column",
+             "alias":"encounter_year",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                 "expression": "YEAR(c.encounter_datetime)"
+                }
+        },
+        {
+            "type": "derived_column",
+            "alias": "active_in_care",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "TIMESTAMPDIFF(DAY, IF(c.rtc_date, c.rtc_date, DATE_ADD(c.encounter_datetime, INTERVAL 30 DAY)), d.endDate) <= 90",
+                        "value": 1
+                    }
+                ]
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "defaulters",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "timestampdiff(day,if(is_clinical_encounter=1,rtc_date,prev_clinical_rtc_date_cdm), d.endDate) > 90",
+                        "value": 1
+                    }
+                ]
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "htn_total",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "htn_status IN (7288 , 7291)",
+                        "value": 1
+                    }
+                ]
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "htn_only",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "htn_status IN (7288 , 7291) AND dm_status NOT IN (7288 , 7291)",
+                        "value": 1
+                    }
+                ]
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "dm_total",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "dm_status IN (7288 , 7291)",
+                        "value": 1
+                    }
+                ]
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "dm_only",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "dm_status IN (7288 , 7291) AND htn_status NOT IN (7288 , 7291)",
+                        "value": 1
+                    }
+                ]
+            }
+        }
+       
+    ],
+    "filters": {
+        "conditionJoinOperator": "and",
+        "conditions": [
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "c.encounter_datetime <= ?",
+                "parameterName": "endDate"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "c.encounter_datetime >= ?",
+                "parameterName": "startDate"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "c.location_id in ?",
+                "parameterName": "locations"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "round(datediff(c.encounter_datetime,t4.birthdate)/365) >= 0",
+                "parameterName": ""
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "round(datediff(c.encounter_datetime,t4.birthdate)/365) <= 120",
+                "parameterName": ""
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "t4.gender in ?",
+                "parameterName": "gender"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "c.is_clinical_encounter = 1",
+                "parameterName": ""
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "c.death_date is null",
+                "parameterName": ""
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "(c.next_clinical_datetime_cdm is null or next_clinical_datetime_cdm  >= d.endDate)",
+                "parameterName": ""
+            }
+        ]
+    }
+}
