@@ -51,7 +51,7 @@
             "alias": "reporting_month",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "DATE_FORMAT(d.endDate,'%d-%m-%Y')"
+                "expression": " DATE_FORMAT(c.encounter_datetime, '%m-%Y')"
             }
         },
         {

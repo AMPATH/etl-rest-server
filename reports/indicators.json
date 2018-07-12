@@ -1303,36 +1303,6 @@
        "expression":""
    },
    {
-       "name":"breast_cancer_total",
-       "label":"Breast Cancer",
-       "description":"",
-       "expression":""
-   },
-   {
-       "name":"referrals_total",
-       "label":"Referrals Total",
-       "description":"",
-       "expression":""
-   },
-   {
-       "name":"referrals_total_out_of_facility",
-       "label": "Referrals total out of facility",
-       "description":"referrals_total_out_of_facility",
-       "expression": ""
-   },
-   {
-       "name":"referrals_to_facility",
-       "label":"referrals_to_facility",
-       "description":"",
-       "expression" : ""
-   },
-   {
-       "name":"referred_not_seen_30_days",
-       "label": "Refferred not seen 30 Days",
-       "description":"referred_not_seen_30_days",
-       "expression":""
-   },
-   {
        "name":"patients_in_month",
        "label":"Patients in month",
        "description": "",

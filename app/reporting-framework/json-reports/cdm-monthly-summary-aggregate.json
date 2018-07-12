@@ -45,7 +45,7 @@
             "alias": "patients_in_month",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression":"COUNT(cmsd.person_id)"
+                "expression":"COUNT(distinct(cmsd.person_id))"
             }
         },
         {
@@ -53,7 +53,7 @@
             "alias": "active_in_care",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression":"COUNT(cmsd.active_in_care)"
+                "expression":"SUM(cmsd.active_in_care = 1)"
             }
         },
         {
@@ -61,7 +61,7 @@
             "alias": "defaulters",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression":"COUNT(cmsd.defaulters)"
+                "expression":"SUM(cmsd.defaulters = 1)"
             }
         },
         {
