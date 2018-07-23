@@ -78,7 +78,13 @@ import {
 
 import {
     Moh731Report
-} from './app/reporting-framework/hiv/moh-731.report'
+} from './app/reporting-framework/hiv/moh-731.report';
+import {
+    BreastCancerMonthlySummaryService
+} from './service/breast-cancer-monthly-summary.service';
+import {
+    CervicalCancerMonthlySummaryService
+} from './service/cervical-cancer-monthly-summary.service';
 
 module.exports = function () {
 
@@ -3563,6 +3569,166 @@ module.exports = function () {
                 notes: 'Returns a list of active patients enrolled',
                 tags: ['api'],
             }
+        },
+        {
+            method: 'GET',
+            path: '/etl/breast-cancer-monthly-screening-summary',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    request.query.reportName = 'breast-cancer-monthly-summary';
+                    preRequest.resolveLocationIdsToLocationUuids(request,
+                        function () {
+                            let requestParams = Object.assign({}, request.query, request.params);
+                            let reportParams = etlHelpers.getReportParams('breast-cancer-summary-dataset', 
+                            ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], 
+                            requestParams);
+                            let service = new BreastCancerMonthlySummaryService();
+                            console.log('Report Params',reportParams);
+                            service.getAggregateReport(reportParams).then((result) => {
+                                reply(result);
+                            }).catch((error) => {
+                                reply(error);
+                            });
+                        });
+                    
+                },
+                description: 'Get breast cancer monthly screening summary details based on location and time filters',
+                notes: 'Returns aggeregates of breast cancer screening',
+                tags: ['api'],
+            }
+
+        },
+        {
+            method: 'GET',
+            path: '/etl/breast-cancer-monthly-screening-patient-list',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    request.query.reportName = 'breast-cancer-monthly-screening-summary';
+                    preRequest.resolveLocationIdsToLocationUuids(request,
+                        function () {
+                            let requestParams = Object.assign({}, request.query, request.params);
+                            let reportParams = etlHelpers.getReportParams('breast-cancer-summary-dataset', 
+                            ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], 
+                            requestParams);
+                            let service = new BreastCancerMonthlySummaryService();
+                            console.log('Report Params',reportParams);
+                            service.getPatientListReport(reportParams).then((result) => {
+                                reply(result);
+                            }).catch((error) => {
+                                reply(error);
+                            });
+                        });
+                    
+                },
+                description: 'Get breast cancer monthly screening summary patient list based on location and time filters',
+                notes: 'Returns details of patients who underwent breast cancer screenings',
+                tags: ['api'],
+            }
+
+        },
+        {
+            method: 'GET',
+            path: '/etl/cervical-cancer-monthly-screening-summary',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    request.query.reportName = 'cervical-cancer-monthly-screening-summary';
+                    preRequest.resolveLocationIdsToLocationUuids(request,
+                        function () {
+                            let requestParams = Object.assign({}, request.query, request.params);
+                            let reportParams = etlHelpers.getReportParams('cervical-cancer-monthly-summary', 
+                            ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], 
+                            requestParams);
+                            let service = new CervicalCancerMonthlySummaryService();
+                            console.log('Report Params',reportParams);
+                            service.getAggregateReport(reportParams).then((result) => {
+                                reply(result);
+                            }).catch((error) => {
+                                reply(error);
+                            });
+                        });
+                    
+                },
+                description: 'Get cervical cancer monthly screening summary based on location and time filters',
+                notes: 'Returns aggeregates of cervical cancer screenings',
+                tags: ['api'],
+            }
+
+        },
+        {
+            method: 'GET',
+            path: '/etl/cervical-cancer-monthly-screening-patient-list',
+            config: {
+                auth: 'simple',
+                plugins: {
+                    'hapiAuthorization': {
+                        role: privileges.canViewClinicDashBoard
+                    },
+                    'openmrsLocationAuthorizer': {
+                        locationParameter: [{
+                            type: 'query', //can be in either query or params so you have to specify
+                            name: 'locationUuids' //name of the location parameter
+                        }]
+                    }
+                },
+                handler: function (request, reply) {
+                    request.query.reportName = 'cervical-cancer-patient-list';
+                    preRequest.resolveLocationIdsToLocationUuids(request,
+                        function () {
+                            let requestParams = Object.assign({}, request.query, request.params);
+                            let reportParams = etlHelpers.getReportParams('cervical-cancer-patient-list', 
+                            ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], 
+                            requestParams);
+                            let service = new CervicalCancerMonthlySummaryService();
+                            console.log('Report Params',reportParams);
+                            service.getPatientListReport(reportParams).then((result) => {
+                                reply(result);
+                            }).catch((error) => {
+                                reply(error);
+                            });
+                        });
+                    
+                },
+                description: 'Get cervical cancer monthly screening patient list based on location and time filters',
+                notes: 'Returns details of patients who underwent cervical cancer screenings',
+                tags: ['api'],
+            }
+
         }
     ];
 
