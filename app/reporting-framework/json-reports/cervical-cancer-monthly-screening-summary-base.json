@@ -1,0 +1,136 @@
+{
+    "name": "cervicalCancerMonthlyReportBase",
+    "version": "1.0",
+    "tag": "",
+    "uses": [],
+    "sources": [{
+            "table": "etl.flat_cervical_cancer_screening",
+            "alias": "fccs"
+        },
+        {
+            "table": "amrs.person_name",
+            "alias": "p2",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "fccs.person_id = p2.person_id AND (p2.voided is null || p2.voided = 0)"
+            }
+        },
+        {
+            "table": "amrs.patient_identifier",
+            "alias": "p3",
+            "join": {
+                "type": "LEFT OUTER",
+                "joinCondition": "fccs.person_id = p3.patient_id AND (p3.voided is null || p3.voided = 0)"
+            }
+        },
+        {
+            "table": "amrs.location",
+            "alias": "l",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "l.location_id = fccs.location_id"
+            }
+        },
+        {
+            "table": "amrs.person_attribute",
+            "alias": "p4",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "fccs.person_id = p4.person_id AND (p4.voided is null|| p4.voided = 0 and (p4.person_attribute_type_id =10))"
+            }
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias": "person_id",
+            "column": "fccs.person_id"
+        },
+        {
+            "type": "derived_column",
+            "alias": "person_name",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "CONCAT(COALESCE(p2.given_name, ''), ' ', COALESCE(p2.middle_name, ''), ' ', COALESCE(p2.family_name, ''))"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias": "phone_number",
+            "column": "p4.value"
+        },
+        {
+            "type": "derived_column",
+            "alias": "identifiers",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "GROUP_CONCAT(DISTINCT p3.identifier SEPARATOR ', ')"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias": "age",
+            "column": "fccs.age"
+        },
+        {
+            "type": "simple_column",
+            "alias": "location_id",
+            "column": "fccs.location_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "location_name",
+            "column": "l.name"
+        },
+        {
+            "type": "simple_column",
+            "alias": "encounter_datetime",
+            "column": "fccs.encounter_datetime"
+        },
+        {
+            "type": "derived_column",
+            "alias": "abnormal_cervical_screening",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fccs.cur_via_result != 1, 1, null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "normal_cervical_screening",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fccs.cur_via_result =1 or fccs.cur_via_result is null,1,null)"
+            }
+        }
+    ],
+    "filters": {
+        "conditionJoinOperator": "and",
+        "conditions": [{
+                "filterType": "tableColumns",
+                "conditionExpression": "fccs.encounter_datetime >= ?",
+                "parameterName": "startDate"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "fccs.encounter_datetime <= ?",
+                "parameterName": "endDate"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "fccs.encounter_type = 69"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "fccs.location_uuid in ?",
+                "parameterName": "locationUuids"
+            }
+        ]
+    },
+    "groupBy": {
+        "groupParam": "groupByParam",
+        "columns": [
+            "person_id"
+        ]
+    }
+}
