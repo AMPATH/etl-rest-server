@@ -85,7 +85,7 @@ import {
 } from './app/reporting-framework/patientlist-mysql.report'
 import {
     BaseMysqlReport 
-} from '../app/reporting-framework/base-mysql.report'
+} from './app/reporting-framework/base-mysql.report'
 module.exports = function () {
 
     var routes = [{
@@ -338,6 +338,8 @@ module.exports = function () {
                                         request.query.programTypeIds = programTypeIds;
                                         let compineRequestParams = Object.assign({}, request.query, request.params);
                                         // let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
+                                        compineRequestParams.limitParam = compineRequestParams.limit;
+                                        compineRequestParams.offSetParam = compineRequestParams.startIndex;
                                         let service = new PatientlistMysqlReport('dailyAppointmentsAggregate', compineRequestParams);
                                         service.generatePatientListReport(['patients']).then((result) => {
                                             let returnedResult = {};
@@ -388,6 +390,8 @@ module.exports = function () {
                                         request.query.visitTypeIds = visitTypeIds;
                                         request.query.programTypeIds = programTypeIds;
                                         let compineRequestParams = Object.assign({}, request.query, request.params);
+                                        compineRequestParams.limitParam = compineRequestParams.limit;
+                                        compineRequestParams.offSetParam = compineRequestParams.startIndex;
                                         let service = new PatientlistMysqlReport('dailyAttendanceAggregate', compineRequestParams);
                                         service.generatePatientListReport(['patients']).then((result) => {
                                             let returnedResult = {};
@@ -438,6 +442,8 @@ module.exports = function () {
                                         request.query.visitTypeIds = visitTypeIds;
                                        // request.query.programTypeIds = programTypeIds;
                                         let compineRequestParams = Object.assign({}, request.query, request.params);
+                                        compineRequestParams.limitParam = compineRequestParams.limit;
+                                        compineRequestParams.offSetParam = compineRequestParams.startIndex;
                                         //let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
                                         //reportParams.limit = 100000;
                                         console.log('Params',compineRequestParams);
@@ -582,17 +588,6 @@ module.exports = function () {
             }
         }
        ,
-        {
-            method: 'POST',
-            path: '/etl/forms/error',
-            config: {
-                auth: 'simple',
-                handler: function (request, reply) {
-
-                    dao.logError(request, reply);
-                }
-            }
-        },
         {
             method: 'POST',
             path: '/etl/forms/error',
@@ -882,7 +877,40 @@ module.exports = function () {
                     dao.getClinicEncounterData(request, reply);
                 }
             }
-        }, {
+        }, 
+        {
+            method: 'GET',
+            path  : '/etl/patient-program-config',
+            config: {
+              auth       : 'simple',
+              plugins    : {},
+              handler    : function (request, reply) {
+                var requestParams = Object.assign({}, request.query);
+                if (!requestParams.patientUuid) {
+                  reply(Boom.badImplementation('The patient\'s uuid(universally unique ' +
+                    'identifier must be provided as a query param'));
+                }
+                patientProgramService.validateEnrollmentOptions(requestParams.patientUuid)
+                  .then(function (programConfigs) {
+                    reply(programConfigs);
+                  }).catch(function (err) {
+                  console.log('there is an error', err);
+                  reply(Boom.badImplementation(err));
+                });
+              },
+              description: 'Get a list of programs ',
+              notes      : 'Returns a  list of programs',
+              tags       : ['api'],
+              validate   : {
+                options: {
+                  allowUnknown: true
+                },
+                params : {}
+              }
+            }
+          },
+        
+        {
             method: 'GET',
             path: '/etl/location/{uuid}/monthly-appointment-visits',
             config: {
@@ -1010,6 +1038,8 @@ module.exports = function () {
                     preRequest.resolveLocationIdsToLocationUuids(request,
                         function () {
                             let requestParams = Object.assign({}, request.query, request.params);
+                            requestParams.limitParam = requestParams.limit;
+                            requestParams.offSetParam = requestParams.startIndex;
                             let service = new hivComparativeOverviewService();
                             service.getPatientListReport(requestParams).then((result) => {
                                 reply(result);
@@ -1419,9 +1449,11 @@ module.exports = function () {
                 },
                 handler: function (request, reply) {
                     let requestParams = Object.assign({}, request.query, request.params);
-                    let reportParams = etlHelpers.getReportParams('patient-daily-care-status', ['referenceDate', 'patient_uuid'],
-                        requestParams);
-                        let report = new BaseMysqlReport('patientDailyCareStatus',reportParams.requestParams);
+                    // let reportParams = etlHelpers.getReportParams('patient-daily-care-status', ['referenceDate', 'patient_uuid'],
+                    //     requestParams);
+                        reportParams.limitParam = reportParams.limit;
+                        reportParams.offSetParam = reportParams.startIndex;
+                        let report = new BaseMysqlReport('patientDailyCareStatus',reportParams);
                         report.generateReport().then((results) => {
                             results.result=results.results.results;
                             delete results['results'];

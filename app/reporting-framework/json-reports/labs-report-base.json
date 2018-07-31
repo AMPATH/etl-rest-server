@@ -37,7 +37,7 @@
             "alias": "needs_vl_in_period",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(case when (cur_arv_meds is not null and vl_1 > 1000) and (timestampdiff(day,vl_1_date, '{endDate}') >= 90) then true when (timestampdiff(month,arv_start_date, '{endDate}') <= 12) and (vl_1_date is null or timestampdiff(month,vl_1_date, '{endDate}') >= 6)  and (timestampdiff(month,arv_start_date, '{endDate}')>=6) then true when (timestampdiff(month,arv_start_date, '{endDate}') >= 12) and (vl_1_date is null or timestampdiff(month,vl_1_date, '{endDate}') >= 12) then true else false end,t2.person_id,null)"
+                "expression": "if(case when (cur_arv_meds is not null and vl_1 > 1000) and (timestampdiff(day,vl_1_date, '{endDate}') >= 90) then true when (timestampdiff(month,arv_start_date, '{endDate}') <= 12) and (vl_1_date is null or timestampdiff(month,vl_1_date, '{endDate}') >= 6)  and (timestampdiff(month,arv_start_date, '{endDate}')>=6) then true when (timestampdiff(month,arv_start_date, '{endDate}') >= 12) and (vl_1_date is null or timestampdiff(month,vl_1_date, '{endDate}') >= 12) then true else false end,1,0)"
             }
         },
         {

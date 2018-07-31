@@ -30,7 +30,12 @@ export class hivComparativeOverviewService {
     }
     getPatientListReport(reportParams) {
         let self = this;
-       
+        let endDate = reportParams.endDate.split('T')[0];
+        let startDate = reportParams.startDate.split('T')[0];
+        reportParams.endDate = endDate;
+        reportParams.startDate = startDate;
+        let locations = reportParams.locations.split(',');
+        reportParams.locations = locations;
         return new Promise(function (resolve, reject) {
             //TODO: Do some pre processing
             let report = new PatientlistMysqlReport('clinicHivComparativeOverviewAggregate', reportParams)

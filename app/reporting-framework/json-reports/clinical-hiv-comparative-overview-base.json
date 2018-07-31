@@ -6,32 +6,15 @@
     "uses": [],
     "sources": [
         {
-            "table": "etl.flat_hiv_summary_v15b",
+            "table": "etl.hiv_monthly_report_dataset",
             "alias": "fhs"
-        },
-        {
-            "table": "etl.dates",
-            "alias": "t2",
-            "join": {
-                "type": "INNER",
-                "joinCondition": "date(fhs.encounter_datetime) <= date(t2.endDate)"
-            }
-        },
-        
+        },        
         {
             "table": "amrs.orders",
             "alias": "orders",
             "join": {
                 "type": "LEFT",
                 "joinCondition": "orders.voided=0 and fhs.encounter_id=orders.encounter_id"
-            }
-        },
-        {
-            "table": "amrs.person",
-            "alias": "t3",
-            "join": {
-                "type": "INNER",
-                "joinCondition": "fhs.person_id = t3.person_id"
             }
         }
     ],
@@ -56,7 +39,7 @@
             "alias": "currently_in_care_total",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(case when date(fhs.death_date) <= t2.endDate or (date(outreach_death_date_bncd) <= t2.endDate and date(outreach_date_bncd) <= t2.endDate) then null when fhs.transfer_out is not  null or  (outreach_patient_care_status_bncd in (1287,1594,9068,9504,1285) and date(outreach_date_bncd) <=  t2.endDate) or (transfer_transfer_out_bncd is not null and date(transfer_date_bncd) <=  t2.endDate) then null when fhs.patient_care_status in (9083) or (outreach_patient_care_status_bncd in (9083) and date(outreach_date_bncd) <=  t2.endDate) then null when (outreach_patient_care_status_bncd in (9036) and date(outreach_date_bncd) <=  t2.endDate) or fhs.patient_care_status in (9036) then null when  timestampdiff(day, if(fhs.rtc_date, fhs.rtc_date, DATE_ADD(fhs.encounter_datetime, INTERVAL 30 DAY)), t2.endDate) <= 90 then 1 end,1,null)"
+                "expression": "case when status='active' then 1 else null end"
             }
         },
         {
@@ -64,7 +47,7 @@
             "alias": "on_art_total",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(encounter_datetime >= arv_start_date,1,null)"
+                "expression": "case when on_art_this_month=1 and status='active' then 1 else null end"
             }
         },
         {
@@ -72,7 +55,7 @@
             "alias": "not_on_art_total",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if((encounter_datetime < arv_start_date  or arv_start_date is null),1,null)"
+                "expression": "case when on_art_this_month=0 and status='active' then 1 else null end"
             }
         },
         {
@@ -80,7 +63,7 @@
             "alias": "patients_requiring_vl",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(timestampdiff(month,arv_start_date,encounter_datetime) >= 6,1,null)"
+                "expression": "case when eligible_for_vl=1 AND status = 'active' then 1 else null end"
             }
         },
         {
@@ -88,7 +71,7 @@
             "alias": "tested_appropriately",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(timestampdiff(month, arv_start_date, encounter_datetime) >= 6 and timestampdiff(day, date(vl_1_date), date(t2.endDate)) <= 365,1,null)"
+                "expression": "if(timestampdiff(month, arv_start_date, encounter_date) >= 6 and timestampdiff(day, date(vl_1_date), date(fhs.endDate)) <= 365,1,null)"
             }
         },
         {
@@ -96,7 +79,7 @@
             "alias": "not_tested_appropriately",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(timestampdiff(month, arv_start_date, encounter_datetime) >= 6 and (timestampdiff(day,vl_1_date, date(t2.endDate)) > 365 or vl_1_date is null),1,null)"
+                "expression": "if(timestampdiff(month, arv_start_date, encounter_date) >= 6 and (timestampdiff(day,vl_1_date, date(fhs.endDate)) > 365 or vl_1_date is null),1,null)"
             }
         },
         {
@@ -104,7 +87,7 @@
             "alias": "due_for_annual_vl",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(timestampdiff(month, arv_start_date, encounter_datetime) >= 6 and (DATE_ADD(vl_1_date, INTERVAL 1 YEAR)  between  DATE_FORMAT(t2.endDate,'%Y-%m-01') and t2.endDate) and (orders.date_created is null or orders.concept_id!=856),1,null)"
+                "expression": "case when vl_in_past_year=0  AND status = 'active' then 1 else null end"
             }
         },
         {
@@ -112,7 +95,7 @@
             "alias": "pending_vl_orders",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(orders.concept_id=856 and (date(orders.date_created)  between  DATE_FORMAT(t2.endDate,'%Y-%m-01') and t2.endDate) and date(vl_1_date) != date(orders.date_created) and  date(vl_1_date) < DATE_FORMAT(t2.endDate,'%Y-%m-01'),1,null)"
+                "expression": "if(orders.concept_id=856 and (date(orders.date_created)  between  DATE_FORMAT(fhs.endDate,'%Y-%m-01') and fhs.endDate) and date(vl_1_date) != date(orders.date_created) and  date(vl_1_date) < DATE_FORMAT(fhs.endDate,'%Y-%m-01'),1,null)"
             }
         },
         {
@@ -120,7 +103,7 @@
             "alias": "missing_vl_order",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(timestampdiff(month, arv_start_date, encounter_datetime) >= 6 and (timestampdiff(day,vl_1_date, date(t2.endDate)) > 365 or vl_1_date is null) and (orders.date_created is null or orders.concept_id!=856),1,null)"
+                "expression": "if(timestampdiff(month, arv_start_date, encounter_date) >= 6 and (timestampdiff(day,vl_1_date, date(fhs.endDate)) > 365 or vl_1_date is null) and (orders.date_created is null or orders.concept_id!=856),1,null)"
             }
         },
         {
@@ -128,7 +111,7 @@
             "alias": "virally_suppressed",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(timestampdiff(month,arv_start_date,encounter_datetime) >= 6 and timestampdiff(day, date(vl_1_date), date(t2.endDate)) <= 365 and vl_1 < 1000,1,null)"
+                "expression": "if(timestampdiff(month,arv_start_date,encounter_date) >= 6 and timestampdiff(day, date(vl_1_date), date(fhs.endDate)) <= 365 and vl_1 < 1000,1,null)"
             }
         },
         {
@@ -136,23 +119,23 @@
             "alias": "not_virally_suppressed",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(timestampdiff(month,arv_start_date,encounter_datetime) >= 6 and timestampdiff(day, date(vl_1_date), date(t2.endDate)) <= 365 and vl_1 >= 1000,1,null)"
+                "expression": "if(timestampdiff(month,arv_start_date,encounter_date) >= 6 and timestampdiff(day, date(vl_1_date), date(fhs.endDate)) <= 365 and vl_1 >= 1000,1,null)"
             }
         },
         {
             "type": "simple_column",
             "alias": "reporting_date",
-            "column": "t2.endDate"
+            "column": "fhs.endDate"
         },
         {
             "type": "simple_column",
             "alias": "endDate",
-            "column": "t2.endDate"
+            "column": "fhs.endDate"
         },
         {
             "type": "simple_column",
             "alias": "end_date",
-            "column": "date(t2.endDate)"
+            "column": "date(fhs.endDate)"
         },
         {
             "type": "simple_column",
@@ -172,46 +155,31 @@
         {
             "type": "simple_column",
             "alias": "reporting_month",
-            "column": "date_format(t2.endDate, '%Y/%m')"
+            "column": "date_format(fhs.endDate, '%Y/%m')"
         }
     ],
     "indexDirectives": [
         {
           "type": "force",
-          "indexList": ["loc_id_enc_date_next_clinic"]
+          "indexList": ["endDate_location_id"]
         }],
     "filters": {
         "conditionJoinOperator": "and",
         "conditions": [
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "t2.endDate >= date(?)",
+                "conditionExpression": "fhs.endDate >= date(?)",
                 "parameterName": "startDate"
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "t2.endDate <= date(?)",
+                "conditionExpression": "fhs.endDate <= date(?)",
                 "parameterName": "endDate"
             },
             {
                 "filterType": "tableColumns",
                 "conditionExpression": "fhs.location_id in ?",
                 "parameterName": "locations"
-            },
-            {
-                "filterType": "tableColumns",
-                "conditionExpression": "fhs.is_clinical_encounter=1",
-                "parameterName": ""
-            },
-            {
-                "filterType": "tableColumns",
-                "conditionExpression": "case when date(fhs.death_date) <= t2.endDate or (date(outreach_death_date_bncd) <= t2.endDate and date(outreach_date_bncd) <= t2.endDate) then false when fhs.transfer_out is not  null or  (outreach_patient_care_status_bncd in (1287,1594,9068,9504,1285) and date(outreach_date_bncd) <=  t2.endDate) or (transfer_transfer_out_bncd is not null and date(transfer_date_bncd) <=  t2.endDate) then null when fhs.patient_care_status in (9083) or (outreach_patient_care_status_bncd in (9083) and date(outreach_date_bncd) <=  t2.endDate) then null when (outreach_patient_care_status_bncd in (9036) and date(outreach_date_bncd) <=  t2.endDate) or fhs.patient_care_status in (9036) then null when  timestampdiff(day, if(fhs.rtc_date, fhs.rtc_date, DATE_ADD(fhs.encounter_datetime, INTERVAL 30 DAY)), t2.endDate) <= 90 then 1 end",
-                "parameterName": ""
-            },
-            {
-                "filterType": "tableColumns",
-                "conditionExpression": "(fhs.next_clinical_datetime_hiv is null or date(fhs.next_clinical_datetime_hiv) > t2.endDate)",
-                "parameterName": ""
             }
         ]
     }

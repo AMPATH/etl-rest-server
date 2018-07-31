@@ -49,6 +49,12 @@ export class HivSummaryIndicatorsService {
     }
     getPatientListReport(reportParams) {
         let self = this;
+        let gender = reportParams.gender.split(',');
+        let locations = reportParams.locationUuids.split(',');
+        reportParams.locationUuids = locations;
+        reportParams.gender = gender;
+        reportParams.limitParam = reportParams.limit;
+        reportParams.offSetParam = reportParams.startIndex;
         let report = new PatientlistMysqlReport('hivSummaryBaseAggregate', reportParams)
         return new Promise(function (resolve, reject) {
             //TODO: Do some pre processing

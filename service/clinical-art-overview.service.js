@@ -27,10 +27,11 @@ export class clinicalArtOverviewService {
     }
     getPatientListReport(reportParams) {
         let self = this;
+        let indicators = reportParams.indicator.split(',');
         let report = new PatientlistMysqlReport('clinicalArtOverviewAggregeate', reportParams)
         return new Promise(function (resolve, reject) {
             //TODO: Do some pre processing
-            Promise.join(report.generatePatientListReport(reportParams),
+            Promise.join(report.generatePatientListReport(indicators),
                 (result) => {
                     let returnedResult = {};
                     returnedResult.schemas = result.schemas;

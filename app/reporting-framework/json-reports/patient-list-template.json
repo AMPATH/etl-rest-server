@@ -32,6 +32,14 @@
             "column": "t1.uuid"
         },
         {
+            "type": "derived_column",
+            "alias": "uuid",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "t1.uuid"
+            }
+        },
+        {
             "type": "simple_column",
             "alias": "person_id",
             "column": "t1.person_id"
