@@ -17,7 +17,9 @@
         CC_HPI: 'a89ffbf4-1350-11df-a1f1-0026b9348838',
         ASSESSMENT: '23f710cc-7f9c-4255-9b6b-c3e240215dba',
         TB_PROPHY_PLAN: 'a89c1cfa-1350-11df-a1f1-0026b9348838',
-        OTHER_ASSESSMENT: '5e4dc798-2cce-4a1a-97e9-bcf22d64b07c'
+        OTHER_ASSESSMENT: '5e4dc798-2cce-4a1a-97e9-bcf22d64b07c',
+        ADHERENCE_NOTES: 'd9390b4c-11c5-4005-822e-d72dea27ba7f',
+        ADH_NOTES: '2b2d7085-6065-4a39-8955-4568b1ccfaba'
     };
 
     var encOrder = {
@@ -156,6 +158,7 @@
             ccHpi: [],
             assessment: [],
             otherAssessment: [],
+            adherenceNotes: [],
             vitals: {
                 weight: noInfo,
                 height: noInfo,
@@ -192,6 +195,7 @@
 
         //Get the providers & regimens
         if (Array.isArray(encounters) && !_.isEmpty(encounters)) {
+
             note.providers = _getProviders(encounters);
 
             // Get CC/HPI & Assessment
@@ -210,12 +214,21 @@
             note.assessment.sort(function(ass1, ass2) {
                 return moment(ass1.obsDatetime).diff(ass2.obsDatetime);
             });
+            
             note.otherAssessment = _findTextObsValue(encounters, CONCEPT_UUIDS.OTHER_ASSESSMENT,
                 __findObsWithGivenConcept);
             // Sort assessment
             note.otherAssessment.sort(function(ass1, ass2) {
                 return moment(ass1.obsDatetime).diff(ass2.obsDatetime);
             });
+
+            note.adherenceNotes = _findTextObsValue(encounters, CONCEPT_UUIDS.ADHERENCE_NOTES,
+                __findObsWithGivenConcept);
+            // Sort assessment
+            note.adherenceNotes.sort(function(ass1, ass2) {
+                return moment(ass1.obsDatetime).diff(ass2.obsDatetime);
+            });
+
 
             // Get TB prophylaxis
             note.tbProphylaxisPlan = _constructTBProphylaxisPlan(encounters, hivSummary,
@@ -293,11 +306,22 @@
     function __findObsWithGivenConcept(obsArray, conceptUuid, grouper) {
         var grouper = grouper || false;
         var found = null;
+
         if (grouper) {
             found = [];
             _.each(obsArray, function(obs) {
-                if (obs.groupMembers !== null && obs.concept !== null && obs.concept.uuid === conceptUuid) {
-                    found.push(obs);
+                if (obs.groupMembers !== null || obs.concept !== null && obs.concept.uuid === conceptUuid) {
+                    _.each(obs.groupMembers, function(ob) {
+                        if (ob.concept !== null && ob.concept.name.uuid === CONCEPT_UUIDS.ADH_NOTES) {
+                            var foo = {
+                                uuid: ob.uuid,
+                                obsDatetime: ob.obsDatetime,
+                                concept: ob.concept,
+                                value: ob.value
+                            };
+                            found.push(foo);
+                        }
+                    });
                 }
             });
         } else {
@@ -311,16 +335,32 @@
 
     function _findTextObsValue(encArray, conceptUuid, obsfinder) {
         var values = [];
+        var grouper = false;
 
         _.each(encArray, function(enc) {
-            var ret = obsfinder(enc.obs, conceptUuid);
+            if (conceptUuid === CONCEPT_UUIDS.ADHERENCE_NOTES) {
+                grouper = true;
+            }
+            var ret = obsfinder(enc.obs, conceptUuid, grouper);
             if (ret !== null && !_.isEmpty(ret)) {
-                var value = {
-                    obsDatetime: ret.obsDatetime || enc.encounterDatetime,
-                    encounterType: enc.encounterType.display || '',
-                    value: ret.value
-                };
-                values.push(value);
+                if (grouper) {
+                    _.each(ret, function(v) {
+                        var value = {
+                            obsDatetime: ret.obsDatetime || enc.encounterDatetime,
+                            encounterType: enc.encounterType.display || '',
+                            value: v.value
+                        };
+                        values.push(value);
+                    });
+                    
+                } else {
+                    var value = {
+                        obsDatetime: ret.obsDatetime || enc.encounterDatetime,
+                        encounterType: enc.encounterType.display || '',
+                        value: ret.value
+                    };
+                    values.push(value);
+                }
             }
         });
         return values;
