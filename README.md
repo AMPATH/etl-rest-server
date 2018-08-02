@@ -45,6 +45,31 @@ With the following content
 }
 
 ```
+Create a kibana-dashboards.config.json file inside conf folder
+
+```$ touch kibana-dashboards.config.json```
+
+With the following content
+
+``json
+ [
+   {
+            "id": 1, 
+            "title": "Dashboard Title",
+            "department": "Department Name",
+            "width": "99%",
+            "height": "1680",
+            "description": "Description of Dashboard",
+            "url": "url of dashboard",
+            "allowedDashboards": [
+                "clinic", "data-analytics"
+            ]
+  }
+]
+
+```
+
+
 You can set ```tls:false``` if you don't care about https and don't provide the keys but if you set
 it to true you have to provide the keys.
 

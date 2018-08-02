@@ -1,5 +1,6 @@
 node_modules/
 conf/config.json
+conf/kibana-dashboards.config.json
 conf_copy/
 .idea/**
 .vscode/

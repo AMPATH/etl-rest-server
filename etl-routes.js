@@ -81,7 +81,9 @@ import {
 
 import {
     Moh731Report
-} from './app/reporting-framework/hiv/moh-731.report'
+} from './app/reporting-framework/hiv/moh-731.report';
+
+var dashboardService = require('./dash-board/dashboards.service');
 
 module.exports = function () {
 
@@ -3712,7 +3714,30 @@ module.exports = function () {
                 notes: "Api endpoint that post comments on a particular image",
                 tags: ['api']
             }
-        }
+        },
+        {
+            method: 'GET',
+            path: '/etl/kibana-dashboards',
+            config: {
+                auth: 'simple',
+                plugins: {},
+                handler: function (request, reply) {
+                    reply(dashboardService.getDashboard());
+                },
+                description: 'Get a list of Kibana Dashboards',
+                notes: 'Returns a  list of Kibana Dashboards',
+                tags: ['api'],
+                validate: {
+                    options: {
+                        allowUnknown: true
+                    },
+                    params: {
+    
+                    }
+                }
+            }
+       }
+
     ];
 
     return routes;
