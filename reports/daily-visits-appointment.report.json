@@ -111,6 +111,11 @@
         "expression": "t1.encounter_type != 99999",
         "processForce": true,
         "parameter": ""
+      },
+      {
+        "expression": "t1.encounter_type !=116",
+        "processForce": true,
+        "parameter": ""
       }
     ],
     "groupClause": [
