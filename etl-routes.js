@@ -2401,6 +2401,7 @@ module.exports = function () {
                                 service.getAggregateReport(reportParams).then((result) => {
                                     reply(result);
                                 }).catch((error) => {
+                                    console.error('Error loading HIV Summary:', error)
                                     reply(error);
                                 });
                             });
