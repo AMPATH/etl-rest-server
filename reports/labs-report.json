@@ -84,7 +84,7 @@
            "t1.cur_arv_line",
            "t1.cur_arv_meds",
            "t1.arv_first_regimen",
-           "date_format(t1.encounter_datetime,'%d-%m-%Y') as last_clinical_encounter_datetime "
+           "case when (t1.is_clinical_encounter = 1) THEN DATE_FORMAT(t1.encounter_datetime, '%d-%m-%Y') end as last_clinical_encounter_datetime"
          ]
     }
 ]

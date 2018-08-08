@@ -21,10 +21,10 @@ module.exports = function () {
     function getPatientHivSummary(request, callback) {
         var uuid = request.params.uuid;
         var order = helpers.getSortOrder(request.query.order);
-        var includeNonClinicalEncounter = Boolean(true || false);
-        var whereClause = includeNonClinicalEncounter === true ? ["uuid = ?",
+        var includeNonClinicalEncounter = request.params.includeNonClinicalEncounter;
+        var whereClause = includeNonClinicalEncounter === false ? ["uuid = ?",
             uuid
-        ] : ["uuid = ?  and t1.encounter_type in (1,2,3,4,17,21,110,117,99999)", uuid];
+        ] : ["uuid = ?  and t1.encounter_type in (1,2,3,4,10,14,15,17,19,26,32,33,34,47,105,106,112,113,114,115,117,120,127,128,129)", uuid];
         var queryParts = {
             columns: request.query.fields || "*",
             table: "etl.flat_hiv_summary",
