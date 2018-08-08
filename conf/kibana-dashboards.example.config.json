@@ -1,0 +1,15 @@
+[
+    {
+            "id": 1, 
+            "title": "Dashboard Title",
+            "department": "hiv",
+            "width": "99%",
+            "height": "1680",
+            "description": "MOH 731 Monthly Analysis by Month",
+            "url": "http://dashboard-url",
+            "allowedDashboards": [
+                "clinic", "data-analytics"
+            ]
+    }
+]
+    
