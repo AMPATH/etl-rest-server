@@ -63,6 +63,7 @@
         ccHpi: [],
         assessment: [],
         otherAssessment: [],
+        adherenceNotes: [],
         vitals: {
           weight: vitals.weight,
           height: vitals.height,
@@ -106,6 +107,7 @@
             ccHpi: [],
             assessment: [],
             otherAssessment: [],
+            adherenceNotes: [],
             vitals: {
               weight: '',
               height: '',
