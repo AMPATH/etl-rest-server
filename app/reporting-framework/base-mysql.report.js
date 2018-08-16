@@ -33,6 +33,7 @@ import * as ever_on_art_base from './json-reports/ever-on-art-base.json';
 import * as referral_patient_list_template from './json-reports/referral-patient-list-template.json';
 import * as referral_dataset_base from './json-reports/referral-dataset-base.json';
 import * as referral_aggregate from './json-reports/referral-aggregate.json';
+import * as cdm_dataset_base from './json-reports/cdm/cdm-dataset-base.json';
 
 import * as starting_art_aggregation_age15 from './json-reports/starting-art-aggregation-age15.json';
 import * as starting_art_base_age15 from './json-reports/starting-art-base-age15.json';
@@ -71,8 +72,8 @@ export class BaseMysqlReport{
                         .then((sqlQuery) => {
                             // console.log(sqlQuery);
                             // allow user to use 'null' as parameter values
-                            sqlQuery = sqlQuery.replace(/\'null\'/g, "null");
-                            that.reportQuery = sqlQuery;
+                            sqlQuery=sqlQuery.replace(/\'null\'/g,"null");
+                            that.reportQuery = sqlQuery;  
                             // run query
                             that.executeReportQuery(that.reportQuery)
                                 .then((result) => {
@@ -244,7 +245,11 @@ export class BaseMysqlReport{
                     cervicalCancerMonthlyReportBase: cervical_cancer_monthly_screening_summary_base
                 });
                 break;
-
+                case 'cdmPatientSummary':
+                    resolve({
+                        main: cdm_dataset_base
+                    });
+                    break;
                 default:
                     reject('Unknown report ', reportName);
                     break;
