@@ -82,6 +82,10 @@ import * as breast_cancer_patient_list_template from './json-reports/breast-canc
 import * as cervical_cancer_monthly_screening_summary_aggregate from './json-reports/cervical-cancer-monthly-screening-summary-aggregate.json';
 import * as cervical_cancer_monthly_screening_summary_base from './json-reports/cervical-cancer-monthly-screening-summary-base.json';
 
+import * as patient_program_enrollment_aggregate from './json-reports/patient-program-enrollment-aggregate.json';
+import * as patient_program_enrollment_base from './json-reports/patient-program-enrollment-base.json';
+import * as patient_program_enrollment_patient_list_template from './json-reports/patient-program-enrollment-patient-list-template.json';
+
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -358,7 +362,17 @@ export class BaseMysqlReport {
                         cervicalCancerMonthlyReportBase: cervical_cancer_monthly_screening_summary_base
                     });
                     break;
-
+                case 'patientProgramEnrollmentAggregate':
+                    resolve({
+                        main: patient_program_enrollment_aggregate,
+                        patientProgramEnrollmentBase: patient_program_enrollment_base
+                    });
+                    break;
+                case 'patient-program-enrollment-patient-list-template':
+                    resolve({
+                        main: patient_program_enrollment_patient_list_template
+                    });
+                    break;
                 case 'labsReportAggregate':
                     resolve({
                         main: labs_report_aggregate,

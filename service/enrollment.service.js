@@ -1,10 +1,18 @@
 var Promise = require("bluebird");
 var enrollmentDao = require('../dao/enrollment/enrollment-dao');
 const _ = require('lodash');
+import {
+    BaseMysqlReport
+} from '../app/reporting-framework/base-mysql.report';
+import { 
+    PatientlistMysqlReport 
+} from '../app/reporting-framework/patientlist-mysql.report';
 
 var def = {
     getActiveProgramEnrollmentSummary: getActiveProgramEnrollmentSummary,
-    getActiveProgramEnrollmentsPatientList: getActiveProgramEnrollmentsPatientList
+    getActiveProgramEnrollmentsPatientList: getActiveProgramEnrollmentsPatientList,
+    getPatientListReport: getPatientListReport,
+    getAggregateReport: getAggregateReport
 };
 
 module.exports = def;
@@ -73,6 +81,49 @@ function getActiveProgramEnrollmentsPatientList(params){
 
 
 }
+
+function getAggregateReport(reportParams) {
+    return new Promise(function (resolve, reject) {
+
+            console.log('ReportParams', reportParams);
+
+            let report = new BaseMysqlReport('patientProgramEnrollmentAggregate', reportParams.requestParams);
+
+        Promise.join(report.generateReport(),
+            (results) => {
+                let result =results.results.results;
+                results.size =result?result.length:0;
+                results.result=result;                    
+                delete results['results'];
+                resolve(results);
+                //TODO Do some post processing
+            }).catch((errors) => {
+                reject(errors);
+            });
+    });
+}
+function getPatientListReport(reportParams) {
+
+    let indicators = [];
+    
+   
+    let report = new  PatientlistMysqlReport('patientProgramEnrollmentAggregate', reportParams);
+    
+
+    return new Promise(function (resolve, reject) {
+        //TODO: Do some pre processing
+        Promise.join(report.generatePatientListReport(indicators),
+            (results) => {
+                resolve(results.results);
+            }).catch((errors) => {
+                console.log('Error', errors);
+                reject(errors);
+            });
+    });
+
+}
+
+
 
 
 

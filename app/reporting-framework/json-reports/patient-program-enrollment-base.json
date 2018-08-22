@@ -1,0 +1,115 @@
+{
+    "name": "patientProgramEnrollmentBase",
+    "version": "1.0",
+    "tag": "",
+    "description": "",
+    "uses": [],
+    "sources": [
+        {
+            "table": "amrs.patient_program",
+            "alias": "pp"
+        },
+        {
+            "table": "amrs.program",
+            "alias": "s1",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "pp.program_id = s1.program_id"
+            }
+        },
+        {
+            "table": "amrs.person",
+            "alias": "p1",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "p1.person_id = pp.patient_id"
+            }
+        },
+        {
+            "table": "amrs.person_attribute",
+            "alias": "t5",
+            "join": {
+                "type": "LEFT OUTER JOIN",
+                "joinCondition": "p1.person_id = t5.person_id AND t5.person_attribute_type_id = 28 AND t5.voided = 0"
+            }
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias": "patient_program_id",
+            "column": "pp.patient_program_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "program_name",
+            "column": "s1.name"
+        },
+        {
+            "type": "simple_column",
+            "alias": "program_uuid",
+            "column": "s1.uuid"
+        },
+        {
+            "type": "simple_column",
+            "alias": "program_id",
+            "column": "pp.program_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "patient_id",
+            "column": "pp.patient_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "location_id",
+            "column": "pp.location_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "enrolled_date",
+            "column": "pp.date_enrolled"
+        },
+        {
+            "type": "simple_column",
+            "alias": "enrolled_date",
+            "column": "pp.date_enrolled"
+        }
+        
+    ],
+    "filters": {
+        "conditionJoinOperator": "and",
+        "conditions": [
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "pp.program_id IN ?",
+                "parameterName": "programTypeIds"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "pp.location_id IN ?",
+                "parameterName": "locationIds"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "t5.value IS NULL OR t5.value = 'false'",
+                "parameterName": ""
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "(date_completed IS NULL || date_completed <= ?)",
+                "parameterName": "endDate"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "DATE(date_enrolled) >= ?",
+                "parameterName": "startDate"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "(p1.death_date IS NULL || p1.death_date >= ?)",
+                "parameterName": "endDate"
+            }
+        ]
+    }
+}

@@ -3420,16 +3420,25 @@ module.exports = function () {
                     handler: function (request, reply) {
                         resolveLocationUuidToId.resolveLocationUuidsParamsToIds(request.query)
                             .then((result) => {
-
                                 let locationIds = result;
-                                request.query.locations = locationIds;
+                                if(locationIds.length > 0){
+                                    request.query.locationIds = locationIds;
+                                }
+                                
 
                                 resolveProgramEnrollmentFilterParams.resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
                                     .then((resolve) => {
 
+                                        console.log('Resolve',request.query);
+
                                         let programTypeIds = resolve.programTypeIds;
                                         request.query.programTypeIds = programTypeIds;
-                                        enrollmentService.getActiveProgramEnrollmentSummary(request.query)
+                                        let requestParams = Object.assign({}, request.query, request.params);
+                                        let reportParams = etlHelpers.getReportParams('patient-program-enrollment',
+                                        ['startDate', 'endDate', 'programType','programTypeIds','locationIds'], requestParams);
+                                        
+                                        console.log('reportParams', reportParams);
+                                        enrollmentService.getAggregateReport(reportParams)
                                             .then((result) => {
                                                 reply(result);
 
@@ -3517,14 +3526,17 @@ module.exports = function () {
                             .then((result) => {
 
                                 let locationIds = result;
-                                request.query.locations = locationIds;
+                                if(locationIds.length > 0){
+                                    request.query.locationIds = locationIds;
+                                }
 
                                 resolveProgramEnrollmentFilterParams.resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
                                     .then((resolve) => {
 
                                         let programTypeIds = resolve.programTypeIds;
                                         request.query.programTypeIds = programTypeIds;
-                                        enrollmentService.getActiveProgramEnrollmentsPatientList(request.query)
+                                        let requestParams = Object.assign({}, request.query, request.params);
+                                        enrollmentService.getPatientListReport(requestParams)
                                             .then((result) => {
                                                 reply(result);
 
