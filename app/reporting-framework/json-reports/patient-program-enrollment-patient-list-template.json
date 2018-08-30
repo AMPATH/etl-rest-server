@@ -1,0 +1,64 @@
+{
+    "name": "patient-program-enrollment-patient-list-template",
+    "version": "1.0",
+    "tag": "patient_list_template",
+    "description": "Patient list template",
+    "sources": [
+        {
+            "table": "amrs.person",
+            "alias": "t1"
+        },
+        {
+            "table": "amrs.person_name",
+            "alias": "person_name",
+            "join": {
+                "type": "INNER",
+                "joinCondition": "t1.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0)"
+            }
+        },
+        {
+            "table": "amrs.patient_identifier",
+            "alias": "id",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "t1.person_id = id.patient_id AND (id.voided IS NULL || id.voided = 0)"
+            }
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias": "person_id",
+            "column": "t1.person_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "person_uuid",
+            "column": "t1.uuid"
+        },
+        {
+            "type": "derived_column",
+            "alias": "patient_name",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": " CONCAT(COALESCE(person_name.given_name, ''), ' ', COALESCE(person_name.middle_name, ''), ' ', COALESCE(person_name.family_name, ''))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "patient_identifier",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": " GROUP_CONCAT(DISTINCT id.identifier SEPARATOR ', ')"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias": "death_date",
+            "column": "p1.death_date"
+        }
+    ],
+    "groupBy":{
+        "columns":["t1.person_id"]
+    }
+}

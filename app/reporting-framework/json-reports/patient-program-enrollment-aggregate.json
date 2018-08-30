@@ -1,0 +1,72 @@
+{
+    "name": "patientProgramEnrollmentAggregate",
+    "version": "1.0",
+    "tag": "",
+    "description": "",
+    "uses": [
+        {
+            "name": "patientProgramEnrollmentBase",
+            "version": "1.0",
+            "type": "dataset_def"
+        }
+    ],
+    "sources": [
+        {
+            "dataSet": "patientProgramEnrollmentBase",
+            "alias": "ppe"
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias": "patient_program_id",
+            "column": "ppe.patient_program_id"
+        },
+        {
+            "type": "derived_column",
+            "alias": "enrollment_count",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "COUNT(DISTINCT ppe.patient_program_id)"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias": "program_name",
+            "column": "ppe.program_name"
+        },
+        {
+            "type": "simple_column",
+            "alias": "program_uuid",
+            "column": "ppe.program_uuid"
+        },
+        {
+            "type": "simple_column",
+            "alias": "program_id",
+            "column": "ppe.program_id"
+        }
+    ],
+    "groupBy": {
+        "groupParam": "groupByParam",
+        "columns": [
+            "program_id"
+        ],
+        "excludeParam": "excludeParam"
+    },
+    "transFormDirectives":{
+    },
+    "dynamicJsonQueryGenerationDirectives": {
+        "patientListGenerator": {
+            "useTemplate": "patient-program-enrollment-patient-list-template",
+            "useTemplateVersion": "1.0",
+            "generatingDirectives": {
+                "joinDirectives": {
+                    "joinType": "INNER",
+                    "joinCondition": "<<base_column>> = <<template_column>>",
+                    "baseColumn": "patient_id",
+                    "templateColumn": "person_id"
+                }
+            }
+        }
+    }
+}

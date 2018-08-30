@@ -72,7 +72,7 @@ function getActiveProgramEnrollmentSummary(params) {
 
 function getActiveProgramEnrollmentsPatientList(params) {
 
-    console.log('getActiveProgramEnrollmentsPatientList', params);
+    // console.log('getActiveProgramEnrollmentsPatientList', params);
 
 
     return new Promise(function (resolve, reject) {
@@ -137,10 +137,9 @@ function buildWhereClause(params){
 
     let whereClause =  [];
 
-    whereClause.push("(date_completed IS NULL || date_completed > '" + params.endDate + "')");
+    whereClause.push("(date_completed IS NULL || date_completed <= '" + params.endDate + "')");
     whereClause.push("AND DATE(date_enrolled) >= '" + params.startDate + "' ");
-    whereClause.push("AND date_enrolled <= '" + params.endDate +"' ");
-    whereClause.push("AND (p1.death_date IS NULL || p1.death_date < '" + params.endDate + "')");
+    whereClause.push("AND (p1.death_date IS NULL || p1.death_date >= '" + params.endDate + "')");
     whereClause.push("AND (t5.value IS NULL OR t5.value = 'false')");
 
     if(params.programTypeIds.length > 1 ){
