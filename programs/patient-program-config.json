@@ -562,6 +562,14 @@
           {
             "uuid": "81166f83-1ee6-486e-8f56-aca528fc0fc0",
             "display": "GENCONSULTATION"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -597,6 +605,14 @@
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -656,6 +672,14 @@
           {
             "uuid": "6a50f1d5-9f33-41ae-b2e7-7fd8267c181e",
             "display": "HTNDMREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -720,6 +744,14 @@
           {
             "uuid": "6a50f1d5-9f33-41ae-b2e7-7fd8267c181e",
             "display": "HTNDMREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -791,6 +823,14 @@
           {
             "uuid": "6a50f1d5-9f33-41ae-b2e7-7fd8267c181e",
             "display": "HTNDMREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -888,6 +928,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -920,6 +964,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -952,6 +1000,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -984,6 +1036,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -1016,6 +1072,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1132,6 +1192,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -1162,6 +1226,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           },
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
@@ -1345,6 +1413,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1428,6 +1500,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1512,6 +1588,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1539,6 +1619,14 @@
           {
             "uuid": "7cc419d5-b145-4315-a0a8-4614b710ff5f",
             "display": "SOCIALWORKSUPPORT"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1624,6 +1712,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -1654,6 +1746,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1731,6 +1831,10 @@
             "display": "POCLAB"
           },
           {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
+          },
+          {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
           }
@@ -1777,6 +1881,14 @@
           {
             "uuid": "e49a203a-068a-4d6b-b351-f40d9384170e",
             "display": "BREASTCANCERASSESSMENT"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1819,6 +1931,14 @@
           {
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1865,6 +1985,14 @@
           {
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
 
         ]
@@ -1903,6 +2031,14 @@
           {
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1936,6 +2072,14 @@
           {
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -1973,6 +2117,14 @@
           {
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2010,6 +2162,14 @@
           {
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2047,6 +2207,14 @@
           {
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2187,6 +2355,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -2217,6 +2389,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           },
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
@@ -2291,6 +2467,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2359,6 +2539,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2424,6 +2612,14 @@
           },{
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
 
         ]
@@ -2519,6 +2715,14 @@
           {
             "uuid": "fa49ec8b-1f19-41b2-ade2-e31ae291196b",
             "display": "DERMINITIAL"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
 
         ]
@@ -2602,6 +2806,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       },
@@ -2633,6 +2845,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2715,6 +2935,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2745,6 +2969,14 @@
           {
             "uuid": "655c3451-172e-4c85-960a-392e4284ef92",
             "display": "PHARMACOVIGILANCEPEER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2804,6 +3036,14 @@
           {
             "uuid": "5e019c94-0f80-49b7-8593-28100eb4f787",
             "display": "HEIFOLLOWUP"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
@@ -2831,6 +3071,14 @@
           {
             "uuid": "3cd9dd0a-a5d1-4482-9f45-a0fea4f5e556",
             "display": "NUTRITIONENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+            "display": "INPATIENTPEER"
           }
         ]
       }
