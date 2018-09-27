@@ -126,6 +126,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -154,6 +162,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -186,6 +202,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -218,6 +242,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -245,6 +277,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -277,6 +317,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -309,6 +357,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -337,6 +393,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -369,6 +433,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -397,6 +469,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -412,6 +492,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -446,6 +534,14 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       }
@@ -1601,6 +1697,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -1631,6 +1735,14 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       },
@@ -1655,6 +1767,14 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
           }
         ]
       }
