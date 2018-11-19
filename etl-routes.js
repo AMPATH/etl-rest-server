@@ -29,6 +29,7 @@ var resolveProgramEnrollmentFilterParams = require('./resolve-program-visit-enco
 var programVisitEncounterResolver = require('./resolve-program-visit-encounter-Ids/resolve-program-visit-encounter-idsv2');
 var imagingService = require('./service/radilogy-imaging.service');
 var oncologyReportsService = require('./oncology-reports/oncology-reports-service');
+var pocEidPayloadHelper =  require('./app/lab-integration/utils/poc-eid-payload-helper.js');
 import {
     MonthlyScheduleService
 } from './service/monthly-schedule-service';
@@ -103,6 +104,7 @@ import {
 import {
   PatientReferralService
 } from './service/patient-referral.service';
+
 
 module.exports = function () {
 
@@ -3238,6 +3240,26 @@ module.exports = function () {
                     },
                     handler: function (request, reply) {
                         dao.postLabOrderToEid(request, reply);
+                    }
+                }
+            },
+            {
+                method: 'POST',
+                path: '/etl/new-eid/order/{lab}',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewPatient
+                        }
+                    },
+                    handler: function (request, reply) {
+                        var rawPayload = JSON.parse(JSON.stringify(request.payload));
+                        pocEidPayloadHelper.generatePocToEidPayLoad(rawPayload).then((eidPayLoad) => {
+
+                        }).catch((error) => {
+                            console.error('ERROR', error);
+                        });
                     }
                 }
             },
