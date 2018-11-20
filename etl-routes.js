@@ -98,7 +98,10 @@ import {
 } from './app/reporting-framework/base-mysql.report';
 import {
     CDMReportingService
-} from './service/cdm/cdm-reporting.service'
+} from './service/cdm/cdm-reporting.service';
+var pocEidPayloadHelper = require('./app/lab-integration/utils/poc-eid-payload-helper.js');
+import { LabSyncService } from './app/lab-integration/lab-sync-service';
+import { LabClient } from './app/lab-integration/utils/lab-client';
 
 module.exports = function () {
 
@@ -1811,7 +1814,6 @@ module.exports = function () {
                      the rest request and query expression should be
                      /table/filter_column/filter/filter_value or
                      /table/filter_column/filter/filter_value?fields=(field1,field2,fieldn) or
-
                      */
                 }
             },
@@ -3059,7 +3061,21 @@ module.exports = function () {
                         }
                     },
                     handler: function (request, reply) {
-                        dao.postLabOrderToEid(request, reply);
+                        if (request.params.lab === 'ampath') {
+                            var rawPayload = JSON.parse(JSON.stringify(request.payload));
+                            pocEidPayloadHelper.generatePocToEidPayLoad(rawPayload).then((eidPayLoad) => {
+                                let client = new LabClient(config.hivLabSystem);
+                                return client.postLabPayload(eidPayLoad);
+                            }).then((result)=>{
+                                reply(result);
+                            }).catch((error) => {
+                                let errorObject = JSON.parse(error.error)
+                                console.log('Error',errorObject);
+                                reply(errorObject.error).code(error.statusCode);
+                            });
+                        } else {
+                            dao.postLabOrderToEid(request, reply);
+                        }
                     }
                 }
             },
@@ -3940,6 +3956,26 @@ module.exports = function () {
                     tags: ['api'],
                 }
 
+            },
+            {
+                method: 'GET',
+                path: '/etl/sync-patient-labs',
+                config: {
+                    auth: 'simple',
+                    handler: function (request, reply) {
+                        if (config.eidSyncOn === true) {
+                            let labSyncService = new LabSyncService();
+                            labSyncService.syncLabsByPatientUuid(request.query.patientUuid).then((result) => {
+                                reply(result);
+                            }).catch((error) => {
+                                console.log('Error',error);
+                                reply(Boom.notFound('Sorry, sync service temporarily unavailable.'));
+                            });
+                        }
+                        else
+                            reply(Boom.notImplemented('Sorry, sync service temporarily unavailable.'));
+                    }
+                }
             }
         ];
 
