@@ -3051,6 +3051,21 @@ module.exports = function () {
                 }
             },
             {
+                method: 'GET',
+                path: '/etl/sync-patient-labs',
+                config: {
+                    auth: 'simple',
+                    handler: function (request, reply) {
+                        if (config.eidSyncOn === true) {
+                            const labSyncService = new LabSyncService();
+                            labSyncService.syncAllLabsByPatientUuid(request.query.patientUuid, reply);
+                        }
+                        else
+                            reply(Boom.notImplemented('Sorry, sync service temporarily unavailable.'));
+                    }
+                }
+            },
+            {
                 method: 'POST',
                 path: '/etl/eid/order/{lab}',
                 config: {
@@ -3956,26 +3971,6 @@ module.exports = function () {
                     tags: ['api'],
                 }
 
-            },
-            {
-                method: 'GET',
-                path: '/etl/sync-patient-labs',
-                config: {
-                    auth: 'simple',
-                    handler: function (request, reply) {
-                        if (config.eidSyncOn === true) {
-                            let labSyncService = new LabSyncService();
-                            labSyncService.syncLabsByPatientUuid(request.query.patientUuid).then((result) => {
-                                reply(result);
-                            }).catch((error) => {
-                                console.log('Error',error);
-                                reply(Boom.notFound('Sorry, sync service temporarily unavailable.'));
-                            });
-                        }
-                        else
-                            reply(Boom.notImplemented('Sorry, sync service temporarily unavailable.'));
-                    }
-                }
             }
         ];
 
