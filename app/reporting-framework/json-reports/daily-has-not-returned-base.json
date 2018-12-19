@@ -3,15 +3,12 @@
     "version": "1.0",
     "tag": "",
     "description": "",
-    "uses": [
-        {
-            "name": "dailyHasNotReturnedCohort",
-            "version": "1.0",
-            "type": "dataset_def"
-        }
-    ],
-    "sources": [
-        {
+    "uses": [{
+        "name": "dailyHasNotReturnedCohort",
+        "version": "1.0",
+        "type": "dataset_def"
+    }],
+    "sources": [{
             "table": "etl.flat_appointment",
             "alias": "t2"
         },
@@ -48,8 +45,7 @@
             }
         }
     ],
-    "columns": [
-        {
+    "columns": [{
             "type": "simple_column",
             "alias": "person_id",
             "column": "t2.person_id"
@@ -83,8 +79,7 @@
     ],
     "filters": {
         "conditionJoinOperator": "and",
-        "conditions": [
-            {
+        "conditions": [{
                 "filterType": "tableColumns",
                 "conditionExpression": "t2.rtc_date >= ?",
                 "parameterName": "startDate"
@@ -131,7 +126,12 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression":  "t2.is_clinical = 1",
+                "conditionExpression": "t2.is_clinical = 1",
+                "parameterName": ""
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "DATE(max_rtc_date) < DATE(NOW())",
                 "parameterName": ""
             }
         ]
