@@ -6,7 +6,7 @@
     "uses": [],
     "sources": [
         {
-            "table": "etl.hiv_monthly_report_dataset_frozen",
+            "table": "etl.hiv_monthly_report_dataset_v1_2",
             "alias": "hmsd"
         },
         {
