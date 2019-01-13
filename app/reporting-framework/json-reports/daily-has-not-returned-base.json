@@ -131,6 +131,11 @@
             },
             {
                 "filterType": "tableColumns",
+                "conditionExpression": "DATE(max_rtc_date) < DATE(NOW())",
+                "parameterName": ""
+            },
+            {
+                "filterType": "tableColumns",
                 "conditionExpression":  "t2.is_clinical = 1",
                 "parameterName": ""
             }
