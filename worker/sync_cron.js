@@ -19,7 +19,6 @@ var App = {
         return _this.savePatientsWithResults(results);
       })
       .then(function (result) {
-
         logger.info('sync success: %s', JSON.stringify(result));
         logger.close();
         process.exit(1);
@@ -80,9 +79,7 @@ var App = {
       });
     });
   },
-
   savePatientsWithResults(results) {
-
     results = results.replace('[', "").replace(']', ""); // TODO - use regex
 
     var sql = 'replace into etl.eid_sync_queue(person_uuid) select distinct p.uuid from amrs.person p left join amrs.patient_identifier i on p.person_id = i.patient_id where identifier in (?)';
@@ -102,9 +99,7 @@ var App = {
   },
 
   getProcessArg(arg) {
-
     var val = null;
-
     var args = process.argv;
     _.each(args, function (row) {
       if (row.indexOf(arg) != -1) {
