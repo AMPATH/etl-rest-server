@@ -45,7 +45,7 @@ var Sync = {
     //   return;
     // }
 
-    // incase of server unavailability, postpone sync    
+    // incase of server unavailability, postpone sync
     if (moment().isBefore(Sync.nextSyncDateTime)) {
       console.log('Sync paused and will resume ' + Sync.nextSyncDateTime.fromNow());
       console.log('Sync will resume at ' + Sync.nextSyncDateTime.format());
@@ -115,6 +115,8 @@ var Sync = {
     for (var i = 0; i < data.length; i++) {
 
       var row = data[i];
+          console.log(row);
+
       list.push(Sync.syncSingleRecord(row.person_uuid));
     }
 
@@ -201,7 +203,6 @@ var Sync = {
       query: sql,
       sqlParams: [lst]
     }
-
     return new Promise(function (resolve, reject) {
       try {
         db.queryReportServer(qObject, function (result) {
@@ -217,5 +218,4 @@ var Sync = {
 }
 
 Sync.start();
-
 module.exports = Sync;
