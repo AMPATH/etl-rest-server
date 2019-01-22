@@ -77,9 +77,6 @@ var s = fs.createReadStream(input_file)
 
                 });
             }
-
-
-
         } catch (error) {
             console.error(error);
             // resume the readstream, possibly from a callback

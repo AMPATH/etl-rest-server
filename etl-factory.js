@@ -78,17 +78,12 @@ module.exports = function () {
 
         });
     }
-
-
-
-
     function resolveIndicators(reportName, result, requestIndicators) {
         _.each(reports, function (report) {
             if (report.name === reportName) {
                 _.each(report.indicatorHandlers, function (handler) {
                     indicatorHandlers[handler.processor](handler.indicators, result, requestIndicators);
                 });
-
             }
         });
         return result;
@@ -254,9 +249,6 @@ module.exports = function () {
         });
         return order;
     }
-
-
-  
 
     //converts a set of indicators into sql columns
     function indicatorsToColumns(report, countBy, requestParam) {

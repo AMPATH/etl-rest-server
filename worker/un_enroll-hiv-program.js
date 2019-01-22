@@ -50,6 +50,7 @@ var s = fs.createReadStream(input_file)
                 //JSON.stringify(createPayload(line));
                 var url = protocol + '://' + config.openmrs.host + ':' + config.openmrs.port + '/' + openmrsAppName + '/ws/rest/v1/programenrollment/' +
                     payload.uuid;
+                //remove property uuid from the payload object
                 delete payload['uuid'];
                 payload = JSON.stringify(payload);
 
@@ -57,7 +58,6 @@ var s = fs.createReadStream(input_file)
                 var auth = "Basic " + new Buffer(usernamePass).toString('base64');
 
                 var options = {
-
                     url: url,
                     data: payload,
                     headers: {
@@ -66,7 +66,6 @@ var s = fs.createReadStream(input_file)
                     },
                     method: 'POST'
                 };
-
                 curl.request(options, function (err, parts) {
 
                     if (err || (parts && JSON.parse(parts).error)) {
@@ -75,14 +74,11 @@ var s = fs.createReadStream(input_file)
                     } else {
                         console.log('updated enrollment location for program: ' + line);
                     }
-
                     // resume the readstream, possibly from a callback
                     s.resume();
 
                 });
             }
-
-
 
         } catch (error) {
             console.error(error);

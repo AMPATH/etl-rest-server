@@ -151,8 +151,6 @@ module.exports = function () {
               _updateJoins(join, s);
           }
       });
-
-
       if (queryParts.columns && queryParts.columns !== "*") {
           if (typeof queryParts.columns === "string") {
               // if (queryParts.columns.substring(0, 1) === "(")
