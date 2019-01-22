@@ -33,50 +33,48 @@ describe('ETL-AUTHORIZER TESTS', function() {
       //stub.restore();
       etlAuthorizer.setUser(undefined);
     });
-    
+
     it('should inject user mocks',
     function(){
         expect(userMocks).to.be.defined;
         expect(userSample).to.be.defined;
     });
-    
+
     it('should set user when setUser is called',
     function(){
         etlAuthorizer.setUser(userSample);
         expect(etlAuthorizer.getUser()).to.deep.equal(userSample);
     });
-    
-    it('should return true when a user has a certain privilege' + 
+
+    it('should return true when a user has a certain privilege' +
     ' and hasPrivilege is invoked ',
     function(){
         var toFind = userSample.privileges[2].display;
         var hasPrivilege =  etlAuthorizer.hasPrivilege(toFind);
-        expect(hasPrivilege).to.be.true;       
+        expect(hasPrivilege).to.be.true;
     });
-    
-    it('should always return true when a user is a super user' + 
+
+    it('should always return true when a user is a super user' +
     ' and hasPrivilege is invoked ',
     function(){
-        
+
         var userWithSuperUserRole =  userMocks.getMockedUser();
-        
+
         //add super user role
         var superUserRole = {
             uuid:'some-uuid',
             display: 'System Developer' //this is a super user role
         };
-        
         userWithSuperUserRole.roles.push(superUserRole);
-        
+
         //make privileges empty as is the case with super user roles
          userWithSuperUserRole.privileges = [];
-         
-         //set the user 
+
+         //set the user
          etlAuthorizer.setUser(userWithSuperUserRole);
-          
+
         var hasPrivilege =  etlAuthorizer.hasPrivilege('some random feature');
-        expect(hasPrivilege).to.be.true;       
+        expect(hasPrivilege).to.be.true;
     });
-    
-    
+
 });

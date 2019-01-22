@@ -14,5 +14,5 @@ RUN  cd /opt/etl && npm install
 ENV TZ=Africa/Nairobi
 RUN ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 RUN echo "cron.* /var/log/cron.log" >> /etc/rsyslog.conf
-RUN chmod +x /opt/etl/run.sh
-CMD /opt/etl/run.sh
+RUN chmod +x /opt/etl/run1.sh
+CMD /opt/etl/run1.sh

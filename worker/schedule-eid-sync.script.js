@@ -424,12 +424,10 @@ var service = {
     },
     emptyEidQueueErrors: function () {
         var sql = 'delete from etl.eid_sync_queue_errors';
-
         var queryObject = {
             query: sql,
             sqlParams: []
         };
-
         return new Promise(function (resolve, reject) {
             db.queryReportServer(queryObject, function (response) {
                 if (response.error) {
@@ -441,9 +439,7 @@ var service = {
         });
     },
     getProcessArg(arg) {
-
         var val = null;
-
         var args = process.argv;
         _.each(args, function (row) {
             if (row.indexOf(arg) != -1) {
@@ -473,7 +469,6 @@ var service = {
                 pass: config.emailNotification.sourcePassword // Your password
             }
         });
-
         var mailOptions = {
             from: config.emailNotification.sourceAddress, // sender address
             to: destination, // list of receivers
@@ -481,7 +476,6 @@ var service = {
             text: message //, // plaintext body
             // html: '<b>Hello world ✔</b>' // You can choose to send an HTML body instead
         };
-
         return new Promise(function (resolve, reject) {
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
@@ -492,10 +486,8 @@ var service = {
                     resolve(info.response);
                 };
             });
-
         });
     }
-
 };
 
 service.start();

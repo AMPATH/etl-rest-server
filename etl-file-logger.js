@@ -49,6 +49,5 @@ function logger(filePath) {
   logger.add(require('winston-daily-rotate-file'), {
     filename: filePath || 'server-request-logs.log'
   });
-
   return logger;
 }

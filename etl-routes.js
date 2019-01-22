@@ -107,6 +107,8 @@ import {
     PatientReferralService
 } from './service/patient-referral.service';
 
+import {auto_enroll} from './worker/auto-enroll-veremia.js'
+
 
 module.exports = function () {
 
@@ -3271,7 +3273,7 @@ module.exports = function () {
                                 }else{
                                    console.error('Undefined Lab Configuration');
                                 }
-                               
+
                             }).then((result)=>{
                                 reply(result);
                             }).catch((error) => {
@@ -4193,7 +4195,27 @@ module.exports = function () {
                     tags: ['api'],
                 }
 
+            },
+            {
+                method: 'GET',
+                path: '/etl/auto-enroll',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+
+                    },
+                    handler: function (request, reply) {
+                          auto_enroll.start();
+
+                    },
+                    description: 'Get cervical cancer monthly screening patient list based on location and time filters',
+                    notes: 'Returns details of patients who underwent cervical cancer screenings',
+                    tags: ['api'],
+                }
+
             }
+
+
         ];
 
     return routes;
