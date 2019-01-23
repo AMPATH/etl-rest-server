@@ -199,16 +199,15 @@ var App = {
   },
 
   init: function() {
-      cron.schedule('',function(){
+      cron.schedule('* * * * *',function(){
         try {
-          App.start()
+          App.start();
         } catch (e) {
           console.log(`Error occured when starting app ${e}`);
         }
       })
   }
 }
-
 App.init();
 
 //module.exports = App;
