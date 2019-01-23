@@ -8,10 +8,17 @@ const
   _ = require('underscore'),
   program_config = require('../programs/patient-program-config'),
   patient_programs = require('../dao/enrollment/enrollment-patient-program-dao'),
+<<<<<<< HEAD
   check_program_enrollment = require('../dao/enrollment/double-enrollment-check'),
   CronJob = require('cron').CronJob;
 const cron = require("node-cron");
 
+=======
+  check_program_enrollment = require('../dao/enrollment/double-enrollment-check');
+const cron = require("node-cron");
+
+
+>>>>>>> 17594d6af0c7242451664c96412aab482c9dbea2
 var App = {
 
   stateTracker: false,
@@ -30,8 +37,13 @@ var App = {
               console.log(err);
             })
         } else {
+<<<<<<< HEAD
           console.log('No data in the queue ');
           //  process.exit(1);
+=======
+          console.log('No data in the queue', new Date());
+          //process.exit(1);
+>>>>>>> 17594d6af0c7242451664c96412aab482c9dbea2
         }
       });
   },
@@ -139,7 +151,10 @@ var App = {
 
     }
     var protocol = config.openmrs.https ? 'https' : 'http';
+<<<<<<< HEAD
     ``
+=======
+>>>>>>> 17594d6af0c7242451664c96412aab482c9dbea2
     var url = protocol + '://' + config.openmrs.host + ':' + config.openmrs.port + '/' + openmrsAppName + '/ws/rest/v1/programenrollment/';
 
     var usernamePass = config.eidSyncCredentials.username + ":" + config.eidSyncCredentials.password;
@@ -199,10 +214,21 @@ var App = {
     });
   },
   init: function() {
+<<<<<<< HEAD
       } catch (e) {
         console.log(`Error starting the app ${e}`);
       }
     });
+=======
+      cron.schedule('*/5 * * * *',function(){
+        try {
+          console.log(`app started..`);
+          App.start()
+        } catch (e) {
+          console.log(`Error occured when starting app ${e}`);
+        }
+      })
+>>>>>>> 17594d6af0c7242451664c96412aab482c9dbea2
   }
 }
 
