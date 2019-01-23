@@ -10,6 +10,7 @@ const
   patient_programs = require('../dao/enrollment/enrollment-patient-program-dao'),
   check_program_enrollment = require('../dao/enrollment/double-enrollment-check'),
   CronJob = require('cron').CronJob;
+const cron = require("node-cron");
 
 var App = {
 
@@ -29,7 +30,8 @@ var App = {
               console.log(err);
             })
         } else {
-          process.exit(1);
+          console.log('No data in the queue ');
+          //  process.exit(1);
         }
       });
   },
@@ -136,7 +138,8 @@ var App = {
       dateEnrolled: dateEnrolled
 
     }
-    var protocol = config.openmrs.https ? 'https' : 'http';``
+    var protocol = config.openmrs.https ? 'https' : 'http';
+    ``
     var url = protocol + '://' + config.openmrs.host + ':' + config.openmrs.port + '/' + openmrsAppName + '/ws/rest/v1/programenrollment/';
 
     var usernamePass = config.eidSyncCredentials.username + ":" + config.eidSyncCredentials.password;
@@ -194,16 +197,19 @@ var App = {
         resolve(e);
       }
     });
+  },
+  init: function() {
+    cron.schedule('*/10 * * * * ', function() {
+      try {
+        console.log('App started');
+        App.start();
+      } catch (e) {
+        console.log(`Error starting the app ${e}`);
+      }
+    });
   }
 }
-new CronJob('*/5 * * * * *', function() {
-  try {
-    console.log('App started');
-    App.start();
-  } catch (e) {
-    console.log(`Error starting the app ${e}`);
-  }
-}, null, true, 'Africa/Nairobi');
 
+App.init();
 
-module.exports = App;
+//module.exports = App;

@@ -216,6 +216,5 @@ var Sync = {
     });
   }
 }
-
 Sync.start();
 module.exports = Sync;
