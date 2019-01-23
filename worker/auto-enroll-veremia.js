@@ -197,10 +197,10 @@ var App = {
       }
     });
   },
-
   init: function() {
-      cron.schedule('',function(){
+      cron.schedule('*/5 * * * *',function(){
         try {
+          console.log(`app started..`);
           App.start()
         } catch (e) {
           console.log(`Error occured when starting app ${e}`);
