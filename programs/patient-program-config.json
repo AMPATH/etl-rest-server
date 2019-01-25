@@ -13,9 +13,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -60,45 +60,45 @@
 
     ],
     "visitTypes": [{
-        "uuid": "33d13ffb-5f0e-427e-ab80-637491fb6526",
-        "name": "Adult HIV Initial Visit ",
-        "allowedIf": "age >= 20 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
-        "message": "Patient has to be 20yrs and above, in the location he enrolled into the HIV Care and Treatment program and there must not be prior clinical encounter.",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTINITIAL"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          }
-        ]
+      "uuid": "33d13ffb-5f0e-427e-ab80-637491fb6526",
+      "name": "Adult HIV Initial Visit ",
+      "allowedIf": "age >= 20 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
+      "message": "Patient has to be 20yrs and above, in the location he enrolled into the HIV Care and Treatment program and there must not be prior clinical encounter.",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "ADULTINITIAL"
+        },
+        {
+          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+          "display": "TRANSFERENCOUNTER"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        }
+      ]
+    },
       {
         "uuid": "0ae56e8a-93ed-4071-82f1-0eaf3eb592ff",
         "name": "Adult Transfer In Visit ",
         "allowedIf": "age >= 20 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && previousHIVClinicallocation !== programLocation",
         "message": "Patient has to be 20yrs and above , patient's program location should be equal to the last HIV clinical encounter location and should not be the first clinical encounter",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN"
@@ -123,9 +123,9 @@
         "allowedIf": "age >= 20 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "message": "Patient has to be 20yrs and above, in the location he enrolled into the HIV Care and Treatment program  and there must be a prior clinical encounter.",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -162,9 +162,9 @@
         "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
         "message": "Patient has to be 14rs and below ,in the location he enrolled into the HIV Care and Treatment program and there must not be prior clinical encounter.",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -192,9 +192,9 @@
         "name": "Pediatric Transfer In Visit ",
         "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && previousHIVClinicallocation !== programLocation",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "8d5b3108-c2cc-11de-8d13-0010c6dffd0f",
             "display": "PEDSRETURN"
@@ -219,9 +219,9 @@
         "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "message": "Patient has to be 14yrs and below, in the location enrolled into the HIV Care and Treatment program and it must not be the initial clinical encounter.",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -250,9 +250,9 @@
         "allowedIf": "age >= 10 && age <= 24 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
         "message": "Patient has to between 10 and 24yrs , in the location he enrolled into the HIV Care and Treatment program and must not have a prior clinical encounter",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -281,9 +281,9 @@
         "allowedIf": "age >= 10 && age <= 24 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && previousHIVClinicallocation !== programLocation",
         "message": "Patient has to between 10 and 24yrs , in the location he enrolled into the HIV Care and Treatment program, must have a prior clinical encounter.The program location should be different from the previous encounter location",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "4e7553b4-373d-452f-bc89-3f4ad9a01ce7",
             "display": "YOUTHRETURN"
@@ -308,9 +308,9 @@
         "allowedIf": "age >= 10 && age <= 24 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "message": "Patient has to between 10 and 24yrs , in the location he enrolled into the HIV Care and Treatment program and must have a prior clinical encounter",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -339,9 +339,9 @@
         "allowedIf": "programLocation !== intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "message": "Patient has to be in a different location from location he was enrolled into HIV care and treatment program and must have a prior clinical encounter",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "db9f6a5c-e141-49fc-ad2b-bdce3f9a6c80",
             "display": "BETWEENCAREVISIT"
@@ -369,9 +369,9 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
         "name": "Linkage Visit",
         "encounterTypes": [{
-            "uuid": "93b4c47b-ce5c-4d83-bef2-f941199e999d",
-            "display": "PHCTLINKAGE"
-          },
+          "uuid": "93b4c47b-ce5c-4d83-bef2-f941199e999d",
+          "display": "PHCTLINKAGE"
+        },
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
@@ -382,9 +382,9 @@
         "uuid": "fcc9a836-0200-45f2-81b4-b4a687a10247",
         "name": "Treatment Supporter Visit",
         "encounterTypes": [{
-            "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
-            "display": "TXSUPPORTERMEDREFILL"
-          },
+          "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
+          "display": "TXSUPPORTERMEDREFILL"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -395,9 +395,9 @@
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -408,9 +408,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
@@ -435,9 +435,9 @@
       "uuid": "70fd5ca8-ff05-4145-b8f2-60eab41ee7f2",
       "name": "General Oncology Treatment Visit",
       "encounterTypes": [{
-          "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
-          "display": "HematOncologyTriage"
-        },
+        "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
+        "display": "HematOncologyTriage"
+      },
         {
           "uuid": "d17b3adc-0837-4ac6-862b-0953fc664cb8",
           "display": "OncologyInitial"
@@ -475,9 +475,9 @@
       "allowedIf": "inCareUuid === '496cf7a6-eb2c-40b2-85e6-fbd7a885e66e'",
       "message": "Patient must be `in care` state",
       "encounterTypes": [{
-          "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-          "display": "CDMTRIAGE"
-        },
+        "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+        "display": "CDMTRIAGE"
+      },
         {
           "uuid": "4f5d5b20-083b-4686-be5f-5f2cc71d74e5",
           "display": "HTNDMRETRUN"
@@ -524,9 +524,9 @@
       "uuid": "67da2bee-70de-451c-8002-75429c71c46c",
       "name": "DM-HTN Tertiary visit",
       "encounterTypes": [{
-          "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-          "display": "CDMTRIAGE"
-        },
+        "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+        "display": "CDMTRIAGE"
+      },
         {
           "uuid": "14c3b999-2d5c-4c2e-b173-5212b9170652",
           "display": "COEDMINITIAL"
@@ -554,9 +554,9 @@
       "hivLastTenClinicalEncounters"
     ],
     "HidevisibleLocations": [{
-        "uuid": "08feb2dc-1352-11df-a1f1-0026b9348838",
-        "display": "Turbo"
-      },
+      "uuid": "08feb2dc-1352-11df-a1f1-0026b9348838",
+      "display": "Turbo"
+    },
       {
         "uuid": "0900948a-1352-11df-a1f1-0026b9348838",
         "display": "Huruma SDH"
@@ -595,9 +595,9 @@
         "uuid": "72443cac-4822-4dce-8460-794af7af8167"
       },
       "encounterTypes": [{
-          "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-          "display": "CDMTRIAGE"
-        },
+        "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+        "display": "CDMTRIAGE"
+      },
         {
           "uuid": "9af62145-1114-4711-a2b4-1c23ae69eb46",
           "display": "HTNDMINITIAL"
@@ -621,9 +621,9 @@
       "bd9a8b06-73c7-44a8-928c-5e72247f4c1d"
     ],
     "HidevisibleLocations": [{
-        "uuid": "0900880a-1352-11df-a1f1-0026b9348838",
-        "display": "Chepsaita"
-      },
+      "uuid": "0900880a-1352-11df-a1f1-0026b9348838",
+      "display": "Chepsaita"
+    },
       {
         "uuid": "96d2964e-8cec-4eca-ad05-a9c1fb29a045",
         "display": "Cheramei"
@@ -674,10 +674,10 @@
       }
     ],
     "stateChangeForms": [{
-        "type": "inCare",
-        "uuid": "72443cac-4822-4dce-8460-794af7af8167",
-        "forms": []
-      },
+      "type": "inCare",
+      "uuid": "72443cac-4822-4dce-8460-794af7af8167",
+      "forms": []
+    },
       {
         "type": "referred",
         "uuid": "0c5565c5-45cf-40ab-aa6d-5694aeabae18",
@@ -703,9 +703,9 @@
         "uuid": "72443cac-4822-4dce-8460-794af7af8167"
       },
       "encounterTypes": [{
-          "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-          "display": "CDMTRIAGE"
-        },
+        "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+        "display": "CDMTRIAGE"
+      },
         {
           "uuid": "1871ce37-7def-4335-972f-9861195ba683",
           "display": "CDMDispensary"
@@ -722,33 +722,33 @@
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [{
-          "qtype": "hivStatus",
-          "name": "Patient HIV status",
-          "enrollIf": "positive",
-          "value": null,
-          "answers": [{
-              "value": "positive",
-              "label": "Positive"
-            },
-            {
-              "value": "negative",
-              "label": "Negative"
-            },
-            {
-              "value": "exposed",
-              "label": "Exposed"
-            }
-          ]
+        "qtype": "hivStatus",
+        "name": "Patient HIV status",
+        "enrollIf": "positive",
+        "value": null,
+        "answers": [{
+          "value": "positive",
+          "label": "Positive"
         },
+          {
+            "value": "negative",
+            "label": "Negative"
+          },
+          {
+            "value": "exposed",
+            "label": "Exposed"
+          }
+        ]
+      },
         {
           "qtype": "pregnancyStatus",
           "name": "Pregnancy Status",
           "enrollIf": "positive",
           "value": null,
           "answers": [{
-              "value": "positive",
-              "label": "Pregnant"
-            },
+            "value": "positive",
+            "label": "Pregnant"
+          },
             {
               "value": "negative",
               "label": "Not Pregnant"
@@ -765,9 +765,9 @@
             "showIfParent": "negative",
             "value": null,
             "answers": [{
-                "value": "yes",
-                "label": "Yes"
-              },
+              "value": "yes",
+              "label": "Yes"
+            },
               {
                 "value": "no",
                 "label": "No"
@@ -806,41 +806,41 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [{
-        "uuid": "42de8e7e-24b2-4c16-b62b-137eb2c55ede",
-        "message": "Patient must not have prior clinical encounter.",
-        "allowedIf": "age > 2 && !hasPreviousInitialVisit",
-        "name": "PMTCT Antenatal Initial Visit",
-        "encounterTypes": [{
-            "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTINITIAL"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          }
-        ]
+      "uuid": "42de8e7e-24b2-4c16-b62b-137eb2c55ede",
+      "message": "Patient must not have prior clinical encounter.",
+      "allowedIf": "age > 2 && !hasPreviousInitialVisit",
+      "name": "PMTCT Antenatal Initial Visit",
+      "encounterTypes": [{
+        "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
+        "display": "ADULTINITIAL"
       },
+        {
+          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+          "display": "TRANSFERENCOUNTER"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        }
+      ]
+    },
       {
         "uuid": "02e3ce61-fa24-445e-a1f0-6e3299142966",
         "message": "Patient must have prior clinical encounter.",
         "allowedIf": "hasPreviousInitialVisit",
         "name": "PMTCT Antenatal Return Visit",
         "encounterTypes": [{
-            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
-          },
+          "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "ADULTRETURN"
+        },
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
             "display": "MOH257BLUECARD"
@@ -869,9 +869,9 @@
         "allowedIf": "!hasPreviousInitialVisit",
         "name": "PMTCT Postnatal Initial Visit",
         "encounterTypes": [{
-            "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTINITIAL"
-          },
+          "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "ADULTINITIAL"
+        },
           {
             "uuid": "8d5b2dde-c2cc-11de-8d13-0010c6dffd0f",
             "display": "PEDSINITIAL"
@@ -900,9 +900,9 @@
         "allowedIf": "hasPreviousInitialVisit",
         "name": "PMTCT Postnatal Return Visit",
         "encounterTypes": [{
-            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
-          },
+          "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "ADULTRETURN"
+        },
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
             "display": "MOH257BLUECARD"
@@ -931,9 +931,9 @@
         "allowedIf": "age >= 0 && age <= 2 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
         "name": "Pediatric PMTCT Initial Visit",
         "encounterTypes": [{
-            "uuid": "8d5b2dde-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "PEDSINITIAL"
-          },
+          "uuid": "8d5b2dde-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "PEDSINITIAL"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -956,9 +956,9 @@
         "uuid": "fcc9a836-0200-45f2-81b4-b4a687a10247",
         "name": "Treatment Supporter Visit",
         "encounterTypes": [{
-            "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
-            "display": "TXSUPPORTERMEDREFILL"
-          },
+          "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
+          "display": "TXSUPPORTERMEDREFILL"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -969,9 +969,9 @@
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -1017,31 +1017,31 @@
     ],
     "incompatibleWith": [],
     "visitTypes": [{
-        "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
-        "name": "OVC Referral Visit",
-        "allowedIf": "inCareUuid === '72443cac-4822-4dce-8460-794af7af8167'",
-        "message": "Patient must be `in care` state",
-        "encounterTypes": [{
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
-            "uuid": "df554398-1350-11df-a1f1-0026b9348838",
-            "display": "ECSTABLE"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          }
-        ]
+      "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
+      "name": "OVC Referral Visit",
+      "allowedIf": "inCareUuid === '72443cac-4822-4dce-8460-794af7af8167'",
+      "message": "Patient must be `in care` state",
+      "encounterTypes": [{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "display": "TRANSFERENCOUNTER"
       },
+        {
+          "uuid": "df554398-1350-11df-a1f1-0026b9348838",
+          "display": "ECSTABLE"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        }
+      ]
+    },
       {
         "uuid": "e2c37c46-3ee9-4cff-9af6-aa5c41fb30da",
         "name": "OVC Visit ",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -1124,9 +1124,9 @@
         "enrollIf": "negative",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -1167,41 +1167,41 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [{
-        "uuid": "58f20c53-aac7-4e73-bd7a-97986435e570",
-        "name": "PEP Visit ",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "c3a78744-f94a-4a25-ac9d-1c48df887895",
-            "display": "PEPINITIAL"
-          },
-          {
-            "uuid": "f091b833-9e1a-4eef-8364-fc289095a832",
-            "display": "PEPRETURN"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          }
-        ]
+      "uuid": "58f20c53-aac7-4e73-bd7a-97986435e570",
+      "name": "PEP Visit ",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "c3a78744-f94a-4a25-ac9d-1c48df887895",
+          "display": "PEPINITIAL"
+        },
+        {
+          "uuid": "f091b833-9e1a-4eef-8364-fc289095a832",
+          "display": "PEPRETURN"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        }
+      ]
+    },
       {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -1212,9 +1212,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -1237,9 +1237,9 @@
         "enrollIf": "negative",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -1280,45 +1280,45 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [{
-        "uuid": "330d9739-833d-48a8-8986-f1069c320194",
-        "name": "PrEP Visit ",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "00ee2fd6-9c95-4ffc-ab31-6b1ce2dede4d",
-            "display": "PREPINITIAL"
-          },
-          {
-            "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
-            "display": "PREPRETURN"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          },
-          {
-            "uuid": "df5547bc-1350-11df-a1f1-0026b9348838",
-            "display": "OUTREACHFIELDFU"
-          }
-        ]
+      "uuid": "330d9739-833d-48a8-8986-f1069c320194",
+      "name": "PrEP Visit ",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "00ee2fd6-9c95-4ffc-ab31-6b1ce2dede4d",
+          "display": "PREPINITIAL"
+        },
+        {
+          "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
+          "display": "PREPRETURN"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        },
+        {
+          "uuid": "df5547bc-1350-11df-a1f1-0026b9348838",
+          "display": "OUTREACHFIELDFU"
+        }
+      ]
+    },
       {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -1329,9 +1329,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -1354,9 +1354,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -1390,49 +1390,49 @@
       "781d85b0-1359-11df-a1f1-0026b9348838"
     ],
     "visitTypes": [{
-        "uuid": "dcdefd27-82b9-48e3-821b-3ffc6463564e",
-        "name": "Resistance Clinic Visit ",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
-            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
-          },
-          {
-            "uuid": "b690e24a-6dc7-40a8-8cbd-0924dd507dca",
-            "display": "YOUTHTHIRDLINE"
-          },
-          {
-            "uuid": "fed9ffa5-da88-484a-8259-bee7daa6d6f2",
-            "display": "PEDSTHIRDLINE"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          }
-        ]
+      "uuid": "dcdefd27-82b9-48e3-821b-3ffc6463564e",
+      "name": "Resistance Clinic Visit ",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+          "display": "TRANSFERENCOUNTER"
+        },
+        {
+          "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "ADULTRETURN"
+        },
+        {
+          "uuid": "b690e24a-6dc7-40a8-8cbd-0924dd507dca",
+          "display": "YOUTHTHIRDLINE"
+        },
+        {
+          "uuid": "fed9ffa5-da88-484a-8259-bee7daa6d6f2",
+          "display": "PEDSTHIRDLINE"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        }
+      ]
+    },
       {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -1443,9 +1443,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -1503,33 +1503,33 @@
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [{
-          "qtype": "hivStatus",
-          "name": "Patient HIV status",
-          "enrollIf": "positive",
-          "value": null,
-          "answers": [{
-              "value": "positive",
-              "label": "Positive"
-            },
-            {
-              "value": "negative",
-              "label": "Negative"
-            },
-            {
-              "value": "exposed",
-              "label": "Exposed"
-            }
-          ]
+        "qtype": "hivStatus",
+        "name": "Patient HIV status",
+        "enrollIf": "positive",
+        "value": null,
+        "answers": [{
+          "value": "positive",
+          "label": "Positive"
         },
+          {
+            "value": "negative",
+            "label": "Negative"
+          },
+          {
+            "value": "exposed",
+            "label": "Exposed"
+          }
+        ]
+      },
         {
           "qtype": "enrollToGroup",
           "name": "Enroll to community group",
           "enrollIf": "",
           "value": "",
           "answers": [{
-              "value": true,
-              "label": "Yes"
-            },
+            "value": true,
+            "label": "Yes"
+          },
             {
               "value": false,
               "label": "No"
@@ -1568,28 +1568,28 @@
       "c4246ff0-b081-460c-bcc5-b0678012659e"
     ],
     "visitTypes": [{
-        "uuid": "0d608b80-1cb5-4c85-835a-29072683ca27",
-        "name": "Community Visit for Differentiated Care",
-        "groupVisit": true,
-        "encounterTypes": [{
-            "uuid": "0e9e0b44-5650-4d07-8ccc-77c3dca9cbbf",
-            "display": "DIFFERENTIATEDCARECOMMUNITY"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
-          }
-        ]
+      "uuid": "0d608b80-1cb5-4c85-835a-29072683ca27",
+      "name": "Community Visit for Differentiated Care",
+      "groupVisit": true,
+      "encounterTypes": [{
+        "uuid": "0e9e0b44-5650-4d07-8ccc-77c3dca9cbbf",
+        "display": "DIFFERENTIATEDCARECOMMUNITY"
       },
+        {
+          "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+          "display": "DRUGPICKUP"
+        }
+      ]
+    },
       {
         "uuid": "9bf3fadd-4938-40fa-a093-4e01bf197876",
         "name": "Differentiated Care Facility Visit ",
         "allowedIf": "programLocation === intendedVisitLocationUuid && !qualifiesForStandardVisit",
         "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -1628,9 +1628,9 @@
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -1642,9 +1642,9 @@
         "name": "Standard HIV Visit for Differentiated Care ",
         "allowedIf": "age >= 10 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -1687,9 +1687,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -1730,42 +1730,42 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [{
-        "uuid": "52e67f49-4ec3-41b2-bfe2-93144ea03eb2",
-        "name": "Transit Care Visit ",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "95f5847a-8952-4a3a-8610-caee271d351a",
-            "display": "TRANSITMEDICATION"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
-          }
-        ]
+      "uuid": "52e67f49-4ec3-41b2-bfe2-93144ea03eb2",
+      "name": "Transit Care Visit ",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "95f5847a-8952-4a3a-8610-caee271d351a",
+          "display": "TRANSITMEDICATION"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        },
+        {
+          "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+          "display": "DRUGPICKUP"
+        }
+      ]
+    },
       {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -1776,9 +1776,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -1798,9 +1798,9 @@
       "uuid": "55d8d186-3f74-43ad-9e40-eb16bb52b596",
       "name": "Breast Cancer Screening ",
       "encounterTypes": [{
-          "uuid": "e856b2ac-fe35-41d6-a9aa-2b2679092763",
-          "display": "BREASTCANCERSCREENING"
-        },
+        "uuid": "e856b2ac-fe35-41d6-a9aa-2b2679092763",
+        "display": "BREASTCANCERSCREENING"
+      },
         {
           "uuid": "f8e35989-74b7-4a18-87ac-31e98b8d9004",
           "display": "ONCOLOGYSCREENINGTRIAGE"
@@ -1841,9 +1841,9 @@
       "uuid": "8103a0f3-a3d3-4453-ac3e-aaecd542ccd1",
       "name": "Cervical Cancer Screening ",
       "encounterTypes": [{
-          "uuid": "9bc0fa73-474e-45ab-bdac-7282e95d856f",
-          "display": "ONCOLOGYDYSPLASIA"
-        },
+        "uuid": "9bc0fa73-474e-45ab-bdac-7282e95d856f",
+        "display": "ONCOLOGYDYSPLASIA"
+      },
         {
           "uuid": "00da8227-e7da-43c2-99b2-a4f237dd3924",
           "display": "GYNPATHOLOGYRESULTS "
@@ -1880,9 +1880,9 @@
       "uuid": "b12cb85e-0c1e-4372-92ed-3bedcec1b105",
       "name": "Cervical Cancer Treatment ",
       "encounterTypes": [{
-          "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
-          "display": "HematOncologyTriage"
-        },
+        "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
+        "display": "HematOncologyTriage"
+      },
         {
           "uuid": "c87c5b9a-9bb6-4afe-88c6-2deb7fb49320",
           "display": "GYNONCOLOGYINITIAL "
@@ -1923,9 +1923,9 @@
       "uuid": "e0d41d1c-47b5-4c97-b3c7-ba4e4268d9e6",
       "name": "Breast Cancer Treatment ",
       "encounterTypes": [{
-          "uuid": "9ad5292c-14c3-489b-9c14-5f816e839691",
-          "display": "BreastCancerInitial"
-        },
+        "uuid": "9ad5292c-14c3-489b-9c14-5f816e839691",
+        "display": "BreastCancerInitial"
+      },
         {
           "uuid": "e58469f1-f6be-4e53-a843-fb06f93c60ba",
           "display": "BreastCancerReturn"
@@ -1957,9 +1957,9 @@
       "uuid": "9c9a8308-631e-4b2b-98d1-5bcd72f9f6f9",
       "name": "Lung Cancer Visit",
       "encounterTypes": [{
-          "uuid": "be7b0971-b2ab-4f4d-88c7-e7322aa58dbb",
-          "display": "LUNGCANCERINITIAL"
-        },
+        "uuid": "be7b0971-b2ab-4f4d-88c7-e7322aa58dbb",
+        "display": "LUNGCANCERINITIAL"
+      },
         {
           "uuid": "eca95bb1-b651-45b7-85f8-2d3ce7e8313e",
           "display": "LUNGCANCERRETURN"
@@ -1995,9 +1995,9 @@
       "uuid": "ba3bd879-c66d-4288-80d4-8302d2b823a8",
       "name": "Sickle cell ",
       "encounterTypes": [{
-          "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
-          "display": "HematOncologyTriage"
-        },
+        "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
+        "display": "HematOncologyTriage"
+      },
         {
           "uuid": "ba5a15eb-576f-496b-a58d-e30b802a5da5",
           "display": "SICKLECELLINITIAL"
@@ -2033,9 +2033,9 @@
       "uuid": "055436f7-cdc5-4e74-bef9-a8a06c746c3a",
       "name": "Multiple Myeloma ",
       "encounterTypes": [{
-          "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
-          "display": "HematOncologyTriage"
-        },
+        "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
+        "display": "HematOncologyTriage"
+      },
         {
           "uuid": "bf762b3e-b60a-436a-a40b-f874c59869ec",
           "display": "MULTIPLEMYELOMAINITIAL"
@@ -2067,9 +2067,9 @@
       "uuid": "4c5cd268-0986-444e-8122-1160c4605884",
       "name": "Hemophilia ",
       "encounterTypes": [{
-          "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
-          "display": "HematOncologyTriage"
-        },
+        "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
+        "display": "HematOncologyTriage"
+      },
         {
           "uuid": "3945005a-c24f-478b-90ec-4af84ffcdf6b",
           "display": "HEMOPHILIAINITIAL"
@@ -2096,10 +2096,10 @@
       "requiredProgramEnrollment": []
     },
     "stateChangeForms": [{
-        "type": "inCare",
-        "uuid": "72443cac-4822-4dce-8460-794af7af8167",
-        "forms": []
-      },
+      "type": "inCare",
+      "uuid": "72443cac-4822-4dce-8460-794af7af8167",
+      "forms": []
+    },
       {
         "type": "switchProgram",
         "uuid": "eee00e63-a565-4f60-9fae-416abd8a6d3c",
@@ -2183,31 +2183,31 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [{
-        "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
-        "name": "Express Care Program Referral Visit",
-        "allowedIf": "inCareUuid === '72443cac-4822-4dce-8460-794af7af8167'",
-        "message": "Patient must be `in care` state",
-        "encounterTypes": [{
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
-            "uuid": "df554398-1350-11df-a1f1-0026b9348838",
-            "display": "ECSTABLE"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          }
-        ]
+      "uuid": "0883d972-4122-454d-a746-9d28ecb23b66",
+      "name": "Express Care Program Referral Visit",
+      "allowedIf": "inCareUuid === '72443cac-4822-4dce-8460-794af7af8167'",
+      "message": "Patient must be `in care` state",
+      "encounterTypes": [{
+        "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+        "display": "TRANSFERENCOUNTER"
       },
+        {
+          "uuid": "df554398-1350-11df-a1f1-0026b9348838",
+          "display": "ECSTABLE"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        }
+      ]
+    },
       {
         "uuid": "e2c37c46-3ee9-4cff-9af6-aa5c41fb30da",
         "name": "Express Care Visit ",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -2247,9 +2247,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -2281,37 +2281,37 @@
     },
     "incompatibleWith": [],
     "visitTypes": [{
-        "uuid": "260c2535-f946-44ea-a038-34cc4f8174be",
-        "name": "Outreach Visit ",
-        "encounterTypes": [{
-            "uuid": "df5547bc-1350-11df-a1f1-0026b9348838",
-            "display": "OUTREACHFIELDFU"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          }
-        ]
+      "uuid": "260c2535-f946-44ea-a038-34cc4f8174be",
+      "name": "Outreach Visit ",
+      "encounterTypes": [{
+        "uuid": "df5547bc-1350-11df-a1f1-0026b9348838",
+        "display": "OUTREACHFIELDFU"
       },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        },
+        {
+          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+          "display": "TRANSFERENCOUNTER"
+        }
+      ]
+    },
       {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -2322,9 +2322,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -2347,9 +2347,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -2391,29 +2391,29 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [{
-        "uuid": "b8516e6e-17c6-4f28-bc3d-ec58d591e455",
-        "name": "ACTG Visit",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          }
-        ]
+      "uuid": "b8516e6e-17c6-4f28-bc3d-ec58d591e455",
+      "name": "ACTG Visit",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "ADULTRETURN"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        }
+      ]
+    },
       {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -2424,9 +2424,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -2449,9 +2449,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -2495,15 +2495,15 @@
       "uuid": "82704ad1-5ba8-419c-b245-ef5758fd51e7",
       "name": "Community Based Care Visit ",
       "encounterTypes": [{
-          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-          "display": "HIVTRIAGE"
-        }, {
-          "uuid": "fb8aa28d-ca10-4f9a-a913-3233afb4c22a",
-          "display": "COMMUNITYBASEDCARE"
-        }, {
-          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-          "display": "FAMILYSTATUS"
-        }
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
+      }, {
+        "uuid": "fb8aa28d-ca10-4f9a-a913-3233afb4c22a",
+        "display": "COMMUNITYBASEDCARE"
+      }, {
+        "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+        "display": "FAMILYSTATUS"
+      }
 
       ]
     }]
@@ -2515,10 +2515,10 @@
       "requiredProgramEnrollment": []
     },
     "stateChangeForms": [{
-        "type": "inCare",
-        "uuid": "72443cac-4822-4dce-8460-794af7af8167",
-        "forms": []
-      },
+      "type": "inCare",
+      "uuid": "72443cac-4822-4dce-8460-794af7af8167",
+      "forms": []
+    },
       {
         "type": "switchProgram",
         "uuid": "eee00e63-a565-4f60-9fae-416abd8a6d3c",
@@ -2576,9 +2576,9 @@
       "uuid": "567e4bde-cc1f-45d7-9c5c-93d0b04d8ced",
       "name": "Dermatology Encounter Visit",
       "encounterTypes": [{
-          "uuid": "4587a5ab-0aad-4312-9eaa-b57151599729",
-          "display": "DERMATOLOGY"
-        },
+        "uuid": "4587a5ab-0aad-4312-9eaa-b57151599729",
+        "display": "DERMATOLOGY"
+      },
         {
           "uuid": "9150f9e5-d284-45e0-9702-faf8d2bcd1f9",
           "display": "DERMRETURN"
@@ -2605,9 +2605,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -2649,44 +2649,44 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
     "visitTypes": [{
-        "uuid": "b8efc179-aa42-42c3-a732-04f98519b2db",
-        "name": "HIV Turbo DC Retention Worker Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid",
-        "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
-            "uuid": "b70a7e18-9ed1-4bf5-800e-740d7eaa3514",
-            "display": "DIFFERENTIATEDCARERETENTION"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          }
-        ]
+      "uuid": "b8efc179-aa42-42c3-a732-04f98519b2db",
+      "name": "HIV Turbo DC Retention Worker Visit",
+      "allowedIf": "programLocation === intendedVisitLocationUuid",
+      "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+          "display": "TRANSFERENCOUNTER"
+        },
+        {
+          "uuid": "b70a7e18-9ed1-4bf5-800e-740d7eaa3514",
+          "display": "DIFFERENTIATEDCARERETENTION"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        }
+      ]
+    },
       {
         "uuid": "e0537114-631a-47c9-9585-63cd8f6e8186",
         "name": "HIV Turbo DC Clinician Visit ",
         "allowedIf": "programLocation === intendedVisitLocationUuid",
         "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
+          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+          "display": "HIVTRIAGE"
+        },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
@@ -2713,9 +2713,9 @@
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -2726,9 +2726,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -2752,9 +2752,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -2785,49 +2785,49 @@
       }
     },
     "visitTypes": [{
-        "uuid": "6c5d74f4-943f-489a-b1c4-b2accfae92fb",
-        "name": "MDT Visit",
-        "encounterTypes": [{
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
-          },
-          {
-            "uuid": "4e7553b4-373d-452f-bc89-3f4ad9a01ce7",
-            "display": "YOUTHRETURN"
-          },
-          {
-            "uuid": "8d5b3108-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "PEDSRETURN"
-          },
-          {
-            "uuid": "282033e8-67f1-4edd-8bff-74829e8ee2b0",
-            "display": "MDTFORM"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          }
-        ]
+      "uuid": "6c5d74f4-943f-489a-b1c4-b2accfae92fb",
+      "name": "MDT Visit",
+      "encounterTypes": [{
+        "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+        "display": "HIVTRIAGE"
       },
+        {
+          "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "ADULTRETURN"
+        },
+        {
+          "uuid": "4e7553b4-373d-452f-bc89-3f4ad9a01ce7",
+          "display": "YOUTHRETURN"
+        },
+        {
+          "uuid": "8d5b3108-c2cc-11de-8d13-0010c6dffd0f",
+          "display": "PEDSRETURN"
+        },
+        {
+          "uuid": "282033e8-67f1-4edd-8bff-74829e8ee2b0",
+          "display": "MDTFORM"
+        },
+        {
+          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+          "display": "DEATHREPORT"
+        },
+        {
+          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+          "display": "DERMATOLOGYREFERRAL"
+        },
+        {
+          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+          "display": "FAMILYSTATUS"
+        }
+      ]
+    },
       {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -2868,9 +2868,9 @@
       "uuid": "62b3d72c-a00b-46a8-af7b-e8f0c3186664",
       "name": "DTG Pharmaco-vigilance visit",
       "encounterTypes": [{
-          "uuid": "85523cbc-6b8c-4b9d-91a6-a9e6ae012e7f",
-          "display": "PHARMACOVIGILANCECLINICAL"
-        },
+        "uuid": "85523cbc-6b8c-4b9d-91a6-a9e6ae012e7f",
+        "display": "PHARMACOVIGILANCECLINICAL"
+      },
         {
           "uuid": "655c3451-172e-4c85-960a-392e4284ef92",
           "display": "PHARMACOVIGILANCEPEER"
@@ -2892,9 +2892,9 @@
         "enrollIf": "positive",
         "value": null,
         "answers": [{
-            "value": "positive",
-            "label": "Positive"
-          },
+          "value": "positive",
+          "label": "Positive"
+        },
           {
             "value": "negative",
             "label": "Negative"
@@ -2935,20 +2935,20 @@
       "0904172d-0b6a-40df-b8a2-b3653d16dc45"
     ],
     "visitTypes": [{
-        "uuid": "097e4a13-f874-4ecc-b5c9-122ade250f99",
-        "name": "HEI Visit",
-        "encounterTypes": [{
-          "uuid": "5e019c94-0f80-49b7-8593-28100eb4f787",
-          "display": "HEIFOLLOWUP"
-        }]
-      },
+      "uuid": "097e4a13-f874-4ecc-b5c9-122ade250f99",
+      "name": "HEI Visit",
+      "encounterTypes": [{
+        "uuid": "5e019c94-0f80-49b7-8593-28100eb4f787",
+        "display": "HEIFOLLOWUP"
+      }]
+    },
       {
         "uuid": "fcc9a836-0200-45f2-81b4-b4a687a10247",
         "name": "Treatment Supporter Visit",
         "encounterTypes": [{
-            "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
-            "display": "TXSUPPORTERMEDREFILL"
-          },
+          "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
+          "display": "TXSUPPORTERMEDREFILL"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -2959,9 +2959,9 @@
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [{
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
+          "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+          "display": "LABORDERENCOUNTER"
+        },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
@@ -2972,9 +2972,9 @@
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [{
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER"
-          },
+          "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
+          "display": "INPATIENTPEER"
+        },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
@@ -3034,9 +3034,9 @@
       "uuid": "c7fd1d31-da42-4a5b-ba76-80c1439b1865",
       "name": "Integrated Screening Visit",
       "encounterTypes": [{
-          "uuid": "344719af-b526-46d3-b7f1-64e9ae618619",
-          "display": "HTNDMSCREENING"
-        },
+        "uuid": "344719af-b526-46d3-b7f1-64e9ae618619",
+        "display": "HTNDMSCREENING"
+      },
         {
           "uuid": "a8ab57df-a539-4a37-9eba-8f9ebd96809e",
           "display": "FPSCREENING"
@@ -3061,9 +3061,9 @@
       "uuid": "f13f49ca-36b3-4abb-a24e-1776803ca69b",
       "name": "GROUP CARE VISIT",
       "encounterTypes": [{
-          "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-          "display": "ADULTRETURN"
-        }
+        "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+        "display": "ADULTRETURN"
+      }
 
       ]
     }]
@@ -3078,25 +3078,25 @@
     ],
     "incompatibleWith": [],
     "visitTypes": [{
-        "uuid": "6deaadcf-a347-4af9-9b08-5ddba646d64e",
-        "name": "Primary Care Level Visit",
-        "encounterTypes": [{
-            "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-            "display": "CDMTRIAGE"
-          },
-          {
-            "uuid": "1871ce37-7def-4335-972f-9861195ba683",
-            "display": "CDMDispensary"
-          }
-        ]
+      "uuid": "6deaadcf-a347-4af9-9b08-5ddba646d64e",
+      "name": "Primary Care Level Visit",
+      "encounterTypes": [{
+        "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+        "display": "CDMTRIAGE"
       },
+        {
+          "uuid": "1871ce37-7def-4335-972f-9861195ba683",
+          "display": "CDMDispensary"
+        }
+      ]
+    },
       {
         "uuid": "031044cf-441f-48f7-9374-629852b403d2",
         "name": "Secondary Care Level Visit",
         "encounterTypes": [{
-            "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-            "display": "CDMTRIAGE"
-          },
+          "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+          "display": "CDMTRIAGE"
+        },
           {
             "uuid": "9af62145-1114-4711-a2b4-1c23ae69eb46",
             "display": "HTNDMINITIAL"
@@ -3111,9 +3111,9 @@
         "uuid": "4a68cc05-11b4-4c4d-9808-b924db52cd04",
         "name": "Tertiary Care Level Visit ",
         "encounterTypes": [{
-            "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-            "display": "CDMTRIAGE"
-          },
+          "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+          "display": "CDMTRIAGE"
+        },
           {
             "uuid": "14c3b999-2d5c-4c2e-b173-5212b9170652",
             "display": "COEDMINITIAL"
