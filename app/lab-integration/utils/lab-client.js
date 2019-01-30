@@ -1,4 +1,5 @@
 const rp = require('request-promise');
+const eidFacilityMap = require('../../../service/eid/eid-facility-mappings');
 export class LabClient {
     config = null;
     constructor(config) {
@@ -97,6 +98,12 @@ export class LabClient {
 
     getFetchRequest(filterOptions) {
         process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+        let fetchOffset = 1;
+        let facilityCodes = this.getFacitityCodes().join();
+        filterOptions.facility_code = facilityCodes;
+        if (offset) {
+            fetchOffset = offset;
+        }
         var options = {
             uri: `${this.config.serverUrl}/api/function`,
             headers: {
@@ -108,5 +115,15 @@ export class LabClient {
             formData: filterOptions
         };
         return rp(options);
+    }
+    getFacitityCodes() {
+        let facilityCodes = [];
+        for (let key in eidFacilityMap) {
+            let facility = eidFacilityMap[key];
+            if(facility.mflCode && facility.mflCode !== ''){
+                facilityCodes.push(facility.mflCode);
+            }
+        }
+        return facilityCodes;
     }
 }
