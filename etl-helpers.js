@@ -1,6 +1,7 @@
 /*jshint -W003, -W097, -W117, -W026 */
 'use strict';
 var _ = require('underscore');
+var moment = require('moment');
 module.exports = function () {
 
     return {
@@ -108,7 +109,7 @@ module.exports = function () {
                 limit: queryParams.limit,
                 requestIndicators: queryParams.indicators,
                 requestParams: queryParams
-            }
+            };
             return reportParams;
         },
         getSortOrder: function getSortOrder(param) {
@@ -191,7 +192,6 @@ module.exports = function () {
                 1899: "NUMBER OF MILLIGRAM",
                 2176: "EVERY NIGHT",
                 2178: "STAT",
-                5622: "OTHER NON-CODED",
                 7682: "ONCE EVERY TWO WEEKS",
                 7772: "AS NEEDED",
                 8909: "ONCE A WEEK",
@@ -232,12 +232,123 @@ module.exports = function () {
                 8085:"GASTROPATHY",
                 8086:"AUTONOMIC NEUROPATHY",
                 70:"CATARACTS",
-                1878:"STROKE",
-                1456:"HEART FAILURE",
                 1885:"KIDNEY FAILURE",
-                6730:"VISUAL IMPAIREMENT"
-
-
+                6730:"VISUAL IMPAIREMENT",
+                // ONCOLOGY CONCEPTS
+                8480: "LENALIDOMIDE",
+                6555: "MULTIPLE MYELOMA",
+                6902: "BONE MARROW ASPIRATION",
+                10206: "DURIE-SALMON SYSTEM",
+                9851: "STAGE 0",
+                9852: "STAGE I",
+                9853: "STAGE IA", 
+                9854: "STAGE IB",
+                9855: "STAGE IC",
+                9856: "STAGE II",
+                9857: "STAGE IIA",
+                9858: "STAGE IIB",
+                9859: "STAGE IIC",
+                9860: "STAGE III",
+                9861: "STAGE IIIA",
+                9862: "STAGE IIIB",
+                9863: "STAGE IIIC",
+                9864: "STAGE IV",
+                9865: "STAGE IVA",
+                9867: "STAGE IVC",
+                9866: "STAGE IVB",
+                6575: "CHEMOTHERAPY",
+                10078: "INTRATHECAL, DRUG ROUTE",
+                8479: "THALIDOMIDE",
+                6566: "COMPLETE STAGING",
+                6536: "GYNECOLOGIC CANCER TYPE",
+                7213: "MELPHALAN",
+                6485: "SARCOMA",
+                9918: "CHEMO MEDS",
+                8478: "IMATINIB",
+                7217: "PALLIATIVE TAMOXIFEN",
+                7203: "CYCLOPHOSPHAMIDE",
+                7215: "METHOTREXATE",
+                7223: "FLUOROURACIL",
+                7198: "HYDROXYDAUNORUBICIN (ADRIAMYCIN)",
+                491: "PREDNISONE",
+                7199: "BLEOMYCIN",
+                7218: "VINBLASTINE",
+                7205: "DACARBAZINE",
+                7212: "5FU / LEUCOVORIN",
+                8513: "ANASTRAZOLE",
+                7202: "CISPLATIN",
+                7209: "ETOPOSIDE",
+                7197: "ACTINOMYCIN D",
+                7219: "VINCRISTINE",
+                8506: "PACLITAXEL",
+                7210: "GEMCITABINE (GEMZAR)",
+                8499: "IFOSFAMIDE",
+                8492: "CARBOPLATINUM",
+                8522: "INTERFERON ALFA",
+                8510: "CAPECITABINE",
+                8511: "EPIRUBICIN",
+                9919: "MESNA",
+                8518: "LEUPROLIDE",
+                8516: "BICALUTAMIDE",
+                8481: "SORAFENIB",
+                7207: "DEXAMETHASONE",
+                7204: "CYTARABINE",
+                7201: "CHLORAMBUCIL",
+                8519: "ZOLADEX/GOSERELIN",
+                8507: "TAXOTERE",
+                10139: "OXALIPLATIN",
+                10140: "ZOLEDRONIC ACID",
+                8515: "LETROZOLE",
+                8514: "EXEMESTANE",
+                8486: "BORTEZOMIB",
+                1895: "MEDICATION ADDED",
+                10198: "OTHER MEDS GIVEN",
+                88: "BABY ASA",
+                8598: "VIT. B12 INJECTION",
+                8597: "VIT D SUPPLEMETATION",
+                1195: "ANTIBIOTICS",
+                8410: "ANTICOAGULATION",
+                7458: "IV FLUIDS",
+                9710: "SICKLE CELL DRUGS",
+                7211: "HYDROXYUREA",
+                257: "FOLATE/FOLIC ACID",
+                784: "PEN-V",
+                97: "PALLUDRINE",
+                8723: "ONCOLOGY TREATMENT PLAN",
+                7465: "SURGERY",
+                8427: "RADIATION THERAPY",
+                9626: "HORMONAL THERAPY",
+                10038: "BIOLOGICAL THERAPY",
+                10039: "OTHER ONCOLOGY TREATMENT PLAN",
+                8725: "REASONS FOR SURGERY",
+                8428: "CURATIVE CARE",
+                8724: "PALLIATIVE CARE",
+                8727: "DIAGNOSTIC",
+                2206: "CHEMOTHERAPY INTENT",
+                9219: "NEO ADJUVANT INTENT",
+                9218: "ADJUVANT INTENT",
+                9220: "SYMPTOM CONTROL",
+                9869: "CHEMOTHERAPY PLAN",
+                6576: "CHEMOTHERAPY REGIMEN MODIFICATION",
+                1190: "CHEMOTHERAPY START DATE",
+                6643: "CURRENT CHEMOTHERAPY CYCLE",
+                7463: "DRUG ROUTE",
+                10079: "INTRA OMMAYA",
+                7597: "SUBCUTANEOUS INJECTION",
+                7581: "INTRAMUSCULAR INJECTION",
+                7609: "INTRARTERIAL INJECTION",
+                7616: "INTRADERMAL INJECTION",
+                7447: "ORAL ADMINISTRATION",
+                6042: "DIAGNOSIS",
+                10129: "NON-SMALL CELL LUNG CANCER",
+                10130: "SMALL CELL LUNG CANCER",
+                9728: "DIAGNOSIS DATE",
+                9868: "OVERALL CANCER STAGE GROUP",
+                7176: "CANCER TYPE",
+                9847: "NON-CANCER",
+                9841: "BREAST CANCER TYPE",
+                6582: "CANCER STAGE",
+                6504: "DIAGNOSIS METHOD"
             };
             return concepts[code];
         },
@@ -587,6 +698,9 @@ module.exports = function () {
                 });
                 where.formIds = formIds;
             }
+        },
+        filterDate: function filterDate(date) {
+            return moment(date).format('DD-MM-YYYY');
         }
     };
 
