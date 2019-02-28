@@ -230,7 +230,7 @@ function generateReminders(etlResults, eidResults) {
   let vl_Errors = viralLoadErrors(data);
   let pending_vl_orders = pendingViralOrder(data);
   let pending_vl_lab_result = pendingViralLoadLabResult(eidResults);
-  let qualifies_differenciated_care_reminders = qualifiesDifferenciatedReminders(data);
+  let qualifies_differenciated_care_reminders = [] /*qualifiesDifferenciatedReminders(data)*/;
   let inh_reminders = inhReminders(data);
   let vl_reminders = viralLoadReminders(data);
   let currentReminder = [];
