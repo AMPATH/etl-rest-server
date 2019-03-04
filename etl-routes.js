@@ -1031,6 +1031,91 @@ module.exports = function () {
                     }
                 }
             },
+          {
+            method: 'GET',
+            path: '/etl/patient/{uuid}/oncology/summary',
+            config: {
+              auth: 'simple',
+              plugins: {
+                'hapiAuthorization': {
+                  role: privileges.canViewPatient
+                }
+              },
+              handler: function (request, reply) {
+                dao.getPatientOncologySummary(request, reply);
+              },
+              description: 'Get patient Oncology summary',
+              notes: "Returns a list of patient's Oncology summary with the given patient uuid. " +
+                "A patient's Oncology summary includes details such as last appointment date, " +
+                "most recent diagnosis etc. as at that encounter's date. ",
+              tags: ['api'],
+              validate: {
+                options: {
+                  allowUnknown: true
+                },
+                params: {
+                  uuid: Joi.string()
+                    .required()
+                    .description("The patient's uuid(universally unique identifier)."),
+                }
+              }
+            }
+          },
+          {
+            method: 'GET',
+            path: '/etl/patient/{uuid}/oncology/medication-history',
+            config: {
+              auth: 'simple',
+              plugins: {
+                'hapiAuthorization': {
+                  role: privileges.canViewPatient
+                }
+              },
+              handler: function (request, reply) {
+                dao.getPatientOncologyMedicationHistory(request, reply);
+              },
+              description: 'Get patient medication history',
+              notes: "Returns the medication history for the patient",
+              tags: ['api'],
+              validate: {
+                options: {
+                  allowUnknown: true
+                },
+                params: {
+                  uuid: Joi.string()
+                    .required()
+                    .description("The patient's uuid(universally unique identifier)."),
+                }
+              }
+            }
+          },
+          {
+            method: 'GET',
+            path: '/etl/patient/{uuid}/oncology/diagnosis-history',
+            config: {
+              auth: 'simple',
+              plugins: {
+                'hapiAuthorization': {
+                  role: privileges.canViewPatient
+                }
+              },
+              handler: function (request, reply) {
+                dao.getPatientOncologyDiagnosis(request, reply);
+              },
+              description: 'Get patient diagnosis history',
+              tags: ['api'],
+              validate: {
+                options: {
+                  allowUnknown: true
+                },
+                params: {
+                  uuid: Joi.string()
+                    .required()
+                    .description("The patient's uuid(universally unique identifier)."),
+                }
+              }
+            }
+          },
             {
                 method: 'GET',
                 path: '/etl/location/{uuid}/clinic-encounter-data',
