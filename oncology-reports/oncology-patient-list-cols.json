@@ -170,6 +170,36 @@
 
             },
             {
+                "indicator": "normal_cervical_screening_below_30yrs",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age" , "phone_number" ,"type_of_abnormality" , "patient_uuid"
+                ]
+
+            },
+            {
+                "indicator": "normal_cervical_screening_30_to_40yrs",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age" , "phone_number" ,"type_of_abnormality" , "patient_uuid"
+                ]
+
+            },
+            {
+                "indicator": "normal_cervical_screening_41_to_50yrs",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age" , "phone_number" ,"type_of_abnormality" , "patient_uuid"
+                ]
+
+            },
+            {
+                "indicator": "normal_cervical_screening_51_to_69yrs",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age" , "phone_number" ,"type_of_abnormality" , "patient_uuid"
+                ]
+
+            },
+            {
+                "indicator": "normal_cervical_screening_above_70yrs",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age" , "phone_number" ,"type_of_abnormality" , "patient_uuid"
+                ]
+
+            },
+            {
                 "indicator": "abnormal_cervical_screening",
                 "patientListCols": ["encounter_datetime" , "location_name" , "identifiers", "person_name" , "gender", "age" , "hiv_status" , "phone_number" , "type_of_abnormality" ,
                      "procedure_done" , "patient_uuid", "diagnostic_interval"
