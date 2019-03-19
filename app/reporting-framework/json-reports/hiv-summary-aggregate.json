@@ -371,6 +371,30 @@
         },
         {
             "type": "derived_column",
+            "alias": "hiv_status_partialy_disclosed",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(hiv_status_partialy_disclosed, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "hiv_status_fully_disclosed",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(hiv_status_fully_disclosed, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "hiv_status_not_disclosed",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(hiv_status_not_disclosed, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "vl_suppressed_patients",
             "expressionType": "simple_expression",
             "expressionOptions": {
