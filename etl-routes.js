@@ -3271,7 +3271,7 @@ module.exports = function () {
                                 }else{
                                    console.error('Undefined Lab Configuration');
                                 }
-                               
+
                             }).then((result)=>{
                                 reply(result);
                             }).catch((error) => {
@@ -3473,6 +3473,7 @@ module.exports = function () {
                             }
                         })
                             .catch(function (error) {
+                              console.log('---------------------',error);
                                 reply(Boom.create(500, 'Internal server error.', error));
                             });
 
