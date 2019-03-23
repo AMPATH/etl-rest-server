@@ -99,6 +99,11 @@ import * as combined_breast_cervical_cancer_monthly_screening_summary_aggregate 
 import * as combined_breast_cervical_cancer_monthly_screening_summary_base from './json-reports/combined-breast-cervical-cancer-monthly-screening-summary-base.json';
 import * as combined_breast_cervical_cancer_daily_screening_summary_base from './json-reports/combined-breast-cervical-cancer-daily-screening-summary-base.json';
 import * as combined_breast_cervical_cancer_patient_list_template from './json-reports/combined-breast-cervical-cancer-patient-list-template.json';
+
+import * as lung_cancer_daily_screening_summary_aggregate from './json-reports/lung-cancer-daily-screening-summary-aggregate.json';
+import * as lung_cancer_monthly_screening_summary_aggregate from './json-reports/lung-cancer-monthly-screening-summary-aggregate.json';
+import * as lung_cancer_monthly_screening_summary_base from './json-reports/lung-cancer-monthly-screening-summary-base.json';
+import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-patient-list-template.json';
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -411,6 +416,24 @@ export class BaseMysqlReport {
                         cervicalCancerMonthlyReportBase: this.cloneJsonSchema(cervical_cancer_monthly_screening_summary_base)
                     });
                     break;
+
+                   
+                case 'lungCancerDailySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_daily_screening_summary_aggregate),
+                        breastCancerMonthlySummaryBase: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_base)
+                    });
+                case 'lungCancerMonthlySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_aggregate),
+                        lungCancerMonthlySummaryBase: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_base)
+                    });
+                    break;
+                case 'lung_cancer_patient_list_template':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_patient_list_template)
+                    });
+                    break; 
 
                 case 'labsReportAggregate':
                     resolve({

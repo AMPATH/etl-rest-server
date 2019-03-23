@@ -18,6 +18,15 @@
     }]
   },
   {
+    "program": "Lung Cancer Screening",
+    "uuid": "b2db2bdf-67e9-42c5-858c-c7e435742ef5",
+    "reports": [{
+      "name": "L1. Lung cancer screening numbers",
+      "type": "lung-cancer-screening-numbers",
+      "description": "lung cancer screening numbers contains the following indicators - total Lung screened, normal Lung screened,abnormal Lung screening findings, Lung call rate, biopsy within 2 weeks, clients staged before treatment and total referred for follow up"
+    }]
+  },
+  {
     "program": "Breast and Cervical Cancer Screening",
     "uuid": "b2837614-e144-4bec-abc2-e9f5e3116bb9",
     "reports": [{
