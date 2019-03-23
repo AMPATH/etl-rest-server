@@ -18,6 +18,15 @@
     }]
   },
   {
+    "program": "Lung Cancer Treatment",
+    "uuid": "1a5a9a8d-f4a8-4c48-b63a-22f84530b4b9",
+    "reports": [{
+      "name": "L2. Lung cancer treatment numbers",
+      "type": "lung-cancer-treatment-numbers",
+      "description": "Lung cancer treatment numbers contains the following indicators - total patients, walk-in, referred from clinic, diagnosis without procedures done, diagnosis with procedures, non-small cell lung cancer, epidermoid carcinoma / squamous cell carcinoma, adenocarcinoma, large cell carcinoma, mixed squamous, small cell lung cancer, stage I, stage II, stage III, stage IV, limited stage, extensive stage, chemotherapy, radiotherapy, surgery"
+    }]
+  },
+  {
     "program": "Breast and Cervical Cancer Screening",
     "uuid": "b2837614-e144-4bec-abc2-e9f5e3116bb9",
     "reports": [{
