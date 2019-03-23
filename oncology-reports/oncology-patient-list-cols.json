@@ -154,5 +154,103 @@
 
             }
         ]
+    },
+    "1a5a9a8d-f4a8-4c48-b63a-22f84530b4b9" : {      
+        "program": "Lung Cancer Treatment",
+        "report": "Lung Cancer Treatment",
+        "indicators": [{
+                "indicator": "total_patients",
+                "patientListCols": [ "encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age" , "phone_number", "hiv_status"
+                ]
+
+            },
+            {
+                "indicator": "walk_in",
+                "patientListCols": [ "encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender"  ,"patient_uuid"
+                ]
+
+            },
+            {
+                "indicator": "referred_from_clinic",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+
+            },
+            {
+                "indicator": "non_small_cell_lung_cancer",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "epidermoid_carcinoma",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "adenocarcinoma",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "large cell carcinoma",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "mixed squamous",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "small cell lung cancer",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "stage_one",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number ", "metastasis_region"
+                ]
+            },
+            {
+                "indicator": "stage_two",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number", "metastasis_region"
+                ]
+            },
+            {
+                "indicator": "stage_three",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number", "metastasis_region"
+                ]
+            },
+            {
+                "indicator": "stage_four",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number", "metastasis_region"
+                ]
+            },
+            {
+                "indicator": "limited stage",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number", "metastasis_region"
+                ]
+            },
+            {
+                "indicator": "extensive stage",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number", "metastasis_region"
+                ]
+            },
+            {
+                "indicator": "chemotherapy",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "radiotherapy",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "surgery",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            }
+        ]
     }
 }
