@@ -443,7 +443,7 @@ export class BaseMysqlReport {
                 case 'lungCancerDailySummaryAggregate':
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_daily_screening_summary_aggregate),
-                        breastCancerMonthlySummaryBase: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_base)
+                        lungCancerMonthlySummaryBase: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_base)
                     });
                 case 'lungCancerMonthlySummaryAggregate':
                     resolve({

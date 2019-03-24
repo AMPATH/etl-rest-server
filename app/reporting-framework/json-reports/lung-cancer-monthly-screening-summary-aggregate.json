@@ -45,10 +45,10 @@
         },
         {
             "type": "derived_column",
-            "alias": "total_walk_in_for_treatment",
+            "alias": "walk_in",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "count(total_walk_in_for_treatment)"
+                "expression": "count(walk_in)"
             }
         },
         {

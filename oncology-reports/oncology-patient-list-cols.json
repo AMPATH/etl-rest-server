@@ -376,7 +376,7 @@
 
         },
         {
-            "indicator": "total_walk_in_for_treatment",
+            "indicator": "walk_in",
             "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" , "age" , "phone_number" , "patient_uuid"
             ]
 
