@@ -31,7 +31,7 @@
             "alias": "encounter_datetime",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "date_format(lcsd.encounter_datetime, '%m-%Y')"
+                "expression": "date_format(lcsd.encounter_datetime, '%d-%m-%Y')"
             }
         },
         

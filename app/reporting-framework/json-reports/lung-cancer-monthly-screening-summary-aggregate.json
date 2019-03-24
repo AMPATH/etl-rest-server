@@ -149,30 +149,6 @@
         },
         {
             "type": "derived_column",
-            "alias": "indication_of_lung_mass_from_ct_findings",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-                "expression": "count(indication_of_lung_mass_from_ct_findings)"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "indication_of_mediastial_mass_from_ct_findings",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-                "expression": "count(indication_of_mediastial_mass_from_ct_findings)"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "indication_of_pleural_mass_from_ct_findings",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-                "expression": "count(indication_of_pleural_mass_from_ct_findings)"
-            }
-        },
-        {
-            "type": "derived_column",
             "alias": "biopsy_done",
             "expressionType": "simple_expression",
             "expressionOptions": {

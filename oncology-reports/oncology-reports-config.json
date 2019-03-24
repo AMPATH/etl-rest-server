@@ -23,7 +23,7 @@
     "reports": [{
       "name": "L1. Lung cancer screening numbers",
       "type": "lung-cancer-screening-numbers",
-      "description": "lung cancer screening numbers contains the following indicators - total Lung screened, normal Lung screened,abnormal Lung screening findings, Lung call rate, biopsy within 2 weeks, clients staged before treatment and total referred for follow up"
+      "description": "Lung cancer screening numbers contains the following indicators - total screened, walk-in, referred from clinic, cigarette smoking, tobacco smoking, chemical exposure, asbestos exposure, HIV positive, HIV negative, HIV status unknown, TB treatment received, no TB treatment, normal X-ray results, abnormal X-ray results, normal CT-scan results, indication of lung mass from CT findings, indication of mediastial mass from CT findings indication of pleural mass from CT findings, biopsy done, biopsy not done, non-respiratory disease, non-small-cell lung cancer, small-cell-lung cancer"
     }]
   },
   {
