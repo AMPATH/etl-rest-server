@@ -121,6 +121,14 @@
         },
         {
             "type": "derived_column",
+            "alias": "total_lung_cancer",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+            "expression": "(IF(lung_cancer_type IN (1,2), 1, NULL))"
+                       }
+        },
+        {
+            "type": "derived_column",
             "alias": "cigarette_smoking",
             "expressionType": "simple_expression",
             "expressionOptions": {
@@ -274,6 +282,38 @@
             "expressionType": "simple_expression",
             "expressionOptions": {
                 "expression": "if(lung_cancer_type = 1, 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "lung_mass_who_did_biopsy",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if((ct_findings = 2 AND biospy_procedure_done = 1), 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "clients_who_did_not_do_biopsy",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(biospy_procedure_done = 2, 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "clients_who_did_biopsy_and_results_reported",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if((biospy_procedure_done = 1 AND biospy_results in (1,2,3)), 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "total_patients_with_small_cell_and_non_small_cell_lung_cancer",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(lung_cancer_type in (2,1) , 1, NULL)"
             }
         },
         {

@@ -118,6 +118,30 @@
         },
         {
             "type": "derived_column",
+            "alias": "hiv_positive",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(hiv_status = 3 , 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "hiv_negative",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(hiv_status = 2 , 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "hiv_status_unknown",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(hiv_status = 1 , 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "referred_from",
             "expressionType": "case_statement",
             "expressionOptions": {
@@ -163,10 +187,26 @@
         },
         {
             "type": "derived_column",
+            "alias": "total_lung_cancer",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+            "expression": "(IF(lung_cancer_type IN (1,2), 1, NULL))"
+                       }
+        },
+        {
+            "type": "derived_column",
+            "alias": "lung_cancer_patients_on_palliative_care",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+            "expression": "(IF(referral_ordered = 2, 1, NULL))"
+                       }
+        },
+        {
+            "type": "derived_column",
             "alias": "referred_from_clinic",
             "expressionType": "simple_expression",
             "expressionOptions": {
-            "expression": "(IF(cur_visit_type IN (1), 1, NULL))"
+            "expression": "(IF(cur_visit_type = 1, 1, NULL))"
                        }
         },
         {

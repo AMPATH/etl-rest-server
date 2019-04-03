@@ -363,6 +363,31 @@
                 "indicator": "surgery",
                 "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
                 ]
+            },
+            {
+                "indicator": "patients_diagnosed_with_lung_cancer",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "hiv_positive",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "hiv_negative",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "hiv_status_unknown",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
+            },
+            {
+                "indicator": "lung_cancer_patients_on_palliative_care",
+                "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" ,  "age", "phone_number"
+                ]
             }
         ]
     },
@@ -496,6 +521,30 @@
         },
         {
             "indicator": "small_cell_lung_cancer",
+            "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" , "age" , "patient_uuid", "biopsy_result", "biopsy_workup_date", "diagnosis_date", "imaging_results_description", "diagnosis_interval", "referrals"
+            ]
+
+        },
+        {
+            "indicator": "clients_who_did_biopsy_and_results_reported",
+            "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" , "age" , "patient_uuid", "biopsy_result", "biopsy_workup_date", "diagnosis_date", "imaging_results_description", "diagnosis_interval", "referrals"
+            ]
+
+        },
+        {
+            "indicator": "clients_who_did_not_do_biopsy",
+            "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" , "age" , "patient_uuid", "biopsy_result", "biopsy_workup_date", "diagnosis_date", "imaging_results_description", "diagnosis_interval", "referrals"
+            ]
+
+        },
+        {
+            "indicator": "lung_mass_clients_who_did_biopsy",
+            "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" , "age" , "patient_uuid", "biopsy_result", "biopsy_workup_date", "diagnosis_date", "imaging_results_description", "diagnosis_interval", "referrals"
+            ]
+
+        },
+        {
+            "indicator": "total_patients_with_small_cell_and_non_small_cell_lung_cancer",
             "patientListCols": ["encounter_datetime" , "location_name" , "identifiers" , "person_name" , "gender" , "age" , "patient_uuid", "biopsy_result", "biopsy_workup_date", "diagnosis_date", "imaging_results_description", "diagnosis_interval", "referrals"
             ]
 
