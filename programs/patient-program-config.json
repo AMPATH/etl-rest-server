@@ -830,16 +830,12 @@
           "enrollIf": "positive",
           "value": null,
           "answers": [{
-            "value": "positive",
-            "label": "Pregnant"
-          },
-            {
-              "value": "negative",
-              "label": "Not Pregnant"
+              "value": "positive",
+              "label": "Yes"
             },
             {
-              "value": "positive",
-              "label": "Not applicable(child)"
+              "value": "negative",
+              "label": "No"
             }
           ],
           "relatedQuestions": [{
