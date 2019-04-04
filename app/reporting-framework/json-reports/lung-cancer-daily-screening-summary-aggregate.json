@@ -61,6 +61,14 @@
         },
         {
             "type": "derived_column",
+            "alias": "patients_diagnosed_with_lung_cancer",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "sum(total_lung_cancer)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "cigarette_smoking",
             "expressionType": "simple_expression",
             "expressionOptions": {
@@ -173,6 +181,30 @@
         },
         {
             "type": "derived_column",
+            "alias": "lung_mass_clients_who_did_biopsy",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(lung_mass_who_did_biopsy)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "clients_who_did_not_do_biopsy",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(clients_who_did_not_do_biopsy)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "clients_who_did_biopsy_and_results_reported",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(clients_who_did_biopsy_and_results_reported)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "biopsy_done",
             "expressionType": "simple_expression",
             "expressionOptions": {
@@ -209,6 +241,14 @@
             "expressionType": "simple_expression",
             "expressionOptions": {
                 "expression": "count(small_cell_lung_cancer)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "total_patients_with_small_cell_and_non_small_cell_lung_cancer",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(total_patients_with_small_cell_and_non_small_cell_lung_cancer)"
             }
         }
     ],
