@@ -180,6 +180,7 @@ module.exports = function () {
                                     dao.runReport(reportParams).then((result) => {
                                         _.each(result.result, (row) => {
                                             row.order_type = etlHelpers.getTestsOrderedNames(row.order_type);
+                                            row.cur_meds = etlHelpers.getARVNames(row.cur_meds);
                                         });
                                         reply(result);
                                     }).catch((error) => {
@@ -426,6 +427,9 @@ module.exports = function () {
                                                 returnedResult.schemas = result.schemas;
                                                 returnedResult.sqlQuery = result.sqlQuery;
                                                 returnedResult.result = result.results.results;
+                                                _.each(returnedResult.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(returnedResult);
                                             }).catch((error) => {
                                                 reply(error);
@@ -484,6 +488,9 @@ module.exports = function () {
                                                 returnedResult.schemas = result.schemas;
                                                 returnedResult.sqlQuery = result.sqlQuery;
                                                 returnedResult.result = result.results.results;
+                                                _.each(returnedResult.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(returnedResult);
                                             }).catch((error) => {
                                                 reply(error);
@@ -545,6 +552,9 @@ module.exports = function () {
                                                 returnedResult.schemas = result.schemas;
                                                 returnedResult.sqlQuery = result.sqlQuery;
                                                 returnedResult.result = result.results.results;
+                                                _.each(returnedResult.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(returnedResult);
                                             }).catch((error) => {
                                                 reply(error);
@@ -1218,6 +1228,9 @@ module.exports = function () {
                                 requestParams.offSetParam = requestParams.startIndex;
                                 let service = new hivComparativeOverviewService();
                                 service.getPatientListReport(requestParams).then((result) => {
+                                    _.each(result.result, (item) => {
+                                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                    });
                                     reply(result);
                                 }).catch((error) => {
                                     reply(error);
@@ -2421,6 +2434,9 @@ module.exports = function () {
                                     let requestParams = Object.assign({}, request.query, request.params);
                                     let service = new PatientStatusChangeTrackerService();
                                     service.getPatientListReport(requestParams).then((result) => {
+                                        _.each(result.result, (item) => {
+                                            item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                        });
                                         reply(result);
                                     }).catch((error) => {
                                         reply(error);
@@ -2731,6 +2747,9 @@ module.exports = function () {
                         let requestParams = Object.assign({}, request.query, request.params);
                         let service = new HivSummaryIndicatorsService();
                         service.getPatientListReport(requestParams).then((result) => {
+                            _.each(result.result, (item) => {
+                                item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                            });
                             reply(result);
                         }).catch((error) => {
                             reply(error);
@@ -3507,6 +3526,9 @@ module.exports = function () {
                                 let requestParams = Object.assign({}, request.query, request.params);
                                 let service = new patientsRequiringVLService();
                                 service.getPatientListReport(requestParams).then((result) => {
+                                    _.each(result.result, (item) => {
+                                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                    });
                                     reply(result);
                                 }).catch((error) => {
                                     reply(error);
@@ -3865,6 +3887,9 @@ module.exports = function () {
                                         request.query.programTypeIds = programTypeIds;
                                         enrollmentService.getActiveProgramEnrollmentsPatientList(request.query)
                                             .then((result) => {
+                                                _.each(result.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(result);
 
                                             }).catch((error) => {
