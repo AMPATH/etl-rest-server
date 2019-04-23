@@ -26,11 +26,11 @@ function createPatientReferral(newPatientReferral) {
         if (!requiredFieldsCheck.isValid) {
             return reject(requiredFieldsCheck);
         }
-     
-      try{ 
+
+      try{
         resolveEnrollmentUuidsToIds(newPatientReferral).
             then(function (newPateintReferral) {
-            
+
                 validateCreateReferralPayload(newPateintReferral)
                     .then(function (validationStatus) {
 
@@ -48,6 +48,8 @@ function createPatientReferral(newPatientReferral) {
                                         .set('referred_to_location_id', newPateintReferral.referredToLocationId)
                                         .set('notification_status', newPateintReferral.notificationStatus)
                                         .set('referral_reason', newPateintReferral.referralReason)
+                                        .set('current_program', newPateintReferral.patientProgramIdCurrent)
+                                        .set('previous_program', newPateintReferral.patientProgramIdPrevious)
                                         .set('creator', getCurrentUserIdSquel())
                                         .set('voided', 0)
                                         .toString();
@@ -62,10 +64,10 @@ function createPatientReferral(newPatientReferral) {
                                             var resolvedFieldsCheck = checkResolvedReferralFields(newPateintReferral)
                                             if (!resolvedFieldsCheck.isValid) {
                                                 return reject(resolvedFieldsCheck);
-                                            } 
+                                            }
 
-                                            findPatientReferral( 
-                                                                newPateintReferral.encounterId,  
+                                            findPatientReferral(
+                                                                newPateintReferral.encounterId,
                                                                 newPateintReferral.providerId,
                                                                 newPateintReferral.referredToLocationId,
                                                                 newPateintReferral.referredFromLocationId, 0)
@@ -94,7 +96,7 @@ function createPatientReferral(newPatientReferral) {
              } catch(error){
     }
     });
-   
+
 }
 
 function updatePatientReferralNotification(patientReferralId, newPatientReferral) {
@@ -132,7 +134,7 @@ function updatePatientReferralNotification(patientReferralId, newPatientReferral
                             });
                         })
                         .catch(function (err) {
-                            
+
                             reject('Error establishing connection to MySql Server to update the resource');
                         });
                 }
@@ -150,11 +152,11 @@ function getPatientReferral(patientReferralId) {
                     .field('pr.voided')
                     .field('pr.encounter_id')
                     .field('pr.provider_id')
-                    .field('pr.referred_to_location_id') 
-                    .field('pr.referred_from_location_id') 
+                    .field('pr.referred_to_location_id')
+                    .field('pr.referred_from_location_id')
                     .field('pr.patient_program_id')
-                    .field('pr.notification_status') 
-					.field('pr.referral_reason')  
+                    .field('pr.notification_status')
+					.field('pr.referral_reason')
                     .from('etl.patient_referral', 'pr')
                     // .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
                     .join('amrs.provider', 'ap', 'ap.provider_id = pr.provider_id')
@@ -193,8 +195,8 @@ function getPatientReferralByEnrollmentUuid(locationUuid, enrollmentUuid) {
                     .field('pr.voided')
                     .field('e.uuid as encounter_uuid')
                     .field('pr.provider_id')
-                    .field('pr.referred_to_location_id') 
-                    .field('pr.referred_from_location_id')                     
+                    .field('pr.referred_to_location_id')
+                    .field('pr.referred_from_location_id')
                     .field('pr.patient_program_id')
                     .field('pr.notification_status')
 					        .field('lt.name as referred_to_location')
@@ -261,8 +263,8 @@ function validateCreateReferralPayload(patientReferralPayload) {
                      return reject(resolvedFieldsCheck);
             }
 
-            findPatientReferral( 
-                patientReferralPayload.encounterId,  
+            findPatientReferral(
+                patientReferralPayload.encounterId,
                 patientReferralPayload.providerId,
                 patientReferralPayload.referredToLocationId,
                 patientReferralPayload.referredFromLocationId, 0)
@@ -281,7 +283,7 @@ function validateCreateReferralPayload(patientReferralPayload) {
                         resolve(validationErrors);
                         console.log('An error occured while trying to validate patient referral payload',error);
                     })
-        
+
 
     }).catch(function (error) {
         console.log('An error occured while trying to validate patient referral payload',error);
@@ -302,7 +304,7 @@ function hasRequiredReferralFields(newPatientReferralPayload) {
             message: 'Provider is required'
         });
     }
-  
+
     if (_.isEmpty(newPatientReferralPayload.referredToLocation)) {
         validationResult.isValid = false;
         validationResult.errors.push({
@@ -338,8 +340,14 @@ function resolveEnrollmentUuidsToIds(referralPayload) {
                 getPatientProgramId(referralPayload.patientProgram)
                     .then(function (patientProgramId) {
                         referralPayload.patientProgramId = patientProgramId;
-                             getProviderId(referralPayload.provider)
-                                .then(function (providerId) {
+                          getProgramId(referralPayload.previousEnrolledProgram.program._openmrsModel.uuid)
+                           .then(function(programId){
+                              referralPayload.patientProgramIdPrevious = programId;
+                              getProgramId(referralPayload.programUuid)
+                              .then(function(programId1){
+                                referralPayload.patientProgramIdCurrent = programId1;
+                                getProviderId(referralPayload.provider)
+                                  .then(function (providerId) {
                                     referralPayload.providerId = providerId;
                                                     getLocation(referralPayload.referredToLocation)
                                                     .then(function (referredToLocationId) {
@@ -368,6 +376,16 @@ function resolveEnrollmentUuidsToIds(referralPayload) {
                         console.error(err);
                         reject(err);
                     })
+                  })
+                  .catch(function (error) {
+                      console.error(error);
+                      resolve(error);
+                  })
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    resolve(error);
+                })
             })
             .catch(function (error) {
                 console.error(error);
@@ -378,7 +396,7 @@ function resolveEnrollmentUuidsToIds(referralPayload) {
 
 
 function findPatientReferral(encounterId, providerId,referredToLocationId,referredFromLocationId, voided) {
-   
+
         return new Promise(function (resolve, reject) {
             connection.getServerConnection()
                 .then(function (conn) {
@@ -386,11 +404,11 @@ function findPatientReferral(encounterId, providerId,referredToLocationId,referr
                         .field('pr.patient_referral_id')
                         .field('pr.encounter_id')
                         .field('pr.provider_id')
-                        .field('pr.referred_to_location_id') 
-                        .field('pr.referred_from_location_id') 
-                        .field('pr.patient_program_id') 
-                        .field('pr.notification_status') 
-                        .field('pr.referral_reason') 
+                        .field('pr.referred_to_location_id')
+                        .field('pr.referred_from_location_id')
+                        .field('pr.patient_program_id')
+                        .field('pr.notification_status')
+                        .field('pr.referral_reason')
                         .from('etl.patient_referral', 'pr')
                         .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
                         .join('amrs.provider', 'apr', 'apr.provider_id = pr.provider_id')
@@ -403,7 +421,7 @@ function findPatientReferral(encounterId, providerId,referredToLocationId,referr
                         .where('pr.referred_from_location_id = ?', referredFromLocationId)
                         .where('pr.voided = ?', voided)
                         .toString();
-    
+
                     conn.query(query, {}, function (err, rows, fields) {
                         console.log(err)
                         if (err) {
@@ -420,11 +438,11 @@ function findPatientReferral(encounterId, providerId,referredToLocationId,referr
                     reject('Error establishing connection to MySql Server find duplicate');
                 });
         });
-    
-    
+
+
 }
 function getPatientReferralStats(providerId,startDate,endDate) {
-   
+
     return new Promise(function (resolve, reject) {
         connection.getServerConnection()
             .then(function (conn) {
@@ -432,11 +450,11 @@ function getPatientReferralStats(providerId,startDate,endDate) {
                     .field('pr.patient_referral_id')
                     .field('pr.encounter_id')
                     .field('pr.provider_id')
-                    .field('pr.referred_to_location_id') 
-                    .field('pr.referred_from_location_id') 
-                    .field('pr.patient_program_id') 
-                    .field('pr.notification_status') 
-                    .field('pr.referral_reason') 
+                    .field('pr.referred_to_location_id')
+                    .field('pr.referred_from_location_id')
+                    .field('pr.patient_program_id')
+                    .field('pr.notification_status')
+                    .field('pr.referral_reason')
                     .from('etl.patient_referral', 'pr')
                     .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
                     .join('amrs.provider', 'apr', 'apr.provider_id = pr.provider_id')
@@ -472,8 +490,8 @@ function getPatientReferralStats(providerId,startDate,endDate) {
 
 
 }
-    
-    
+
+
     function  getEncounterId(encounterUuid) {
         return new Promise(function (resolve, reject) {
             connection.getServerConnection()
@@ -483,7 +501,7 @@ function getPatientReferralStats(providerId,startDate,endDate) {
                         .from('amrs.encounter', 'u')
                         .where('u.uuid = ?', encounterUuid)
                         .toString();
-    
+
                     conn.query(query, {}, function (err, rows, fields) {
                         if (err) {
                             console.log(err)
@@ -513,7 +531,7 @@ function getPatientReferralStats(providerId,startDate,endDate) {
                         .from('amrs.patient_program', 'u')
                         .where('u.uuid = ?', patientProgramUuid)
                         .toString();
-    
+
                     conn.query(query, {}, function (err, rows, fields) {
                         if (err) {
                             reject('Error querying patient program server');
@@ -532,9 +550,37 @@ function getPatientReferralStats(providerId,startDate,endDate) {
                     reject('Error establishing connection to MySql Server  to resolve patient program');
                 });
         });
-    } 
-   
+    }
 
+    function getProgramId(patientProgramUuid) {
+        return new Promise(function (resolve, reject) {
+            connection.getServerConnection()
+                .then(function (conn) {
+                    var query = squel.select()
+                        .field('u.program_id')
+                        .from('amrs.program', 'u')
+                        .where('u.uuid = ?', patientProgramUuid)
+                        .toString();
+
+                    conn.query(query, {}, function (err, rows, fields) {
+                        if (err) {
+                            reject('Error querying patient program server');
+                        }
+                        else {
+                            if (rows.length > 0) {
+                                resolve(rows[0]['program_id']);
+                            } else {
+                                resolve(undefined);
+                            }
+                        }
+                        conn.release();
+                    });
+                })
+                .catch(function (err) {
+                    reject('Error establishing connection to MySql Server  to resolve patient program');
+                });
+        });
+    }
 
 
 function getProviderId(providerUuid) {
@@ -672,6 +718,6 @@ function checkResolvedReferralFields(newPatientReferralPayload) {
             message: 'Referred From Location is Not Found'
         });
     }
-    
+
     return validationResult;
 }
