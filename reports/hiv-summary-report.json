@@ -298,6 +298,21 @@
                 "label":"late_scheduled_visits",
                 "expression":"late_scheduled_visits",
                 "sql": "count(distinct if($expression,t1.person_id,null))"
+            },
+            {
+                "label":"hiv_status_partialy_disclosed",
+                "expression":"hiv_status_partialy_disclosed",
+                "sql": "count(distinct if($expression,t1.person_id,null))"
+            },
+            {
+                "label":"hiv_status_fully disclosed",
+                "expression":"hiv_status_fully_disclosed",
+                "sql": "count(distinct if($expression,t1.person_id,null))"
+            },
+            {
+                "label":"hiv_status_not_disclosed",
+                "expression":"hiv_status_not_disclosed",
+                "sql": "count(distinct if($expression,t1.person_id,null))"
             }
 
         ],

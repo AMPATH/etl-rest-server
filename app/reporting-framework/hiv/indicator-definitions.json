@@ -214,5 +214,23 @@
         "label": " late scheduled visits",
         "description": "Late scheduled visit",
         "expression": "(date(encounter_datetime) > date(prev_rtc_date)) and encounter_datetime between @startDate and @endDate "
+    },
+    {
+        "name": "hiv_status_partialy_disclosed",
+        "label": "hiv status partialy disclosed",
+        "description": "Partialy Disclosed",
+        "expression": "hiv_status_disclosed = 3"
+    },
+    {
+        "name": "hiv_status_fully_disclosed",
+        "label": "hiv status fully disclosed",
+        "description": "Fully Disclosed",
+        "expression": "hiv_status_disclosed = 2"
+    },
+    {
+        "name": "hiv_status_not_disclosed",
+        "label": "hiv status not disclosed",
+        "description": "Not Disclosed",
+        "expression": "hiv_status_disclosed = 0"
     }]
 }
