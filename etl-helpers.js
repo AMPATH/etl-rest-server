@@ -137,12 +137,12 @@ module.exports = function () {
                     s += column;
                     if (f === "start") s += " >= ?";
                     else if (f === "end") s += " <= ?";
-                    elses += " like ?";
+                    else s += " like ?";
                     vals.push(item.filters[f]);
                     s += " AND ";
                 }
             });
-            s = s.substring(0, s.length - 5)
+            s = s.substring(0, s.length - 5);
             if (s !== "")
                 s = "(" + s + ")";
             console.log(s);
@@ -263,6 +263,7 @@ module.exports = function () {
                 6536: "GYNECOLOGIC CANCER TYPE",
                 7213: "MELPHALAN",
                 6485: "SARCOMA",
+                6537: "CERVICAL CANCER",
                 9918: "CHEMO MEDS",
                 8478: "IMATINIB",
                 7217: "PALLIATIVE TAMOXIFEN",
