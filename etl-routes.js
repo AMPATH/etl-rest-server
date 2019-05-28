@@ -109,12 +109,15 @@ import {
 import {
     PatientReferralService
 } from './service/patient-referral.service';
-import { 
-    CombinedBreastCervicalCancerMonthlySummary 
+import {
+    CombinedBreastCervicalCancerMonthlySummary
 } from './service/combined-breast-cervical-cancer-monthly-summary.service';
 import {
      LungCancerTreatmentSummary
      } from './service/lung-cancer-treatment-summary.service';
+import {
+      PatientPeerReferral
+} from './service/patient-peer-referral.service';
 var  kibanaService = require('./service/kibana.service');
 
 
@@ -1043,7 +1046,7 @@ module.exports = function () {
                             }
                             reply(summary);
                         });
-                        
+
                     },
                     description: 'Get patient HIV summary',
                     notes: "Returns a list of historical patient's HIV summary with the given patient uuid. " +
@@ -1287,6 +1290,7 @@ module.exports = function () {
                 }
             },
             {
+
                 method: 'GET',
                 path: '/etl/patient-referrals',
                 config: {
@@ -1324,7 +1328,6 @@ module.exports = function () {
                                     reply(error);
                                 });
                             });
-
                     },
                     description: "Get patient referral for selected clinic",
                     notes: "Returns a list of patient referral for the selected clinic(s),start date, end date",
@@ -3316,7 +3319,7 @@ module.exports = function () {
                                 }else{
                                    console.error('Undefined Lab Configuration');
                                 }
-                               
+
                             }).then((result)=>{
                                 reply(result);
                             }).catch((error) => {
@@ -4417,7 +4420,7 @@ module.exports = function () {
                                 let reportParams = etlHelpers.getReportParams('breast-cancer-summary-dataset',
                                     ['startDate', 'endDate', 'period', 'locationUuids', 'indicators', 'genders', 'startAge', 'endAge'],
                                     requestParams);
-     
+
                                 let service = new LungCancerTreatmentSummary();
                                 service.getAggregateReport(reportParams).then((result) => {
                                     reply(result);
@@ -4478,7 +4481,7 @@ module.exports = function () {
                         }
                     },
                     handler: function (request, reply) {
-                        
+
                         let kibanaDashboard = kibanaService.getKibanaDashboards().then((result) => {
                                     console.log('Kibana Dashboard', result);
                                     reply(result);
@@ -4492,7 +4495,74 @@ module.exports = function () {
                     tags: ['api'],
                 }
 
-            }
+            },
+            {
+                  method: 'GET',
+                  path: '/etl/patient-referrals-peer-navigator',
+                  config: {
+                      auth: 'simple',
+                      plugins: {
+                          'openmrsLocationAuthorizer': {
+                              locationParameter: [{
+                                  type: 'query', //can be in either query or params so you have to specify
+                                  name: 'locationUuids' //name of the location parameter
+                              }],
+                              aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
+                                  {
+                                      type: 'query', //can be in either query or params so you have to specify
+                                      name: 'reportName', //name of the parameter
+                                      value: 'patient-peer-navigator-referral-report' //parameter value
+                                  }
+                              ]
+                          }
+                      },
+                      handler: function (request, reply) {
+                          //security check
+                          request.query.reportName = 'patient-referral-report';
+                          if (!authorizer.hasReportAccess(request.query.reportName)) {
+                              return reply(Boom.forbidden('Unauthorized'));
+                          }
+
+                          let requestParams = Object.assign({}, request.query, request.params);
+                          requestParams.reportName = 'referral-patient-peer-navigator-list';
+                          let service = new PatientReferralService();
+
+                          service.getPatientListReport3(requestParams).then((result) => {
+
+                              reply(result);
+                          }).catch((error) => {
+                              reply(error);
+                          });
+
+                      },
+                      description: 'Get the patient list for CDM strengths study',
+                      notes: 'Returns the normal referral patient list plus some additional columns for front end processing',
+                      tags: ['api'],
+                      validate: {
+                          query: {
+                              locationUuids: Joi.string()
+                                  .optional()
+                                  .description("A list of comma separated location uuids"),
+                              startDate: Joi.string()
+                                  .optional()
+                                  .description("The start date to filter by"),
+                              endDate: Joi.string()
+                                  .optional()
+                                  .description("The end date to filter by"),
+                              programUuids: Joi.string()
+                                  .optional()
+                                  .description("The program to filter by"),
+                              limit: Joi.string()
+                                  .optional()
+                                  .description("The limit to indicate number of rows"),
+                              department: Joi.string()
+                                  .optional()
+                                  .description("The department to filter by")
+
+                          }
+                      }
+                  }
+              }
         ];
 
     return routes;

@@ -112,6 +112,9 @@ import * as lung_cancer_daily_screening_summary_aggregate from './json-reports/l
 import * as lung_cancer_monthly_screening_summary_aggregate from './json-reports/lung-cancer-monthly-screening-summary-aggregate.json';
 import * as lung_cancer_monthly_screening_summary_base from './json-reports/lung-cancer-monthly-screening-summary-base.json';
 import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-patient-list-template.json';
+import * as referral_patient_list_peer_base from './json-reports/referral-peer-base';
+import * as referral_peer_aggregate from './json-reports/referral-peer-aggregate';
+
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -349,6 +352,13 @@ export class BaseMysqlReport {
                         referralDatasetbase: this.cloneJsonSchema(referral_dataset_base)
                     });
                     break;
+
+                case 'referral-patient-peer-navigator-list':
+                        resolve({
+                            main: this.cloneJsonSchema(referral_peer_aggregate),
+                            referralDatasetbase: this.cloneJsonSchema(referral_patient_list_peer_base)
+                        });
+                        break;
                 case 'StartingARTAggregationAge15':
                     resolve({
                         main: this.cloneJsonSchema(starting_art_aggregation_age15),
@@ -444,8 +454,6 @@ export class BaseMysqlReport {
                         cervicalCancerMonthlyReportBase: this.cloneJsonSchema(cervical_cancer_monthly_screening_summary_base)
                     });
                     break;
-
-                   
                 case 'lungCancerDailySummaryAggregate':
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_daily_screening_summary_aggregate),
@@ -461,8 +469,7 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_patient_list_template)
                     });
-                    break; 
-
+                    break;
                 case 'labsReportAggregate':
                     resolve({
                         main: this.cloneJsonSchema(labs_report_aggregate),
