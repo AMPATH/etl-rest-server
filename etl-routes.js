@@ -95,6 +95,9 @@ import {
 } from './service/cervical-cancer-monthly-summary.service';
 
 import {
+    LungCancerMonthlySummaryService
+} from './service/lung-cancer-monthly-summary.service';
+import {
     PatientlistMysqlReport
 } from './app/reporting-framework/patientlist-mysql.report';
 import {
@@ -106,6 +109,13 @@ import {
 import {
     PatientReferralService
 } from './service/patient-referral.service';
+import { 
+    CombinedBreastCervicalCancerMonthlySummary 
+} from './service/combined-breast-cervical-cancer-monthly-summary.service';
+import {
+     LungCancerTreatmentSummary
+     } from './service/lung-cancer-treatment-summary.service';
+var  kibanaService = require('./service/kibana.service');
 
 
 module.exports = function () {
@@ -179,6 +189,7 @@ module.exports = function () {
                                     dao.runReport(reportParams).then((result) => {
                                         _.each(result.result, (row) => {
                                             row.order_type = etlHelpers.getTestsOrderedNames(row.order_type);
+                                            row.cur_meds = etlHelpers.getARVNames(row.cur_meds);
                                         });
                                         reply(result);
                                     }).catch((error) => {
@@ -424,6 +435,9 @@ module.exports = function () {
                                                 returnedResult.schemas = result.schemas;
                                                 returnedResult.sqlQuery = result.sqlQuery;
                                                 returnedResult.result = result.results.results;
+                                                _.each(returnedResult.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(returnedResult);
                                             }).catch((error) => {
                                                 reply(error);
@@ -482,6 +496,9 @@ module.exports = function () {
                                                 returnedResult.schemas = result.schemas;
                                                 returnedResult.sqlQuery = result.sqlQuery;
                                                 returnedResult.result = result.results.results;
+                                                _.each(returnedResult.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(returnedResult);
                                             }).catch((error) => {
                                                 reply(error);
@@ -543,6 +560,9 @@ module.exports = function () {
                                                 returnedResult.schemas = result.schemas;
                                                 returnedResult.sqlQuery = result.sqlQuery;
                                                 returnedResult.result = result.results.results;
+                                                _.each(returnedResult.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(returnedResult);
                                             }).catch((error) => {
                                                 reply(error);
@@ -716,7 +736,7 @@ module.exports = function () {
                     },
                     handler: function (request, reply) {
                         let EIDLabReminderService = require('./service/eid/eid-lab-reminder.service');
-                        EIDLabReminderService.pendingEIDReminders(request.params, config.eid)
+                        EIDLabReminderService.pendingEIDReminders(request.params, config.hivLabSystem)
                             .then((eidReminders) => {
                                 let combineRequestParams = Object.assign({}, request.query, request.params);
                                 combineRequestParams.limitParam = 1;
@@ -1012,7 +1032,17 @@ module.exports = function () {
                         }
                     },
                     handler: function (request, reply) {
-                        dao.getPatientHivSummary(request, reply);
+                        console.log('get hiv summary');
+                        dao.getPatientHivSummary(request)
+                        .then(summary => {
+                            // console.log('Summary', summary);
+                            if(summary.result && summary.result.length > 0){
+                                const transformed = etlHelpers.transformMedicalRefillToClinical(summary.result);
+                                summary.result = transformed;
+                            }
+                            reply(summary);
+                        });
+                        
                     },
                     description: 'Get patient HIV summary',
                     notes: "Returns a list of historical patient's HIV summary with the given patient uuid. " +
@@ -1301,6 +1331,9 @@ module.exports = function () {
                                 requestParams.offSetParam = requestParams.startIndex;
                                 let service = new hivComparativeOverviewService();
                                 service.getPatientListReport(requestParams).then((result) => {
+                                    _.each(result.result, (item) => {
+                                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                    });
                                     reply(result);
                                 }).catch((error) => {
                                     reply(error);
@@ -1393,8 +1426,10 @@ module.exports = function () {
                                 .description("The end date to filter by"),
                             programUuids: Joi.string()
                                 .optional()
-                                .description("The program to filter by")
-
+                                .description("The program to filter by"),
+                            department: Joi.string()
+                                .optional()
+                                .description("The department to filter by")
                         }
                     }
                 }
@@ -1457,7 +1492,10 @@ module.exports = function () {
                                 .description("The program to filter by"),
                             limit: Joi.string()
                                 .optional()
-                                .description("The limit to indicate number of rows")
+                                .description("The limit to indicate number of rows"),
+                            department: Joi.string()
+                                .optional()
+                                .description("The department to filter by")
 
                         }
                     }
@@ -1516,7 +1554,7 @@ module.exports = function () {
                     auth: 'simple',
                     plugins: {},
                     handler: function (request, reply) {
-                        console.log('xxxxxxxxxxxx', request)
+                        // console.log('xxxxxxxxxxxx', request)
                         patientReferralDao.updatePatientReferralNotification(request.params['patientReferralId'], request.payload)
                             .then(function (updatedPatientReferral) {
                                 reply(updatedPatientReferral);
@@ -2504,6 +2542,9 @@ module.exports = function () {
                                     let requestParams = Object.assign({}, request.query, request.params);
                                     let service = new PatientStatusChangeTrackerService();
                                     service.getPatientListReport(requestParams).then((result) => {
+                                        _.each(result.result, (item) => {
+                                            item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                        });
                                         reply(result);
                                     }).catch((error) => {
                                         reply(error);
@@ -2814,6 +2855,9 @@ module.exports = function () {
                         let requestParams = Object.assign({}, request.query, request.params);
                         let service = new HivSummaryIndicatorsService();
                         service.getPatientListReport(requestParams).then((result) => {
+                            _.each(result.result, (item) => {
+                                item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                            });
                             reply(result);
                         }).catch((error) => {
                             reply(error);
@@ -3590,6 +3634,9 @@ module.exports = function () {
                                 let requestParams = Object.assign({}, request.query, request.params);
                                 let service = new patientsRequiringVLService();
                                 service.getPatientListReport(requestParams).then((result) => {
+                                    _.each(result.result, (item) => {
+                                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                    });
                                     reply(result);
                                 }).catch((error) => {
                                     reply(error);
@@ -3948,6 +3995,9 @@ module.exports = function () {
                                         request.query.programTypeIds = programTypeIds;
                                         enrollmentService.getActiveProgramEnrollmentsPatientList(request.query)
                                             .then((result) => {
+                                                _.each(result.result, (item) => {
+                                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                });
                                                 reply(result);
 
                                             }).catch((error) => {
@@ -4210,6 +4260,79 @@ module.exports = function () {
             },
             {
                 method: 'GET',
+                path: '/etl/combined-breast-cervical-cancer-screening-numbers',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewClinicDashBoard
+                        },
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }]
+                        }
+                    },
+                    handler: function (request, reply) {
+                        request.query.reportName = 'combined-breast-cervical-cancer-monthly-screening-summary';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let reportParams = etlHelpers.getReportParams('breast-cancer-summary-dataset',
+                                    ['startDate', 'endDate', 'period', 'locationUuids', 'indicators', 'genders', 'startAge', 'endAge'],
+                                    requestParams);
+                                let service = new CombinedBreastCervicalCancerMonthlySummary();
+                                service.getAggregateReport(reportParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    console.error('Error: ', error);
+                                    reply(error);
+                                });
+                            });
+
+                    },
+                    description: 'Get combined breast & cervical cancer monthly screening summary details based on location and time filters',
+                    notes: 'Returns aggregates of combined breast & cervical cancer screening',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
+                path: '/etl/combined-breast-cervical-cancer-screening-numbers-patient-list',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }]
+                        }
+                    },
+                    handler: function (request, reply) {
+                        request.query.reportName = 'combined-breast-cervical-cancer-monthly-screening-summary';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let service = new CombinedBreastCervicalCancerMonthlySummary();
+                                service.getPatientListReport(requestParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    reply(error);
+                                });
+                            });
+
+                    },
+                    description: 'Get combined breast & cervical cancer monthly summary patient list based on location and time filters',
+                    notes: 'Returns details of patients who underwent both breast & cervical cancer screenings',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
                 path: '/etl/cervical-cancer-screening-numbers',
                 config: {
                     auth: 'simple',
@@ -4243,7 +4366,7 @@ module.exports = function () {
 
                     },
                     description: 'Get cervical cancer monthly screening summary based on location and time filters',
-                    notes: 'Returns aggeregates of cervical cancer screenings',
+                    notes: 'Returns aggregates of cervical cancer screenings',
                     tags: ['api'],
                 }
 
@@ -4277,6 +4400,179 @@ module.exports = function () {
                     },
                     description: 'Get cervical cancer monthly screening patient list based on location and time filters',
                     notes: 'Returns details of patients who underwent cervical cancer screenings',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
+                path: '/etl/lung-cancer-screening-numbers',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewClinicDashBoard
+                        },
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }]
+                        }
+                    },
+                    handler: function (request, reply) {
+                        request.query.reportName = 'lung-cancer-monthly-screening-summary';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let reportParams = etlHelpers.getReportParams('lung-cancer-monthly-summary',
+                                    ['startDate', 'endDate', 'period', 'locationUuids', 'indicators', 'genders', 'startAge', 'endAge'],
+                                    requestParams);
+                                let service = new LungCancerMonthlySummaryService();
+                                service.getAggregateReport(reportParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    console.error('Error: ', error);
+                                    reply(error);
+                                });
+                            });
+
+                    },
+                    description: 'Get lung cancer monthly screening summary based on location and time filters',
+                    notes: 'Returns aggregates of lung cancer screenings',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
+                path: '/etl/lung-cancer-screening-numbers-patient-list',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }]
+                        }
+                    },
+                    handler: function (request, reply) {
+                        request.query.reportName = 'lung-cancer-monthly-screening-summary';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let service = new LungCancerMonthlySummaryService();
+                                service.getPatientListReport(requestParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    reply(error);
+                                });
+                            });
+
+                    },
+                    description: 'Get lung cancer monthly screening patient list based on location and time filters',
+                    notes: 'Returns details of patients who underwent lung cancer screenings',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
+                path: '/etl/lung-cancer-treatment-numbers',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewClinicDashBoard
+                        },
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }]
+                        }
+                    },
+                    handler: function (request, reply) {
+                        request.query.reportName = 'lung-cancer-treatment-summary';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let reportParams = etlHelpers.getReportParams('breast-cancer-summary-dataset',
+                                    ['startDate', 'endDate', 'period', 'locationUuids', 'indicators', 'genders', 'startAge', 'endAge'],
+                                    requestParams);
+     
+                                let service = new LungCancerTreatmentSummary();
+                                service.getAggregateReport(reportParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    console.error('Error: ', error);
+                                    reply(error);
+                                });
+                            });
+
+                    },
+                    description: 'Get lung cancer treatment summary details based on location and time filters',
+                    notes: 'Returns aggregates of lung cancer treatment',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
+                path: '/etl/lung-cancer-treatment-numbers-patient-list',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }]
+                        }
+                    },
+                    handler: function (request, reply) {
+                        request.query.reportName = 'lung-cancer-treatment-summary';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let service = new LungCancerTreatmentSummary();
+                                service.getPatientListReport(requestParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    reply(error);
+                                });
+                            });
+
+                    },
+                    description: 'Get Lung cancer treatment monthly patient list based on location and time filters',
+                    notes: 'Returns details of patients who underwent lung cancer treatment',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
+                path: '/etl/kibana-dashboards',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewClinicDashBoard
+                        }
+                    },
+                    handler: function (request, reply) {
+                        
+                        let kibanaDashboard = kibanaService.getKibanaDashboards().then((result) => {
+                                    console.log('Kibana Dashboard', result);
+                                    reply(result);
+                                }).catch((error) => {
+                                    reply(error);
+                                });
+
+                    },
+                    description: 'Get a list of Kibana Dashboards',
+                    notes: 'Returns a list of links for Kibana Dashboards',
                     tags: ['api'],
                 }
 

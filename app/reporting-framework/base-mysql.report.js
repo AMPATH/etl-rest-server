@@ -65,8 +65,10 @@ import * as clinical_hiv_comparative_overview_base from './json-reports/clinical
 import * as daily_has_not_returned_aggregate from './json-reports/daily-has-not-returned-aggregate.json';
 import * as daily_has_not_returned_base from './json-reports/daily-has-not-returned-base.json';
 import * as daily_has_not_returned_cohort from './json-reports/daily-has-not-returned-cohort.json';
+import * as next_drug_pickup_encounter_base from './json-reports/next-drug-pickup-encounter.base.json';
 import * as daily_appointments_aggregate from './json-reports/daily-appointments-aggregate.json';
 import * as daily_appointments_base from './json-reports/daily-appointments-base.json';
+import * as daily_appointment_latest_rtc_cohort_base from './json-reports/daily-appointment-latest-rtc-cohort-base.json';
 import * as daily_attendance_aggregate from './json-reports/daily-attendance-aggregate.json';
 import * as daily_attendance_base from './json-reports/daily-attendance-base.json';
 import * as patint_change_status_tracker_aggregate from './json-reports/patint-change-status-tracker-aggregate.json';
@@ -82,6 +84,12 @@ import * as breast_cancer_monthly_screening_summary_aggregate from './json-repor
 import * as breast_cancer_monthly_screening_summary_base from './json-reports/breast-cancer-monthly-screening-summary-base.json';
 import * as breast_cancer_patient_list_template from './json-reports/breast-cancer-patient-list-template.json';
 
+import * as lung_cancer_treatment_monthly_summary_aggregate from './json-reports/lung-cancer-treatment-monthly-summary-aggregate.json';
+import * as lung_cancer_treatment_daily_summary_aggregate from './json-reports/lung-cancer-treatment-daily-summary-aggregate.json';
+import * as lung_cancer_treatment_summary_base from './json-reports/lung-cancer-treatment-summary-base.json';
+import * as lung_cancer_treatment_patient_list_template from './json-reports/lung-cancer-treatment-patient-list-template.json';
+import * as lung_cancer_treatment_monthly_summary_base from './json-reports/lung-cancer-treatment-monthly-summary-base.json';
+
 import * as cervical_cancer_daily_screening_summary_aggregate from './json-reports/cervical-cancer-daily-screening-summary-aggregate.json';
 import * as cervical_cancer_monthly_screening_summary_aggregate from './json-reports/cervical-cancer-monthly-screening-summary-aggregate.json';
 import * as cervical_cancer_monthly_screening_summary_base from './json-reports/cervical-cancer-monthly-screening-summary-base.json';
@@ -94,7 +102,16 @@ import * as enhanced_adherence_hiv_program_cohort from './json-reports/enhanced-
 
 import * as currently_enrolled_patients_base from './json-reports/currently-enrolled-patients.base';
 import * as currently_enrolled_patients_aggregate from './json-reports/currently-enrolled-patients-aggregate';
+import * as combined_breast_cervical_cancer_daily_screening_summary_aggregate from './json-reports/combined-breast-cervical-cancer-daily-screening-summary-aggregate.json';
+import * as combined_breast_cervical_cancer_monthly_screening_summary_aggregate from './json-reports/combined-breast-cervical-cancer-monthly-screening-summary-aggregate.json';
+import * as combined_breast_cervical_cancer_monthly_screening_summary_base from './json-reports/combined-breast-cervical-cancer-monthly-screening-summary-base.json';
+import * as combined_breast_cervical_cancer_daily_screening_summary_base from './json-reports/combined-breast-cervical-cancer-daily-screening-summary-base.json';
+import * as combined_breast_cervical_cancer_patient_list_template from './json-reports/combined-breast-cervical-cancer-patient-list-template.json';
 
+import * as lung_cancer_daily_screening_summary_aggregate from './json-reports/lung-cancer-daily-screening-summary-aggregate.json';
+import * as lung_cancer_monthly_screening_summary_aggregate from './json-reports/lung-cancer-monthly-screening-summary-aggregate.json';
+import * as lung_cancer_monthly_screening_summary_base from './json-reports/lung-cancer-monthly-screening-summary-base.json';
+import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-patient-list-template.json';
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -116,6 +133,7 @@ export class BaseMysqlReport {
                         .then((sqlQuery) => {
                             // allow user to use 'null' as parameter values
                             sqlQuery = sqlQuery.replace(/\'null\'/g, "null");
+                            // console.log('Query: ', sqlQuery);
 
                             that.reportQuery = sqlQuery;
                             // run query
@@ -274,7 +292,8 @@ export class BaseMysqlReport {
                 case 'dailyAppointmentsAggregate':
                     resolve({
                         main: this.cloneJsonSchema(daily_appointments_aggregate),
-                        dailyAppointmentsBase: this.cloneJsonSchema(daily_appointments_base)
+                        dailyAppointmentsBase: this.cloneJsonSchema(daily_appointments_base),
+                        dailyAppointmentlatestRtcCohortBase: this.cloneJsonSchema(daily_appointment_latest_rtc_cohort_base)
                     });
                     break;
                 case 'dailyAttendanceAggregate':
@@ -287,7 +306,8 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(daily_has_not_returned_aggregate),
                         dailyHasNotReturnedBase: this.cloneJsonSchema(daily_has_not_returned_base),
-                        dailyHasNotReturnedCohort: this.cloneJsonSchema(daily_has_not_returned_cohort)
+                        dailyHasNotReturnedCohort: this.cloneJsonSchema(daily_has_not_returned_cohort),
+                        nextDrugPickupEncounterBase: this.cloneJsonSchema(next_drug_pickup_encounter_base)
                     });
                     break;
                 case 'dailyHasNotReturnedCohort':
@@ -375,9 +395,42 @@ export class BaseMysqlReport {
                         breastCancerMonthlySummaryBase: this.cloneJsonSchema(breast_cancer_monthly_screening_summary_base)
                     });
                     break;
+                case 'lungCancerTreatmentMonthlySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_treatment_monthly_summary_aggregate),
+                        lungCancerTreatmentMonthlySummaryBase: this.cloneJsonSchema(lung_cancer_treatment_monthly_summary_base)
+                    });
+                    break;
+                case 'lungCancerTreatmentDailySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_treatment_daily_summary_aggregate),
+                        lungCancerTreatmentSummaryBase: this.cloneJsonSchema(lung_cancer_treatment_summary_base)
+                    });
+                    break;
+                case 'lung_cancer_treatment_patient_list_template':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_treatment_patient_list_template)
+                    });
+                    break;
+                case 'combinedBreastCervicalCancerDailySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(combined_breast_cervical_cancer_daily_screening_summary_aggregate),
+                        combinedBreastCervicalCancerDailySummaryBase: this.cloneJsonSchema(combined_breast_cervical_cancer_daily_screening_summary_base)
+                    })
+                case 'combinedBreastCervicalCancerMonthlySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(combined_breast_cervical_cancer_monthly_screening_summary_aggregate),
+                        combinedBreastCervicalCancerMonthlySummaryBase: this.cloneJsonSchema(combined_breast_cervical_cancer_monthly_screening_summary_base)
+                    });
+                    break;
                 case 'breast_cancer_patient_list_template':
                     resolve({
                         main: this.cloneJsonSchema(breast_cancer_patient_list_template)
+                    });
+                    break;
+                case 'combined_breast_cervical_cancer_patient_list_template':
+                    resolve({
+                        main: this.cloneJsonSchema(combined_breast_cervical_cancer_patient_list_template)
                     });
                     break;
                 case 'cervicalCancerDailySummaryAggregate':
@@ -391,6 +444,24 @@ export class BaseMysqlReport {
                         cervicalCancerMonthlyReportBase: this.cloneJsonSchema(cervical_cancer_monthly_screening_summary_base)
                     });
                     break;
+
+                   
+                case 'lungCancerDailySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_daily_screening_summary_aggregate),
+                        lungCancerMonthlySummaryBase: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_base)
+                    });
+                case 'lungCancerMonthlySummaryAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_aggregate),
+                        lungCancerMonthlySummaryBase: this.cloneJsonSchema(lung_cancer_monthly_screening_summary_base)
+                    });
+                    break;
+                case 'lung_cancer_patient_list_template':
+                    resolve({
+                        main: this.cloneJsonSchema(lung_cancer_patient_list_template)
+                    });
+                    break; 
 
                 case 'labsReportAggregate':
                     resolve({

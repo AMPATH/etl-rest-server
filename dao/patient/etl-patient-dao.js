@@ -130,7 +130,9 @@ module.exports = function () {
         getOncologyPatientReport(request, queryParts).then((data) => {
             let oncMedHistory = data;
             let oncMedsDetailed = [];
-            let meds, dose, frequency;
+            let meds = '';
+            let dose = '';
+            let frequency = '';
             _.each(oncMedHistory.result, (summary) => {
                 if (!!summary.cur_onc_meds) {
                     meds = summary.cur_onc_meds.split(' ## ');
@@ -370,10 +372,23 @@ module.exports = function () {
                 row.hiv_dna_pcr = helpers.getConceptName(row.hiv_dna_pcr);
                 row.chest_xray = helpers.getConceptName(row.chest_xray);
                 row.ecg = helpers.getConceptName(row.ecg);
-
+                row.test_datetime = row.test_datetime.toString();
             });
+            var arr = result.result;
+
+            var cleanResult = getUnique(arr, 'test_datetime');
+            result.result = cleanResult;  
             callback(result);
         });
+    }
+
+    function getUnique(arr, comp) {
+        const unique = arr.map(e => e[comp])
+        .map((e, i, final) => final.indexOf(e) === i && i)
+        .filter(e => arr[e]).map(e => arr[e]);
+  
+        return unique;
+
     }
 
     function getPatient(request, callback) {

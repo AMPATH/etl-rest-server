@@ -22,12 +22,18 @@ const routes = [{
             if (requestParams.indicators) {
                 indicators = requestParams.indicators.split(',');
             }
+
+            if(!requestParams.lower_vl){
+                requestParams.lower_vl = 401;
+            }
             requestParams.locationUuids = locationUuids;
+            requestParams.startDate = requestParams.startDate.split('T')[0];
+            requestParams.endDate = requestParams.endDate.split('T')[0];
             let report = new PatientlistMysqlReport('enhancedAdherenceHIVProgramAggregate', requestParams);
             report.generatePatientListReport(indicators).then((result) => {
                 if (result.results.results.length > 0) {
                     _.each(result.results.results, (item) => {
-                        item.cur_arv_meds = helpers.getARVNames(item.cur_arv_meds);
+                        item.cur_meds = helpers.getARVNames(item.cur_meds);
                         item.vl_1_date = moment(item.vl_1_date).format('DD-MM-YYYY');
                     });
                     reply(result);

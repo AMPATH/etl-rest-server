@@ -75,12 +75,12 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "encounter_type not in (21,99999)",
+                "conditionExpression": "t2.encounter_type not in (21,99999)",
                 "parameterName": ""
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression":  "t2.is_clinical = 1",
+                "conditionExpression":  "t2.is_clinical = 1 OR t2.encounter_type = 186",
                 "parameterName": ""
             }
         ]
