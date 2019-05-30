@@ -374,6 +374,42 @@ function dnaReminder(data) {
 
 }
 
+function dstReminders(data) {
+
+    let reminders = [];
+    if (data.has_dst_result === 1) {
+        reminders.push({
+            message: 'New DRT/DST Image result.',
+            title: 'DRT/DST Reminders',
+            type: 'success',
+            display: {
+                banner: true,
+                toast: true
+            }
+        });
+    }
+    return reminders;
+
+}
+
+function geneXpertReminders(data) {
+
+    let reminders = [];
+    if (data.has_gene_xpert_result === 1) {
+        reminders.push({
+            message: 'New GeneXpert Image result.',
+            title: 'GeneXpert Reminders',
+            type: 'success',
+            display: {
+                banner: true,
+                toast: true
+            }
+        });
+    }
+    return reminders;
+
+}
+
 function generateReminders(etlResults, eidResults) {
   let reminders = [];
   let patientReminder;
@@ -394,6 +430,8 @@ function generateReminders(etlResults, eidResults) {
   let vl_reminders = viralLoadReminders(data);
   let qualifies_enhanced = qualifiesEnhancedReminders(data);
   let dna_pcr_reminder = dnaReminder(data);
+  let dst_result = dstReminders(data);
+  let gene_xpert_result = geneXpertReminders(data);
   let currentReminder = [];
   if(pending_vl_lab_result.length> 0) {
     currentReminder = pending_vl_lab_result.concat(inh_reminders);
@@ -405,7 +443,9 @@ function generateReminders(etlResults, eidResults) {
       qualifies_differenciated_care_reminders,
       vl_reminders,
       qualifies_enhanced,
-      dna_pcr_reminder);
+      dna_pcr_reminder,
+      dst_result,
+      gene_xpert_result);
   }
   
   reminders = reminders.concat(currentReminder);
