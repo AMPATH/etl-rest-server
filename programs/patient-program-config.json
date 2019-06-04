@@ -447,10 +447,6 @@
           "display": "DEATHREPORT"
         },
         {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
-        },
-        {
           "uuid": "81166f83-1ee6-486e-8f56-aca528fc0fc0",
           "display": "GENCONSULTATION"
         }
@@ -1843,10 +1839,6 @@
           "display": "DEATHREPORT"
         },
         {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
-        },
-        {
           "uuid": "e49a203a-068a-4d6b-b351-f40d9384170e",
           "display": "BREASTCANCERASSESSMENT"
         }
@@ -1884,10 +1876,6 @@
         {
           "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
           "display": "DEATHREPORT"
-        },
-        {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
         }
       ]
     }]
@@ -1927,10 +1915,6 @@
         {
           "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
           "display": "DEATHREPORT"
-        },
-        {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
         }
 
       ]
@@ -1962,10 +1946,6 @@
         {
           "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
           "display": "DEATHREPORT"
-        },
-        {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
         }
       ]
     }]
@@ -1992,10 +1972,6 @@
         {
           "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
           "display": "DEATHREPORT"
-        },
-        {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
         },
         {
           "uuid": "7c21df85-c928-4dc9-93d9-5dd1e8101d32",
@@ -2036,10 +2012,6 @@
           "display": "DEATHREPORT"
         },
         {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
-        },
-        {
           "uuid": "bb1ad67a-5363-42fd-a53e-ba0047eb431c",
           "display": "SICKLECELLSCREENING"
         }
@@ -2072,10 +2044,6 @@
         {
           "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
           "display": "DEATHREPORT"
-        },
-        {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
         }
       ]
     }]
@@ -2106,10 +2074,6 @@
         {
           "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
           "display": "DEATHREPORT"
-        },
-        {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
         }
       ]
     }]
