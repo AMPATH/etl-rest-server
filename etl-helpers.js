@@ -156,6 +156,7 @@ module.exports = function () {
             if (code === null || code === undefined) return "";
             var concepts = {
                 221: "RHEUMATIC HEART DISEASE",
+                9842: "DUCTAL CELL CARCINOMA",
                 664: "NEGATIVE",
                 703: "POSITIVE",
                 1115: "NORMAL",

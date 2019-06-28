@@ -1,6 +1,6 @@
 /*jshint -W003, -W097, -W117, -W026 */
 'use strict';
-import {BaseMysqlReport} from '../../app/reporting-framework/base-mysql.report';
+import { BaseMysqlReport } from '../../app/reporting-framework/base-mysql.report';
 
 var Promise = require('bluebird');
 var noteService = require('../../service/notes.service');
@@ -92,27 +92,41 @@ module.exports = function () {
 
         getOncologyPatientReport(request, queryParts).then((data) => {
             let oncSummary = data;
+            let medsSummary = '';
+            let encounterId = 0;
+            if (!_.isEmpty(oncSummary.result)) {
+                encounterId = oncSummary.result[0].encounter_id;
+            }
+            getOncMeds(request, 'summary', encounterId).then((data) => {
+                _.each(data.result, function (concept) {
+                    medsSummary += helpers.getConceptName(parseInt(concept.value_coded)) + ', ';
+                });
+                _.each(oncSummary.result, (summary) => {
+                    summary.diagnosis = helpers.getConceptName(summary.diagnosis);
+                    summary.cur_onc_meds = medsSummary;
+                    summary.diagnosis_method = helpers.getConceptName(summary.diagnosis_method);
+                    summary.cancer_stage = helpers.getConceptName(summary.cancer_stage);
+                    summary.overal_cancer_stage_group = helpers.getConceptName(summary.overal_cancer_stage_group);
+                    summary.oncology_treatment_plan = helpers.getConceptName(summary.oncology_treatment_plan);
+                    summary.chemotherapy_plan = helpers.getConceptName(summary.chemotherapy_plan);
+                    summary.drug_route = helpers.getConceptName(summary.drug_route);
+                    summary.medication_history = helpers.getConceptName(summary.medication_history);
+                    summary.other_meds_added = helpers.getConceptName(summary.other_meds_addeds);
+                    summary.encounter_datetime = helpers.filterDate(summary.encounter_datetime);
+                    summary.visit_start_datetime = helpers.filterDate(summary.visit_start_datetime);
+                    summary.enrollment_date = helpers.filterDate(summary.enrollment_date);
+                    summary.rtc_date = helpers.filterDate(summary.rtc_date);
+                    summary.prev_rtc_date = helpers.filterDate(summary.prev_rtc_date);
+                    summary.diagnosis_date = helpers.filterDate(summary.diagnosis_date);
+                    summary.cur_onc_meds_start_date = helpers.filterDate(summary.cur_onc_meds_start_date);
+                });
 
-            _.each(oncSummary.result, (summary) => {
-                summary.diagnosis = helpers.getConceptName(summary.diagnosis);
-                summary.diagnosis_method = helpers.getConceptName(summary.diagnosis_method);
-                summary.cancer_stage = helpers.getConceptName(summary.cancer_stage);
-                summary.overal_cancer_stage_group = helpers.getConceptName(summary.overal_cancer_stage_group);
-                summary.cur_onc_meds = getOncMeds(summary.cur_onc_meds);
-                summary.oncology_treatment_plan = helpers.getConceptName(summary.oncology_treatment_plan);
-                summary.chemotherapy_plan = helpers.getConceptName(summary.chemotherapy_plan);
-                summary.drug_route = helpers.getConceptName(summary.drug_route);
-                summary.medication_history = helpers.getConceptName(summary.medication_history);
-                summary.other_meds_added = helpers.getConceptName(summary.other_meds_addeds);
-                summary.encounter_datetime = helpers.filterDate(summary.encounter_datetime);
-                summary.visit_start_datetime = helpers.filterDate(summary.visit_start_datetime);
-                summary.enrollment_date = helpers.filterDate(summary.enrollment_date);
-                summary.rtc_date = helpers.filterDate(summary.rtc_date);
-                summary.prev_rtc_date = helpers.filterDate(summary.prev_rtc_date);
-                summary.diagnosis_date = helpers.filterDate(summary.diagnosis_date);
-                summary.cur_onc_meds_start_date = helpers.filterDate(summary.cur_onc_meds_start_date);
+                callback(oncSummary);
+
+            }).catch((error) => {
+                callback(error);
             });
-            callback(oncSummary);
+
         }).catch((error) => {
             callback(error);
         });
@@ -120,66 +134,64 @@ module.exports = function () {
     }
 
     function getPatientOncologyMedicationHistory(request, callback) {
-        let queryParts = {
-            columns: "DATE_FORMAT(t1.cur_onc_meds_start_date,'%d-%m-%Y') as meds_start_date, cur_onc_meds, cur_onc_meds_dose, cur_onc_meds_frequency, chemotherapy_plan",
-            order: [{
-                column: 'encounter_datetime',
-                asc: false
-            }]
-        };
-        getOncologyPatientReport(request, queryParts).then((data) => {
-            let oncMedHistory = data;
-            let oncMedsDetailed = [];
-            let meds = '';
-            let dose = '';
-            let frequency = '';
-            _.each(oncMedHistory.result, (summary) => {
-                if (!!summary.cur_onc_meds) {
-                    meds = summary.cur_onc_meds.split(' ## ');
-                }
-                if (!!summary.cur_onc_meds_dose) {
-                    dose = summary.cur_onc_meds_dose.split(' ## ');
-                }
-                if (!!summary.cur_onc_meds_frequency) {
-                    frequency = summary.cur_onc_meds_frequency.split(' ## ');
-                }
-                let count = 0;
-                if (meds.length > 0) {
-                    _.each(meds, function (data) {
-                        oncMedsDetailed.push({
-                            "cur_onc_meds": helpers.getConceptName(data),
-                            "cur_onc_meds_frequency": helpers.getConceptName(frequency[count]),
-                            "chemotherapy_plan": helpers.getConceptName(summary.chemotherapy_plan),
-                            "cur_onc_meds_dose": dose[count],
-                            "meds_start_date": summary.meds_start_date
+        let oncMedsDetailed = [];
+        let oncMedHistory = {};
+        getOncMeds(request, '', '').then((data) => {
+            if (!!data) {
+                let groupedMedsData = generateMedsDataSet(data.result);
+                _.each(groupedMedsData, (summary) => {
+                    if (summary.drugs) {
+                        let planAndDate = summary.treatment_plan;
+                        _.each(summary.drugs, function (data) {
+                            let oncMed = {};
+                            _.each(data, function (a) {
+                                if (a.concept_id === 9918) {
+                                    oncMed.cur_onc_meds = helpers.getConceptName(a.value_coded);
+                                } else if (a.concept_id === 1899) {
+                                    oncMed.cur_onc_meds_dose = a.value_numeric;
+                                } else if (a.concept_id === 1896) {
+                                    oncMed.cur_onc_meds_frequency = helpers.getConceptName(a.value_coded);
+                                } else if (a.concept_id === 7463) {
+                                    oncMed.cur_onc_meds_route = helpers.getConceptName(a.value_coded);
+                                }
+                                if (planAndDate) {
+                                    oncMed.meds_start_date = planAndDate[0].obs_datetime;
+                                    oncMed.chemotherapy_plan = helpers.getConceptName(planAndDate[0].value_coded);
+                                }
+                            });
+                            if (oncMed !== '') {
+                                oncMedsDetailed.push(oncMed);
+                            }
                         });
-                        count++;
-                    });
-                    oncMedHistory.result = oncMedsDetailed
-                }
-
-            });
-            callback(oncMedHistory);
-        }).catch((error) => {
-            console.log(error);
-            callback(error);
+                    }
+                });
+                oncMedHistory.result = oncMedsDetailed;
+                callback(oncMedHistory);
+            }
         });
     }
 
     function getPatientOncologyDiagnosis(request, callback) {
-
+        let patientUuid = request.params.uuid;
         let queryParts = {
-            columns: "DATE_FORMAT(t1.diagnosis_date,'%d-%m-%Y') as diagnosis_date, diagnosis, overal_cancer_stage_group",
+            columns: "*",
             order: [{
-                column: 'diagnosis_date',
+                column: 'encounter_id',
                 asc: false
-            }]
+            }],
+            joins: [
+                ['amrs.person', 't2', 't2.person_id=t1.person_id']
+            ],
+            table: "amrs.obs",
+            where: ["t2.uuid = ? and t1.concept_id in ? and t1.voided = ?", patientUuid, [9841, 9871, 6536, 9844, 6551, 9846, 6540, 9843], 0],
+            offset: request.query.startIndex,
+            limit: request.query.limit
         };
-        getOncologyPatientReport(request, queryParts).then((data) => {
+        db.queryDb(queryParts).then(data => {
             let diagnosisData = data;
             _.each(diagnosisData.result, (summary) => {
-                summary.diagnosis = helpers.getConceptName(summary.diagnosis);
-                summary.overal_cancer_stage_group = helpers.getConceptName(summary.overal_cancer_stage_group);
+                summary.diagnosis = helpers.getConceptName(summary.value_coded);
+                summary.diagnosis_date = helpers.filterDate(summary.diagnosis_date);
             });
             callback(diagnosisData);
         }).catch((error) => {
@@ -333,7 +345,6 @@ module.exports = function () {
         })
             .catch(function (e) {
                 // Return empty json on error
-                console.log('Error', e);
                 callback({
                     notes: [],
                     status: 'error generating notes',
@@ -377,16 +388,16 @@ module.exports = function () {
             var arr = result.result;
 
             var cleanResult = getUnique(arr, 'test_datetime');
-            result.result = cleanResult;  
+            result.result = cleanResult;
             callback(result);
         });
     }
 
     function getUnique(arr, comp) {
         const unique = arr.map(e => e[comp])
-        .map((e, i, final) => final.indexOf(e) === i && i)
-        .filter(e => arr[e]).map(e => arr[e]);
-  
+            .map((e, i, final) => final.indexOf(e) === i && i)
+            .filter(e => arr[e]).map(e => arr[e]);
+
         return unique;
 
     }
@@ -467,16 +478,78 @@ module.exports = function () {
         });
     }
 
-    function getOncMeds(str) {
-        let medsCodes = str.split(" ## ");
-        let medsSummary = '';
-        _.each(medsCodes, function (medCode) {
-
-            medsSummary += helpers.getConceptName(parseInt(medCode)) + ', ';
-        });
-
-        return medsSummary;
+    function getOncMeds(request, medsFormat, encounterId) {
+        let queryParts = {};
+        var patientUuid = request.params.uuid;
+        var programUuid = request.query.programUuid;
+        if (medsFormat == 'summary') {
+            queryParts = {
+                columns: "t1.value_coded",
+                table: "amrs.obs",
+                where: ["t2.uuid = ? and t1.concept_id in ? and t1.encounter_id = ? and t1.voided = ?", patientUuid, [9918], encounterId, 0],
+                order: [{
+                    column: 't1.obs_group_id',
+                    asc: false
+                }],
+                joins: [
+                    ['amrs.person', 't2', 't2.person_id=t1.person_id'],
+                ],
+                offset: request.query.startIndex,
+                limit: request.query.limit
+            };
+        } else {
+            queryParts = {
+                columns: "t1.concept_id, t1.value_coded, t1.value_numeric, t1.obs_group_id, t1.encounter_id, t1.obs_datetime",
+                table: "amrs.obs",
+                where: ["t2.uuid = ? and t5.programuuid = ? and t1.concept_id in ? and t1.voided = ?", patientUuid, programUuid, [9918, 8723, 1896, 7463, 1899, 9869], 0],
+                order: [{
+                    column: 't1.obs_group_id',
+                    asc: false
+                }],
+                joins: [
+                    ['amrs.person', 't2', 't2.person_id=t1.person_id'],
+                    ['amrs.patient_program', 't3', 't3.patient_id=t2.person_id']
+                ],
+                leftOuterJoins: [
+                    ['(SELECT program_id, uuid as `programuuid` FROM amrs.program ) `t5` ON (t3.program_id = t5.program_id)']
+                ],
+                offset: request.query.startIndex,
+                limit: request.query.limit
+            };
+        }
+        return db.queryDb(queryParts)
     }
+    let generateMedsDataSet = ((data) => {
+        let meds = [];
+        const groupBy = key => array =>
+            array.reduce((objectsByKeyValue, obj) => {
+                const value = obj[key];
+                objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+                return objectsByKeyValue;
+            }, {});
+        //Group medical history obs by the group
+        if (data) {
+            const groupByEncounter = groupBy('encounter_id');
+            const encounterData = groupByEncounter(data);
+            _.each(encounterData, function (concepts) {
+                let oncMeds = {};
+                const i = groupBy('obs_group_id');
+                let plan = _.filter(concepts, function (o) { return o.concept_id == 9869 });
+                oncMeds.treatment_plan = plan;
+                _.remove(concepts, function (e) {
+                    return e.obs_group_id == null;
+                });
+                let drug;
+                drug = i(concepts);
+                if (!_.isEmpty(drug)) {
+                    oncMeds.drugs = drug;
+                    meds.push(oncMeds);
+                }
+            })
+        }
+        return meds;
+    });
+
     return {
         getPatientHivSummary: getPatientHivSummary,
         getPatientOncologySummary: getPatientOncologySummary,
