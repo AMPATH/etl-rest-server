@@ -541,6 +541,28 @@
       "enrollment",
       "hivLastTenClinicalEncounters"
     ],
+    "enrollmentOptions": {
+      "requiredProgramQuestions": [],
+      "allowMultipleEnrollment": false,
+      "stateChangeEncounterTypes": {
+        "enrollment": [],
+        "transfer": [{
+          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+          "name": "AMPATH POC Transfer Out Form v0.01",
+          "required": true
+        }],
+        "discharge": [{
+          "uuid": "9765992c-6279-46cc-915b-452a73e7dab5",
+          "name": "AMPATH POC HIV Exit Care Form v1.1",
+          "required": true
+        }],
+        "referral": [{
+          "uuid": "6a50f1d5-9f33-41ae-b2e7-7fd8267c181e",
+          "name": "CDM DM-HTN Referral Form v1.1",
+          "required": true
+        }]
+      }
+    },
     "incompatibleWith": [
       "b731ba72-cf99-4176-9fcd-37cd186400c7",
       "876a154d-310d-4caf-8b58-be9dbcc7e753"
@@ -601,11 +623,7 @@
           "name": "CDM DM-HTN Referral Form v1.1",
           "required": true
         }],
-        "incompatible": [{
-          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-          "name": "AMPATH POC Know Your Status Form v1.0",
-          "required": false
-        }]
+        "incompatible": []
       }
     },
     "incompatibleWith": [
@@ -645,6 +663,19 @@
       "b731ba72-cf99-4176-9fcd-37cd186400c7",
       "bd9a8b06-73c7-44a8-928c-5e72247f4c1d"
     ],
+    "enrollmentOptions": {
+      "requiredProgramQuestions": [],
+      "allowMultipleEnrollment": false,
+      "stateChangeEncounterTypes": {
+        "enrollment": [],
+        "referral": [{
+          "uuid": "6a50f1d5-9f33-41ae-b2e7-7fd8267c181e",
+          "name": "CDM DM-HTN Referral Form v1.1",
+          "required": true
+        }],
+        "incompatible": []
+      }
+    },
     "HidevisibleLocations": [{
       "uuid": "0900880a-1352-11df-a1f1-0026b9348838",
       "display": "Chepsaita"
@@ -2207,39 +2238,6 @@
       }
     ]
   },
-  "418fe011-a903-4862-93d4-5e7c84d9c253": {
-    "name": "ANTICOAGULATION TREATMENT PROGRAM",
-    "dataDependencies": [
-      "patient",
-      "enrollment"
-    ],
-    "incompatibleWith": [],
-    "visitTypes": [{
-      "uuid": "a77b29b4-42c5-4cf0-a224-04f1ef877747",
-      "name": "Anticoagulation Treatment Visit",
-      "encounterTypes": [{
-            "uuid": "4a7450b1-f720-4a0c-b13b-d8a6a83348ee",
-            "display": "ANTICOAGULATIONINITIAL"
-          },
-          {
-            "uuid": "6accd920-6254-4063-bfd1-0e1b70b3f201",
-            "display": "ANTICOAGULATIONREFERRAL"
-          },
-          {
-            "uuid": "857170c9-f54a-4c1a-8382-5f4abe5d71dd",
-            "display": "ANTICOAGULATIONRETURN"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "2cd62224-5507-48ee-a7b3-55f66162b148",
-            "display": "ONCOLOGYLABENTRY"
-          }
-        ]
-    }]
-  },
   "40677054-c402-4c56-a0e4-5dd7d799b52f": {
     "name": "LYMPHOMA TREATMENT PROGRAM",
     "dataDependencies": [
@@ -3154,10 +3152,24 @@
     "dataDependencies": [
     ],
     "incompatibleWith": [],
+    "enrollmentOptions": { 
+      "stateChangeEncounterTypes": {
+        "referral": [{
+          "uuid": "ff13c7ad-9552-4d94-881b-dbad1116f7f7",
+          "name": "Oncology POC Screening Referral Form V1.0",
+          "required": true
+        }]
+      }
+    },
     "visitTypes": [
       {
         "uuid": "8103a0f3-a3d3-4453-ac3e-aaecd542ccd1",
         "name": "Cervical Cancer Screening ",
+        "enrollmentOptions": {
+          "enrollIf": "gender === 'F'",
+          "requiredProgramQuestions": [],
+          "allowMultipleEnrollment": false
+        },
         "encounterTypes": [
           {
             "uuid": "fc08ae1c-4588-443b-ae46-856bb20a5ee9",
@@ -3196,6 +3208,17 @@
       {
         "uuid": "55d8d186-3f74-43ad-9e40-eb16bb52b596",
         "name": "Breast Cancer Screening ",
+        "enrollmentOptions": {
+          "requiredProgramQuestions": [],
+          "allowMultipleEnrollment": false,
+          "stateChangeEncounterTypes": {
+            "referral": [{
+              "uuid": "ff13c7ad-9552-4d94-881b-dbad1116f7f7",
+              "name": "Oncology POC Screening Referral Form V1.0",
+              "required": true
+            }]
+          }
+        },
         "encounterTypes": [
           {
             "uuid": "fc08ae1c-4588-443b-ae46-856bb20a5ee9",
