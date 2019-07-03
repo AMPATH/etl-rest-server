@@ -550,6 +550,39 @@ module.exports = function () {
         return meds;
     });
 
+    let generateMedsDataSet = ((data) => {
+        let meds = [];
+        const groupBy = key => array =>
+            array.reduce((objectsByKeyValue, obj) => {
+                const value = obj[key];
+                objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
+                return objectsByKeyValue;
+            }, {});
+        //Group medical history obs by the group
+        if (data) {
+            const groupByEncounter = groupBy('encounter_id');
+            const encounterData = groupByEncounter(data);
+            _.each(encounterData, function (concepts) {
+                let oncMeds = {};
+                const i = groupBy('obs_group_id');
+                let plan = _.filter(concepts, function (o) {
+                    return o.concept_id == 9869
+                });
+                oncMeds.treatment_plan = plan;
+                _.remove(concepts, function (e) {
+                    return e.obs_group_id == null;
+                });
+                let drug;
+                drug = i(concepts);
+                if (!_.isEmpty(drug)) {
+                    oncMeds.drugs = drug;
+                    meds.push(oncMeds);
+                }
+            })
+        }
+        return meds;
+    });
+
     return {
         getPatientHivSummary: getPatientHivSummary,
         getPatientOncologySummary: getPatientOncologySummary,
