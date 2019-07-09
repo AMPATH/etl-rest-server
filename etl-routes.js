@@ -113,7 +113,6 @@ var  kibanaService = require('./service/kibana.service');
 import { CombinedBreastCervicalCancerMonthlySummary } from './service/combined-breast-cervical-cancer-monthly-summary.service';
 import { LungCancerTreatmentSummary } from './service/lung-cancer-treatment-summary.service';
 
-
 module.exports = function () {
 
     var routes =

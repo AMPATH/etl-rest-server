@@ -115,6 +115,9 @@ import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-p
 import * as referral_patient_list_peer_base from './json-reports/referral-peer-base';
 import * as referral_peer_aggregate from './json-reports/referral-peer-aggregate';
 
+import * as surge_report_base from './json-reports/surge-report-base.json';
+import * as surge_report_aggregate from './json-reports/surge-report-aggregate.json';
+
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -517,6 +520,13 @@ export class BaseMysqlReport {
                             referralDatasetbase: this.cloneJsonSchema(referral_patient_list_peer_base)
                         });
                 break;
+                    break;
+                case 'surgeReport':
+                    resolve({
+                        main: this.cloneJsonSchema(surge_report_aggregate),
+                        surgeReport: this.cloneJsonSchema(surge_report_base)
+                    });
+                    break;
                 default:
                     reject('Unknown report ', reportName);
                     break;
