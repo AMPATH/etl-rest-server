@@ -717,6 +717,7 @@
       "hivLastTenClinicalEncounters"
     ],
     "enrollmentOptions": {
+      "enrollIf": "gender === 'F'",
       "requiredProgramQuestions": [{
         "qtype": "hivStatus",
         "name": "Patient HIV status",
@@ -1865,7 +1866,7 @@
       "patient"
     ],
     "enrollmentOptions": {
-      "enrollIf": "gender != 'M'"
+      "enrollIf": "gender === 'F'"
     },
     "incompatibleWith": [],
     "visitTypes": [{
