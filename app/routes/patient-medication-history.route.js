@@ -1,6 +1,6 @@
 var authorizer = require('../../authorization/etl-authorizer');
 var privileges = authorizer.getAllPrivileges();
-const {generateMedsDataSet, getOncMeds} = require('../../service/oncology/patient-oncology-summary-service.js');
+import { generateMedsDataSet, getOncMeds } from '../../service/oncology/patient-oncology-summary-service'
 var helpers = require('../../etl-helpers');
 const routes = [{
     method: 'GET',

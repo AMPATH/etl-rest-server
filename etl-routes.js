@@ -19,6 +19,7 @@ var config = require('./conf/config');
 var privileges = authorizer.getAllPrivileges();
 var etlHelpers = require('./etl-helpers.js');
 var crypto = require('crypto');
+var moment = require('moment');
 var motd = require('./dao/motd_notification/motd_notification-dao');
 var patientProgramService = require('./programs/patient-program-base.service.js');
 var resolveClinicDashboardFilterParams = require('./resolve-program-visit-encounter-Ids/resolve-program-visit-encounter-Ids');
@@ -373,11 +374,12 @@ module.exports = function () {
                                                 request.query.encounterIds = encounterIds;
                                             }
 
-                                            let compineRequestParams = Object.assign({}, request.query, request.params);
+                                            let combineRequestParams = Object.assign({}, request.query, request.params);
                                             // let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
-                                            compineRequestParams.limitParam = compineRequestParams.limit;
-                                            compineRequestParams.offSetParam = compineRequestParams.startIndex;
-                                            let service = new PatientlistMysqlReport('dailyAppointmentsAggregate', compineRequestParams);
+                                            combineRequestParams.limitParam = combineRequestParams.limit;
+                                            combineRequestParams.offSetParam = combineRequestParams.startIndex;
+                                            combineRequestParams.endDate = combineRequestParams.startDate;
+                                            let service = new PatientlistMysqlReport('dailyAppointmentsAggregate', combineRequestParams);
                                             service.generatePatientListReport(['patients']).then((result) => {
                                                 let returnedResult = {};
                                                 returnedResult.schemas = result.schemas;
@@ -496,13 +498,13 @@ module.exports = function () {
                                             if (encounterIds.length > 0) {
                                                 request.query.encounterIds = encounterIds;
                                             }
-                                            let compineRequestParams = Object.assign({}, request.query, request.params);
-                                            compineRequestParams.limitParam = compineRequestParams.limit;
-                                            compineRequestParams.offSetParam = compineRequestParams.startIndex;
+                                            let combineRequestParams = Object.assign({}, request.query, request.params);
+                                          combineRequestParams.limitParam = combineRequestParams.limit;
+                                          combineRequestParams.offSetParam = combineRequestParams.startIndex;
+                                          combineRequestParams.endDate = combineRequestParams.startDate;
                                             //let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
                                             //reportParams.limit = 100000;
-                                            console.log('Params', compineRequestParams);
-                                            let service = new PatientlistMysqlReport('dailyHasNotReturnedAggregate', compineRequestParams);
+                                            let service = new PatientlistMysqlReport('dailyHasNotReturnedAggregate', combineRequestParams);
                                             service.generatePatientListReport(['patients']).then((result) => {
                                                 let returnedResult = {};
                                                 returnedResult.schemas = result.schemas;
@@ -4469,6 +4471,52 @@ module.exports = function () {
                     tags: ['api'],
                 }
 
+            },
+            {
+                method: 'GET',
+                path: '/etl/differentiated-care-program/patient-list',
+                config: {
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewPatient
+                        }
+                    },
+                    handler: function (request, reply) {
+                        let requestParams = Object.assign({}, request.query, request.params);
+                        let locationUuids = request.query.locationUuids.split(',')
+                        requestParams.startDate = requestParams.startDate.split('T')[0];
+                        requestParams.endDate = requestParams.endDate.split('T')[0];
+                        let indicators = [];
+                        if (requestParams.indicators) {
+                            indicators = requestParams.indicators.split(',');
+                        }
+                        requestParams.locationUuids = locationUuids;
+                        let report = new PatientlistMysqlReport('differentiatedCareProgramAggregate', requestParams);
+                        report.generatePatientListReport(indicators).then((result) => {
+                            if (result.results.results.length > 0) {
+                                _.each(result.results.results, (item) => {
+                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                    item.vl_1_date = moment(item.vl_1_date).format('DD-MM-YYYY');
+                                });
+                                reply(result);
+                            } else {
+                                reply(result);
+                            }
+            
+                        }).catch((error) => {
+                            reply(error);
+                        });
+                    },
+                    description: "Get the medical history report",
+                    notes: "Returns the the medical history of the selected patient",
+                    tags: ['api'],
+                    validate: {
+                        options: {
+                            allowUnknown: true
+                        },
+                        params: {}
+                    }
+                }
             }
         ];
 
