@@ -16,7 +16,7 @@
             "alias": "t1"                                                                                                                                                                                                                                                                                                                                                                    
         },                                                                                                                                                                                                                                                                                                                                                                                   
         {                                                                                                                                                                                                                                                                                                                                                                                    
-            "table": "etl.flat_labs_and_imaging",                                                                                                                                                                                                                                                                                                                                            
+            "table": "etl.flat_labs_and_imaging_test",
             "alias": "t2",                                                                                                                                                                                                                                                                                                                                                                   
             "join": {                                                                                                                                                                                                                                                                                                                                                                        
                 "type": "left",                                                                                                                                                                                                                                                                                                                                                              
@@ -38,7 +38,7 @@
                 "type": "left",                                                                                                                                                                                                                                                                                                                                                              
                 "joinCondition": "t1.person_id = p.patient_id AND p.program_id = 9 AND date_completed IS NULL"                                                                                                                                                                                                                                                                               
             }                                                                                                                                                                                                                                                                                                                                                                                
-        },                                                                                                                                                                                                                                                                                                                                                                                   
+        },
         {                                                                                                                                                                                                                                                                                                                                                                                    
             "dataSet": "flatLabsAndImagingDataSetbase",                                                                                                                                                                                                                                                                                                                                      
             "alias": "t3",                                                                                                                                                                                                                                                                                                                                                                   
@@ -70,6 +70,14 @@
                 "type": "left",                                                                                                                                                                                                                                                                                                                                                              
                 "joinCondition": "t1.person_id = t10.patient_id AND t10.program_id = 4 AND t10.date_completed IS NULL"                                                                                                                                                                                                                                                                                                                                
             }  
+        },
+        {
+            "table": "amrs.patient_program",
+            "alias": "t11",
+            "join": {
+                "type": "left",
+                "joinCondition": "t1.person_id = t11.patient_id AND t11.program_id = 17 AND t11.date_completed IS NULL"
+            }
         },
         {                                                                                                                                                                                                                                                                                                                                                                                    
             "table": "amrs.patient_program",                                                                                                                                                                                                                                                                                                                                                    
@@ -214,7 +222,17 @@
             "type": "simple_column",                                                                                                                                                                                                                                                                                                                                                         
             "alias":"vl_error_order_date",                                                                                                                                                                                                                                                                                                                                                   
             "column":"t3.vl_error_order_date"                                                                                                                                                                                                                                                                                                                                                
-        },                                                                                                                                                                                                                                                                                                                                                                                   
+        },
+        {
+            "type": "simple_column",
+            "alias":"spep",
+            "column":"t2.spep"
+        },
+        {
+            "type": "simple_column",
+            "alias": "program",
+            "column": "t11.program_id"
+        },
         {                                                                                                                                                                                                                                                                                                                                                                                    
             "type": "derived_column",                                                                                                                                                                                                                                                                                                                                                        
             "alias": "ipt_completion_date",                                                                                                                                                                                                                                                                                                                                                  
@@ -291,7 +309,15 @@
             "expressionOptions": {                                                                                                                                                                                                                                                                                                                                                           
                 "expression":"case when t3.dst_image is not null then 1 else 0 end"                                                                                                                                                                                                                                                             
             }                                                                                                                                                                                                                                                                                                                                                                                
-        }                                                                                                                                                                                                                                                                                                    
+        },
+        {
+            "type": "derived_column",
+            "alias": "days_since_last_spep_result",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression":"IF((t2.spep is not null),timestampdiff(day,t2.test_datetime, curdate()), null)"
+            }
+        }
     ],                                                                                                                                                                                                                                                                                                                                                                                       
     "indexDirectives": [                                                                                                                                                                                                                                                                                                                                                                     
       {                                                                                                                                                                                                                                                                                                                                                                                      

@@ -6,7 +6,7 @@
     "uses": [],
     "sources": [
         {
-            "table": "etl.flat_labs_and_imaging",
+            "table": "etl.flat_labs_and_imaging_test",
             "alias": "t1"
         }
     ],
@@ -38,6 +38,11 @@
             "type": "simple_column",
             "alias": "dst_image",
             "column": "t1.dst_image"
+        },
+        {
+            "type": "simple_column",
+            "alias": "spep",
+            "column": "t1.spep"
         }
     ],
     "filters": {
@@ -62,8 +67,8 @@
           "order": "desc"
     }]
    },
-   "paging":  {                                                                                                                                                                                                                                                                                                                                                                              
-    "offSetParam":"offSetParam",                                                                                                                                                                                                                                                                                                                                                             
-    "limitParam": "limitParam"                                                                                                                                                                                                                                                                                                                                                               
-  }  
+   "paging":  {
+    "offSetParam":"offSetParam",
+    "limitParam": "limitParam"
+  }
 }

@@ -8,14 +8,15 @@ var serviceDef = {
     newViralLoadPresent: newViralLoadPresent,
     viralLoadErrors: viralLoadErrors,
     pendingViralOrder: pendingViralOrder,
-    inhReminders: inhReminders
+    inhReminders: inhReminders,
+    spepReminders: spepReminders
 };
 
 module.exports = serviceDef;
 
 
 function viralLoadReminders(data) {
-    
+
     let reminders = [];
 
     let labMessage = 'Last viral load: none';
@@ -26,7 +27,7 @@ function viralLoadReminders(data) {
     }
 
     let isAdult = checkAge(new Date(data.birth_date));
-    
+
     if (!isAdult && data.months_since_last_vl_date >= 6) {
         reminders.push({
             message: 'Patient requires viral load. Patients who are between 0-24 years old ' +
@@ -48,7 +49,7 @@ function viralLoadReminders(data) {
                 banner: true,
                 toast: true
             }
-        }); 
+        });
     } else if (isAdult && data.needs_vl_coded === 3 && data.months_since_last_vl_date >= 12) {
         reminders.push({
             message: 'Patient requires viral load. Patients older than 25 years and on ART > 1 year require ' +
@@ -139,11 +140,11 @@ function qualifiesDifferenciatedReminders(data){
             },
             auto_register: '334c9e98-173f-4454-a8ce-f80b20b7fdf0'
         });
-            
+
     } else {
         console.info.call('No Differenciated Care Reminder For Selected Patient' + data.qualifies_differenciated_care);
     }
-    
+
     return reminders;
 
 }
@@ -154,7 +155,7 @@ function inhReminders(data) {
     try{
         if (data.is_on_inh_treatment && data.inh_treatment_days_remaining > 30 &&
             data.inh_treatment_days_remaining < 150) {
-                
+
             reminders.push({
                 message: 'Patient started INH treatment on (' +
 
@@ -310,7 +311,7 @@ function qualifiesEnhancedReminders(data) {
             break;
         default:
             console.info.call('No Viremia Program Reminder For Selected Patient' + data.qualifies_enhanced);
-        
+
     }
 
     return reminders;
@@ -369,7 +370,7 @@ function dnaReminder(data) {
             default:
                 console.info.call('No DNA/PCR Reminder For Selected Patient' + data.qna_pcr_reminder);
         }
-        
+
     }
 
     return reminders;
@@ -415,6 +416,35 @@ function geneXpertReminders(data) {
 
 }
 
+function spepReminders(data) {
+
+    let reminders = [];
+    if (data.days_since_last_spep_result >= 90 && data.program === 17) {
+        reminders.push({
+            message: 'Last SPEP test results (collected on ' +
+            Moment(data.test_date).format('DD-MM-YYYY') + '). Order for a NEW SPEP TEST',
+            title: 'SPEP Reminder',
+            type: 'warning',
+            display: {
+                banner: true,
+                toast: true
+            }
+        });
+    } else if(data.spep === null && data.program === 17) {
+        reminders.push({
+            message: 'No available SPEP test results. Please refer the patient for SPEP lab test',
+            title: 'SPEP Reminder',
+            type: 'warning',
+            display: {
+                banner: true,
+                toast: true
+            }
+        });
+    }
+    return reminders;
+
+}
+
 function generateReminders(etlResults, eidResults) {
   let reminders = [];
   let patientReminder;
@@ -437,6 +467,7 @@ function generateReminders(etlResults, eidResults) {
   let dna_pcr_reminder = dnaReminder(data);
   let dst_result = dstReminders(data);
   let gene_xpert_result = geneXpertReminders(data);
+  let spep_reminders = spepReminders(data);
   let currentReminder = [];
   if(pending_vl_lab_result.length> 0) {
     currentReminder = pending_vl_lab_result.concat(inh_reminders);
@@ -450,11 +481,12 @@ function generateReminders(etlResults, eidResults) {
       qualifies_enhanced,
       dna_pcr_reminder,
       dst_result,
+      spep_reminders,
       gene_xpert_result);
   }
-  
+
   reminders = reminders.concat(currentReminder);
-  
+
   patientReminder.reminders = reminders;
   return patientReminder;
 }
@@ -467,6 +499,6 @@ function transformZeroVl(vl){
         return 'LDL';
     }else{
        return vl;
-    } 
+    }
 
 }
