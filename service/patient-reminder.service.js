@@ -417,7 +417,7 @@ function geneXpertReminders(data) {
 }
 
 function spepReminders(data) {
-console.log('data', data);
+
     let reminders = [];
     if (data.days_since_last_spep_result >= 90 && data.program == 17) {
         reminders.push({
