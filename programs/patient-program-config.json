@@ -1827,7 +1827,7 @@
       "patient"
     ],
     "enrollmentOptions": {
-      "enrollIf": "gender != 'M'"
+      "enrollIf": "gender === 'F'"
     },
     "incompatibleWith": [],
     "visitTypes": [{
