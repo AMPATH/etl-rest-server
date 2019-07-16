@@ -45,7 +45,7 @@
         "conditions": [
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "date(rtc_date) >= ?",
+                "conditionExpression": "date(t2.rtc_date) >= ?",
                 "parameterName": "startDate"
             },
             {
@@ -75,12 +75,12 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "encounter_type not in (21,99999)",
+                "conditionExpression": "t2.encounter_type not in (21,99999)",
                 "parameterName": ""
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression":  "((t2.next_encounter_type<>116  OR  t2.next_encounter_type is null )   OR rtc_date >= next_encounter_datetime)",
+                "conditionExpression":  "((t2.next_encounter_type<>116  OR  t2.next_encounter_type is null )   OR t2.rtc_date >= next_encounter_datetime)",
                 "parameterName": ""
             },
             {
