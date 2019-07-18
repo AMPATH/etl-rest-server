@@ -9,7 +9,8 @@ var serviceDef = {
     viralLoadErrors: viralLoadErrors,
     pendingViralOrder: pendingViralOrder,
     inhReminders: inhReminders,
-    spepReminders: spepReminders
+    spepReminders: spepReminders,
+    remissionReminder: remissionReminder
 };
 
 module.exports = serviceDef;
@@ -445,6 +446,24 @@ function spepReminders(data) {
 
 }
 
+function remissionReminder(data) {
+
+    let reminders = [];
+    if (data.spep === 0) {
+        reminders.push({
+            message: 'Patient SPEP results '+ data.spep + ' Put this patient on remission',
+            title: 'Care on Remission Reminder',
+            type: 'success',
+            display: {
+                banner: true,
+                toast: true
+            }
+        });
+    }
+    return reminders;
+
+}
+
 function generateReminders(etlResults, eidResults) {
   let reminders = [];
   let patientReminder;
@@ -468,6 +487,7 @@ function generateReminders(etlResults, eidResults) {
   let dst_result = dstReminders(data);
   let gene_xpert_result = geneXpertReminders(data);
   let spep_reminders = spepReminders(data);
+  let remission_reminder = remissionReminder(data);
   let currentReminder = [];
   if(pending_vl_lab_result.length> 0) {
     currentReminder = pending_vl_lab_result.concat(inh_reminders);
@@ -482,6 +502,7 @@ function generateReminders(etlResults, eidResults) {
       dna_pcr_reminder,
       dst_result,
       spep_reminders,
+      remission_reminder,
       gene_xpert_result);
   }
 
