@@ -65,6 +65,7 @@ function buildScope(dataDictionary) {
   if (dataDictionary.patientEncounters) {
     scope.patientEncounters = dataDictionary.patientEncounters;
     buildHivScopeMembers(scope, dataDictionary.patientEncounters);
+    buildOncologyScopeMembers(scope, dataDictionary.patientEncounters);
   }
 
   // add other methods to build the scope objects
@@ -178,4 +179,8 @@ function buildHivScopeMembers(scope, lastTenHivSummary, intendedVisitLocationUui
   
   scope.isFirstPrEPVisit = isInitialPrepVisit(scope.patientEncounters);
   scope.isFirstPEPVisit = isInitialPepVisit(scope.patientEncounters);
+}
+
+function buildOncologyScopeMembers(scope) {
+  scope.isFirstOncologyVisit = isInitialOncologyVisit(scope.patientEncounters);
 }
