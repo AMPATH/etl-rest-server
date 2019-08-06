@@ -1,0 +1,45 @@
+{
+    "indicatorDefinitions": [{
+        "name": "patients",
+        "label": "patients",
+        "description": "Total number of patients",
+        "expression": "true"
+    },
+     {
+        "name": "number_of_up_referrals",
+        "label": "number of up referrals",
+        "description": "number of up referral",
+        "expression": "if(t4.previous_program =33 and t4.current_program = 24  or t4.previous_program = 24 and t4.current_program= 23 or t4.previous_program = 33 and t4.current_program = 23,1,null)"
+    },
+    {
+        "name": "number_of_down_referrals",
+        "label": "number of down referral",
+        "description": "number of down referral",
+        "expression": "if (t4.current_program =33 and t4.previous_program = 24  or t4.current_program = 24 and t4.previous_program= 23 or t4.current_program = 33 and t4.previous_program = 23,1,null)"
+    },
+    {
+        "name": "is_referal_complete",
+        "label": "number of incomplete referrals",
+        "description": "number of outstanding referrals",
+        "expression": ""
+    },
+    {
+        "name": "Number_of_referrals_completed_by_rtc",
+        "label": "number of complete referrals by RTC ",
+        "description": "number of complete referrals by RTC",
+        "expression": ""
+    },
+    {
+        "name": "Number_of_outstanding_down_referral",
+        "label": "number of outstanding down referral",
+        "description": "number of outstanding down referral",
+        "expression": ""
+    },
+    {
+        "name": "Number_of_outstanding_up_referral",
+        "label": "number of outstanding down referral",
+        "description": "number of outstanding down referral",
+        "expression": ""
+    }
+  ]
+}

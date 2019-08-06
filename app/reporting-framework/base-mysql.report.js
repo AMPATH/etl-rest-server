@@ -116,6 +116,9 @@ import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-p
 import * as differentiated_care_program_aggregate from './json-reports/differentiated-care-program-aggregate.json';
 import * as differentiated_care_program_base from './json-reports/differentiated-care-program-base.json';
 
+import * as facility_referral_indicator_aggregate from './json-reports/facility-referral-indicator-aggregate.json';
+import * as facility_referal_indicator_dataset_base from './json-reports/facility-referal-indicator-dataset-base.json';
+
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -258,6 +261,13 @@ export class BaseMysqlReport {
                         hivMonthlySummaryDataSetBase: this.cloneJsonSchema(hiv_monthly_summary_dataset_base)
                     });
                     break;
+                    case 'facilityReferralReportAggregate':
+                        resolve({
+                            main: this.cloneJsonSchema(facility_referral_indicator_aggregate),
+                            facilityReferralIndicatorDataSetBase: this.cloneJsonSchema(facility_referal_indicator_dataset_base)
+                        });
+                        break;
+
                 case 'clinicComparatorAggregate':
                     resolve({
                         main: this.cloneJsonSchema(clinic_comparator_aggregate),
@@ -449,7 +459,6 @@ export class BaseMysqlReport {
                     });
                     break;
 
-                   
                 case 'lungCancerDailySummaryAggregate':
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_daily_screening_summary_aggregate),
@@ -465,7 +474,7 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_patient_list_template)
                     });
-                    break; 
+                    break;
 
                 case 'labsReportAggregate':
                     resolve({

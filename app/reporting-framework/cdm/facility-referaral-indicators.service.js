@@ -12,45 +12,9 @@ const dao = require('../../../etl-dao');
 const Promise = require("bluebird");
 const Moment = require('moment');
 const _ = require('lodash');
-export class HivSummaryIndicatorsService {
+export class ReferalIndicatorsService {
 
     composite_indicators ={
-        'perc_virally_suppressed_in_past_year': {
-            childIndictors: ['virally_suppressed_in_past_year', 'viral_load_resulted_in_past_year'],
-            patientlistIndicator: 'virally_suppressed_in_past_year'
-        },
-        'perc_not_virally_suppressed_in_past_year': {
-            childIndictors: ['not_virally_suppressed_in_past_year', 'viral_load_resulted_in_past_year'],
-            patientlistIndicator: 'not_virally_suppressed_in_past_year'
-        },
-        'perc_on_arvs': {
-            childIndictors: ['on_arvs'],
-            patientlistIndicator: 'on_arvs'
-        },
-        'perc_on_arv_first_line': {
-            childIndictors: ['on_arvs_first_line', 'on_arvs'],
-            patientlistIndicator: 'on_arvs_first_line'
-        },
-        'perc_on_arv_second_line': {
-            childIndictors: ['on_arvs_second_line', 'on_arvs'],
-            patientlistIndicator: 'on_arvs_second_line'
-        },
-        'perc_on_arv_third_line': {
-            childIndictors: ['on_arvs_third_line', 'on_arvs'],
-            patientlistIndicator: 'on_arvs_third_line'
-        },
-        'perc_with_pending_viral_load': {
-            childIndictors: ['pending_vl_order', 'on_arvs'],
-            patientlistIndicator: 'pending_vl_order'
-        },
-        'perc_on_arvs_lte_6_months': {
-            childIndictors: ['on_arvs_lte_26_weeks', 'on_arvs'],
-            patientlistIndicator: 'on_arvs_lte_26_weeks'
-        },
-        'perc_on_arvs_gt_6_months': {
-            childIndictors: ['on_arvs_gt_26_weeks', 'on_arvs'],
-            patientlistIndicator: 'on_arvs_gt_26_weeks'
-        }
     }
 
     getAggregateReport(reportParams) {
@@ -66,7 +30,7 @@ export class HivSummaryIndicatorsService {
             columnWhitelist = this.addDerivateIndicatorsForPercIndicators(columnWhitelist);
             params.columnWhitelist = columnWhitelist;
         }
-        let report = new BaseMysqlReport('hivSummaryBaseAggregate', params)
+        let report = new BaseMysqlReport('facilityReferralReportAggregate', params)
         return new Promise(function (resolve, reject) {
             Promise.join(report.generateReport(),
                 (result) => {
@@ -81,6 +45,7 @@ export class HivSummaryIndicatorsService {
                     returnedResult.schemas = result.schemas;
                     returnedResult.sqlQuery = result.sqlQuery;
                     returnedResult.result = result.results.results;
+                    resolve(returnedResult);
                     //TODO Do some post processing
                 }).catch((errors) => {
                 reject(errors);
@@ -96,7 +61,7 @@ export class HivSummaryIndicatorsService {
         reportParams.gender = gender;
         reportParams.limitParam = reportParams.limit;
         reportParams.offSetParam = reportParams.startIndex;
-        let report = new PatientlistMysqlReport('hivSummaryBaseAggregate', reportParams)
+        let report = new PatientlistMysqlReport('facilityReferralReportAggregate', reportParams)
         return new Promise(function (resolve, reject) {
             //TODO: Do some pre processing
             Promise.join(report.generatePatientListReport(reportParams.indicator.split(',')),

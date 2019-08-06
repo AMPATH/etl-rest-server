@@ -7,6 +7,7 @@ var indicatorHandlersDefinition = require('./etl-processors.js');
 var indicatorProcessor = require('./service/indicator-processor/indicator-processor.service');
 //Report Indicators Json Schema Path
 var indicatorsSchemaDefinition = require('./reports/indicators.json');
+var indicatorsSchemaReferralDefinition = require('./reports/referral-indicators.json');
 var patientLevelIndicatorsSchema = require('./reports/patient-level.indicators.json');
 var patientLabOrderProperties = require('./patient-lab-orders.json');
 var reportList = [];
@@ -57,13 +58,15 @@ module.exports = function () {
         buildPatientListReportExpression: buildPatientListReportExpression,
         buildETLPatientLabOrdersExpression: buildETLPatientLabOrdersExpression,
         indicatorsSchema: indicatorsSchema,
+        indicatorsSchemaReferralDefinition:indicatorsSchemaReferralDefinition,
         reports: reports
     };
 
-    function initialize(_reports, _indicatorsSchema, _indicatorHandlers, _patientLevelIndicatorsSchema) {
+    function initialize(_reports, _indicatorsSchema, _indicatorHandlers, _patientLevelIndicatorsSchema, _indicatorsSchemaReferralDefinition) {
         reports = _reports;
         indicatorsSchema = [];
         indicatorsSchema.push.apply(indicatorsSchema, _indicatorsSchema);
+        indicatorsSchema.push.apply(indicatorsSchema, _indicatorsSchemaReferralDefinition);
         indicatorsSchema.push.apply(indicatorsSchema, _patientLevelIndicatorsSchema);
         indicatorHandlers = _indicatorHandlers;
         // disaggregation fixed indicators
@@ -130,21 +133,25 @@ module.exports = function () {
         //Check for undefined params
         if (queryParams === null || queryParams === undefined) return "";
         var result = [];
+        if(queryParams.reportName === 'facility-referral-report'){
+             _.each(indicatorsSchemaReferralDefinition, function (indicator) {
+                 result.push(indicator);
+             });
+        }
         //Load json schema into the query builder
-        _.each(reports, function (report) {
-            if (report.name === queryParams.reportName) {
-                _.each(report.indicators, function (reportIndicator) {
-                    _.each(indicatorsSchema, function (indicator) {
-                        if (indicator.name === reportIndicator.expression) {
-                            result.push(indicator);
-                        }
+         _.each(reports, function (report) {
+             if (report.name === queryParams.reportName) {
+                 _.each(report.indicators, function (reportIndicator) {
+                     _.each(indicatorsSchema, function (indicator) {
+                         if (indicator.name === reportIndicator.expression) {
+                             result.push(indicator);
+                         }
                     });
-                });
-            }
-        });
+                 });
+             }
+         });
         successCallback(result);
     }
-
     /**
      Returns the report json schema,resolved from  request parameter reportName
      **/
@@ -256,7 +263,6 @@ module.exports = function () {
     }
 
 
-  
 
     //converts a set of indicators into sql columns
     function indicatorsToColumns(report, countBy, requestParam) {

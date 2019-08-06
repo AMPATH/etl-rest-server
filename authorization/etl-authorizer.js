@@ -38,7 +38,7 @@ var reportPrivileges = {
     'patient-status-change-tracker-report':  [PRIVILEGES.canViewDataAnalytics],
     'patient-care-cascade-report':  [PRIVILEGES.canViewDataAnalytics],
     'cohort-report':  [PRIVILEGES.canViewPatient],
-    'patient-referral-report':  [PRIVILEGES.canViewDataAnalytics]
+    'facility-referral-report':  [PRIVILEGES.canViewDataAnalytics]
 };
 
 var SUPERUSER_ROLES = ['System Developer'];
