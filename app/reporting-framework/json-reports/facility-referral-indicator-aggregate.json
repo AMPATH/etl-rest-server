@@ -1,0 +1,109 @@
+{
+    "name": "facilityReferralIndicatorDataSetAggregate",
+    "version": "1.0",
+    "tag": "",
+    "description": "",
+    "uses": [
+        {
+            "name": "facilityReferralIndicatorDataSetBase",
+            "version": "1.0",
+            "type": "dataset_def"
+        }
+    ],
+    "sources": [
+        {
+            "dataSet": "facilityReferralIndicatorDataSetBase",
+            "alias": "frid"
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias":"location",
+            "column":"frid.location"
+        },
+        {
+            "type": "simple_column",
+            "alias":"location_id",
+            "column":"frid.location_id"
+        },
+        {
+            "type": "derived_column",
+             "alias":"number_of_up_referrals",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                "expression":"count(frid.number_of_up_referrals)"
+			 }
+        },
+        {
+            "type": "derived_column",
+             "alias":"number_of_down_referrals",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                "expression":"count(frid.number_of_down_referrals)"
+			           }
+        },
+        {
+            "type": "derived_column",
+             "alias":"is_referal_complete",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                "expression":"count(frid.is_referal_complete)"
+                 }
+        },
+        {
+            "type": "derived_column",
+             "alias":"urgent_referrals",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                "expression":"count(frid.urgent_referrals)"
+                 }
+        },
+        {
+            "type": "derived_column",
+             "alias":"non_urgent_referrals",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                "expression":"count(frid.non_urgent_referrals)"
+                 }
+        },
+        {
+            "type": "derived_column",
+             "alias":"completed_referrals",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                "expression":"count(frid.completed_referrals)"
+                 }
+        },
+        {
+            "type": "derived_column",
+             "alias":"Incomplete_completed_referrals",
+             "expressionType": "simple_expression",
+             "expressionOptions": {
+                "expression":"count(frid.Incomplete_completed_referrals)"
+                 }
+        }
+    ],
+    "groupBy": {
+        "groupParam": "groupByParam",
+        "columns": [
+            "location_id"
+        ],
+        "excludeParam": "excludeParam"
+    },
+   "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+        "useTemplate": "facility-referral-template",
+        "useTemplateVersion": "1.0",
+        "generatingDirectives": {
+            "joinDirectives": {
+                "joinType": "LEFT",
+                "joinCondition": "<<base_column>> = <<template_column>>",
+                "baseColumn": "patient_id",
+                "templateColumn": "person_id"
+            }
+        },
+        "skipParams": ["gender"]
+    }
+}
+}

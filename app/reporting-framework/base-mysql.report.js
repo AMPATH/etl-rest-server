@@ -32,6 +32,7 @@ import * as ever_on_art_aggregate from './json-reports/ever-on-art-aggregate.jso
 import * as ever_on_art_disaggregation from './json-reports/ever-on-art-disaggregation.json';
 import * as ever_on_art_base from './json-reports/ever-on-art-base.json';
 import * as referral_patient_list_template from './json-reports/referral-patient-list-template.json';
+import * as facility_referral_template from './json-reports/facility-referral-template.json';
 import * as referral_dataset_base from './json-reports/referral-dataset-base.json';
 import * as referral_aggregate from './json-reports/referral-aggregate.json';
 import * as cdm_dataset_base from './json-reports/cdm/cdm-dataset-base.json';
@@ -115,6 +116,9 @@ import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-p
 
 import * as differentiated_care_program_aggregate from './json-reports/differentiated-care-program-aggregate.json';
 import * as differentiated_care_program_base from './json-reports/differentiated-care-program-base.json';
+
+import * as facility_referral_indicator_aggregate from './json-reports/facility-referral-indicator-aggregate.json';
+import * as facility_referal_indicator_dataset_base from './json-reports/facility-referal-indicator-dataset-base.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -258,6 +262,13 @@ export class BaseMysqlReport {
                         hivMonthlySummaryDataSetBase: this.cloneJsonSchema(hiv_monthly_summary_dataset_base)
                     });
                     break;
+                    case 'facilityReferralReportAggregate':
+                        resolve({
+                            main: this.cloneJsonSchema(facility_referral_indicator_aggregate),
+                            facilityReferralIndicatorDataSetBase: this.cloneJsonSchema(facility_referal_indicator_dataset_base)
+                        });
+                        break;
+
                 case 'clinicComparatorAggregate':
                     resolve({
                         main: this.cloneJsonSchema(clinic_comparator_aggregate),
@@ -342,6 +353,12 @@ export class BaseMysqlReport {
                         main: this.cloneJsonSchema(referral_patient_list_template)
                     });
                     break;
+                case 'facility-referral-template':
+                        resolve({
+                            main: this.cloneJsonSchema(facility_referral_template)
+                    });
+                    break;
+
                 case 'patients-requiring-viral-load-template':
                     resolve({
                         main: this.cloneJsonSchema(patients_requiring_viral_load_template)
@@ -449,7 +466,6 @@ export class BaseMysqlReport {
                     });
                     break;
 
-                   
                 case 'lungCancerDailySummaryAggregate':
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_daily_screening_summary_aggregate),
@@ -465,7 +481,7 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_patient_list_template)
                     });
-                    break; 
+                    break;
 
                 case 'labsReportAggregate':
                     resolve({

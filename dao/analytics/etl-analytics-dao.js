@@ -268,12 +268,14 @@ module.exports = function () {
             var queryParams = {
                 reportName: reportName
             };
-            //retrieve jsin
-            reportFactory.buildIndicatorsSchema(queryParams, function (result) {
-                var schema = {};
-                schema.result = result;
-                callback(schema);
-            });
+
+              console.log('----------------reportName-------------------', reportName);
+              reportFactory.buildIndicatorsSchema(queryParams, function (result) {
+                  var schema = {};
+                  schema.result = result;
+                  callback(schema);
+              });
+
         },
         getIdsByUuidAsyc: function getIdsByUuidAsyc(fullTableName, idColumnName, uuidColumnName, arrayOfUuids, callback) {
             var uuids = [];

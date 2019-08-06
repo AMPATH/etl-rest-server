@@ -1,0 +1,39 @@
+[
+  {
+      "name": "number_of_up_referrals",
+      "label": "number of up referrals",
+      "description": "number of up referral",
+      "expression": "IF(t4.previous_program =33 and t4.current_program = 24  or t4.previous_program = 24 and t4.current_program= 23 or t4.previous_program = 33 and t4.current_program = 23,1,null)"
+  },
+  {
+      "name": "number_of_down_referrals",
+      "label": "number of down referral",
+      "description": "number of down referrals",
+      "expression": "if (t4.current_program =33 and t4.previous_program = 24  or t4.current_program = 24 and t4.previous_program= 23 or t4.current_program = 33 and t4.previous_program = 23,1,null)"
+  },
+  {
+      "name": "urgent_referrals",
+      "label": "Number of urgent referrals",
+      "description": "Number of urgent referrals",
+      "expression": ""
+  },
+  {
+      "name": "non_urgent_referrals",
+      "label": "Number of non urgent referrals",
+      "description": "Number of non urgent referrals",
+      "expression": ""
+  },
+  {
+      "name": "completed_referrals",
+      "label": "Number of completed referrals",
+      "description": "Number of completed referrals",
+      "expression": ""
+  },
+  {
+      "name": "incomplete_referrals",
+      "label": "Number of incomplete referrals",
+      "description": "Number of incomplete referrals",
+      "expression": ""
+  }
+
+]

@@ -6,4 +6,4 @@ export class IndicatorDefinitionService {
             return indicators.indexOf(el.name) >= 0;
           });
     }
-}
+  }

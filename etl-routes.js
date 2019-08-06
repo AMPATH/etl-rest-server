@@ -44,6 +44,7 @@ import {SlackService} from './service/slack-service';
 import {PatientRegisterReportService} from './service/patient-register-report.service';
 import {HivSummaryIndicatorsService} from './app/reporting-framework/hiv/hiv-summary-indicators.service';
 import {HivSummaryMonthlyIndicatorsService} from './app/reporting-framework/hiv/hiv-summary-monthly-indicators.service';
+import {facilityReferralIndicatorsService} from './app/reporting-framework/cdm/facility-referral-monthly-indicators.service';
 import {PatientMonthlyStatusHistory} from './service/patient-monthly-status-history';
 import {cohortUserService} from './service/cohort-user.service.js';
 import {patientsRequiringVLService} from './service/patients-requiring-viral-load.service';
@@ -992,7 +993,6 @@ module.exports = function () {
                             }
                             reply(summary);
                         });
-                        
                     },
                     description: 'Get patient HIV summary',
                     notes: "Returns a list of historical patient's HIV summary with the given patient uuid. " +
@@ -1424,6 +1424,7 @@ module.exports = function () {
                     auth: 'simple',
                     plugins: {},
                     handler: function (request, reply) {
+                      console.log('---------------------------rp----------------', request.payload);
                         patientReferralDao.createPatientReferral(request.payload)
                             .then(function (newCohortReferral) {
                                 reply(newCohortReferral);
@@ -2687,7 +2688,6 @@ module.exports = function () {
                             function () {
                                 let requestParams = Object.assign({}, request.query, request.params);
                                 let reportParams = etlHelpers.getReportParams('hiv-summary-report', ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], requestParams);
-
                                 let service = new HivSummaryIndicatorsService();
                                 service.getAggregateReport(reportParams).then((result) => {
                                     reply(result);
@@ -2796,7 +2796,7 @@ module.exports = function () {
             },
             {
                 method: 'GET',
-                path: '/etl/hiv-summary-monthly-indicators',
+                path: '/etl/cdm-indicators',
                 config: {
                     auth: 'simple',
                     plugins: {
@@ -2809,33 +2809,32 @@ module.exports = function () {
                                 {
                                     type: 'query', //can be in either query or params so you have to specify
                                     name: 'reportName', //name of the parameter
-                                    value: 'hiv-summary-monthly-report' //parameter value
+                                    value: 'facility-referral-report' //parameter value
                                 }
                             ]
                         }
                     },
                     handler: function (request, reply) {
                         //security check
-                        request.query.reportName = 'hiv-summary-monthly-report';
+                        request.query.reportName = 'facility-referral-report';
                         if (!authorizer.hasReportAccess(request.query.reportName)) {
                             return reply(Boom.forbidden('Unauthorized'));
                         }
                         preRequest.resolveLocationIdsToLocationUuids(request,
                             function () {
                                 let requestParams = Object.assign({}, request.query, request.params);
-                                let reportParams = etlHelpers.getReportParams('hiv-summary-monthly-report', ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], requestParams);
-
-                                let service = new HivSummaryMonthlyIndicatorsService();
+                                let reportParams = etlHelpers.getReportParams('facility-referral-report', ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], requestParams);
+                                let service = new facilityReferralIndicatorsService();
                                 service.getAggregateReport(reportParams).then((result) => {
                                     reply(result);
                                 }).catch((error) => {
-                                    console.error('Error fetching HIV summary', error);
+                                    console.error('Error fetching cdm referral summary', error);
                                     reply(Boom.badImplementation('An error occured', error));
                                 });
                             });
                     },
-                    description: "Get hiv summary monthly indicators for  selected clinic",
-                    notes: "Returns hiv summary monthly indicators for the selected clinic(s),start date, end date",
+                    description: "Get cdm referral summary monthly indicators for  selected clinic",
+                    notes: "Returns cdm  summary monthly indicators for the selected clinic(s),start date, end date",
                     tags: ['api'],
                     validate: {
                         query: {
@@ -2865,6 +2864,140 @@ module.exports = function () {
                     }
                 }
             },
+            {
+                method: 'GET',
+                path: '/etl/cdm-indicators/patient-list',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewPatient
+                        },
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }]
+                        }
+                    },
+                    handler: function (request, reply) {
+
+                        request.query.reportName = 'facility-referral-report';
+                        let requestParams = Object.assign({}, request.query, request.params);
+                        let service = new facilityReferralIndicatorsService();
+                        service.getPatientListReport(requestParams).then((result) => {
+                            reply(result);
+                        }).catch((error) => {
+                            reply(error);
+                        });
+                    },
+                    description: "Get cd summary indicator's patient list for selected clinic",
+                    notes: "Returns cdm summary indicator's patient list for the selected clinic,start date, end date",
+                    tags: ['api'],
+                    validate: {
+                        query: {
+                            indicator: Joi.string()
+                                .required()
+                                .description("A list of comma separated indicators"),
+                            locationUuids: Joi.string()
+                                .required()
+                                .description("A list of comma separated location uuids"),
+                            startDate: Joi.string()
+                                .required()
+                                .description("The start date to filter by"),
+                            endDate: Joi.string()
+                                .required()
+                                .description("The end date to filter by"),
+                            startIndex: Joi.number()
+                                .required()
+                                .description("The startIndex to control pagination"),
+                            limit: Joi.number()
+                                .required()
+                                .description("The offset to control pagination"),
+                            startAge: Joi.string()
+                                .optional()
+                                .description("The start age to filter by"),
+                            endAge: Joi.string()
+                                .optional()
+                                .description("The end age to filter by"),
+                            gender: Joi.string()
+                                .optional()
+                                .description("The gender to filter by"),
+                        }
+                    }
+                }
+            },
+            {
+               method: 'GET',
+               path: '/etl/hiv-summary-monthly-indicators',
+               config: {
+                   auth: 'simple',
+                   plugins: {
+                       'openmrsLocationAuthorizer': {
+                           locationParameter: [{
+                               type: 'query', //can be in either query or params so you have to specify
+                               name: 'locationUuids' //name of the location parameter
+                           }],
+                           aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
+                               {
+                                   type: 'query', //can be in either query or params so you have to specify
+                                   name: 'reportName', //name of the parameter
+                                   value: 'hiv-summary-monthly-report' //parameter value
+                               }
+                           ]
+                       }
+                   },
+                   handler: function (request, reply) {
+                       //security check
+                       request.query.reportName = 'hiv-summary-monthly-report';
+                       if (!authorizer.hasReportAccess(request.query.reportName)) {
+                           return reply(Boom.forbidden('Unauthorized'));
+                       }
+                       preRequest.resolveLocationIdsToLocationUuids(request,
+                           function () {
+                               let requestParams = Object.assign({}, request.query, request.params);
+                               let reportParams = etlHelpers.getReportParams('hiv-summary-monthly-report', ['startDate', 'endDate', 'locationUuids', 'indicators', 'gender', 'startAge', 'endAge'], requestParams);
+
+                               let service = new HivSummaryMonthlyIndicatorsService();
+                               service.getAggregateReport(reportParams).then((result) => {
+                                   reply(result);
+                               }).catch((error) => {
+                                   console.error('Error fetching HIV summary', error);
+                                   reply(Boom.badImplementation('An error occured', error));
+                               });
+                           });
+                   },
+                   description: "Get hiv summary monthly indicators for  selected clinic",
+                   notes: "Returns hiv summary monthly indicators for the selected clinic(s),start date, end date",
+                   tags: ['api'],
+                   validate: {
+                       query: {
+                           indicators: Joi.string()
+                               .required()
+                               .description("A list of comma separated indicators"),
+                           locationUuids: Joi.string()
+                               .required()
+                               .description("A list of comma separated location uuids"),
+                           startDate: Joi.string()
+                               .required()
+                               .description("The start date to filter by"),
+                           endDate: Joi.string()
+                               .required()
+                               .description("The end date to filter by"),
+                           gender: Joi.string()
+                               .optional()
+                               .description("The gender to filter by"),
+                           startAge: Joi.string()
+                               .optional()
+                               .description("The start age to filter by"),
+                           endAge: Joi.string()
+                               .optional()
+                               .description("The end age to filter by")
+
+                       }
+                   }
+               }
+           },
             {
                 method: 'GET',
                 path: '/etl/hiv-summary-monthly-indicators/patient-list',
@@ -3295,7 +3428,6 @@ module.exports = function () {
                                 }else{
                                    console.error('Undefined Lab Configuration');
                                 }
-                               
                             }).then((result)=>{
                                 reply(result);
                             }).catch((error) => {
@@ -4396,7 +4528,6 @@ module.exports = function () {
                                 let reportParams = etlHelpers.getReportParams('breast-cancer-summary-dataset',
                                     ['startDate', 'endDate', 'period', 'locationUuids', 'indicators', 'genders', 'startAge', 'endAge'],
                                     requestParams);
-     
                                 let service = new LungCancerTreatmentSummary();
                                 service.getAggregateReport(reportParams).then((result) => {
                                     reply(result);
@@ -4457,7 +4588,6 @@ module.exports = function () {
                         }
                     },
                     handler: function (request, reply) {
-                        
                         let kibanaDashboard = kibanaService.getKibanaDashboards().then((result) => {
                                     console.log('Kibana Dashboard', result);
                                     reply(result);
@@ -4502,7 +4632,6 @@ module.exports = function () {
                             } else {
                                 reply(result);
                             }
-            
                         }).catch((error) => {
                             reply(error);
                         });

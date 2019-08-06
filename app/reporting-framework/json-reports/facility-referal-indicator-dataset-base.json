@@ -1,0 +1,251 @@
+{
+    "name": "facilityReferralIndicatorDataSetBase",
+    "version": "1.0",
+    "tag": "facility_referral_indicator_dataset_base",
+    "description": "",
+    "uses": [],
+    "sources": [
+      {
+          "table": "amrs.patient_program",
+          "alias": "t3"
+      },
+      {
+          "table": "etl.patient_referral",
+          "alias": "t4",
+          "join": {
+              "type": "LEFT",
+              "joinCondition": "t4.patient_program_id = t3.patient_program_id"
+          }
+      },
+      {
+          "table": "amrs.program",
+          "alias": "t5",
+          "join": {
+              "type": "LEFT",
+              "joinCondition": "t3.program_id = t5.program_id"
+          }
+      },
+      {
+          "table": "amrs.location",
+          "alias": "t9",
+          "join": {
+              "type": "LEFT",
+              "joinCondition": "t3.location_id = t9.location_id"
+          }
+      },
+      {
+          "table": "amrs.location",
+          "alias": "location",
+          "join": {
+              "type": "LEFT",
+              "joinCondition": "t4.referred_from_location_id = location.location_id"
+          }
+      },
+        {
+            "table": "amrs.person",
+            "alias": "t",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "t3.patient_id = t.person_id"
+            }
+
+        },
+        {
+            "table": "amrs.person_name",
+            "alias": "pn",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "t.person_id = pn.person_id AND (pn.voided IS NULL || pn.voided = 0)"
+            }
+        },
+        {
+            "table": "amrs.patient_identifier",
+            "alias": "pi",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "t.person_id = pi.patient_id AND (pi.voided IS NULL || pi.voided = 0)"
+            }
+        },
+        {
+            "table": "amrs.person_attribute",
+            "alias": "c",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "t.person_id = c.person_id AND (c.voided IS NULL || c.voided = 0) AND c.person_attribute_type_id = 10"
+            }
+        },
+        {
+            "table": "etl.flat_cdm_peer_navigation",
+            "alias": "peer_navigation",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "peer_navigation.person_id = t3.patient_id"
+            }
+        },
+        {
+           "table": "etl.flat_cdm_peer_navigation",
+           "alias": "urgent_referrals",
+           "join": {
+               "type": "LEFT",
+               "joinCondition": "urgent_referrals.person_id = t3.patient_id AND urgent_referrals.referal_category =1"
+           }
+       },
+       {
+          "table": "etl.flat_cdm_peer_navigation",
+          "alias": "non_urgent_referrals",
+          "join": {
+              "type": "LEFT",
+              "joinCondition": "non_urgent_referrals.person_id = t3.patient_id AND non_urgent_referrals.referal_category =2"
+          }
+      },
+      {
+         "table": "etl.flat_cdm_peer_navigation",
+         "alias": "completed_referrals",
+         "join": {
+             "type": "LEFT",
+             "joinCondition": "completed_referrals.person_id = t3.patient_id AND completed_referrals.is_referal_completed =1"
+         }
+     }
+
+     ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias": "patient_uuid",
+            "column": "t.uuid"
+        },
+        {
+            "type": "simple_column",
+            "alias": "location",
+            "column": "t9.name"
+        },
+        {
+            "type": "simple_column",
+            "alias": "location_uuid",
+            "column": "t9.uuid"
+        },
+        {
+            "type": "simple_column",
+            "alias": "location_id",
+            "column": "t9.location_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "patients",
+            "column": "t.person_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "gender",
+            "column": "t.gender"
+        },
+        {
+            "type": "simple_column",
+            "alias": "birthdate",
+            "column": "t.birthdate"
+        },
+        {
+            "type": "simple_column",
+            "alias": "is_referal_complete",
+            "column": "peer_navigation.is_referal_completed "
+        },
+        {
+            "type": "derived_column",
+            "alias": "phone_number",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if (c.value IS NULL, '', c.value)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "age",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "extract(year from (from_days(datediff(now(),t.birthdate))))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "pn",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "CONCAT(COALESCE(pn.given_name, ''), ' ', COALESCE(pn.middle_name, ''), ' ', COALESCE(pn.family_name, ''))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "identifiers",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": " GROUP_CONCAT(DISTINCT id.identifier SEPARATOR ', ')"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias": "patient_referal_status",
+            "column": "peer_navigation.patient_referal_status"
+        },
+        {
+            "type": "derived_column",
+            "alias": "number_of_up_referrals",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if (t4.previous_program = 33 AND t4.current_program = 24 OR t4.previous_program = 33 AND t4.current_program = 23 OR t4.previous_program = 24 AND t4.current_program = 23,1,NULL )"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "number_of_down_referrals",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if (t4.previous_program = 23 AND t4.current_program = 24 OR t4.previous_program = 23 AND t4.current_program = 33 OR t4.previous_program = 24 AND t4.current_program = 33 , 1, NULL)"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias": "urgent_referrals",
+            "column": "urgent_referrals.referal_category"
+        },
+        {
+            "type": "simple_column",
+            "alias": "non_urgent_referrals",
+            "column": "non_urgent_referrals.referal_category"
+        },
+        {
+            "type": "simple_column",
+            "alias": "completed_referrals",
+            "column": "completed_referrals.is_referal_completed"
+        }
+
+     ],
+     "groupBy":{
+         "columns":["t.person_id"]
+     },
+     "filters": {
+         "conditionJoinOperator": "and",
+         "conditions": [
+               {
+                  "filterType": "tableColumns",
+                  "conditionExpression": "DATE_FORMAT(t4.date_created, '%Y-%m-%d') >= ?",
+                  "parameterName": "startDate"
+              },
+              {
+                  "filterType": "tableColumns",
+                  "conditionExpression": "DATE_FORMAT(t4.date_created, '%Y-%m-%d') <= ?",
+                  "parameterName": "endDate"
+              },
+             {
+                 "filterType": "tableColumns",
+                 "conditionExpression": "t9.uuid in ?",
+                 "parameterName": "locationUuids"
+             },
+             {
+                 "filterType": "tableColumns",
+                 "conditionExpression": "t.gender in ?",
+                 "parameterName": "gender"
+             }
+         ]
+
+     }
+}

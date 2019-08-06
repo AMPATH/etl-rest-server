@@ -23,7 +23,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                     that.reportSchemas = reportSchemas;
                     // consolidate params and indicators
                     indicators = that.consolidateParamsAndIndicators(that.params, indicators);
-                   
                     // determine patient list seed schemas
                     let aggs = this.determineBaseAndAggrSchema(that.reportSchemas, indicators);
                     if (aggs.length > 0) {
@@ -35,8 +34,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                         that.fetchPatientListTemplate(that.plSchemasRaw.aggregate)
                             .then((template) => {
                                 that.plTemplate = template.main;
-
-
                                 let generated =
                                     that.generatePatientListJsonQuery(that.plSchemasRaw.aggregate, that.plSchemasRaw.base, that.plTemplate, that.params);
                                 // console.log('GENERATED', generated.generated.filters, that.params);
@@ -50,7 +47,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                                 //             break;
                                 //         }
                                 //     }
-        
                                 // }
                                // let aggregateDatasets = that.fetchReportSchema(that.reportSchemas);
 
