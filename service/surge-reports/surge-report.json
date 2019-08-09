@@ -12,6 +12,11 @@
         "sectionTitle": "Visits",
         "indicators": [
             {
+                "label": "Visit this week",
+                "description": "All patients who came for visits this week including scheduled and unscheduled",
+                "indicator": "visit_this_week"
+            },
+            {
                 "label": "Scheduled this week",
                 "description": "Patients scheduled this week",
                 "indicator": "scheduled_this_week"
@@ -20,11 +25,6 @@
                 "label": "Honored visit",
                 "description": "Patients who came the day of their rtc",
                 "indicator": "on_schedule_this_week"
-            },
-            {
-                "label": "Visit this week",
-                "description": "All patients who came for visits this week including scheduled and unscheduled",
-                "indicator": "visit_this_week"
             },
             {
                 "label": "Unscheduled this week",
@@ -47,34 +47,34 @@
         "sectionTitle": "Client Disengagements",
         "indicators": [
             {
-                "label": "Missed this week",
-                "description": "Patients who missed their appointments",
+                "label": "Missed this week (0 - 4 days)",
+                "description": "Patients who missed their this week appointments",
                 "indicator": "missed_appointment_this_week"
             },
             {
-                "label": "All Defaulted as of this week",
+                "label": "All Defaulted as of this week (5 - 28 days)",
                 "description": "Patients who have missed their rtc date between 5 and 27 days",
                 "indicator": "defaulted"
             },
             {
-                "label": "All LTFU as of this week",
-                "description": "All LTFU patients since care",
-                "indicator": "all_ltfu_this_week"
+                "label": "Surge LTFU Baseline",
+                "description": "LTFU october 1st 2018 to 11th may, surge LTFU patients",
+                "indicator": "is_ltfu_surge_baseline"
             },
             {
-                "label": "Surge LTFU (active october 2018 and LTFU may 2019)",
-                "description": "Active october 2018 and LTFU by may 11th, surge LTFU patients",
-                "indicator": "active_october_2018_and_ltfu_may_2019_cohort"
+                "label": "LTFUs after may",
+                "description": "Patients who became LTFU this week",
+                "indicator": "is_ltfu_after_may"
             },
             {
-                "label": "Surge LTFUs Brought To Care",
-                "description": "Surge LTFUs who were brought back to care",
-                "indicator": "ltfu_cumulative_outcomes_active"
-            },
-            {
-                "label": "Surge LTFU and LTFU this week",
+                "label": "Surge LTFU and not yet resolved",
                 "description": "Surge LTFUs that are still currently LTFUs",
-                "indicator": "ltfu_may_2019_and_ltfu_this_week"
+                "indicator": "surge_ltfu_and_still_ltfu"
+            },
+            {
+                "label": "Surge LTFUs unresolved and LTFUs after may",
+                "description": "Surge LTFUs and patients who became LTFUs after may 12th",
+                "indicator": "surge_ltfu_and_ltfu_after_may"
             },
             {
                 "label": "Newly LTFU this week",
@@ -82,34 +82,70 @@
                 "indicator": "newly_ltfu_this_week"
             },
             {
-                "label": "Active october 2018 and LTFU this week",
-                "description": "Active october 2018 and currently are LTFUs",
-                "indicator": "active_october_2018_and_ltfu_this_week"
+                "label": "All dead patients after may",
+                "description": "All dead patients since beginning of surge",
+                "indicator": "cumulative_dead"
+            },
+
+            {
+                "label": "Dead this week",
+                "description": "All patients who died this week",
+                "indicator": "dead_this_week"
             }
         ]
     },
     {
-        "sectionTitle": "Surge LTFU Outcomes",
+        "sectionTitle": "LTFU Outcomes(Surge LTFUs)",
         "indicators": [
             {
-                "label": "Surge LTFU (active october 2018 and LTFU may 2019) ",
-                "description": "Target to bring back, Active october 2018 and LTFU by may 11th",
-                "indicator": "active_october_2018_and_ltfu_may_2019_cohort"
+                "label": "Total Otcomes",
+                "description": "surge LTFUs brought back, transfered out or those who are confirmed dead",
+                "indicator": "ltfu_cumulative_outcomes_total"
+            },
+            {    
+                "label": "Brought To Care",
+                "description": "Surge LTFUs who were brought back to care",
+                "indicator": "ltfu_cumulative_outcomes_active"
             },
             {
-                "label": "Surge LTFUs dead",
-                "description": "Surge LTFUs that are confirmed dead",
-                "indicator": "ltfu_cumulative_outcomes_death"
-            },
-            {
-                "label": "Surge LTFUs transfer out",
+                "label": "Reported transfered out",
                 "description": "Surge LTFUs that have been transfered to another clinic",
                 "indicator": "ltfu_cumulative_outcomes_transfer_out"
             },
             {
-                "label": "Surge LTFUs Brought To Care",
-                "description": "Surge LTFUs who were brought back to care",
-                "indicator": "ltfu_cumulative_outcomes_active"
+                "label": "Reported dead",
+                "description": "Surge LTFUs that are confirmed dead",
+                "indicator": "ltfu_cumulative_outcomes_death"
+            },
+            {
+                "label": "Brought To Care this week",
+                "description": "Patients who were LTFUs last week and have died this week",
+                "indicator": "ltfu_active_this_week"
+            },
+            {
+                "label": "Reported transfered out this week",
+                "description": "Patients who were LTFUs last week and have been transfered out this week",
+                "indicator": "ltfu_transfer_out_this_week"
+            },
+            {
+                "label": "Reported dead this week",
+                "description": "Patients who were LTFUs last week and have died this week",
+                "indicator": "ltfu_death_this_week"
+            }
+        ]
+    },
+    {
+        "sectionTitle": "LTFU Outcomes (self returnies)",
+        "indicators": [
+            {
+                "label": "Total returnies",
+                "description": "surge LTFUs brought back, transfered out or those who are confirmed dead",
+                "indicator": "old_ltfus_to_active"
+            },
+            {
+                "label": "Return To Care this week",
+                "description": "Patients who were LTFUs last week and are active/brought back this week",
+                "indicator": "old_ltfus_to_active_this_week"
             }
         ]
     },
@@ -117,14 +153,9 @@
         "sectionTitle": "Viral Load this week",
         "indicators": [
             {
-                "label": "Overdue for VL",
+                "label": "Eligible for VL",
                 "description": "Active and Due for VL this week",
                 "indicator": "overdue_for_vl_active"
-            },
-            {
-                "label": "Eligible for VL",
-                "description": "Active and Eligible for VL this week",
-                "indicator": "due_for_vl_this_week_active"
             },
             {
                 "label": "Scheduled and Eligible for VL",
@@ -152,24 +183,59 @@
                 "indicator": "has_vl_this_week"
             },
             {
-                "label": "Has VL and Suppressed cumulative",
-                "description": "Has VL and Suppressed cumulative",
+                "label": "Has VL and Suppressed (<400 copies)",
+                "description": "Has VL and Suppressed ",
                 "indicator": "is_suppressed"
             },
             {
-                "label": "Has VL and Unsuppressed cumulative",
-                "description": "Has VL and Unsuppressed cumulative",
+                "label": "Has VL and Unsuppressed (>400 copies)",
+                "description": "Has VL and Unsuppressed ",
                 "indicator": "is_un_suppressed"
             }
         ]
-    },
+    },			    
     {
         "sectionTitle": "Differentiated Care(DC)",
         "indicators": [
             {
-                "label": "DC eligible cumulative",
-                "description": "DC eligible this week",
-                "indicator": "dc_eligible_cumulative"
+                "label": "Active on DC as of this week",
+                "description": "Active on DC as of this week",
+                "indicator": "active_on_dc"
+            },
+            {
+                "label": "DC eligible total (on DC and those not on DC)",
+                "description": "DC eligible as of this week",
+                "indicator": "elligible_total"
+            },
+            {
+                "label": "DC eligible and on dc",
+                "description": "DC eligible as of this week",
+                "indicator": "eligible_and_on_dc"
+            },
+            {
+                "label": "DC eligible and not dc",
+                "description": "DC eligible as of this week",
+                "indicator": "eligible_not_on_dc"
+            },
+            {
+                "label": "DC eligible and not on dc scheduled",
+                "description": "DC eligible as of this week",
+                "indicator": "eligible_not_on_dc_and_scheduled_this_week"
+            },
+            {
+                "label": "DC eligible and not on dc unscheduled",
+                "description": "DC eligible as of this week",
+                "indicator": "eligible_not_on_dc_and_unscheduled_this_week"
+            },
+            {
+                "label": "DC eligible and on dc scheduled",
+                "description": "DC eligible as of this week",
+                "indicator": "eligible_and_on_dc_and_scheduled_this_week"
+            },
+            {
+                "label": "DC eligible and on dc unscheduled",
+                "description": "DC eligible as of this week",
+                "indicator": "eligible_and_on_dc_and_unscheduled_this_week"
             },
             {
                 "label": "Enrolled to DC this week",
@@ -185,6 +251,11 @@
                 "label": "Enrolled this week",
                 "description": "Enrolled this week",
                 "indicator": "enrolled_this_week"
+            },
+            {
+                "label": "Started ART this week",
+                "description": "Started ART this week",
+                "indicator": "started_art_this_week"
             },
             {
                 "label": "ART revisit this week",
@@ -207,16 +278,6 @@
         "sectionTitle": "Second Visit for New on ART (TX_SV)",
         "indicators": [
             {
-                "label": "Started ART this week",
-                "description": "Started ART this week",
-                "indicator": "started_art_this_week"
-            },
-            {
-                "label": "ART second visit this week",
-                "description": "ART second visit this week",
-                "indicator": "tx2_visit_this_week"
-            },
-            {
                 "label": "Scheduled second visit",
                 "description": "Scheduled second visit",
                 "indicator": "tx2_scheduled_this_week"
@@ -225,6 +286,16 @@
                 "label": "Honored Second visit",
                 "description": "Honored Second visit",
                 "indicator": "tx2_scheduled_honored"
+            },
+            {
+                "label": "ART second visit this week",
+                "description": "ART second visit this week",
+                "indicator": "tx2_visit_this_week"
+            },
+            {
+                "label": "UnScheduled second visit",
+                "description": "UnScheduled second visit",
+                "indicator": "tx2_unscheduled_this_week"
             },
             {
                 "label": "Missed ART second visit this week",
@@ -245,6 +316,21 @@
                 "label": "Enrolled to PREP this week",
                 "description": "Enrolled to PREP this week",
                 "indicator": "new_prep_this_week"
+            }
+        ]
+    },
+    {
+        "sectionTitle": "Interventions",
+        "indicators": [
+            {
+                "label": "Total interventions",
+                "description": "Pinterventions",
+                "indicator": "interventions"
+            },
+            {
+                "label": "intervention done this week",
+                "description": "intervention done this week",
+                "indicator": "intervention_done_this_week"
             }
         ]
     }
