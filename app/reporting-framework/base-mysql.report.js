@@ -138,6 +138,8 @@ import * as prep_aggregate_report from './json-reports/prep-aggregate-report.jso
 import * as ltfu_surge_baseline_report from './json-reports/ltfus-surge-baseline-base.json';
 import * as ltfu_surge_baseline_aggregate_report from './json-reports/ltfus-surge-baseline-aggregate.json';
 import * as patient_list_prep_template from './json-reports/patient-list-prep-template.json';
+import * as surge_daily_report_base from './json-reports/surge-daily-report-base';
+import * as surge_daily_report_aggregate from './json-reports/surge-daily-report-aggregate';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -546,7 +548,12 @@ export class BaseMysqlReport {
                             referralDatasetbase: this.cloneJsonSchema(referral_patient_list_peer_base)
                         });
                 break;
-                    break;
+                case 'surgeDailyReport':
+                    resolve({
+                        main: this.cloneJsonSchema(surge_daily_report_aggregate),
+                        surgeDailyReport: this.cloneJsonSchema(surge_daily_report_base)
+                    });
+                break;
                 case 'surgeReport':
                     resolve({
                         main: this.cloneJsonSchema(surge_report_aggregate),
