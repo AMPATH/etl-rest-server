@@ -3292,7 +3292,6 @@ module.exports = function () {
                                 }else{
                                    console.error('Undefined Lab Configuration');
                                 }
-                               
                             }).then((result)=>{
                                 reply(result);
                             }).catch((error) => {
@@ -4233,7 +4232,7 @@ module.exports = function () {
                         }
                     },
                     handler: function (request, reply) {
-                        
+
                         let kibanaDashboard = kibanaService.getKibanaDashboards().then((result) => {
                                     console.log('Kibana Dashboard', result);
                                     reply(result);
