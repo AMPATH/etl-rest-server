@@ -64,8 +64,9 @@ function buildScope(dataDictionary) {
  
   if (dataDictionary.patientEncounters) {
     scope.patientEncounters = dataDictionary.patientEncounters;
+    scope.programUuid = dataDictionary.programUuid;
     buildHivScopeMembers(scope, dataDictionary.patientEncounters);
-    buildOncologyScopeMembers(scope, dataDictionary.patientEncounters);
+    buildOncologyScopeMembers(scope, dataDictionary.patientEncounters, dataDictionary.programUuid);
   }
 
   // add other methods to build the scope objects
@@ -138,16 +139,15 @@ function isInitialOncologyVisit(encounters, programUuid) {
       initialEncounterUuid: '4a7450b1-f720-4a0c-b13b-d8a6a83348ee' // Anticoagulation Initial
     }
   ];
-
   let initialOncologyEncounters = [];
   let initialEncounterType = oncologyProgramEncounterTypeMap.find(e => e.programUuid === programUuid);
-  
   if (initialEncounterType) {
     initialOncologyEncounters = _.filter(encounters, encounter => {
       return initialEncounterType.initialEncounterUuid === encounter.encounterType.uuid
     });
   }
   return initialOncologyEncounters.length === 0;
+  
 }
 
 function buildProgramScopeMembers(scope, programEnrollment) {
@@ -181,6 +181,6 @@ function buildHivScopeMembers(scope, lastTenHivSummary, intendedVisitLocationUui
   scope.isFirstPEPVisit = isInitialPepVisit(scope.patientEncounters);
 }
 
-function buildOncologyScopeMembers(scope) {
-  scope.isFirstOncologyVisit = isInitialOncologyVisit(scope.patientEncounters);
+function buildOncologyScopeMembers(scope, patientEncounters, programUuid) {
+  scope.isFirstOncologyVisit = isInitialOncologyVisit(scope.patientEncounters, programUuid);
 }
