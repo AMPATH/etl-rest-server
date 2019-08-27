@@ -27,6 +27,7 @@ import * as retention_dataset_base from './json-reports/retention-dataset-base.j
 import * as pep_dataset_aggregate from './json-reports/pep-dataset-aggregate.json';
 import * as pep_dataset_base from './json-reports/pep-dataset-base.json';
 import * as patient_list_template from './json-reports/patient-list-template.json';
+import * as patient_list_schedules_template from './json-reports/patient-list-schedules-template.json';
 import * as patient_list_frozen_template from './json-reports/patient-list-frozen-template.json';
 import * as ever_on_art_aggregate from './json-reports/ever-on-art-aggregate.json';
 import * as ever_on_art_disaggregation from './json-reports/ever-on-art-disaggregation.json';
@@ -112,8 +113,16 @@ import * as lung_cancer_daily_screening_summary_aggregate from './json-reports/l
 import * as lung_cancer_monthly_screening_summary_aggregate from './json-reports/lung-cancer-monthly-screening-summary-aggregate.json';
 import * as lung_cancer_monthly_screening_summary_base from './json-reports/lung-cancer-monthly-screening-summary-base.json';
 import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-patient-list-template.json';
+
 import * as referral_patient_list_peer_base from './json-reports/referral-peer-base';
 import * as referral_peer_aggregate from './json-reports/referral-peer-aggregate';
+
+import * as differentiated_care_program_aggregate from './json-reports/differentiated-care-program-aggregate.json';
+import * as differentiated_care_program_base from './json-reports/differentiated-care-program-base.json';
+
+import * as surge_report_base from './json-reports/surge-report-base.json';
+import * as surge_report_aggregate from './json-reports/surge-report-aggregate.json';
+
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -190,6 +199,11 @@ export class BaseMysqlReport {
                 case 'patient-list-frozen-template':
                     resolve({
                         main: this.cloneJsonSchema(patient_list_frozen_template) //patient_list_frozen_template
+                    });
+                    break;
+                case 'patient-list-schedules-template':
+                    resolve({
+                        main: this.cloneJsonSchema(patient_list_schedules_template)
                     });
                     break;
                 case 'patient-list-with-contacts-template':
@@ -511,7 +525,19 @@ export class BaseMysqlReport {
                         main: this.cloneJsonSchema(currently_enrolled_patients_aggregate),
                         currentlyEnrolledPatientsBase: this.cloneJsonSchema(currently_enrolled_patients_base)
                     });
-                break;
+                    break;
+                case 'differentiatedCareProgramAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(differentiated_care_program_aggregate),
+                        differentiatedCareProgramBase: this.cloneJsonSchema(differentiated_care_program_base)
+                    });
+                    break;
+                case 'surgeReport':
+                    resolve({
+                        main: this.cloneJsonSchema(surge_report_aggregate),
+                        surgeReport: this.cloneJsonSchema(surge_report_base)
+                    });
+                    break;
                 default:
                     reject('Unknown report ', reportName);
                     break;

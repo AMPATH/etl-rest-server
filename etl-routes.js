@@ -19,6 +19,7 @@ var config = require('./conf/config');
 var privileges = authorizer.getAllPrivileges();
 var etlHelpers = require('./etl-helpers.js');
 var crypto = require('crypto');
+var moment = require('moment');
 var motd = require('./dao/motd_notification/motd_notification-dao');
 var patientProgramService = require('./programs/patient-program-base.service.js');
 var resolveClinicDashboardFilterParams = require('./resolve-program-visit-encounter-Ids/resolve-program-visit-encounter-Ids');
@@ -30,96 +31,43 @@ var programVisitEncounterResolver = require('./resolve-program-visit-encounter-I
 var imagingService = require('./service/radilogy-imaging.service');
 var oncologyReportsService = require('./oncology-reports/oncology-reports-service');
 var pocEidPayloadHelper = require('./app/lab-integration/utils/poc-eid-payload-helper.js');
-import { LabSyncService } from './app/lab-integration/lab-sync-service';
-import { LabClient } from './app/lab-integration/utils/lab-client';
-import {
-    MonthlyScheduleService
-} from './service/monthly-schedule-service';
-import {
-    PatientStatusChangeTrackerService
-} from './service/patient-status-change-tracker-service';
-import {
-    clinicalArtOverviewService
-} from './service/clinical-art-overview.service';
-import { labOrdersService } from './service/lab-orders.service';
+import {LabSyncService} from './app/lab-integration/lab-sync-service';
+import {LabClient} from './app/lab-integration/utils/lab-client';
+import {MonthlyScheduleService} from './service/monthly-schedule-service';
+import {PatientStatusChangeTrackerService} from './service/patient-status-change-tracker-service';
+import {clinicalArtOverviewService} from './service/clinical-art-overview.service';
+import {labOrdersService} from './service/lab-orders.service';
 
-import {
-    hivComparativeOverviewService
-} from './service/hiv-comparative-overview.service';
-import {
-    clinicalPatientCareStatusOverviewService
-} from './service/clinical-patient-care-status-overview';
-import {
-    SlackService
-} from './service/slack-service';
-import {
-    Moh731Service
-} from './service/moh-731/moh-731.service';
-import {
-    PatientRegisterReportService
-} from './service/patient-register-report.service';
-import {
-    HivSummaryIndicatorsService
-} from './app/reporting-framework/hiv/hiv-summary-indicators.service';
-import {
-    HivSummaryMonthlyIndicatorsService
-} from './app/reporting-framework/hiv/hiv-summary-monthly-indicators.service';
-import {
-    PatientMonthlyStatusHistory
-} from './service/patient-monthly-status-history';
-import {
-    cohortUserService
-} from './service/cohort-user.service.js';
-import {
-    patientsRequiringVLService
-} from './service/patients-requiring-viral-load.service';
-import {
-    patientCareCascadeService
-} from './service/patient-care-cascade-report.service';
+import {hivComparativeOverviewService} from './service/hiv-comparative-overview.service';
+import {clinicalPatientCareStatusOverviewService} from './service/clinical-patient-care-status-overview';
+import {SlackService} from './service/slack-service';
+import {PatientRegisterReportService} from './service/patient-register-report.service';
+import {HivSummaryIndicatorsService} from './app/reporting-framework/hiv/hiv-summary-indicators.service';
+import {HivSummaryMonthlyIndicatorsService} from './app/reporting-framework/hiv/hiv-summary-monthly-indicators.service';
+import {PatientMonthlyStatusHistory} from './service/patient-monthly-status-history';
+import {cohortUserService} from './service/cohort-user.service.js';
+import {patientsRequiringVLService} from './service/patients-requiring-viral-load.service';
+import {patientCareCascadeService} from './service/patient-care-cascade-report.service';
+import {patientMedicationHistService} from './service/patient-medication-history.service';
+import {PatientMedicalHistoryService} from './service/patient-medical-history.service';
+
+import {Moh731Report} from './app/reporting-framework/hiv/moh-731.report';
+import {BreastCancerMonthlySummaryService} from './service/breast-cancer-monthly-summary.service';
+import {CervicalCancerMonthlySummaryService} from './service/cervical-cancer-monthly-summary.service';
+
+import {LungCancerMonthlySummaryService} from './service/lung-cancer-monthly-summary.service';
+import {PatientlistMysqlReport} from './app/reporting-framework/patientlist-mysql.report';
+import {BaseMysqlReport} from './app/reporting-framework/base-mysql.report';
+import {CDMReportingService} from './service/cdm/cdm-reporting.service';
+import {PatientReferralService} from './service/patient-referral.service';
+import {CombinedBreastCervicalCancerMonthlySummary} from './service/combined-breast-cervical-cancer-monthly-summary.service';
+import {LungCancerTreatmentSummary} from './service/lung-cancer-treatment-summary.service';
+
 var patientReminderService = require('./service/patient-reminder.service.js');
-import {
-    patientMedicationHistService
-} from './service/patient-medication-history.service';
-import {
-    PatientMedicalHistoryService
-} from './service/patient-medical-history.service';
 
-import {
-    Moh731Report
-} from './app/reporting-framework/hiv/moh-731.report';
-import {
-    BreastCancerMonthlySummaryService
-} from './service/breast-cancer-monthly-summary.service';
-import {
-    CervicalCancerMonthlySummaryService
-} from './service/cervical-cancer-monthly-summary.service';
+import { PatientPeerReferral } from './service/patient-peer-referral.service';
 
-import {
-    LungCancerMonthlySummaryService
-} from './service/lung-cancer-monthly-summary.service';
-import {
-    PatientlistMysqlReport
-} from './app/reporting-framework/patientlist-mysql.report';
-import {
-    BaseMysqlReport
-} from './app/reporting-framework/base-mysql.report';
-import {
-    CDMReportingService
-} from './service/cdm/cdm-reporting.service';
-import {
-    PatientReferralService
-} from './service/patient-referral.service';
-import {
-    CombinedBreastCervicalCancerMonthlySummary
-} from './service/combined-breast-cervical-cancer-monthly-summary.service';
-import {
-     LungCancerTreatmentSummary
-     } from './service/lung-cancer-treatment-summary.service';
-import {
-      PatientPeerReferral
-} from './service/patient-peer-referral.service';
 var  kibanaService = require('./service/kibana.service');
-
 
 module.exports = function () {
 
@@ -373,7 +321,7 @@ module.exports = function () {
                                 .then((result) => {
                                     let locationIds = result;
                                     request.query.locations = locationIds;
-                                    let combineRequestParams = Object.assign(request.query, request.params)
+                                    let combineRequestParams = Object.assign(request.query, request.params);
                                     let service = new MonthlyScheduleService();
                                     service.getMonthlyScheduled(combineRequestParams).then((result) => {
                                         reply(result);
@@ -1065,6 +1013,36 @@ module.exports = function () {
                     }
                 }
             },
+          {
+            method: 'GET',
+            path: '/etl/patient/{uuid}/oncology/summary',
+            config: {
+              auth: 'simple',
+              plugins: {
+                'hapiAuthorization': {
+                  role: privileges.canViewPatient
+                }
+              },
+              handler: function (request, reply) {
+                dao.getPatientOncologySummary(request, reply);
+              },
+              description: 'Get patient Oncology summary',
+              notes: "Returns a list of patient's Oncology summary with the given patient uuid. " +
+                "A patient's Oncology summary includes details such as last appointment date, " +
+                "most recent diagnosis etc. as at that encounter's date. ",
+              tags: ['api'],
+              validate: {
+                options: {
+                  allowUnknown: true
+                },
+                params: {
+                  uuid: Joi.string()
+                    .required()
+                    .description("The patient's uuid(universally unique identifier)."),
+                }
+              }
+            }
+          },
             {
                 method: 'GET',
                 path: '/etl/location/{uuid}/clinic-encounter-data',
@@ -2716,7 +2694,7 @@ module.exports = function () {
                                 service.getAggregateReport(reportParams).then((result) => {
                                     reply(result);
                                 }).catch((error) => {
-                                    console.error('Error loading HIV Summary:', error)
+                                    console.error('Error loading HIV Summary:', error);
                                     reply(error);
                                 });
                             });
@@ -3319,11 +3297,10 @@ module.exports = function () {
                                 }else{
                                    console.error('Undefined Lab Configuration');
                                 }
-
                             }).then((result)=>{
                                 reply(result);
                             }).catch((error) => {
-                                let errorObject = JSON.parse(error.error)
+                                let errorObject = JSON.parse(error.error);
                                 console.error('Error',errorObject);
                                 reply(errorObject.error).code(error.statusCode);
                             });
@@ -4562,7 +4539,53 @@ module.exports = function () {
                           }
                       }
                   }
-              }
+              },
+              {
+                method: 'GET',
+                path: '/etl/differentiated-care-program/patient-list',
+                config: {
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewPatient
+                        }
+                    },
+                    handler: function (request, reply) {
+                        let requestParams = Object.assign({}, request.query, request.params);
+                        let locationUuids = request.query.locationUuids.split(',')
+                        requestParams.startDate = requestParams.startDate.split('T')[0];
+                        requestParams.endDate = requestParams.endDate.split('T')[0];
+                        let indicators = [];
+                        if (requestParams.indicators) {
+                            indicators = requestParams.indicators.split(',');
+                        }
+                        requestParams.locationUuids = locationUuids;
+                        let report = new PatientlistMysqlReport('differentiatedCareProgramAggregate', requestParams);
+                        report.generatePatientListReport(indicators).then((result) => {
+                            if (result.results.results.length > 0) {
+                                _.each(result.results.results, (item) => {
+                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                    item.vl_1_date = moment(item.vl_1_date).format('DD-MM-YYYY');
+                                });
+                                reply(result);
+                            } else {
+                                reply(result);
+                            }
+
+                        }).catch((error) => {
+                            reply(error);
+                        });
+                    },
+                    description: "Get the medical history report",
+                    notes: "Returns the the medical history of the selected patient",
+                    tags: ['api'],
+                    validate: {
+                        options: {
+                            allowUnknown: true
+                        },
+                        params: {}
+                    }
+                }
+            }
         ];
 
     return routes;

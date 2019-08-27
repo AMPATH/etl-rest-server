@@ -1,8 +1,8 @@
 {
-    "name": "patient_list_frozen_template",
+    "name": "patient_list_schedules_template",
     "version": "1.0",
-    "tag": "patient_list_frozen_template",
-    "description": "Patient list frozen template, for use against the hiv monthly frozen table",
+    "tag": "patient_list_schedules_template",
+    "description": "Patient list schedules template",
     "sources": [
         {
             "table": "amrs.person",
@@ -55,8 +55,15 @@
                 "type": "LEFT",
                 "joinCondition": "t1.person_id = pa.person_id"
             }
+        },
+        {
+            "table": "amrs.visit_type",
+            "alias": "vt",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "t2.visit_type_id = vt.visit_type_id"
+            }
         }
-
     ],
     "columns": [
         {
@@ -76,6 +83,24 @@
             "type": "simple_column",
             "alias": "person_id",
             "column": "t1.person_id"
+        },
+        {
+            "type": "simple_column",
+            "alias": "gender",
+            "column": "t1.gender"
+        },
+        {
+            "type": "simple_column",
+            "alias": "birthdate",
+            "column": "t1.birthdate"
+        },
+        {
+            "type": "derived_column",
+            "alias": "age",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "extract(year from (from_days(datediff(now(),t1.birthdate))))"
+            }
         },
         {
             "type": "derived_column",
@@ -123,13 +148,13 @@
         },
         {
             "type": "simple_column",
-            "alias": "cur_meds",
-            "column": "fh.cur_arv_meds"
+            "alias": "visit_type",
+            "column": "CONCAT(COALESCE(DATE_FORMAT(fh.encounter_datetime, '%Y-%m-%d'),''),' ',COALESCE(vt.name, ''))"
         },
         {
             "type": "simple_column",
-            "alias": "cur_arv_line",
-            "column": "fh.cur_arv_line"
+            "alias": "cur_meds",
+            "column": "fh.cur_arv_meds"
         },
         {
             "type": "simple_column",
