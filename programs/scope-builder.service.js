@@ -86,9 +86,9 @@ function isIntraTransfer(lastTenHivSummary, intendedVisitLocationUuid) {
 
 function isInitialPrepVisit(patientEncounters) {
   const initialPrEPEncounterUuid = '00ee2fd6-9c95-4ffc-ab31-6b1ce2dede4d';
-  let previousPrEPEncounters = [];
+  let initialPrEPEncounters = [];
 
-  previousPrEPEncounters = _.filter(patientEncounters, (encounter) => {
+  initialPrEPEncounters = _.filter(patientEncounters, (encounter) => {
     return encounter.encounterType.uuid === initialPrEPEncounterUuid;
   });
 
