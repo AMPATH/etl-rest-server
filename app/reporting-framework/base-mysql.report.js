@@ -118,6 +118,11 @@ import * as referral_peer_aggregate from './json-reports/referral-peer-aggregate
 import * as surge_report_base from './json-reports/surge-report-base.json';
 import * as surge_report_aggregate from './json-reports/surge-report-aggregate.json';
 
+import * as surge from './json-reports/surge-report.json';
+import * as prep_base_report from './json-reports/prep-base-report.json';
+import * as prep_aggregate_report from './json-reports/prep-aggregate-report.json';
+import * as patient_list_prep_template from './json-reports/patient-list-prep-template.json';
+
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -203,6 +208,11 @@ export class BaseMysqlReport {
                 case 'patient-list-with-contacts-template':
                     resolve({
                         main: this.cloneJsonSchema(patient_list_with_contacts_template)
+                    });
+                    break;
+                case 'patient-list-prep-template':
+                    resolve({
+                        main: this.cloneJsonSchema(patient_list_prep_template)
                     });
                     break;
                 case 'mainDatasetAggregate':
@@ -525,6 +535,17 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(surge_report_aggregate),
                         surgeReport: this.cloneJsonSchema(surge_report_base)
+                    });
+                    break;
+                case 'prepReport':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_aggregate_report),
+                        prepBaseReport: this.cloneJsonSchema(prep_base_report)
+                    });
+                    break;
+                case 'surge':
+                    resolve({
+                        main: this.cloneJsonSchema(surge)
                     });
                     break;
                 default:
