@@ -2971,8 +2971,8 @@
         }]
       },
       {
-        "uuid": "015af4d4-67cb-45a3-9929-8dbd53b1e47c",
-        "name": "Treatment Supporter Visit",
+        "uuid": "5e304e47-b912-47c5-8cfb-0e795490dbe6",
+        "name": "HEI Treatment Supporter Visit",
         "encounterTypes": [{
           "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
           "display": "TXSUPPORTERMEDREFILL"
