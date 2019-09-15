@@ -631,7 +631,7 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "l.uuid in (?)",
+                "conditionExpression": "l.uuid in ?",
                 "parameterName": "locationUuids"
             }
         ]
