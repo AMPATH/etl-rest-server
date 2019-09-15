@@ -271,6 +271,11 @@
         },
         {
             "type": "simple_column",
+            "alias": "week_patient_became_active",
+            "column": "srb.week_patient_became_active"
+        },
+        {
+            "type": "simple_column",
             "alias": "status",
             "column": "srb.status"
         },
@@ -318,11 +323,6 @@
             "type": "simple_column",
             "alias": "tx2_scheduled_honored",
             "column": "srb.tx2_scheduled_honored"
-        },
-        {
-            "type": "simple_column",
-            "alias": "returned_to_care_this_week",
-            "column": "srb.returned_to_care_this_week"
         },
         {
             "type": "simple_column",
@@ -589,6 +589,11 @@
             "type": "simple_column",
             "alias": "not_elligible_and_on_dc",
             "column": "srb.not_elligible_and_on_dc"
+        },
+        {
+            "type": "simple_column",
+            "alias": "is_ltfu_after_may_total",
+            "column": "srb.is_ltfu_after_may_total"
         },
         {
             "type": "simple_column",
