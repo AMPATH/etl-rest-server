@@ -774,7 +774,9 @@
     "dataDependencies": [
       "patient",
       "enrollment",
-      "hivLastTenClinicalEncounters"
+      "hivLastTenClinicalEncounters",
+      "patientEnrollment",
+      "patientEncounters"
     ],
     "enrollmentOptions": {
       "enrollIf": "gender === 'F'",
@@ -862,37 +864,109 @@
       "0904172d-0b6a-40df-b8a2-b3653d16dc45",
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b"
     ],
-    "visitTypes": [{
-      "uuid": "42de8e7e-24b2-4c16-b62b-137eb2c55ede",
-      "message": "Patient must not have prior clinical encounter.",
-      "allowedIf": "age > 2 && !hasPreviousInitialVisit",
-      "name": "PMTCT Antenatal Initial Visit",
-      "encounterTypes": [{
-        "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
-        "display": "ADULTINITIAL"
+    "visitTypes": [
+      {
+        "uuid": "53b856ad-21ef-4745-9acd-81aca01bba31",
+        "name": "PMTCT Viremia Antenatal Return Visit",
+        "allowedIf": "!isFirstPMTCTVisit && isEnrolledInViremiaPMTCT",
+        "message": "Patient must be enrolled both in PMTCT and Viremia.",
+        "encounterTypes": [
+          {
+            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+            "display": "ADULTRETURN"
+          },
+          {
+            "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
+            "display": "MOH257BLUECARD"
+          },
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+            "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "282033e8-67f1-4edd-8bff-74829e8ee2b0",
+            "display": "MDTFORM"
+          }
+        ]
       },
-        {
-          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-          "display": "TRANSFERENCOUNTER"
-        },
-        {
-          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-          "display": "DEATHREPORT"
-        },
-        {
-          "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-          "display": "DERMATOLOGYREFERRAL"
-        },
-        {
-          "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-          "display": "FAMILYSTATUS"
-        }
-      ]
-    },
+      {
+        "uuid": "53954785-4d53-4012-8f30-1c37fa870906",
+        "name": "PMTCT Viremia Postnatal Return Visit",
+        "allowedIf": "!isFirstPMTCTVisit && isEnrolledInViremiaPMTCT",
+        "message": "Patient must be enrolled both in PMTCT and Viremia.",
+        "encounterTypes": [
+          {
+            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+            "display": "ADULTRETURN"
+          },
+          {
+            "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
+            "display": "MOH257BLUECARD"
+          },
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+            "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "282033e8-67f1-4edd-8bff-74829e8ee2b0",
+            "display": "MDTFORM"
+          }
+        ]
+      }, {
+        "uuid": "42de8e7e-24b2-4c16-b62b-137eb2c55ede",
+        "message": "Patient must not have prior clinical encounter.",
+        "allowedIf": "age > 2 && isFirstPMTCTVisit",
+        "name": "PMTCT Antenatal Initial Visit",
+        "encounterTypes": [{
+            "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
+            "display": "ADULTINITIAL"
+          },
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "display": "TRANSFERENCOUNTER"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+            "display": "FAMILYSTATUS"
+          }
+        ]
+      },
       {
         "uuid": "02e3ce61-fa24-445e-a1f0-6e3299142966",
         "message": "Patient must have prior clinical encounter.",
-        "allowedIf": "hasPreviousInitialVisit",
+        "allowedIf": "!isFirstPMTCTVisit && !isEnrolledInViremiaPMTCT",
         "name": "PMTCT Antenatal Return Visit",
         "encounterTypes": [{
           "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
@@ -923,7 +997,7 @@
       {
         "uuid": "b1a978ca-9315-4ba2-ac2b-84efb9a68c5c",
         "message": "Patient must not have prior clinical encounter.",
-        "allowedIf": "!hasPreviousInitialVisit",
+        "allowedIf": "isFirstPMTCTVisit",
         "name": "PMTCT Postnatal Initial Visit",
         "encounterTypes": [{
           "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
@@ -954,7 +1028,7 @@
       {
         "uuid": "0b1b6194-d2d5-4e4b-9f7c-c3b778ccc354",
         "message": "Patient must have prior clinical encounter.",
-        "allowedIf": "hasPreviousInitialVisit",
+        "allowedIf": "!isFirstPMTCTVisit && !isEnrolledInViremiaPMTCT",
         "name": "PMTCT Postnatal Return Visit",
         "encounterTypes": [{
           "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
