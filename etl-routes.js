@@ -31,40 +31,46 @@ var programVisitEncounterResolver = require('./resolve-program-visit-encounter-I
 var imagingService = require('./service/radilogy-imaging.service');
 var oncologyReportsService = require('./oncology-reports/oncology-reports-service');
 var pocEidPayloadHelper = require('./app/lab-integration/utils/poc-eid-payload-helper.js');
-import {LabSyncService} from './app/lab-integration/lab-sync-service';
-import {LabClient} from './app/lab-integration/utils/lab-client';
-import {MonthlyScheduleService} from './service/monthly-schedule-service';
-import {PatientStatusChangeTrackerService} from './service/patient-status-change-tracker-service';
-import {clinicalArtOverviewService} from './service/clinical-art-overview.service';
-import {labOrdersService} from './service/lab-orders.service';
+import { LabSyncService } from './app/lab-integration/lab-sync-service';
+import { LabClient } from './app/lab-integration/utils/lab-client';
+import { MonthlyScheduleService } from './service/monthly-schedule-service';
+import { PatientStatusChangeTrackerService } from './service/patient-status-change-tracker-service';
+import { clinicalArtOverviewService } from './service/clinical-art-overview.service';
+import { labOrdersService } from './service/lab-orders.service';
 
-import {hivComparativeOverviewService} from './service/hiv-comparative-overview.service';
-import {clinicalPatientCareStatusOverviewService} from './service/clinical-patient-care-status-overview';
-import {SlackService} from './service/slack-service';
-import {PatientRegisterReportService} from './service/patient-register-report.service';
-import {HivSummaryIndicatorsService} from './app/reporting-framework/hiv/hiv-summary-indicators.service';
-import {HivSummaryMonthlyIndicatorsService} from './app/reporting-framework/hiv/hiv-summary-monthly-indicators.service';
-import {PatientMonthlyStatusHistory} from './service/patient-monthly-status-history';
-import {cohortUserService} from './service/cohort-user.service.js';
-import {patientsRequiringVLService} from './service/patients-requiring-viral-load.service';
-import {patientCareCascadeService} from './service/patient-care-cascade-report.service';
-import {patientMedicationHistService} from './service/patient-medication-history.service';
-import {PatientMedicalHistoryService} from './service/patient-medical-history.service';
+import { hivComparativeOverviewService } from './service/hiv-comparative-overview.service';
+import { clinicalPatientCareStatusOverviewService } from './service/clinical-patient-care-status-overview';
+import { SlackService } from './service/slack-service';
+import { PatientRegisterReportService } from './service/patient-register-report.service';
+import { HivSummaryIndicatorsService } from './app/reporting-framework/hiv/hiv-summary-indicators.service';
+import { HivSummaryMonthlyIndicatorsService } from './app/reporting-framework/hiv/hiv-summary-monthly-indicators.service';
+import { PatientMonthlyStatusHistory } from './service/patient-monthly-status-history';
+import { cohortUserService } from './service/cohort-user.service.js';
+import { patientsRequiringVLService } from './service/patients-requiring-viral-load.service';
+import { patientCareCascadeService } from './service/patient-care-cascade-report.service';
+import { patientMedicationHistService } from './service/patient-medication-history.service';
+import { PatientMedicalHistoryService } from './service/patient-medical-history.service';
 
-import {Moh731Report} from './app/reporting-framework/hiv/moh-731.report';
-import {BreastCancerMonthlySummaryService} from './service/breast-cancer-monthly-summary.service';
-import {CervicalCancerMonthlySummaryService} from './service/cervical-cancer-monthly-summary.service';
+import { Moh731Report } from './app/reporting-framework/hiv/moh-731.report';
+import { BreastCancerMonthlySummaryService } from './service/breast-cancer-monthly-summary.service';
+import { CervicalCancerMonthlySummaryService } from './service/cervical-cancer-monthly-summary.service';
 
-import {LungCancerMonthlySummaryService} from './service/lung-cancer-monthly-summary.service';
-import {PatientlistMysqlReport} from './app/reporting-framework/patientlist-mysql.report';
-import {BaseMysqlReport} from './app/reporting-framework/base-mysql.report';
-import {CDMReportingService} from './service/cdm/cdm-reporting.service';
-import {PatientReferralService} from './service/patient-referral.service';
-import {CombinedBreastCervicalCancerMonthlySummary} from './service/combined-breast-cervical-cancer-monthly-summary.service';
-import {LungCancerTreatmentSummary} from './service/lung-cancer-treatment-summary.service';
+import { LungCancerMonthlySummaryService } from './service/lung-cancer-monthly-summary.service';
+import { PatientlistMysqlReport } from './app/reporting-framework/patientlist-mysql.report';
+import { BaseMysqlReport } from './app/reporting-framework/base-mysql.report';
+import { CDMReportingService } from './service/cdm/cdm-reporting.service';
+import { PatientReferralService } from './service/patient-referral.service';
+import { CombinedBreastCervicalCancerMonthlySummary } from './service/combined-breast-cervical-cancer-monthly-summary.service';
+import { LungCancerTreatmentSummary } from './service/lung-cancer-treatment-summary.service';
+import { SurgeService } from './service/surge-reports/surge-report.service';
 
 var patientReminderService = require('./service/patient-reminder.service.js');
 var  kibanaService = require('./service/kibana.service');
+
+import { 
+    RetentionAppointmentTracingService 
+} from './service/retention-appointment-tracing-service';
+
 
 module.exports = function () {
 
@@ -498,9 +504,9 @@ module.exports = function () {
                                                 request.query.encounterIds = encounterIds;
                                             }
                                             let combineRequestParams = Object.assign({}, request.query, request.params);
-                                          combineRequestParams.limitParam = combineRequestParams.limit;
-                                          combineRequestParams.offSetParam = combineRequestParams.startIndex;
-                                          combineRequestParams.endDate = combineRequestParams.startDate;
+                                            combineRequestParams.limitParam = combineRequestParams.limit;
+                                            combineRequestParams.offSetParam = combineRequestParams.startIndex;
+                                            combineRequestParams.endDate = combineRequestParams.startDate;
                                             //let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
                                             //reportParams.limit = 100000;
                                             let service = new PatientlistMysqlReport('dailyHasNotReturnedAggregate', combineRequestParams);
@@ -983,15 +989,15 @@ module.exports = function () {
                     handler: function (request, reply) {
                         console.log('get hiv summary');
                         dao.getPatientHivSummary(request)
-                        .then(summary => {
-                            // console.log('Summary', summary);
-                            if(summary.result && summary.result.length > 0){
-                                const transformed = etlHelpers.transformMedicalRefillToClinical(summary.result);
-                                summary.result = transformed;
-                            }
-                            reply(summary);
-                        });
-                        
+                            .then(summary => {
+                                // console.log('Summary', summary);
+                                if (summary.result && summary.result.length > 0) {
+                                    const transformed = etlHelpers.transformMedicalRefillToClinical(summary.result);
+                                    summary.result = transformed;
+                                }
+                                reply(summary);
+                            });
+
                     },
                     description: 'Get patient HIV summary',
                     notes: "Returns a list of historical patient's HIV summary with the given patient uuid. " +
@@ -1010,36 +1016,36 @@ module.exports = function () {
                     }
                 }
             },
-          {
-            method: 'GET',
-            path: '/etl/patient/{uuid}/oncology/summary',
-            config: {
-              auth: 'simple',
-              plugins: {
-                'hapiAuthorization': {
-                  role: privileges.canViewPatient
+            {
+                method: 'GET',
+                path: '/etl/patient/{uuid}/oncology/summary',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewPatient
+                        }
+                    },
+                    handler: function (request, reply) {
+                        dao.getPatientOncologySummary(request, reply);
+                    },
+                    description: 'Get patient Oncology summary',
+                    notes: "Returns a list of patient's Oncology summary with the given patient uuid. " +
+                        "A patient's Oncology summary includes details such as last appointment date, " +
+                        "most recent diagnosis etc. as at that encounter's date. ",
+                    tags: ['api'],
+                    validate: {
+                        options: {
+                            allowUnknown: true
+                        },
+                        params: {
+                            uuid: Joi.string()
+                                .required()
+                                .description("The patient's uuid(universally unique identifier)."),
+                        }
+                    }
                 }
-              },
-              handler: function (request, reply) {
-                dao.getPatientOncologySummary(request, reply);
-              },
-              description: 'Get patient Oncology summary',
-              notes: "Returns a list of patient's Oncology summary with the given patient uuid. " +
-                "A patient's Oncology summary includes details such as last appointment date, " +
-                "most recent diagnosis etc. as at that encounter's date. ",
-              tags: ['api'],
-              validate: {
-                options: {
-                  allowUnknown: true
-                },
-                params: {
-                  uuid: Joi.string()
-                    .required()
-                    .description("The patient's uuid(universally unique identifier)."),
-                }
-              }
-            }
-          },
+            },
             {
                 method: 'GET',
                 path: '/etl/location/{uuid}/clinic-encounter-data',
@@ -3246,10 +3252,10 @@ module.exports = function () {
                 config: {
                     auth: 'simple',
                     handler: function (request, reply) {
-                        if (config.eidSyncOn === true){
-                           const labSyncService = new LabSyncService();
+                        if (config.eidSyncOn === true) {
+                            const labSyncService = new LabSyncService();
                             labSyncService.syncAllLabsByPatientUuid(request.query.patientUuId, reply);
-                        }else {
+                        } else {
                             reply(Boom.notImplemented('Sorry, sync service temporarily unavailable.'));
                         }
                     }
@@ -3286,23 +3292,22 @@ module.exports = function () {
                             var labName = request.params.lab;
                             pocEidPayloadHelper.generatePocToEidPayLoad(rawPayload).then((eidPayLoad) => {
                                 let configObj = config.hivLabSystem[labName];
-                                if(typeof configObj !== 'undefined'){
+                                if (typeof configObj !== 'undefined') {
 
                                     let client = new LabClient(configObj);
                                     return client.postLabPayload(eidPayLoad);
 
-                                }else{
-                                   console.error('Undefined Lab Configuration');
+                                } else {
+                                    console.error('Undefined Lab Configuration');
                                 }
-                               
-                            }).then((result)=>{
+                            }).then((result) => {
                                 reply(result);
                             }).catch((error) => {
                                 let errorObject = JSON.parse(error.error);
-                                console.error('Error',errorObject);
+                                console.error('Error', errorObject);
                                 reply(errorObject.error).code(error.statusCode);
                             });
-                        }else{
+                        } else {
                             console.error('No Lab Specified');
                         }
                     }
@@ -4395,7 +4400,7 @@ module.exports = function () {
                                 let reportParams = etlHelpers.getReportParams('breast-cancer-summary-dataset',
                                     ['startDate', 'endDate', 'period', 'locationUuids', 'indicators', 'genders', 'startAge', 'endAge'],
                                     requestParams);
-     
+
                                 let service = new LungCancerTreatmentSummary();
                                 service.getAggregateReport(reportParams).then((result) => {
                                     reply(result);
@@ -4456,13 +4461,13 @@ module.exports = function () {
                         }
                     },
                     handler: function (request, reply) {
-                        
+
                         let kibanaDashboard = kibanaService.getKibanaDashboards().then((result) => {
-                                    console.log('Kibana Dashboard', result);
-                                    reply(result);
-                                }).catch((error) => {
-                                    reply(error);
-                                });
+                            console.log('Kibana Dashboard', result);
+                            reply(result);
+                        }).catch((error) => {
+                            reply(error);
+                        });
 
                     },
                     description: 'Get a list of Kibana Dashboards',
@@ -4501,7 +4506,7 @@ module.exports = function () {
                             } else {
                                 reply(result);
                             }
-            
+
                         }).catch((error) => {
                             reply(error);
                         });
@@ -4516,7 +4521,252 @@ module.exports = function () {
                         params: {}
                     }
                 }
+            },
+            {
+                method: 'GET',
+                path: '/etl/patient-referrals-peer-navigator',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'openmrsLocationAuthorizer': {
+                            locationParameter: [{
+                                type: 'query', //can be in either query or params so you have to specify
+                                name: 'locationUuids' //name of the location parameter
+                            }],
+                            aggregateReport: [ //set this if you want to  validation checks for certain aggregate reports
+                                {
+                                    type: 'query', //can be in either query or params so you have to specify
+                                    name: 'reportName', //name of the parameter
+                                    value: 'patient-peer-navigator-referral-report' //parameter value
+                                }
+                            ]
+                        }
+                    },
+                    handler: function (request, reply) {
+                        //security check
+                        request.query.reportName = 'patient-referral-report';
+                        if (!authorizer.hasReportAccess(request.query.reportName)) {
+                            return reply(Boom.forbidden('Unauthorized'));
+                        }
+
+                        let requestParams = Object.assign({}, request.query, request.params);
+                        requestParams.reportName = 'referral-patient-peer-navigator-list';
+                        let service = new PatientReferralService();
+
+                        service.getPatientListReport3(requestParams).then((result) => {
+
+                            reply(result);
+                        }).catch((error) => {
+                            reply(error);
+                        });
+
+                    },
+                    description: 'Get the patient list for CDM strengths study',
+                    notes: 'Returns the normal referral patient list plus some additional columns for front end processing',
+                    tags: ['api'],
+                    validate: {
+                        query: {
+                            locationUuids: Joi.string()
+                                .optional()
+                                .description("A list of comma separated location uuids"),
+                            startDate: Joi.string()
+                                .optional()
+                                .description("The start date to filter by"),
+                            endDate: Joi.string()
+                                .optional()
+                                .description("The end date to filter by"),
+                            programUuids: Joi.string()
+                                .optional()
+                                .description("The program to filter by"),
+                            limit: Joi.string()
+                                .optional()
+                                .description("The limit to indicate number of rows"),
+                            department: Joi.string()
+                                .optional()
+                                .description("The department to filter by")
+
+                        }
+                    }
+                }
+            },
+            {
+                method: 'GET',
+                path: '/etl/surge-report',
+                config: {
+                    plugins: {
+                        'hapiAuthorization': {
+                        }
+                    },
+                    handler: function (request, reply) {
+
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let reportParams = etlHelpers.getReportParams('surge',
+                                    ['startDate', 'endDate', 'locationUuids'],
+                                    requestParams);
+                                let surgeService = new SurgeService('surge', reportParams.requestParams);
+                                surgeService.generateReport().then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    console.error('Error: ', error);
+                                    reply(error);
+                                });
+
+                            });
+
+                    },
+                    description: "Get the week surge report",
+                    notes: "Returns weekly surge report",
+                    tags: ['api'],
+                    validate: {
+                        options: {
+                            allowUnknown: true
+                        },
+                        params: {}
+                    }
+                }
+            },
+            {
+                method: 'GET',
+                path: '/etl/surge-report-patient-list',
+                config: {
+                    plugins: {
+                        'hapiAuthorization': {
+                        }
+                    },
+                    handler: function (request, reply) {
+
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+
+                                let surgeService = new SurgeService('', requestParams);
+
+                                surgeService.getPatientListReport(requestParams).then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    console.error('Error: ', error);
+                                    reply(error);
+                                });
+
+                            });
+
+                    },
+                    description: "Get the week surge report patient list",
+                    notes: "Returns weekly surge report patient list",
+                    tags: ['api'],
+                    validate: {
+                        options: {
+                            allowUnknown: true
+                        },
+                        params: {}
+                    }
+                }
+            },
+            {
+                method: 'GET',
+                path: '/etl/retention-summary-report',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewClinicDashBoard
+                        }
+                    },
+                    handler: function (request, reply) {
+
+                        if (request.query.locationUuids) {
+                            preRequest.resolveLocationIdsToLocationUuids(request,
+                                function () {
+
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                // console.log('requestParams', requestParams);
+                                let reportParams = etlHelpers.getReportParams('retention-summary-report',
+                                    ['startDate', 'endDate', 'period', 'locations', 'indicators', 'genders', 'startAge', 'endAge'],
+                                    requestParams);
+                                let retentionService = new RetentionAppointmentTracingService('retention-report', reportParams.requestParams);
+                                retentionService.generateReport().then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    console.error('Error: ', error);
+                                    reply(error);
+                                });
+
+                        });
+
+                    }
+                       
+
+                    },
+                    description: 'Get Retention report aggregate data',
+                    notes: 'Returns Retention summary aggregate',
+                    tags: ['api'],
+                }
+            },
+            {
+                method: 'GET',
+                path: '/etl/retention-summary-report/patient-list',
+                config: {
+                    auth: 'simple',
+                    plugins: {},
+                    handler: function (request, reply) {
+
+                        request.query.reportName = 'retention-summary-report';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                               
+
+                                let requestParams = Object.assign({}, request.query, request.params);
+
+                                let requestCopy = _.cloneDeep(requestParams);
+                                let reportParams = etlHelpers.getReportParams(request.query.reportName, ['startDate', 'endDate', 'locationUuids', 'locations'], requestParams);
+                                requestCopy.locations = reportParams.requestParams.locations;
+
+                                let retentionService = new RetentionAppointmentTracingService('retention-report', requestCopy);
+
+                                retentionService.generatePatientListReport(requestParams.indicators.split(',')).then((results) => {
+                                    reply(results);
+                                }).catch((error) => {
+                                    console.error('Error: ', error);
+                                    reply(error);
+                                });
+                            });
+                       
+
+                    },
+                    description: 'Get Retention report Patient list',
+                    notes: 'Returns Retention Report Patient List',
+                    tags: ['api'],
+                }
+
+            },
+            {
+                method: 'GET',
+                path: '/etl/retention-summary-report/indicator-definitions',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        'hapiAuthorization': {
+                            role: privileges.canViewClinicDashBoard
+                        }
+                    },
+                    handler: function (request, reply) {
+                                let service = new RetentionAppointmentTracingService();
+                                service.getIndicatorDefinitions().then((result) => {
+                                    reply(result);
+                                }).catch((error) => {
+                                    reply(error);
+                                });
+
+                    },
+                    description: 'Get Retention report Patient list',
+                    notes: 'Returns Retention Report Patient List',
+                    tags: ['api'],
+                }
             }
+
         ];
 
     return routes;

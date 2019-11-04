@@ -102,3 +102,13 @@ If you have MySQL running at 1.2.3.4 with username "myuser" and password "mypass
 
 The folder /path/to/keys/ should contain SSL certificate and private key in `server.crt` 
 and `server.key`.
+
+### Setup CI Integration
+
+1. Request addition of your dockerhub account to the ampathke docker team.
+2. Activate the `etl-rest-server` repo on your Travis account.
+3. Setup `DOCKER_PASSWORD` & `DOCKER_USERNAME` under environment variables on your forked repo's settings page on Travis.
+4. Update your local `etl-rest-server` fork i.e. `git pull upstream master`. The CD setup should be in master.
+5. Checkout a branch from master e.g. `git checkout -b test-etl-test-branch`
+6. Push that branch i.e. `git push origin <branchname>`
+7. Access your test build via the following url: [https://ngx.ampath.or.ke/etl-backend/branchname/etl](https://ngx.ampath.or.ke/etl-backend/<branchname>/etl) where `branchname` is the name of your branch.

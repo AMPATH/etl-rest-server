@@ -1,0 +1,7 @@
+{
+    "reports": [
+        "surgeReport",
+        "prepReport",
+        "surgeBaselineReport"
+    ]
+}

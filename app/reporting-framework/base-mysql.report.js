@@ -27,6 +27,7 @@ import * as retention_dataset_base from './json-reports/retention-dataset-base.j
 import * as pep_dataset_aggregate from './json-reports/pep-dataset-aggregate.json';
 import * as pep_dataset_base from './json-reports/pep-dataset-base.json';
 import * as patient_list_template from './json-reports/patient-list-template.json';
+import * as patient_list_schedules_template from './json-reports/patient-list-schedules-template.json';
 import * as patient_list_frozen_template from './json-reports/patient-list-frozen-template.json';
 import * as ever_on_art_aggregate from './json-reports/ever-on-art-aggregate.json';
 import * as ever_on_art_disaggregation from './json-reports/ever-on-art-disaggregation.json';
@@ -115,9 +116,35 @@ import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-p
 
 import * as differentiated_care_program_aggregate from './json-reports/differentiated-care-program-aggregate.json';
 import * as differentiated_care_program_base from './json-reports/differentiated-care-program-base.json';
+// appointment adherence
+import * as appointment_adherence from './json-reports/retention-report/appointment-adherence.json';
+import * as retention_appointment_adherence_aggregate from './json-reports/retention-appointment-adherence-aggregate';
+import * as retention_appointment_adherence_base from './json-reports/retention-appointment-adherence-base.json';
+import * as retention_report_patient_list_template from './json-reports/retention-report-patient-list-template.json';
+// defaulter tracing
+import * as retention_defaulter_tracing_base from './json-reports/retention-defaulter-tracing-base.json';
+import * as retention_defaulter_tracing_aggregate from './json-reports/retention-defaulter-tracing-aggregate.json';
+// retention visits
+import * as retention_visits_base from './json-reports/retention-report-visits-base.json';
+import * as retention_visits_aggregate from './json-reports/retention-report-visits-aggregate.json';
+import * as retention_intervention_cohort from './json-reports/retention-intervention-cohort.json';
+import * as retention_ltfu_base from './json-reports/retention-ltfu-base.json';
+import * as retention_ltfu_aggregate from './json-reports/retention-ltfu-aggregate.json';
+
 
 import * as surge_report_base from './json-reports/surge-report-base.json';
 import * as surge_report_aggregate from './json-reports/surge-report-aggregate.json';
+
+import * as referral_patient_list_peer_base from './json-reports/referral-peer-base';
+import * as referral_peer_aggregate from './json-reports/referral-peer-aggregate';
+import * as surge_daily_report_base from './json-reports/surge-daily-report-base';
+import * as surge_daily_report_aggregate from './json-reports/surge-daily-report-aggregate';
+import * as surge from './json-reports/surge-report.json';
+import * as prep_base_report from './json-reports/prep-base-report.json';
+import * as prep_aggregate_report from './json-reports/prep-aggregate-report.json';
+import * as ltfu_surge_baseline_report from './json-reports/ltfus-surge-baseline-base.json';
+import * as ltfu_surge_baseline_aggregate_report from './json-reports/ltfus-surge-baseline-aggregate.json';
+import * as patient_list_prep_template from './json-reports/patient-list-prep-template.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -140,7 +167,7 @@ export class BaseMysqlReport {
                         .then((sqlQuery) => {
                             // allow user to use 'null' as parameter values
                             sqlQuery = sqlQuery.replace(/\'null\'/g, "null");
-                            // console.log('Query: ', sqlQuery);
+                            // console.log('sql query', sqlQuery);
 
                             that.reportQuery = sqlQuery;
                             // run query
@@ -196,9 +223,19 @@ export class BaseMysqlReport {
                         main: this.cloneJsonSchema(patient_list_frozen_template) //patient_list_frozen_template
                     });
                     break;
+                case 'patient-list-schedules-template':
+                    resolve({
+                        main: this.cloneJsonSchema(patient_list_schedules_template)
+                    });
+                    break;
                 case 'patient-list-with-contacts-template':
                     resolve({
                         main: this.cloneJsonSchema(patient_list_with_contacts_template)
+                    });
+                    break;
+                case 'patient-list-prep-template':
+                    resolve({
+                        main: this.cloneJsonSchema(patient_list_prep_template)
                     });
                     break;
                 case 'mainDatasetAggregate':
@@ -452,7 +489,7 @@ export class BaseMysqlReport {
                     });
                     break;
 
-                   
+
                 case 'lungCancerDailySummaryAggregate':
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_daily_screening_summary_aggregate),
@@ -468,7 +505,7 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(lung_cancer_patient_list_template)
                     });
-                    break; 
+                    break;
 
                 case 'labsReportAggregate':
                     resolve({
@@ -524,6 +561,70 @@ export class BaseMysqlReport {
                         surgeReport: this.cloneJsonSchema(surge_report_base)
                     });
                     break;
+                case 'referral-patient-peer-navigator-list':
+                        resolve({
+                            main: this.cloneJsonSchema(referral_peer_aggregate),
+                            referralDatasetbase: this.cloneJsonSchema(referral_patient_list_peer_base)
+                        });
+                        break;
+                case 'surgeDailyReport':
+                    resolve({
+                        main: this.cloneJsonSchema(surge_daily_report_aggregate),
+                        surgeDailyReport: this.cloneJsonSchema(surge_daily_report_base)
+                    });
+                    break;
+                case 'prepReport':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_aggregate_report),
+                        prepBaseReport: this.cloneJsonSchema(prep_base_report)
+                    });
+                    break;
+                case 'surgeBaselineReport':
+                    resolve({
+                        main: this.cloneJsonSchema(ltfu_surge_baseline_aggregate_report),
+                        surgeBaselineReport: this.cloneJsonSchema(ltfu_surge_baseline_report)
+                    });
+                    break;
+                case 'surge':
+                    resolve({
+                        main: this.cloneJsonSchema(surge)
+                    });
+                    break;
+                case 'retention-report':
+                    resolve({
+                        main: this.cloneJsonSchema(appointment_adherence)
+                    });
+                break;
+                case 'retentionAppointmentAdherenceAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(retention_appointment_adherence_aggregate),
+                        retentionAppointmentAdherenceBase: this.cloneJsonSchema(retention_appointment_adherence_base)
+                    });
+                    break;
+                case 'retentionDefaulterTracingAggregate':
+                resolve({
+                    main: this.cloneJsonSchema(retention_defaulter_tracing_aggregate),
+                    retentionDefaulterTracingBase:this.cloneJsonSchema(retention_defaulter_tracing_base)
+                });
+                   break;
+                case 'retentionVisitsAggregate':
+                   resolve({
+                       main: this.cloneJsonSchema(retention_visits_aggregate),
+                       retentionVisitsBase:this.cloneJsonSchema(retention_visits_base),
+                       retentionInterventionCohort: this.cloneJsonSchema(retention_intervention_cohort),
+                   });
+                      break;
+                case 'retentionLtfuAggregate':
+                      resolve({
+                          main: this.cloneJsonSchema(retention_ltfu_aggregate),
+                          retentionLtfuBase:this.cloneJsonSchema(retention_ltfu_base)
+                      });
+                         break;
+                case 'retention-report-patient-list-template':
+                resolve({
+                    main: this.cloneJsonSchema(retention_report_patient_list_template)
+                });
+                   break;
                 default:
                     reject('Unknown report ', reportName);
                     break;
