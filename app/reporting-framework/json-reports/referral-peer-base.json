@@ -141,15 +141,29 @@
         },
         {
             "type": "simple_column",
-            "alias": "referral_urgency",
-            "column": "peer_navigation.referal_category"
-        },
-        {
-            "type": "simple_column",
             "alias": "referred_in_or_out",
             "column": "peer_navigation.referred_in_or_out"
         },
-
+        {
+            "type": "simple_column",
+            "alias": "initial_or_follow_up",
+            "column": "peer_navigation.initial_or_follow_up"
+        },
+        {
+            "type": "simple_column",
+            "alias": "referral_urgency",
+            "column": "peer_navigation.referal_urgency"
+        },
+        {
+            "type": "simple_column",
+            "alias": "are_you_the_referring_or_receiving_peer",
+            "column": "peer_navigation.are_you_the_referring_or_receiving_peer"
+        },
+        {
+            "type": "simple_column",
+            "alias": "patient_able_to_be_contacted",
+            "column": "peer_navigation.patient_able_to_be_contacted"
+        },
         {
             "type": "derived_column",
             "alias": "initial_encounter",
