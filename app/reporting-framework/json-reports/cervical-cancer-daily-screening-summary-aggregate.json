@@ -1,90 +1,170 @@
 {
-  "name": "cervicalCancerDailyReportAggregate",
-  "version": "1.0",
+	"name": "cervicalCancerDailyReportAggregate",
+	"version": "1.0",
 	"tag": "",
 	"description": "",
-  "uses": [{
-  	"name": "cervicalCancerMonthlyReportBase",
+	"uses": [{
+		"name": "cervicalCancerMonthlyReportBase",
 		"version": "1.0",
 		"type": "dataset_def"
-  }],
-  "sources": [{
+	}],
+	"sources": [{
 		"dataSet": "cervicalCancerMonthlyReportBase",
 		"alias": "t1"
-  }],
-  "columns": [{
-		"type": "simple_column",
-		"alias": "location_id",
-		"column": "t1.location_id"
-	},
-	{
-		"type": "simple_column",
-		"alias": "location_name",
-		"column": "location_name"
-	},
-	{
-		"type": "simple_column",
-		"alias": "location_uuid",
-		"column": "location_uuid"
-	},
-	{
-		"type": "derived_column",
-		"alias": "encounter_datetime",
-		"expressionType": "simple_expression",
-		"expressionOptions": {
-			"expression": "date_format(t1.encounter_datetime,'%d-%m-%Y')"
-		}
-	},
-	{
-		"type": "derived_column",
-		"alias": "total_cervical_screened",
-		"expressionType": "simple_expression",
-		"expressionOptions": {
+	}],
+	"columns": [{
+			"type": "simple_column",
+			"alias": "location_id",
+			"column": "t1.location_id"
+		},
+		{
+			"type": "simple_column",
+			"alias": "location_name",
+			"column": "location_name"
+		},
+		{
+			"type": "simple_column",
+			"alias": "location_uuid",
+			"column": "location_uuid"
+		},
+		{
+			"type": "derived_column",
+			"alias": "encounter_datetime",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "date_format(t1.encounter_datetime,'%d-%m-%Y')"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "total_cervical_screened",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
 				"expression": "count(person_id)"
-		}
-	},
-	{
-		"type": "derived_column",
-		"alias": "normal_cervical_screening",
-		"expressionType": "simple_expression",
-		"expressionOptions": {
-				"expression": "count(normal_cervical_screening)"
-		}
-	},
-	{
-		"type": "derived_column",
-		"alias": "abnormal_cervical_screening",
-		"expressionType": "simple_expression",
-		"expressionOptions": {
-				"expression": "count(abnormal_cervical_screening)"
-		}
-	},
-	{
-		"type": "derived_column",
-		"alias": "normal_cervical_call_rate%",
-		"expressionType": "simple_expression",
-		"expressionOptions": {
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "normal_cervical_call_rate%",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
 				"expression": "ROUND(count(normal_cervical_screening)/count(person_id) *100,2)"
-		}
-	},
-	{
-		"type": "derived_column",
-		"alias": "abnormal_cervical_call_rate%",
-		"expressionType": "simple_expression",
-		"expressionOptions": {
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "abnormal_cervical_call_rate%",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
 				"expression": "ROUND(count(abnormal_cervical_screening)/count(person_id) *100,2)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "normal_cervical_screening",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(normal_cervical_screening)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "normal_cervical_screening_below_30yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(normal_cervical_screening_below_30yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "normal_cervical_screening_30_to_40yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(normal_cervical_screening_30_to_40yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "normal_cervical_screening_41_to_50yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(normal_cervical_screening_41_to_50yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "normal_cervical_screening_51_to_69yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(normal_cervical_screening_51_to_69yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "normal_cervical_screening_above_70yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(normal_cervical_screening_above_70yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "abnormal_cervical_screening",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(abnormal_cervical_screening)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "abnormal_cervical_screening_below_30yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(abnormal_cervical_screening_below_30yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "abnormal_cervical_screening_30_to_40yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(abnormal_cervical_screening_30_to_40yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "abnormal_cervical_screening_41_to_50yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(abnormal_cervical_screening_41_to_50yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "abnormal_cervical_screening_51_to_69yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(abnormal_cervical_screening_51_to_69yrs)"
+			}
+		},
+		{
+			"type": "derived_column",
+			"alias": "abnormal_cervical_screening_above_70yrs",
+			"expressionType": "simple_expression",
+			"expressionOptions": {
+				"expression": "count(abnormal_cervical_screening_above_70yrs)"
+			}
 		}
-	}
-  ],
-  "groupBy": {
+	],
+	"groupBy": {
 		"groupParam": "groupByParam",
 		"columns": [
-				"location_id",
-				"DATE(t1.encounter_datetime)"
+			"location_id",
+			"DATE(t1.encounter_datetime)"
 		],
 		"excludeParam": "excludeParam"
-  },
-  "dynamicJsonQueryGenerationDirectives": {
+	},
+	"dynamicJsonQueryGenerationDirectives": {
 		"patientListGenerator": {
 			"useTemplate": "patient-list-template",
 			"useTemplateVersion": "1.0",
@@ -97,5 +177,5 @@
 				}
 			}
 		}
-  }
+	}
 }
