@@ -3106,18 +3106,22 @@
     ],
     "incompatibleWith": [],
     "visitTypes": [{
-      "uuid": "6deaadcf-a347-4af9-9b08-5ddba646d64e",
-      "name": "Primary Care Level Visit",
-      "encounterTypes": [{
-        "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
-        "display": "CDMTRIAGE"
+        "uuid": "6deaadcf-a347-4af9-9b08-5ddba646d64e",
+        "name": "Primary Care Level Visit",
+        "encounterTypes": [{
+            "uuid": "f5381269-c889-4c5a-b384-d017441eedae",
+            "display": "CDMTRIAGE"
+          },
+          {
+            "uuid": "1871ce37-7def-4335-972f-9861195ba683",
+            "display": "CDMDispensary"
+          },
+          {
+            "uuid": "e6c52b4f-615b-452b-b029-3b42bc45434f",
+            "display": "BIKUZARETURN"
+          }
+        ]
       },
-        {
-          "uuid": "1871ce37-7def-4335-972f-9861195ba683",
-          "display": "CDMDispensary"
-        }
-      ]
-    },
       {
         "uuid": "031044cf-441f-48f7-9374-629852b403d2",
         "name": "Secondary Care Level Visit",
@@ -3132,6 +3136,10 @@
           {
             "uuid": "4f5d5b20-083b-4686-be5f-5f2cc71d74e5",
             "display": "HTNDMRETRUN"
+          },
+          {
+            "uuid": "e6c52b4f-615b-452b-b029-3b42bc45434f",
+            "display": "BIKUZARETURN"
           }
         ]
       },
@@ -3149,6 +3157,10 @@
           {
             "uuid": "0d2ff377-a3df-453e-ae20-e92da3aa3a17",
             "display": "COEDMRETURN"
+          },
+          {
+            "uuid": "e6c52b4f-615b-452b-b029-3b42bc45434f",
+            "display": "BIKUZARETURN"
           }
         ]
       }
