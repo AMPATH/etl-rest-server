@@ -206,7 +206,7 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "pp.program_id in (12, 13)"
+                "conditionExpression": "pp.program_id in (12, 13, 40)"
             }
         ]
     },
