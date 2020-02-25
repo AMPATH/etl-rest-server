@@ -3182,6 +3182,23 @@
       }
     ]
   },
+  "ff446cb9-0cf4-4b39-8288-16a43ffcca25": {
+    "name": "CDM DEFAULTER TRACING",
+    "dataDependencies": [
+    ],
+    "incompatibleWith": [],
+    "visitTypes": [{
+        "uuid": "0af25783-0446-48ac-9690-d4277793183d",
+        "name": "Referral Peer Navigator Visit",
+        "encounterTypes": [
+        {
+          "uuid": "02e75e2d-a809-4458-a77e-c1883e897c36",
+          "display": "PEERNAVIGATORFOLLOWUP"
+        }
+        ]
+      }
+    ]
+  },
   "37ff4124-91fd-49e6-8261-057ccfb4fcd0": {
     "name": "ONCOLOGY SCREENING AND DIAGNOSIS PROGRAM",
     "dataDependencies": [
