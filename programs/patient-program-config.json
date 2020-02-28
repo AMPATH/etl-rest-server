@@ -3065,7 +3065,18 @@
           "display": "MENTALHEALTHSCREENING"
         }
       ]
-    }]
+    },
+    {
+      "uuid": "cc50bea5-9ca2-4505-876c-90400c3347cd",
+      "name": "Confirmatory screening visit",
+      "encounterTypes": [{
+          "uuid": "3339810c-4980-4325-9825-0f0ed0c2da4a",
+          "display": "CDMSCREENINGCONFIRMATORY"
+        }
+      ]
+    }
+   
+  ]
 
   },
   "f5cbf61f-eadc-4fe6-999c-2dfe9556df95": {
