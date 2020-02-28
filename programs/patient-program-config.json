@@ -3065,7 +3065,18 @@
           "display": "MENTALHEALTHSCREENING"
         }
       ]
-    }]
+    },
+    {
+      "uuid": "cc50bea5-9ca2-4505-876c-90400c3347cd",
+      "name": "Confirmatory screening visit",
+      "encounterTypes": [{
+          "uuid": "3339810c-4980-4325-9825-0f0ed0c2da4a",
+          "display": "CDMSCREENINGCONFIRMATORY"
+        }
+      ]
+    }
+   
+  ]
 
   },
   "f5cbf61f-eadc-4fe6-999c-2dfe9556df95": {
@@ -3177,6 +3188,23 @@
         {
           "uuid": "02e75e2d-a809-4458-a77e-c1883e897c36",
           "display": "PEERNAVIGATORFOLLOWUP"
+        }
+        ]
+      }
+    ]
+  },
+  "ff446cb9-0cf4-4b39-8288-16a43ffcca25": {
+    "name": "CDM DEFAULTER TRACING",
+    "dataDependencies": [
+    ],
+    "incompatibleWith": [],
+    "visitTypes": [{
+        "uuid": "35fc940e-ca50-4d28-bc47-81a383c04a44",
+        "name": "CDM DEFAULTER TRACING VISIT",
+        "encounterTypes": [
+        {
+          "uuid": "79318e72-3a31-4f98-aa5f-36421bc5398b",
+          "display": "CDMDEFAULTERTRACING"
         }
         ]
       }
