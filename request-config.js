@@ -1,5 +1,6 @@
 'use strict';
 var rp = require('request-promise');
+var cache = require('./session-cache');
 module.exports = function() {
  var authorizationHeader = '';
  return {
