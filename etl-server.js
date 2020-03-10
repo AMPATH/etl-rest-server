@@ -107,11 +107,14 @@ try {
                   authorizer.getAllPrivilegesArray() : authorizer.getCurrentUserPreviliges(),
                 authorizedLocations: authorizedLocations
               };
+              var sessionCookie = res.headers["set-cookie"] && res.headers["set-cookie"].length > 0 ? res.headers["set-cookie"][0] : session.session;
               cache.saveToCache(key, {
                 result: result,
                 currentUser: currentUser,
-                session: res.headers["set-cookie"] && res.headers["set-cookie"].length > 0 ? res.headers["set-cookie"][0] : session.session
+                session: sessionCookie
               });
+              currentUser.session = sessionCookie;
+              requestConfig.setAuthorization(sessionCookie);
               callback(null, result.authenticated, currentUser);
             });
           } else {
@@ -142,11 +145,6 @@ try {
     sortEndpoints: 'path'
   };
 
-  server.ext('onRequest', function (request, reply) {
-    requestConfig.setAuthorization(request.headers.authorization);
-    return reply.continue();
-
-  });
   server.register([
     Inert,
     Vision, {

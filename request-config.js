@@ -2,7 +2,7 @@
 var rp = require('request-promise');
 var cache = require('./session-cache');
 module.exports = function() {
- var authorizationHeader = '';
+ var sessionCookie = '';
  return {
    getRequestPromise: function getRequestPromise(queryString,url) {
      var options = {
@@ -10,7 +10,7 @@ module.exports = function() {
         qs:queryString,
         headers: {
           'User-Agent': 'Request-Promise',
-          'authorization': authorizationHeader
+          'Cookie': sessionCookie
         },
         json: true,
         rejectUnauthorized: false,
@@ -18,11 +18,11 @@ module.exports = function() {
       };
       return rp(options);
    },
-   setAuthorization:function setAuthorization(authorization) {
-     authorizationHeader = authorization;
+   setAuthorization:function (authorization) {
+     sessionCookie = authorization;
    },
-   getAuthorization:function getAuthorization() {
-    return authorizationHeader;
+   getAuthorization:function () {
+    return sessionCookie;
   },
   postRequestPromise:function postRequestPromise(payload,uri){
     var options = {
@@ -30,7 +30,7 @@ module.exports = function() {
       uri: uri,
       headers: {
         'User-Agent': 'Request-Promise',
-        'authorization': authorizationHeader,
+        'Cookie': sessionCookie,
         'content-type':'application/json'
       },
       body:payload,
