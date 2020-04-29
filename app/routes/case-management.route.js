@@ -15,7 +15,9 @@ const routes = [
             handler: function (request, reply) {
                 let params = {
                     minDefaultPeriod : request.query.minDefaultPeriod,
-                    maxDefaultPeriod : request.query.maxDefaultPeriod
+                    maxDefaultPeriod : request.query.maxDefaultPeriod,
+                    minFollowupPeriod : request.query.minFollowupPeriod,
+                    maxFollowupPeriod : request.query.maxFollowupPeriod
                 }
                 caseManagementData.getCaseManagementData(params).then((result) => {
                     reply(result);
