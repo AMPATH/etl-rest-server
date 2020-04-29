@@ -35,6 +35,36 @@ const routes = [
                 params: {}
             }
         }
+    },
+    {
+        method: 'GET',
+        path: '/etl/case-managers',
+        config: {
+            plugins: {
+                'hapiAuthorization': {
+                    role: privileges.canViewPatient
+                }
+            },
+            handler: function (request, reply) {
+                let params = {
+                    locationUuid : request.query.locationUuid
+                }
+                caseManagementData.getCaseManagers(params).then((result) => {
+                    reply(result);
+                }).catch((error) => {
+                    reply(error);
+                });
+            },
+            description: 'List of case management providers filtered by locations',
+            notes: 'Returns providers list',
+            tags: ['api'],
+            validate: {
+                options: {
+                    allowUnknown: true
+                },
+                params: {}
+            }
+        }
     }
 ]
 exports.routes = server => server.route(routes); 
