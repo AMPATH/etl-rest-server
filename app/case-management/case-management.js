@@ -22,6 +22,27 @@ const caseDataDao = {
         } catch (error) {
             return error;
         }
+    },
+    getCaseManagers: (params) => {
+        try {
+            let queryParts = {};
+            queryParts = {
+                columns: "CONCAT(COALESCE(t4.given_name, ''), ' ', COALESCE(t4.middle_name,''), ' ', COALESCE(t4.family_name, '')) as person_name, t1.uuid as `user_uuid`, t5.value_reference as `location_uuid`",
+                table: "amrs.users",
+                alias: 't1',
+                joins: [
+                    ['amrs.person', 't2', 't1.person_id = t2.person_id'],
+                    ['amrs.provider', 't3', 't2.person_id = t3.person_id'],
+                    ['amrs.person_name', 't4', 't2.person_id = t4.person_id'],
+                    ['amrs.provider_attribute', 't5', 't3.provider_id = t5.provider_id'],
+                ],
+                where: ['t5.attribute_type_id = 1 and t5.value_reference = ?', 
+                params.locationUuid]
+            };
+            return db.queryDb(queryParts);
+        } catch (error) {
+            return error;
+        }
     }
 }
 
