@@ -75,6 +75,51 @@ const routes = [
                 params: {}
             }
         }
+    },
+    {
+        method: 'POST',
+        path: '/etl/assign-patients',
+        config: {
+            plugins: {
+                'hapiAuthorization': {
+                    role: privileges.canViewPatient
+                }
+            },
+            handler: function (request, reply) {
+                let payload = {
+                    patients: request.payload.patients,
+                    caseManagers: request.payload.caseManagers
+                }
+                caseManagementData.assignPatientsToCaseManagers(payload).then((result) => {
+                    let response = {}
+                    if (result.length > 0) {
+                        response = {
+                            type: 'Error',
+                            code: 500,
+                            body: result
+                        }
+                    } else {
+                        response = {
+                            type: 'Success',
+                            code: 200,
+                            message: "All patients successfully assigned",
+                        }
+                    }
+                    reply(response);
+                }).catch((error) => {
+                    reply(error);
+                });
+            },
+            description: 'Used for massive asignments of patients to case managers',
+            notes: 'Returns assignment response',
+            tags: ['api'],
+            validate: {
+                options: {
+                    allowUnknown: true
+                },
+                params: {}
+            }
+        }
     }
 ]
 exports.routes = server => server.route(routes); 
