@@ -17,14 +17,20 @@ const caseDataDao = {
                 "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, t1.vl_1_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up,  " +
                 "uuid as patient_uuid, null as phone_rtc_date, null as case_manager_uuid, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
 
-            let where = '';
+            let where = " location_uuid = '" + params.locationUuid + "' ";
             if ((params.minDefaultPeriod != null || params.minDefaultPeriod != null)) {
                 rtcDateRange = convertDaysToDate(params.minDefaultPeriod, params.maxDefaultPeriod);
-                where = "t1.rtc_date between '" + rtcDateRange[1] + "' and '" + rtcDateRange[0] + "' ";
+                where = where + " and t1.rtc_date between '" + rtcDateRange[1] + "' and '" + rtcDateRange[0] + "' ";
             }
             if ((params.minFollowupPeriod != null || params.maxFollowupPeriod != null)) {
                 followupDateRange = convertDaysToDate(params.minFollowupPeriod, params.maxFollowupPeriod);
                 where = where + "and t1.encounter_datetime between '" + followupDateRange[1] + "' and '" + followupDateRange[0] + "' ";
+            }
+            if ((params.rtcStartDate != null || params.rtcEndDate != null)) {
+                where = where + "and t1.rtc_date between DATE('" + params.rtcStartDate + "') and DATE('" + params.rtcEndDate + "') ";
+            }
+            if (params.phoneRtcStartDate != null) {
+                where = where + "and next_phone_appointment =  DATE('" + params.phoneRtcStartDate + "') "
             }
             if (params.hasCaseManager == 1) {
                 where = where + "and case_manager_person_id is not null "
@@ -37,9 +43,9 @@ const caseDataDao = {
                 where = where + "and vl_1 < 1000 "
             }
             if (params.hasPhoneRTC == 1) {
-                where = where + "and phone_rtc is not null "
+                where = where + "and next_phone_appointment is not null "
             } else if (params.hasPhoneRTC == 0) {
-                where = where + "and phone_rtc is null "
+                where = where + "and next_phone_appointment is null "
             }
             if (params.dueForVl == 1) {
                 where = where + "and " + getDueForVl() + " = 1 "
@@ -49,7 +55,7 @@ const caseDataDao = {
             if (params.caseManagerUuid != null) {
                 where = where + "and case_manager_uuid = '" + params.caseManagerUuid + "'"
             }
-            sql = "select " + columns + "FROM etl.flat_case_manager `t1` WHERE (" + where + "  and location_uuid = '" + params.locationUuid + "')"
+            sql = "select " + columns + "FROM etl.flat_case_manager `t1` WHERE ( " + where + " )"
             queryParts = {
                 sql: sql,
                 startIndex: params.startIndex,
