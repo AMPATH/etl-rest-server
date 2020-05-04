@@ -1,5 +1,4 @@
 var authorizer = require('../../authorization/etl-authorizer');
-var resolveLocationUuidToId = require('../../location/resolve-location-uuid-to-id');
 var privileges = authorizer.getAllPrivileges();
 var caseManagementData = require('../case-management/case-management')
 const routes = [
@@ -14,16 +13,27 @@ const routes = [
             },
             handler: function (request, reply) {
                 let params = {
-                    minDefaultPeriod : request.query.minDefaultPeriod,
-                    maxDefaultPeriod : request.query.maxDefaultPeriod,
-                    minFollowupPeriod : request.query.minFollowupPeriod,
-                    maxFollowupPeriod : request.query.maxFollowupPeriod
+                    minDefaultPeriod: request.query.minDefaultPeriod,
+                    maxDefaultPeriod: request.query.maxDefaultPeriod,
+                    minFollowupPeriod: request.query.minFollowupPeriod,
+                    maxFollowupPeriod: request.query.maxFollowupPeriod,
+                    locationUuid: request.query.locationUuid,
+                    hasCaseManager: request.query.hasCaseManager,
+                    hasPhoneRTC: request.query.hasPhoneRTC,
+                    elevatedVL: request.query.elevatedVL,
+                    dueForVl: request.query.dueForVl,
+                    caseManagerUuid: request.query.caseManagerUuid,
+                    startIndex: request.query.startIndex,
+                    limit: request.query.limit
                 }
-                caseManagementData.getCaseManagementData(params).then((result) => {
-                    reply(result);
-                }).catch((error) => {
-                    reply(error);
-                });
+                caseManagementData.getCaseManagementData(params,
+                    (result) => {
+                        if (result.error) {
+                            reply(result);
+                        } else {
+                            reply(result);
+                        }
+                    })
             },
             description: 'Case Management Data',
             notes: 'Returns patient list',
@@ -47,7 +57,7 @@ const routes = [
             },
             handler: function (request, reply) {
                 let params = {
-                    locationUuid : request.query.locationUuid
+                    locationUuid: request.query.locationUuid
                 }
                 caseManagementData.getCaseManagers(params).then((result) => {
                     reply(result);
