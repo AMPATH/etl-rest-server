@@ -13,9 +13,9 @@ const caseDataDao = {
         try {
             let queryParts = {};
 
-            var columns = "identifiers,DATE(encounter_datetime) AS last_follow_up_date,DATE(effective_rtc) AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  " +
-                "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, t1.vl_1_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up,  " +
-                "uuid as patient_uuid, null as phone_rtc_date, null as case_manager_uuid, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
+            var columns = "identifiers,DATE_FORMAT(encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(effective_rtc, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) AS days_since_missed_appointment,  " +
+                "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up,  " +
+                "t1.uuid as patient_uuid, next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
 
             let where = " location_uuid = '" + params.locationUuid + "' ";
             if ((params.minDefaultPeriod != null || params.minDefaultPeriod != null)) {
@@ -29,13 +29,14 @@ const caseDataDao = {
             if ((params.rtcStartDate != null || params.rtcEndDate != null)) {
                 where = where + "and t1.rtc_date between DATE('" + params.rtcStartDate + "') and DATE('" + params.rtcEndDate + "') ";
             }
-            if (params.phoneRtcStartDate != null) {
-                where = where + "and next_phone_appointment =  DATE('" + params.phoneRtcStartDate + "') "
+            if (params.phoneFollowUpStartDate != null) {
+                console.log("phoneFollowUpStartDate", params.phoneFollowUpStartDate)
+                where = where + "and next_phone_appointment =  DATE('" + params.phoneFollowUpStartDate + "') "
             }
             if (params.hasCaseManager == 1) {
-                where = where + "and case_manager_person_id is not null "
+                where = where + "and case_manager_user_id is not null "
             } else if (params.hasCaseManager == 0) {
-                where = where + "and case_manager_person_id is null "
+                where = where + "and case_manager_user_id is null "
             }
             if (params.elevatedVL == 1) {
                 where = where + "and  vl_1 > 1000 "
@@ -52,10 +53,10 @@ const caseDataDao = {
             } else if (params.dueForVl == 0) {
                 where = where + "and " + getDueForVl() + " = 0 "
             }
-            if (params.caseManagerUuid != null) {
-                where = where + "and case_manager_uuid = '" + params.caseManagerUuid + "'"
+            if (params.caseManagerUserId != null) {
+                where = where + "and case_manager_user_id in (" + params.caseManagerUserId + ")"
             }
-            sql = "select " + columns + "FROM etl.flat_case_manager `t1` WHERE ( " + where + " )"
+            sql = "select " + columns + "FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) WHERE ( " + where + " ) order by t1.vl_1 desc"
             queryParts = {
                 sql: sql,
                 startIndex: params.startIndex,
@@ -70,27 +71,27 @@ const caseDataDao = {
         }
     },
     getCaseManagers: (params) => {
-        try {
+        return new Promise((resolve, reject) => {
             let queryParts = {};
+            let sql = "select CONCAT(COALESCE(t6.given_name, ''), ' ', COALESCE(t6.middle_name,''), ' ',  " +
+                "COALESCE(t6.family_name, '')) as person_name, t2.uuid as `user_uuid`, t5.value_reference as `location_uuid`, " +
+                "count(t1.person_id) as `number_assigned`,t4.provider_id,t2.user_id FROM amrs.users `t2`  " +
+                "INNER JOIN amrs.person `t3` ON (t3.person_id = t2.person_id)  " +
+                "INNER JOIN amrs.provider `t4` ON (t4.person_id = t3.person_id) " +
+                "INNER JOIN amrs.provider_attribute `t5` ON (t5.provider_id = t4.provider_id)  " +
+                "INNER JOIN amrs.person_name `t6` ON (t6.person_id = t3.person_id) " +
+                "LEFT JOIN amrs.person_attribute `t1` ON (t2.user_id = t1.value) " +
+                "WHERE ( t5.attribute_type_id = 1 and (person_attribute_type_id is null or person_attribute_type_id=68) " +
+                "AND (t1.voided = 0 or t1.voided is null) AND t5.value_reference = '" + params.locationUuid + "') GROUP by t2.uuid; "
+
             queryParts = {
-                columns: "CONCAT(COALESCE(t6.given_name, ''), ' ', COALESCE(t6.middle_name,''), ' ', COALESCE(t6.family_name, '')) as person_name, t1.uuid as `user_uuid`, t5.value_reference as `location_uuid`,count(t1.person_id) as `number_assigned`,t4.provider_id",
-                table: "amrs.person_attribute",
-                alias: 't1',
-                joins: [
-                    ['amrs.users', 't2', 't2.user_id = t1.value'],
-                    ['amrs.person', 't3', 't3.person_id = t2.person_id'],
-                    ['amrs.provider', 't4', 't4.person_id = t3.person_id'],
-                    ['amrs.provider_attribute', 't5', 't5.provider_id = t4.provider_id'],
-                    ['amrs.person_name', 't6', 't6.person_id = t3.person_id']
-                ],
-                where: ['person_attribute_type_id=68 and t5.attribute_type_id = 1 and t5.value_reference = ?',
-                    params.locationUuid],
-                groupBy: 't4.provider_id'
+                sql: sql
             };
-            return db.queryDb(queryParts);
-        } catch (error) {
-            return error;
-        }
+            return db.queryServer(queryParts, function (result) {
+                result.sql = sql;
+                resolve(result);
+            });
+        })
     },
     assignPatientsToCaseManagers: async (payload) => {
         try {
@@ -101,23 +102,22 @@ const caseDataDao = {
                 let promisesArray = [];
 
                 data.forEach(d => {
-                    let payload = {
-                        "attributes": [
-                            {
-                                "attributeType": "9a6e12b5-98fe-467a-9541-dab11ad87e45",
-                                "value": d.user_uuid
-                            }
-                        ]
+                    const obj = {
+                        user_id: d.user_id,
+                        user_name: d.user_name,
+                        patient_uuid: d.patient_uuid,
+                        user_uuid: d.user_uuid
                     }
-                    promisesArray.push(postPersonAttributes(payload, d.patient_uuid))
+                    promisesArray.push(postPersonAttributes(obj))
                 })
                 await Promise.allSettled(promisesArray).
                     then((results) => results.forEach((result) => {
-                        if (result.isRejected()) {
+                        if (result.isFulfilled()) {
+                            updateCaseManager(result.value());
+                        } else if (result.isRejected()) {
                             erroredPatients.push(result.reason());
                         }
                     }));
-
             }
             return erroredPatients;
         }
@@ -134,12 +134,17 @@ function getPayloadData(payload) {
 
     managers.forEach(m => {
         const patientsToAssign = patients.splice(0, m.count);
-        const user_uuid = m.user_uuid;
+        const uuid = m.user_uuid;
+        const id = m.user_id;
+        const name = m.user_name;
         patientsToAssign.forEach(p => {
-            payloadData.push({
-                user_uuid: user_uuid,
+            const patient = {
+                user_uuid: uuid,
+                user_id: id,
+                user_name: name,
                 patient_uuid: p.patient_uuid
-            })
+            }
+            payloadData.push(patient)
         })
     })
     return payloadData;
@@ -151,35 +156,52 @@ function getRestResource(path) {
     return link;
 }
 
-function postPersonAttributes(payload, personUuid) {
-    var uri = getRestResource('/' + config.openmrs.applicationName + '/ws/rest/v1/person/' + personUuid);
+function postPersonAttributes(params) {
+    var uri = getRestResource('/' + config.openmrs.applicationName + '/ws/rest/v1/person/' + params.patient_uuid);
+    let payload = {
+        "attributes": [
+            {
+                "attributeType": "9a6e12b5-98fe-467a-9541-dab11ad87e45",
+                "value": params.user_uuid
+            }
+        ]
+    }
     return new Promise(function (resolve, reject) {
         rp.postRequestPromise(payload, uri)
-            .then(function (response) {
-                resolve(response);
+            .then(function (r) {
+                resolve(params);
             })
             .catch(function (error) {
                 const response = {
-                    patieuntUuid: personUuid
+                    patieuntUuid: params.patient_uuid
                 }
                 reject(response);
             })
     });
 }
 
+function updateCaseManager(params) {
+    return new Promise((resolve, reject) => {
+        let queryParts = {};
+        let sql = "update etl.flat_case_manager set case_manager_user_id = '" + params.user_id + "', case_manager_user_name='" + params.user_name + "', case_manager_name='" + params.user_name + "'  where uuid = '" + params.patient_uuid + "' ;"
+        queryParts = {
+            sql: sql
+        };
+        db.queryServer(queryParts, function (result) {
+            result.sql = sql;
+            resolve(result);
+        });
+    })
+}
+
 function getDueForVl() {
-    return " (CASE WHEN vl_1 > 999 AND vl_1_date > arv_start_date AND TIMESTAMPDIFF(MONTH,vl_1_date,curdate()) >=3 THEN 1 " +
-        "WHEN extract(year from (from_days(datediff(now(),t1.birthdate))))<=24 AND arv_first_regimen_start_date is not null AND " +
-        "(TIMESTAMPDIFF(MONTH,arv_first_regimen_start_date,curdate())>=6 or TIMESTAMPDIFF(MONTH,arv_start_date,curdate())>=6) and vl_1_date is null  then 1 " +
-        "WHEN extract(year from (from_days(datediff(now(),t1.birthdate)))) <=24 AND arv_first_regimen_start_date is not null AND TIMESTAMPDIFF(MONTH,vl_1_date,curdate()) >=6  then 1 " +
-        "WHEN extract(year from (from_days(datediff(now(),t1.birthdate)))) >=25 AND arv_first_regimen_start_date is not null AND " +
-        "(TIMESTAMPDIFF(MONTH,arv_first_regimen_start_date,curdate())>=6 or TIMESTAMPDIFF(MONTH,arv_start_date,curdate())>=6) and vl_1_date is null  then 1 " +
-        "WHEN extract(year from (from_days(datediff(now(),t1.birthdate)))) >=25 AND arv_first_regimen_start_date is not null " +
-        "AND TIMESTAMPDIFF(MONTH,vl_1_date,curdate()) >=6 and (TIMESTAMPDIFF(MONTH,arv_first_regimen_start_date,curdate()) <=12 or TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) <= 12 ) then 1 " +
-        "WHEN extract(year from (from_days(datediff(now(),t1.birthdate)))) >=25 AND arv_first_regimen_start_date is not null AND TIMESTAMPDIFF(MONTH,vl_1_date,curdate()) >=12 " +
-        "AND (TIMESTAMPDIFF(MONTH,arv_first_regimen_start_date,curdate()) > 12 or TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) > 12 )then 1 WHEN arv_first_regimen_start_date is not null " +
-        "AND arv_start_date is not null and arv_first_regimen_start_date < arv_start_date  AND TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) >= 3 AND vl_1_date is null then 1 WHEN arv_first_regimen_start_date is not null " +
-        "AND arv_start_date is not null and arv_first_regimen_start_date < arv_start_date AND TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) >= 3  then 1 else 0 END) "
+    return "(case when (timestampdiff(month,vl_1_date, curdate()) >= 3) and vl_1 > 999 and arv_start_date < vl_1_date then 1  " +
+        "when (timestampdiff(month,arv_start_date,curdate()) between 6 and 12) and (vl_1_date is null or vl_1_date < arv_start_date ) then 1 " +
+        "when (timestampdiff(month,arv_start_date,curdate()) > 12) and (vl_1_date is null or timestampdiff(month,vl_1_date,curdate()) > 12) then 1  " +
+        "WHEN  (t1.is_pregnant OR (t2.relationship = 2 AND TIMESTAMPDIFF(MONTH, t2.date_created,curdate()) BETWEEN 0 AND 24 )) AND vl_1 > 400 AND  (TIMESTAMPDIFF(MONTH, vl_1_date,curdate()) >= 3) THEN 1  " +
+        "WHEN  (t1.is_pregnant OR (t2.relationship = 2 AND TIMESTAMPDIFF(MONTH, t2.date_created,curdate()) BETWEEN 0 AND 24 )) AND vl_1 <= 400 AND  (TIMESTAMPDIFF(MONTH, vl_1_date,curdate()) >= 6) THEN 1 " +
+        "WHEN arv_first_regimen_start_date is not null and arv_start_date is not null and arv_first_regimen_start_date < arv_start_date AND TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) >= 3 AND vl_1_date is null then 1 " +
+        "WHEN arv_first_regimen_start_date is not null and arv_start_date is not null and arv_first_regimen_start_date < arv_start_date AND TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) >= 3 AND TIMESTAMPDIFF(MONTH,vl_1_date,arv_start_date)>=1  then 1 else 0 end) "
 }
 
 function convertDaysToDate(minDays, maxDays) {

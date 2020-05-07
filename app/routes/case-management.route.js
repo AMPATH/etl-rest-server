@@ -19,13 +19,13 @@ const routes = [
                     maxFollowupPeriod: request.query.maxFollowupPeriod,
                     rtcStartDate: request.query.rtcStartDate,
                     rtcEndDate: request.query.rtcEndDate,
-                    phoneRtcStartDate: request.query.phoneRtcStartDate,
+                    phoneFollowUpStartDate: request.query.phoneFollowUpStartDate,
                     locationUuid: request.query.locationUuid,
                     hasCaseManager: request.query.hasCaseManager,
                     hasPhoneRTC: request.query.hasPhoneRTC,
                     elevatedVL: request.query.elevatedVL,
                     dueForVl: request.query.dueForVl,
-                    caseManagerUuid: request.query.caseManagerUuid,
+                    caseManagerUserId: request.query.caseManagerUserId,
                     startIndex: request.query.startIndex,
                     limit: request.query.limit
                 }
@@ -125,4 +125,5 @@ const routes = [
         }
     }
 ]
+
 exports.routes = server => server.route(routes); 
