@@ -30,7 +30,6 @@ const caseDataDao = {
                 where = where + "and t1.rtc_date between DATE('" + params.rtcStartDate + "') and DATE('" + params.rtcEndDate + "') ";
             }
             if (params.phoneFollowUpStartDate != null) {
-                console.log("phoneFollowUpStartDate", params.phoneFollowUpStartDate)
                 where = where + "and next_phone_appointment =  DATE('" + params.phoneFollowUpStartDate + "') "
             }
             if (params.hasCaseManager == 1) {
@@ -56,7 +55,7 @@ const caseDataDao = {
             if (params.caseManagerUserId != null) {
                 where = where + "and case_manager_user_id in (" + params.caseManagerUserId + ")"
             }
-            sql = "select " + columns + "FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) WHERE ( " + where + " ) order by t1.vl_1 desc"
+            sql = "select " + columns + "FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) WHERE ( " + where + " ) group by person_id order by t1.vl_1 desc"
             queryParts = {
                 sql: sql,
                 startIndex: params.startIndex,
