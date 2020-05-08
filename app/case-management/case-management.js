@@ -15,7 +15,7 @@ const caseDataDao = {
 
             var columns = "identifiers,DATE_FORMAT(encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(effective_rtc, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) AS days_since_missed_appointment,  " +
                 "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up,  " +
-                "t1.uuid as patient_uuid, next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
+                "t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
 
             let where = " location_uuid = '" + params.locationUuid + "' ";
             if ((params.minDefaultPeriod != null || params.minDefaultPeriod != null)) {
@@ -79,9 +79,8 @@ const caseDataDao = {
                 "INNER JOIN amrs.provider `t4` ON (t4.person_id = t3.person_id) " +
                 "INNER JOIN amrs.provider_attribute `t5` ON (t5.provider_id = t4.provider_id)  " +
                 "INNER JOIN amrs.person_name `t6` ON (t6.person_id = t3.person_id) " +
-                "LEFT JOIN amrs.person_attribute `t1` ON (t2.user_id = t1.value) " +
-                "WHERE ( t5.attribute_type_id = 1 and (person_attribute_type_id is null or person_attribute_type_id=68) " +
-                "AND (t1.voided = 0 or t1.voided is null) AND t5.value_reference = '" + params.locationUuid + "') GROUP by t2.uuid; "
+                "LEFT JOIN amrs.person_attribute `t1` ON (t2.user_id = t1.value AND person_attribute_type_id = 68) "+
+                "WHERE ( t5.attribute_type_id = 1 AND (t1.voided = 0 or t1.voided is null) AND t5.value_reference = '" + params.locationUuid + "') GROUP by t2.uuid; "
 
             queryParts = {
                 sql: sql
