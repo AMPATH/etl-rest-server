@@ -79,8 +79,8 @@ const caseDataDao = {
                 "INNER JOIN amrs.provider `t4` ON (t4.person_id = t3.person_id) " +
                 "INNER JOIN amrs.provider_attribute `t5` ON (t5.provider_id = t4.provider_id)  " +
                 "INNER JOIN amrs.person_name `t6` ON (t6.person_id = t3.person_id) " +
-                "LEFT JOIN amrs.person_attribute `t1` ON (t2.user_id = t1.value AND person_attribute_type_id = 68) "+
-                "WHERE ( t5.attribute_type_id = 1 AND (t1.voided = 0 or t1.voided is null) AND t5.value_reference = '" + params.locationUuid + "') GROUP by t2.uuid; "
+                "LEFT JOIN amrs.person_attribute `t1` ON (t2.user_id = t1.value AND person_attribute_type_id = 68 AND t1.voided = 0 ) " +
+                "WHERE ( t5.attribute_type_id = 1 AND t5.value_reference = '" + params.locationUuid + "') GROUP by t2.uuid; "
 
             queryParts = {
                 sql: sql
