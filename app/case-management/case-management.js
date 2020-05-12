@@ -76,7 +76,7 @@ const caseDataDao = {
             let queryParts = {};
             let sql = "select CONCAT(COALESCE(t6.given_name, ''), ' ', COALESCE(t6.middle_name,''), ' ',  " +
                 "COALESCE(t6.family_name, '')) as person_name, t2.uuid as `user_uuid`, t5.value_reference as `location_uuid`, " +
-                "count(t1.person_id) as `number_assigned`,t4.provider_id,t2.user_id FROM amrs.users `t2`  " +
+                "count(DISTINCT t1.person_id) as `number_assigned`,t4.provider_id,t2.user_id FROM amrs.users `t2`  " +
                 "INNER JOIN amrs.person `t3` ON (t3.person_id = t2.person_id)  " +
                 "INNER JOIN amrs.provider `t4` ON (t4.person_id = t3.person_id) " +
                 "INNER JOIN amrs.provider_attribute `t5` ON (t5.provider_id = t4.provider_id)  " +
