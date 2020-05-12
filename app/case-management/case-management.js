@@ -14,7 +14,7 @@ const caseDataDao = {
             let queryParts = {};
 
             var columns = "identifiers,DATE_FORMAT(encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(effective_rtc, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) AS days_since_missed_appointment,  " +
-                "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up,  " +
+                "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up, t3.uuid as `attribute_uuid`, " +
                 "t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
 
             let where = " location_uuid = '" + params.locationUuid + "' ";
@@ -55,7 +55,9 @@ const caseDataDao = {
             if (params.caseManagerUserId != null) {
                 where = where + "and case_manager_user_id in (" + params.caseManagerUserId + ")"
             }
-            sql = "select " + columns + "FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) WHERE ( " + where + " ) group by person_id order by t1.vl_1 desc"
+            sql = "select " + columns + "FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) " +
+                "LEFT JOIN amrs.person_attribute `t3` on (t1.person_id = t3.person_id AND t3.person_attribute_type_id = 68 AND t1.case_manager_user_id = t3.value)  " +
+                "WHERE ( " + where + " ) group by t1.person_id order by t1.vl_1 desc"
             queryParts = {
                 sql: sql,
                 startIndex: params.startIndex,
@@ -111,7 +113,32 @@ const caseDataDao = {
                 await Promise.allSettled(promisesArray).
                     then((results) => results.forEach((result) => {
                         if (result.isFulfilled()) {
-                            updateCaseManager(result.value());
+                            updateCaseManager(result.value(), true);
+                        } else if (result.isRejected()) {
+                            erroredPatients.push(result.reason());
+                        }
+                    }));
+            }
+            return erroredPatients;
+        }
+        catch (error) {
+            return error;
+        }
+    },
+    unAssignPatients: async (payloadData) => {
+        try {
+            let erroredPatients = []
+            while (payloadData.length > 0) {
+                let data = payloadData.splice(0, 10);
+                let promisesArray = [];
+
+                data.forEach(d => {
+                    promisesArray.push(voidPersonAttributes(d))
+                })
+                await Promise.allSettled(promisesArray).
+                    then((results) => results.forEach((result) => {
+                        if (result.isFulfilled()) {
+                            updateCaseManager(result.value(), false);
                         } else if (result.isRejected()) {
                             erroredPatients.push(result.reason());
                         }
@@ -178,10 +205,31 @@ function postPersonAttributes(params) {
     });
 }
 
-function updateCaseManager(params) {
+function voidPersonAttributes(params) {
+    var uri = getRestResource('/' + config.openmrs.applicationName + '/ws/rest/v1/person/' + params.patient_uuid + '/attribute/' + params.attribute_uuid);
+    return new Promise(function (resolve, reject) {
+        rp.deleteRequestPromise(uri)
+            .then(function (r) {
+                resolve(params);
+            })
+            .catch(function (error) {
+                const response = {
+                    patieuntUuid: params.patient_uuid
+                }
+                reject(response);
+            })
+    });
+}
+
+function updateCaseManager(params, update) {
     return new Promise((resolve, reject) => {
         let queryParts = {};
-        let sql = "update etl.flat_case_manager set case_manager_user_id = '" + params.user_id + "', case_manager_user_name='" + params.user_name + "', case_manager_name='" + params.user_name + "'  where uuid = '" + params.patient_uuid + "' ;"
+        let sql = ''
+        if (update == true) {
+            sql = "update etl.flat_case_manager set case_manager_user_id = '" + params.user_id + "', case_manager_user_name='" + params.user_name + "', case_manager_name='" + params.user_name + "'  where uuid = '" + params.patient_uuid + "' ;";
+        } else {
+            sql = "update etl.flat_case_manager set case_manager_user_id = NULL, case_manager_user_name = NULL, case_manager_name = NULL  where uuid = '" + params.patient_uuid + "' ;"
+        }
         queryParts = {
             sql: sql
         };
