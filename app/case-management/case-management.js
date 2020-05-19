@@ -13,9 +13,9 @@ const caseDataDao = {
         try {
             let queryParts = {};
 
-            var columns = "identifiers,DATE_FORMAT(encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(effective_rtc, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) AS days_since_missed_appointment,  " +
-                "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up, t3.uuid as `attribute_uuid`, " +
-                "t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
+            var columns = "identifiers,DATE_FORMAT(encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(t1.rtc_date, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) AS days_since_missed_appointment,  " +
+                "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up, t3.uuid as `attribute_uuid`, DATE_FORMAT(t1.med_pickup_rtc_date, '%Y-%m-%d') AS med_pickup_rtc_date, " +
+                "DATE_FORMAT(t1.enrollment_date, '%Y-%m-%d') AS enrollment_date, TIMESTAMPDIFF(DAY,DATE(t1.enrollment_date),curdate()) AS days_since_enrollment,t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
 
             let where = " location_uuid = '" + params.locationUuid + "' ";
             if ((params.minDefaultPeriod != null || params.minDefaultPeriod != null)) {
