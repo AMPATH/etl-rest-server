@@ -27,6 +27,7 @@ const routes = [
                     elevatedVL: request.query.elevatedVL,
                     dueForVl: request.query.dueForVl,
                     caseManagerUserId: request.query.caseManagerUserId,
+                    isNewlyEnrolled: request.query.isNewlyEnrolled,
                     startIndex: request.query.startIndex,
                     limit: request.query.limit
                 }
