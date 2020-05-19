@@ -13,9 +13,9 @@ const caseDataDao = {
         try {
             let queryParts = {};
 
-            var columns = "t1.identifiers,DATE_FORMAT(t1.encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(t1.rtc_date, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(t1.rtc_date),curdate()) AS days_since_missed_appointment,  " +
+            var columns = "t1.identifiers,CONCAT(COALESCE(DATE_FORMAT(t1.encounter_datetime, '%Y-%m-%d'), ''), ' ', COALESCE(t5.name,'')) AS last_follow_up_date,DATE_FORMAT(t1.rtc_date, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(t1.rtc_date),curdate()) AS days_since_missed_appointment,  " +
                 "case_manager_name AS case_manager,t1.person_name AS patient_name,t1.gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(t1.encounter_datetime),curdate()) AS days_since_follow_up, t3.uuid as `attribute_uuid`, DATE_FORMAT(t1.med_pickup_rtc_date, '%Y-%m-%d') AS med_pickup_rtc_date, " +
-                "DATE_FORMAT(t1.enrollment_date, '%Y-%m-%d') AS enrollment_date, TIMESTAMPDIFF(DAY,DATE(t1.enrollment_date),curdate()) AS days_since_enrollment,t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(t1.rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
+                "DATE_FORMAT(t1.enrollment_date, '%Y-%m-%d') AS enrollment_date, TIMESTAMPDIFF(DAY,DATE(t1.enrollment_date),curdate()) AS days_since_enrollment,t5.name as `encounter_type`,t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(t1.rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
 
             let where = " t1.location_uuid = '" + params.locationUuid + "' ";
             if ((params.minDefaultPeriod != null || params.minDefaultPeriod != null)) {
@@ -47,6 +47,11 @@ const caseDataDao = {
             } else if (params.hasPhoneRTC == 0) {
                 where = where + "and next_phone_appointment is null "
             }
+            if (params.isNewlyEnrolled == 1) {
+                where = where + "and TIMESTAMPDIFF(DAY,DATE(t1.enrollment_date),curdate()) <= 30 "
+            } else if (params.isNewlyEnrolled == 0) {
+                where = where + "and TIMESTAMPDIFF(DAY,DATE(t1.enrollment_date),curdate()) > 30 "
+            }
             if (params.dueForVl == 1) {
                 where = where + "and " + getDueForVl() + " = 1 "
             } else if (params.dueForVl == 0) {
@@ -57,6 +62,7 @@ const caseDataDao = {
             }
             sql = "select " + columns + "FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) " +
                 "LEFT JOIN amrs.person_attribute `t3` on (t1.person_id = t3.person_id AND t3.person_attribute_type_id = 68 AND t1.case_manager_user_id = t3.value)  " +
+                "LEFT JOIN amrs.encounter_type t5 ON (t1.encounter_type = t5.encounter_type_id) "+
                 "INNER JOIN amrs.person t4 ON (t1.person_id = t4.person_id AND dead = 0) "+
                 "LEFT JOIN etl.flat_hiv_summary_v15b t6 on (t1.person_id = t6.person_id and t6.is_clinical_encounter = 1 AND t6.next_clinical_datetime_hiv IS NULL and t6.transfer_transfer_out_bncd is not null)  "+
                 "WHERE ( " + where + " and t1.transfer_out is null and transfer_transfer_out_bncd is null ) group by t1.person_id order by t1.vl_1 desc"
