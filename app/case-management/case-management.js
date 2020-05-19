@@ -13,11 +13,11 @@ const caseDataDao = {
         try {
             let queryParts = {};
 
-            var columns = "identifiers,DATE_FORMAT(encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(t1.rtc_date, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) AS days_since_missed_appointment,  " +
-                "case_manager_name AS case_manager,person_name AS patient_name,gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(encounter_datetime),curdate()) AS days_since_follow_up, t3.uuid as `attribute_uuid`, DATE_FORMAT(t1.med_pickup_rtc_date, '%Y-%m-%d') AS med_pickup_rtc_date, " +
-                "DATE_FORMAT(t1.enrollment_date, '%Y-%m-%d') AS enrollment_date, TIMESTAMPDIFF(DAY,DATE(t1.enrollment_date),curdate()) AS days_since_enrollment,t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
+            var columns = "t1.identifiers,DATE_FORMAT(t1.encounter_datetime, '%Y-%m-%d') AS last_follow_up_date,DATE_FORMAT(t1.rtc_date, '%Y-%m-%d') AS rtc_date,extract(year from (from_days(datediff(now(),t1.birthdate)))) as age,  TIMESTAMPDIFF(DAY,DATE(t1.rtc_date),curdate()) AS days_since_missed_appointment,  " +
+                "case_manager_name AS case_manager,t1.person_name AS patient_name,t1.gender,t1.vl_1 AS last_vl, DATE_FORMAT(t1.vl_1_date, '%Y-%m-%d') as last_vl_date, TIMESTAMPDIFF(DAY,DATE(t1.encounter_datetime),curdate()) AS days_since_follow_up, t3.uuid as `attribute_uuid`, DATE_FORMAT(t1.med_pickup_rtc_date, '%Y-%m-%d') AS med_pickup_rtc_date, " +
+                "DATE_FORMAT(t1.enrollment_date, '%Y-%m-%d') AS enrollment_date, TIMESTAMPDIFF(DAY,DATE(t1.enrollment_date),curdate()) AS days_since_enrollment,t1.uuid as patient_uuid, DATE_FORMAT(next_phone_appointment, '%Y-%m-%d') AS next_phone_appointment, case_manager_user_id, (CASE WHEN TIMESTAMPDIFF(DAY,DATE(t1.rtc_date),curdate()) > 0 THEN 1 ELSE 0 END) as missed_appointment, " + getDueForVl() + "AS patients_due_for_vl ";
 
-            let where = " location_uuid = '" + params.locationUuid + "' ";
+            let where = " t1.location_uuid = '" + params.locationUuid + "' ";
             if ((params.minDefaultPeriod != null || params.minDefaultPeriod != null)) {
                 rtcDateRange = convertDaysToDate(params.minDefaultPeriod, params.maxDefaultPeriod);
                 where = where + " and t1.rtc_date between '" + rtcDateRange[1] + "' and '" + rtcDateRange[0] + "' ";
@@ -38,9 +38,9 @@ const caseDataDao = {
                 where = where + "and case_manager_user_id is null "
             }
             if (params.elevatedVL == 1) {
-                where = where + "and  vl_1 > 1000 "
+                where = where + "and  t1.vl_1 > 1000 "
             } else if (params.elevatedVL == 0) {
-                where = where + "and vl_1 < 1000 "
+                where = where + "and t1.vl_1 < 1000 "
             }
             if (params.hasPhoneRTC == 1) {
                 where = where + "and next_phone_appointment is not null "
@@ -57,7 +57,9 @@ const caseDataDao = {
             }
             sql = "select " + columns + "FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) " +
                 "LEFT JOIN amrs.person_attribute `t3` on (t1.person_id = t3.person_id AND t3.person_attribute_type_id = 68 AND t1.case_manager_user_id = t3.value)  " +
-                "WHERE ( " + where + " ) group by t1.person_id order by t1.vl_1 desc"
+                "INNER JOIN amrs.person t4 ON (t1.person_id = t4.person_id AND dead = 0) "+
+                "LEFT JOIN etl.flat_hiv_summary_v15b t6 on (t1.person_id = t6.person_id and t6.is_clinical_encounter = 1 AND t6.next_clinical_datetime_hiv IS NULL and t6.transfer_transfer_out_bncd is not null)  "+
+                "WHERE ( " + where + " and t1.transfer_out is null and transfer_transfer_out_bncd is null ) group by t1.person_id order by t1.vl_1 desc"
             queryParts = {
                 sql: sql,
                 startIndex: params.startIndex,
@@ -241,13 +243,13 @@ function updateCaseManager(params, update) {
 }
 
 function getDueForVl() {
-    return "(case when (timestampdiff(month,vl_1_date, curdate()) >= 3) and vl_1 > 999 and arv_start_date < vl_1_date then 1  " +
-        "when (timestampdiff(month,arv_start_date,curdate()) between 6 and 12) and (vl_1_date is null or vl_1_date < arv_start_date ) then 1 " +
-        "when (timestampdiff(month,arv_start_date,curdate()) > 12) and (vl_1_date is null or timestampdiff(month,vl_1_date,curdate()) > 12) then 1  " +
-        "WHEN  (t1.is_pregnant OR (t2.relationship = 2 AND TIMESTAMPDIFF(MONTH, t2.date_created,curdate()) BETWEEN 0 AND 24 )) AND vl_1 > 400 AND  (TIMESTAMPDIFF(MONTH, vl_1_date,curdate()) >= 3) THEN 1  " +
-        "WHEN  (t1.is_pregnant OR (t2.relationship = 2 AND TIMESTAMPDIFF(MONTH, t2.date_created,curdate()) BETWEEN 0 AND 24 )) AND vl_1 <= 400 AND  (TIMESTAMPDIFF(MONTH, vl_1_date,curdate()) >= 6) THEN 1 " +
-        "WHEN arv_first_regimen_start_date is not null and arv_start_date is not null and arv_first_regimen_start_date < arv_start_date AND TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) >= 3 AND vl_1_date is null then 1 " +
-        "WHEN arv_first_regimen_start_date is not null and arv_start_date is not null and arv_first_regimen_start_date < arv_start_date AND TIMESTAMPDIFF(MONTH,arv_start_date,curdate()) >= 3 AND TIMESTAMPDIFF(MONTH,vl_1_date,arv_start_date)>=1  then 1 else 0 end) "
+    return "(case when (timestampdiff(month,t1.vl_1_date, curdate()) >= 3) and t1.vl_1 > 999 and t1.arv_start_date < t1.vl_1_date then 1  " +
+        "when (timestampdiff(month,t1.arv_start_date,curdate()) between 6 and 12) and (t1.vl_1_date is null or t1.vl_1_date < t1.arv_start_date ) then 1 " +
+        "when (timestampdiff(month,t1.arv_start_date,curdate()) > 12) and (t1.vl_1_date is null or timestampdiff(month,t1.vl_1_date,curdate()) > 12) then 1  " +
+        "WHEN  (t1.is_pregnant OR (t2.relationship = 2 AND TIMESTAMPDIFF(MONTH, t2.date_created,curdate()) BETWEEN 0 AND 24 )) AND t1.vl_1 > 400 AND  (TIMESTAMPDIFF(MONTH, t1.vl_1_date,curdate()) >= 3) THEN 1  " +
+        "WHEN  (t1.is_pregnant OR (t2.relationship = 2 AND TIMESTAMPDIFF(MONTH, t2.date_created,curdate()) BETWEEN 0 AND 24 )) AND t1.vl_1 <= 400 AND  (TIMESTAMPDIFF(MONTH, t1.vl_1_date,curdate()) >= 6) THEN 1 " +
+        "WHEN t1.arv_first_regimen_start_date is not null and t1.arv_start_date is not null and t1.arv_first_regimen_start_date < t1.arv_start_date AND TIMESTAMPDIFF(MONTH,t1.arv_start_date,curdate()) >= 3 AND t1.vl_1_date is null then 1 " +
+        "WHEN t1.arv_first_regimen_start_date is not null and t1.arv_start_date is not null and t1.arv_first_regimen_start_date < t1.arv_start_date AND TIMESTAMPDIFF(MONTH,t1.arv_start_date,curdate()) >= 3 AND TIMESTAMPDIFF(MONTH,t1.vl_1_date,t1.arv_start_date)>=1  then 1 else 0 end) "
 }
 
 function convertDaysToDate(minDays, maxDays) {
