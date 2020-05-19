@@ -1,6 +1,7 @@
 var authorizer = require('../../authorization/etl-authorizer');
 var privileges = authorizer.getAllPrivileges();
 var caseManagementData = require('../case-management/case-management')
+var definitions = require('../case-management/case-management-indicator-service');
 const routes = [
     {
         method: 'GET',
@@ -159,6 +160,31 @@ const routes = [
             },
             description: 'Used for massive asignments of patients to case managers',
             notes: 'Returns assignment response',
+            tags: ['api'],
+            validate: {
+                options: {
+                    allowUnknown: true
+                },
+                params: {}
+            }
+        }
+    },
+    {
+        method: 'GET',
+        path: '/etl/case-management/indicators',
+        config: {
+            plugins: {
+            },
+            handler: function (request, reply) {
+                definitions.getIndicatorDefinitions().then((result)=> {
+                    reply(result);
+                }).catch((error) => {
+                    reply(error)
+                });
+
+            },
+            description: 'List of case management indicators and their definitions',
+            notes: 'Returns Case Management indicators',
             tags: ['api'],
             validate: {
                 options: {
