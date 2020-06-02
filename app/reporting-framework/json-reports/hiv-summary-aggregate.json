@@ -219,6 +219,38 @@
         },
         {
             "type": "derived_column",
+            "alias": "on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(on_modern_contraception, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(not_on_modern_contraception, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_art_and_not_on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(on_art_and_not_on_modern_contraception, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "started_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(started_modern_contraception, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "pregnant",
             "expressionType": "simple_expression",
             "expressionOptions": {

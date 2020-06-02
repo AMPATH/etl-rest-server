@@ -234,6 +234,38 @@
         },
         {
             "type": "derived_column",
+            "alias": "on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(date(fhs.modern_contraceptive_method_start_date) <= '{endDate}',1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.modern_contraceptive_method_start_date is null,1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_art_and_not_on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.modern_contraceptive_method_start_date is null and fhs.cur_arv_line is not null,1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "started_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(date(fhs.modern_contraceptive_method_start_date) between '{startDate}' and '{endDate}',1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "pregnant",
             "expressionType": "simple_expression",
             "expressionOptions": {
@@ -246,6 +278,14 @@
             "expressionType": "simple_expression",
             "expressionOptions": {
                 "expression": "if(fhs.is_pregnant is not null and fhs.cur_arv_line is not null,1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "pregnant_and_started_art",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.is_pregnant is not null and date(fhs.arv_first_regimen_start_date) between '{startDate}' and '{endDate}',1,null)"
             }
         },
         {
