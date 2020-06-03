@@ -530,6 +530,10 @@
         "encounterTypes": [{
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          },
+          {
+            "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+            "display": "CALLCONSENT"
           }
         ]
       }
@@ -1332,6 +1336,10 @@
         "encounterTypes": [{
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          },
+          {
+            "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+            "display": "CALLCONSENT"
           }
         ]
       }
@@ -1824,6 +1832,10 @@
         "encounterTypes": [{
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          },
+          {
+            "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+            "display": "CALLCONSENT"
           }
         ]
       }
@@ -1962,6 +1974,10 @@
         "encounterTypes": [{
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          },
+          {
+            "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+            "display": "CALLCONSENT"
           }
         ]
       }
@@ -2211,6 +2227,10 @@
         "encounterTypes": [{
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          },
+          {
+            "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+            "display": "CALLCONSENT"
           }
         ]
       }
@@ -3338,6 +3358,10 @@
         "encounterTypes": [{
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          },
+          {
+            "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+            "display": "CALLCONSENT"
           }
         ]
       }
@@ -3385,6 +3409,10 @@
       "encounterTypes": [{
           "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
           "display": "TELECARE"
+        },
+        {
+          "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+          "display": "CALLCONSENT"
         }
       ]
     }]
@@ -3530,6 +3558,10 @@
         "encounterTypes": [{
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          },
+          {
+            "uuid": "5a58f6f5-f5a6-47eb-a644-626abd83f83b",
+            "display": "CALLCONSENT"
           }
         ]
       }
