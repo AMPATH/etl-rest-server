@@ -227,6 +227,22 @@
         },
         {
             "type": "derived_column",
+            "alias": "on_short_term_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(on_short_term_modern_contraception, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_long_term_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "count(distinct concat(on_long_term_modern_contraception, hsb.person_id))"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "not_on_modern_contraception",
             "expressionType": "simple_expression",
             "expressionOptions": {

@@ -242,6 +242,22 @@
         },
         {
             "type": "derived_column",
+            "alias": "on_short_term_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.contraceptive_method not in (1107, 6700, 9510, 9511, 9734, 9735, 6701),1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_long_term_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.contraceptive_method in (6700, 9510, 9511, 9734, 9735, 6701),1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "not_on_modern_contraception",
             "expressionType": "simple_expression",
             "expressionOptions": {
