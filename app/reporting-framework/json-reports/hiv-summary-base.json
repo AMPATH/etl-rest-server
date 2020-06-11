@@ -237,7 +237,7 @@
             "alias": "on_modern_contraception",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(date(fhs.modern_contraceptive_method_start_date) <= '{endDate}',1,null)"
+                "expression": "if((fhs.contraceptive_method IS NOT NULL AND fhs.contraceptive_method <> 1107),1,null)"
             }
         },
         {
@@ -245,7 +245,7 @@
             "alias": "not_on_modern_contraception",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(fhs.modern_contraceptive_method_start_date is null,1,null)"
+                "expression": "if((fhs.contraceptive_method IS NULL or fhs.contraceptive_method = 1107),1,null)"
             }
         },
         {
@@ -253,7 +253,7 @@
             "alias": "on_art_and_not_on_modern_contraception",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(fhs.modern_contraceptive_method_start_date is null and fhs.cur_arv_line is not null,1,null)"
+                "expression": "if((fhs.contraceptive_method IS NULL OR fhs.contraceptive_method = 1107) and fhs.cur_arv_line is not null,1,null)"
             }
         },
         {

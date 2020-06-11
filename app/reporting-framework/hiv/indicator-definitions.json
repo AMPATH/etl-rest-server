@@ -138,18 +138,18 @@
         "name": "on_modern_contraception",
         "label": "on modern contraception",
         "description": "# of patients on modern contraception in a given time period",
-        "expression": "date(fhs.modern_contraceptive_method_start_date) <= @endDate"
+        "expression": "fhs.contraceptive_method IS NOT NULL AND fhs.contraceptive_method <> 1107"
     },{
         "name": "not_on_modern_contraception",
         "label": "not on modern contraception",
         "description": "# of patients not on modern contraception in a given time period",
-        "expression": "fhs.modern_contraceptive_method_start_date is null and cur_arv_line is not null"
+        "expression": "(fhs.contraceptive_method IS NULL OR fhs.contraceptive_method = 1107)"
     },
     {
         "name": "on_art_and_not_on_modern_contraception",
         "label": "on art and not on modern contraception",
         "description": "# of patients on art and not on modern contraception in a given time period",
-        "expression": "fhs.modern_contraceptive_method_start_date is null"
+        "expression": "(fhs.contraceptive_method IS NULL or fhs.contraceptive_method = 1107) and  cur_arv_line is not null"
     },{
         "name": "started_modern_contraception",
         "label": "started modern contraception",
@@ -169,7 +169,7 @@
         "name": "pregnant_and_started_art",
         "label": "pregnant and started art",
         "description": "# of pregnant patients and started ART in a given time period",
-        "expression": "edd > encounter_datetime and date(fhs.modern_contraceptive_method_start_date) between @startDate and @endDate"
+        "expression": "edd > encounter_datetime and date(fhs.arv_first_regimen_start_date) between @startDate and @endDate"
     }, {
         "name": "viral_load_resulted_in_past_year",
         "label": "viral load resulted in past year",
