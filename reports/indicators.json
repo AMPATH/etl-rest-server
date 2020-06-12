@@ -162,6 +162,36 @@
         "expression": "(fhs.contraceptive_method IS NULL OR fhs.contraceptive_method = 1107)"
     },
     {
+        "name": "on_short_term_modern_contraception_pnc",
+        "label": "On short term modern contraception pnc",
+        "description": "# of patients on short term modern contraception in a given time period and in pnc",
+        "expression": "fhs.visit_type in (68, 55, 52, 18) AND fhs.contraceptive_method is not null AND fhs.contraceptive_method not in (1107, 6700, 9510, 9511, 9734, 9735, 6701)"
+    },
+    {
+        "name": "on_long_term_modern_contraception_pnc",
+        "label": "On long term modern contraception pnc",
+        "description": "# of patients on long term modern contraception in a given time period and in pnc",
+        "expression": "fhs.visit_type in (68, 55, 52, 18) AND fhs.contraceptive_method in (6700, 9510, 9511, 9734, 9735, 6701)"
+    },
+    {
+        "name": "on_modern_contraception_pnc",
+        "label": "on modern contraception pnc",
+        "description": "# of patients on modern contraception in a given time period",
+        "expression": "fhs.contraceptive_method IS NOT NULL AND fhs.contraceptive_method <> 1107 AND fhs.visit_type in (68, 55, 52, 18)"
+    },
+    {
+        "name": "not_on_modern_contraception_pnc",
+        "label": "not on modern contraception pnc",
+        "description": "# of patients not on modern contraception in a given time period and they are in PNC",
+        "expression": "(fhs.contraceptive_method IS NULL OR fhs.contraceptive_method = 1107) AND fhs.visit_type in (68, 55, 52, 18)"
+    },
+    {
+        "name": "in_pnc",
+        "label": "in pnc",
+        "description": "# of patients with a pnc visit in a given time period",
+        "expression": "fhs.visit_type in (68, 55, 52, 18)"
+    },
+    {
         "name": "on_art_and_not_on_modern_contraception",
         "label": "on art and not on modern contraception",
         "description": "# of patients on art and not on modern contraception in a given time period",
@@ -175,13 +205,13 @@
     },
     {
         "name": "on_short_term_modern_contraception",
-        "label": "On short term modern contraception",
+        "label": "on short term modern contraception",
         "description": "# of patients on short term modern contraception in a given time period",
         "expression": "fhs.contraceptive_method not in (1107, 6700, 9510, 9511, 9734, 9735, 6701)"
     },
     {
         "name": "on_long_term_modern_contraception",
-        "label": "On long term modern contraception",
+        "label": "on long term modern contraception",
         "description": "# of patients on long term modern contraception in a given time period",
         "expression": "fhs.contraceptive_method in (6700, 9510, 9511, 9734, 9735, 6701)"
     },
