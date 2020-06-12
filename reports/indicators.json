@@ -207,7 +207,7 @@
         "name": "on_short_term_modern_contraception",
         "label": "on short term modern contraception",
         "description": "# of patients on short term modern contraception in a given time period",
-        "expression": "fhs.contraceptive_method not in (1107, 6700, 9510, 9511, 9734, 9735, 6701)"
+        "expression": "fhs.contraceptive_method is not null AND fhs.contraceptive_method not in (190, 6717, 6718, 1107, 6700, 9510, 9511, 9734, 9735, 6701)"
     },
     {
         "name": "on_long_term_modern_contraception",
