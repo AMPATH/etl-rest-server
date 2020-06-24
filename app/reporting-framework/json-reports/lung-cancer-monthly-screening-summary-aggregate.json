@@ -72,7 +72,7 @@
             "alias": "tobacco_use",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "count(tobacco_use)"
+                "expression": "count(uses_tobacco)"
             }
         },
         {
