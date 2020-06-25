@@ -173,6 +173,11 @@ import * as hei_unknown_program_outcome_aggregate from './json-reports/hei-unkno
 import * as hei_unknown_program_outcome_base from './json-reports/hei-unknown-program-outcome-base.json';
 import * as hei_report_patient_list_template from './json-reports/hei-report-patient-list-template.json';
 
+import * as patient_gain_loses_base from './json-reports/patient-gain-loses-base.json';
+import * as patient_gain_loses_aggregate from './json-reports/patient-gain-loses-aggregate.json';
+import * as patient_gain_loses_dataset from './json-reports/patient-gain-lose-dataset.json';
+import * as patient_gain_loses_dataset_report from './json-reports/patient-gain-lose-dataset-report.json';
+
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -740,6 +745,14 @@ export class BaseMysqlReport {
                             main: this.cloneJsonSchema(hei_report_patient_list_template)
                         });
                         break;
+                case 'patientGainLoseAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(patient_gain_loses_aggregate),
+                        patientGainLosesBaseReport: this.cloneJsonSchema(patient_gain_loses_base),
+                        patientGainLoseDataset: this.cloneJsonSchema(patient_gain_loses_dataset),
+                        patientGainLoseDatasetReport: this.cloneJsonSchema(patient_gain_loses_dataset_report)
+                    });
+                    break;
                 default:
                     reject('Unknown report ', reportName);
                     break;

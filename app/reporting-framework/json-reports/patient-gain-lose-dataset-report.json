@@ -1,0 +1,60 @@
+{
+    "name": "patientGainLoseDatasetReport",
+    "version": "1.0",
+    "tag": "",
+    "description": "",
+    "uses": [],
+    "sources": [
+        {
+            "table": "etl.hiv_monthly_report_dataset_frozen",
+            "alias": "t1"
+        }
+    ],
+    "columns": [
+        {
+            "type": "simple_column",
+            "alias": "person_id",
+            "column": "t1.person_id"
+        },
+        {
+          "type": "simple_column",
+          "alias": "ending_month",
+          "column": "t1.endDate"
+        },
+        {
+            "type": "simple_column",
+            "alias": "ending_status",
+            "column": "t1.status"
+        },
+        {
+        "type": "simple_column",
+        "alias": "transfer_in_date",
+        "column": "t1.transfer_in_date"
+        },
+        {
+            "type": "simple_column",
+            "alias": "enrollment_date",
+            "column": "t1.enrollment_date"
+        },
+        {
+            "type": "simple_column",
+            "alias": "person_uuid",
+            "column": "t1.person_uuid"
+        }
+    ],
+    "filters": {
+        "conditionJoinOperator": "and",
+        "conditions": [
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "t1.location_uuid = ?",
+                "parameterName": "locationUuid"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "t1.endDate = ?",
+                "parameterName": "endingMonth"
+            }
+        ]
+    }
+}
