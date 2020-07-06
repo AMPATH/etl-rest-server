@@ -42,30 +42,6 @@
         },
         {
             "type": "derived_column",
-            "alias": "dead",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-                "expression": "SUM(dead)"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "ltfu",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-                "expression": "SUM(ltfu)"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "starting_not_active",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-                "expression": "SUM(starting_not_active)"
-            }
-        },
-        {
-            "type": "derived_column",
             "alias": "transferred_in",
             "expressionType": "simple_expression",
             "expressionOptions": {
@@ -86,6 +62,30 @@
             "expressionType": "simple_expression",
             "expressionOptions": {
                 "expression": "SUM(returned_to_care)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "dead",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(dead)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "ltfu",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(ltfu)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "starting_not_active",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(starting_not_active)"
             }
         },
         {

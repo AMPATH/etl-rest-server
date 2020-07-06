@@ -175,8 +175,8 @@ import * as hei_report_patient_list_template from './json-reports/hei-report-pat
 
 import * as patient_gain_loses_base from './json-reports/patient-gain-loses-base.json';
 import * as patient_gain_loses_aggregate from './json-reports/patient-gain-loses-aggregate.json';
-import * as patient_gain_loses_dataset from './json-reports/patient-gain-lose-dataset.json';
-import * as patient_gain_loses_dataset_report from './json-reports/patient-gain-lose-dataset-report.json';
+import * as patient_gain_lose_dataset_1 from './json-reports/patient-gain-lose-dataset-1.json';
+import * as patient_gain_lose_dataset_2 from './json-reports/patient-gain-lose-dataset-2.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -749,8 +749,8 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(patient_gain_loses_aggregate),
                         patientGainLosesBaseReport: this.cloneJsonSchema(patient_gain_loses_base),
-                        patientGainLoseDataset: this.cloneJsonSchema(patient_gain_loses_dataset),
-                        patientGainLoseDatasetReport: this.cloneJsonSchema(patient_gain_loses_dataset_report)
+                        patientGainLoseDatasetOne: this.cloneJsonSchema(patient_gain_lose_dataset_1),
+                        patientGainLoseDatasetTwo: this.cloneJsonSchema(patient_gain_lose_dataset_2)
                     });
                     break;
                 default:

@@ -5,23 +5,23 @@
     "description": "Patient gains and loses",
     "uses": [
         {
-            "name": "patientGainLoseDatasetReport",
+            "name": "patientGainLoseDatasetOne",
             "version": "1.0",
             "type": "dataset_def1"
         },
         {
-            "name": "patientGainLoseDataset",
+            "name": "patientGainLoseDatasetTwo",
             "version": "1.0",
             "type": "dataset_def2"
         }
     ],
     "sources": [
         {
-            "dataSet": "patientGainLoseDatasetReport",
+            "dataSet": "patientGainLoseDatasetTwo",
             "alias": "t3"
         },
         {
-            "dataSet": "patientGainLoseDataset",
+            "dataSet": "patientGainLoseDatasetOne",
             "alias": "t4",
             "join": {
                 "type": "LEFT",
@@ -65,7 +65,7 @@
             "alias": "starting_active",
             "expressionType": "simple_expression",
             "expressionOptions": {
-              "expression": "CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN @starting_active:=1 ELSE @starting_active:=0 END"
+              "expression": "CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END"
             }
         },
         {
@@ -73,7 +73,7 @@
             "alias": "ending_active",
             "expressionType": "simple_expression",
             "expressionOptions": {
-              "expression": "CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN @ending_active:=1 ELSE @ending_active:=0 END"
+              "expression": "(IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0))"
             }
         },
         {
@@ -81,31 +81,7 @@
             "alias": "starting_not_active",
             "expressionType": "simple_expression",
             "expressionOptions": {
-              "expression": "CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 0) and ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN @starting_not_active := 1 ELSE @starting_not_active := 0 END"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "transferred_in",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-              "expression": "CASE WHEN ((CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 0) and ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN @starting_not_active := 1 ELSE @starting_not_active := 0 END) = 1) AND t3.transfer_in_date BETWEEN @startingMonth AND @endingMonth THEN @transferred_in:=1 ELSE @transferred_in:=0 END"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "newly_enrolled",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-              "expression": "CASE WHEN ((CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 0) and ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN @starting_not_active := 1 ELSE @starting_not_active := 0 END) = 1) AND ((CASE WHEN ((CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 0) and ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN @starting_not_active := 1 ELSE @starting_not_active := 0 END) = 1) AND t3.transfer_in_date BETWEEN @startingMonth AND @endingMonth THEN @transferred_in:=1 ELSE @transferred_in:=0 END) = 0) AND t3.enrollment_date BETWEEN @startingMonth AND @endingMonth THEN @newly_enrolled:=1 ELSE @newly_enrolled:=0 END"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "returned_to_care",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-              "expression": "CASE WHEN ((CASE WHEN ((CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 0) and ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN @starting_not_active := 1 ELSE @starting_not_active := 0 END) = 1) AND ((CASE WHEN ((CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 0) and ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN @starting_not_active := 1 ELSE @starting_not_active := 0 END) = 1) AND t3.transfer_in_date BETWEEN @startingMonth AND @endingMonth THEN @transferred_in:=1 ELSE @transferred_in:=0 END) = 0) AND t3.enrollment_date BETWEEN @startingMonth AND @endingMonth THEN @newly_enrolled:=1 ELSE @newly_enrolled:=0 END) = 0) AND ((CASE WHEN ((CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 0) and ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN @starting_not_active := 1 ELSE @starting_not_active := 0 END) = 1) AND t3.transfer_in_date BETWEEN @startingMonth AND @endingMonth THEN @transferred_in:=1 ELSE @transferred_in:=0 END) = 0) AND ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN @starting_active:=1 ELSE @starting_active:=0 END) = 0)  AND ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN @ending_active:=1 ELSE @ending_active:=0 END) = 1) THEN @returned_to_care:=1 ELSE @returned_to_care:=0 END"
+              "expression": "CASE WHEN (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND (IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0)) = 1 THEN 1 ELSE 0 END"
             }
         },
         {
@@ -113,7 +89,31 @@
             "alias": "transferred_out",
             "expressionType": "simple_expression",
             "expressionOptions": {
-              "expression": "CASE WHEN ending_status = 'transfer_out' THEN @transferred_out:=1 ELSE @transferred_out:=0 END"
+              "expression": "CASE WHEN ending_status = 'transfer_out' THEN 1 ELSE 0 END"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "transferred_in",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+              "expression": "CASE WHEN ((CASE WHEN (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND (IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0)) = 1 THEN 1 ELSE 0 END) = 1 AND t3.transfer_in_date BETWEEN '{startingMonth}' AND '{endingMonth}') THEN 1 ELSE 0 END"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "newly_enrolled",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+              "expression": "CASE WHEN ((CASE WHEN (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND (IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0)) = 1 THEN 1 ELSE 0 END) = 1 AND (CASE WHEN ((CASE WHEN (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND (IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0)) = 1 THEN 1 ELSE 0 END) = 1 AND t3.transfer_in_date BETWEEN '{startingMonth}' AND '{endingMonth}') THEN 1 ELSE 0 END) = 0 AND t3.enrollment_date BETWEEN '{startingMonth}' AND '{endingMonth}') THEN 1 ELSE 0 END"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "returned_to_care",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+              "expression": "CASE WHEN (CASE WHEN ((CASE WHEN (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND (IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0)) = 1 THEN 1 ELSE 0 END) = 1 AND (CASE WHEN ((CASE WHEN (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND (IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0)) = 1 THEN 1 ELSE 0 END) = 1 AND t3.transfer_in_date BETWEEN '{startingMonth}' AND '{endingMonth}') THEN 1 ELSE 0 END) = 0 AND t3.enrollment_date BETWEEN '{startingMonth}' AND '{endingMonth}') THEN 1 ELSE 0 END) = 0 AND (CASE WHEN ((CASE WHEN (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND (IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0)) = 1 THEN 1 ELSE 0 END) = 1 AND t3.transfer_in_date BETWEEN '{startingMonth}' AND '{endingMonth}') THEN 1 ELSE 0 END) = 0 AND (CASE WHEN starting_status = 'active' OR starting_status = 'defaulter' THEN 1 ELSE 0 END) = 0 AND ((IF(ending_status = 'active' OR ending_status = 'defaulter', 1, 0))) = 1 THEN 1 ELSE 0 END"
             }
         },
         {
@@ -121,7 +121,7 @@
             "alias": "dead",
             "expressionType": "simple_expression",
             "expressionOptions": {
-              "expression": "CASE WHEN ending_status = 'dead' THEN @dead:=1 ELSE @dead:=0 END"
+              "expression": "CASE WHEN ending_status = 'dead' THEN 1 ELSE 0 END"
             }
         },
         {
@@ -129,7 +129,7 @@
             "alias": "ltfu",
             "expressionType": "simple_expression",
             "expressionOptions": {
-              "expression": "CASE WHEN ending_status = 'ltfu' THEN @ltfu:=1 ELSE @ltfu:=0 END"
+              "expression": "CASE WHEN ending_status = 'ltfu' THEN 1 ELSE 0 END"
             }
         },
         {
@@ -137,7 +137,7 @@
             "alias": "still_active",
             "expressionType": "simple_expression",
             "expressionOptions": {
-              "expression": "CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN @starting_active:=1 ELSE @starting_active:=0 END) = 1) AND ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN @ending_active:=1 ELSE @ending_active:=0 END) = 1) THEN @still_active:=1 ELSE @still_active:=0 END"
+              "expression": "CASE WHEN ((CASE WHEN (starting_status = 'active' OR starting_status = 'defaulter') THEN 1 ELSE 0 END) = 1) AND ((CASE WHEN (ending_status = 'active' OR ending_status = 'defaulter') THEN 1 ELSE 0 END) = 1) THEN 1 ELSE 0 END"
             }
         },
         {
@@ -157,6 +157,16 @@
             {
                 "filterType": "tableColumns",
                 "conditionExpression": "starting_status = 'active' OR starting_status = 'defaulter' OR starting_status IS NULL"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "",
+                "parameterName": "endingMonth"
+            },
+            {
+                "filterType": "tableColumns",
+                "conditionExpression": "",
+                "parameterName": "startingMonth"
             }
         ]
     }
