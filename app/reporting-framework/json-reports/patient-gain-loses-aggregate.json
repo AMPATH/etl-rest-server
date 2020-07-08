@@ -34,18 +34,10 @@
         },
         {
             "type": "derived_column",
-            "alias": "transferred_out",
+            "alias": "starting_not_active",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "SUM(transferred_out)"
-            }
-        },
-        {
-            "type": "derived_column",
-            "alias": "transferred_in",
-            "expressionType": "simple_expression",
-            "expressionOptions": {
-                "expression": "SUM(transferred_in)"
+                "expression": "SUM(starting_not_active)"
             }
         },
         {
@@ -58,18 +50,58 @@
         },
         {
             "type": "derived_column",
-            "alias": "returned_to_care",
+            "alias": "transferred_in",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "SUM(returned_to_care)"
+                "expression": "SUM(transferred_in)"
             }
         },
         {
             "type": "derived_column",
-            "alias": "dead",
+            "alias": "return_to_care",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "SUM(dead)"
+                "expression": "SUM(return_to_care)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "gained_other",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(gained_other)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "transfer_out",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(transfer_out)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "transfer_out_undocumented",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(transfer_out_undocumented)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "transfer_out_documented",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(transfer_out_documented)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "lost_other",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(lost_other)"
             }
         },
         {
@@ -82,10 +114,18 @@
         },
         {
             "type": "derived_column",
-            "alias": "starting_not_active",
+            "alias": "dead",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "SUM(starting_not_active)"
+                "expression": "SUM(dead)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "ending_not_active",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(ending_not_active)"
             }
         },
         {

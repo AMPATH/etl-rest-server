@@ -25,6 +25,27 @@
             "type": "simple_column",
             "alias": "starting_status",
             "column": "t2.status"
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_art_starting",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+              "expression": "(IF(t2.status = 'active' AND cur_arv_meds is not null, 1, 0))"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_on_art_starting",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+              "expression": "(IF(t2.status = 'active' AND cur_arv_meds is null, 1, 0))"
+            }
+        },
+        {
+            "type": "simple_column",
+            "alias": "starting_location_uuid",
+            "column": "t2.location_uuid"
         }
     ],
     "filters": {
