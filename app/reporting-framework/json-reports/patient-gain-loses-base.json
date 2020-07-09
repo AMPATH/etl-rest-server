@@ -71,6 +71,26 @@
             "column": "t3.ending_location_uuid"
         },
         {
+            "type": "simple_column",
+            "alias": "on_art_starting",
+            "column": "t4.on_art_starting"
+        },
+        {
+            "type": "simple_column",
+            "alias": "not_on_art_starting",
+            "column": "t4.not_on_art_starting"
+        },
+        {
+            "type": "simple_column",
+            "alias": "on_art_ending",
+            "column": "t3.on_art_ending"
+        },
+        {
+            "type": "simple_column",
+            "alias": "not_on_art_ending",
+            "column": "t3.not_on_art_ending"
+        },
+        {
             "type": "derived_column",
             "alias": "starting_active",
             "expressionType": "simple_expression",

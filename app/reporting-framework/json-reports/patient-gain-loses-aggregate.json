@@ -18,6 +18,38 @@
     "columns": [
         {
             "type": "derived_column",
+            "alias": "on_art_starting",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(on_art_starting)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_on_art_starting",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(not_on_art_starting)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_art_ending",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(on_art_ending)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_on_art_ending",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(not_on_art_ending)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "starting_active",
             "expressionType": "simple_expression",
             "expressionOptions": {
