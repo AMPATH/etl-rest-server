@@ -122,7 +122,7 @@ export class LabClient {
             json: true,
             insecure: true,
             method: 'POST',
-            timeout: 120000,
+            timeout: 20000,
             form: filterOptions
         };
         // rp(options).then((res)=>{
