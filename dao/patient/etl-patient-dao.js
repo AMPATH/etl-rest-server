@@ -73,6 +73,7 @@ module.exports = function () {
                     summary.arv_first_regimen = helpers.getARVNames(summary.arv_first_regimen);
                     summary['encounter_type_name'] = encounterTypeNames[summary.encounter_type];
                     summary['prev_encounter_type_name'] = encounterTypeNames[summary.prev_encounter_type_hiv];
+                    // console.log("menstruaction status", summary.menstruation_status, summary.encounter_datetime);
                 });
 
                 // Return when done.
