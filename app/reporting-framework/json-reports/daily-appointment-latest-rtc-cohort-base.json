@@ -6,7 +6,7 @@
     "uses": [],
     "sources": [
         {
-            "table": "etl.flat_appointment",
+            "table": "etl.flat_appointment_pocamrs364",
             "alias": "fa"
         }
     ],
@@ -32,12 +32,12 @@
         "conditions": [
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "date(fa.rtc_date) >= '{startDate}' OR date(fa.med_pickup_rtc_date) >= '{startDate}'",
+                "conditionExpression": "date(fa.scheduled_date) >= '{startDate}'",
                 "parameterName": "startDate"
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "date(fa.rtc_date) <= '{startDate}' OR date(fa.med_pickup_rtc_date) <= '{startDate}'",
+                "conditionExpression": "date(fa.scheduled_date) <= '{startDate}'",
                 "parameterName": "endDate"
             },
             {
