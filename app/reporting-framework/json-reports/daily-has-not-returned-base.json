@@ -185,7 +185,7 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "DATE(t2.scheduled_date) < DATE(NOW()) OR DATE(t2.med_pickup_rtc_date) < DATE(NOW())",
+                "conditionExpression": "DATE(t2.scheduled_date) < DATE(NOW())",
                 "parameterName": ""
             },
             {
@@ -207,11 +207,6 @@
               "filterType": "tableColumns",
               "conditionExpression": "t9.out_of_care is NULL",
               "parameterName": ""
-            },
-            {
-                "filterType": "tableColumns",
-                "conditionExpression": "t9.prev_clinical_location_id is NULL || t9.prev_clinical_location_id = t2.location_id || t9.transfer_in = 1",
-                "parameterName": ""
             }
         ]
     }
