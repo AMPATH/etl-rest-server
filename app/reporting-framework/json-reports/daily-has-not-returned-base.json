@@ -200,7 +200,7 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "t9.transfer_out is NULL || t9.transfer_out = 0",
+                "conditionExpression": "t9.transfer_out_location_id is NULL || t9.transfer_out_location_id <> 9999",
                 "parameterName": ""
             },
             {

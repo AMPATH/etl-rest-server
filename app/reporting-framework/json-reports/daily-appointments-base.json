@@ -141,7 +141,7 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "fhs.transfer_out_location_id IS NULL",
+                "conditionExpression": "fhs.transfer_out_location_id IS NULL or fhs.transfer_out_location_id <> 9999",
                 "parameterName": ""
             }
         ]
