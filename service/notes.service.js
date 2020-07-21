@@ -21,7 +21,7 @@
         S1BEHAVIORAL_BARRIERS: 'ed60ef1e-663e-4034-91ff-8d2e601e0fdc',
         S1EMOTIONAL_BARRIERS: '276f872a-34b4-4bf0-b57c-3d912c4720a4',
         S1ECONOMIC_BARRIERS: '5c941db9-4a23-411d-8517-f60e8b7e459d',
-        S1ADHERENCE_PLAN: '5c941db9-4a23-411d-8517-f60e8b7e459d',
+        S1ADHERENCE_PLAN: 'b951337b-21c0-4b6f-81a4-24f10e9c5819',
         S2REVIEW_ADHERENCE_PLAN: 'b6741855-f9e0-456c-ac50-e864638cccd1',
         S2NEW_ISSUES: 'e3162a57-0ad3-4d9d-9aca-dfbf74762075',
         S2REFERRALS_FOLLOWUP: 'f0949b84-f742-4364-a5fc-ecdd9d3c0a07',
@@ -234,6 +234,9 @@
             note.s1EconomicBarriers = _findTextObsValue(encounters, CONCEPT_UUIDS.S1ECONOMIC_BARRIERS,
                 __findObsWithGivenConcept);
 
+            note.s1AdherencePlan = _findTextObsValue(encounters, CONCEPT_UUIDS.S1ADHERENCE_PLAN,
+                __findObsWithGivenConcept);
+
             note.s2AdherencePlan = _findTextObsValue(encounters, CONCEPT_UUIDS.S2ADHERENCE_PLAN,
                 __findObsWithGivenConcept);
 
@@ -264,9 +267,9 @@
             note.s4DiscussViralLoad = _findTextObsValue(encounters, CONCEPT_UUIDS.S4DISCUSS_VIRAL_LOAD,
                 __findObsWithGivenConcept);
 
-            if(note.s1CognitiveBarriers) {
-                console.log('NOTES: ', note);
-            }    
+            // if(note.s1CognitiveBarriers) {
+            //     console.log('NOTES: ', note);
+            // }    
 
             // Sort assessment
             note.assessment.sort(function(ass1, ass2) {
