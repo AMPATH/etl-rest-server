@@ -17,7 +17,22 @@
         CC_HPI: 'a89ffbf4-1350-11df-a1f1-0026b9348838',
         ASSESSMENT: '23f710cc-7f9c-4255-9b6b-c3e240215dba',
         TB_PROPHY_PLAN: 'a89c1cfa-1350-11df-a1f1-0026b9348838',
-        OTHER_ASSESSMENT: '5e4dc798-2cce-4a1a-97e9-bcf22d64b07c'
+        S1COGNITIVE_BARRIERS: '28026dea-3b8d-4d70-9d16-cf40a7f0692c',
+        S1BEHAVIORAL_BARRIERS: 'ed60ef1e-663e-4034-91ff-8d2e601e0fdc',
+        S1EMOTIONAL_BARRIERS: '276f872a-34b4-4bf0-b57c-3d912c4720a4',
+        S1ECONOMIC_BARRIERS: '5c941db9-4a23-411d-8517-f60e8b7e459d',
+        S1ADHERENCE_PLAN: '5c941db9-4a23-411d-8517-f60e8b7e459d',
+        S2REVIEW_ADHERENCE_PLAN: 'b6741855-f9e0-456c-ac50-e864638cccd1',
+        S2NEW_ISSUES: 'e3162a57-0ad3-4d9d-9aca-dfbf74762075',
+        S2REFERRALS_FOLLOWUP: 'f0949b84-f742-4364-a5fc-ecdd9d3c0a07',
+        S2ADHERENCE_PLAN: '984b1200-c5ec-41f9-8e76-1d894312eb41',
+        S3REVIEW_ADHERENCE_PLAN: 'a486c342-fa15-4965-bbad-ff5c312deeae',
+        S3NEW_ISSUES: '2ea6f19b-ba12-4d98-8b96-0b3977093899',
+        S3REFERRALS_FOLLOWUP: 'e7517430-55a4-4673-9d17-736fc1445aaa',
+        S3ADHERENCE_PLAN: 'cb7eaa9d-a3b1-4f68-8d29-fd2be936be33',
+        S3REPEAT_VIRAL_LOAD: '08d99781-41c2-42a1-b8bc-d50b3c84e5d5',
+        S4DISCUSS_VIRAL_LOAD: 'abb4c3f3-2a2f-4736-96e0-5b9cf63cd6b2',
+        OTHER_ASSESSMENT: '5e4dc798-2cce-4a1a-97e9-bcf22d64b07c',
     };
 
     var encOrder = {
@@ -206,6 +221,53 @@
             note.assessment = _findTextObsValue(encounters, CONCEPT_UUIDS.ASSESSMENT,
                 __findObsWithGivenConcept);
 
+            // Get EAC Session 1 notes
+            note.s1CognitiveBarriers = _findTextObsValue(encounters, CONCEPT_UUIDS.S1COGNITIVE_BARRIERS,
+                __findObsWithGivenConcept);
+
+            note.s1BehavioralBarriers = _findTextObsValue(encounters, CONCEPT_UUIDS.S1BEHAVIORAL_BARRIERS,
+                __findObsWithGivenConcept);
+
+            note.s1EmotionalBarriers = _findTextObsValue(encounters, CONCEPT_UUIDS.S1EMOTIONAL_BARRIERS,
+                __findObsWithGivenConcept);
+
+            note.s1EconomicBarriers = _findTextObsValue(encounters, CONCEPT_UUIDS.S1ECONOMIC_BARRIERS,
+                __findObsWithGivenConcept);
+
+            note.s2AdherencePlan = _findTextObsValue(encounters, CONCEPT_UUIDS.S2ADHERENCE_PLAN,
+                __findObsWithGivenConcept);
+
+            note.s2NewIssues = _findTextObsValue(encounters, CONCEPT_UUIDS.S2NEW_ISSUES,
+                __findObsWithGivenConcept);
+
+            note.s2ReferralsFollowup = _findTextObsValue(encounters, CONCEPT_UUIDS.S2REFERRALS_FOLLOWUP,
+                __findObsWithGivenConcept);
+
+            note.s2ReviewAdherencePlan = _findTextObsValue(encounters, CONCEPT_UUIDS.S2REVIEW_ADHERENCE_PLAN,
+                __findObsWithGivenConcept);
+
+            note.s3AdherencePlan = _findTextObsValue(encounters, CONCEPT_UUIDS.S3ADHERENCE_PLAN,
+                __findObsWithGivenConcept);
+
+            note.s3NewIssues = _findTextObsValue(encounters, CONCEPT_UUIDS.S3NEW_ISSUES,
+                __findObsWithGivenConcept);
+
+            note.s3ReferralsFollowup = _findTextObsValue(encounters, CONCEPT_UUIDS.S3REFERRALS_FOLLOWUP,
+                __findObsWithGivenConcept);
+
+            note.s3RepeatViralLoad = _findTextObsValue(encounters, CONCEPT_UUIDS.S3REPEAT_VIRAL_LOAD,
+                __findObsWithGivenConcept);
+
+            note.s3ReviewAdherencePlan = _findTextObsValue(encounters, CONCEPT_UUIDS.S3REVIEW_ADHERENCE_PLAN,
+                __findObsWithGivenConcept);
+
+            note.s4DiscussViralLoad = _findTextObsValue(encounters, CONCEPT_UUIDS.S4DISCUSS_VIRAL_LOAD,
+                __findObsWithGivenConcept);
+
+            if(note.s1CognitiveBarriers) {
+                console.log('NOTES: ', note);
+            }    
+
             // Sort assessment
             note.assessment.sort(function(ass1, ass2) {
                 return moment(ass1.obsDatetime).diff(ass2.obsDatetime);
@@ -220,6 +282,7 @@
             // Get TB prophylaxis
             note.tbProphylaxisPlan = _constructTBProphylaxisPlan(encounters, hivSummary,
                 __findObsWithGivenConcept);
+
         } else {
             console.log('encounters array is null or empty');
         }
