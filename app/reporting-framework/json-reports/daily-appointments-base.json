@@ -91,6 +91,11 @@
             }
         }
     ],
+    "indexDirectives": [
+        {
+          "type": "force",
+          "indexList": ["location_med_pickup_rtc_date"]
+        }],
     "filters": {
         "conditionJoinOperator": "and",
         "conditions": [
@@ -101,7 +106,7 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "date(t2.scheduled_date) <= '{startDate}'",
+                "conditionExpression": "date(t2.scheduled_date) <= '{endDate}'",
                 "parameterName": "endDate"
             },
             {
