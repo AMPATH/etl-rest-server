@@ -69,6 +69,22 @@
         },
         {
             "type": "derived_column",
+            "alias": "not_virally_suppressed_total",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": " IF(program_id IS NULL or pp.program_id = 27, 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_virally_suppressed_in_enhanced_care_active",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "IF(pp.program_id = 27 AND TIMESTAMPDIFF(DAY, latest_clinical_encounter.rtc_date,'{endDate}') <= 28, 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "not_virally_suppressed_not_in_enhanced_care",
             "expressionType": "simple_expression",
             "expressionOptions": {
@@ -113,6 +129,11 @@
             "type": "simple_column",
             "alias": "cur_arv_meds",
             "column": "fhs.cur_arv_meds"
+        },
+        {
+            "type": "simple_column",
+            "alias": "days_since_rtc",
+            "column": "TIMESTAMPDIFF(DAY, latest_clinical_encounter.rtc_date,'{endDate}')"
         }
     ],
     "filters": {
