@@ -60,7 +60,7 @@
             "alias": "wd",
             "join": {
                 "type": "LEFT",
-                "joinCondition": "fhs.person_id = wd.person_id and fhs.location_id = wd.location_id"
+                "joinCondition": "fhs.person_id = wd.person_id"
             }
         },
         {
@@ -80,10 +80,34 @@
         },
         {
             "type": "derived_column",
-            "alias": "eligible_for_dc",
+            "alias": "total_eligible_for_dc",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(fhs.vl_1 < 401 and fhs.vl_2_date IS NOT NULL AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (TIMESTAMPDIFF(MONTH, fhs.ipt_completion_date,date('{endDate}')) >= 6 ) and (timestampdiff(month,fhs.vl_1_date,date('{endDate}')) <= 12 ) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND pp_dc.program_id IS NULL and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fv.weight/((fv.height/100) * (fv.height/100)) >= 18.5 , 1, NULL)"
+                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND (pp_dc.program_id IS NULL or (pp_dc.program_id in (3,9) and pp_dc.date_completed is null)) and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fv.weight/((fv.height/100) * (fv.height/100)) >= 18.5 , 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "eligible_not_on_dc",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND pp_dc.program_id IS NULL and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fv.weight/((fv.height/100) * (fv.height/100)) >= 18.5 , 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "eligible_and_on_dc",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND pp_dc.program_id in (3,9) and pp_dc.date_completed is null and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fv.weight/((fv.height/100) * (fv.height/100)) >= 18.5 , 1, NULL)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "enrolled_not_elligible",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(pp_dc.program_id = 9 and pp_dc.date_completed is null and (fhs.vl_1 > 400 or (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) < 6) or (timestampdiff(year,person.birthdate, date('{endDate}')) < 20) or (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) < 12) or DATE(fhs.prev_clinical_rtc_date_hiv) != DATE(fhs.encounter_datetime) or fhs.is_pregnant IS NOT NULL OR fv.weight/((fv.height/100) * (fv.height/100)) < 18.5), 1, NULL)"
             }
         },
         {
@@ -144,6 +168,11 @@
             "type": "simple_column",
             "alias": "prev_rtc_date",
             "column": "fhs.prev_rtc_date"
+        },
+        {
+            "type": "simple_column",
+            "alias": "dc_group",
+            "column": "ch.name"
         },
         {
             "type": "simple_column",
