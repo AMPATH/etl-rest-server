@@ -6,7 +6,7 @@
     "uses": [],
     "sources": [
         {
-            "table": "etl.flat_appointment_pocamrs364",
+            "table": "etl.flat_appointment",
             "alias": "t2"
         }
     ],
