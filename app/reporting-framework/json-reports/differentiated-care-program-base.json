@@ -3,16 +3,10 @@
     "version": "1.0",
     "tag": "",
     "description": "",
-    "uses": [
-        {
-            "name": "differentiatedCareWeightDataset",
-            "version": "1.0",
-            "type": "dataset_def"
-        }
-    ],
+    "uses": [],
     "sources": [
         {
-            "table": "etl.flat_hiv_summary_v15b",
+            "table": "etl.flat_hiv_summary_v15b_vitals",
             "alias": "fhs"
         },
         {
@@ -21,14 +15,6 @@
             "join": {
                 "type": "LEFT",
                 "joinCondition": "pp_dc.patient_id = fhs.person_id AND pp_dc.program_id in (3,9)  and  (pp_dc.date_completed is null || date(pp_dc.date_completed) >= date('{startDate}')) and  date(pp_dc.date_enrolled) <= date('{endDate}')"
-            }
-        },
-        {
-            "table": "amrs.patient_program",
-            "alias": "pp_viremia",
-            "join": {
-                "type": "left",
-                "joinCondition": "fhs.person_id = pp_viremia.patient_id AND pp_viremia.program_id = 27 AND (pp_viremia.date_completed is null || date(pp_viremia.date_completed) <= date('{endDate}'))"
             }
         },
         {
@@ -54,22 +40,6 @@
                 "type": "left",
                 "joinCondition": "person.person_id = fhs.person_id"
             }
-        },
-        {
-            "dataSet": "differentiatedCareWeightDataset",
-            "alias": "wd",
-            "join": {
-                "type": "LEFT",
-                "joinCondition": "fhs.person_id = wd.person_id"
-            }
-        },
-        {
-            "table": "etl.flat_vitals",
-            "alias": "fv",
-            "join": {
-                "type": "left",
-                "joinCondition": "fv.person_id = wd.person_id and fv.encounter_datetime = wd.latest_encounter_date and fv.location_id = wd.location_id"
-            }
         }
     ],
     "columns": [
@@ -83,7 +53,7 @@
             "alias": "total_eligible_for_dc",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND (pp_dc.program_id IS NULL or (pp_dc.program_id in (3,9) and pp_dc.date_completed is null)) and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fv.weight/((fv.height/100) * (fv.height/100)) >= 18.5 , 1, NULL)"
+                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND (pp_dc.program_id IS NULL or (pp_dc.program_id in (3,9) and pp_dc.date_completed is null)) and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fhs.weight/((fhs.height/100) * (fhs.height/100)) >= 18.5 , 1, NULL)"
             }
         },
         {
@@ -91,7 +61,7 @@
             "alias": "eligible_not_on_dc",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND pp_dc.program_id IS NULL and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fv.weight/((fv.height/100) * (fv.height/100)) >= 18.5 , 1, NULL)"
+                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND pp_dc.program_id IS NULL and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fhs.weight/((fhs.height/100) * (fhs.height/100)) >= 18.5 , 1, NULL)"
             }
         },
         {
@@ -99,7 +69,7 @@
             "alias": "eligible_and_on_dc",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND pp_dc.program_id in (3,9) and pp_dc.date_completed is null and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fv.weight/((fv.height/100) * (fv.height/100)) >= 18.5 , 1, NULL)"
+                "expression": "if(fhs.vl_1 < 401 AND (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) >=6 OR fhs.tb_tx_start_date IS NULL) and (timestampdiff(year,person.birthdate, date('{endDate}')) >= 20) and (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) >= 12) AND pp_dc.program_id in (3,9) and pp_dc.date_completed is null and DATE(fhs.prev_clinical_rtc_date_hiv) = DATE(fhs.encounter_datetime) and fhs.is_clinical_encounter = 1 and fhs.is_pregnant IS NULL and fhs.weight/((fhs.height/100) * (fhs.height/100)) >= 18.5 , 1, NULL)"
             }
         },
         {
@@ -107,7 +77,7 @@
             "alias": "enrolled_not_elligible",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(pp_dc.program_id = 9 and pp_dc.date_completed is null and (fhs.vl_1 > 400 or (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) < 6) or (timestampdiff(year,person.birthdate, date('{endDate}')) < 20) or (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) < 12) or DATE(fhs.prev_clinical_rtc_date_hiv) != DATE(fhs.encounter_datetime) or fhs.is_pregnant IS NOT NULL OR fv.weight/((fv.height/100) * (fv.height/100)) < 18.5), 1, NULL)"
+                "expression": "if(pp_dc.program_id = 9 and pp_dc.date_completed is null and (fhs.vl_1 > 400 or (TIMESTAMPDIFF(MONTH,fhs.tb_tx_start_date,date('{endDate}')) < 6) or (timestampdiff(year,person.birthdate, date('{endDate}')) < 20) or (timestampdiff(month,fhs.arv_first_regimen_start_date, date('{endDate}')) < 12) or DATE(fhs.prev_clinical_rtc_date_hiv) != DATE(fhs.encounter_datetime) or fhs.is_pregnant IS NOT NULL OR fhs.weight/((fhs.height/100) * (fhs.height/100)) < 18.5), 1, NULL)"
             }
         },
         {
@@ -157,12 +127,12 @@
         {
             "type": "simple_column",
             "alias": "height",
-            "column": "fv.height"
+            "column": "fhs.height"
         },
         {
             "type": "simple_column",
             "alias": "weight",
-            "column": "fv.weight"
+            "column": "fhs.weight"
         },
         {
             "type": "simple_column",
@@ -177,7 +147,20 @@
         {
             "type": "simple_column",
             "alias": "bmi",
-            "column": "fv.weight/((fv.height/100) * (fv.height/100))"
+            "column": "fhs.weight/((fhs.height/100) * (fhs.height/100))"
+        },
+        {
+            "type": "simple_column",
+            "alias": "ipt_start_date",
+            "column": "date_format(fhs.ipt_start_date,'%Y-%m-%d')"
+        },
+        {
+            "type": "derived_column",
+            "alias": "completed_IPT",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.ipt_completion_date is not null, 1, 0)"
+            }
         }
     ],
     "filters": {
