@@ -586,7 +586,9 @@ export class BaseMysqlReport {
                 case 'differentiatedCareProgramAggregate':
                     resolve({
                         main: this.cloneJsonSchema(differentiated_care_program_aggregate),
-                        differentiatedCareProgramBase: this.cloneJsonSchema(differentiated_care_program_base)
+                        differentiatedCareProgramBase: this.cloneJsonSchema(differentiated_care_program_base),
+                        hivLatestClinicalEncounterDateBase: this.cloneJsonSchema(hiv_latest_clinical_encounter_date_base)
+
                     });
                     break;
                 case 'surgeReport':

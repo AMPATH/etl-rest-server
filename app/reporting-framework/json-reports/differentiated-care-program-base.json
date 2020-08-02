@@ -3,18 +3,24 @@
     "version": "1.0",
     "tag": "",
     "description": "",
-    "uses": [],
+    "uses": [
+        {
+            "name": "hivLatestClinicalEncounterDateBase",
+            "version": "1.0",
+            "type": "dataset_def"
+        }
+    ],
     "sources": [
         {
             "table": "etl.flat_hiv_summary_v15b",
-            "alias": "fhs"
+            "alias": "fhs2"
         },
         {
             "table": "amrs.patient_program",
             "alias": "pp_dc",
             "join": {
                 "type": "LEFT",
-                "joinCondition": "pp_dc.patient_id = fhs.person_id AND pp_dc.program_id in (3,9)  and  (pp_dc.date_completed is null || date(pp_dc.date_completed) >= date('{startDate}')) and  date(pp_dc.date_enrolled) <= date('{endDate}')"
+                "joinCondition": "pp_dc.patient_id = fhs2.person_id AND pp_dc.program_id in (3,9)  and  (pp_dc.date_completed is null || date(pp_dc.date_completed) >= date('{startDate}')) and  date(pp_dc.date_enrolled) <= date('{endDate}')"
             }
         },
         {
@@ -22,7 +28,7 @@
             "alias": "cm",
             "join": {
                 "type": "left",
-                "joinCondition": "cm.patient_id = fhs.person_id AND cm.voided = 0"
+                "joinCondition": "cm.patient_id = fhs2.person_id AND cm.voided = 0"
             }
         },
         {
@@ -38,7 +44,23 @@
             "alias": "person",
             "join": {
                 "type": "left",
-                "joinCondition": "person.person_id = fhs.person_id"
+                "joinCondition": "person.person_id = fhs2.person_id"
+            }
+        },
+        {
+            "dataSet": "hivLatestClinicalEncounterDateBase",
+            "alias": "latest_clinical_encounter_date",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "latest_clinical_encounter_date.person_id = fhs2.person_id"
+            }
+        },
+        {
+            "table": "etl.flat_hiv_summary_v15b",
+            "alias": "fhs",
+            "join": {
+                "type": "LEFT",
+                "joinCondition": "fhs.person_id = latest_clinical_encounter_date.person_id AND fhs.encounter_datetime = latest_clinical_encounter_date.latest_encounter_date"
             }
         }
     ],
