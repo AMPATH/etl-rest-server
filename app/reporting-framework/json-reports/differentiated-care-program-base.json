@@ -190,6 +190,11 @@
         "conditions": [
             {
                 "filterType": "tableColumns",
+                "conditionExpression": "date(fhs.encounter_datetime) >= ?",
+                "parameterName": "startDate"
+            },
+            {
+                "filterType": "tableColumns",
                 "conditionExpression": "date(fhs.encounter_datetime) <= ?",
                 "parameterName": "endDate"
             },
