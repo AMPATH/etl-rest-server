@@ -154,6 +154,32 @@
                     }
                 ]
             }
+        },
+        {
+            "type": "derived_column",
+            "alias": "newly_enrolled_pregnant",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "prep.is_pregnant = 1 and prep.enrolled_in_prep_this_month = 1",
+                        "value": "is_pregnant"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "newly_enrolled_breastfeeding",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "prep.is_breastfeeding = 1 and prep.enrolled_in_prep_this_month = 1",
+                        "value": "is_breastfeeding"
+                    }
+                ]
+            }
         }
     ],
     "filters": {

@@ -155,6 +155,8 @@ import * as prep_monthly_summary_base_report from './json-reports/prep-monthly-s
 import * as prep_monthly_populationtype_disaggregation from './json-reports/prep-monthly-population-type-disaggregation.json';
 import * as prep_monthly_breastfeeding_disaggregation from './json-reports/prep-monthly-breastfeeding-disaggregation.json';
 import * as prep_monthly_pregnancy_disaggregation from './json-reports/prep-monthly-pregnancy-disaggregation.json';
+import * as prep_monthly_newly_enrolled_breastfeeding_disaggregation from  './json-reports/prep-monthly-newly-enrolled-breastfeeding-disaggregation.json';
+import * as prep_monthly_newly_enrolled_pregnancy_disaggregation from './json-reports/prep-monthly-newly-enrolled-pregnancy-disaggregation.json';
 import * as moh_408 from './json-reports/moh-408.json';
 import * as hei_infant_feeding_aggregate from './json-reports/hei-infant-feeding-aggregate.json';
 import * as hei_infant_feeding_base from './json-reports/hei-infant-feeding-base.json';
@@ -679,6 +681,18 @@ export class BaseMysqlReport {
                         prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
                     });
                     break;
+                case 'prepMonthlyNewlyEnrolledBreastFeedingDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_newly_enrolled_breastfeeding_disaggregation),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break;
+                case 'prepMonthlyNewlyEnrolledPregnancyDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_newly_enrolled_pregnancy_disaggregation),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break; 
                 case 'prepMonthlySummaryPregnancyDisaggregation':
                     resolve({
                         main: this.cloneJsonSchema(prep_monthly_pregnancy_disaggregation),

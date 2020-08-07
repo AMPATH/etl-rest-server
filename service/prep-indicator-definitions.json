@@ -67,36 +67,23 @@
         ]
     },
     {
-        "sectionTitle": "Active on PrEP by Pregnancy",
+        "sectionTitle": "Pregnancy and Breastfeeding",
         "indicators": [
             {
-                "label": "Pregnant",
+                "label": "Active & Pregnant",
                 "indicator": "dc__is_pregnant__is_pregnant__active_on_prep_this_month"
             },
             {
-                "label": "Not Pregnant",
-                "indicator": "dc__is_pregnant__not_pregnant__active_on_prep_this_month"
+                "label": "Newly Enrolled & Pregnant",
+                "indicator": "dc__newly_enrolled_pregnant__is_pregnant__enrolled_in_prep_this_month"
             },
             {
-                "label": "Unknown",
-                "indicator": "dc__is_pregnant__unknown__active_on_prep_this_month"
-            }
-        ]
-    },
-    {
-        "sectionTitle": "Active on PrEP by Breastfeeding",
-        "indicators": [
-            {
-                "label": "Breastfeeding",
+                "label": "Active & BreastFeeding",
                 "indicator": "dc__is_breastfeeding__is_breastfeeding__active_on_prep_this_month"
             },
             {
-                "label": "Not Breastfeeding",
-                "indicator": "dc__is_breastfeeding__not_breastfeeding__active_on_prep_this_month"
-            },
-            {
-                "label": "Unknown",
-                "indicator": "dc__is_breastfeeding__unknown__active_on_prep_this_month"
+                "label": "Newly Enrolled & BreastFeeding",
+                "indicator": "dc__newly_enrolled_breastfeeding__is_breastfeeding__enrolled_in_prep_this_month"
             }
         ]
     }
