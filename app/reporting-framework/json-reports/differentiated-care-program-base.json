@@ -24,19 +24,11 @@
             }
         },
         {
-            "table": "amrs.cohort_member",
-            "alias": "cm",
-            "join": {
-                "type": "left",
-                "joinCondition": "cm.patient_id = fhs2.person_id AND cm.voided = 0"
-            }
-        },
-        {
-            "table": "amrs.cohort",
+            "table": "etl.flat_cohort_members",
             "alias": "ch",
             "join": {
                 "type": "left",
-                "joinCondition": "ch.cohort_id = cm.cohort_id"
+                "joinCondition": "(ch.person_id = fhs2.person_id)"
             }
         },
         {
@@ -164,7 +156,7 @@
         {
             "type": "simple_column",
             "alias": "dc_group",
-            "column": "ch.name"
+            "column": "ch.cohort_name"
         },
         {
             "type": "simple_column",
