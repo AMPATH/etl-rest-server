@@ -146,7 +146,7 @@ import * as prep_aggregate_report from './json-reports/prep-aggregate-report.jso
 import * as prep_dataset_report from './json-reports/prep-dataset-report.json';
 import * as ltfu_surge_baseline_report from './json-reports/ltfus-surge-baseline-base.json';
 import * as ltfu_surge_baseline_aggregate_report from './json-reports/ltfus-surge-baseline-aggregate.json';
-import * as patient_list_prep_template from './json-reports/patient-list-prep-template.json';
+import * as prep_report_patient_list_template from './json-reports/prep-report-patient-list-template.json';
 
 import * as hiv_latest_clinical_encounter_date_base from './json-reports/hiv-latest-clinical-encounter-date-base.json';
 import * as prep_monthly_summary from './json-reports/prep-monthly-summary.json'
@@ -262,9 +262,9 @@ export class BaseMysqlReport {
                         main: this.cloneJsonSchema(patient_list_with_contacts_template)
                     });
                     break;
-                case 'patient-list-prep-template':
+                case 'prep-report-patient-list-template':
                     resolve({
-                        main: this.cloneJsonSchema(patient_list_prep_template)
+                        main: this.cloneJsonSchema(prep_report_patient_list_template)
                     });
                     break;
                 case 'mainDatasetAggregate':
@@ -660,7 +660,8 @@ export class BaseMysqlReport {
                     break;
                 case 'prepMonthlySummaryReport':
                     resolve({
-                        main: this.cloneJsonSchema(prep_monthly_summary)
+                        main: this.cloneJsonSchema(prep_monthly_summary),
+                        
                     });
                     break;
                 case 'prepMonthlySummaryNoDisaggregation':

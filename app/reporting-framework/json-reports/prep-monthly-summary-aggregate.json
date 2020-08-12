@@ -4,11 +4,12 @@
     "tag": "",
     "description": "",
     "uses": [
-         {
-        "name": "prepMonthlySummaryBaseReport",
-        "version": "1.0",
-        "type": "dataset_def"
-    }],
+        {
+            "name": "prepMonthlySummaryBaseReport",
+            "version": "1.0",
+            "type": "dataset_def"
+        }
+    ],
     "sources": [
         {
             "dataSet": "prepMonthlySummaryBaseReport",
@@ -97,14 +98,12 @@
     },
     "transFormDirectives": {
         "joinColumn": "location_id",
-        "skipColumns": [
-        ],
-        "disaggregationColumns": [
-        ]
+        "skipColumns": [],
+        "disaggregationColumns": []
     },
     "dynamicJsonQueryGenerationDirectives": {
         "patientListGenerator": {
-            "useTemplate": "patient-list-prep-template",
+            "useTemplate": "prep-report-patient-list-template",
             "useTemplateVersion": "1.0",
             "generatingDirectives": {
                 "joinDirectives": {
@@ -113,7 +112,8 @@
                     "baseColumn": "person_id",
                     "templateColumn": "person_id"
                 }
-            }
+            },
+            "skipParams": []
         }
     }
 }

@@ -5,6 +5,7 @@ import {
 } from '../app/reporting-framework/multi-dataset-patientlist.report.js';
 import ReportProcessorHelpersService from '../app/reporting-framework/report-processor-helpers.service';
 const indicatorDefinitions = require('./prep-indicator-definitions.json');
+var etlHelpers = require('../etl-helpers');
 export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
 
     constructor(reportName, params) {
@@ -58,6 +59,12 @@ export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
 
                     results.indicators = indicatorLabels;
 
+                    if (results.result.length > 0) {
+                        _.each(results.result, (item) => {
+                            item.cur_prep_meds_names = etlHelpers.getARVNames(item.cur_prep_meds_names);
+                        });
+                    }
+
                     self.resolveLocationUuidsToName(self.params.locationUuids)
                         .then((locations) => {
                             results.locations = locations;
@@ -65,7 +72,7 @@ export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
                         })
                         .catch((err) => {
                             resolve(results);
-                        });
+                         });
 
                 })
                 .catch((err) => {
