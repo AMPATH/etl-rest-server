@@ -8,7 +8,7 @@ var
 
 var Sync = {
 
-  timeout: 3000,
+  timeout: 30000,
 
   nextSyncDateTime: moment().subtract(1, 'minute'),
 
@@ -36,6 +36,7 @@ var Sync = {
   },
 
   process: function () {
+    console.log('Process called...');
 
     var today = new Date().getHours();
 
@@ -76,8 +77,11 @@ var Sync = {
               return Sync.deleteProcessed(data);
             })
             .then(function (deleted) {
+              console.log('Wait 15 seconds before sync next record');
+              setTimeout(function(){
+                Sync.process();
+              },20000);
 
-              Sync.process();
             })
             .catch(function (err) {
 
@@ -91,6 +95,8 @@ var Sync = {
   },
 
   loadDbRecords: function () {
+
+    console.log('loadDbRecord...');
 
     var limit = Sync.records_limit;
 
@@ -109,6 +115,8 @@ var Sync = {
   },
 
   sync: function (data) {
+
+    console.log('sync called...');
 
     var list = [];
 
@@ -158,6 +166,7 @@ var Sync = {
               resolve('str');
             });
         } else {
+          console.log('Currequest parts', parts.split('\r\n'));
           console.log('syncing single record done. ' + patientUuId);
           resolve('str');
         }
