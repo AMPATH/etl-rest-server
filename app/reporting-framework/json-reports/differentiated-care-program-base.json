@@ -109,6 +109,11 @@
         },
         {
             "type": "simple_column",
+            "alias": "status",
+            "column": "dcr.cur_status"
+        },
+        {
+            "type": "simple_column",
             "alias": "ipt_start_date",
             "column": "date_format(dcr.ipt_start_date,'%Y-%m-%d')"
         },
