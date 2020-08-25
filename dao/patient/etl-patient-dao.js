@@ -281,6 +281,7 @@ module.exports = function () {
             });
         })
             .catch(function (e) {
+                console.error('Error fetching notes dependencies', e);
                 // Return empty json on error
                 callback({
                     notes: [],
