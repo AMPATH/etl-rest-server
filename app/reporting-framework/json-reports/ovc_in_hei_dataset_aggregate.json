@@ -79,6 +79,14 @@
             "expressionOptions": {
                 "expression": "sum(hmsd.ovc_non_enrolment_out_of_catchment_area)"
             }
+        },
+        {
+            "type": "derived_column",
+            "alias": "ovc_non_enrolment_undocumented_hei",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "sum(hmsd.ovc_non_enrolment_undocumented_hei)"
+            }
         }
     ],
     "groupBy": {
