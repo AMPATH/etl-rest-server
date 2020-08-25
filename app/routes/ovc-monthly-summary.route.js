@@ -1,7 +1,7 @@
 var authorizer = require('../../authorization/etl-authorizer');
 import {
     OvcMonthlySummary
-} from '../../service/ovc_monthly_summary.service';
+} from '../ovc-report/ovc-monthly-summary.service';
 var etlHelpers = require('../../etl-helpers');
 var privileges = authorizer.getAllPrivileges();
 var preRequest = require('../../pre-request-processing');
