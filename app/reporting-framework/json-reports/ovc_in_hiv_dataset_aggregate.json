@@ -63,18 +63,18 @@
         },
         {
             "type": "derived_column",
-            "alias": "active_and_elligible_for_ovc",
+            "alias": "active_and_eligible_for_ovc",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "sum(hmsd.active_and_elligible_for_ovc)"
+                "expression": "sum(hmsd.active_and_eligible_for_ovc)"
             }
         },
         {
             "type": "derived_column",
-            "alias": "inactive_and_elligible_for_ovc",
+            "alias": "inactive_and_eligible_for_ovc",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "sum(hmsd.inactive_and_elligible_for_ovc)"
+                "expression": "sum(hmsd.inactive_and_eligible_for_ovc)"
             }
         },
         {
@@ -99,6 +99,14 @@
             "expressionType": "simple_expression",
             "expressionOptions": {
                 "expression": "sum(hmsd.ovc_non_enrolment_out_of_catchment_area)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "ovc_non_enrolment_undocumented",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "sum(hmsd.ovc_non_enrolment_undocumented)"
             }
         }
     ],

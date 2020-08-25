@@ -12,32 +12,27 @@
         "sectionTitle": "OVC in Hiv",
         "indicators": [
             {
-                "label": "Active in care",
+                "label": "Active in Care",
                 "indicator": "active_in_care_this_month"
             },
             {
-                "label": "On ART",
-                "indicator": "on_art_this_month"
+                "label": "Active in Care and Eligible for OVC",
+                "indicator": "active_and_eligible_for_ovc"
             },
             {
-                "label": "Active in care and elligible for OVC",
-                "indicator": "active_and_elligible_for_ovc"
-            },
-
-            {
-                "label": "Enrolled in OVC",
+                "label": "Eligible and Enrolled in OVC",
                 "indicator": "enrolled_on_ovc_this_month"
             },
             {
-                "label": "Inactive and elligible for OVC",
-                "indicator": "inactive_and_elligible_for_ovc"
+                "label": "Eligible for OVC and NOT Enrolled",
+                "indicator": "ovc_non_enrolment_undocumented"
             },
             {
-                "label": "Declined OVC enrollment",
+                "label": "Declined OVC Enrollment",
                 "indicator": "ovc_non_enrolment_declined"
             },
             {
-                "label": "Out of catchment area",
+                "label": "Out of OVC Catchment Area",
                 "indicator": "ovc_non_enrolment_out_of_catchment_area"
             }
         ]
@@ -46,8 +41,8 @@
         "sectionTitle": "OVC in Hei",
         "indicators": [
             {
-                "label": "Active and elligible for OVC",
-                "indicator": "active_and_elligible_for_ovc_hei"
+                "label": "Active and Eligible for OVC",
+                "indicator": "active_and_eligible_for_ovc_hei"
             },
 
             {
@@ -55,15 +50,15 @@
                 "indicator": "enrolled_on_ovc_this_month_hei"
             },
             {
-                "label": "Inactive and enrolled in OVC",
-                "indicator": "inactive_and_elligible_for_ovc"
+                "label": "Eligible for OVC and NOT Enrolled",
+                "indicator": "ovc_non_enrolment_undocumented_hei"
             },
             {
-                "label": "Declined OVC enrollment",
+                "label": "Declined OVC Enrollment",
                 "indicator": "ovc_non_enrolment_declined_hei"
             },
             {
-                "label": "Out of catchment area",
+                "label": "Out of Catchment Area",
                 "indicator": "ovc_non_enrolment_out_of_catchment_area_hei"
             }
         ]

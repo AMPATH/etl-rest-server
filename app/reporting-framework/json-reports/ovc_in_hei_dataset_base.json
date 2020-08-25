@@ -69,12 +69,12 @@
         },
         {
             "type": "simple_column",
-            "alias": "active_and_elligible_for_ovc",
+            "alias": "active_and_eligible_for_ovc",
             "column": "hmsd.active_and_elligible_for_ovc"
         },
         {
             "type": "simple_column",
-            "alias": "inactive_and_elligible_for_ovc",
+            "alias": "inactive_and_eligible_for_ovc",
             "column": "hmsd.inactive_and_elligible_for_ovc"
         },
         {
@@ -91,6 +91,14 @@
             "type": "simple_column",
             "alias": "ovc_non_enrolment_declined",
             "column": "hmsd.ovc_non_enrolment_declined"
+        },
+        {
+            "type": "derived_column",
+            "alias": "ovc_non_enrolment_undocumented_hei",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(hmsd.active_and_elligible_for_ovc = 1 and (hmsd.enrolled_on_ovc_this_month is null or hmsd.enrolled_on_ovc_this_month = 0 ) and hmsd.ovc_non_enrolment_declined <> 1 and hmsd.ovc_non_enrolment_out_of_catchment_area <> 1, 1,0)"
+            }
         }
     ],
     "filters": {
