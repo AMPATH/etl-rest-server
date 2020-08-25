@@ -69,12 +69,12 @@
         },
         {
             "type": "simple_column",
-            "alias": "active_and_elligible_for_ovc",
+            "alias": "active_and_eligible_for_ovc",
             "column": "hmsd.active_and_elligible_for_ovc"
         },
         {
             "type": "simple_column",
-            "alias": "inactive_and_elligible_for_ovc",
+            "alias": "inactive_and_eligible_for_ovc",
             "column": "hmsd.inactive_and_elligible_for_ovc"
         },
         {

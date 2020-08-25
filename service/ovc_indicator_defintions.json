@@ -17,7 +17,7 @@
             },
             {
                 "label": "Active in Care and Eligible for OVC",
-                "indicator": "active_and_elligible_for_ovc"
+                "indicator": "active_and_eligible_for_ovc"
             },
             {
                 "label": "Eligible and Enrolled in OVC",
@@ -42,7 +42,7 @@
         "indicators": [
             {
                 "label": "Active and Eligible for OVC",
-                "indicator": "active_and_elligible_for_ovc_hei"
+                "indicator": "active_and_eligible_for_ovc_hei"
             },
 
             {
