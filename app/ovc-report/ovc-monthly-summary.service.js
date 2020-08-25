@@ -1,11 +1,11 @@
 import {
     MultiDatasetPatientlistReport
-} from '../app/reporting-framework/multi-dataset-patientlist.report';
-import ReportProcessorHelpersService from '../app/reporting-framework/report-processor-helpers.service';
+} from '../reporting-framework/multi-dataset-patientlist.report';
+import ReportProcessorHelpersService from '../reporting-framework/report-processor-helpers.service';
 import { Promise } from 'bluebird';
-import indicatorDefinitions from './ovc_indicator_defintions.json';
+import indicatorDefinitions from './ovc-indicator-definitions.json';
 const Moment = require('moment');
-const dao = require('../etl-dao');
+const dao = require('../../etl-dao');
 export class OvcMonthlySummary extends MultiDatasetPatientlistReport {
     constructor(reportName, params) {
         if (params.isAggregated) {
