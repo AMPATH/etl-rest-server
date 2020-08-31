@@ -780,7 +780,7 @@ export class BaseMysqlReport {
                     })
                 case 'ovc-patient-list-template':
                     resolve({
-                        main: this.cloneJsonSchema(ovc_patient_list_template)
+                        main: this.cloneJsonSchema(ovc_patient_list_template)   
                     });
                     break;
                 default:
