@@ -8,7 +8,7 @@ var
 
 var Sync = {
 
-  timeout: 3000,
+  timeout: config.eidSyncSettings.timeout,
 
   nextSyncDateTime: moment().subtract(1, 'minute'),
 
@@ -76,8 +76,9 @@ var Sync = {
               return Sync.deleteProcessed(data);
             })
             .then(function (deleted) {
-
-              Sync.process();
+              setTimeout(function(){
+                Sync.process();
+              },config.eidSyncSettings.syncInterval);
             })
             .catch(function (err) {
 
@@ -127,7 +128,7 @@ var Sync = {
 
     var protocol = config.etl.tls ? 'https' : 'http';
 
-    var url = protocol + '://' + config.etl.host + ':' + config.etl.port + '/etl/patient-lab-orders?patientUuId=' + patientUuId;
+    var url = protocol + '://' + config.etl.host + ':' + config.etl.port + '/etl/patient-lab-orders?patientUuId=' + patientUuId + '&mode=batch';
 
     var usernamePass = config.eidSyncCredentials.username + ":" + config.eidSyncCredentials.password;
     var auth = "Basic " + new Buffer(usernamePass).toString('base64');

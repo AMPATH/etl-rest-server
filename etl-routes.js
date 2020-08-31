@@ -73,6 +73,9 @@ import {
 } from './service/retention-appointment-tracing-service';
 
 
+var syncPreproc = require('./app/lab-integration/lab-sync-pre-processor.service');
+
+
 module.exports = function () {
 
     var routes =
@@ -692,38 +695,50 @@ module.exports = function () {
                     },
                     handler: function (request, reply) {
                         let EIDLabReminderService = require('./service/eid/eid-lab-reminder.service');
-                        EIDLabReminderService.pendingEIDReminders(request.params, config.hivLabSystem)
-                            .then((eidReminders) => {
-                                let combineRequestParams = Object.assign({}, request.query, request.params);
-                                combineRequestParams.limitParam = 1;
-                                let reportParams = etlHelpers.getReportParams('clinical-reminder-report', ['referenceDate', 'patientUuid', 'offSetParam', 'limitParam'], combineRequestParams);
-
-                                let report = new BaseMysqlReport('clinicalReminderReport', reportParams.requestParams);
-                                report.generateReport().then((results) => {
-                                    try {
-                                        if (results.results.results.length > 0) {
-                                            let processedResults = patientReminderService.generateReminders(results.results.results, eidReminders);
-                                            results.result = processedResults;
-                                        } else {
-                                            results.result = {
-                                                person_uuid: combineRequestParams.person_uuid,
-                                                reminders: []
-                                            };
-                                        }
-                                        reply(results);
-                                    } catch (error) {
-                                        console.log('Error generating reminders', error);
-                                        reply(Boom.badImplementation('An internal error occurred'));
-                                    }
-                                }).catch((error) => {
-                                    console.log('Error generating reminders', error);
-                                    reply(Boom.badImplementation('An internal error occurred'));
+                        let combineRequestParams = Object.assign({}, request.query, request.params);
+                        syncPreproc.processPendingLabResultRequest(request.params.patientUuid)
+                        .then((cachedResults)=> {
+                             if(cachedResults.length > 0){
+                                EIDLabReminderService.generateRemindersReport(combineRequestParams,cachedResults)
+                                .then((report) => {
+                                    reply(report)
                                 });
-                            }).catch((err) => {
-                                console.log('EID lab results err', err);
-                                reply(err);
-                            });
 
+                             }else{
+                                syncPreproc.hasPendingVLOrder(request.params.patientUuid).then((pendingVlResults) => {
+                                   if(pendingVlResults.size > 0){
+                                    EIDLabReminderService.pendingEIDReminders(request.params, config.hivLabSystem)
+                                    .then((eidReminders) => {
+                                        EIDLabReminderService.generateRemindersReport(combineRequestParams,eidReminders)
+                                          .then((result) => {
+                                                reply(result);
+                                          }).catch((error) => {
+                                              reply(error);
+                                          });
+                                       
+                                    }).catch((err) => {
+                                        reply(err);
+                                    });
+
+                                   }else{
+
+                                    EIDLabReminderService.generateRemindersReport(combineRequestParams,[])
+                                          .then((result) => {
+                                                reply(result);
+                                          }).catch((error) => {
+                                              reply(error);
+                                          });
+                                         
+                                   }
+                                }).catch((error) => {
+
+                                });
+
+                             }
+                        }).catch((error) => {
+                            reply(error);
+                        });
+                        
                     },
                     description: 'Get a list of reminders for selected patient and indicators',
                     notes: 'Returns a  list of reminders for selected patient and indicators on a given reference date',
@@ -3256,7 +3271,17 @@ module.exports = function () {
                     handler: function (request, reply) {
                         if (config.eidSyncOn === true) {
                             const labSyncService = new LabSyncService();
-                            labSyncService.syncAllLabsByPatientUuid(request.query.patientUuId, reply);
+                            syncPreproc.processLabSyncReqest(request.query).then((validRequest) => {
+                                console.log();
+                                if(validRequest){
+                                    labSyncService.syncAllLabsByPatientUuid(request.query.patientUuId, reply);
+                                }else{
+                                    reply(validRequest);
+                                }
+                            }).catch((error) => {
+                                    console.error('ERROR: ', error);
+                                    reply(error);
+                            });;
                         } else {
                             reply(Boom.notImplemented('Sorry, sync service temporarily unavailable.'));
                         }
@@ -3271,7 +3296,8 @@ module.exports = function () {
                     handler: function (request, reply) {
                         if (config.eidSyncOn === true) {
                             const labSyncService = new LabSyncService();
-                            labSyncService.syncAllLabsByPatientUuid(request.query.patientUuid, reply);
+                            // labSyncService.syncAllLabsByPatientUuid(request.query.patientUuid, reply);
+                            reply({});
                         }
                         else
                             reply(Boom.notImplemented('Sorry, sync service temporarily unavailable.'));

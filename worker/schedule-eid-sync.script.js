@@ -135,7 +135,8 @@ var service = {
             // also pick items from previously saved error queue
         }
         // console.log('queue', service.errorQueue);
-        if (service.weekly_sync) {
+        // if (service.weekly_sync) {
+            /*
             let startDateVlPending = format('yyyy-MM-dd', moment(new Date()).subtract(3, 'months').toDate());
             console.log('Patients with missing vl');
             service.schedulePatientsWithMissingVlPastOneYear()
@@ -157,16 +158,17 @@ var service = {
                     console.log('Exiting scheduler...');
                     process.exit(1);
                 });
-        } else {
-            service.scheduleQueue()
-                .then(function (result) {
+            */
+        // } else {
+           // service.scheduleQueue()
+            //    .then(function (result) {
                     // console.log('Queue passed',result)
                     // if (service.errorQueue.length === 0) {
-                    console.info('*********************************');
-                    console.info('Scheduling completed successfully');
-                    console.info('*********************************');
-                    console.info(service.scheduledSuccessfully);
-                    service.logSuccessfulScheduling(service.scheduledSuccessfully);
+             //       console.info('*********************************');
+             //       console.info('Scheduling completed successfully');
+             //       console.info('*********************************');
+             //       console.info(service.scheduledSuccessfully);
+             //       service.logSuccessfulScheduling(service.scheduledSuccessfully);
 
                     // attempt for pending vl orders
                     // Attempt to schedule patients with pending vl orders
@@ -208,14 +210,14 @@ var service = {
                             process.exit(1);
                         });
 
-                })
-                .catch(function (error) {
-                    service.logErrorWhenScheduling(error);
-                    console.log('Error', error);
-                    console.log('An expected error happened while scheduling...');
-                    process.exit(1);
-                });
-        }
+               // })
+               // .catch(function (error) {
+               //     service.logErrorWhenScheduling(error);
+               //     console.log('Error', error);
+               //     console.log('An expected error happened while scheduling...');
+               //     process.exit(1);
+               // });
+        // }
 
 
     },
@@ -435,7 +437,7 @@ var service = {
         });
     },
     schedulePatientsWithPendingOrders: function (startDate) {
-        var sql = "replace into  etl.eid_sync_queue(person_uuid) (select distinct uuid from (select t3.uuid, t1.patient_id, t1.order_id, t2.order_id as obs_order_id, t1.date_activated from amrs.orders t1  inner join amrs.person t3 on t3.person_id = t1.patient_id left outer join amrs.obs t2 on t1.order_id = t2.order_id having obs_order_id is null) t where t.date_activated > date('?'))";
+        var sql = "replace into  etl.eid_sync_queue(person_uuid) (select distinct uuid from (select t3.uuid, t1.patient_id, t1.order_id, t2.order_id as obs_order_id, t1.date_activated from amrs.orders t1  inner join amrs.person t3 on t3.person_id = t1.patient_id left outer join amrs.obs t2 on t1.order_id = t2.order_id having obs_order_id is null) t where t.date_activated > date('?') ORDER BY t.date_activated DESC limit 2000)";
         sql = sql.replace('?', startDate);
         // console.log(sql);
 

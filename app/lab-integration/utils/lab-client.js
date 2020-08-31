@@ -39,7 +39,7 @@ export class LabClient {
 
     fetchPendingViralLoad(filterOptions, offset) {
         if (!filterOptions) {
-            throw (Error('Please supply filter options'));
+            throw (Error('Please supply fetchPendingViralLoad filter options'));
         }
         filterOptions.test = 2;
         filterOptions.dispatched = 0;
@@ -57,7 +57,6 @@ export class LabClient {
         filterOptions.test = 3;
         filterOptions.dispatched = 1;
         return this.getFetchRequest(filterOptions, offset).catch(function (err) {
-            //return error;
             return err;
         });
     }
@@ -144,16 +143,34 @@ export class LabClient {
                 if(unknownMFL.length > 0) {
                     // post unknown MFL code to slack
                     console.warn('Unknown MFL codes', unknownMFL);
+
                 }
                 // console.log('RESULTS', response);
                 resolve(response);
             }).catch((err)=>{
-                console.error('LAB INTEGRATION ERROR:', err);
-                this.logRequestError(err,options).then((result) => {
-                    reject(err);
-                }).catch((error) => {
-                    reject(err);
-                });
+                // console.error('LAB INTEGRATION ERROR:', err);
+                if(err.message){
+                    if(err.statusCode === 400){
+                        resolve([]);
+
+                    }else{
+
+                        this.logRequestError(err,options).then((result) => {
+                            reject(err);
+                        }).catch((error) => {
+                            reject(err);
+                        });
+
+                    }
+                }else{
+
+                    this.logRequestError(err,options).then((result) => {
+                        reject(err);
+                    }).catch((error) => {
+                        reject(err);
+                    });
+
+                }
             });
         });
     }
