@@ -128,7 +128,7 @@
     },
     "dynamicJsonQueryGenerationDirectives": {
         "patientListGenerator": {
-            "useTemplate": "patient-list-frozen-template",
+            "useTemplate": "ovc-patient-list-template",
             "useTemplateVersion": "1.0",
             "generatingDirectives": {
                 "joinDirectives": {
