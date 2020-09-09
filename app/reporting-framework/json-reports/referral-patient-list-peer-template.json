@@ -47,7 +47,7 @@
                 "type": "LEFT",
                 "joinCondition": "peer_initial.person_id = t1.person_id AND peer_initial.encounter_type = 192"
             }
-        }
+        },
         {
             "table": "etl.flat_cdm_peer_navigation",
             "alias": "peer_follow_up",
