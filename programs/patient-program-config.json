@@ -1612,16 +1612,20 @@
       "allowMultipleEnrollment": false,
       "stateChangeEncounterTypes": {
         "enrollment": [],
-        "transfer": [{
-          "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-          "name": "AMPATH POC Transfer Out Form v0.01",
-          "required": true
-        }],
-        "discharge": [{
-          "uuid": "13fdaf27-51a2-4745-8a26-dac250fd29cd",
-          "name": "AMPATH POC OVC Exit Form V1.0",
-          "required": true
-        }]
+        "transfer": [
+          {
+            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
+            "name": "AMPATH POC Transfer Out Form v0.01",
+            "required": true
+          }
+        ],
+        "discharge": [
+          {
+            "uuid": "13fdaf27-51a2-4745-8a26-dac250fd29cd",
+            "name": "AMPATH POC OVC Exit Form V1.0",
+            "required": true
+          }
+        ]
       }
     },
     "dataDependencies": [
@@ -4125,31 +4129,36 @@
       {
         "uuid": "097e4a13-f874-4ecc-b5c9-122ade250f99",
         "name": "HEI Visit",
-        "encounterTypes": [{
-          "uuid": "5e019c94-0f80-49b7-8593-28100eb4f787",
-          "display": "HEIFOLLOWUP"
-        }, {
-          "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-          "display": "HIVTRIAGE"
-        }, {
-          "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-          "display": "DEATHREPORT"
-        }, {
-          "uuid": "df5547bc-1350-11df-a1f1-0026b9348838",
-          "display": "OUTREACHFIELDFU"
-        },
-        {
-          "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-          "display": "COVIDSCREENING"
-        },
-        {
-          "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
-          "display": "COVIDCASEREPORTING"
-        },
-        {
-          "uuid": "824ca90d-c313-4d7e-bc99-119871d927cb",
-          "display": "OVCNONENROLLMENT"
-        }]
+        "encounterTypes": [
+          {
+            "uuid": "5e019c94-0f80-49b7-8593-28100eb4f787",
+            "display": "HEIFOLLOWUP"
+          },
+          {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          },
+          {
+            "uuid": "df5547bc-1350-11df-a1f1-0026b9348838",
+            "display": "OUTREACHFIELDFU"
+          },
+          {
+            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
+            "display": "COVIDSCREENING"
+          },
+          {
+            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
+            "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "824ca90d-c313-4d7e-bc99-119871d927cb",
+            "display": "OVCNONENROLLMENT"
+          }
+        ]
       },
       {
         "uuid": "015af4d4-67cb-45a3-9929-8dbd53b1e47c",
