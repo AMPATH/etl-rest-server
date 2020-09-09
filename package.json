@@ -14,7 +14,7 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write ."
   },
-   "husky": {
+  "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
