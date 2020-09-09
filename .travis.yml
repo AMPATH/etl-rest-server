@@ -2,13 +2,13 @@ sudo: required
 language: node_js
 node_js:
 - '10'
-services:	
+services:
   - docker
 before_install:
   - export TZ=Africa/Nairobi
   - date
   - npm install -g node-gyp
-  - docker build -f docker/etl-rest-server/Dockerfile -t ampathke/etl-services:$TRAVIS_BRANCH .
+  - docker build -f docker/etl-rest-server/Dockerfile -t ampathke/etl-services:"$TRAVIS_BRANCH" .
   - cp $TRAVIS_BUILD_DIR/conf/config.example.json $TRAVIS_BUILD_DIR/conf/config.json
 addons:
   apt:

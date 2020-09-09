@@ -61,7 +61,7 @@
             "alias": "on_tdf_3tc_efv_400",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "IF(fhs.cur_arv_meds REGEXP '(802.*633.*628)|(802.*628.*633)|(628.*802.*633)|(628.*633.*802)|(633.*802.*628)|(633.*628.*802)' AND fhs.cur_arv_drugs REGEXP '(1088.*598)', 1, NULL) "
+                "expression": "IF(fhs.cur_arv_meds REGEXP '(802.*633.*628)|(802.*628.*633)|(628.*802.*633)|(628.*633.*802)|(633.*802.*628)|(633.*628.*802)' AND fhs.cur_arv_drugs LIKE '%6964=598%', 1, NULL) "
             }
         },
         {
@@ -69,7 +69,7 @@
             "alias": "on_tdf_3tc_efv_600",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "IF(fhs.cur_arv_meds REGEXP '(802.*633.*628)|(802.*628.*633)|(628.*802.*633)|(628.*633.*802)|(633.*802.*628)|(633.*628.*802)' AND (fhs.cur_arv_drugs REGEXP '(1088.*38)' OR fhs.cur_arv_drugs IS NULL), 1, NULL) "
+                "expression": "IF(fhs.cur_arv_meds REGEXP '(802.*633.*628)|(802.*628.*633)|(628.*802.*633)|(628.*633.*802)|(633.*802.*628)|(633.*628.*802)' AND fhs.cur_arv_drugs LIKE '%6964=38%', 1, NULL) "
             }
         },
         {
@@ -234,6 +234,94 @@
         },
         {
             "type": "derived_column",
+            "alias": "on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if((fhs.contraceptive_method IS NOT NULL AND fhs.contraceptive_method IN (190 , 780, 907, 6218, 6217, 5841, 6717, 6718, 6725, 8134, 5274, 8300, 5279 , 5278, 5275, 5276, 6220, 6700, 6701, 9510, 9511, 9734, 9735, 10817)),1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_short_term_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.contraceptive_method is not null AND fhs.contraceptive_method in (190,780,907,6218,6217,5841,6717,6718,6725,8134,5274,8300),1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_long_term_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.contraceptive_method in (5279,5278,5275,5276,6220,6700,6701,9510,9511,9734,9735,10817),1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_short_term_modern_contraception_pnc",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.visit_type in (68, 55, 52, 18) AND fhs.contraceptive_method is not null AND fhs.contraceptive_method in (190,780,907,6218,6217,5841,6717,6718,6725,8134,5274,8300), 1, null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_long_term_modern_contraception_pnc",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.visit_type in (68, 55, 52, 18) AND fhs.contraceptive_method in (5279,5278,5275,5276,6220,6700,6701,9510,9511,9734,9735,10817), 1, null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_modern_contraception_pnc",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.contraceptive_method IS NOT NULL AND fhs.contraceptive_method IN (190 , 780, 907, 6218, 6217, 5841, 6717, 6718, 6725, 8134, 5274, 8300, 5279 , 5278, 5275, 5276, 6220, 6700, 6701, 9510, 9511, 9734, 9735, 10817) AND fhs.visit_type in (68, 55, 52, 18), 1, null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if((fhs.contraceptive_method IS NULL or fhs.contraceptive_method in (6219 , 1624, 6707, 1067, 1107, 10956, 5622, 5277)),1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "not_on_modern_contraception_pnc",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if((fhs.contraceptive_method IS NULL or fhs.contraceptive_method in (6219 , 1624, 6707, 1067, 1107, 10956, 5622, 5277)) AND fhs.visit_type in (68, 55, 52, 18) ,1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "in_pnc",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.visit_type in (68, 55, 52, 18) ,1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "on_art_and_not_on_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if((fhs.contraceptive_method IS NULL OR fhs.contraceptive_method = 1107) and fhs.cur_arv_line is not null,1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "started_modern_contraception",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(date(fhs.modern_contraceptive_method_start_date) between '{startDate}' and '{endDate}',1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
             "alias": "pregnant",
             "expressionType": "simple_expression",
             "expressionOptions": {
@@ -246,6 +334,14 @@
             "expressionType": "simple_expression",
             "expressionOptions": {
                 "expression": "if(fhs.is_pregnant is not null and fhs.cur_arv_line is not null,1,null)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "pregnant_and_started_art",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "if(fhs.is_pregnant is not null and date(fhs.arv_first_regimen_start_date) between '{startDate}' and '{endDate}',1,null)"
             }
         },
         {
@@ -388,12 +484,12 @@
         "conditions": [
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "fhs.encounter_datetime >= ?",
+                "conditionExpression": "DATE(fhs.encounter_datetime) >= ?",
                 "parameterName": "startDate"
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "fhs.encounter_datetime <= ?",
+                "conditionExpression": "DATE(fhs.encounter_datetime) <= ?",
                 "parameterName": "endDate"
             },
             {
@@ -428,7 +524,7 @@
             },
             {
                 "filterType": "tableColumns",
-                "conditionExpression": "(fhs.next_clinical_datetime_hiv is null or fhs.next_clinical_datetime_hiv  >= ?)",
+                "conditionExpression": "(fhs.next_clinical_datetime_hiv is null or DATE(fhs.next_clinical_datetime_hiv) > ?)",
                 "parameterName": "endDate"
             }
         ]
