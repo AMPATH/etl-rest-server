@@ -12,20 +12,31 @@ import { VLAdapter } from './adapters/vl-adapter';
 import { DNAPCRAdapter } from './adapters/dnapcr-adpater';
 import { CD4Adapter } from './adapters/cd4-adapter';
 import { EidCompareOperator } from './utils/eid-compare-operator';
+import { PatientLastOrderLocationDao } from '../../dao/eid/eid-patient-last-order-location';
 
 export class LabSyncService {
   syncAllLabsByPatientUuid(patientUuid, reply) {
     let tasks = [];
-    Object.keys(config.hivLabSystem).forEach((labLocation) => {
+    const isAffliated = this.isPatientLastOrderLocationAffliatedToAlupe(patientUuid);
+    if(!isAffliated) {
       tasks.push((cb) => {
-        // delay alupe for a few ms
-        cb(null, this.syncLabsByPatientUuid(patientUuid, labLocation, labLocation === 'alupe' ? 50 : 0).then((result)=>{
+        cb(null, this.syncLabsByPatientUuid(patientUuid, 'ampath', 0).then((result)=>{
           return result;
         }));
       });
-    });
+    } else {
+      Object.keys(config.hivLabSystem).forEach((labLocation) => {
+        tasks.push((cb) => {
+          // delay alupe for a few ms
+          cb(null, this.syncLabsByPatientUuid(patientUuid, labLocation, labLocation === 'alupe' ? 50 : 0).then((result)=>{
+            return result;
+          }));
+        });
+      });
+    }
+
     async.parallel(async.reflectAll(tasks), (err, results) => {
-     
+
       // currently we have duplicate data in db. Try to remove here
       Promise.all(results.map((result) => result.value)).then((lab_data) => {
         const _lab_data = _.map(lab_data, (lab) => {
@@ -39,11 +50,11 @@ export class LabSyncService {
         console.log('sync service error', err);
         reply(Boom.notFound('Sorry, sync service temporarily unavailable.'));
       });
-      
+
     });
   }
 
- 
+
   syncLabsByPatientUuid(patientUuid, labLocation, delay) {
     //obsService.getPatientIdentifiers(patientUuid);
     return this.getLabSyncLog(patientUuid).then((result) => {
@@ -67,7 +78,7 @@ export class LabSyncService {
             });
         }
         else {
-      
+
             return this.syncAndGetPatientLabResults(patientUuid, labLocation).then((result) => {
               return this.syncLabsByPatientUuid(patientUuid,labLocation);
             }).catch((err)=>{
@@ -256,6 +267,25 @@ export class LabSyncService {
 
   handleLabRequestError(error) {
     throw Error(error.message)
+  }
+
+  isPatientLastOrderLocationAffliatedToAlupe(patientUuid) {
+    const dao = new PatientLastOrderLocationDao();
+    let lastOrderLocation = 0 ;
+
+    // TODO Refactor to load Alupe Lab affliated locations from config JSON rather than static array
+    //Busia, Busia MCH, port victoria, Bumala A, Bumala B, Osieko, Matayos, Mukhubola, Teso, Malaba,
+    //Kamolo, Angurai, Changara, Mt. Elgon, Cheptais
+    const alupeLabLocations = [19, 230, 20, 55, 83, 100, 130, 78, 12, 91, 106, 65, 90, 9, 66];
+
+    dao.getPatientLastOrderLocation(patientUuid).then(
+      (result) => {
+        console.log("Last order location: ", result.location);
+        lastOrderLocation = result.location;
+      }
+    ).catch((error) => "Error getting patient last order location " + error);
+
+    return alupeLabLocations.includes(lastOrderLocation);
   }
 
   getLabSyncLog(patientUuid) {
