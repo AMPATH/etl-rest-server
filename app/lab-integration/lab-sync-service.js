@@ -12,20 +12,33 @@ import { VLAdapter } from './adapters/vl-adapter';
 import { DNAPCRAdapter } from './adapters/dnapcr-adpater';
 import { CD4Adapter } from './adapters/cd4-adapter';
 import { EidCompareOperator } from './utils/eid-compare-operator';
+import { PatientLastOrderLocationService } from '../../service/eid/eid-patient-last-order-location.service';
 
 export class LabSyncService {
   syncAllLabsByPatientUuid(patientUuid, reply) {
     let tasks = [];
-    Object.keys(config.hivLabSystem).forEach((labLocation) => {
-      tasks.push((cb) => {
-        // delay alupe for a few ms
-        cb(null, this.syncLabsByPatientUuid(patientUuid, labLocation, labLocation === 'alupe' ? 50 : 0).then((result)=>{
-          return result;
-        }));
-      });
-    });
+    const service = new PatientLastOrderLocationService();
+    service.isPatientLastOrderLocationAffliatedToAlupe(patientUuid).then( isAffliated => {
+      if(!isAffliated) {
+        tasks.push((cb) => {
+          cb(null, this.syncLabsByPatientUuid(patientUuid, 'ampath', 0).then((result)=>{
+            return result;
+          }));
+        });
+      } else {
+        Object.keys(config.hivLabSystem).forEach((labLocation) => {
+          tasks.push((cb) => {
+            // delay alupe for a few ms
+            cb(null, this.syncLabsByPatientUuid(patientUuid, labLocation, labLocation === 'alupe' ? 50 : 0).then((result)=>{
+              return result;
+            }));
+          });
+        });
+      }
+    })
+
     async.parallel(async.reflectAll(tasks), (err, results) => {
-     
+
       // currently we have duplicate data in db. Try to remove here
       Promise.all(results.map((result) => result.value)).then((lab_data) => {
         const _lab_data = _.map(lab_data, (lab) => {
@@ -39,11 +52,11 @@ export class LabSyncService {
         console.log('sync service error', err);
         reply(Boom.notFound('Sorry, sync service temporarily unavailable.'));
       });
-      
+
     });
   }
 
- 
+
   syncLabsByPatientUuid(patientUuid, labLocation, delay) {
     //obsService.getPatientIdentifiers(patientUuid);
     return this.getLabSyncLog(patientUuid).then((result) => {
@@ -67,7 +80,7 @@ export class LabSyncService {
             });
         }
         else {
-      
+
             return this.syncAndGetPatientLabResults(patientUuid, labLocation).then((result) => {
               return this.syncLabsByPatientUuid(patientUuid,labLocation);
             }).catch((err)=>{
