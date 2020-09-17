@@ -9,9 +9,13 @@ var etlHelpers = require('../etl-helpers');
 export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
 
     constructor(reportName, params) {
+        if (params.isAggregated) {
+            params.excludeParam = ['location_id'];
+            params.joinColumnParam = 'join_location';
+        }
+
         super(reportName, params)
     }
-
     getAggregateReport(reportParams) {
         const that = this;
         return new Promise((resolve, reject) => {

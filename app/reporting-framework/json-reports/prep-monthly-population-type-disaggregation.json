@@ -45,7 +45,7 @@
         "excludeParam": "excludeParam"
     },
     "transFormDirectives": {
-        "joinColumn": "location_id",
+        "joinColumn": "location_uuid",
         "skipColumns": [
             "location_uuid"
         ],
