@@ -21,30 +21,37 @@ module.exports = definition;
 
 
 function processLabSyncReqest(params) {
+  const hasVisitStartedEnabled = config.eid.filterOptions.hasVisitStartedEnabled;
+  console.log("has visit started enabled: "+ hasVisitStartedEnabled);
   return new Promise(function (resolve, reject) {
     determineIfTestPatient(params.patientUuId)
-            .then((result) => {
-                     if(result === false){
-                        const isBatch = isBatchMode(params);
-                        if(isBatch === true){
-                          resolve(true);
-                        }else{
-                              hasVisitStartedToday(params.patientUuId)
-                                .then((result) => {
-                                  if (result === true) {
-                                    resolve(true);
-                                  } else {
-                                    resolve(false);
-                                  }
-                                }).catch((error)=> {
-                                    reject(error);
-                                });
-                        }
-                     }else{
-                         reject('ERROR: is a TestPatient');
-                     }
-      }).catch((error)=> {
-                  reject('ERROR: isTestPatient', error);
+      .then((result) => {
+        if (result === false) {
+          const isBatch = isBatchMode(params);
+          if (isBatch === true) {
+            resolve(true);
+          } else {
+            if (hasVisitStartedEnabled) {
+              console.log('Filter added');
+              hasVisitStartedToday(params.patientUuId)
+                .then((result) => {
+                  if (result === true) {
+                    resolve(true);
+                  } else {
+                    resolve(false);
+                  }
+                })
+                .catch((error) => {
+                  reject(error);
+                });
+            } else { resolve(true) }
+          }
+        } else {
+          reject("ERROR: is a TestPatient");
+        }
+      })
+      .catch((error) => {
+        reject("ERROR: isTestPatient", error);
       });
   });
 }
