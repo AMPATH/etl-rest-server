@@ -8,6 +8,7 @@ import {
 const Moment = require('moment');
 const moh731GreenCarddefs = require('./moh-731-2017');
 const moh731BlueCarddefs = require('./moh-731-legacy');
+const cbhipIndicatorDefs = require('./cbhip-indicator-definitions.json');
 const dao = require('../../../etl-dao');
 
 export class Moh731Report extends MultiDatasetPatientlistReport {
@@ -27,7 +28,7 @@ export class Moh731Report extends MultiDatasetPatientlistReport {
         return new Promise((resolve, reject) => {
             that.determineMohReportSourceTables()
             .then((res)=> {
-                console.log('Params:::', that.params);
+                console.log('Params:::++++++++++++', that.params);
                 super.generateReport(additionalParams)
                 .then((results) => {
                     if (additionalParams && additionalParams.type === 'patient-list') {
@@ -51,11 +52,18 @@ export class Moh731Report extends MultiDatasetPatientlistReport {
                             finalResult[0].location = 'Multiple Locations...';
                         }
 
-                        let moh731defs = that.reportName === 'MOH-731-greencard' ? moh731GreenCarddefs : moh731BlueCarddefs;
+                        let sectionDefs = null;
+
+                        if(that.params.exclude == 'moh731') {
+                            sectionDefs = cbhipIndicatorDefs;
+                        }else {
+                            sectionDefs = that.reportName === 'MOH-731-greencard' ? moh731GreenCarddefs : moh731BlueCarddefs;
+                        }
+                        
                         resolve({
                             queriesAndSchemas: results,
                             result: finalResult,
-                            sectionDefinitions: moh731defs,
+                            sectionDefinitions: sectionDefs,
                             indicatorDefinitions: [],
                             isReleased: that.params.hivMonthlyDatasetSource === 'etl.hiv_monthly_report_dataset_frozen'
                         });
@@ -147,9 +155,9 @@ export class Moh731Report extends MultiDatasetPatientlistReport {
                         console.log('Last released MOH 731 month: ' + Moment(lastReleasedMonth).toLocaleString());
                         console.log('MOH 731 Request Month: ' + Moment(self.params.endDate).toLocaleString());
                         if (Moment(lastReleasedMonth).isSameOrAfter(Moment(self.params.endDate))) {
-                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen';
+                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_cbb';
                         } else {
-                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_v1_2';
+                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_cbb';
                         }
                         console.log('Using Datasource::: ', self.params.hivMonthlyDatasetSource)
                         resolve(self.params.hivMonthlyDatasetSource);
