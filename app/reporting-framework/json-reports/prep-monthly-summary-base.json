@@ -95,6 +95,19 @@
             "column": "prep.gender"
         },
         {
+            "type": "simple_column",
+            "alias": "days_since_rtc_date",
+            "column": "prep.days_since_rtc_date"
+        },
+        {
+            "type": "derived_column",
+            "alias": "general_pop_active",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "IF((prep.population_type = 3  or prep.population_type = 1  or prep.population_type is null) and active_on_prep_this_month = 1 ,1, 0)"
+            }
+        },
+        {
             "type": "derived_column",
             "alias": "population_type",
             "expressionType": "case_statement",
@@ -109,7 +122,7 @@
                         "value": "priority"
                     },
                     {
-                        "condition": "prep.population_type = 3 or prep.population_type = 1 or prep.population_type is null",
+                        "condition": "prep.population_type = 3  or prep.population_type is null",
                         "value": "general"
                     },
                     {

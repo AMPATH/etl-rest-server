@@ -103,6 +103,14 @@
             "expressionOptions": {
                 "expression": "SUM(t2.cumulative_turned_positive_this_month)"
             }
+        },
+        {
+            "type": "derived_column",
+            "alias": "general_pop_active",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "SUM(t2.general_pop_active)"
+            }
         }
     ],
     "groupBy": {

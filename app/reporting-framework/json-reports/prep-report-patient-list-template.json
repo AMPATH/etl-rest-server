@@ -200,7 +200,7 @@
         },
         {
             "type": "simple_column",
-            "alias": "days_since_rtc_date",
+            "alias": "days_since_rtc",
             "column": "TIMESTAMPDIFF(DAY, prep.rtc_date, curdate())"
         },
         {

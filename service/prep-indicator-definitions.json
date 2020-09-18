@@ -58,7 +58,7 @@
             },
             {
                 "label": "General Population",
-                "indicator": "dc__population_type__general__active_on_prep_this_month"
+                "indicator": "general_pop_active"
             },
             {
                 "label": "Priority Population",
