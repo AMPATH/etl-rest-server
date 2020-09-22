@@ -19,13 +19,7 @@ export class LabSyncService {
     let tasks = [];
     const service = new PatientLastOrderLocationService();
     service.isPatientLastOrderLocationAffliatedToAlupe(patientUuid).then( isAffliated => {
-      if(!isAffliated) {
-        tasks.push((cb) => {
-          cb(null, this.syncLabsByPatientUuid(patientUuid, 'ampath', 0).then((result)=>{
-            return result;
-          }));
-        });
-      } else {
+      if(isAffliated) {
         Object.keys(config.hivLabSystem).forEach((labLocation) => {
           tasks.push((cb) => {
             // delay alupe for a few ms
@@ -34,11 +28,19 @@ export class LabSyncService {
             }));
           });
         });
+      } else {
+        tasks.push((cb) => {
+          cb(null, this.syncLabsByPatientUuid(patientUuid, 'ampath', 0).then((result)=>{
+            return result;
+          }));
+        });
       }
-    })
+      this.syncLabsParallel(tasks, reply);
+    });
+  }
 
+  syncLabsParallel(tasks, reply) {
     async.parallel(async.reflectAll(tasks), (err, results) => {
-
       // currently we have duplicate data in db. Try to remove here
       Promise.all(results.map((result) => result.value)).then((lab_data) => {
         const _lab_data = _.map(lab_data, (lab) => {
@@ -52,7 +54,6 @@ export class LabSyncService {
         console.log('sync service error', err);
         reply(Boom.notFound('Sorry, sync service temporarily unavailable.'));
       });
-
     });
   }
 
