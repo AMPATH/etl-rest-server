@@ -155,9 +155,9 @@ export class Moh731Report extends MultiDatasetPatientlistReport {
                         console.log('Last released MOH 731 month: ' + Moment(lastReleasedMonth).toLocaleString());
                         console.log('MOH 731 Request Month: ' + Moment(self.params.endDate).toLocaleString());
                         if (Moment(lastReleasedMonth).isSameOrAfter(Moment(self.params.endDate))) {
-                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_cbb';
+                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen';
                         } else {
-                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_cbb';
+                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_v1_2';
                         }
                         console.log('Using Datasource::: ', self.params.hivMonthlyDatasetSource)
                         resolve(self.params.hivMonthlyDatasetSource);
