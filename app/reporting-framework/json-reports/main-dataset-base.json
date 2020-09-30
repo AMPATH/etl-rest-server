@@ -269,7 +269,7 @@
             "alias": "is_cross_border_vl_suppressed_this_month",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "IF(hmsd.is_suppressed_this_month = 1 and hmsd.is_cross_border_this_month = 1 , 1 , 0)"
+                "expression": "IF(hmsd.is_suppressed_this_month = 1 and hmsd.is_cross_border_this_month = 1 and hmsd.status = 'active' , 1 , 0)"
             }
         },
         {
@@ -285,7 +285,7 @@
             "alias": "is_cross_border_presumed_tb_positive_this_month",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "IF(hmsd.presumed_tb_positive_this_month = 1 and hmsd.is_cross_border_this_month = 1 , 1 , 0)"
+                "expression": "IF(hmsd.presumed_tb_positive_this_month = 1 and hmsd.is_cross_border_this_month = 1 and hmsd.status = 'active' , 1 , 0)"
             }
         },
         {
@@ -349,7 +349,7 @@
             "alias": "is_cross_border_on_modern_contraception_this_month",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "IF(hmsd.on_modern_contraception_this_month = 1 and hmsd.is_cross_border_this_month = 1 , 1 , 0)"
+                "expression": "IF(hmsd.on_modern_contraception_this_month = 1 and hmsd.is_cross_border_this_month = 1 and hmsd.status = 'active', 1 , 0)"
             }
         },
         {
@@ -417,9 +417,12 @@
             }
         },
         {
-            "type": "simple_column",
+            "type": "derived_column",
             "alias": "is_cross_border_this_month",
-            "column": "hmsd.is_cross_border_this_month"
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "IF(hmsd.is_cross_border_this_month = 1 and hmsd.status = 'active', 1 , 0)"
+            }
         }
 
     ],
