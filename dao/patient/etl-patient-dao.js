@@ -60,8 +60,10 @@ module.exports = function () {
                     summary.arv_first_regimen_id = summary.arv_first_regimen;
                     summary.cur_arv_meds = helpers.getARVNames(summary.cur_arv_meds);
                     summary.arv_first_regimen = helpers.getARVNames(summary.arv_first_regimen);
+                    summary.contraceptive_method= helpers.getContraceptiveMethod(summary.contraceptive_method);
                     summary['encounter_type_name'] = encounterTypeNames[summary.encounter_type];
                     summary['prev_encounter_type_name'] = encounterTypeNames[summary.prev_encounter_type_hiv];
+                    // console.log("menstruaction status", summary.menstruation_status, summary.encounter_datetime);
                 });
 
                 // Return when done.
@@ -329,7 +331,8 @@ module.exports = function () {
             });
             var arr = result.result;
 
-            var cleanResult = getUnique(arr, 'test_datetime');
+            var resultsByDay = getUniqueResultsByDay(arr);
+            var cleanResult = getUnique(resultsByDay, 'test_datetime');
             result.result = cleanResult;
             callback(result);
         });
@@ -342,6 +345,42 @@ module.exports = function () {
 
         return unique;
 
+    }
+
+    function getUniqueResultsByDay(results){
+        let resultTracker = {};
+        const sortedArray = results.map((result,index) => {
+            const test_date = result.test_datetime;
+            const curResult = result;
+            if(resultTracker.hasOwnProperty(test_date)){
+              const prevResult = resultTracker[test_date];
+              const mergedResult = mergeResults(curResult,prevResult);
+              resultTracker[test_date] = mergedResult;
+              return mergedResult;
+            }else{
+              resultTracker[test_date] = result;
+              return result;
+            }
+        }).filter((result) => {
+            const test_date = result.test_datetime;
+            return _.isEqual(result, resultTracker[test_date]);
+        });
+        return sortedArray;
+
+    }
+
+    function mergeResults(curResult,prevResult){
+      let mergedResult = {};
+       Object.keys(curResult).forEach((key) => {
+              if((curResult[key] === null || curResult[key] === '') && (prevResult[key] !== null || prevResult[key] !== '')){
+                   mergedResult[key] = prevResult[key];
+              }else{
+                mergedResult[key] = curResult[key];
+              }
+       });
+
+       return mergedResult;
+       
     }
 
     function getPatient(request, callback) {

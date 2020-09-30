@@ -35,6 +35,8 @@ import * as ever_on_art_base from './json-reports/ever-on-art-base.json';
 import * as referral_patient_list_template from './json-reports/referral-patient-list-template.json';
 import * as referral_dataset_base from './json-reports/referral-dataset-base.json';
 import * as referral_aggregate from './json-reports/referral-aggregate.json';
+import * as referral_peer_aggregate from './json-reports/referral-peer-aggregate.json';
+import * as referral_patient_list_peer_base from './json-reports/referral-peer-base.json';
 import * as cdm_dataset_base from './json-reports/cdm/cdm-dataset-base.json';
 
 import * as starting_art_aggregation_age15 from './json-reports/starting-art-aggregation-age15.json';
@@ -116,6 +118,8 @@ import * as lung_cancer_patient_list_template from './json-reports/lung-cancer-p
 
 import * as differentiated_care_program_aggregate from './json-reports/differentiated-care-program-aggregate.json';
 import * as differentiated_care_program_base from './json-reports/differentiated-care-program-base.json';
+import * as differentiated_care_weight_dataset from './json-reports/differentiated-care-weight-dataset.json'
+
 // appointment adherence
 import * as appointment_adherence from './json-reports/retention-report/appointment-adherence.json';
 import * as retention_appointment_adherence_aggregate from './json-reports/retention-appointment-adherence-aggregate';
@@ -131,12 +135,9 @@ import * as retention_intervention_cohort from './json-reports/retention-interve
 import * as retention_ltfu_base from './json-reports/retention-ltfu-base.json';
 import * as retention_ltfu_aggregate from './json-reports/retention-ltfu-aggregate.json';
 
-
 import * as surge_report_base from './json-reports/surge-report-base.json';
 import * as surge_report_aggregate from './json-reports/surge-report-aggregate.json';
 
-import * as referral_patient_list_peer_base from './json-reports/referral-peer-base';
-import * as referral_peer_aggregate from './json-reports/referral-peer-aggregate';
 import * as surge_daily_report_base from './json-reports/surge-daily-report-base';
 import * as surge_daily_report_aggregate from './json-reports/surge-daily-report-aggregate';
 import * as surge from './json-reports/surge-report.json';
@@ -145,9 +146,35 @@ import * as prep_aggregate_report from './json-reports/prep-aggregate-report.jso
 import * as prep_dataset_report from './json-reports/prep-dataset-report.json';
 import * as ltfu_surge_baseline_report from './json-reports/ltfus-surge-baseline-base.json';
 import * as ltfu_surge_baseline_aggregate_report from './json-reports/ltfus-surge-baseline-aggregate.json';
-import * as patient_list_prep_template from './json-reports/patient-list-prep-template.json';
+import * as prep_report_patient_list_template from './json-reports/prep-report-patient-list-template.json';
 
 import * as hiv_latest_clinical_encounter_date_base from './json-reports/hiv-latest-clinical-encounter-date-base.json';
+import * as prep_monthly_summary from './json-reports/prep-monthly-summary.json'
+import * as prep_monthly_summary_aggregate_report from './json-reports/prep-monthly-summary-aggregate.json';
+import * as prep_monthly_summary_base_report from './json-reports/prep-monthly-summary-base.json';
+import * as prep_monthly_populationtype_disaggregation from './json-reports/prep-monthly-population-type-disaggregation.json';
+import * as prep_monthly_breastfeeding_disaggregation from './json-reports/prep-monthly-breastfeeding-disaggregation.json';
+import * as prep_monthly_pregnancy_disaggregation from './json-reports/prep-monthly-pregnancy-disaggregation.json';
+import * as prep_monthly_newly_enrolled_breastfeeding_disaggregation from  './json-reports/prep-monthly-newly-enrolled-breastfeeding-disaggregation.json';
+import * as prep_monthly_newly_enrolled_pregnancy_disaggregation from './json-reports/prep-monthly-newly-enrolled-pregnancy-disaggregation.json';
+import * as moh_408 from './json-reports/moh-408.json';
+import * as hei_infant_feeding_aggregate from './json-reports/hei-infant-feeding-aggregate.json';
+import * as hei_infant_feeding_base from './json-reports/hei-infant-feeding-base.json';
+import * as hei_infant_feeding_no_disaggregation_aggregate from './json-reports/hei-infant-feeding-no-disaggregation-aggregate.json';
+import * as hei_infant_feeding_no_disaggregation_base from './json-reports/hei-infant-feeding-no-disaggregation-base.json';
+import * as hei_infant_testing_base from './json-reports/hei-infant-testing-base.json';
+import * as hei_infant_testing_aggregate from './json-reports/hei-infant-testing-aggregate.json';
+import * as hei_retention_pairs_base from './json-reports/hei-retention-pairs-base.json';
+import * as hei_retention_pairs_aggregate from './json-reports/hei-retention-pairs-aggregate.json';
+import * as hei_mother_base from './json-reports/hei-mother-base.json';
+import * as hei_mother_aggregate from './json-reports/hei-mother-aggregate.json';
+import * as hei_program_outcome_base from './json-reports/hei-program-outcome-base.json';
+import * as hei_program_outcome_aggregate from './json-reports/hei-program-outcome-aggregate.json';
+import * as hei_original_cohort_base from './json-reports/hei-original-cohort-base.json';
+import * as hei_original_cohort_aggregate from './json-reports/hei-original-cohort-aggregate.json';
+import * as hei_unknown_program_outcome_aggregate from './json-reports/hei-unknown-program-outcome-aggregate.json';
+import * as hei_unknown_program_outcome_base from './json-reports/hei-unknown-program-outcome-base.json';
+import * as hei_report_patient_list_template from './json-reports/hei-report-patient-list-template.json';
 
 export class BaseMysqlReport {
     constructor(reportName, params) {
@@ -170,7 +197,6 @@ export class BaseMysqlReport {
                         .then((sqlQuery) => {
                             // allow user to use 'null' as parameter values
                             sqlQuery = sqlQuery.replace(/\'null\'/g, "null");
-                            // console.log('sql query', sqlQuery);
 
                             that.reportQuery = sqlQuery;
                             // run query
@@ -236,9 +262,9 @@ export class BaseMysqlReport {
                         main: this.cloneJsonSchema(patient_list_with_contacts_template)
                     });
                     break;
-                case 'patient-list-prep-template':
+                case 'prep-report-patient-list-template':
                     resolve({
-                        main: this.cloneJsonSchema(patient_list_prep_template)
+                        main: this.cloneJsonSchema(prep_report_patient_list_template)
                     });
                     break;
                 case 'mainDatasetAggregate':
@@ -394,6 +420,12 @@ export class BaseMysqlReport {
                     resolve({
                         main: this.cloneJsonSchema(referral_aggregate),
                         referralDatasetbase: this.cloneJsonSchema(referral_dataset_base)
+                    });
+                    break;
+                case 'referral-patient-peer-navigator-list':
+                    resolve({
+                        main: this.cloneJsonSchema(referral_peer_aggregate),
+                        referralDatasetbase: this.cloneJsonSchema(referral_patient_list_peer_base)
                     });
                     break;
                 case 'StartingARTAggregationAge15':
@@ -556,19 +588,15 @@ export class BaseMysqlReport {
                 case 'differentiatedCareProgramAggregate':
                     resolve({
                         main: this.cloneJsonSchema(differentiated_care_program_aggregate),
-                        differentiatedCareProgramBase: this.cloneJsonSchema(differentiated_care_program_base)
+                        differentiatedCareProgramBase: this.cloneJsonSchema(differentiated_care_program_base),
+                        hivLatestClinicalEncounterDateBase: this.cloneJsonSchema(hiv_latest_clinical_encounter_date_base)
+
                     });
                     break;
                 case 'surgeReport':
                     resolve({
                         main: this.cloneJsonSchema(surge_report_aggregate),
                         surgeReport: this.cloneJsonSchema(surge_report_base)
-                    });
-                    break;
-                case 'referral-patient-peer-navigator-list':
-                    resolve({
-                        main: this.cloneJsonSchema(referral_peer_aggregate),
-                        referralDatasetbase: this.cloneJsonSchema(referral_patient_list_peer_base)
                     });
                     break;
                 case 'surgeDailyReport':
@@ -630,6 +658,106 @@ export class BaseMysqlReport {
                         main: this.cloneJsonSchema(retention_report_patient_list_template)
                     });
                     break;
+                case 'prepMonthlySummaryReport':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_summary),
+                        
+                    });
+                    break;
+                case 'prepMonthlySummaryNoDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_summary_aggregate_report),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break;
+                case 'prepMonthlySummaryPopulationTypeDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_populationtype_disaggregation),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break;
+                case 'prepMonthlySummaryBreastFeedingDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_breastfeeding_disaggregation),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break;
+                case 'prepMonthlyNewlyEnrolledBreastFeedingDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_newly_enrolled_breastfeeding_disaggregation),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break;
+                case 'prepMonthlyNewlyEnrolledPregnancyDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_newly_enrolled_pregnancy_disaggregation),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break; 
+                case 'prepMonthlySummaryPregnancyDisaggregation':
+                    resolve({
+                        main: this.cloneJsonSchema(prep_monthly_pregnancy_disaggregation),
+                        prepMonthlySummaryBaseReport: this.cloneJsonSchema(prep_monthly_summary_base_report)
+                    });
+                    break;
+                case 'MOH-408':
+                    resolve({
+                        main: this.cloneJsonSchema(moh_408)
+                    });
+                    break;
+                case 'heiInfantFeedingAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_infant_feeding_aggregate),
+                        heiInfantFeedingBase: this.cloneJsonSchema(hei_infant_feeding_base)
+                    });
+                    break;
+                case 'heiInfantFeedingNoDisaggregationAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_infant_feeding_no_disaggregation_aggregate),
+                        heiInfantFeedingNoDisaggregationBase: this.cloneJsonSchema(hei_infant_feeding_no_disaggregation_base)
+                    });
+                    break;
+                case 'heiInfantTestingAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_infant_testing_aggregate),
+                        heiInfantTestingBase: this.cloneJsonSchema(hei_infant_testing_base)
+                    });
+                    break;
+                case 'heiRetentionPairsAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_retention_pairs_aggregate),
+                        heiRetentionPairsBase: this.cloneJsonSchema(hei_retention_pairs_base)
+                    });
+                    break;
+                case 'heiMotherAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_mother_aggregate),
+                        heiMotherBase: this.cloneJsonSchema(hei_mother_base)
+                    });
+                    break;
+                case 'heiProgramOutcomeAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_program_outcome_aggregate),
+                        heiProgramOutcomeBase: this.cloneJsonSchema(hei_program_outcome_base)
+                    });
+                    break;
+                case 'heiUknownProgramOutcomeAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_unknown_program_outcome_aggregate),
+                        heiUknownProgramOutcomeBase: this.cloneJsonSchema(hei_unknown_program_outcome_base)
+                    });
+                    break;
+                case 'heiOriginalCohortAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(hei_original_cohort_aggregate),
+                        heiOriginalCohortBase: this.cloneJsonSchema(hei_original_cohort_base)
+                    });
+                    break;
+               case 'hei-report-patient-list-template':
+                        resolve({
+                            main: this.cloneJsonSchema(hei_report_patient_list_template)
+                        });
+                        break;
                 default:
                     reject('Unknown report ', reportName);
                     break;

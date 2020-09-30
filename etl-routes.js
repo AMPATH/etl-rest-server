@@ -66,6 +66,7 @@ import { SurgeService } from './service/surge-reports/surge-report.service';
 
 var patientReminderService = require('./service/patient-reminder.service.js');
 var  kibanaService = require('./service/kibana.service');
+import { HeiSummaryService } from './service/moh-408-service';
 
 import { 
     RetentionAppointmentTracingService 
@@ -324,7 +325,7 @@ module.exports = function () {
                                 .then((result) => {
                                     let locationIds = result;
                                     request.query.locations = locationIds;
-                                    let combineRequestParams = Object.assign(request.query, request.params);
+                                    let combineRequestParams = Object.assign({}, request.query, request.params);
                                     let service = new MonthlyScheduleService();
                                     service.getMonthlyScheduled(combineRequestParams).then((result) => {
                                         reply(result);
@@ -1359,18 +1360,14 @@ module.exports = function () {
                         if (!authorizer.hasReportAccess(request.query.reportName)) {
                             return reply(Boom.forbidden('Unauthorized'));
                         }
-
                         let requestParams = Object.assign({}, request.query, request.params);
                         requestParams.reportName = 'referralAggregate';
                         let service = new PatientReferralService();
-
-                        service.getPatientListReport2(requestParams).then((result) => {
-
+                        service.getReferralPatientListReport(requestParams).then((result) => {
                             reply(result);
                         }).catch((error) => {
                             reply(error);
                         });
-
                     },
                     description: "Get patient referral for selected clinic",
                     notes: "Returns patient referral for the selected clinic(s),start date, end date",
@@ -3076,6 +3073,12 @@ module.exports = function () {
                                     request.query.encounterTypeIds = results;
                                 }).onResolved = onResolvedPromise;
                         }
+                        if (request.query.visitTypeUuids) {
+                            dao.getIdsByUuidAsyc('amrs.visit_type', 'visit_type_id', 'uuid', request.query.visitTypeUuids,
+                                function (results) {
+                                    request.query.visitTypeIds = results;
+                                }).onResolved = onResolvedPromise;
+                        }
                         if (request.query.locationUuids) {
                             dao.getIdsByUuidAsyc('amrs.location', 'location_id', 'uuid', request.query.locationUuids,
                                 function (results) {
@@ -3302,9 +3305,15 @@ module.exports = function () {
                             }).then((result) => {
                                 reply(result);
                             }).catch((error) => {
-                                let errorObject = JSON.parse(error.error);
-                                console.error('Error', errorObject);
-                                reply(errorObject.error).code(error.statusCode);
+                                try{
+                                    let errorObject = JSON.parse(error.error);
+                                    console.error('Error', errorObject);
+                                    reply(errorObject.error).code(error.statusCode);
+                                } catch(err) {
+                                    console.error('Error', error);
+                                    throw Boom.badImplementation(error);
+                                }
+                            
                             });
                         } else {
                             console.error('No Lab Specified');
@@ -4485,30 +4494,39 @@ module.exports = function () {
                         }
                     },
                     handler: function (request, reply) {
-                        let requestParams = Object.assign({}, request.query, request.params);
-                        let locationUuids = request.query.locationUuids.split(',')
-                        requestParams.startDate = requestParams.startDate.split('T')[0];
-                        requestParams.endDate = requestParams.endDate.split('T')[0];
-                        let indicators = [];
-                        if (requestParams.indicators) {
-                            indicators = requestParams.indicators.split(',');
-                        }
-                        requestParams.locationUuids = locationUuids;
-                        let report = new PatientlistMysqlReport('differentiatedCareProgramAggregate', requestParams);
-                        report.generatePatientListReport(indicators).then((result) => {
-                            if (result.results.results.length > 0) {
-                                _.each(result.results.results, (item) => {
-                                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                                    item.vl_1_date = moment(item.vl_1_date).format('DD-MM-YYYY');
-                                });
-                                reply(result);
-                            } else {
-                                reply(result);
-                            }
+                        if (request.query.locationUuids) {
+                            resolveLocationUuidToId.resolveLocationUuidsParamsToIds(request.query)
+                                .then((result) => {
+                                    let requestParams = Object.assign({}, request.query, request.params);
+                                    let locationUuids = request.query.locationUuids.split(',')
+                                    requestParams.startDate = requestParams.startDate.split('T')[0];
+                                    requestParams.endDate = requestParams.endDate.split('T')[0];
+                                    requestParams.limitParam = requestParams.limit;
+                                    requestParams.offSetParam = requestParams.startIndex;
+                                    let indicators = [];
+                                    if (requestParams.indicators) {
+                                        indicators = requestParams.indicators.split(',');
+                                    }
+                                    requestParams.locationUuids = locationUuids;
+                                    requestParams.locationIds = result;
 
-                        }).catch((error) => {
-                            reply(error);
-                        });
+                                    let report = new PatientlistMysqlReport('differentiatedCareProgramAggregate', requestParams);
+                                    report.generatePatientListReport(indicators).then((result) => {
+                                        if (result.results.results.length > 0) {
+                                            _.each(result.results.results, (item) => {
+                                                item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                                                item.vl_1_date = moment(item.vl_1_date).format('DD-MM-YYYY');
+                                            });
+                                            reply(result);
+                                        } else {
+                                            reply(result);
+                                        }
+
+                                    }).catch((error) => {
+                                        reply(error);
+                                    });
+                                })
+                        };
                     },
                     description: "Get the medical history report",
                     notes: "Returns the the medical history of the selected patient",
@@ -4547,13 +4565,11 @@ module.exports = function () {
                         if (!authorizer.hasReportAccess(request.query.reportName)) {
                             return reply(Boom.forbidden('Unauthorized'));
                         }
-
                         let requestParams = Object.assign({}, request.query, request.params);
                         requestParams.reportName = 'referral-patient-peer-navigator-list';
                         let service = new PatientReferralService();
 
-                        service.getPatientListReport3(requestParams).then((result) => {
-
+                        service.getPeerNavigatorReferralPatientList(requestParams).then((result) => {
                             reply(result);
                         }).catch((error) => {
                             reply(error);
@@ -4764,7 +4780,82 @@ module.exports = function () {
                     notes: 'Returns Retention Report Patient List',
                     tags: ['api'],
                 }
-            }
+            },
+            {
+                method: 'GET',
+                path: '/etl/hei-monthly-summary',
+                config: {
+                    plugins: {
+                        'hapiAuthorization': {
+                        }
+                    },
+                    handler: function (request, reply) {
+
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+                                let reportParams = etlHelpers.getReportParams('hei-monthly-summary',
+                                    ['startDate', 'endDate', 'locationUuids'],
+                                    requestParams);
+
+                                let heiSummaryService = new HeiSummaryService('MOH-408', reportParams.requestParams);
+                                heiSummaryService.generateReport().then((result) => {
+                                        reply(result);
+                                        
+                                }).catch((error) => {
+                                        console.error('Error: ', error);
+                                        reply(error);
+                                });
+                            });
+                       
+                        },
+                        description: "Get the monthly hei monthly summary report",
+                        notes: "Returns the the monthly hei summary report",
+                        tags: ['api'],
+                        validate: {
+                            options: {
+                                allowUnknown: true
+                            },
+                            params: {}
+                        }
+                    }
+
+                },
+                {
+                method: 'GET',
+                path: '/etl/hei-monthly-summary/patient-list',
+                config: {
+                    auth: 'simple',
+                    plugins: {
+                        
+                    },
+                    handler: function (request, reply) {
+                        request.query.reportName = 'hei-summary-patient-list';
+                        preRequest.resolveLocationIdsToLocationUuids(request,
+                            function () {
+                                let requestParams = Object.assign({}, request.query, request.params);
+
+                                let requestCopy = _.cloneDeep(requestParams);
+                                let reportParams = etlHelpers.getReportParams(request.query.reportName, ['startDate', 'endDate', 'locationUuids', 'locations'], requestParams);
+                                const moh408Service = new HeiSummaryService('MOH-408', requestCopy);
+
+
+                                moh408Service.generatePatientListReport(requestParams.indicators.split(',')).then((results) => {
+                                    reply(results);
+                                })
+                                    .catch((err) => {
+                                        reply(Boom.internal('An error occured', err));
+                                    });
+
+
+                            });
+
+                    },
+                    description: 'HEI summary Patient list',
+                    notes: 'Returns HEI summary patient list',
+                    tags: ['api'],
+                }
+                }
 
         ];
 

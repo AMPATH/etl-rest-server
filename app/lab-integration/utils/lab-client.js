@@ -1,5 +1,7 @@
 const rp = require('request-promise');
 const eidFacilityMap = require('../../../service/eid/eid-facility-mappings');
+const db = require('../../../etl-db');
+// import formurlencoded from 'form-urlencoded';
 export class LabClient {
     config = null;
     constructor(config) {
@@ -74,69 +76,129 @@ export class LabClient {
 
     }
     postDNAPCR(payload) {
-        const options = {
-            uri: `${this.config.serverUrl}/api/eid`,
-            headers: {
-                'apikey': this.config.apiKey
-            },
-            method: 'POST',
-            formData: payload
-        };
-        return rp(options);
+        return this.getPostRequest(payload, `${this.config.serverUrl}/api/eid`,);
     }
 
     postViralLoad(payload) {
-        const options = {
-            uri: `${this.config.serverUrl}/api/vl`,
-            headers: {
-                'apikey': this.config.apiKey
-            },
-            method: 'POST',
-            formData: payload
-        };
-        return rp(options);
+        return this.getPostRequest(payload, `${this.config.serverUrl}/api/vl`);
     }
 
     postCD4(payload) {
+        return this.getPostRequest(payload, `${this.config.serverUrl}/api/cd4`);
+    }
+
+    getPostRequest(payload, endpoint) {
         const options = {
-            uri: `${this.config.serverUrl}/api/cd4`,
+            uri: endpoint,
             headers: {
-                'apikey': this.config.apiKey
+                'apikey': this.config.apiKey,
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             method: 'POST',
-            formData: payload
+            // json: true,
+            form: payload,
+            timeout: 20000
         };
         return rp(options);
+
     }
 
     getFetchRequest(filterOptions, offset) {
-        process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+        // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
         let fetchOffset = 1;
-        let facilityCodes = this.getFacitityCodes().join();
-        filterOptions.facility_code = facilityCodes;
+        // let facilityCodes = this.getFacitityCodes().join();
+        // filterOptions.facility_code = facilityCodes;
+        let facilityCodes = this.getFacitityCodesDictionary();
+
         if (offset) {
             fetchOffset = offset;
         }
+        // var host = new String(this.config.serverUrl).substr(8);
         var options = {
             uri: `${this.config.serverUrl}/api/function?page=${fetchOffset}`,
             headers: {
-                'apikey': this.config.apiKey
+                'apikey': this.config.apiKey,
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             json: true,
             insecure: true,
             method: 'POST',
-            formData: filterOptions
+            timeout: 20000,
+            form: filterOptions
         };
-        return rp(options);
+        return new Promise((resolve, reject) => {
+            rp(options).then((response)=>{
+                var unknownMFL = [];
+                if(Array.isArray(response.data) && response.data.length > 0) {
+                    response.data = response.data.filter((item) => {
+                        if(facilityCodes[item.facility_code]) {
+                            return true;
+                        } else {
+                            unknownMFL.push(item.facility_code);
+                        }
+                        return false;
+                    });
+                }
+                if(unknownMFL.length > 0) {
+                    // post unknown MFL code to slack
+                    console.warn('Unknown MFL codes', unknownMFL);
+                }
+                // console.log('RESULTS', response);
+                resolve(response);
+            }).catch((err)=>{
+                console.error('LAB INTEGRATION ERROR:', err);
+                this.logRequestError(err,options).then((result) => {
+                    reject(err);
+                }).catch((error) => {
+                    reject(err);
+                });
+            });
+        });
     }
+
+    
     getFacitityCodes() {
         let facilityCodes = [];
         for (let key in eidFacilityMap) {
             let facility = eidFacilityMap[key];
-            if(facility.mflCode && facility.mflCode !== ''){
+            if (facility.mflCode && facility.mflCode !== '') {
                 facilityCodes.push(facility.mflCode);
             }
         }
         return facilityCodes;
     }
+
+    getFacitityCodesDictionary() {
+        let facilityCodes = {};
+        for (let key in eidFacilityMap) {
+            let facility = eidFacilityMap[key];
+            if (facility.mflCode && facility.mflCode !== '') {
+                facilityCodes[facility.mflCode] = facility.mflCode;
+            }
+        }
+        return facilityCodes;
+    }
+
+    logRequestError(error,options) {
+       // console.log('Logging lab request error...', error);
+       var sql = "INSERT INTO etl.eid_lab_request_errors(error,options)" +
+          " VALUES('" + error + "','" + JSON.stringify(options) + "');";
+    
+        var queryObject = {
+          query: sql,
+          sqlParams: []
+        };
+    
+        return new Promise(function (resolve, reject) {
+          db.queryReportServer(queryObject, function (response) {
+            if (response.error) {
+              reject(response);
+            } else {
+              resolve(response);
+            }
+          });
+        });
+      }
 }
