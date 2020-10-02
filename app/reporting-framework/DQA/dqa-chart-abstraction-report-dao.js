@@ -1,14 +1,14 @@
-import QueryService from '../../app/database-access/query.service';
+import QueryService from '../../database-access/query.service';
 
 export class DQAChartAbstractionDAO {
 
     constructor() { }
 
-    getDQAChartAbstractionReport(locations, limit, offset) {
+    getDQAChartAbstractionReport(locations, limit, offset, startDate, endDate) {
         let runner = this.getSqlRunner();
         let sqlQuery = `
         SELECT 
-        uuid, 
+        hiv.uuid, 
         person_id, 
         identifiers, 
         person_name, 
@@ -23,13 +23,25 @@ export class DQAChartAbstractionDAO {
         etl.get_arv_names(cur_arv_meds) AS drugs_given,
         weight,
         height,
+        weight_height_zscore,
+        weight_height_zscore_diagnosis_value,
+        muac_value,
+        muac_diagnosis_value,
+        h_l_for_age_zscore,
+        h_l_for_age_zscore_diagnosis_value,
+        bmi,
+        bmi_for_age_category_value,
+        nutrition_assessment,
         case
             when height is not null and weight is not null then weight/((height/100) * (height/100))
             else null
         end as BMI,
         condom_provided_this_visit,
         tb_screened_this_visit,
-        ipt_start_date as last_ipt_start_date
+        tb_screening_datetime,
+        ipt_start_date as last_ipt_start_date,
+        location_id,
+        l.name
     FROM
         (SELECT 
             *,
@@ -70,8 +82,7 @@ export class DQAChartAbstractionDAO {
             AND (id.voided IS NULL || id.voided = 0))
         WHERE
             is_clinical_encounter = 1
-                AND encounter_datetime < NOW()
-                AND encounter_datetime > '2018-01-01'
+            AND encounter_datetime BETWEEN ' ` + startDate + ` ' AND ' ` + endDate + ` '
                 AND h.location_id IN (` + locations + `)
         ORDER BY encounter_datetime DESC
         LIMIT 10000000) clinical
@@ -86,19 +97,29 @@ export class DQAChartAbstractionDAO {
                 encounter_id AS v_encounter_id,
                 encounter_datetime AS v_encounter_datetime,
                 weight,
-                height
+                height,
+                weight_height_zscore,
+                weight_height_zscore_diagnosis_value,
+                muac_value,
+                muac_diagnosis_value,
+                h_l_for_age_zscore,
+                h_l_for_age_zscore_diagnosis_value,
+                bmi,
+                bmi_for_age_category_value,
+                nutrition_assessment
         FROM
-            etl.flat_vitals
+            etl.flat_nutrition
         WHERE
-            location_id IN (` + locations + `)
-                AND encounter_datetime <= NOW()
-                AND encounter_datetime > '2018-01-01'
+        location_id IN (` + locations + `)
+                AND encounter_datetime BETWEEN ' ` + startDate + ` ' AND ' ` + endDate + ` '
                 AND (height IS NOT NULL OR weight IS NOT NULL)
         ORDER BY encounter_datetime DESC
         LIMIT 10000000) vitals
         GROUP BY v_person_id
         ORDER BY v_person_id DESC) AS vitals ON (hiv.person_id = vitals.v_person_id)
+        left outer join amrs.location l using(location_id)
         ORDER BY encounter_datetime desc limit ` + limit + ` offset ` + offset + `; `;
+
         return new Promise((resolve, reject) => {
             runner.executeQuery(sqlQuery)
                 .then((results) => {

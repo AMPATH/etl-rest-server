@@ -1,4 +1,4 @@
-import { DQAChartAbstractionService } from '../../reports/DQA/dqa-chart-abstraction-service';
+import { DQAChartAbstractionService } from '../reporting-framework/DQA/dqa-chart-abstraction-service';
 var authorizer = require('../../authorization/etl-authorizer');
 var resolveLocationUuidToId = require('../../location/resolve-location-uuid-to-id');
 var privileges = authorizer.getAllPrivileges();
@@ -17,6 +17,8 @@ const routes = [
                     resolveLocationUuidToId.resolveLocationUuidsParamsToIds(request.query)
                         .then((result) => {
                             let locations = result;
+                            let startDate = request.query.startDate;
+                            let endDate = request.query.endDate;
                             let limit = 300;
                             if (request.query.limit != null) {
                                 limit = request.query.limit;
@@ -27,7 +29,7 @@ const routes = [
                             }
 
                             let service = new DQAChartAbstractionService();
-                            service.getDQAChartAbstractionReport(locations, limit, offset).then((result) => {
+                            service.getDQAChartAbstractionReport(locations, limit, offset, startDate, endDate).then((result) => {
                                 reply(result);
                             }).catch((error) => {
                                 reply(error);
