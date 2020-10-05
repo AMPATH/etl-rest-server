@@ -181,6 +181,7 @@ import * as ovc_in_hiv_dataset_base from './json-reports/ovc-in-hiv-dataset-base
 import * as ovc_in_hiv_dataset_aggregate from './json-reports/ovc-in-hiv-dataset-aggregate.json';
 import * as ovc_in_hei_dataset_base from './json-reports/ovc-in-hei-dataset-base.json';
 import * as ovc_in_hei_dataset_aggregate from './json-reports/ovc-in-hei-dataset-aggregate.json';
+import * as ovc_patient_list_template from './json-reports/ovc-patient-list-template.json';
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -777,6 +778,11 @@ export class BaseMysqlReport {
                         main: this.cloneJsonSchema(ovc_in_hei_dataset_aggregate),
                         ovcInHeiDatasetBase: this.cloneJsonSchema(ovc_in_hei_dataset_base)
                     })
+                case 'ovc-patient-list-template':
+                    resolve({
+                        main: this.cloneJsonSchema(ovc_patient_list_template)
+                    });
+                    break;
                 default:
                     reject('Unknown report ', reportName);
                     break;
