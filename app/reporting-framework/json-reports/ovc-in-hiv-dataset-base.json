@@ -56,6 +56,11 @@
         },
         {
             "type": "simple_column",
+            "alias": "status",
+            "column": "hmsd.status"
+        },
+        {
+            "type": "simple_column",
             "alias": "cur_arv_meds",
             "column": "hmsd.cur_arv_meds"
         },
@@ -111,17 +116,17 @@
         {
             "type": "simple_column",
             "alias": "active_and_eligible_for_ovc",
-            "column": "hmsd.active_and_elligible_for_ovc"
+            "column": "hmsd.active_and_eligible_for_ovc"
         },
         {
             "type": "simple_column",
             "alias": "inactive_and_eligible_for_ovc",
-            "column": "hmsd.inactive_and_elligible_for_ovc"
+            "column": "hmsd.inactive_and_eligible_for_ovc"
         },
         {
             "type": "simple_column",
-            "alias": "enrolled_on_ovc_this_month",
-            "column": "hmsd.enrolled_on_ovc_this_month"
+            "alias": "enrolled_in_ovc_this_month",
+            "column": "hmsd.enrolled_in_ovc_this_month"
         },
         {
             "type": "simple_column",
@@ -134,12 +139,27 @@
             "column": "hmsd.ovc_non_enrolment_out_of_catchment_area"
         },
         {
+            "type": "simple_column",
+            "alias": "newly_exited_from_ovc_this_month",
+            "column": "hmsd.newly_exited_from_ovc_this_month"
+        },
+        {
+            "type": "simple_column",
+            "alias": "exited_from_ovc_this_month",
+            "column": "hmsd.exited_from_ovc_this_month"
+        },
+        {
             "type": "derived_column",
             "alias": "ovc_non_enrolment_undocumented",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "if(hmsd.active_and_elligible_for_ovc = 1 and (hmsd.enrolled_on_ovc_this_month is null or hmsd.enrolled_on_ovc_this_month = 0 ) and hmsd.ovc_non_enrolment_declined <> 1 and hmsd.ovc_non_enrolment_out_of_catchment_area <> 1, 1,0)"
+                "expression": "if(hmsd.active_and_eligible_for_ovc = 1 and (hmsd.enrolled_in_ovc_this_month is null or hmsd.enrolled_in_ovc_this_month = 0 ) and hmsd.ovc_non_enrolment_declined <> 1 and hmsd.ovc_non_enrolment_out_of_catchment_area <> 1, 1,0)"
             }
+        },
+        {
+            "type": "simple_column",
+            "alias": "due_for_vl_this_month",
+            "column": "hmsd.due_for_vl_this_month"
         }
     ],
     "filters": {
