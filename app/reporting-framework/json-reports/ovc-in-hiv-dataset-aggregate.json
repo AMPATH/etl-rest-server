@@ -79,10 +79,10 @@
         },
         {
             "type": "derived_column",
-            "alias": "enrolled_on_ovc_this_month",
+            "alias": "enrolled_in_ovc_this_month",
             "expressionType": "simple_expression",
             "expressionOptions": {
-                "expression": "sum(hmsd.enrolled_on_ovc_this_month)"
+                "expression": "sum(hmsd.enrolled_in_ovc_this_month)"
             }
         },
         {
@@ -107,6 +107,22 @@
             "expressionType": "simple_expression",
             "expressionOptions": {
                 "expression": "sum(hmsd.ovc_non_enrolment_undocumented)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "newly_exited_from_ovc_this_month",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "sum(hmsd.newly_exited_from_ovc_this_month)"
+            }
+        },
+        {
+            "type": "derived_column",
+            "alias": "exited_from_ovc_this_month",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "sum(hmsd.exited_from_ovc_this_month)"
             }
         }
     ],

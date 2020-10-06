@@ -21,7 +21,7 @@
             },
             {
                 "label": "Eligible and Enrolled in OVC",
-                "indicator": "enrolled_on_ovc_this_month"
+                "indicator": "enrolled_in_ovc_this_month"
             },
             {
                 "label": "Eligible for OVC and NOT Enrolled",
@@ -34,6 +34,14 @@
             {
                 "label": "Out of OVC Catchment Area",
                 "indicator": "ovc_non_enrolment_out_of_catchment_area"
+            },
+            {
+                "label": "Newly Exited this month",
+                "indicator": "newly_exited_from_ovc_this_month"
+            },
+            {
+                "label": "Cumulative Exited",
+                "indicator": "exited_from_ovc_this_month"
             }
         ]
     },
@@ -47,7 +55,7 @@
 
             {
                 "label": "Enrolled in OVC",
-                "indicator": "enrolled_on_ovc_this_month_hei"
+                "indicator": "enrolled_in_ovc_this_month_hei"
             },
             {
                 "label": "Eligible for OVC and NOT Enrolled",
@@ -60,6 +68,14 @@
             {
                 "label": "Out of Catchment Area",
                 "indicator": "ovc_non_enrolment_out_of_catchment_area_hei"
+            },
+            {
+                "label": "Newly Exited this month",
+                "indicator": "newly_exited_from_ovc_this_month_hei"
+            },
+            {
+                "label": "Cumulative Exited",
+                "indicator": "exited_from_ovc_this_month_hei"
             }
         ]
     }

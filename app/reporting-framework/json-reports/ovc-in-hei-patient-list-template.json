@@ -1,7 +1,7 @@
 {
-    "name": "ovc-patient-list-template",
+    "name": "ovc-in-hei-patient-list-template",
     "version": "1.0",
-    "tag": "ovc-patient-list-template",
+    "tag": "ovc-in-hei-patient-list-template",
     "description": "OVC Patient list template",
     "sources": [
         {
@@ -33,7 +33,7 @@
             }
         },
         {
-            "table": "etl.flat_hiv_summary_v15b",
+            "table": "etl.flat_hei_summary",
             "alias": "fh",
             "join": {
                 "type": "LEFT",
@@ -148,11 +148,6 @@
                     }
                 ]
             }
-        },
-        {
-            "type": "simple_column",
-            "alias": "disclosure_status",
-            "column": "fh.hiv_status_disclosed"
         },
         {
             "type": "simple_column",

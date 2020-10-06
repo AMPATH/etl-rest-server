@@ -11,7 +11,7 @@ export class OvcMonthlySummary extends MultiDatasetPatientlistReport {
         if (params.isAggregated) {
             params.joinColumnParam = 'join_location';
         }
-        params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_v1_6';
+        params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_v1_2';
         super(reportName, params)
     }
 
@@ -129,9 +129,9 @@ export class OvcMonthlySummary extends MultiDatasetPatientlistReport {
                     (results) => {
                         let lastReleasedMonth = results[0]['last_released_month'];
                         if (Moment(lastReleasedMonth).isSameOrAfter(Moment(self.params.endDate))) {
-                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_v1_6';
+                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen';
                         } else {
-                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_v1_6';
+                            self.params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_v1_2';
                         }
                         resolve(self.params.hivMonthlyDatasetSource);
                     })
