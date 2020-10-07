@@ -90,13 +90,21 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
       {
         "uuid": "0ae56e8a-93ed-4071-82f1-0eaf3eb592ff",
         "name": "Adult Transfer In Visit ",
-        "allowedIf": "age >= 20 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && previousHIVClinicallocation !== programLocation",
+        "allowedIf": "age >= 20 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "message": "Patient has to be 20yrs and above , patient's program location should be equal to the last HIV clinical encounter location and should not be the first clinical encounter",
         "encounterTypes": [{
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
@@ -125,6 +133,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -172,6 +188,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -211,13 +235,21 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
       {
         "uuid": "2e67b87c-8843-45b7-a380-3a0e8bd58e4d",
         "name": "Pediatric Transfer In Visit ",
-        "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && previousHIVClinicallocation !== programLocation",
+        "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "encounterTypes": [{
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
@@ -245,6 +277,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -284,6 +324,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -323,13 +371,21 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
       {
         "uuid": "b27e13f7-7118-4c0d-b9d6-b759495991d6",
         "name": "Youth Transfer In Visit ",
-        "allowedIf": "age >= 10 && age <= 24 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && previousHIVClinicallocation !== programLocation",
+        "allowedIf": "age >= 10 && age <= 24 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
         "message": "Patient has to between 10 and 24yrs , in the location he enrolled into the HIV Care and Treatment program, must have a prior clinical encounter.The program location should be different from the previous encounter location",
         "encounterTypes": [{
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
@@ -358,6 +414,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -397,6 +461,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -479,6 +551,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1013,6 +1093,10 @@
         "message": "Patient must be enrolled both in PMTCT and Viremia.",
         "encounterTypes": [
           {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          },
+          {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN"
           },
@@ -1047,6 +1131,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1057,6 +1149,10 @@
         "message": "Patient must be enrolled both in PMTCT and Viremia.",
         "encounterTypes": [
           {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          },
+          {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN"
           },
@@ -1091,6 +1187,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       }, {
@@ -1103,6 +1207,10 @@
             "display": "ADULTINITIAL"
           },
           {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          },
+          {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
           },
@@ -1125,6 +1233,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1138,6 +1254,10 @@
             "display": "ADULTRETURN"
           },
           {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          },
+          {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
             "display": "MOH257BLUECARD"
           },
@@ -1164,6 +1284,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1175,6 +1303,10 @@
         "encounterTypes": [{
             "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTINITIAL"
+          },
+          {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
           },
           {
             "uuid": "8d5b2dde-c2cc-11de-8d13-0010c6dffd0f",
@@ -1203,6 +1335,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1214,6 +1354,10 @@
         "encounterTypes": [{
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN"
+          },
+          {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
           },
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
@@ -1242,6 +1386,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1277,11 +1429,19 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
       {
-        "uuid": "fcc9a836-0200-45f2-81b4-b4a687a10247",
+        "uuid": "18f59064-961e-4d51-9ccf-e950f04b4c66",
         "name": "Treatment Supporter Visit",
         "encounterTypes": [{
             "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
@@ -1298,6 +1458,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1366,8 +1534,8 @@
           "required": true
         }],
         "discharge": [{
-          "uuid": "9765992c-6279-46cc-915b-452a73e7dab5",
-          "name": "AMPATH POC HIV Exit Care Form v1.1",
+          "uuid": "06e5321e-fc08-4995-aaa3-19c76b48cd22",
+          "name": "AMPATH POC OVC Exit Form V1.0",
           "required": true
         }]
       }
@@ -1439,6 +1607,10 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "824ca90d-c313-4d7e-bc99-119871d927cb",
+            "display": "OVCNONENROLLMENT"
           }
         ]
       }
@@ -1759,6 +1931,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1798,6 +1978,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -1940,6 +2128,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -2107,7 +2303,84 @@
       "a8e7c30d-6d2f-401c-bb52-d4433689a36b",
       "c4246ff0-b081-460c-bcc5-b0678012659e"
     ],
-    "visitTypes": [{
+    "visitTypes": [
+      {
+        "uuid": "dddea595-9814-430d-bed6-cee9ac59b579",
+        "name": "Between Care Visit",
+        "allowedIf": "programLocation !== intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
+        "message": "Patient has to be in a different location from location he was enrolled into HIV care and treatment program and must have a prior clinical encounter",
+        "encounterTypes": [{
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "db9f6a5c-e141-49fc-ad2b-bdce3f9a6c80",
+            "display": "BETWEENCAREVISIT"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          },
+          {
+            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
+            "display": "DERMATOLOGYREFERRAL"
+          },
+          {
+            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
+            "display": "FAMILYSTATUS"
+          },
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
+          },
+          {
+            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
+            "display": "COVIDSCREENING"
+          },
+          {
+            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
+            "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
+          }
+        ]
+      },
+      {
+        "uuid": "0bcccab0-59ce-4a25-a158-cc722427ff3f",
+        "name": "Treatment Supporter visit",
+        "encounterTypes": [{
+          "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
+          "display": "TXSUPPORTERMEDREFILL"
+        },
+        {
+          "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+          "display": "DRUGPICKUP"
+        },
+        {
+          "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
+          "display": "COVIDSCREENING"
+        },
+        {
+          "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
+          "display": "COVIDCASEREPORTING"
+        },
+        {
+          "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+          "display": "MOBILITYSCREENING"
+        },
+        {
+          "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+          "display": "HIVCLINICALREFERRAL"
+        }
+        ]
+      },
+      {
         "uuid": "0d608b80-1cb5-4c85-835a-29072683ca27",
         "name": "Community Visit for Differentiated Care",
         "groupVisit": true,
@@ -2165,6 +2438,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -2229,9 +2510,15 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
-          
-          
         ]
       },
       {
@@ -3372,6 +3659,14 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
           }
         ]
       },
@@ -3428,6 +3723,14 @@
         {
           "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
           "display": "COVIDCASEREPORTING"
+        },
+        {
+          "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+          "display": "MOBILITYSCREENING"
+        },
+        {
+          "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+          "display": "HIVCLINICALREFERRAL"
         }
         ]
       },
@@ -3604,6 +3907,10 @@
         {
           "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
           "display": "COVIDCASEREPORTING"
+        },
+        {
+          "uuid": "824ca90d-c313-4d7e-bc99-119871d927cb",
+          "display": "OVCNONENROLLMENT"
         }]
       },
       {
@@ -3790,6 +4097,16 @@
           "display": "ONCOLOGYVIA"
         }
 
+      ]
+    },
+    {
+      "uuid": "f7cadb7e-b8be-4ea4-a6ad-4578aa7d18c9",
+      "name": "BIGPIC PHONE FOLLOW UP VISIT",
+      "encounterTypes": [
+        {
+          "uuid": "0e5b24d2-b642-4c9d-b236-595dab3323cb",
+          "display": "BIGPICTELECARE"
+        }
       ]
     }]
 
@@ -4034,6 +4351,30 @@
     "encounterTypes": [{
         "uuid": "07542bc4-77a4-44ff-986b-2f5985a74cd9",
         "display": "HOMEGLUCOSEMONITORINGPEDS"
+      }]
+  }
+]
+},
+"6976b7eb-6d66-4aba-bcc0-cd8be80041cd": {
+  "name": "MENTAL HEALTH PROGRAM",
+  "dataDependencies": [
+  ],
+  "incompatibleWith": [],
+  "visitTypes": [
+  {
+      "uuid": "6960d9c7-f54b-4dd5-abb6-9b710a2716df",
+      "name": "Mental Health Initial Visit",
+      "encounterTypes": [{
+          "uuid": "c9c2aa71-bd29-444e-b77b-31eead82fdaf",
+          "display": "CDMMENTALHEALTHINITIAL"
+        }]
+  },
+  {
+    "uuid": "3a7c6dc0-ce13-4332-99d6-c0ebf2d3d472",
+    "name": "Mental Health Return Visit",
+    "encounterTypes": [{
+        "uuid": "c2d4a901-8007-4e36-8f50-5b19eb293451",
+        "display": "CDMMENTALHEALTHRETURN"
       }]
   }
 ]

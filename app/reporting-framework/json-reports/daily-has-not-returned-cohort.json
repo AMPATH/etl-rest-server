@@ -24,7 +24,7 @@
         {
             "type": "simple_column",
             "alias": "latest_rtc_date",
-            "column": "rtc_date"
+            "column": "scheduled_date"
         },
         {
             "type": "simple_column",
@@ -35,6 +35,11 @@
             "type": "simple_column",
             "alias": "next_clinical_encounter_datetime",
             "column": "next_clinical_encounter_datetime"
+        },
+        {
+            "type": "simple_column",
+            "alias": "program_id",
+            "column": "program_id"
         }
     ],
     "filters": {
