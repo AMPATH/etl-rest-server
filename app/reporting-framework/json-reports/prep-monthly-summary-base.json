@@ -244,6 +244,14 @@
                     }
                 ]
             }
+        },
+        {
+            "type": "derived_column",
+            "alias": "has_hiv_rapid_test_this_month",
+            "expressionType": "simple_expression",
+            "expressionOptions": {
+                "expression": "IF((prep.status = 'active' or prep.status = 'defaulter') and has_hiv_rapid_test_this_month = 1 ,1, 0)"
+            }
         }
     ],
     "filters": {

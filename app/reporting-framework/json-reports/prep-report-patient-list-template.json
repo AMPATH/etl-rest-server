@@ -191,6 +191,35 @@
             "type": "simple_column",
             "alias": "death_date",
             "column": "date_format(fps.death_date, '%Y-%m-%d')"
+        },
+        {
+            "type": "derived_column",
+            "alias": "hiv_rapid_test",
+            "expressionType": "case_statement",
+            "expressionOptions": {
+                "caseOptions": [
+                    {
+                        "condition": "fps.hiv_rapid_test_result = 703",
+                        "value": "Positive"
+                    },
+                    {
+                        "condition": "fps.hiv_rapid_test_result = 664",
+                        "value": "Negative"
+                    },
+                    {
+                        "condition": "fps.hiv_rapid_test_result = 1138",
+                        "value": "Indeterminate"
+                    },
+                    {
+                        "condition": "fps.hiv_rapid_test_result = 1304",
+                        "value": "Poor sample quality"
+                    },
+                    {
+                        "condition": "fps.hiv_rapid_test_result = 1067",
+                        "value": "Unknown"
+                    }
+                ]
+            }
         }
     ],
     "groupBy": {
