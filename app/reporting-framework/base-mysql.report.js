@@ -177,6 +177,13 @@ import * as hei_unknown_program_outcome_aggregate from './json-reports/hei-unkno
 import * as hei_unknown_program_outcome_base from './json-reports/hei-unknown-program-outcome-base.json';
 import * as hei_report_patient_list_template from './json-reports/hei-report-patient-list-template.json';
 
+import * as ovc_report from './json-reports/ovc-report.json';
+import * as ovc_in_hiv_dataset_base from './json-reports/ovc-in-hiv-dataset-base.json';
+import * as ovc_in_hiv_dataset_aggregate from './json-reports/ovc-in-hiv-dataset-aggregate.json';
+import * as ovc_in_hei_dataset_base from './json-reports/ovc-in-hei-dataset-base.json';
+import * as ovc_in_hei_dataset_aggregate from './json-reports/ovc-in-hei-dataset-aggregate.json';
+import * as ovc_patient_list_template from './json-reports/ovc-patient-list-template.json';
+import * as ovc_in_hei_patient_list_template from './json-reports/ovc-in-hei-patient-list-template.json';
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -765,6 +772,30 @@ export class BaseMysqlReport {
                             main: this.cloneJsonSchema(hei_report_patient_list_template)
                         });
                         break;
+                case 'ovcReport':
+                    resolve({
+                        main: this.cloneJsonSchema(ovc_report)
+                    });
+                case 'ovcInHivDatasetAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(ovc_in_hiv_dataset_aggregate),
+                        ovcInHivDatasetBase: this.cloneJsonSchema(ovc_in_hiv_dataset_base)
+                    })
+                case 'ovcInHeiDatasetAggregate':
+                    resolve({
+                        main: this.cloneJsonSchema(ovc_in_hei_dataset_aggregate),
+                        ovcInHeiDatasetBase: this.cloneJsonSchema(ovc_in_hei_dataset_base)
+                    })
+                case 'ovc-patient-list-template':
+                    resolve({
+                        main: this.cloneJsonSchema(ovc_patient_list_template)
+                    });
+                    break;
+                case 'ovc-in-hei-patient-list-template':
+                    resolve({
+                        main: this.cloneJsonSchema(ovc_in_hei_patient_list_template)
+                    })
+                    break;
                 default:
                     reject('Unknown report ', reportName);
                     break;
