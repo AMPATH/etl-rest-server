@@ -1,14 +1,14 @@
 var authorizer = require('../../authorization/etl-authorizer');
 import {
-    PrepMonthlySummaryService
-} from '../../service/prep-monthly-summary.service';
+    OvcMonthlySummary
+} from '../ovc-report/ovc-monthly-summary.service';
 var etlHelpers = require('../../etl-helpers');
 var privileges = authorizer.getAllPrivileges();
 var preRequest = require('../../pre-request-processing');
 const routes = [
     {
         method: 'GET',
-        path: '/etl/prep-monthly-summary',
+        path: '/etl/ovc-monthly-summary',
         config: {
             plugins: {
                 'hapiAuthorization': {
@@ -19,13 +19,12 @@ const routes = [
                 preRequest.resolveLocationIdsToLocationUuids(request,
                     function () {
                         let requestParams = Object.assign({}, request.query, request.params);
-                        let reportParams = etlHelpers.getReportParams('prep-monthly-summary',
+                        let reportParams = etlHelpers.getReportParams('ovc-monthly-summary',
                             ['endDate', 'locationUuids'],
                             requestParams);
-                            reportParams.requestParams.isAggregated = true
 
-                        let service = new PrepMonthlySummaryService('prepMonthlySummaryReport', reportParams.requestParams);
-                        service.getAggregateReport().then((result) => {
+                        let service = new OvcMonthlySummary('ovcReport', reportParams.requestParams);
+                        service.generateAggregateReport().then((result) => {
                             reply(result);
 
                         }).catch((error) => {
@@ -34,8 +33,8 @@ const routes = [
                     });
 
             },
-            description: 'prep monthly summary dataset',
-            notes: 'prep monthly summary dataset',
+            description: 'ovc-monthly-summary dataset',
+            notes: 'ovc-monthly-summary dataset',
             tags: ['api'],
             validate: {
                 options: {
@@ -47,7 +46,7 @@ const routes = [
     },
     {
         method: 'GET',
-        path: '/etl/prep-monthly-summary-patient-list',
+        path: '/etl/ovc-monthly-summary-patient-list',
         config: {
             plugins: {
                 'hapiAuthorization': {
@@ -55,27 +54,26 @@ const routes = [
                 }
             },
             handler: function (request, reply) {
-                request.query.reportName = 'prep-summary-patient-list';
+                request.query.reportName = 'ovc-monthly-summarypatient-list';
                 preRequest.resolveLocationIdsToLocationUuids(request,
                     function () {
                         let requestParams = Object.assign({}, request.query, request.params);
 
                         let requestCopy = _.cloneDeep(requestParams);
                         let reportParams = etlHelpers.getReportParams(request.query.reportName, ['startDate', 'endDate', 'locationUuids', 'locations'], requestParams);
-                        requestCopy.locationUuids = reportParams.requestParams.locationUuids;
-                        const prepService = new PrepMonthlySummaryService('prepMonthlySummaryReport', requestCopy);
+                        const service = new OvcMonthlySummary('ovcReport', requestCopy);
 
-                        prepService.generatePatientList(requestParams.indicators.split(',')).then((results) => {
+                        service.generatePatientListReport(requestParams.indicators.split(',')).then((results) => { //.indicators.split(',')
                             reply(results);
                         })
                             .catch((err) => {
-                                reply(err);
+                                reply(Boom.internal('An error occured', err));
                             });
                     });
 
             },
-            description: 'Get patient list for prep monthly summary report of the location and month provided',
-            notes: 'Returns patient list of prep monthly summary indicators',
+            description: 'Get patient list for ovc monthly summary report of the location and month provided',
+            notes: 'Returns patient list of  monthly summary indicators',
             tags: ['api']
         }
 
