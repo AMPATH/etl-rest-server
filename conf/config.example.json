@@ -12,6 +12,17 @@
     "tls": false,
     "uploadsDirectory": ""
   },
+  "eidSyncSettings":{
+    "retryInterval": 1200000,
+    "maxTrialCount": 3,
+    "timeout": 30000,
+    "syncInterval": 20000,
+    "daySyncInterval": 30000,
+    "nightSyncInterval": 50,
+    "daySyncStartHr": 5,
+    "nightSyncStartHr": 20,
+    "bulkSyncHr": 22
+  },
   "mysql2": {
     "connectionLimit": 10,
     "host": "",

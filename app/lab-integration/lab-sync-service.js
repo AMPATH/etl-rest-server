@@ -280,4 +280,54 @@ export class LabSyncService {
       });
     });
   }
+  hasPendingVLOrder(personUuid) {
+
+    return new Promise((resolve, reject) => {
+      let queryParts = {};
+      let sql = ''
+     
+      sql = "SELECT t3.uuid FROM amrs.orders t1 INNER JOIN amrs.person t3 ON t3.person_id = t1.patient_id LEFT OUTER JOIN amrs.obs t2 ON t1.order_id = t2.order_id where t2.order_id IS NULL AND t1.date_activated >= DATE('2020-01-01') AND t3.uuid = '" + personUuid +"';" ;
+      queryParts = {
+          sql: sql
+      };
+      db.queryServer(queryParts, function (result) {
+          result.sql = sql;
+          resolve(result);
+      });
+  });
+  
+  }
+  savePendingLabResults(eidResults,personUuid) {
+    return new Promise((resolve, reject) => {
+        let queryParts = {};
+        let sql = ''
+       
+        sql = "replace into etl.eid_pending_results (person_uuid,pending_result) values ('" + personUuid + "','" + eidResults + "');" ;
+        queryParts = {
+            sql: sql
+        };
+        db.queryServer(queryParts, function (result) {
+            result.sql = sql;
+            resolve(result);
+        });
+    })
+  
+  }
+  
+  getCachedPendingLabResults(personUuid) {
+    return new Promise((resolve, reject) => {
+        let queryParts = {};
+        let sql = ''
+       
+        sql = "select * from etl.eid_pending_results where person_uuid = '" + personUuid + "' AND DATE(date_created) = DATE(CURDATE()) order by date_created limit 1;" ;
+        queryParts = {
+            sql: sql
+        };
+        db.queryServer(queryParts, function (result) {
+            result.sql = sql;
+            resolve(result);
+        });
+    });
+  
+  }
 }

@@ -5,16 +5,21 @@ var
   config = require('../conf/config'),
   moment = require('moment'),
   curl = require('curlrequest');
+  scheduleEidSync = require('./schedule-eid-sync.script');
 
 var Sync = {
 
-  timeout: 3000,
+  timeout: config.eidSyncSettings.timeout,
 
   nextSyncDateTime: moment().subtract(1, 'minute'),
 
   records_limit: 1,
 
   processing: false,
+
+  bulkSync: true,
+
+  syncInterval: 30000,
 
   start: function () {
     console.log('Starting EID sync');
@@ -39,6 +44,18 @@ var Sync = {
 
     var today = new Date().getHours();
 
+    let currentHour = moment().format('HH');
+    console.log('Current Hour', currentHour);
+    if(currentHour >= config.eidSyncSettings.nightSyncStartHr || currentHour <= config.eidSyncSettings.daySyncStartHr){
+       Sync.syncInterval = config.eidSyncSettings.nightSyncInterval;
+    }else{
+       Sync.syncInterval = config.eidSyncSettings.daySyncInterval;
+    }
+    console.log('SyncInterval...', Sync.syncInterval);
+
+    Sync.setSyncInterval();
+    Sync.setBulkSyncMode();
+
     //sync records after working hours only
     // if (today >= 7 && today <= 17) {
     //   Sync.processing = false;
@@ -51,6 +68,13 @@ var Sync = {
       console.log('Sync will resume at ' + Sync.nextSyncDateTime.format());
       Sync.processing = false;
       return;
+    }
+
+    
+
+    if(Sync.bulkSync){
+        scheduleEidSync.start();
+        Sync.bulkSync = false;
     }
 
     // if(!moment().isBefore(Sync.nextSyncDateTime)) {
@@ -76,8 +100,9 @@ var Sync = {
               return Sync.deleteProcessed(data);
             })
             .then(function (deleted) {
-
-              Sync.process();
+              setTimeout(function(){
+                Sync.process();
+              },Sync.syncInterval);
             })
             .catch(function (err) {
 
@@ -127,7 +152,7 @@ var Sync = {
 
     var protocol = config.etl.tls ? 'https' : 'http';
 
-    var url = protocol + '://' + config.etl.host + ':' + config.etl.port + '/etl/patient-lab-orders?patientUuId=' + patientUuId;
+    var url = protocol + '://' + config.etl.host + ':' + config.etl.port + '/etl/patient-lab-orders?patientUuId=' + patientUuId + '&mode=batch';
 
     var usernamePass = config.eidSyncCredentials.username + ":" + config.eidSyncCredentials.password;
     var auth = "Basic " + new Buffer(usernamePass).toString('base64');
@@ -213,7 +238,28 @@ var Sync = {
         resolve(e);
       }
     });
-  }
+  },
+
+  setSyncInterval: function(){
+
+    const currentHour = moment().format('HH');
+    if(currentHour >= 8 && currentHour < 5){
+        Sync.syncInterval = config.eidSyncSettings.nightSyncInterval;
+    }else{
+        Sync.syncInterval = config.eidSyncSettings.daySyncInterval;
+    }
+
+  },
+  setBulkSyncMode: function(){
+        currentHour = moment.format('HH');
+        if(currentHour === config.bulkSyncHr && Sync.bulkSync === false){
+            // schedule bulk sync one at the bulk sync hour specified in config
+            Sync.bulkSync = true;
+        }else{
+            Sync.bulkSync = false;
+        }
+
+    }
 }
 
 Sync.start();

@@ -1,9 +1,6 @@
 var
     db = require('../etl-db'),
     fs = require('fs'),
-    util = require('util'),
-    stream = require('stream'),
-    es = require('event-stream'),
     config = require('../conf/config'),
     Promise = require('bluebird'),
     eidService = require('../service/eid.service.js'),
@@ -16,7 +13,6 @@ var log_file = 'lab-sync-scheduling.log';
 var error_file = 'lab-sync-scheduling-error.log';
 var config = require('../conf/config');
 var requestConfig = require('../request-config');
-const patientService = require('../service/openmrs-rest/patient.service')
 import { LabClient } from '../app/lab-integration/utils/lab-client';
 
 var service = {
@@ -25,15 +21,12 @@ var service = {
     retryInterval: 20 * 60 * 1000, // Retry every 20 minutes incase of an error
     maxTrialCount: 3, // maxinum number of attempts to schedule syncing incase of an error during 1st trial
     currentTrialCount: 0,
-    lab: '',
+    lab: 'ampath',
+    queueTable: 'eid_sync_queue',
     weekly_sync: false,
     schedulingInProgress: false,
     start: function () {
         console.info('scheduling process started');
-        setInterval(function () {
-            if (!service.schedulingInProgress)
-                service.scheduleEidSync();
-        }, service.retryInterval);
         service.scheduleEidSync();
     },
     scheduleEidSync: function () {
@@ -43,7 +36,8 @@ var service = {
             // check for date arguments.
             var startDate = this.getProcessArg('--start-date');
             var endDate = this.getProcessArg('--end-date');
-            var lab = this.getProcessArg('--lab');
+            var lab = this.getSyncLab();
+            service.queueTable = this.getQueuTable();
             var weekly_sync = this.getProcessArg('--weekly');
             if (lab) {
                 service.lab = lab;
@@ -135,7 +129,8 @@ var service = {
             // also pick items from previously saved error queue
         }
         // console.log('queue', service.errorQueue);
-        if (service.weekly_sync) {
+        // if (service.weekly_sync) {
+            /*
             let startDateVlPending = format('yyyy-MM-dd', moment(new Date()).subtract(3, 'months').toDate());
             console.log('Patients with missing vl');
             service.schedulePatientsWithMissingVlPastOneYear()
@@ -157,7 +152,8 @@ var service = {
                     console.log('Exiting scheduler...');
                     process.exit(1);
                 });
-        } else {
+            */
+        // } else {
             service.scheduleQueue()
                 .then(function (result) {
                     // console.log('Queue passed',result)
@@ -165,8 +161,8 @@ var service = {
                     console.info('*********************************');
                     console.info('Scheduling completed successfully');
                     console.info('*********************************');
-                    console.info(service.scheduledSuccessfully);
-                    service.logSuccessfulScheduling(service.scheduledSuccessfully);
+             //       console.info(service.scheduledSuccessfully);
+             //       service.logSuccessfulScheduling(service.scheduledSuccessfully);
 
                     // attempt for pending vl orders
                     // Attempt to schedule patients with pending vl orders
@@ -208,24 +204,25 @@ var service = {
                             process.exit(1);
                         });
 
-                })
+               })
                 .catch(function (error) {
-                    service.logErrorWhenScheduling(error);
-                    console.log('Error', error);
-                    console.log('An expected error happened while scheduling...');
-                    process.exit(1);
+                      service.logErrorWhenScheduling(error);
+                      console.log('Error', error);
+                      console.log('An expected error happened while scheduling...');
+                      process.exit(1);
                 });
-        }
+        // }
 
 
     },
     fetchAllViralLoad: function (configObj, options) {
         let client = new LabClient(configObj);
-        return client.fetchViralLoad(options).then((result) => {
+        return client.fetchViralLoad(options).then(async (result) => {
             let promises = [];
             let i;
             for (i = 1; i <= result.last_page; i++) {
-                promises.push(client.fetchViralLoad(options, i));
+                let clientViralLoad = await client.fetchViralLoad(options, i);
+                promises.push(clientViralLoad);
             }
             return Promise.all(promises);
         }).then((results) => {
@@ -244,11 +241,12 @@ var service = {
     },
     fetchAllCD4: function (configObj, options) {
         let client = new LabClient(configObj);
-        return client.fetchCD4(options).then((result) => {
+        return client.fetchCD4(options).then(async (result) => {
             let promises = [];
             let i;
             for (i = 1; i <= result.last_page; i++) {
-                promises.push(client.fetchCD4(options, i));
+                const clientCd4 = await client.fetchCD4(options, i);
+                promises.push(clientCd4);
             }
             return Promise.all(promises);
         }).then((results) => {
@@ -271,7 +269,8 @@ var service = {
             let promises = [];
             let i;
             for (i = 1; i <= result.last_page; i++) {
-                promises.push(client.fetchDNAPCR(options, i));
+                const clientPcr = await client.fetchDNAPCR(options, i);
+                promises.push(clientPcr);
             }
             return Promise.all(promises);
         }).then((results) => {
@@ -304,8 +303,10 @@ var service = {
         let configObj = config.hivLabSystem[service.lab];
         let options = {
             date_dispatched_start: service.startDate,
-            date_dispatched_end: service.endDate, dispached: 1
+            date_dispatched_end: service.endDate, 
+            dispached: 1
         };
+        const queueTable = service.queueTable;
         return service.fetchAllPatientResults(configObj, options).then((identifiers) => {
             return service.insertPatientsWithEidResultsIntoSyncQueue(identifiers);
         });
@@ -408,7 +409,7 @@ var service = {
         
                 console.log('Results...', results);
         
-                var sql = 'replace into etl.eid_sync_queue(person_uuid) select distinct p.uuid from amrs.person p left join amrs.patient_identifier i on p.person_id = i.patient_id where identifier in (?)';
+                var sql = `replace into etl.${service.queueTable}(person_uuid) select distinct p.uuid from amrs.person p left join amrs.patient_identifier i on p.person_id = i.patient_id where identifier in (?)`;
                 sql = sql.replace('?', results);
                 console.log('sql....', sql);
         
@@ -435,7 +436,7 @@ var service = {
         });
     },
     schedulePatientsWithPendingOrders: function (startDate) {
-        var sql = "replace into  etl.eid_sync_queue(person_uuid) (select distinct uuid from (select t3.uuid, t1.patient_id, t1.order_id, t2.order_id as obs_order_id, t1.date_activated from amrs.orders t1  inner join amrs.person t3 on t3.person_id = t1.patient_id left outer join amrs.obs t2 on t1.order_id = t2.order_id having obs_order_id is null) t where t.date_activated > date('?'))";
+        var sql = `replace into  etl.${service.queueTable}(person_uuid) (select distinct uuid from (select t3.uuid, t1.patient_id, t1.order_id, t2.order_id as obs_order_id, t1.date_activated from amrs.orders t1  inner join amrs.person t3 on t3.person_id = t1.patient_id left outer join amrs.obs t2 on t1.order_id = t2.order_id having obs_order_id is null) t where t.date_activated > date('?') ORDER BY t.date_activated DESC limit 2000)`;
         sql = sql.replace('?', startDate);
         // console.log(sql);
 
@@ -455,8 +456,8 @@ var service = {
         });
     },
     schedulePatientsWithMissingVlPastOneYear: function () {
-        var sql = "replace into  etl.eid_sync_queue(person_uuid) " +
-            "(select uuid from etl.flat_hiv_summary_v15b where timestampdiff(month, vl_1_date, now()) >= 11 and timestampdiff(month,arv_start_date,now()) >= 4 and is_clinical_encounter=1 and next_clinical_datetime_hiv is null and timestampdiff(month,encounter_datetime,now()) <= 18)";
+        var sql = `replace into  etl.${service.queueTable}(person_uuid) " +
+            "(select uuid from etl.flat_hiv_summary_v15b where timestampdiff(month, vl_1_date, now()) >= 11 and timestampdiff(month,arv_start_date,now()) >= 4 and is_clinical_encounter=1 and next_clinical_datetime_hiv is null and timestampdiff(month,encounter_datetime,now()) <= 18)`;
         // sql = sql.replace('?', startDate);
         // console.log(sql);
 
@@ -498,8 +499,8 @@ var service = {
         });
     },
     insertEidQueueErrorsIntoEidSyncQueue: function () {
-        var sql = 'replace into  etl.eid_sync_queue(person_uuid)' +
-            ' (select person_uuid from etl.eid_sync_queue_errors)';
+        var sql = `replace into  etl.${service.queueTable}(person_uuid)' +
+            ' (select person_uuid from etl.eid_sync_queue_errors)`;
         var queryObject = {
             query: sql,
             sqlParams: []
@@ -588,8 +589,34 @@ var service = {
             });
 
         });
+    },
+
+    getSyncLab: function (){
+        console.log('getsynclab called ..');
+        const lab = Object.keys(config.hivLabSystem)[0];
+        console.log('Lab ..', lab);
+        return lab;
+
+
+    },
+
+    getQueuTable: function(lab){
+        let queueTable = '';
+        switch(lab){
+          case 'ampath':
+            queueTable = 'eid_sync_queue';
+           break;
+          case 'alupe':
+            queueTable = 'eid_sync_queue_alupe';
+            break;
+          default:
+              queueTable = 'eid_sync_queue';
+
+        };
+        return queueTable;
+
     }
 
 };
 
-service.start();
+module.exports = service;
