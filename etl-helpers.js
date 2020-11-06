@@ -10,7 +10,6 @@ module.exports = (function () {
       queryParams
     ) {
       let whereParams = [];
-
       // format dates to avoid timezone errors
       queryParams.startDate = (
         queryParams.startDate || new Date().toISOString().substring(0, 10)
