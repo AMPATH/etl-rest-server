@@ -179,6 +179,7 @@ import * as patient_gain_loses_base from './json-reports/patient-gain-loses-base
 import * as patient_gain_loses_aggregate from './json-reports/patient-gain-loses-aggregate.json';
 import * as patient_gain_lose_dataset_1 from './json-reports/patient-gain-lose-dataset-1.json';
 import * as patient_gain_lose_dataset_2 from './json-reports/patient-gain-lose-dataset-2.json';
+import * as patient_gain_loses_patient_list_template from './json-reports/patient-gain-loses-patient-list-template.json';
 
 import * as ovc_report from './json-reports/ovc-report.json';
 import * as ovc_in_hiv_dataset_base from './json-reports/ovc-in-hiv-dataset-base.json';
@@ -945,6 +946,11 @@ export class BaseMysqlReport {
             patientGainLoseDatasetTwo: this.cloneJsonSchema(
               patient_gain_lose_dataset_2
             )
+          });
+          break;
+        case 'patient-gain-loses-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(patient_gain_loses_patient_list_template)
           });
           break;
         case 'ovcReport':
