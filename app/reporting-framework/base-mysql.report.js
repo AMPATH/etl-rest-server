@@ -186,6 +186,11 @@ import * as ovc_in_hei_dataset_base from './json-reports/ovc-in-hei-dataset-base
 import * as ovc_in_hei_dataset_aggregate from './json-reports/ovc-in-hei-dataset-aggregate.json';
 import * as ovc_patient_list_template from './json-reports/ovc-patient-list-template.json';
 import * as ovc_in_hei_patient_list_template from './json-reports/ovc-in-hei-patient-list-template.json';
+
+import * as tb_preventive_ipt_monthly_summary_aggregate from './json-reports/tb-preventive-ipt-monthly-summary-aggregate.json';
+import * as tb_preventive_monthly_summary_aggregate from './json-reports/tb-preventive-monthly-summary-aggregate.json';
+import * as tb_preventive_dataSet_base from './json-reports/tb-preventive-dataset-base.json';
+import * as tb_preventive_report from './json-reports/tb-preventive-report.json';
 export class BaseMysqlReport {
     constructor(reportName, params) {
         this.reportName = reportName;
@@ -809,6 +814,29 @@ export class BaseMysqlReport {
                         )
                       });
                     break;
+                case 'TbPreventiveReport':
+                  resolve({
+                    main: this.cloneJsonSchema(tb_preventive_report)
+                  });
+                  break;
+                case 'TbPreventiveIptMonthlySummaryAggregate':
+                  resolve({
+                    main: this.cloneJsonSchema(
+                      tb_preventive_ipt_monthly_summary_aggregate
+                    ),
+                    TbPreventiveDataSetBase: this.cloneJsonSchema(
+                      tb_preventive_dataSet_base
+                    )
+                  });
+                  break;
+                case 'TbPreventiveMonthlySummaryAggregate':
+                  resolve({
+                    main: this.cloneJsonSchema(tb_preventive_monthly_summary_aggregate),
+                    TbPreventiveDataSetBase: this.cloneJsonSchema(
+                      tb_preventive_dataSet_base
+                    )
+                  });
+                  break;
                 default:
                     reject('Unknown report ', reportName);
                     break;
