@@ -7,7 +7,7 @@ export class FamilyTestingService {
       let sql =
         "select * from etl.flat_family_testing where location_uuid = '" +
         params.locationUuid +
-        "'";
+        "' group by patient_id";
 
       queryParts = {
         sql: sql,
@@ -20,12 +20,31 @@ export class FamilyTestingService {
       });
     });
   };
-  getPatientFamilyHistory = (params) => {
+  getPatientContacts = (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
       let sql =
-        'select * from etl.flat_family_testing where patient_id = ' +
-        params.patientId +
+        "select * from etl.flat_family_testing where patient_uuid = '" +
+        params.patientUuid +
+        "'";
+      queryParts = {
+        sql: sql
+      };
+      return db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result);
+      });
+    });
+  };
+
+  updateContact = (params) => {
+    return new Promise((resolve, reject) => {
+      let queryParts = {};
+      let sql =
+        'update etl.flat_family_testing set is_registered = 1, fm_uuid = "' +
+        params.uuid +
+        '" where obs_group_id = ' +
+        params.obs_group_id +
         '';
       queryParts = {
         sql: sql
