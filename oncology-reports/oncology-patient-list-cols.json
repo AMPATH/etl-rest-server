@@ -342,8 +342,8 @@
           "phone_number",
           "hiv_status",
           "patient_uuid",
-   
-   "referrals_ordered",       "breast_rtc_date"
+          "referrals_ordered",
+          "breast_rtc_date"
         ]
       },
       {
