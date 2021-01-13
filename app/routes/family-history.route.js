@@ -81,14 +81,16 @@ const routes = [
         try {
           let familyTestingService = new FamilyTestingService();
 
-          familyTestingService.updateContact(request.payload).then((result) => {
-            const res = {
-              type: 'Success',
-              message: 'Contact Updated successfully',
-              body: result
-            };
-            h.response(res);
-          });
+          familyTestingService
+            .updateRegisteredContact(request.payload)
+            .then((result) => {
+              const res = {
+                type: 'Success',
+                message: 'Contact Updated successfully',
+                body: result
+              };
+              h.response(res);
+            });
         } catch (err) {
           h.response(error);
         }
@@ -121,7 +123,6 @@ const routes = [
             payload: request.payload,
             query: request.query
           };
-
           service.saveContactTracing(params).then((result) => {
             const res = {
               type: 'Success',
@@ -167,6 +168,42 @@ const routes = [
       },
       description: 'Tracing information saved',
       notes: 'Tracing information saved',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'DELETE',
+    path: '/etl/contact',
+    config: {
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      handler: function (request, h) {
+        try {
+          const service = new FamilyTestingService();
+
+          service.deleteContact(request.query).then((result) => {
+            const res = {
+              type: 'Success',
+              message: `Contact with id ${request.query.contact_id} deleted successfully`,
+              body: result
+            };
+            h.response(res);
+          });
+        } catch (err) {
+          h.response(error);
+        }
+      },
+      description: 'Delete contact endpoint',
+      notes: 'Delete contact endpoint',
       tags: ['api'],
       validate: {
         options: {

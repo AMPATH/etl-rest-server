@@ -1,6 +1,15 @@
 var db = require('../../etl-db');
+var rp = require('../../request-config');
+var config = require('../../conf/config');
 
 export class FamilyTestingService {
+  getRestResource = (path) => {
+    var protocol = config.openmrs.https ? 'https' : 'http';
+    var link =
+      protocol + '://' + config.openmrs.host + ':' + config.openmrs.port + path;
+    return link;
+  };
+
   getPatientList = (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
@@ -18,6 +27,7 @@ export class FamilyTestingService {
       });
     });
   };
+
   getPatientContacts = (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
@@ -35,7 +45,7 @@ export class FamilyTestingService {
     });
   };
 
-  updateContact = (params) => {
+  updateRegisteredContact = (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
       let sql =
@@ -126,6 +136,61 @@ export class FamilyTestingService {
         end as reason_not_contacted
         from etl.contact_tracing 
         where contact_id = ${params.contact_id}`;
+      queryParts = {
+        sql: sql
+      };
+      return db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result);
+      });
+    });
+  };
+
+  getContactObsData = (params) => {
+    return new Promise((resolve, reject) => {
+      let queryParts = {};
+      let sql =
+        "select uuid from amrs.obs where obs_id = '" + params.contact_id + "'";
+      queryParts = {
+        sql: sql
+      };
+      return db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result);
+      });
+    });
+  };
+
+  deleteContact = (params) => {
+    let that = this;
+    return this.getContactObsData(params).then((res) => {
+      var uri = this.getRestResource(
+        '/' +
+          config.openmrs.applicationName +
+          '/ws/rest/v1/obs/' +
+          res.result[0].uuid
+      );
+      return new Promise(function (resolve, reject) {
+        rp.deleteRequestPromise(uri)
+          .then(function (result) {
+            that.removeDeletedContacts(params).then((res) => {
+              resolve(res);
+            });
+          })
+          .catch(function (error) {
+            reject(error);
+          });
+      });
+    });
+  };
+
+  removeDeletedContacts = (params) => {
+    return new Promise((resolve, reject) => {
+      let queryParts = {};
+      let sql =
+        "delete from etl.flat_family_testing where obs_group_id = '" +
+        params.contact_id +
+        "'";
       queryParts = {
         sql: sql
       };
