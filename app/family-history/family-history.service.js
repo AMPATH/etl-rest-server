@@ -5,14 +5,12 @@ export class FamilyTestingService {
     return new Promise((resolve, reject) => {
       let queryParts = {};
       let sql =
-        "select * from etl.flat_family_testing where location_uuid = '" +
+        "select *, count(*) as `contacts_count` from etl.flat_family_testing where location_uuid = '" +
         params.locationUuid +
         "' group by patient_id";
 
       queryParts = {
-        sql: sql,
-        startIndex: params.startIndex,
-        limit: params.limit
+        sql: sql
       };
       return db.queryServer(queryParts, function (result) {
         result.sql = sql;
@@ -46,6 +44,88 @@ export class FamilyTestingService {
         '" where obs_group_id = ' +
         params.obs_group_id +
         '';
+      queryParts = {
+        sql: sql
+      };
+      return db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result);
+      });
+    });
+  };
+
+  saveContactTracing = (params) => {
+    return new Promise((resolve, reject) => {
+      let queryParts = {};
+      let sql = '';
+
+      if (params.query.trace_id != null) {
+        sql =
+          'update etl.contact_tracing set contact_id = ' +
+          params.payload.contact_id +
+          ',contact_date="' +
+          params.payload.contact_date +
+          '",contact_type=' +
+          params.payload.contact_type +
+          ',contact_status=' +
+          params.payload.contact_status +
+          ',reason_not_contacted=' +
+          params.payload.reason_not_contacted +
+          ',remarks="' +
+          params.payload.remarks +
+          '" where id = ' +
+          params.query.trace_id +
+          '';
+      } else {
+        sql =
+          'insert into etl.contact_tracing (contact_id,contact_date,contact_type,contact_status,reason_not_contacted,remarks) values( ' +
+          params.payload.contact_id +
+          ',"' +
+          params.payload.contact_date +
+          '",' +
+          params.payload.contact_type +
+          ',' +
+          params.payload.contact_status +
+          ',' +
+          params.payload.reason_not_contacted +
+          ',"' +
+          params.payload.remarks +
+          '")';
+      }
+      queryParts = {
+        sql: sql
+      };
+      return db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result);
+      });
+    });
+  };
+
+  getContactTracingHistory = (params) => {
+    return new Promise((resolve, reject) => {
+      let queryParts = {};
+      let sql = `select id, contact_id, contact_date, remarks,
+        case 
+          when contact_type = 1555 then @contact_type:='Phone tracing' 
+          when contact_type = 10791 then @contact_type:='Physical tracing' 
+        end as contact_type,
+        case 
+          when contact_status = 1065 then @contact_status:='Contacted and linked' 
+          when contact_status = 1066 then @contact_status:='Contacted but not linked' 
+          when contact_status = 1118 then @contact_status:='Not contacted'
+        end as contact_status,
+        case 
+          when reason_not_contacted = 1550 then @reason_not_contacted:='No locator information' 
+          when reason_not_contacted = 1561 then @reason_not_contacted:='Incorrect locator information' 
+          when reason_not_contacted = 1562 then @reason_not_contacted:='Migrated'
+          when reason_not_contacted = 1563 then @reason_not_contacted:='Not found at home' 
+          when reason_not_contacted = 1560 then @reason_not_contacted:='Calls not going through' 
+          when reason_not_contacted = 1593 then @reason_not_contacted:='Died'
+          when reason_not_contacted = 5622 then @reason_not_contacted:='other'
+        end as reason_not_contacted
+        from etl.contact_tracing 
+        where contact_id = ${params.contact_id}`;
       queryParts = {
         sql: sql
       };
