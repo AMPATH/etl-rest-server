@@ -31,10 +31,39 @@ export class FamilyTestingService {
   getPatientContacts = (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
-      let sql =
-        "select * from etl.flat_family_testing where patient_uuid = '" +
-        params.patientUuid +
-        "'";
+      let sql = `select *,
+        case 
+          when test_result = 703 then @test_result_value:='POSITIVE' 
+          when test_result = 664 then @test_result_value:='NEGATIVE' 
+          else @test_result_value:=null 
+        end as test_result_value,
+        case 
+          when in_care = 1065 then @enrolled:='YES' 
+          when in_care = 1066 then @enrolled:='NO' 
+          when in_care = 1067 then @enrolled:='UNKNOWN'
+          else @enrolled:=null 
+        end as enrolled,
+        case 
+          when eligible_for_testing = 1065 then @test_eligible:='YES' 
+          when eligible_for_testing = 1066 then @test_eligible:='No' 
+          else @test_eligible:=null 
+        end as test_eligible,
+        case 
+          when test_result is not null then @eligible_for_tracing:=1 
+          when eligible_for_testing = 1065 then  @eligible_for_tracing:=2
+          else @eligible_for_tracing:=0 
+        end as eligible_for_tracing,
+        case 
+          when facility_enrolled is not null then facility_enrolled  
+          else fm_address 
+        end as fm_facility_enrolled,
+        date_format(preferred_testing_date,"%d-%m-%Y") as preferred_testing_date
+      from etl.flat_family_testing where patient_uuid = '${params.patientUuid}'`;
+      /*
+      1.eligible_for_tracing = 1, traced and tested
+      2.eligible_for_tracing = 2, eligible for testing
+      3.eligible_for_tracing = 0, not eligible for testing 
+      */
       queryParts = {
         sql: sql
       };
