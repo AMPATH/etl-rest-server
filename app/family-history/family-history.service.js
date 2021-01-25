@@ -13,10 +13,20 @@ export class FamilyTestingService {
   getPatientList = (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
-      let sql =
-        "select *, count(*) as `contacts_count` from etl.flat_family_testing where location_uuid = '" +
-        params.locationUuid +
-        "' group by patient_id";
+      let sql = `SELECT 
+      t1.*, t2.contacts_count
+        FROM
+            etl.flat_family_testing t1
+                INNER JOIN
+            (SELECT 
+                patient_id, COUNT(*) AS 'contacts_count'
+            FROM
+                etl.flat_family_testing
+            WHERE
+                location_uuid = '${params.locationUuid}'
+            GROUP BY patient_id) t2 ON (t1.patient_id = t2.patient_id)
+        WHERE
+            location_uuid = '${params.locationUuid}'`;
 
       queryParts = {
         sql: sql
