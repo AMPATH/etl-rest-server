@@ -2,6 +2,9 @@
 const Promise = require('bluebird');
 const Moment = require('moment');
 const _ = require('lodash');
+var rp = require('../request-config');
+var config = require('../conf/config.json');
+
 var serviceDef = {
   generateReminders: generateReminders,
   viralLoadReminders: viralLoadReminders,
@@ -162,6 +165,7 @@ function qualifiesDifferenciatedReminders(data) {
         banner: true,
         toast: true
       },
+      action: true,
       auto_register: '334c9e98-173f-4454-a8ce-f80b20b7fdf0'
     });
   } else {
@@ -335,6 +339,7 @@ function qualifiesEnhancedReminders(data) {
           banner: true,
           toast: true
         },
+        action: true,
         auto_register: 'c4246ff0-b081-460c-bcc5-b0678012659e'
       });
       break;
@@ -498,7 +503,50 @@ function getIptCompletionReminder(data) {
   return reminders;
 }
 
-function generateReminders(etlResults, eidResults) {
+function getFamilyTestingReminder(patientUuid) {
+  let reminders = [];
+  return getAllEncounters(patientUuid).then((res) => {
+    if (res.results.length == 0) {
+      reminders.push({
+        message:
+          'No contact tracing has been done for this index, please fill the  contact tracing form',
+        title: 'Contact Tracing Reminder',
+        type: 'warning',
+        display: {
+          banner: true,
+          toast: true
+        },
+        action: true,
+        addContacts: true
+      });
+      return reminders;
+    } else {
+      let months = 0;
+      if (res.results[0].auditInfo.dateChanged != null) {
+        months = Moment().diff(res.results[0].auditInfo.dateChanged, 'months');
+      } else {
+        months = Moment().diff(res.results[0].encounterDatetime, 'months');
+      }
+      if (months > 6) {
+        reminders.push({
+          message:
+            "It's six months since patient's contacts were last updated, click update to add more contacts",
+          title: 'Contact Tracing Reminder',
+          type: 'info',
+          display: {
+            banner: true,
+            toast: true
+          },
+          action: true,
+          updateContacts: true
+        });
+      }
+      return reminders;
+    }
+  });
+}
+
+async function generateReminders(etlResults, eidResults) {
   let reminders = [];
   let patientReminder;
   if (etlResults && etlResults.length > 0) {
@@ -523,6 +571,10 @@ function generateReminders(etlResults, eidResults) {
   let dst_result = dstReminders(data);
   let gene_xpert_result = geneXpertReminders(data);
   let not_completed_ipt = getIptCompletionReminder(data);
+  let contact_tracing_reminder = await getFamilyTestingReminder(
+    etlResults[0].person_uuid
+  );
+
   let currentReminder = [];
   if (pending_vl_lab_result.length > 0) {
     currentReminder = pending_vl_lab_result.concat(inh_reminders);
@@ -537,7 +589,8 @@ function generateReminders(etlResults, eidResults) {
       dna_pcr_reminder,
       dst_result,
       gene_xpert_result,
-      not_completed_ipt
+      not_completed_ipt,
+      contact_tracing_reminder
     );
   }
 
@@ -555,4 +608,30 @@ function transformZeroVl(vl) {
   } else {
     return vl;
   }
+}
+
+function getRestResource(path) {
+  var protocol = config.openmrs.https ? 'https' : 'http';
+  var link =
+    protocol + '://' + config.openmrs.host + ':' + config.openmrs.port + path;
+  return link;
+}
+
+function getAllEncounters(patient_uuid) {
+  var uri = getRestResource(
+    '/' +
+      config.openmrs.applicationName +
+      '/ws/rest/v1/encounter?patient=' +
+      patient_uuid +
+      '&encounterType=975ae894-7660-4224-b777-468c2e710a2a&v=full'
+  );
+  return new Promise(function (resolve, reject) {
+    rp.getRequestPromise('', uri)
+      .then(function (result) {
+        resolve(result);
+      })
+      .catch(function (error) {
+        reject(error);
+      });
+  });
 }
