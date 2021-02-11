@@ -4,6 +4,7 @@ const Moment = require('moment');
 const _ = require('lodash');
 var rp = require('../request-config');
 var config = require('../conf/config.json');
+var encounter_service = require('./openmrs-rest/encounter');
 
 var serviceDef = {
   generateReminders: generateReminders,
@@ -505,7 +506,7 @@ function getIptCompletionReminder(data) {
 
 function getFamilyTestingReminder(patientUuid) {
   let reminders = [];
-  return getAllEncounters(patientUuid).then((res) => {
+  return getEncountersByEncounterType(patientUuid).then((res) => {
     if (res.results.length == 0) {
       reminders.push({
         message:
@@ -610,28 +611,16 @@ function transformZeroVl(vl) {
   }
 }
 
-function getRestResource(path) {
-  var protocol = config.openmrs.https ? 'https' : 'http';
-  var link =
-    protocol + '://' + config.openmrs.host + ':' + config.openmrs.port + path;
-  return link;
-}
-
-function getAllEncounters(patient_uuid) {
-  var uri = getRestResource(
-    '/' +
-      config.openmrs.applicationName +
-      '/ws/rest/v1/encounter?patient=' +
-      patient_uuid +
-      '&encounterType=975ae894-7660-4224-b777-468c2e710a2a&v=full'
-  );
+function getEncountersByEncounterType(patient_uuid) {
+  const family_testing_encounter = '975ae894-7660-4224-b777-468c2e710a2a';
   return new Promise(function (resolve, reject) {
-    rp.getRequestPromise('', uri)
-      .then(function (result) {
-        resolve(result);
+    encounter_service
+      .getEncountersByEncounterType(patient_uuid, family_testing_encounter)
+      .then((encounters) => {
+        resolve(encounters);
       })
-      .catch(function (error) {
-        reject(error);
+      .catch((err) => {
+        reject(err);
       });
   });
 }
