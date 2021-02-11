@@ -60,8 +60,29 @@
       });
     });
   }
-  
-  module.exports = {
-    getPatientEncounters: getPatientEncounters
+
+  function getEncountersByEncounterType(patient_uuid, enc_type) {
+    var uri =
+      openmrsBase +
+      '/ws/rest/v1/encounter?patient=' +
+      patient_uuid +
+      '&encounterType=' +
+      enc_type +
+      '&v=full';
+    return new Promise(function (resolve, reject) {
+      requestConfig
+        .getRequestPromise('', uri)
+        .then(function (result) {
+          resolve(result);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+    });
   }
-})();    
+
+  module.exports = {
+    getPatientEncounters: getPatientEncounters,
+    getEncountersByEncounterType: getEncountersByEncounterType
+  };
+})();

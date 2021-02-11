@@ -71,7 +71,7 @@ import { HeiSummaryService } from './service/moh-408-service';
 import { 
     RetentionAppointmentTracingService 
 } from './service/retention-appointment-tracing-service';
-
+import { PrepReminderService } from './service/prep-reminder/prep-reminder.service';
 
 var syncPreproc = require('./app/lab-integration/lab-sync-pre-processor.service');
 
@@ -687,65 +687,130 @@ module.exports = function () {
                 method: 'GET',
                 path: '/etl/patient/{patientUuid}/hiv-clinical-reminder/{referenceDate}',
                 config: {
-                    auth: 'simple',
-                    plugins: {
-                        'hapiAuthorization': {
-                            role: privileges.canViewPatient
-                        }
-                    },
-                    handler: function (request, reply) {
+                  auth: 'simple',
+                  plugins: {
+                    hapiAuthorization: {
+                      role: privileges.canViewPatient
+                    }
+                  },
+                  handler: function (request, reply) {
+                    let combineRequestParams = Object.assign(
+                      {},
+                      request.query,
+                      request.params
+                    );
+                    combineRequestParams.limitParam = 1;
+                    let prepReminder = new PrepReminderService();
+                    prepReminder.isPatientEnrolledInPrep(request.params).then((b) => {
+                      if (b) {
+                        let reportParams = etlHelpers.getReportParams(
+                          'prepClinicalReminder',
+                          ['referenceDate', 'patientUuid', 'offSetParam', 'limitParam'],
+                          combineRequestParams
+                        );
+                        let report = new BaseMysqlReport(
+                          'prepClinicalReminderReport',
+                          reportParams.requestParams
+                        );
+                        report
+                          .generateReport()
+                          .then((results) => {
+                            try {
+                              if (results.results.results.length > 0) {
+                                let processedResults = prepReminder.generateReminders(
+                                  results.results.results
+                                );
+                                results.result = {
+                                  person_id: results.results.results[0].person_id,
+                                  person_uuid: results.results.results[0].uuid,
+                                  reminders: processedResults
+                                };
+                              } else {
+                                results.result = {
+                                  person_uuid: combineRequestParams.patientUuid,
+                                  reminders: []
+                                };
+                              }
+                              reply(results);
+                            } catch (error) {
+                              console.log('Error generating prep reminders', error);
+                              reply(Boom.badImplementation('An internal error occurred'));
+                            }
+                          })
+                          .catch((error) => {
+                            console.log('Error generating prep reminders', error);
+                            reply(Boom.badImplementation('An internal error occurred'));
+                          });
+                      } else {
                         let EIDLabReminderService = require('./service/eid/eid-lab-reminder.service');
-                        let combineRequestParams = Object.assign({}, request.query, request.params);
-                        syncPreproc.processPendingLabResultRequest(request.params.patientUuid)
-                        .then((cachedResults)=> {
-                             if(cachedResults.length > 0){
-                                EIDLabReminderService.generateRemindersReport(combineRequestParams,cachedResults)
-                                .then((report) => {
-                                    reply(report)
-                                });
-
-                             }else{
-                                syncPreproc.hasPendingVLOrder(request.params.patientUuid).then((pendingVlResults) => {
-                                   if(pendingVlResults.size > 0){
-                                    EIDLabReminderService.pendingEIDReminders(request.params, config.hivLabSystem)
-                                    .then((eidReminders) => {
-                                        EIDLabReminderService.generateRemindersReport(combineRequestParams,eidReminders)
-                                          .then((result) => {
-                                                reply(result);
-                                          }).catch((error) => {
-                                              reply(error);
-                                          });
-                                       
-                                    }).catch((err) => {
-                                        reply(err);
-                                    });
-
-                                   }else{
-
-                                    EIDLabReminderService.generateRemindersReport(combineRequestParams,[])
-                                          .then((result) => {
-                                                reply(result);
-                                          }).catch((error) => {
-                                              reply(error);
-                                          });
-                                         
-                                   }
-                                }).catch((error) => {
-
-                                });
-
-                             }
-                        }).catch((error) => {
-                            reply(error);
-                        });
-                        
-                    },
-                    description: 'Get a list of reminders for selected patient and indicators',
-                    notes: 'Returns a  list of reminders for selected patient and indicators on a given reference date',
-                    tags: ['api'],
+                        EIDLabReminderService.pendingEIDReminders(
+                          request.params,
+                          config.hivLabSystem
+                        )
+                          .then((eidReminders) => {
+                            let reportParams = etlHelpers.getReportParams(
+                              'clinical-reminder-report',
+                              [
+                                'referenceDate',
+                                'patientUuid',
+                                'offSetParam',
+                                'limitParam'
+                              ],
+                              combineRequestParams
+                            );
+                            let report = new BaseMysqlReport(
+                              'clinicalReminderReport',
+                              reportParams.requestParams
+                            );
+                            report
+                              .generateReport()
+                              .then((results) => {
+                                try {
+                                  if (results.results.results.length > 0) {
+                                    patientReminderService
+                                      .generateReminders(
+                                        results.results.results,
+                                        eidReminders
+                                      )
+                                      .then((res) => {
+                                        results.result = res;
+                                        reply(results);
+                                      });
+                                  } else {
+                                    results.result = {
+                                      person_uuid: combineRequestParams.person_uuid,
+                                      reminders: []
+                                    };
+                                    reply(results);
+                                  }
+                                } catch (error) {
+                                  console.log('Error generating reminders', error);
+                                  reply(
+                                    Boom.badImplementation('An internal error occurred')
+                                  );
+                                }
+                              })
+                              .catch((error) => {
+                                console.log('Error generating reminders', error);
+                                reply(
+                                  Boom.badImplementation('An internal error occurred')
+                                );
+                              });
+                          })
+                          .catch((err) => {
+                            console.log('EID lab results err', err);
+                            reply(err);
+                          });
+                      }
+                    });
+                  },
+                  description:
+                    'Get a list of reminders for selected patient and indicators',
+                  notes:
+                    'Returns a  list of reminders for selected patient and indicators on a given reference date',
+                  tags: ['api']
                 }
-            }
-            ,
+            },
             {
                 method: 'POST',
                 path: '/etl/forms/error',
