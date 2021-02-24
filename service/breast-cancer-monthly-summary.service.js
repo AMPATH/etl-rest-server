@@ -1,54 +1,55 @@
-const Promise = require('bluebird');
+import * as _ from 'lodash';
+import { Promise } from 'bluebird';
 
-const _ = require('lodash');
-const oncologyReportsService = require('../oncology-reports/oncology-reports-service');
+import { titleCase } from '../etl-helpers';
 import { BaseMysqlReport } from '../app/reporting-framework/base-mysql.report';
 import { PatientlistMysqlReport } from '../app/reporting-framework/patientlist-mysql.report';
-import { titleCase } from '../etl-helpers';
+import { getPatientListCols } from '../oncology-reports/oncology-reports-service';
 
 export class BreastCancerMonthlySummaryService {
   getAggregateReport(reportParams) {
     return new Promise((resolve, reject) => {
       let report;
 
-      if (reportParams.requestParams.period === 'daily') {
+      const { period } = reportParams.requestParams;
+      if (period === 'daily') {
         report = new BaseMysqlReport(
           'breastCancerDailySummaryAggregate',
           reportParams.requestParams
         );
-      } else if (reportParams.requestParams.period === 'monthly') {
+      } else if (period === 'monthly') {
         report = new BaseMysqlReport(
           'breastCancerMonthlySummaryAggregate',
           reportParams.requestParams
         );
       }
 
-      Promise.join(report.generateReport(), (results) => {
-        let result = results.results.results;
-        results.size = result ? result.length : 0;
-        results.result = result;
-        delete results['results'];
-        resolve(results);
-        // TODO Do some post processing
-      }).catch((errors) => {
-        reject(errors);
+      Promise.join(report.generateReport(), (queryResults) => {
+        let reportData = queryResults.results.results;
+        reportData.size = reportData ? reportData.length : 0;
+        queryResults.result = reportData;
+        delete queryResults['results'];
+        resolve(queryResults);
+      }).catch((error) => {
+        reject(error);
       });
     });
   }
 
   getPatientListReport(reportParams) {
+    const breastCancerScreeningReportUuid =
+      '142939b0-28a9-4649-baf9-a9d012bf3b3d';
+
     let indicators = reportParams.indicators
       ? reportParams.indicators.split(',')
       : [];
-    if (reportParams.locationUuids) {
-      let locationUuids = reportParams.locationUuids
-        ? reportParams.locationUuids.split(',')
-        : [];
-      reportParams.locationUuids = locationUuids;
-    }
+
     if (reportParams.genders) {
-      let genders = reportParams.genders ? reportParams.genders.split(',') : [];
-      reportParams.genders = genders;
+      reportParams.genders = reportParams.genders.split(',') || [];
+    }
+
+    if (reportParams.locationUuids) {
+      reportParams.locationUuids = reportParams.locationUuids.split(',') || [];
     }
 
     let report = new PatientlistMysqlReport(
@@ -57,33 +58,34 @@ export class BreastCancerMonthlySummaryService {
     );
 
     return new Promise((resolve, reject) => {
-      // TODO: Do some pre processing
-      Promise.join(report.generatePatientListReport(indicators), (results) => {
-        for (const key in results.results.results) {
-          if (results.results.results.hasOwnProperty(key)) {
-            if (results.results.results[key].person_name) {
-              results.results.results[key].person_name = titleCase(
-                results.results.results[key].person_name
-              );
+      Promise.join(
+        report.generatePatientListReport(indicators),
+        (reportData) => {
+          reportData.results.results.forEach((result) => {
+            if (result.person_name) {
+              result.person_name = titleCase(result.person_name);
             }
-          }
-        }
-        oncologyReportsService
-          .getPatientListCols(
-            reportParams.indicators,
-            '142939b0-28a9-4649-baf9-a9d012bf3b3d'
-          )
-          .then((patientListCols) => {
-            results['patientListCols'] = patientListCols;
-            resolve(results);
-          })
-          .catch((error) => {
-            console.error('ERROR: Error getting patient list cols', error);
-            reject(error);
           });
-      }).catch((errors) => {
-        console.error('Error', errors);
-        reject(errors);
+
+          getPatientListCols(
+            reportParams.indicators,
+            breastCancerScreeningReportUuid
+          )
+            .then((patientListCols) => {
+              reportData['patientListCols'] = patientListCols;
+              resolve(reportData);
+            })
+            .catch((error) => {
+              console.error('Error fetching patient list columns: ', error);
+              reject(error);
+            });
+        }
+      ).catch((error) => {
+        console.error(
+          'Error generating breast cancer screening patient list: ',
+          error
+        );
+        reject(error);
       });
     });
   }
