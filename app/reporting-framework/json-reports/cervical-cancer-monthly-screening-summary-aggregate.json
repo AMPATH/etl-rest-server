@@ -42,7 +42,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "total_cervical_screened",
+      "alias": "clients_screened",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "count(person_id)"
@@ -50,34 +50,242 @@
     },
     {
       "type": "derived_column",
-      "alias": "normal_findings",
+      "alias": "negative_via_or_via_vili_below_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_findings)"
+        "expression": "count(negative_via_or_via_vili_below_25)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_findings",
+      "alias": "negative_via_or_via_vili_25_to_49",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_findings)"
+        "expression": "count(negative_via_or_via_vili_25_to_49)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_cervical_call_rate%",
+      "alias": "negative_via_or_via_vili_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "ROUND(count(normal_findings)/count(person_id) *100,2)"
+        "expression": "count(negative_via_or_via_vili_50_and_above)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_cervical_call_rate%",
+      "alias": "positive_via_or_via_vili_below_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "ROUND(count(abnormal_findings)/count(person_id) *100,2)"
+        "expression": "count(positive_via_or_via_vili_below_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_or_via_vili_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_via_or_via_vili_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_or_via_vili_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_via_or_via_vili_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_via_or_via_vili_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(suspicious_via_or_via_vili_below_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_via_or_via_vili_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(suspicious_via_or_via_vili_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_via_or_via_vili_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(suspicious_via_or_via_vili_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_via_or_via_vili_screened",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_via_or_via_vili_tests)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_cytology_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(normal_cytology_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_cytology_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(normal_cytology_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_cytology_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(normal_cytology_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_cytology_below_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_cytology_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_cytology_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre-invasive_cancer_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pre_invasive_cancer_under_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre-invasive_cancer_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pre_invasive_cancer_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre-invasive_cancer_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pre_invasive_cancer_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "invasive_cancer_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(invasive_cancer_below_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "invasive_cancer_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(invasive_cancer_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "invasive_cancer_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(invasive_cancer_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_pap_smear_screened",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_pap_smear_tests)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_positive_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_hpv_below_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_positive_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_hpv_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_positive_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(positive_hpv_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_negative_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(negative_hpv_below_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_negative_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(negative_hpv_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_negative_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(negative_hpv_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hpv_screened",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_hpv_tests)"
       }
     },
     {
@@ -90,7 +298,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "hiv_negative",
+      "alias": "total_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "count(hiv_negative)"
@@ -98,7 +306,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "hiv_status_unknown",
+      "alias": "total_hiv_status_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "count(hiv_status_unknown)"
@@ -106,7 +314,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive",
+      "alias": "total_hiv_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "count(hiv_positive)"
@@ -162,138 +370,66 @@
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_over_50",
+      "alias": "hiv_positive_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_positive_over_50)"
+        "expression": "count(hiv_positive_50_and_above)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_negative_over_50",
+      "alias": "hiv_negative_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_negative_over_50)"
+        "expression": "count(hiv_negative_50_and_above)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_unknown_over_50",
+      "alias": "hiv_unknown_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_unknown_over_50)"
+        "expression": "count(hiv_unknown_50_and_above)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_below_30yrs",
+      "alias": "total_hiv_positive_clients_with_positive_findings",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_below_30yrs)"
+        "expression": "count(total_hiv_positive_clients_with_positive_findings)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_below_30yrs",
+      "alias": "hiv_positive_clients_with_positive_findings_under_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_below_30yrs)"
+        "expression": "count(hiv_positive_clients_with_positive_findings_under_25)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_30_to_40yrs",
+      "alias": "hiv_positive_clients_with_positive_findings_25_to_49",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_30_to_40yrs)"
+        "expression": "count(hiv_positive_clients_with_positive_findings_25_to_49)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_30_to_40yrs",
+      "alias": "hiv_positive_clients_with_positive_findings_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_30_to_40yrs)"
+        "expression": "count(hiv_positive_clients_with_positive_findings_50_and_above)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_41_to_50yrs",
+      "alias": "endometrial_biopsies",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_41_to_50yrs)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "abnormal_41_to_50yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(abnormal_41_to_50yrs)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "normal_51_to_69yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(normal_51_to_69yrs)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "abnormal_51_to_69yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(abnormal_51_to_69yrs)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "normal_above_70yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(normal_above_70yrs)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "abnormal_above_70yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(abnormal_above_70yrs)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "procedures_done",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(procedures_done)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "excisional_biopsies",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(excisional_biopsies_done)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "cryotherapies",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(cryotherapies_done)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "leeps",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "count(leeps_done)"
+        "expression": "count(endometrial_biopsies_done)"
       }
     },
     {
@@ -306,18 +442,170 @@
     },
     {
       "type": "derived_column",
-      "alias": "core_needle_biopsies",
+      "alias": "punch_biopsies",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(core_needle_biopsies_done)"
+        "expression": "count(punch_biopsies_done)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pap_smears",
+      "alias": "total_procedures_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(pap_smears_done)"
+        "expression": "count(total_procedures_done)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_using_cryotherapy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_treated_via_cryo)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_cryo_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_cryo_under_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_cryo_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_cryo_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_cryo_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_cryo_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_using_leep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_treated_via_leep)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_leep_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_leep_under_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_leep_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_leep_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_leep_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_leep_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_using_thermocoagulation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_treated_via_thermo)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_thermo_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_thermo_under_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_thermo_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_thermo_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_thermo_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_via_thermo_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_using_other_treatment_options",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_treated_using_other_treatment_options)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_other_treatment_options_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_using_other_treatment_options_under_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_other_treatment_options_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_using_other_treatment_options_25_to_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_other_treatment_options_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(treated_using_other_treatment_options_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screenings)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screenings)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screenings)"
       }
     }
   ],

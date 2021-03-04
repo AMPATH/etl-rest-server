@@ -1,86 +1,93 @@
-const Promise = require('bluebird');
-const _ = require('lodash');
-const oncologyReportsService = require('../oncology-reports/oncology-reports-service');
+import * as _ from 'lodash';
+import { Promise } from 'bluebird';
+
+import { titleCase } from '../etl-helpers';
 import { BaseMysqlReport } from '../app/reporting-framework/base-mysql.report';
 import { PatientlistMysqlReport } from '../app/reporting-framework/patientlist-mysql.report';
-import { titleCase } from '../etl-helpers';
+import { getPatientListCols } from '../oncology-reports/oncology-reports-service';
+const sectionDefs = require('./cervical-cancer-screening-indicator-definitions.json');
 
 export class CervicalCancerMonthlySummaryService {
   getAggregateReport(reportParams) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
       let report;
 
-      if (reportParams.requestParams.period === 'daily') {
+      const { period } = reportParams.requestParams;
+      if (period === 'daily') {
         report = new BaseMysqlReport(
           'cervicalCancerDailySummaryAggregate',
           reportParams.requestParams
         );
-      } else if (reportParams.requestParams.period === 'monthly') {
+      } else if (period === 'monthly') {
         report = new BaseMysqlReport(
           'cervicalCancerMonthlySummaryAggregate',
           reportParams.requestParams
         );
       }
 
-      Promise.join(report.generateReport(), (results) => {
-        let result = results.results.results;
-        results.size = result ? result.length : 0;
-        results.result = result;
-        delete results['results'];
-        resolve(results);
-        //TODO Do some post processing
-      }).catch((errors) => {
-        reject(errors);
+      Promise.join(report.generateReport(), (queryResults) => {
+        let reportData = queryResults.results.results;
+        reportData.size = reportData ? reportData.length : 0;
+        queryResults.result = reportData;
+        queryResults.sectionDefinitions = sectionDefs;
+        delete queryResults['results'];
+        resolve(queryResults);
+      }).catch((error) => {
+        reject(error);
       });
     });
   }
+
   getPatientListReport(reportParams) {
+    const cervicalCancerScreeningReportUuid =
+      'cad71628-692c-4d8f-8dac-b2e20bece27f';
+
     let indicators = reportParams.indicators
       ? reportParams.indicators.split(',')
       : [];
-    if (reportParams.locationUuids) {
-      let locationUuids = reportParams.locationUuids
-        ? reportParams.locationUuids.split(',')
-        : [];
-      reportParams.locationUuids = locationUuids;
-    }
+
     if (reportParams.genders) {
-      let genders = reportParams.genders ? reportParams.genders.split(',') : [];
-      reportParams.genders = genders;
+      reportParams.genders = reportParams.genders.split(',') || [];
     }
+
+    if (reportParams.locationUuids) {
+      reportParams.locationUuids = reportParams.locationUuids.split(',') || [];
+    }
+
     let report = new PatientlistMysqlReport(
       'cervicalCancerMonthlySummaryAggregate',
       reportParams
     );
 
-    return new Promise(function (resolve, reject) {
-      //TODO: Do some pre processing
-      Promise.join(report.generatePatientListReport(indicators), (results) => {
-        for (const key in results.results.results) {
-          if (results.results.results.hasOwnProperty(key)) {
-            if (results.results.results[key].person_name) {
-              results.results.results[key].person_name = titleCase(
-                results.results.results[key].person_name
-              );
+    return new Promise((resolve, reject) => {
+      Promise.join(
+        report.generatePatientListReport(indicators),
+        (reportData) => {
+          reportData.results.results.forEach((result) => {
+            if (result.person_name) {
+              result.person_name = titleCase(result.person_name);
             }
-          }
-        }
-        oncologyReportsService
-          .getPatientListCols(
-            reportParams.indicators,
-            'cad71628-692c-4d8f-8dac-b2e20bece27f'
-          )
-          .then((patientListCols) => {
-            results['patientListCols'] = patientListCols;
-            resolve(results);
-          })
-          .catch((error) => {
-            console.error('ERROR: Error getting patient list cols', error);
-            reject(error);
           });
-      }).catch((errors) => {
-        console.error('Error', errors);
-        reject(errors);
+
+          getPatientListCols(
+            reportParams.indicators,
+            cervicalCancerScreeningReportUuid
+          )
+            .then((patientListCols) => {
+              reportData['patientListCols'] = patientListCols;
+              resolve(reportData);
+            })
+            .catch((error) => {
+              console.error('Error fetching patient list columns: ', error);
+              reject(error);
+            });
+        }
+      ).catch((error) => {
+        console.error(
+          'Error generating cervical cancer screening patient list: ',
+          error
+        );
+        reject(error);
       });
     });
   }

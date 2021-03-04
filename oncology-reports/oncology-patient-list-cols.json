@@ -603,9 +603,10 @@
   "cad71628-692c-4d8f-8dac-b2e20bece27f": {
     "program": "Cervical Cancer",
     "report": "Cervical Cancer Screening",
+    "sectionTitle": "VIA or VIA/VILI",
     "indicators": [
       {
-        "indicator": "total_cervical_screened",
+        "indicator": "clients_screened",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -613,29 +614,29 @@
           "person_name",
           "gender",
           "age",
-          "type_of_abnormality",
-          "procedure_done",
           "patient_uuid",
-          "date_patient_informed_of_results",
-          "hiv_status",
           "phone_number",
-          "diagnostic_interval",
-          "type_of_abnormality",
-          "via_procedure_done",
-          "other_via_procedure_done",
-          "patient_uuid",
+          "hiv_status",
           "prior_via_done",
-          "prior_via_date",
           "prior_via_result",
-          "visual_impression_cervix",
-          "visual_impression_vagina",
-          "visual_impression_vulva",
-          "via_management_plan",
-          "via_rtc_date"
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "normal_findings",
+        "indicator": "total_via_or_via_vili_screened",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -643,27 +644,17 @@
           "person_name",
           "gender",
           "age",
-          "hiv_status",
-          "patient_uuid"
-        ]
-      },
-      {
-        "indicator": "normal_below_30yrs",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "hiv_status",
+          "patient_uuid",
           "phone_number",
-          "type_of_abnormality",
-          "patient_uuid"
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "normal_30_to_40yrs",
+        "indicator": "negative_via_or_via_vili_below_25",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -671,14 +662,17 @@
           "person_name",
           "gender",
           "age",
-          "hiv_status",
+          "patient_uuid",
           "phone_number",
-          "type_of_abnormality",
-          "patient_uuid"
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "normal_41_to_50yrs",
+        "indicator": "negative_via_or_via_vili_25_to_49",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -686,14 +680,17 @@
           "person_name",
           "gender",
           "age",
-          "hiv_status",
+          "patient_uuid",
           "phone_number",
-          "type_of_abnormality",
-          "patient_uuid"
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "normal_51_to_69yrs",
+        "indicator": "negative_via_or_via_vili_50_and_above",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -701,14 +698,17 @@
           "person_name",
           "gender",
           "age",
-          "hiv_status",
+          "patient_uuid",
           "phone_number",
-          "type_of_abnormality",
-          "patient_uuid"
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "normal_above_70yrs",
+        "indicator": "positive_via_or_via_vili_below_25",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -716,10 +716,686 @@
           "person_name",
           "gender",
           "age",
-          "hiv_status",
+          "patient_uuid",
           "phone_number",
-          "type_of_abnormality",
-          "patient_uuid"
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "positive_via_or_via_vili_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "positive_via_or_via_vili_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "suspicious_via_or_via_vili_below_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "suspicious_via_or_via_vili_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "suspicious_via_or_via_vili_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "total_pap_smear_screened",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "normal_cytology_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "normal_cytology_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "positive_cytology_below_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "positive_cytology_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "positive_cytology_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "total_hpv_screened",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_negative_below_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_negative_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_negative_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_positive_below_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_positive_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_positive_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_negative_below_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "hpv_negative_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "total_treated_using_cryotherapy",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_cryo_under_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_cryo_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_cryo_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "total_treated_using_thermocoagulation",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_thermo_under_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_thermo_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_thermo_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "total_treated_using_leep",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_leep_under_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_leep_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_leep_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "total_treated_using_other_treatment_options",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_other_treatment_options_under_25",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_other_treatment_options_25_to_49",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
+        ]
+      },
+      {
+        "indicator": "treated_using_other_treatment_options_50_and_above",
+        "patientListCols": [
+          "encounter_datetime",
+          "location_name",
+          "identifiers",
+          "person_name",
+          "gender",
+          "age",
+          "patient_uuid",
+          "phone_number",
+          "hiv_status",
+          "via_or_via_vili_test_result",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "hpv_type",
+          "screening_rtc_date"
         ]
       },
       {
@@ -731,151 +1407,25 @@
           "person_name",
           "gender",
           "age",
-          "hiv_status",
-          "phone_number",
-          "diagnostic_interval",
-          "type_of_abnormality",
-          "via_procedure_done",
-          "other_via_procedure_done",
           "patient_uuid",
-          "prior_via_done",
-          "prior_via_date",
-          "prior_via_result",
-          "visual_impression_cervix",
-          "visual_impression_vagina",
-          "visual_impression_vulva",
-          "via_management_plan",
-          "via_rtc_date"
-        ]
-      },
-      {
-        "indicator": "abnormal_below_30yrs",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "hiv_status",
           "phone_number",
-          "diagnostic_interval",
-          "type_of_abnormality",
-          "via_procedure_done",
-          "other_via_procedure_done",
-          "patient_uuid",
-          "prior_via_done",
-          "prior_via_date",
-          "prior_via_result",
-          "visual_impression_cervix",
-          "visual_impression_vagina",
-          "visual_impression_vulva",
-          "via_management_plan",
-          "via_rtc_date"
-        ]
-      },
-      {
-        "indicator": "abnormal_30_to_40yrs",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
           "hiv_status",
-          "phone_number",
-          "diagnostic_interval",
-          "type_of_abnormality",
-          "via_procedure_done",
-          "other_via_procedure_done",
-          "patient_uuid",
           "prior_via_done",
-          "prior_via_date",
           "prior_via_result",
-          "visual_impression_cervix",
-          "visual_impression_vagina",
-          "visual_impression_vulva",
-          "via_management_plan",
-          "via_rtc_date"
-        ]
-      },
-      {
-        "indicator": "abnormal_41_to_50yrs",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "hiv_status",
-          "phone_number",
-          "diagnostic_interval",
-          "type_of_abnormality",
-          "via_procedure_done",
-          "other_via_procedure_done",
-          "patient_uuid",
-          "prior_via_done",
-          "prior_via_date",
-          "prior_via_result",
-          "visual_impression_cervix",
-          "visual_impression_vagina",
-          "visual_impression_vulva",
-          "via_management_plan",
-          "via_rtc_date"
-        ]
-      },
-      {
-        "indicator": "abnormal_51_to_69yrs",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "hiv_status",
-          "phone_number",
-          "diagnostic_interval",
-          "type_of_abnormality",
-          "via_procedure_done",
-          "other_via_procedure_done",
-          "patient_uuid",
-          "prior_via_done",
-          "prior_via_date",
-          "prior_via_result",
-          "visual_impression_cervix",
-          "visual_impression_vagina",
-          "visual_impression_vulva",
-          "via_management_plan",
-          "via_rtc_date"
-        ]
-      },
-      {
-        "indicator": "abnormal_above_70yrs",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "hiv_status",
-          "phone_number",
-          "diagnostic_interval",
-          "type_of_abnormality",
-          "via_procedure_done",
-          "other_via_procedure_done",
-          "patient_uuid",
-          "prior_via_done",
-          "prior_via_date",
-          "prior_via_result",
-          "visual_impression_cervix",
-          "visual_impression_vagina",
-          "visual_impression_vulva",
-          "via_management_plan",
-          "via_rtc_date"
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -887,7 +1437,7 @@
         "patientListCols": []
       },
       {
-        "indicator": "diagnostic_interval",
+        "indicator": "total_hiv_negative",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -895,57 +1445,29 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
-          "diagnosis",
-          "cancer_stage",
-          "date_patient_informed_of_results",
-          "diagnostic_interval",
-          "patient_uuid"
-        ]
-      },
-      {
-        "indicator": "clients_staged_before_treatment",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "phone_number",
-          "patient_uuid"
-        ]
-      },
-      {
-        "indicator": "total_reffered_for_followup",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "phone_number",
-          "patient_uuid"
-        ]
-      },
-      {
-        "indicator": "biopsy_results_within_2wks",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "phone_number",
           "patient_uuid",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "phone_number",
+          "hiv_status",
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "hiv_negative",
+        "indicator": "total_hiv_status_unknown",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -953,14 +1475,29 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "phone_number",
+          "hiv_status",
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "hiv_status_unknown",
+        "indicator": "total_hiv_positive",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -968,25 +1505,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
-          "type_of_abnormality",
-          "via_procedure_done"
-        ]
-      },
-      {
-        "indicator": "hiv_positive",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
           "phone_number",
-          "patient_uuid",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "hiv_status",
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -998,11 +1535,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1014,11 +1565,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1030,11 +1595,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1046,11 +1625,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1062,11 +1655,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1078,11 +1685,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1094,11 +1715,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1110,11 +1745,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
@@ -1126,15 +1775,29 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "procedures_done",
+        "indicator": "total_hiv_positive_clients_with_positive_findings",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -1142,15 +1805,29 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "excisional_biopsies",
+        "indicator": "hiv_positive_clients_with_positive_findings_under_25",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -1158,15 +1835,29 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "cryotherapies",
+        "indicator": "hiv_positive_clients_with_positive_findings_25_to_49",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -1174,15 +1865,29 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
+          "phone_number",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       },
       {
-        "indicator": "leeps",
+        "indicator": "hiv_positive_clients_with_positive_findings_50_and_above",
         "patientListCols": [
           "encounter_datetime",
           "location_name",
@@ -1190,59 +1895,25 @@
           "person_name",
           "gender",
           "age",
-          "phone_number",
           "patient_uuid",
-          "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
-        ]
-      },
-      {
-        "indicator": "polypectomies",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
           "phone_number",
-          "patient_uuid",
           "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
-        ]
-      },
-      {
-        "indicator": "core_needle_biopsies",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "phone_number",
-          "patient_uuid",
-          "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
-        ]
-      },
-      {
-        "indicator": "pap_smears",
-        "patientListCols": [
-          "encounter_datetime",
-          "location_name",
-          "identifiers",
-          "person_name",
-          "gender",
-          "age",
-          "phone_number",
-          "patient_uuid",
-          "hiv_status",
-          "type_of_abnormality",
-          "via_procedure_done"
+          "prior_via_done",
+          "prior_via_result",
+          "procedures_done_this_visit",
+          "via_or_via_vili_test_result",
+          "observations_from_positive_via_or_via_vili_test",
+          "cervix_impression",
+          "vagina_impression",
+          "vulva_impression",
+          "pap_smear_test_result",
+          "hpv_test_result",
+          "treatment_method",
+          "leep_status",
+          "cryotherapy_status",
+          "thermocoagulation_status",
+          "follow_up_plan",
+          "screening_rtc_date"
         ]
       }
     ]

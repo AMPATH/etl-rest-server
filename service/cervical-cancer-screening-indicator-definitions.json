@@ -1,0 +1,350 @@
+[
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Locations",
+        "indicator": "location_name"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Period",
+        "indicator": "encounter_datetime"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Clients screened",
+        "indicator": "clients_screened"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "VIA or VIA/VILI",
+    "indicators": [
+      {
+        "label": "Total VIA or VIA/VILI tests",
+        "indicator": "total_via_or_via_vili_screened"
+      },
+      {
+        "label": "Negative < 25 yrs",
+        "indicator": "negative_via_or_via_vili_below_25"
+      },
+      {
+        "label": "Negative 25 to 49 yrs",
+        "indicator": "negative_via_or_via_vili_25_to_49"
+      },
+      {
+        "label": "Negative 50 yrs and above",
+        "indicator": "negative_via_or_via_vili_50_and_above"
+      },
+      {
+        "label": "Positive < 25 yrs",
+        "indicator": "positive_via_or_via_vili_below_25"
+      },
+      {
+        "label": "Positive 25 to 49 yrs",
+        "indicator": "positive_via_or_via_vili_25_to_49"
+      },
+      {
+        "label": "Positive 50 yrs and above",
+        "indicator": "positive_via_or_via_vili_50_and_above"
+      },
+      {
+        "label": "Suspicious < 25 yrs",
+        "indicator": "suspicious_via_or_via_vili_below_25"
+      },
+      {
+        "label": "Suspicious 25 to 49 yrs",
+        "indicator": "suspicious_via_or_via_vili_25_to_49"
+      },
+      {
+        "label": "Suspicious 50 yrs and above",
+        "indicator": "suspicious_via_or_via_vili_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Pap Smear",
+    "indicators": [
+      {
+        "label": "Total Pap Smear tests",
+        "indicator": "total_pap_smear_screened"
+      },
+      {
+        "label": "Normal < 25 yrs",
+        "indicator": "normal_cytology_below_25"
+      },
+      {
+        "label": "Normal 25 to 49 yrs",
+        "indicator": "normal_cytology_25_to_49"
+      },
+      {
+        "label": "Normal 50 yrs and above",
+        "indicator": "normal_cytology_50_and_above"
+      },
+      {
+        "label": "Positive < 25 yrs",
+        "indicator": "positive_cytology_below_25"
+      },
+      {
+        "label": "Positive 25 to 49 yrs",
+        "indicator": "positive_cytology_25_to_49"
+      },
+      {
+        "label": "Positive 50 yrs and above",
+        "indicator": "positive_cytology_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "HPV",
+    "indicators": [
+      {
+        "label": "Total HPV tests",
+        "indicator": "total_hpv_screened"
+      },
+      {
+        "label": "Negative < 25 yrs",
+        "indicator": "hpv_negative_below_25"
+      },
+      {
+        "label": "Negative 25 to 49 yrs",
+        "indicator": "hpv_negative_25_to_49"
+      },
+      {
+        "label": "Negative 50 yrs and above",
+        "indicator": "hpv_negative_50_and_above"
+      },
+      {
+        "label": "Positive < 25 yrs",
+        "indicator": "hpv_positive_below_25"
+      },
+      {
+        "label": "Positive 25 to 49 yrs",
+        "indicator": "hpv_positive_25_to_49"
+      },
+      {
+        "label": "Positive 50 yrs and above",
+        "indicator": "hpv_positive_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Suspicious lesions",
+    "indicators": [
+      {
+        "label": "Total suspicious lesions",
+        "indicator": "total_suspicious_lesions"
+      },
+      {
+        "label": "Suspicious lesions < 25 yrs",
+        "indicator": ""
+      },
+      {
+        "label": "Suspicious lesions 25 to 49 yrs",
+        "indicator": ""
+      },
+      {
+        "label": "Suspicious lesions 50 yrs and above",
+        "indicator": ""
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Treated using Cryotherapy",
+    "indicators": [
+      {
+        "label": "Cryotherapies done",
+        "indicator": "total_treated_using_cryotherapy"
+      },
+      {
+        "label": "Cryotherapy < 25 yrs",
+        "indicator": "treated_using_cryo_under_25"
+      },
+      {
+        "label": "Cryotherapy 25 to 49 yrs",
+        "indicator": "treated_using_cryo_25_to_49"
+      },
+      {
+        "label": "Cryotherapy 50 yrs and above",
+        "indicator": "treated_using_cryo_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Treated using Thermocoagulation",
+    "indicators": [
+      {
+        "label": "Thermocoagulations done",
+        "indicator": "total_treated_using_thermocoagulation"
+      },
+      {
+        "label": "Thermocoagulation < 25 yrs",
+        "indicator": "treated_using_thermo_under_25"
+      },
+      {
+        "label": "Thermocoagulation 25 to 49 yrs",
+        "indicator": "treated_using_thermo_25_to_49"
+      },
+      {
+        "label": "Thermocoagulation 50 yrs and above",
+        "indicator": "treated_using_thermo_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Treated using LEEP",
+    "indicators": [
+      {
+        "label": "LEEPs done",
+        "indicator": "total_treated_using_leep"
+      },
+      {
+        "label": "LEEP < 25 yrs",
+        "indicator": "treated_using_leep_under_25"
+      },
+      {
+        "label": "LEEP 25 to 49 yrs",
+        "indicator": "treated_using_leep_25_to_49"
+      },
+      {
+        "label": "LEEP 50 yrs and above",
+        "indicator": "treated_using_leep_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Treated using other options",
+    "indicators": [
+      {
+        "label": "Other treatment options",
+        "indicator": "total_treated_using_other_treatment_options"
+      },
+      {
+        "label": "Other treatment < 25 yrs",
+        "indicator": "treated_using_other_treatment_options_under_25"
+      },
+      {
+        "label": "Other treatment 25 to 49 yrs",
+        "indicator": "treated_using_other_treatment_options_25_to_49"
+      },
+      {
+        "label": "Other treatment 50 yrs and above",
+        "indicator": "treated_using_other_treatment_options_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "HIV negative clients",
+    "indicators": [
+      {
+        "label": "Total HIV negative",
+        "indicator": "total_hiv_negative"
+      },
+      {
+        "label": "HIV negative < 25 yrs",
+        "indicator": "hiv_negative_below_25"
+      },
+      {
+        "label": "HIV negative 25 to 49 yrs",
+        "indicator": "hiv_negative_25_to_49"
+      },
+      {
+        "label": "HIV negative 50 yrs and above",
+        "indicator": "hiv_negative_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "HIV positive clients",
+    "indicators": [
+      {
+        "label": "Total HIV positive",
+        "indicator": "total_hiv_positive"
+      },
+      {
+        "label": "HIV positive < 25 yrs",
+        "indicator": "hiv_positive_below_25"
+      },
+      {
+        "label": "HIV positive 25 to 49 yrs",
+        "indicator": "hiv_positive_25_to_49"
+      },
+      {
+        "label": "HIV positive 50 yrs and above",
+        "indicator": "hiv_positive_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "HIV status unknown",
+    "indicators": [
+      {
+        "label": "Total HIV status unknown",
+        "indicator": "total_hiv_status_unknown"
+      },
+      {
+        "label": "HIV unknown < 25 yrs",
+        "indicator": "hiv_unknown_below_25"
+      },
+      {
+        "label": "HIV unknown 25 to 49 yrs",
+        "indicator": "hiv_unknown_25_to_49"
+      },
+      {
+        "label": "HIV unknown 50 yrs and above",
+        "indicator": "hiv_unknown_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "HIV positive clients with positive results",
+    "indicators": [
+      {
+        "label": "Total HIV +ve with positive findings",
+        "indicator": "total_hiv_positive_clients_with_positive_findings"
+      },
+      {
+        "label": "HIV +ve with positive findings < 25 yrs",
+        "indicator": "hiv_positive_clients_with_positive_findings_under_25"
+      },
+      {
+        "label": "HIV +ve with positive findings 25 to 49 yrs",
+        "indicator": "hiv_positive_clients_with_positive_findings_25_to_49"
+      },
+      {
+        "label": "HIV +ve with positive findings 50 yrs and above",
+        "indicator": "hiv_positive_clients_with_positive_findings_50_and_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Procedures done",
+    "indicators": [
+      {
+        "label": "Total procedures done",
+        "indicator": "total_procedures_done"
+      },
+      {
+        "label": "Endometrial biopsies",
+        "indicator": "endometrial_biopsies"
+      },
+      {
+        "label": "Punch biopsies",
+        "indicator": "punch_biopsies"
+      },
+      {
+        "label": "Polypectomies",
+        "indicator": "polypectomies"
+      }
+    ]
+  }
+]

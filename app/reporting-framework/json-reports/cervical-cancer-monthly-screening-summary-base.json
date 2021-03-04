@@ -5,7 +5,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.flat_cervical_cancer_screening",
+      "table": "etl.flat_cervical_cancer_screening_test2",
       "alias": "fccs"
     },
     {
@@ -13,7 +13,7 @@
       "alias": "p2",
       "join": {
         "type": "INNER",
-        "joinCondition": "fccs.person_id = p2.person_id AND (p2.voided is null || p2.voided = 0)"
+        "joinCondition": "fccs.person_id = p2.person_id AND (p2.voided is NULL || p2.voided = 0)"
       }
     },
     {
@@ -21,7 +21,7 @@
       "alias": "p3",
       "join": {
         "type": "LEFT OUTER",
-        "joinCondition": "fccs.person_id = p3.patient_id AND (p3.voided is null || p3.voided = 0)"
+        "joinCondition": "fccs.person_id = p3.patient_id AND (p3.voided is NULL || p3.voided = 0)"
       }
     },
     {
@@ -29,7 +29,7 @@
       "alias": "p5",
       "join": {
         "type": "INNER",
-        "joinCondition": "fccs.person_id = p5.person_id AND (p5.voided is null || p5.voided = 0)"
+        "joinCondition": "fccs.person_id = p5.person_id AND (p5.voided is NULL || p5.voided = 0)"
       }
     },
     {
@@ -45,7 +45,7 @@
       "alias": "p4",
       "join": {
         "type": "LEFT",
-        "joinCondition": "fccs.person_id = p4.person_id AND (p4.voided is null|| p4.voided = 0 and (p4.person_attribute_type_id =10))"
+        "joinCondition": "fccs.person_id = p4.person_id AND (p4.voided is NULL|| p4.voided = 0 and (p4.person_attribute_type_id =10))"
       }
     }
   ],
@@ -78,49 +78,270 @@
     },
     {
       "type": "derived_column",
-      "alias": "type_of_abnormality",
+      "alias": "cur_visit_type",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "cur_via_result = 1",
-            "value": "Normal"
+            "condition": "cur_visit_type = 1",
+            "value": "Scheduled visit"
           },
           {
-            "condition": "cur_via_result = 2",
-            "value": "Acetowhite Lesion"
+            "condition": "cur_visit_type = 2",
+            "value": "Unscheduled visit early"
           },
           {
-            "condition": "cur_via_result = 3",
-            "value": "Friable Tissue"
+            "condition": "cur_visit_type = 3",
+            "value": "Unscheduled visit late"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reasons_for_current_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "reasons_for_current_visit = 1",
+            "value": "Initial screening"
           },
           {
-            "condition": "cur_via_result = 4",
-            "value": "Atypical Blood Vessels"
+            "condition": "reasons_for_current_visit = 2",
+            "value": "Routine screening"
           },
           {
-            "condition": "cur_via_result = 5",
-            "value": "Ulcer"
+            "condition": "reasons_for_current_visit = 3",
+            "value": "Post-treatment screening"
           },
           {
-            "condition": "cur_via_result = 6",
-            "value": "Punctuated Capillaries"
+            "condition": "reasons_for_current_visit = 4",
+            "value": "Treatment visit"
           },
           {
-            "condition": "cur_via_result = 7",
-            "value": "Dysfunctional Uterine Bleeding"
+            "condition": "reasons_for_current_visit = 5",
+            "value": "Complications"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screenings",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.reasons_for_current_visit = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screenings",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.reasons_for_current_visit = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screenings",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.reasons_for_current_visit = 3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screening_method",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "screening_method = 1",
+            "value": "VIA or VIA/VILI"
           },
           {
-            "condition": "cur_via_result = 8",
-            "value": "Pallor"
+            "condition": "screening_method = 3",
+            "value": "Pap smear"
           },
           {
-            "condition": "cur_via_result = 9",
-            "value": "Oysterwhite Lesion"
+            "condition": "screening_method = 4",
+            "value": "HPV"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_test_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "via_or_via_vili_test_result = 1",
+            "value": "Negative"
           },
           {
-            "condition": "cur_via_result = 10",
-            "value": "Bright White Lesion"
+            "condition": "via_or_via_vili_test_result = 2",
+            "value": "Positive"
+          },
+          {
+            "condition": "via_or_via_vili_test_result = 3",
+            "value": "Suspicious of cancer"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "observations_from_positive_via_or_via_vili_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "observations_from_positive_via_or_via_vili_test = 7472",
+            "value": "Abnormal vessels"
+          },
+          {
+            "condition": "observations_from_positive_via_or_via_vili_test = 7469",
+            "value": "Aceto white lesions"
+          },
+          {
+            "condition": "observations_from_positive_via_or_via_vili_test = 6497",
+            "value": "Excessive bleeding"
+          },
+          {
+            "condition": "observations_from_positive_via_or_via_vili_test = 9593",
+            "value": "Friable tissue"
+          },
+          {
+            "condition": "observations_from_positive_via_or_via_vili_test = 7470",
+            "value": "Punctuated capillaries"
+          },
+          {
+            "condition": "observations_from_positive_via_or_via_vili_test = 7293",
+            "value": "Ulceration"
+          },
+          {
+            "condition": "observations_from_positive_via_or_via_vili_test = 11772",
+            "value": "Yellow staining lesion"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "hpv_test_result = 1",
+            "value": "Negative"
+          },
+          {
+            "condition": "hpv_test_result = 2",
+            "value": "Positive"
+          },
+          {
+            "condition": "hpv_test_result = 3",
+            "value": "Unknown"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "hpv_type = 1",
+            "value": "HPV TYPE 16"
+          },
+          {
+            "condition": "hpv_type = 2",
+            "value": "HPV TYPE 18"
+          },
+          {
+            "condition": "hpv_type = 3",
+            "value": "HPV TYPE 45"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_test_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "pap_smear_test_result = 1",
+            "value": "Negative"
+          },
+          {
+            "condition": "pap_smear_test_result = 2",
+            "value": "Positive"
+          },
+          {
+            "condition": "pap_smear_test_result = 3",
+            "value": "Suspicious of cancer"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "treatment_method = 1",
+            "value": "None"
+          },
+          {
+            "condition": "treatment_method = 2",
+            "value": "Cryotherapy"
+          },
+          {
+            "condition": "treatment_method = 3",
+            "value": "LEEP"
+          },
+          {
+            "condition": "treatment_method = 4",
+            "value": "Thermocoagulation"
+          },
+          {
+            "condition": "treatment_method = 5",
+            "value": "Other"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "procedures_done_this_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "procedures_done_this_visit = 1",
+            "value": "None"
+          },
+          {
+            "condition": "procedures_done_this_visit = 2",
+            "value": "Endometrial biopsy"
+          },
+          {
+            "condition": "procedures_done_this_visit = 3",
+            "value": "Punch biopsy"
+          },
+          {
+            "condition": "procedures_done_this_visit = 4",
+            "value": "Polypectomy"
           }
         ]
       }
@@ -168,7 +389,7 @@
       "alias": "prior_via_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE WHEN prior_via_done = 1 THEN 'Yes' WHEN prior_via_done = 2 THEN 'No' ELSE NULL END"
+        "expression": "CASE WHEN prior_via_done = 1 THEN 'Yes' WHEN prior_via_done = 0 THEN 'No' ELSE NULL END"
       }
     },
     {
@@ -186,7 +407,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "visual_impression_cervix",
+      "alias": "cervix_impression",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
@@ -201,37 +422,13 @@
           {
             "condition": "visual_impression_cervix = 3",
             "value": "Positive VIA with suspicious lesion"
-          },
-          {
-            "condition": "visual_impression_cervix = 4",
-            "value": "Cervical intraepithelial neoplasia grade 1"
-          },
-          {
-            "condition": "visual_impression_cervix = 5",
-            "value": "Cervical intraepithelial neoplasia grade 2"
-          },
-          {
-            "condition": "visual_impression_cervix = 6",
-            "value": "Cervical intraepithelial neoplasia grade 3"
-          },
-          {
-            "condition": "visual_impression_cervix = 7",
-            "value": "Cervical cancer"
-          },
-          {
-            "condition": "visual_impression_cervix = 8",
-            "value": "Squamous cell carcinoma, not otherwise specified"
-          },
-          {
-            "condition": "visual_impression_cervix = 9",
-            "value": "Other (Non-coded)"
           }
         ]
       }
     },
     {
       "type": "derived_column",
-      "alias": "visual_impression_vagina",
+      "alias": "vagina_impression",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
@@ -246,37 +443,13 @@
           {
             "condition": "visual_impression_vagina = 3",
             "value": "Suspicious of cancer, vaginal lesion"
-          },
-          {
-            "condition": "visual_impression_vagina = 4",
-            "value": "Abnormal"
-          },
-          {
-            "condition": "visual_impression_vagina = 5",
-            "value": "Suspicious of cancer, vulva lesion"
-          },
-          {
-            "condition": "visual_impression_vagina = 6",
-            "value": "Vaginal intraepithelial neoplasia grade 1"
-          },
-          {
-            "condition": "visual_impression_vagina = 7",
-            "value": "Vaginal intraepithelial neoplasia grade 2"
-          },
-          {
-            "condition": "visual_impression_vagina = 8",
-            "value": "Vaginal intraepithelial neoplasia grade 3"
-          },
-          {
-            "condition": "visual_impression_vagina = 9",
-            "value": "Other (Non-coded)"
           }
         ]
       }
     },
     {
       "type": "derived_column",
-      "alias": "visual_impression_vulva",
+      "alias": "vulva_impression",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
@@ -291,60 +464,32 @@
           {
             "condition": "visual_impression_vulva = 3",
             "value": "Suspicious of cancer, vulva lesion"
-          },
-          {
-            "condition": "visual_impression_vulva = 4",
-            "value": "Abnormal"
-          },
-          {
-            "condition": "visual_impression_vulva = 5",
-            "value": "Condyloma or vulvar intraepithelial neoplasia grade 1"
-          },
-          {
-            "condition": "visual_impression_vulva = 6",
-            "value": "Vulvar intraepithelial neoplasia grade 2"
-          },
-          {
-            "condition": "visual_impression_vulva = 7",
-            "value": "Vulvar intraepithelial neoplasia grade 3"
-          },
-          {
-            "condition": "visual_impression_vulva = 8",
-            "value": "Other (Non-coded)"
           }
         ]
       }
     },
     {
       "type": "derived_column",
-      "alias": "procedures_done",
+      "alias": "total_procedures_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(via_procedure_done != 1, 1, null)"
+        "expression": "if(procedures_done_this_visit != 1, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "excisional_biopsies_done",
+      "alias": "endometrial_biopsies_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(via_procedure_done = 2, 1, null)"
+        "expression": "if(procedures_done_this_visit = 2, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "cryotherapies_done",
+      "alias": "punch_biopsies_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(via_procedure_done = 3, 1, null)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "leeps_done",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(via_procedure_done = 4, 1, null)"
+        "expression": "if(procedures_done_this_visit = 3, 1, NULL)"
       }
     },
     {
@@ -352,195 +497,277 @@
       "alias": "polypectomies_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(via_procedure_done = 5, 1, null)"
+        "expression": "if(procedures_done_this_visit = 4, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "core_needle_biopsies_done",
+      "alias": "total_via_or_via_vili_tests",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(via_procedure_done = 6, 1, null)"
+        "expression": "if(screening_method = 1, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pap_smears_done",
+      "alias": "total_pap_smear_tests",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(via_procedure_done = 7, 1, null)"
+        "expression": "if(screening_method = 3, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "via_procedure_done",
+      "alias": "total_hpv_tests",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "via_procedure_done = 1",
-            "value": "None"
-          },
-          {
-            "condition": "via_procedure_done = 2",
-            "value": "Excisional/Surgical biopsy"
-          },
-          {
-            "condition": "via_procedure_done = 3",
-            "value": "Cryotherapy"
-          },
-          {
-            "condition": "via_procedure_done = 4",
-            "value": "LEEP"
-          },
-          {
-            "condition": "via_procedure_done = 5",
-            "value": "Cervical Polypectomy"
-          },
-          {
-            "condition": "via_procedure_done = 6",
-            "value": "Core Needle Biopsy"
-          },
-          {
-            "condition": "via_procedure_done = 7",
-            "value": "Papanicolaou Smear"
-          },
-          {
-            "condition": "via_procedure_done = 8",
-            "value": "Endocervical Curretage"
-          },
-          {
-            "condition": "via_procedure_done = 9",
-            "value": "Closure by suture"
-          },
-          {
-            "condition": "via_procedure_done = 10",
-            "value": "Plaster services"
-          },
-          {
-            "condition": "via_procedure_done = 11",
-            "value": "Clean and dressing"
-          },
-          {
-            "condition": "via_procedure_done = 12",
-            "value": "Circumcized"
-          },
-          {
-            "condition": "via_procedure_done = 13",
-            "value": "Minor surgical procedure"
-          },
-          {
-            "condition": "via_procedure_done = 14",
-            "value": "Visual inspection with acetic acid"
-          },
-          {
-            "condition": "via_procedure_done = 15",
-            "value": "Intrauterine device"
-          },
-          {
-            "condition": "via_procedure_done = 16",
-            "value": "Contraceptive implant"
-          },
-          {
-            "condition": "via_procedure_done = 17",
-            "value": "Other (Non-coded)"
-          }
-        ]
+        "expression": "if(screening_method = 4, 1, NULL)"
       }
     },
     {
-      "type": "simple_column",
-      "alias": "other_via_procedure_done",
-      "column": "other_via_procedure_done"
-    },
-    {
       "type": "derived_column",
-      "alias": "via_management_plan",
+      "alias": "follow_up_plan",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "via_management_plan = 1",
-            "value": "Return for result"
+            "condition": "follow_up_plan = 1",
+            "value": "Return for results"
           },
           {
-            "condition": "via_management_plan = 2",
-            "value": "VIA follow-up in 3 months"
+            "condition": "follow_up_plan = 2",
+            "value": "VIA follow-up in 3 to 6 months"
           },
           {
-            "condition": "via_management_plan = 3",
-            "value": "Complete VIA in 3 years"
+            "condition": "follow_up_plan = 3",
+            "value": "Routine yearly VIA"
           },
           {
-            "condition": "via_management_plan = 4",
-            "value": "Colposcopy"
+            "condition": "follow_up_plan = 4",
+            "value": "Routine 3 year VIA"
           },
           {
-            "condition": "via_management_plan = 5",
+            "condition": "follow_up_plan = 5",
+            "value": "Colposcopy planned"
+          },
+          {
+            "condition": "follow_up_plan = 6",
             "value": "Gynecologic oncology services"
-          },
-          {
-            "condition": "via_management_plan = 6",
-            "value": "Complete VIA in 1 year"
-          },
-          {
-            "condition": "via_management_plan = 7",
-            "value": "Complete VIA or pap smear in six months"
-          },
-          {
-            "condition": "via_management_plan = 8",
-            "value": "Surgery"
-          },
-          {
-            "condition": "via_management_plan = 9",
-            "value": "Cryotherapy"
-          },
-          {
-            "condition": "via_management_plan = 10",
-            "value": "Clinician"
-          },
-          {
-            "condition": "via_management_plan = 11",
-            "value": "None"
-          },
-          {
-            "condition": "via_management_plan = 12",
-            "value": "Discontinue"
-          },
-          {
-            "condition": "via_management_plan = 13",
-            "value": "Endocervical curettage"
-          },
-          {
-            "condition": "via_management_plan = 14",
-            "value": "Excisional/Surgical biopsy"
-          },
-          {
-            "condition": "via_management_plan = 16",
-            "value": "Female sterilization"
-          },
-          {
-            "condition": "via_management_plan = 17",
-            "value": "Repeat procedure"
-          },
-          {
-            "condition": "via_management_plan = 18",
-            "value": "Other (Non-coded)"
           }
         ]
       }
     },
     {
       "type": "simple_column",
-      "alias": "via_rtc_date",
-      "column": "DATE_FORMAT(fccs.via_rtc_date, '%Y-%m-%d')"
+      "alias": "screening_rtc_date",
+      "column": "DATE_FORMAT(fccs.screening_rtc_date, '%Y-%m-%d')"
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_or_via_vili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.via_or_via_vili_test_result = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.hpv_test_result = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.pap_smear_test_result IN (2,3,4,5,6), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_via_cryo",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_cryo_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 2 AND age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_cryo_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 2 AND (age >= 25 AND age <= 49), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_cryo_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 2 AND age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_via_leep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_leep_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 3 AND age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_leep_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 3 AND (age >= 25 AND age <= 49), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_leep_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 3 AND age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_via_thermo",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 4, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_thermo_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 4 AND age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_thermo_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 4 AND (age >= 25 AND age <= 49), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_thermo_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 4 AND age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_treated_using_other_treatment_options",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_other_treatment_options_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 5 AND age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_other_treatment_options_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 5 AND (age >= 25 or age <= 49), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_using_other_treatment_options_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 5 AND age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_sva",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 2 AND fccs.cryotherapy_status = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_postponed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 2 AND fccs.cryotherapy_status = 3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_sva",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 4 AND fccs.thermocoagulation_status = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_postponed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 4 AND fccs.thermocoagulation_status = 3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_sva",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 3 AND fccs.leep_status = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_postponed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.treatment_method = 3 AND fccs.leep_status = 2, 1, NULL)"
+      }
     },
     {
       "type": "derived_column",
       "alias": "hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 1, 1, null)"
+        "expression": "if(fccs.hiv_status = 1, 1, NULL)"
       }
     },
     {
@@ -548,7 +775,7 @@
       "alias": "hiv_status_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 3, 1, null)"
+        "expression": "if(fccs.hiv_status = 3, 1, NULL)"
       }
     },
     {
@@ -556,7 +783,7 @@
       "alias": "hiv_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 2, 1, null)"
+        "expression": "if(fccs.hiv_status = 2, 1, NULL)"
       }
     },
     {
@@ -564,7 +791,7 @@
       "alias": "hiv_positive_below_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 2 and age < 25, 1, null)"
+        "expression": "if(fccs.hiv_status = 2 and age < 25, 1, NULL)"
       }
     },
     {
@@ -572,7 +799,7 @@
       "alias": "hiv_negative_below_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 1 and age < 25, 1, null)"
+        "expression": "if(fccs.hiv_status = 1 and age < 25, 1, NULL)"
       }
     },
     {
@@ -580,7 +807,7 @@
       "alias": "hiv_unknown_below_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 3 and age < 30, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 and age < 30, 1, NULL)"
       }
     },
     {
@@ -588,7 +815,7 @@
       "alias": "hiv_positive_25_to_49",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 2 and age >= 25 and age < 50, 1, null)"
+        "expression": "if(fccs.hiv_status = 2 and age >= 25 and age < 50, 1, NULL)"
       }
     },
     {
@@ -596,7 +823,7 @@
       "alias": "hiv_negative_25_to_49",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 1 and age >= 25 and age < 50, 1, null)"
+        "expression": "if(fccs.hiv_status = 1 and age >= 25 and age < 50, 1, NULL)"
       }
     },
     {
@@ -604,79 +831,343 @@
       "alias": "hiv_unknown_25_to_49",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 3 and age >= 25 and age < 50, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 and age >= 25 and age < 50, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_over_50",
+      "alias": "hiv_positive_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 3 and age > 50, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 and age >= 50, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_negative_over_50",
+      "alias": "hiv_negative_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 1 and age > 50, 1, null)"
+        "expression": "if(fccs.hiv_status = 1 and age >= 50, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_unknown_over_50",
+      "alias": "hiv_unknown_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.hiv_status = 3 and age > 50, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 and age >= 50, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_findings",
+      "alias": "total_hiv_positive_clients_with_positive_findings",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.cur_via_result != 1, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 AND (fccs.via_or_via_vili_test_result = 1 OR fccs.hpv_test_result = 1 OR fccs.pap_smear_test_result = 1), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_below_30yrs",
+      "alias": "hiv_positive_clients_with_positive_findings_under_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.cur_via_result != 1 and age < 30, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 AND age < 25 AND (fccs.via_or_via_vili_test_result = 1 OR fccs.hpv_test_result = 1 OR fccs.pap_smear_test_result = 1), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_30_to_40yrs",
+      "alias": "hiv_positive_clients_with_positive_findings_25_to_49",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.cur_via_result != 1 and age >= 30 and age <= 40, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 AND (age >= 25 AND age <= 49) AND (fccs.via_or_via_vili_test_result = 1 OR fccs.hpv_test_result = 1 OR fccs.pap_smear_test_result = 1), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_41_to_50yrs",
+      "alias": "hiv_positive_clients_with_positive_findings_50_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.cur_via_result != 1 and age >= 41 and age <= 50, 1, null)"
+        "expression": "if(fccs.hiv_status = 3 AND (age >= 50) AND (fccs.via_or_via_vili_test_result = 1 OR fccs.hpv_test_result = 1 OR fccs.pap_smear_test_result = 1), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_51_to_69yrs",
+      "alias": "negative_via_or_via_vili",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.cur_via_result != 1 and  age >= 51 and age <= 69, 1, null)"
+        "expression": "if(fccs.via_or_via_vili_test_result = 1, 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_above_70yrs",
+      "alias": "negative_via_or_via_vili_below_25",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.cur_via_result != 1 and age >= 70, 1, null)"
+        "expression": "if((fccs.via_or_via_vili_test_result = 1) and age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "negative_via_or_via_vili_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 1) and age >= 25 and age <= 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "negative_via_or_via_vili_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 1) and age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_cytology",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result = 1), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_cytology_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result = 1) and age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_cytology_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result = 1) and age >= 25 and age <= 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_cytology_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result = 1) and age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "negative_hpv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.hpv_test_result = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "negative_hpv_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.hpv_test_result = 1) and age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "negative_hpv_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.hpv_test_result = 1) and age >= 25 and age <= 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "negative_hpv_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.hpv_test_result = 1) and age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_or_via_vili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.via_or_via_vili_test_result = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_or_via_vili_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 2) and age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_or_via_vili_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 2) and age >= 25 and age <= 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_or_via_vili_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 2) and age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result IS NOT NULL AND fccs.pap_smear_test_result != 1) and age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result IS NOT NULL AND fccs.pap_smear_test_result != 1) and age >= 25 and age <= 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result IS NOT NULL AND fccs.pap_smear_test_result != 1) and age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre_invasive_cancer",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fccs.pap_smear_test_result IN (2,3,4,5), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "invasive_cancer",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fccs.pap_smear_test_result = 6), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre_invasive_cancer_under_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result IN (2,3,4,5) and age < 25), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre_invasive_cancer_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result IN (2,3,4,5) and age >= 25 and age <= 49), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre_invasive_cancer_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.pap_smear_test_result IN (2,3,4,5) and age >= 50), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "invasive_cancer_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fccs.pap_smear_test_result = 6 and age < 25), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "invasive_cancer_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fccs.pap_smear_test_result = 6 and age >= 25 and age <= 49), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "invasive_cancer_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fccs.pap_smear_test_result = 6 and age >= 50), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.hpv_test_result = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.hpv_test_result = 2) and age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.hpv_test_result = 2) and age >= 25 and age <= 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.hpv_test_result = 2) and age >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_via_or_via_vili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fccs.via_or_via_vili_test_result = 3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_via_or_via_vili_below_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 3) and age < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_via_or_via_vili_25_to_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 3) and age >= 25 and age <= 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_via_or_via_vili_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((fccs.via_or_via_vili_test_result = 3) and age >= 50, 1, NULL)"
       }
     },
     {
@@ -684,93 +1175,28 @@
       "alias": "normal_findings",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fccs.cur_via_result =1 or fccs.cur_via_result is null,1,null)"
+        "expression": "IF((fccs.via_or_via_vili_test_result = 1) OR (fccs.hpv_test_result = 1) OR (fccs.pap_smear_test_result = 1), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_below_30yrs",
+      "alias": "abnormal_findings",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((fccs.cur_via_result = 1 or fccs.cur_via_result is null) and age < 30, 1, null)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "normal_30_to_40yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if((fccs.cur_via_result = 1 or fccs.cur_via_result is null) and age >= 30 and age <= 40, 1, null)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "normal_41_to_50yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if((fccs.cur_via_result = 1 or fccs.cur_via_result is null) and age >= 41 and age <= 50, 1, null)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "normal_51_to_69yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if((fccs.cur_via_result = 1 or fccs.cur_via_result is null) and  age >= 51 and age <= 69, 1, null)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "normal_above_70yrs",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if((fccs.cur_via_result = 1 or fccs.cur_via_result is null) and age >= 70, 1, null)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "cancer_stage",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "cancer_staging = 1",
-            "value": "Stage I"
-          },
-          {
-            "condition": "cancer_staging = 2",
-            "value": "Stage II"
-          },
-          {
-            "condition": "cancer_staging = 3",
-            "value": "stage III"
-          },
-          {
-            "condition": "cancer_staging = 4",
-            "value": "Stage IV"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "clients_staged_before_treatment",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "(if(cancer_staging in (1,2,3,4),1,null))"
+        "expression": "IF((fccs.via_or_via_vili_test_result = 2) OR (fccs.hpv_test_result = 2) OR (fccs.pap_smear_test_result IN (2,3,4,5)), 1, NULL)"
       }
     },
     {
       "type": "simple_column",
       "alias": "date_patient_informed_of_results",
-      "column": "(select DATE_FORMAT(date_patient_informed_referred, '%d-%M-%Y') from etl.flat_cervical_cancer_screening where encounter_type = 147 and (select date_patient_informed_referred from etl.flat_cervical_cancer_screening where encounter_type = 147 and person_id = p2.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_cervical_cancer_screening where encounter_type = 69 and person_id = p2.person_id order by encounter_datetime desc limit 1) and person_id = p2.person_id order by encounter_datetime desc limit 1)"
+      "column": "(select DATE_FORMAT(gynp_date_patient_informed_and_referred, '%d-%M-%Y') from etl.flat_cervical_cancer_screening where encounter_type = 147 and (select gynp_date_patient_informed_and_referred from etl.flat_cervical_cancer_screening where encounter_type = 147 and person_id = p2.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_cervical_cancer_screening where encounter_type = 69 and person_id = p2.person_id order by encounter_datetime desc limit 1) and person_id = p2.person_id order by encounter_datetime desc limit 1)"
     },
     {
       "type": "derived_column",
       "alias": "diagnostic_interval",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT CONCAT(TIMESTAMPDIFF(DAY, DATE(encounter_datetime), (SELECT date_patient_informed_referred FROM etl.flat_cervical_cancer_screening WHERE encounter_type = 147 AND person_id = p2.person_id ORDER BY encounter_datetime DESC LIMIT 1)), ' day(s)') FROM etl.flat_cervical_cancer_screening WHERE person_id = p2.person_id AND encounter_type = 69 and (select date_patient_informed_referred from etl.flat_cervical_cancer_screening where encounter_type = 147 and person_id = p2.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_cervical_cancer_screening where encounter_type = 69 and person_id = p2.person_id order by encounter_datetime desc limit 1) ORDER BY encounter_datetime DESC LIMIT 1)"
+        "expression": "(SELECT CONCAT(TIMESTAMPDIFF(DAY, DATE(encounter_datetime), (SELECT gynp_date_patient_informed_and_referred FROM etl.flat_cervical_cancer_screening WHERE encounter_type = 147 AND person_id = p2.person_id ORDER BY encounter_datetime DESC LIMIT 1)), ' day(s)') FROM etl.flat_cervical_cancer_screening WHERE person_id = p2.person_id AND encounter_type = 69 and (select gynp_date_patient_informed_and_referred from etl.flat_cervical_cancer_screening where encounter_type = 147 and person_id = p2.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_cervical_cancer_screening where encounter_type = 69 and person_id = p2.person_id order by encounter_datetime desc limit 1) ORDER BY encounter_datetime DESC LIMIT 1)"
       }
     },
     {
@@ -780,7 +1206,7 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "TIMESTAMPDIFF(day, DATE(fccs.encounter_datetime), DATE(prior_biopsy_result_date)) <= 14",
+            "condition": "TIMESTAMPDIFF(day, DATE(fccs.encounter_datetime), DATE(dysp_past_biopsy_result_date)) <= 14",
             "value": 1
           }
         ]
