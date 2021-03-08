@@ -18,332 +18,1712 @@
     ]
   },
   {
-    "sectionTitle": "",
+    "sectionHeader": "Initial Screening",
+    "sectionTitle": "VIA or VIA/VILI",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "Clients screened",
-        "indicator": "clients_screened"
+        "label": "Total HIV Negative VIA or VIA/VILI screened",
+        "indicator": "total_hiv_neg_via_or_via_vili_screened"
+      },
+      {
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "initial_screening_negative_via_or_via_vili_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "initial_screening_positive_via_or_via_vili_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Suspicious 15 to 19 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Suspicious 20 to 24 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Suspicious 25 to 29 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Suspicious 30 to 34 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Suspicious 35 to 39 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Suspicious 40 to 44 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Suspicious 45 to 49 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Suspicious 50 and above",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_50_and_above_hiv_neg"
       }
     ]
   },
   {
-    "sectionTitle": "VIA or VIA/VILI",
+    "subsectionTitle": "HIV Positive",
     "indicators": [
       {
-        "label": "Total VIA or VIA/VILI tests",
-        "indicator": "total_via_or_via_vili_screened"
+        "label": "Total HIV Positive VIA or VIA/VILI screened",
+        "indicator": "total_hiv_pos_via_or_via_vili_screened"
       },
       {
-        "label": "Negative < 25 yrs",
-        "indicator": "negative_via_or_via_vili_below_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_15_to_19_hiv_pos"
       },
       {
-        "label": "Negative 25 to 49 yrs",
-        "indicator": "negative_via_or_via_vili_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_20_to_24_hiv_pos"
       },
       {
-        "label": "Negative 50 yrs and above",
-        "indicator": "negative_via_or_via_vili_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_25_to_29_hiv_pos"
       },
       {
-        "label": "Positive < 25 yrs",
-        "indicator": "positive_via_or_via_vili_below_25"
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_30_to_34_hiv_pos"
       },
       {
-        "label": "Positive 25 to 49 yrs",
-        "indicator": "positive_via_or_via_vili_25_to_49"
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_35_to_39_hiv_pos"
       },
       {
-        "label": "Positive 50 yrs and above",
-        "indicator": "positive_via_or_via_vili_50_and_above"
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_40_to_44_hiv_pos"
       },
       {
-        "label": "Suspicious < 25 yrs",
-        "indicator": "suspicious_via_or_via_vili_below_25"
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "initial_screening_negative_via_or_via_vili_45_to_49_hiv_pos"
       },
       {
-        "label": "Suspicious 25 to 49 yrs",
-        "indicator": "suspicious_via_or_via_vili_25_to_49"
+        "label": "Negative 50 and above",
+        "indicator": "initial_screening_negative_via_or_via_vili_50_and_above_hiv_pos"
       },
       {
-        "label": "Suspicious 50 yrs and above",
-        "indicator": "suspicious_via_or_via_vili_50_and_above"
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "initial_screening_positive_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "initial_screening_positive_via_or_via_vili_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Suspicious 15 to 19 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Suspicious 20 to 24 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Suspicious 25 to 29 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Suspicious 30 to 34 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Suspicious 35 to 39 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Suspicious 40 to 44 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Suspicious 45 to 49 yrs",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Suspicious 50 and above",
+        "indicator": "initial_screening_suspicious_via_or_via_vili_50_and_above_hiv_pos"
       }
     ]
   },
   {
     "sectionTitle": "Pap Smear",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "Total Pap Smear tests",
-        "indicator": "total_pap_smear_screened"
+        "label": "Total HIV Negative Pap Smear",
+        "indicator": "total_hiv_neg_pap_smear_screened"
       },
       {
-        "label": "Normal < 25 yrs",
-        "indicator": "normal_cytology_below_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "initial_screening_negative_pap_smear_15_to_19_hiv_neg"
       },
       {
-        "label": "Normal 25 to 49 yrs",
-        "indicator": "normal_cytology_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "initial_screening_negative_pap_smear_20_to_24_hiv_neg"
       },
       {
-        "label": "Normal 50 yrs and above",
-        "indicator": "normal_cytology_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "initial_screening_negative_pap_smear_25_to_29_hiv_neg"
       },
       {
-        "label": "Positive < 25 yrs",
-        "indicator": "positive_cytology_below_25"
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "initial_screening_negative_pap_smear_30_to_34_hiv_neg"
       },
       {
-        "label": "Positive 25 to 49 yrs",
-        "indicator": "positive_cytology_25_to_49"
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "initial_screening_negative_pap_smear_35_to_39_hiv_neg"
       },
       {
-        "label": "Positive 50 yrs and above",
-        "indicator": "positive_cytology_50_and_above"
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "initial_screening_negative_pap_smear_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "initial_screening_negative_pap_smear_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "initial_screening_negative_pap_smear_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "initial_screening_positive_pap_smear_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "initial_screening_positive_pap_smear_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "initial_screening_positive_pap_smear_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "initial_screening_positive_pap_smear_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "initial_screening_positive_pap_smear_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "initial_screening_positive_pap_smear_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "initial_screening_positive_pap_smear_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "initial_screening_positive_pap_smear_50_and_above_hiv_neg"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "HIV Positive",
+    "indicators": [
+      {
+        "label": "Total HIV Positive Pap Smear",
+        "indicator": "total_hiv_pos_pap_smear_screened"
+      },
+      {
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "initial_screening_negative_pap_smear_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "initial_screening_negative_pap_smear_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "initial_screening_negative_pap_smear_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "initial_screening_negative_pap_smear_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "initial_screening_negative_pap_smear_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "initial_screening_negative_pap_smear_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "initial_screening_negative_pap_smear_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "initial_screening_negative_pap_smear_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "initial_screening_positive_pap_smear_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "initial_screening_positive_pap_smear_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "initial_screening_positive_pap_smear_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "initial_screening_positive_pap_smear_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "initial_screening_positive_pap_smear_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "initial_screening_positive_pap_smear_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "initial_screening_positive_pap_smear_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "initial_screening_positive_pap_smear_50_and_above_hiv_pos"
       }
     ]
   },
   {
     "sectionTitle": "HPV",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "Total HPV tests",
-        "indicator": "total_hpv_screened"
+        "label": "Total HIV Negative HPV Screened",
+        "indicator": "total_hiv_neg_hpv_screened"
       },
       {
-        "label": "Negative < 25 yrs",
-        "indicator": "hpv_negative_below_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "initial_screening_negative_hpv_15_to_19_hiv_neg"
       },
       {
-        "label": "Negative 25 to 49 yrs",
-        "indicator": "hpv_negative_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "initial_screening_negative_hpv_20_to_24_hiv_neg"
       },
       {
-        "label": "Negative 50 yrs and above",
-        "indicator": "hpv_negative_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "initial_screening_negative_hpv_25_to_29_hiv_neg"
       },
       {
-        "label": "Positive < 25 yrs",
-        "indicator": "hpv_positive_below_25"
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "initial_screening_negative_hpv_30_to_34_hiv_neg"
       },
       {
-        "label": "Positive 25 to 49 yrs",
-        "indicator": "hpv_positive_25_to_49"
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "initial_screening_negative_hpv_35_to_39_hiv_neg"
       },
       {
-        "label": "Positive 50 yrs and above",
-        "indicator": "hpv_positive_50_and_above"
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "initial_screening_negative_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "initial_screening_negative_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "initial_screening_negative_hpv_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "initial_screening_positive_hpv_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "initial_screening_positive_hpv_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "initial_screening_positive_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "initial_screening_positive_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "initial_screening_positive_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "initial_screening_positive_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "initial_screening_positive_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "initial_screening_positive_hpv_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Unknown 15 to 19 yrs",
+        "indicator": "initial_screening_unknown_hpv_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Unknown 20 to 24 yrs",
+        "indicator": "initial_screening_unknown_hpv_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Unknown 25 to 29 yrs",
+        "indicator": "initial_screening_unknown_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Unknown 30 to 34 yrs",
+        "indicator": "initial_screening_unknown_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Unknown 35 to 39 yrs",
+        "indicator": "initial_screening_unknown_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Unknown 40 to 44 yrs",
+        "indicator": "initial_screening_unknown_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Unknown 45 to 49 yrs",
+        "indicator": "initial_screening_unknown_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Unknown 50 and above",
+        "indicator": "initial_screening_unknown_hpv_50_and_above_hiv_neg"
       }
     ]
   },
   {
-    "sectionTitle": "Suspicious lesions",
+    "subsectionTitle": "HIV Positive",
     "indicators": [
       {
-        "label": "Total suspicious lesions",
-        "indicator": "total_suspicious_lesions"
+        "label": "Total HIV Positive VIA or VIA/VILI screened",
+        "indicator": "total_hiv_pos_hpv_screened"
       },
       {
-        "label": "Suspicious lesions < 25 yrs",
-        "indicator": ""
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "initial_screening_negative_hpv_15_to_19_hiv_pos"
       },
       {
-        "label": "Suspicious lesions 25 to 49 yrs",
-        "indicator": ""
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "initial_screening_negative_hpv_20_to_24_hiv_pos"
       },
       {
-        "label": "Suspicious lesions 50 yrs and above",
-        "indicator": ""
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "initial_screening_negative_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "initial_screening_negative_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "initial_screening_negative_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "initial_screening_negative_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "initial_screening_negative_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "initial_screening_negative_hpv_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "initial_screening_positive_hpv_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "initial_screening_positive_hpv_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "initial_screening_positive_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "initial_screening_positive_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "initial_screening_positive_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "initial_screening_positive_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "initial_screening_positive_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "initial_screening_positive_hpv_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Unknown 15 to 19 yrs",
+        "indicator": "initial_screening_unknown_hpv_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Unknown 20 to 24 yrs",
+        "indicator": "initial_screening_unknown_hpv_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Unknown 25 to 29 yrs",
+        "indicator": "initial_screening_unknown_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Unknown 30 to 34 yrs",
+        "indicator": "initial_screening_unknown_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Unknown 35 to 39 yrs",
+        "indicator": "initial_screening_unknown_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Unknown 40 to 44 yrs",
+        "indicator": "initial_screening_unknown_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Unknown 45 to 49 yrs",
+        "indicator": "initial_screening_unknown_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Unknown 50 and above",
+        "indicator": "initial_screening_unknown_hpv_50_and_above_hiv_pos"
       }
     ]
   },
   {
-    "sectionTitle": "Treated using Cryotherapy",
+    "sectionHeader": "Routine Screening",
+    "sectionTitle": "VIA or VIA/VILI",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "Cryotherapies done",
-        "indicator": "total_treated_using_cryotherapy"
+        "label": "Total HIV Negative VIA or VIA/VILI screened",
+        "indicator": "total_hiv_neg_via_or_via_vili_screened"
       },
       {
-        "label": "Cryotherapy < 25 yrs",
-        "indicator": "treated_using_cryo_under_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_15_to_19_hiv_neg"
       },
       {
-        "label": "Cryotherapy 25 to 49 yrs",
-        "indicator": "treated_using_cryo_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_20_to_24_hiv_neg"
       },
       {
-        "label": "Cryotherapy 50 yrs and above",
-        "indicator": "treated_using_cryo_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "routine_screening_negative_via_or_via_vili_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "routine_screening_positive_via_or_via_vili_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Suspicious 15 to 19 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Suspicious 20 to 24 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Suspicious 25 to 29 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Suspicious 30 to 34 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Suspicious 35 to 39 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Suspicious 40 to 44 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Suspicious 45 to 49 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Suspicious 50 and above",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_50_and_above_hiv_neg"
       }
     ]
   },
   {
-    "sectionTitle": "Treated using Thermocoagulation",
+    "subsectionTitle": "HIV Positive",
     "indicators": [
       {
-        "label": "Thermocoagulations done",
-        "indicator": "total_treated_using_thermocoagulation"
+        "label": "Total HIV Positive VIA or VIA/VILI screened",
+        "indicator": "total_hiv_pos_via_or_via_vili_screened"
       },
       {
-        "label": "Thermocoagulation < 25 yrs",
-        "indicator": "treated_using_thermo_under_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_15_to_19_hiv_pos"
       },
       {
-        "label": "Thermocoagulation 25 to 49 yrs",
-        "indicator": "treated_using_thermo_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_20_to_24_hiv_pos"
       },
       {
-        "label": "Thermocoagulation 50 yrs and above",
-        "indicator": "treated_using_thermo_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "routine_screening_negative_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "routine_screening_negative_via_or_via_vili_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "routine_screening_positive_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "routine_screening_positive_via_or_via_vili_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Suspicious 15 to 19 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Suspicious 20 to 24 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Suspicious 25 to 29 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Suspicious 30 to 34 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Suspicious 35 to 39 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Suspicious 40 to 44 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Suspicious 45 to 49 yrs",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Suspicious 50 and above",
+        "indicator": "routine_screening_suspicious_via_or_via_vili_50_and_above_hiv_pos"
       }
     ]
   },
   {
-    "sectionTitle": "Treated using LEEP",
+    "sectionTitle": "Pap Smear",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "LEEPs done",
-        "indicator": "total_treated_using_leep"
+        "label": "Total HIV Negative Pap Smear",
+        "indicator": "total_hiv_neg_pap_smear_screened"
       },
       {
-        "label": "LEEP < 25 yrs",
-        "indicator": "treated_using_leep_under_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "routine_screening_negative_pap_smear_15_to_19_hiv_neg"
       },
       {
-        "label": "LEEP 25 to 49 yrs",
-        "indicator": "treated_using_leep_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "routine_screening_negative_pap_smear_20_to_24_hiv_neg"
       },
       {
-        "label": "LEEP 50 yrs and above",
-        "indicator": "treated_using_leep_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "routine_screening_negative_pap_smear_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "routine_screening_negative_pap_smear_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "routine_screening_negative_pap_smear_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "routine_screening_negative_pap_smear_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "routine_screening_negative_pap_smear_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "routine_screening_negative_pap_smear_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "routine_screening_positive_pap_smear_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "routine_screening_positive_pap_smear_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "routine_screening_positive_pap_smear_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "routine_screening_positive_pap_smear_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "routine_screening_positive_pap_smear_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "routine_screening_positive_pap_smear_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "routine_screening_positive_pap_smear_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "routine_screening_positive_pap_smear_50_and_above_hiv_neg"
       }
     ]
   },
   {
-    "sectionTitle": "Treated using other options",
+    "subsectionTitle": "HIV Positive",
     "indicators": [
       {
-        "label": "Other treatment options",
-        "indicator": "total_treated_using_other_treatment_options"
+        "label": "Total HIV Positive Pap Smear",
+        "indicator": "total_hiv_pos_pap_smear_screened"
       },
       {
-        "label": "Other treatment < 25 yrs",
-        "indicator": "treated_using_other_treatment_options_under_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "routine_screening_negative_pap_smear_15_to_19_hiv_pos"
       },
       {
-        "label": "Other treatment 25 to 49 yrs",
-        "indicator": "treated_using_other_treatment_options_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "routine_screening_negative_pap_smear_20_to_24_hiv_pos"
       },
       {
-        "label": "Other treatment 50 yrs and above",
-        "indicator": "treated_using_other_treatment_options_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "routine_screening_negative_pap_smear_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "routine_screening_negative_pap_smear_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "routine_screening_negative_pap_smear_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "routine_screening_negative_pap_smear_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "routine_screening_negative_pap_smear_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "routine_screening_negative_pap_smear_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "routine_screening_positive_pap_smear_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "routine_screening_positive_pap_smear_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "routine_screening_positive_pap_smear_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "routine_screening_positive_pap_smear_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "routine_screening_positive_pap_smear_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "routine_screening_positive_pap_smear_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "routine_screening_positive_pap_smear_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "routine_screening_positive_pap_smear_50_and_above_hiv_pos"
       }
     ]
   },
   {
-    "sectionTitle": "HIV negative clients",
+    "sectionTitle": "HPV",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "Total HIV negative",
-        "indicator": "total_hiv_negative"
+        "label": "Total HIV Negative HPV Screened",
+        "indicator": "total_hiv_neg_hpv_screened"
       },
       {
-        "label": "HIV negative < 25 yrs",
-        "indicator": "hiv_negative_below_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "routine_screening_negative_hpv_15_to_19_hiv_neg"
       },
       {
-        "label": "HIV negative 25 to 49 yrs",
-        "indicator": "hiv_negative_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "routine_screening_negative_hpv_20_to_24_hiv_neg"
       },
       {
-        "label": "HIV negative 50 yrs and above",
-        "indicator": "hiv_negative_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "routine_screening_negative_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "routine_screening_negative_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "routine_screening_negative_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "routine_screening_negative_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "routine_screening_negative_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "routine_screening_negative_hpv_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "routine_screening_positive_hpv_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "routine_screening_positive_hpv_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "routine_screening_positive_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "routine_screening_positive_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "routine_screening_positive_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "routine_screening_positive_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "routine_screening_positive_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "routine_screening_positive_hpv_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Unknown 15 to 19 yrs",
+        "indicator": "routine_screening_unknown_hpv_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Unknown 20 to 24 yrs",
+        "indicator": "routine_screening_unknown_hpv_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Unknown 25 to 29 yrs",
+        "indicator": "routine_screening_unknown_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Unknown 30 to 34 yrs",
+        "indicator": "routine_screening_unknown_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Unknown 35 to 39 yrs",
+        "indicator": "routine_screening_unknown_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Unknown 40 to 44 yrs",
+        "indicator": "routine_screening_unknown_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Unknown 45 to 49 yrs",
+        "indicator": "routine_screening_unknown_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Unknown 50 and above",
+        "indicator": "routine_screening_unknown_hpv_50_and_above_hiv_neg"
       }
     ]
   },
   {
-    "sectionTitle": "HIV positive clients",
+    "subsectionTitle": "HIV Positive",
     "indicators": [
       {
-        "label": "Total HIV positive",
-        "indicator": "total_hiv_positive"
+        "label": "Total HIV Positive VIA or VIA/VILI screened",
+        "indicator": "total_hiv_pos_hpv_screened"
       },
       {
-        "label": "HIV positive < 25 yrs",
-        "indicator": "hiv_positive_below_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "routine_screening_negative_hpv_15_to_19_hiv_pos"
       },
       {
-        "label": "HIV positive 25 to 49 yrs",
-        "indicator": "hiv_positive_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "routine_screening_negative_hpv_20_to_24_hiv_pos"
       },
       {
-        "label": "HIV positive 50 yrs and above",
-        "indicator": "hiv_positive_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "routine_screening_negative_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "routine_screening_negative_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "routine_screening_negative_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "routine_screening_negative_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "routine_screening_negative_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "routine_screening_negative_hpv_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "routine_screening_positive_hpv_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "routine_screening_positive_hpv_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "routine_screening_positive_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "routine_screening_positive_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "routine_screening_positive_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "routine_screening_positive_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "routine_screening_positive_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "routine_screening_positive_hpv_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Unknown 15 to 19 yrs",
+        "indicator": "routine_screening_unknown_hpv_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Unknown 20 to 24 yrs",
+        "indicator": "routine_screening_unknown_hpv_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Unknown 25 to 29 yrs",
+        "indicator": "routine_screening_unknown_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Unknown 30 to 34 yrs",
+        "indicator": "routine_screening_unknown_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Unknown 35 to 39 yrs",
+        "indicator": "routine_screening_unknown_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Unknown 40 to 44 yrs",
+        "indicator": "routine_screening_unknown_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Unknown 45 to 49 yrs",
+        "indicator": "routine_screening_unknown_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Unknown 50 and above",
+        "indicator": "routine_screening_unknown_hpv_50_and_above_hiv_pos"
       }
     ]
   },
   {
-    "sectionTitle": "HIV status unknown",
+    "sectionHeader": "Post-Treatment Screening",
+    "sectionTitle": "VIA or VIA/VILI",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "Total HIV status unknown",
-        "indicator": "total_hiv_status_unknown"
+        "label": "Total HIV Negative VIA or VIA/VILI Screened",
+        "indicator": "total_hiv_neg_via_or_via_vili_screened"
       },
       {
-        "label": "HIV unknown < 25 yrs",
-        "indicator": "hiv_unknown_below_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_15_to_19_hiv_neg"
       },
       {
-        "label": "HIV unknown 25 to 49 yrs",
-        "indicator": "hiv_unknown_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_20_to_24_hiv_neg"
       },
       {
-        "label": "HIV unknown 50 yrs and above",
-        "indicator": "hiv_unknown_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Suspicious 15 to 19 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Suspicious 20 to 24 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Suspicious 25 to 29 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Suspicious 30 to 34 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Suspicious 35 to 39 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Suspicious 40 to 44 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Suspicious 45 to 49 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Suspicious 50 and above",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_50_and_above_hiv_neg"
       }
     ]
   },
   {
-    "sectionTitle": "HIV positive clients with positive results",
+    "subsectionTitle": "HIV Positive",
     "indicators": [
       {
-        "label": "Total HIV +ve with positive findings",
-        "indicator": "total_hiv_positive_clients_with_positive_findings"
+        "label": "Total HIV Positive VIA or VIA/VILI screened",
+        "indicator": "total_hiv_pos_via_or_via_vili_screened"
       },
       {
-        "label": "HIV +ve with positive findings < 25 yrs",
-        "indicator": "hiv_positive_clients_with_positive_findings_under_25"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_15_to_19_hiv_pos"
       },
       {
-        "label": "HIV +ve with positive findings 25 to 49 yrs",
-        "indicator": "hiv_positive_clients_with_positive_findings_25_to_49"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_20_to_24_hiv_pos"
       },
       {
-        "label": "HIV +ve with positive findings 50 yrs and above",
-        "indicator": "hiv_positive_clients_with_positive_findings_50_and_above"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "post_treatment_screening_negative_via_or_via_vili_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "post_treatment_screening_positive_via_or_via_vili_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Suspicious 15 to 19 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Suspicious 20 to 24 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Suspicious 25 to 29 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Suspicious 30 to 34 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Suspicious 35 to 39 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Suspicious 40 to 44 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Suspicious 45 to 49 yrs",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Suspicious 50 and above",
+        "indicator": "post_treatment_screening_suspicious_via_or_via_vili_50_and_above_hiv_pos"
       }
     ]
   },
   {
-    "sectionTitle": "Procedures done",
+    "sectionTitle": "Pap Smear",
+    "subsectionTitle": "HIV Negative",
     "indicators": [
       {
-        "label": "Total procedures done",
-        "indicator": "total_procedures_done"
+        "label": "Total HIV Negative Pap Smear Screened",
+        "indicator": "total_hiv_neg_pap_smear_screened"
       },
       {
-        "label": "Endometrial biopsies",
-        "indicator": "endometrial_biopsies"
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_15_to_19_hiv_neg"
       },
       {
-        "label": "Punch biopsies",
-        "indicator": "punch_biopsies"
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_20_to_24_hiv_neg"
       },
       {
-        "label": "Polypectomies",
-        "indicator": "polypectomies"
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "post_treatment_screening_negative_pap_smear_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "post_treatment_screening_positive_pap_smear_50_and_above_hiv_neg"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "HIV Positive",
+    "indicators": [
+      {
+        "label": "Total HIV Positive Pap Smear screened",
+        "indicator": "total_hiv_pos_pap_smear_screened"
+      },
+      {
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "post_treatment_screening_negative_pap_smear_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "post_treatment_screening_negative_pap_smear_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "post_treatment_screening_positive_pap_smear_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "post_treatment_screening_positive_pap_smear_50_and_above_hiv_pos"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "HPV",
+    "subsectionTitle": "HIV Negative",
+    "indicators": [
+      {
+        "label": "Total HIV Negative HPV Screened",
+        "indicator": "total_hiv_neg_hpv_screened"
+      },
+      {
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "post_treatment_screening_negative_hpv_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "post_treatment_screening_positive_hpv_50_and_above_hiv_neg"
+      },
+      {
+        "label": "Unknown 15 to 19 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_15_to_19_hiv_neg"
+      },
+      {
+        "label": "Unknown 20 to 24 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_20_to_24_hiv_neg"
+      },
+      {
+        "label": "Unknown 25 to 29 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_25_to_29_hiv_neg"
+      },
+      {
+        "label": "Unknown 30 to 34 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_30_to_34_hiv_neg"
+      },
+      {
+        "label": "Unknown 35 to 39 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_35_to_39_hiv_neg"
+      },
+      {
+        "label": "Unknown 40 to 44 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_40_to_44_hiv_neg"
+      },
+      {
+        "label": "Unknown 45 to 49 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_45_to_49_hiv_neg"
+      },
+      {
+        "label": "Unknown 50 and above",
+        "indicator": "post_treatment_screening_unknown_hpv_50_and_above_hiv_neg"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "HIV Positive",
+    "indicators": [
+      {
+        "label": "Total HIV Positive VIA or VIA/VILI screened",
+        "indicator": "total_hiv_pos_hpv_screened"
+      },
+      {
+        "label": "Negative 15 to 19 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Negative 20 to 24 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Negative 25 to 29 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Negative 30 to 34 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Negative 35 to 39 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Negative 40 to 44 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Negative 45 to 49 yrs",
+        "indicator": "post_treatment_screening_negative_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Negative 50 and above",
+        "indicator": "post_treatment_screening_negative_hpv_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Positive 15 to 19 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Positive 20 to 24 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Positive 25 to 29 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Positive 30 to 34 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Positive 35 to 39 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Positive 40 to 44 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Positive 45 to 49 yrs",
+        "indicator": "post_treatment_screening_positive_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Positive 50 and above",
+        "indicator": "post_treatment_screening_positive_hpv_50_and_above_hiv_pos"
+      },
+      {
+        "label": "Unknown 15 to 19 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_15_to_19_hiv_pos"
+      },
+      {
+        "label": "Unknown 20 to 24 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_20_to_24_hiv_pos"
+      },
+      {
+        "label": "Unknown 25 to 29 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_25_to_29_hiv_pos"
+      },
+      {
+        "label": "Unknown 30 to 34 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_30_to_34_hiv_pos"
+      },
+      {
+        "label": "Unknown 35 to 39 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_35_to_39_hiv_pos"
+      },
+      {
+        "label": "Unknown 40 to 44 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_40_to_44_hiv_pos"
+      },
+      {
+        "label": "Unknown 45 to 49 yrs",
+        "indicator": "post_treatment_screening_unknown_hpv_45_to_49_hiv_pos"
+      },
+      {
+        "label": "Unknown 50 and above",
+        "indicator": "post_treatment_screening_unknown_hpv_50_and_above_hiv_pos"
       }
     ]
   }
