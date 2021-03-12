@@ -92,6 +92,9 @@ import * as lung_cancer_treatment_monthly_summary_base from './json-reports/lung
 import * as cervical_cancer_daily_screening_summary_aggregate from './json-reports/cervical-cancer-daily-screening-summary-aggregate.json';
 import * as cervical_cancer_monthly_screening_summary_aggregate from './json-reports/cervical-cancer-monthly-screening-summary-aggregate.json';
 import * as cervical_cancer_monthly_screening_summary_base from './json-reports/cervical-cancer-monthly-screening-summary-base.json';
+import * as cervical_cancer_moh_412_daily_screening_summary_aggregate from './json-reports/cervical-cancer-moh-412-daily-screening-summary-aggregate.json';
+import * as cervical_cancer_moh_412_monthly_screening_summary_aggregate from './json-reports/cervical-cancer-moh-412-monthly-screening-summary-aggregate.json';
+import * as cervical_cancer_moh_412_monthly_screening_summary_base from './json-reports/cervical-cancer-moh-412-monthly-screening-summary-base.json';
 
 import * as patient_list_with_contacts_template from './json-reports/patient-list-with-contacts-template.json';
 import * as enhanced_adherence_hiv_program_aggregate from './json-reports/enhanced-adherence-hiv-program-aggregate.json';
@@ -601,6 +604,7 @@ export class BaseMysqlReport {
             )
           });
           break;
+
         case 'cervicalCancerDailySummaryAggregate':
           resolve({
             main: this.cloneJsonSchema(
@@ -617,6 +621,25 @@ export class BaseMysqlReport {
             ),
             cervicalCancerMonthlyReportBase: this.cloneJsonSchema(
               cervical_cancer_monthly_screening_summary_base
+            )
+          });
+          break;
+        case 'cervicalCancerMoh412DailySummaryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              cervical_cancer_moh_412_daily_screening_summary_aggregate
+            ),
+            cervicalCancerMoh412MonthlyReportBase: this.cloneJsonSchema(
+              cervical_cancer_moh_412_monthly_screening_summary_base
+            )
+          });
+        case 'cervicalCancerMoh412MonthlySummaryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              cervical_cancer_moh_412_monthly_screening_summary_aggregate
+            ),
+            cervicalCancerMoh412MonthlyReportBase: this.cloneJsonSchema(
+              cervical_cancer_moh_412_monthly_screening_summary_base
             )
           });
           break;

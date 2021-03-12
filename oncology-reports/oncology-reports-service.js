@@ -1,8 +1,8 @@
 'use strict';
-const _ = require('lodash');
 
-const oncologyReportsConfig = require('./oncology-reports-config.json');
-const oncologyPatientListCols = require('./oncology-patient-list-cols.json');
+import * as _ from 'lodash';
+import * as oncologyPatientListCols from './oncology-patient-list-cols.json';
+import * as oncologyReportsConfig from './oncology-reports-config.json';
 
 var serviceDefinition = {
   getOncologyReports: getOncologyReports,
@@ -13,15 +13,19 @@ var serviceDefinition = {
 module.exports = serviceDefinition;
 
 function getOncologyReports() {
-  return new Promise(function (resolve, reject) {
-    resolve(JSON.parse(JSON.stringify(oncologyReportsConfig)));
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(JSON.parse(JSON.stringify(oncologyReportsConfig['default'])));
+    } catch (e) {
+      reject('Error parsing oncology reports config: ', e);
+    }
   });
 }
 
 function getSpecificOncologyReport(reportUuid) {
   let specificReport = [];
 
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     _.each(oncologyReportsConfig, (report) => {
       let programUuid = report.uuid;
       if (programUuid === reportUuid) {
@@ -33,20 +37,15 @@ function getSpecificOncologyReport(reportUuid) {
   });
 }
 
-function getPatientListCols(indicator, programUuid) {
-  let patientCols = [];
-  let specificReport = oncologyPatientListCols[programUuid];
+function getPatientListCols(indicatorToQueryBy, programUuid) {
+  let programReports = oncologyPatientListCols['default'][programUuid];
   return new Promise((resolve, reject) => {
-    _.each(specificReport, (report) => {
-      _.each(report, (programReport) => {
-        let reportIndicator = programReport.indicator;
-        if (reportIndicator === indicator) {
-          let patientListCols = programReport.patientListCols;
-          patientCols = patientListCols;
+    _.each(programReports, (programReport) => {
+      _.each(programReport, (report) => {
+        if (report.indicator === indicatorToQueryBy) {
+          resolve(report.patientListCols);
         }
       });
     });
-
-    resolve(patientCols);
   });
 }

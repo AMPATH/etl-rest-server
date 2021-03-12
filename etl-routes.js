@@ -5062,6 +5062,65 @@ module.exports = (function () {
     },
     {
       method: 'GET',
+      path: '/etl/cervical-cancer-screening-numbers-moh-412',
+      config: {
+        auth: 'simple',
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewClinicDashBoard
+          },
+          openmrsLocationAuthorizer: {
+            locationParameter: [
+              {
+                type: 'query', //can be in either query or params so you have to specify
+                name: 'locationUuids' //name of the location parameter
+              }
+            ]
+          }
+        },
+        handler: function (request, reply) {
+          request.query.reportName =
+            'cervical-cancer-monthly-screening-summary-moh-412';
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'cervical-cancer-monthly-summary-moh-412',
+              [
+                'startDate',
+                'endDate',
+                'period',
+                'locationUuids',
+                'indicators',
+                'genders',
+                'startAge',
+                'endAge'
+              ],
+              requestParams
+            );
+            let service = new CervicalCancerMonthlySummaryService();
+            service
+              .getAggregateReport(reportParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                console.error('Error: ', error);
+                reply(error);
+              });
+          });
+        },
+        description:
+          'Get HIV cervical cancer monthly screening summary based on location and time filters',
+        notes: 'Returns aggregates of cervical cancer screenings',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
       path: '/etl/cervical-cancer-screening-numbers-patient-list',
       config: {
         auth: 'simple',
@@ -5087,8 +5146,8 @@ module.exports = (function () {
             let service = new CervicalCancerMonthlySummaryService();
             service
               .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
+              .then((patientListReport) => {
+                reply(patientListReport);
               })
               .catch((error) => {
                 reply(error);
@@ -5097,6 +5156,48 @@ module.exports = (function () {
         },
         description:
           'Get cervical cancer monthly screening patient list based on location and time filters',
+        notes:
+          'Returns details of patients who underwent cervical cancer screenings',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/cervical-cancer-screening-numbers-moh-412-patient-list',
+      config: {
+        auth: 'simple',
+        plugins: {
+          openmrsLocationAuthorizer: {
+            locationParameter: [
+              {
+                type: 'query',
+                name: 'locationUuids'
+              }
+            ]
+          }
+        },
+        handler: function (request, reply) {
+          request.query.reportName =
+            'cervical-cancer-monthly-screening-summary-moh-412';
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let service = new CervicalCancerMonthlySummaryService();
+            service
+              .getPatientListReport(requestParams)
+              .then((patientListReport) => {
+                reply(patientListReport);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
+        },
+        description:
+          'Get HIV cervical cancer monthly screening patient list based on location and time filters',
         notes:
           'Returns details of patients who underwent cervical cancer screenings',
         tags: ['api']
@@ -5114,8 +5215,8 @@ module.exports = (function () {
           openmrsLocationAuthorizer: {
             locationParameter: [
               {
-                type: 'query', //can be in either query or params so you have to specify
-                name: 'locationUuids' //name of the location parameter
+                type: 'query',
+                name: 'locationUuids'
               }
             ]
           }
