@@ -1,4 +1,4 @@
-name: etl-rest-server CI
+name: POC CI
 on:
   push:
     branches: [master]
