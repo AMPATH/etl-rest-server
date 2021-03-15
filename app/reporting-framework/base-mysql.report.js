@@ -154,6 +154,8 @@ import * as prep_monthly_pregnancy_disaggregation from './json-reports/prep-mont
 import * as prep_monthly_newly_enrolled_breastfeeding_disaggregation from './json-reports/prep-monthly-newly-enrolled-breastfeeding-disaggregation.json';
 import * as prep_monthly_newly_enrolled_pregnancy_disaggregation from './json-reports/prep-monthly-newly-enrolled-pregnancy-disaggregation.json';
 import * as prep_latest_clinical_encounter_date_base from './json-reports/prep_latest_clinical_encounter_date_base.json';
+import * as prep_initial_encounter_date from './json-reports/prep-initial-encounter-date.json';
+import * as prep_clinical_remainder from './json-reports/prep-clinical-reminder-report.json';
 import * as moh_408 from './json-reports/moh-408.json';
 import * as hei_infant_feeding_aggregate from './json-reports/hei-infant-feeding-aggregate.json';
 import * as hei_infant_feeding_base from './json-reports/hei-infant-feeding-base.json';
@@ -185,6 +187,11 @@ import * as ovc_in_hei_dataset_base from './json-reports/ovc-in-hei-dataset-base
 import * as ovc_in_hei_dataset_aggregate from './json-reports/ovc-in-hei-dataset-aggregate.json';
 import * as ovc_patient_list_template from './json-reports/ovc-patient-list-template.json';
 import * as ovc_in_hei_patient_list_template from './json-reports/ovc-in-hei-patient-list-template.json';
+
+import * as tb_preventive_ipt_monthly_summary_aggregate from './json-reports/tb-preventive-ipt-monthly-summary-aggregate.json';
+import * as tb_preventive_monthly_summary_aggregate from './json-reports/tb-preventive-monthly-summary-aggregate.json';
+import * as tb_preventive_dataSet_base from './json-reports/tb-preventive-dataset-base.json';
+import * as tb_preventive_report from './json-reports/tb-preventive-report.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -967,6 +974,40 @@ export class BaseMysqlReport {
         case 'ovc-in-hei-patient-list-template':
           resolve({
             main: this.cloneJsonSchema(ovc_in_hei_patient_list_template)
+          });
+          break;
+        case 'prepClinicalReminderReport':
+          resolve({
+            main: this.cloneJsonSchema(prep_clinical_remainder),
+            prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+              prep_latest_clinical_encounter_date_base
+            ),
+            prepInitialClinicalEncounterDate: this.cloneJsonSchema(
+              prep_initial_encounter_date
+            )
+          });
+          break;
+        case 'TbPreventiveReport':
+          resolve({
+            main: this.cloneJsonSchema(tb_preventive_report)
+          });
+          break;
+        case 'TbPreventiveIptMonthlySummaryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              tb_preventive_ipt_monthly_summary_aggregate
+            ),
+            TbPreventiveDataSetBase: this.cloneJsonSchema(
+              tb_preventive_dataSet_base
+            )
+          });
+          break;
+        case 'TbPreventiveMonthlySummaryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_preventive_monthly_summary_aggregate),
+            TbPreventiveDataSetBase: this.cloneJsonSchema(
+              tb_preventive_dataSet_base
+            )
           });
           break;
         default:
