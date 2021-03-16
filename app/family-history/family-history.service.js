@@ -5,6 +5,7 @@ export class FamilyTestingService {
   getPatientList = (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
+      let where = '';
       let sql = `SELECT 
       t1.*, t2.contacts_count,
       case 
@@ -34,14 +35,42 @@ export class FamilyTestingService {
                 patient_id, COUNT(*) AS 'contacts_count'
             FROM
                 etl.flat_family_testing
-            WHERE
-                location_uuid = '${params.locationUuid}'
-            GROUP BY patient_id) t2 ON (t1.patient_id = t2.patient_id)
-        WHERE
-            location_uuid = '${params.locationUuid}'`;
+                WHERE
+            location_uuid = '${params.locationUuid}'
+        GROUP BY patient_id) t2 ON (t1.patient_id = t2.patient_id)
+            
+        `;
+
+      where = `
+      WHERE
+      location_uuid = '${params.locationUuid}'`;
+
+      if (params.start_date != null && params.end_date != null) {
+        where =
+          where +
+          `  and date(date_elicited) between date('${params.start_date}') and date('${params.end_date}')`;
+      }
+
+      if (params.eligible != null) {
+        where = where + `  and eligible_for_testing = '${params.eligible}'`;
+      }
+
+      if (params.programs != undefined) {
+        let program = '';
+        const programs = params.programs.split(',');
+        for (let i = 0; i < programs.length; i++) {
+          if (i == programs.length - 1) {
+            program += `'${programs[i]}'`;
+          } else {
+            program += `'${programs[i]}',`;
+          }
+        }
+
+        where = where + `  and patient_program_uuid in (${program})`;
+      }
 
       queryParts = {
-        sql: sql
+        sql: sql + where
       };
       return db.queryServer(queryParts, function (result) {
         result.sql = sql;
