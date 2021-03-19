@@ -12,7 +12,7 @@
     "sectionTitle": "OVC in Hiv",
     "indicators": [
       {
-        "label": "Active OVC Clients",
+        "label": "Active Clients (19yrs and below)",
         "indicator": "active_and_eligible_for_ovc"
       },
       {

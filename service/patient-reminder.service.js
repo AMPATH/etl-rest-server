@@ -566,8 +566,8 @@ function ovcUnenrollmentReminder(data) {
         ) {
           reminders.push({
             message:
-              'Patients 20 years and above qualifies to be unenrolled from OVC',
-            title: 'OVC Graduation Reminder',
+              'Patient 20 years and above, qualifies to be transitioned out of OVC',
+            title: 'OVC Transition Reminder',
             type: 'info',
             display: {
               banner: true,

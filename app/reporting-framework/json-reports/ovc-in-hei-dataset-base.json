@@ -16,6 +16,14 @@
         "type": "INNER",
         "joinCondition": "l.location_id = hmsd.location_id"
       }
+    },
+    {
+      "table": "amrs.patient_program",
+      "alias": "pp",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pp.patient_id = hmsd.person_id and pp.program_id = 29 and pp.date_completed is null"
+      }
     }
   ],
   "columns": [
@@ -141,7 +149,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "endDate = ?",
+        "conditionExpression": "age <= 2 and endDate = ?",
         "parameterName": "endDate"
       },
       {
