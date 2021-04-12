@@ -109,7 +109,6 @@ function isInitialPepVisit(patientEncounters) {
   let isInitialPEPVisit = true;
 
   // get initial pep encounters
-
   let initialPEPEncounters = _.filter(patientEncounters, (encounter) => {
     return encounter.encounterType.uuid === initialPEPEncounterUuid;
   });
@@ -132,7 +131,7 @@ function isInitialPepVisit(patientEncounters) {
       latestPEPEncounter.encounterDatetime
     ).format();
     duration = today.diff(latestPEPEncounterDate, 'days');
-    // if its more than 60 days since their last PEP Initial then they should see a pep initial visit
+    // Show a PEP Initial visit again if its been more than 60 days since their last PEP Initial visit
     if (duration > 120) {
       isInitialPEPVisit = true;
     } else {
