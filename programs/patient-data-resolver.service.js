@@ -11,7 +11,7 @@ const availableKeys = {
   enrollment: getProgramEnrollment,
   hivLastTenClinicalEncounters: gethivLastTenClinicalEncounters,
   hivLastEncounter: getPatientLastEncounter,
-  patientEnrollment: getPatientEnrollement,
+  patientEnrollment: getPatientEnrollment,
   patientEncounters: getPatientEncounters
 };
 
@@ -130,7 +130,7 @@ function getPatientLastEncounter(patientUuid) {
   });
 }
 
-function getPatientEnrollement(patientUuid, params) {
+function getPatientEnrollment(patientUuid, params) {
   return new Promise((resolve, reject) => {
     programService
       .getProgramEnrollmentByPatientUuid(patientUuid, params)

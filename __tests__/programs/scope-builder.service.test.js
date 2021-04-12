@@ -1,4 +1,4 @@
-const ScopeBuilder = require('../../programs/scope-builder.service');
+const ScopeBuilderService = require('../../programs/scope-builder.service');
 
 const dataDictionary = {
   patient: {
@@ -19,7 +19,7 @@ const dataDictionary = {
   }
 };
 
-describe('ScopeBuilderService', () => {
+describe('ScopeBuilderService: ', () => {
   test('builds and returns a scope object from the provided data dictionary', () => {
     const expectedScopeObject = {
       age: 20,
@@ -28,7 +28,7 @@ describe('ScopeBuilderService', () => {
       programLocation: 'some location uuid'
     };
 
-    const builtScopeObj = ScopeBuilder.buildScope(dataDictionary);
+    const builtScopeObj = ScopeBuilderService.buildScope(dataDictionary);
     expect(builtScopeObj).toEqual(expectedScopeObject);
   });
 
@@ -36,7 +36,7 @@ describe('ScopeBuilderService', () => {
     dataDictionary.hivLastTenClinicalEncounters = [];
     dataDictionary.patientEncounters = [];
 
-    let builtScopeObj = ScopeBuilder.buildScope(dataDictionary);
+    let builtScopeObj = ScopeBuilderService.buildScope(dataDictionary);
     expect(builtScopeObj.isFirstPrEPVisit).toBeTruthy();
     expect(builtScopeObj.isFirstPMTCTVisit).toBeTruthy();
     expect(builtScopeObj.isFirstPEPVisit).toBeTruthy();
@@ -70,7 +70,7 @@ describe('ScopeBuilderService', () => {
       }
     ];
 
-    builtScopeObj = ScopeBuilder.buildScope(dataDictionary);
+    builtScopeObj = ScopeBuilderService.buildScope(dataDictionary);
     expect(builtScopeObj.isFirstPrEPVisit).toBeTruthy();
     expect(builtScopeObj.isFirstPMTCTVisit).toBeTruthy();
     expect(builtScopeObj.isFirstPEPVisit).toBeFalsy();
@@ -91,7 +91,7 @@ describe('ScopeBuilderService', () => {
       }
     ];
 
-    let builtScopeObj = ScopeBuilder.buildScope(dataDictionary);
+    let builtScopeObj = ScopeBuilderService.buildScope(dataDictionary);
     expect(builtScopeObj.isFirstOncologyVisit).toBeTruthy();
 
     dataDictionary.patientEncounters = [
@@ -105,7 +105,7 @@ describe('ScopeBuilderService', () => {
       }
     ];
 
-    builtScopeObj = ScopeBuilder.buildScope(dataDictionary);
+    builtScopeObj = ScopeBuilderService.buildScope(dataDictionary);
     expect(builtScopeObj.isFirstOncologyVisit).toBeFalsy();
   });
 });

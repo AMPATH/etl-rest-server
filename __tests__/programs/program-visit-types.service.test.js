@@ -1,192 +1,139 @@
-// var request = require('request');
+const ProgramVisitTypesService = require('../../programs/program-visit-types.service');
+const {
+  getAllDataDependencies
+} = require('../../programs/patient-data-resolver.service');
 
-// //var nock = require('nock');
-// //var _ = require('underscore');
-// //var Hapi = require('hapi');
-// //var fakeServer = require('../sinon-server-1.17.3');
-// var pVisitTypes = require('../../programs/program-visit-types.service');
-// var dataResolver = require('../../programs/patient-data-resolver.service');
+const mockGetAllDataDependencies = getAllDataDependencies;
 
-// var baseUrl = 'http://localhost:8002';
+jest.mock('../../programs/patient-data-resolver.service.js', () => ({
+  ...jest.requireActual,
+  getAllDataDependencies: jest.fn()
+}));
 
-// describe('PROGRAM VISITTYPES SERVICE:', function () {
-//   beforeEach(function (done) {
-//     done();
-//   });
+describe('ProgramVisitTypesService: ', () => {
+  test('fetches the allowed and disallowed visit types for a patient', async () => {
+    const programsConfig = {
+      'test-program-uuid': {
+        name: 'Test Program A',
+        dataDependencies: ['patient'],
+        visitTypes: [
+          {
+            uuid: 'visit-type-1-uuid',
+            name: 'Visit Type 1',
+            encounterTypes: [] // no rules
+          },
+          {
+            uuid: 'visit-type-2-uuid',
+            name: 'Visit Type 2 for adults',
+            encounterTypes: [], // has a rule
+            allowedIf: 'age > 18',
+            ruleExplanation: 'Should be older than 18 years'
+          },
+          {
+            uuid: 'visit-type-3-uuid',
+            name: 'Visit Type 3 for youth',
+            encounterTypes: [], // has a rule
+            allowedIf: 'age < 18',
+            ruleExplanation: 'Should be younger than 18 years'
+          }
+        ]
+      }
+    };
 
-//   afterEach(function () {});
+    const payload = {
+      patientUuid: 'test-patient-uuid',
+      programUuid: 'test-program-uuid',
+      programEnrollmentUuid: 'test-enrollment-uuid',
+      intendedVisitLocationUuid: 'test-location-a-uuid',
+      allProgramsConfig: programsConfig
+    };
 
-//   it('should load program visit types service', function () {
-//     expect(pVisitTypes).toBeDefined();
-//   });
+    mockGetAllDataDependencies.mockResolvedValue({
+      patient: {
+        uuid: 'some uuid',
+        person: {
+          age: 20
+        }
+      }
+    });
 
-//   it('should determine whether a visit type is allowed for a given patient', function () {
-//     var scope = {
-//       enrollmentLocationUuid: 'some location uuid',
-//       intendedLocationOfVisitUuid: 'some location uuid'
-//     };
+    const patientVisitTypes = await ProgramVisitTypesService.getPatientVisitTypes(
+      payload.patientUuid,
+      payload.programUuid,
+      payload.programEnrollmentUuid,
+      payload.intendedVisitLocationUuid,
+      payload.allProgramsConfig
+    );
 
-//     var visitType = {
-//       uuid: 'some uuid',
-//       name: 'some visit',
-//       encounterTypes: [],
-//       allowedIf: 'enrollmentLocationUuid === intendedLocationOfVisitUuid'
-//     };
-//     var allowed = pVisitTypes.isVisitTypeAllowed(scope, visitType);
-//     expect(allowed).toBeTruthy();
-//   });
+    expect(patientVisitTypes.visitTypes).toHaveProperty('allowed');
+    expect(patientVisitTypes.visitTypes).toHaveProperty('disallowed');
+    expect(patientVisitTypes.name).toEqual('Test Program A');
+    expect(patientVisitTypes.visitTypes.allowed).not.toContain({
+      name: /visit type 3 for youth/i
+    });
+    expect(patientVisitTypes.visitTypes.disallowed).toMatchObject([
+      {
+        name: /visit type 3 for youth/i
+      }
+    ]);
+  });
 
-//   it(
-//     'should seperate allowed visit and disallowed visit types' +
-//       ' for a given patient within a program ',
-//     function () {
-//       var scope = {
-//         enrollmentLocationUuid: 'some location uuid',
-//         intendedLocationOfVisitUuid: 'some location uuid'
-//       };
+  test('determines whether a given visit type is allowed for a patient', () => {
+    const scope = {
+      enrollmentLocationUuid: 'test-location-a-uuid',
+      intendedLocationOfVisitUuid: 'test-location-a-uuid'
+    };
 
-//       var programsConfig = {
-//         visitTypes: [
-//           {
-//             uuid: 'some uuid',
-//             name: 'some visit',
-//             encounterTypes: [],
-//             allowedIf: 'enrollmentLocationUuid === intendedLocationOfVisitUuid'
-//           },
-//           {
-//             uuid: 'some uuid 2',
-//             name: 'some visit 2',
-//             encounterTypes: [],
-//             allowedIf: 'enrollmentLocationUuid !== intendedLocationOfVisitUuid'
-//           }
-//         ]
-//       };
+    const visitType = {
+      uuid: 'visit-type-a-uuid',
+      name: 'An A-Type test visit',
+      encounterTypes: [],
+      allowedIf: 'enrollmentLocationUuid === intendedLocationOfVisitUuid'
+    };
 
-//       var expected = {
-//         allowed: [programsConfig.visitTypes[0]],
-//         disallowed: [programsConfig.visitTypes[1]]
-//       };
+    expect(
+      ProgramVisitTypesService.isVisitTypeAllowed(scope, visitType)
+    ).toBeTruthy();
 
-//       var actual = pVisitTypes.separateAllowedDisallowedVisitTypes(
-//         scope,
-//         programsConfig.visitTypes
-//       );
+    scope.intendedLocationOfVisitUuid = 'test-location-b-uuid';
+    expect(
+      ProgramVisitTypesService.isVisitTypeAllowed(scope, visitType)
+    ).toBeFalsy();
+  });
 
-//       expect(actual).to.deep.equal(expected);
-//     }
-//   );
+  test('separates allowed and disallowed visit types', () => {
+    const scope = {
+      enrollmentLocationUuid: 'some location uuid',
+      intendedLocationOfVisitUuid: 'some location uuid'
+    };
 
-//   it('should fetch the visit types for a given patient, program, and intended visit location', function (done) {
-//     // stub the data service and check it integrates well
+    const programsConfig = {
+      visitTypes: [
+        {
+          uuid: 'visit-type-a-uuid',
+          name: 'An A-Type test visit',
+          encounterTypes: [],
+          allowedIf: 'enrollmentLocationUuid === intendedLocationOfVisitUuid'
+        },
+        {
+          uuid: 'visit-type-b-uuid',
+          name: 'A B-Type test visit',
+          encounterTypes: [],
+          allowedIf: 'enrollmentLocationUuid !== intendedLocationOfVisitUuid'
+        }
+      ]
+    };
 
-//     var patientUuid = 'some uuid';
-//     var programUuid = 'some program uuid';
-//     var programEnrollmentUuid = 'some program enrollment uuid';
-//     var intendedLocationUuid = 'some location uuid';
+    const expected = {
+      allowed: [programsConfig.visitTypes[0]],
+      disallowed: [programsConfig.visitTypes[1]]
+    };
 
-//     var programConfig = {
-//       'some program uuid': {
-//         name: 'test program',
-//         dataDependencies: ['patient'],
-//         visitTypes: [
-//           {
-//             uuid: 'visit one uuid',
-//             name: 'Visit One',
-//             encounterTypes: [] // one without rules
-//           },
-//           {
-//             uuid: 'visit two uuid',
-//             name: 'Visit Two',
-//             encounterTypes: [], // one with rule
-//             allowedIf: 'age > 10',
-//             ruleExplanation: 'should be of age greater than 10'
-//           },
-//           {
-//             uuid: 'visit three uuid',
-//             name: 'Visit Three',
-//             encounterTypes: [], // one with rule
-//             allowedIf: 'age < 10',
-//             ruleExplanation: 'should be of age less than 10'
-//           }
-//         ]
-//       },
-//       'some other program config': {
-//         name: 'test program'
-//       }
-//     };
+    const actual = ProgramVisitTypesService.separateAllowedDisallowedVisitTypes(
+      scope,
+      programsConfig.visitTypes
+    );
 
-//     // data resolver stub
-//     var dataResolverStub = sinon
-//       .stub(dataResolver, 'getAllDataDependencies')
-//       .returns(function (keys, patientUuid, params) {
-//         expect(keys).to.deep.equal(['patient']);
-//         expect(patientUuid).to.equal(patientUuid);
-//         expect(params).to.deep.equal({
-//           programUuid: programUuid,
-//           programEnrollmentUuid: programEnrollmentUuid,
-//           intendedVisitLocationUuid: intendedLocationUuid
-//         }); // fetch default patient object
-//         var promise = new Promise(function (resolve, reject) {
-//           resolve({
-//             patient: {
-//               uuid: 'some uuid',
-//               person: {
-//                 age: 20
-//               }
-//             }
-//           });
-//         });
-//         return promise;
-//       });
-
-//     var expectedProgram = {
-//       name: 'test program',
-//       dataDependencies: ['patient'],
-//       visitTypes: {
-//         allowed: [
-//           {
-//             uuid: 'visit one uuid',
-//             name: 'Visit One',
-//             encounterTypes: [] // one without rules
-//           },
-//           {
-//             uuid: 'visit two uuid',
-//             name: 'Visit Two',
-//             encounterTypes: [], // one with rule
-//             allowedIf: 'age > 10',
-//             ruleExplanation: 'should be of age greater than 10'
-//           }
-//         ],
-//         disallowed: [
-//           {
-//             uuid: 'visit three uuid',
-//             name: 'Visit Three',
-//             encounterTypes: [], // one with rule but not allowed
-//             allowedIf: 'age < 10',
-//             ruleExplanation: 'should be of age less than 10'
-//           }
-//         ]
-//       }
-//     };
-
-//     pVisitTypes
-//       .getPatientVisitTypes(
-//         patientUuid,
-//         programUuid,
-//         programEnrollmentUuid,
-//         intendedLocationUuid,
-//         programConfig
-//       )
-//       .then(function (configs) {
-//         expect(configs).to.deep.equal(expectedProgram);
-//         done();
-//         dataResolverStub.restore();
-//       })
-//       .catch(function (err) {
-//         console.error('error:', err);
-//         expect(true).to.be.false;
-//         done();
-//       });
-//     done();
-//   });
-// });
+    expect(actual).toEqual(expected);
+  });
+});

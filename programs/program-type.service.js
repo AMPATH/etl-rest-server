@@ -6,7 +6,7 @@ var programUuidIdMap = new Map();
 const programsConfig = require('./patient-program-config');
 
 var def = {
-  getAllprogramTypes: getAllprogramTypes,
+  getAllProgramTypes: getAllProgramTypes,
   mapprogramUuidToId: mapprogramUuidToId,
   loadAndMapProgramUuidToId: loadAndMapProgramUuidToId,
   getprogramIdFromUuid: getprogramIdFromUuid
@@ -14,7 +14,7 @@ var def = {
 
 module.exports = def;
 
-function getAllprogramTypes() {
+function getAllProgramTypes() {
   /*
      returns a list of all program-types with their id
      and uuid
@@ -69,7 +69,7 @@ function getprogramIdFromUuid(programUuid) {
 
 function loadAndMapProgramUuidToId() {
   return new Promise(function (resolve, reject) {
-    getAllprogramTypes()
+    getAllProgramTypes()
       .then((result) => {
         if (result) {
           programUuidIdMap = mapprogramUuidToId(result);
