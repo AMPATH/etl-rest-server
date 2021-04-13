@@ -1,64 +1,48 @@
-var Promise = require('bluebird');
-var programTypeDao = require('../dao/program-type/program-type-dao');
+const Promise = require('bluebird');
 const _ = require('lodash');
-var programTypes = [];
-var programUuidIdMap = new Map();
-const programsConfig = require('./patient-program-config');
 
-var def = {
-  getAllprogramTypes: getAllprogramTypes,
-  mapprogramUuidToId: mapprogramUuidToId,
+const programTypeDao = require('../dao/program-type/program-type-dao');
+let programUuidIdMap = new Map();
+let programTypes = [];
+
+const def = {
+  getAllProgramTypes: getAllProgramTypes,
+  mapProgramUuidToId: mapProgramUuidToId,
   loadAndMapProgramUuidToId: loadAndMapProgramUuidToId,
-  getprogramIdFromUuid: getprogramIdFromUuid
+  getProgramIdFromUuid: getProgramIdFromUuid
 };
 
 module.exports = def;
 
-function getAllprogramTypes() {
-  /*
-     returns a list of all program-types with their id
-     and uuid
-
-    */
-
-  return new Promise(function (resolve, reject) {
-    if (programTypes.length > 0) {
-      // console.log('program Type length > 0');
-
-      resolve(programTypes);
-    } else {
-      // console.log('program Type length < 0');
-
-      programTypeDao
-        .getProgramTypes()
-        .then(function (result) {
-          if (result) {
-            programTypes = result;
-            resolve(programTypes);
-          } else {
-            reject('error');
-          }
-        })
-        .catch(function (error) {
-          reject('error');
+function getAllProgramTypes() {
+  return new Promise((resolve, reject) => {
+    programTypeDao
+      .getProgramTypes()
+      .then((result) => {
+        if (result.length) {
+          programTypes = result;
+          resolve(result);
+        }
+      })
+      .catch((error) => {
+        reject({
+          message: 'Error fetching program types: ',
+          error
         });
-    }
+      });
   });
 }
 
-function mapprogramUuidToId(programTypes) {
-  //  console.log('Got programTypes', programTypes);
-
+function mapProgramUuidToId(programTypes) {
   _.each(programTypes, (programType, index) => {
-    // console.log('Specific program Type', programType)
     programUuidIdMap.set(programType.uuid, programType.program_id);
   });
 
   return programUuidIdMap;
 }
 
-function getprogramIdFromUuid(programUuid) {
-  var programObj = programUuidIdMap.get(programUuid);
+function getProgramIdFromUuid(programUuid) {
+  const programObj = programUuidIdMap.get(programUuid);
 
   if (typeof programObj === 'undefined') {
     return -1;
@@ -69,17 +53,15 @@ function getprogramIdFromUuid(programUuid) {
 
 function loadAndMapProgramUuidToId() {
   return new Promise(function (resolve, reject) {
-    getAllprogramTypes()
+    getAllProgramTypes()
       .then((result) => {
         if (result) {
-          programUuidIdMap = mapprogramUuidToId(result);
+          programUuidIdMap = mapProgramUuidToId(result);
           resolve(programUuidIdMap);
         }
       })
       .catch((error) => {
-        reject('Error');
+        reject('Error loading and mapping program UUIDs to IDs: ', error);
       });
   });
 }
-
-//get all visit types and encounters under a certain program

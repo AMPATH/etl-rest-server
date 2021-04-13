@@ -47,7 +47,7 @@ function getPatientProgramVisits(
   enrollment,
   locationUuid
 ) {
-  return new Promise(function (success, error) {
+  return new Promise(function (resolve, reject) {
     getPatientProgramEnrollmentVisits(
       patientUuid,
       programUuid,
@@ -55,11 +55,10 @@ function getPatientProgramVisits(
       locationUuid
     )
       .then((programVisits) => {
-        success(programVisits);
+        resolve(programVisits);
       })
       .catch((err) => {
-        console.error('Error fetching program enrollment visits: ', err);
-        error(err);
+        reject(err);
       });
   });
 }

@@ -11,7 +11,7 @@ const availableKeys = {
   enrollment: getProgramEnrollment,
   hivLastTenClinicalEncounters: gethivLastTenClinicalEncounters,
   hivLastEncounter: getPatientLastEncounter,
-  patientEnrollment: getPatientEnrollement,
+  patientEnrollment: getPatientEnrollment,
   patientEncounters: getPatientEncounters
 };
 
@@ -28,16 +28,16 @@ const def = {
 module.exports = def;
 
 function getAllDataDependencies(dataDependenciesKeys, patientUuid, params) {
-  return new Promise((success, error) => {
+  return new Promise((resolve, reject) => {
     const dataObject = {};
     Promise.reduce(
       dataDependenciesKeys,
-      function (previous, key) {
+      (previous, key) => {
         return availableKeys[key](patientUuid, params)
-          .then(function (data) {
+          .then((data) => {
             dataObject[key] = data;
           })
-          .catch(function (err) {
+          .catch((err) => {
             dataObject[key] = {
               error: 'An error occured',
               detail: err
@@ -46,11 +46,12 @@ function getAllDataDependencies(dataDependenciesKeys, patientUuid, params) {
       },
       0
     )
-      .then(function (data) {
-        success(dataObject);
+      .then((data) => {
+        resolve(dataObject);
       })
-      .catch(function (err) {
-        error(err);
+      .catch((err) => {
+        console.log('err: ', err);
+        reject(err);
       });
   });
 }
@@ -98,7 +99,6 @@ function getPatientEncounters(patientUuid) {
         resolve(encounters);
       })
       .catch((e) => {
-        console.error('An error occurred fetching encounters: ', e);
         reject(e);
       });
   });
@@ -130,7 +130,7 @@ function getPatientLastEncounter(patientUuid) {
   });
 }
 
-function getPatientEnrollement(patientUuid, params) {
+function getPatientEnrollment(patientUuid, params) {
   return new Promise((resolve, reject) => {
     programService
       .getProgramEnrollmentByPatientUuid(patientUuid, params)

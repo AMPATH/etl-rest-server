@@ -1,12 +1,11 @@
-var Promise = require('bluebird');
-var async = require('async');
-var scopeBuilder = require('./scope-builder.service');
-var dataResolver = require('./patient-data-resolver.service');
-var expressionRunner = require('../expression-runner/expression-runner');
-var _ = require('underscore');
-_ = require('lodash');
+const Promise = require('bluebird');
+const async = require('async');
+const scopeBuilder = require('./scope-builder.service');
+const dataResolver = require('./patient-data-resolver.service');
+const expressionRunner = require('../expression-runner/expression-runner');
+const _ = require('lodash');
 
-var def = {
+const def = {
   validateEnrollmentOptions: validateEnrollmentOptions
 };
 
@@ -34,7 +33,10 @@ function updateProgramConfig(patientUuid, program, callback, res) {
 
 function validateEnrollmentOptions(patientUuid, allProgramsConfig) {
   return new Promise(function (resolve, reject) {
-    var dataObject = getDependanciesKeysAndData(allProgramsConfig, patientUuid);
+    const dataObject = getDependenciesKeysAndData(
+      allProgramsConfig,
+      patientUuid
+    );
 
     async.each(
       allProgramsConfig,
@@ -54,7 +56,7 @@ function validateEnrollmentOptions(patientUuid, allProgramsConfig) {
   });
 }
 
-function getDependanciesKeysAndData(allProgramsConfig, patientUuid) {
+function getDependenciesKeysAndData(allProgramsConfig, patientUuid) {
   return new Promise(function (resolve, reject) {
     var dep = [];
     _.each(allProgramsConfig, function (prog) {

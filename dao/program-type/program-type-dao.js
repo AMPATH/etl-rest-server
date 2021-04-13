@@ -3,10 +3,8 @@
 
 var Promise = require('bluebird');
 var squel = require('squel');
-var _ = require('underscore');
-var moment = require('moment');
 var connection = require('../../dao/connection/mysql-connection-service.js');
-var authorizer = require('../../authorization/etl-authorizer');
+var _ = require('underscore');
 
 var programType = {
   getProgramTypes: getProgramTypes
@@ -15,7 +13,7 @@ var programType = {
 module.exports = programType;
 
 function getProgramTypes() {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve, reject) => {
     connection
       .getServerConnection()
       .then(function (conn) {
@@ -26,7 +24,7 @@ function getProgramTypes() {
           .field('p.uuid')
           .from('amrs.program', 'p')
           .toString();
-        conn.query(query, {}, function (err, rows, fields) {
+        conn.query(query, {}, (err, rows, fields) => {
           if (err) {
             reject('Error querying server');
           } else {
@@ -35,7 +33,7 @@ function getProgramTypes() {
           conn.release();
         });
       })
-      .catch(function (err) {
+      .catch((err) => {
         reject('Error establishing connection to MySql Server');
       });
   });

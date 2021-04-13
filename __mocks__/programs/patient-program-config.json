@@ -1,0 +1,21 @@
+{
+  "test-hiv-program-1-uuid": {
+    "name": "A Test HIV Program for women",
+    "dataDependencies": [
+      "patient",
+      "enrollment",
+      "hivLastTenClinicalEncounters"
+    ],
+    "enrollmentOptions": {
+      "requiredProgramQuestions": [],
+      "enrollIf": "gender === 'F'"
+    },
+    "visitTypes": [
+      {
+        "uuid": "test-initial-visit-type",
+        "name": "Test Initial Visit",
+        "allowedIf": "age > 18"
+      }
+    ]
+  }
+}

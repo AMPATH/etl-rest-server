@@ -43,10 +43,10 @@ function getPatientVisitTypes(
   intendedVisitLocationUuid,
   allProgramsConfig
 ) {
-  return new Promise((success, error) => {
+  return new Promise((resolve, reject) => {
     const program = allProgramsConfig[programUuid];
     if (!program) {
-      error({ message: 'Program not found!' });
+      reject({ message: 'Program not found!' });
       return;
     }
 
@@ -71,11 +71,10 @@ function getPatientVisitTypes(
           visits
         );
 
-        success(program);
+        resolve(program);
       })
       .catch((dataErr) => {
-        console.error(dataErr);
-        error({
+        reject({
           message: 'Error resolving data dependencies'
         });
       });
