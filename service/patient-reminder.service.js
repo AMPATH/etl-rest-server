@@ -2,12 +2,10 @@
 const Promise = require('bluebird');
 const Moment = require('moment');
 const _ = require('lodash');
-var rp = require('../request-config');
-var config = require('../conf/config.json');
-var encounter_service = require('./openmrs-rest/encounter');
-var program_service = require('./openmrs-rest/program.service');
+const encounter_service = require('./openmrs-rest/encounter');
+const program_service = require('./openmrs-rest/program.service');
 
-var serviceDef = {
+const serviceDef = {
   generateReminders: generateReminders,
   viralLoadReminders: viralLoadReminders,
   newViralLoadPresent: newViralLoadPresent,
@@ -87,7 +85,7 @@ function viralLoadReminders(data) {
   } else if (data.needs_vl_coded === 4) {
     reminders.push({
       message:
-        'Patient requires viral load. A pregnant or breastfeeding patient  with vl > 400 requires ' +
+        'Patient requires viral load. A pregnant or breastfeeding patient with vl > 400 requires ' +
         'a viral load test every 3 months. ' +
         labMessage,
       title: 'Viral Load Reminder',
@@ -100,7 +98,7 @@ function viralLoadReminders(data) {
   } else if (data.needs_vl_coded === 5) {
     reminders.push({
       message:
-        'Patient requires viral load. A pregnant or breastfeeding patient with vl<= 400 requires ' +
+        'Patient requires viral load. A pregnant or breastfeeding patient with vl <= 400 requires ' +
         'a viral load test every 6 months. ' +
         labMessage,
       title: 'Viral Load Reminder',
@@ -139,7 +137,7 @@ function isInfant(dateString) {
   let months = Moment().diff(dateString, 'months');
 }
 
-function qualifiesDifferenciatedReminders(data) {
+function qualifiesForDifferentiatedCareReminders(data) {
   let reminders = [];
   let diffMessage = '';
   if (data.qualifies_differenciated_care) {
@@ -163,7 +161,7 @@ function qualifiesDifferenciatedReminders(data) {
   ) {
     reminders.push({
       message:
-        'Patient qualifies for differentiated care. Viral load is <= 400 and age >= 20. ' +
+        'Patient qualifies for differentiated care. Viral load is <= 400 and age >= 20.' +
         diffMessage,
       title: 'Differentiated Care Reminder',
       type: 'warning',
@@ -176,7 +174,7 @@ function qualifiesDifferenciatedReminders(data) {
     });
   } else {
     console.info.call(
-      'No Differenciated Care Reminder For Selected Patient' +
+      'No Differentiated Care Reminder For Selected Patient' +
         data.qualifies_differenciated_care
     );
   }
@@ -211,9 +209,9 @@ function inhReminders(data) {
       });
     }
   } catch (e) {
-    console.log(e);
+    console.error('Error creating INH reminder: ', e);
   }
-  // INH Treatment Reminder - last mont
+  // INH Treatment Reminder - last month
   if (
     data.is_on_inh_treatment &&
     data.inh_treatment_days_remaining <= 30 &&
@@ -223,7 +221,7 @@ function inhReminders(data) {
       message:
         'Patient has been on INH treatment for the last 5 months, expected to end on (' +
         Moment(data.ipt_completion_date).format('DD-MM-YYYY') +
-        ') ',
+        ')',
       title: 'INH Treatment Reminder',
       type: 'danger',
       display: {
@@ -243,7 +241,7 @@ function viralLoadErrors(data) {
         'Viral load test that was ordered on: (' +
         Moment(data.vl_error_order_date).format('DD-MM-YYYY') +
         ') ' +
-        'resulted to an error. Please re-order.',
+        'resulted in an error. Please reorder.',
       title: 'Lab Error Reminder',
       type: 'danger',
       display: {
@@ -297,7 +295,6 @@ function newViralLoadPresent(data) {
 }
 
 function pendingViralLoadLabResult(eidResults) {
-  // console.log('EID Results', eidResults);
   let incompleteResult = eidResults.find((result) => {
     if (result) {
       if (result.sample_status) {
@@ -308,7 +305,6 @@ function pendingViralLoadLabResult(eidResults) {
     }
   });
   let reminders = [];
-  //let data = _.last(eidResults.viralLoad);
   if (incompleteResult) {
     let dateSplit = incompleteResult.date_collected.split('-');
     let dateCollected = Moment(incompleteResult.date_collected);
@@ -331,7 +327,7 @@ function pendingViralLoadLabResult(eidResults) {
   return reminders;
 }
 
-function qualifiesEnhancedReminders(data) {
+function qualifiesForEnhancedReminders(data) {
   let reminders = [];
 
   switch (data.qualifies_enhanced) {
@@ -437,7 +433,7 @@ function dnaReminder(data) {
         break;
       default:
         console.info.call(
-          'No DNA/PCR Reminder For Selected Patient' + data.qna_pcr_reminder
+          'No DNA/PCR Reminder For Selected Patient' + data.dna_pcr_reminder
         );
     }
   }
@@ -446,8 +442,6 @@ function dnaReminder(data) {
 }
 
 function dstReminders(data) {
-  // console.log('dstRemindersdata', data);
-
   let reminders = [];
   if (data.has_dst_result === 1) {
     reminders.push({
@@ -471,7 +465,7 @@ function geneXpertReminders(data) {
   if (data.has_gene_xpert_result === 1) {
     reminders.push({
       message:
-        'New GeneXpert Image result : (collected on ' +
+        'New GeneXpert Image result: (collected on ' +
         Moment(data.test_date).format('DD-MM-YYYY') +
         ').',
       title: 'GeneXpert Reminders',
@@ -515,7 +509,7 @@ function getFamilyTestingReminder(patientUuid) {
     if (res.results.length == 0) {
       reminders.push({
         message:
-          'No contact tracing has been done for this index, please fill the  contact tracing form',
+          'No contact tracing has been done for this index, please fill the contact tracing form',
         title: 'Contact Tracing Reminder',
         type: 'warning',
         display: {
@@ -593,15 +587,15 @@ async function generateReminders(etlResults, eidResults) {
 
   let data = etlResults[0];
   let new_vl = newViralLoadPresent(data);
-  let vl_Errors = viralLoadErrors(data);
+  let vl_errors = viralLoadErrors(data);
   let pending_vl_orders = pendingViralOrder(data);
   let pending_vl_lab_result = pendingViralLoadLabResult(eidResults);
-  let qualifies_differenciated_care_reminders = qualifiesDifferenciatedReminders(
+  let qualifies_for_differentiated_care_reminders = qualifiesForDifferentiatedCareReminders(
     data
   );
   let inh_reminders = inhReminders(data);
   let vl_reminders = viralLoadReminders(data);
-  let qualifies_enhanced = qualifiesEnhancedReminders(data);
+  let qualifies_enhanced = qualifiesForEnhancedReminders(data);
   let dna_pcr_reminder = dnaReminder(data);
   let dst_result = dstReminders(data);
   let gene_xpert_result = geneXpertReminders(data);
@@ -616,10 +610,10 @@ async function generateReminders(etlResults, eidResults) {
     currentReminder = pending_vl_lab_result.concat(inh_reminders);
   } else {
     currentReminder = new_vl.concat(
-      vl_Errors,
+      vl_errors,
       pending_vl_orders,
       inh_reminders,
-      qualifies_differenciated_care_reminders,
+      qualifies_for_differentiated_care_reminders,
       vl_reminders,
       qualifies_enhanced,
       dna_pcr_reminder,

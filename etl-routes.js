@@ -28,7 +28,7 @@ var enrollmentService = require('./service/enrollment.service');
 var resolveLocationUuidToId = require('./location/resolve-location-uuid-to-id');
 var resolveProgramEnrollmentFilterParams = require('./resolve-program-visit-encounter-Ids/resolve-program-visit-encounter-idsv2');
 var programVisitEncounterResolver = require('./resolve-program-visit-encounter-Ids/resolve-program-visit-encounter-idsv2');
-var imagingService = require('./service/radilogy-imaging.service');
+var imagingService = require('./service/radiology-imaging.service');
 var oncologyReportsService = require('./oncology-reports/oncology-reports-service');
 var pocEidPayloadHelper = require('./app/lab-integration/utils/poc-eid-payload-helper.js');
 import { LabSyncService } from './app/lab-integration/lab-sync-service';
