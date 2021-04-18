@@ -1,9 +1,11 @@
-const ProgramTypeService = require('../../programs/program-type.service');
-const { getProgramTypes } = require('../../dao/program-type/program-type-dao');
+const ProgramTypeService = require('../../../programs/program-type.service');
+const {
+  getProgramTypes
+} = require('../../../dao/program-type/program-type-dao');
 
 const mockGetProgramTypes = getProgramTypes;
 
-jest.mock('../../dao/program-type/program-type-dao', () => ({
+jest.mock('../../../dao/program-type/program-type-dao', () => ({
   getProgramTypes: jest.fn()
 }));
 
@@ -108,9 +110,9 @@ describe('ProgramTypeService: ', () => {
   });
 
   test('loads and returns a map of program UUIDs to program IDs', async () => {
-    const message = 'TEST_ERROR_MESSAGE';
+    const error = new Error('Error establishing a database connection');
 
-    mockGetProgramTypes.mockRejectedValue({ message });
+    mockGetProgramTypes.mockRejectedValue(error);
 
     await ProgramTypeService.loadAndMapProgramUuidToId()
       .then((programTypeMap) => {

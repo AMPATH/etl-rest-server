@@ -1,17 +1,17 @@
-const PatientDataResolverService = require('../../programs/patient-data-resolver.service');
+const PatientDataResolverService = require('../../../programs/patient-data-resolver.service');
 const {
   getPatientEncounters
-} = require('../../service/openmrs-rest/encounter');
+} = require('../../../service/openmrs-rest/encounter');
 const {
   getPatientByUuid
-} = require('../../service/openmrs-rest/patient.service');
+} = require('../../../service/openmrs-rest/patient.service');
 const {
   getProgramEnrollmentByUuid
-} = require('../../service/openmrs-rest/program.service');
+} = require('../../../service/openmrs-rest/program.service');
 const {
   getPatientHivSummary,
   getPatientLastEncounter
-} = require('../../dao/patient/etl-patient-hiv-summary-dao');
+} = require('../../../dao/patient/etl-patient-hiv-summary-dao');
 
 const mockGetPatientByUuid = getPatientByUuid;
 const mockGetPatientEncounters = getPatientEncounters;
@@ -19,22 +19,22 @@ const mockGetPatientHivSummary = getPatientHivSummary;
 const mockGetPatientLastEncounter = getPatientLastEncounter;
 const mockGetProgramEnrollmentByUuid = getProgramEnrollmentByUuid;
 
-jest.mock('../../service/openmrs-rest/patient.service', () => ({
+jest.mock('../../../service/openmrs-rest/patient.service', () => ({
   ...jest.requireActual,
   getPatientByUuid: jest.fn()
 }));
 
-jest.mock('../../service/openmrs-rest/program.service', () => ({
+jest.mock('../../../service/openmrs-rest/program.service', () => ({
   ...jest.requireActual,
   getProgramEnrollmentByUuid: jest.fn()
 }));
 
-jest.mock('../../service/openmrs-rest/encounter', () => ({
+jest.mock('../../../service/openmrs-rest/encounter', () => ({
   ...jest.requireActual,
   getPatientEncounters: jest.fn()
 }));
 
-jest.mock('../../dao/patient/etl-patient-hiv-summary-dao', () => ({
+jest.mock('../../../dao/patient/etl-patient-hiv-summary-dao', () => ({
   ...jest.requireActual,
   getPatientHivSummary: jest.fn(),
   getPatientLastEncounter: jest.fn()
@@ -119,7 +119,6 @@ const testLatestEncounter = [
 
 describe('PatientDataResolverService: ', () => {
   const params = {};
-  const TEST_ERROR = new Error('Error fetching data');
 
   test("resolves and returns the program's data dependencies", async () => {
     mockGetPatientByUuid.mockResolvedValue(testPatient);
@@ -154,13 +153,17 @@ describe('PatientDataResolverService: ', () => {
   });
 
   test('throws an error if there is a problem fetching a patient', async () => {
-    mockGetPatientByUuid.mockRejectedValue(TEST_ERROR);
+    const error = new Error('Error establishing a database connection');
+
+    mockGetPatientByUuid.mockRejectedValue(error);
 
     await PatientDataResolverService.getPatient(testPatient.uuid, params)
       .then((patient) => expect(patient).not.toBeDefined())
       .catch((err) => {
         expect(err).toBeDefined();
-        expect(err.message).toMatch(/error fetching data/i);
+        expect(err.message).toMatch(
+          /error establishing a database connection/i
+        );
       });
   });
 
@@ -178,7 +181,9 @@ describe('PatientDataResolverService: ', () => {
   });
 
   test('throws an error if there is a problem fetching program enrollments', async () => {
-    mockGetProgramEnrollmentByUuid.mockRejectedValue(TEST_ERROR);
+    const error = new Error('Error establishing a database connection');
+
+    mockGetProgramEnrollmentByUuid.mockRejectedValue(error);
 
     await PatientDataResolverService.getProgramEnrollment(
       testPatient.uuid,
@@ -187,7 +192,9 @@ describe('PatientDataResolverService: ', () => {
       .then((enrollment) => expect(enrollment).not.toBeDefined())
       .catch((err) => {
         expect(err).toBeDefined();
-        expect(err.message).toMatch(/error fetching data/i);
+        expect(err.message).toMatch(
+          /error establishing a database connection/i
+        );
       });
   });
 
@@ -205,7 +212,9 @@ describe('PatientDataResolverService: ', () => {
   });
 
   test('throws an error if there is a problem fetching patient encounters', async () => {
-    mockGetPatientEncounters.mockRejectedValue(TEST_ERROR);
+    const error = new Error('Error establishing a database connection');
+
+    mockGetPatientEncounters.mockRejectedValue(error);
 
     await PatientDataResolverService.getPatientEncounters(
       testPatient.uuid,
@@ -214,7 +223,9 @@ describe('PatientDataResolverService: ', () => {
       .then((encounters) => expect(encounters).not.toBeDefined())
       .catch((err) => {
         expect(err).toBeDefined();
-        expect(err.message).toMatch(/error fetching data/i);
+        expect(err.message).toMatch(
+          /error establishing a database connection/i
+        );
       });
   });
 
@@ -232,7 +243,9 @@ describe('PatientDataResolverService: ', () => {
   });
 
   test("throws an error if there is a problem fetching the patient's last ten HIV clinical encounters", async () => {
-    mockGetPatientHivSummary.mockRejectedValue(TEST_ERROR);
+    const error = new Error('Error establishing a database connection');
+
+    mockGetPatientHivSummary.mockRejectedValue(error);
 
     await PatientDataResolverService.gethivLastTenClinicalEncounters(
       testPatient.uuid,
@@ -241,7 +254,9 @@ describe('PatientDataResolverService: ', () => {
       .then((hivSummary) => expect(hivSummary).not.toBeDefined())
       .catch((err) => {
         expect(err).toBeDefined();
-        expect(err.message).toMatch(/error fetching data/i);
+        expect(err.message).toMatch(
+          /error establishing a database connection/i
+        );
       });
   });
 
@@ -261,7 +276,9 @@ describe('PatientDataResolverService: ', () => {
   });
 
   test("throws an error if there is a problem fetching the patient's latest encounter", async () => {
-    mockGetPatientLastEncounter.mockRejectedValue(TEST_ERROR);
+    const error = new Error('Error establishing a database connection');
+
+    mockGetPatientLastEncounter.mockRejectedValue(error);
 
     await PatientDataResolverService.getPatientLastEncounter(
       testPatient.uuid,
@@ -270,7 +287,9 @@ describe('PatientDataResolverService: ', () => {
       .then((hivSummary) => expect(hivSummary).not.toBeDefined())
       .catch((err) => {
         expect(err).toBeDefined();
-        expect(err.message).toMatch(/error fetching data/i);
+        expect(err.message).toMatch(
+          /error establishing a database connection/i
+        );
       });
   });
 });

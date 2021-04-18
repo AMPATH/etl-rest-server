@@ -1,4 +1,4 @@
-const ScopeBuilderService = require('../../programs/scope-builder.service');
+const ScopeBuilderService = require('../../../programs/scope-builder.service');
 
 const dataDictionary = {
   patient: {

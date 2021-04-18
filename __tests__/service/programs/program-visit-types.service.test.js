@@ -1,11 +1,11 @@
-const ProgramVisitTypesService = require('../../programs/program-visit-types.service');
+const ProgramVisitTypesService = require('../../../programs/program-visit-types.service');
 const {
   getAllDataDependencies
-} = require('../../programs/patient-data-resolver.service');
+} = require('../../../programs/patient-data-resolver.service');
 
 const mockGetAllDataDependencies = getAllDataDependencies;
 
-jest.mock('../../programs/patient-data-resolver.service', () => ({
+jest.mock('../../../programs/patient-data-resolver.service', () => ({
   ...jest.requireActual,
   getAllDataDependencies: jest.fn()
 }));
@@ -87,7 +87,8 @@ describe('ProgramVisitTypesService: ', () => {
   });
 
   test('throws an error if there is a problem getting visit types data', async () => {
-    const message = 'TEST_ERROR_MESSAGE';
+    const error = new Error('Error establishing a database connection');
+
     const payload = {
       patientUuid: 'test-patient-uuid',
       programUuid: 'test-hiv-program-1-uuid',
@@ -96,7 +97,7 @@ describe('ProgramVisitTypesService: ', () => {
       allProgramsConfig: programsConfig
     };
 
-    mockGetAllDataDependencies.mockRejectedValue({ message });
+    mockGetAllDataDependencies.mockRejectedValue(error);
 
     await ProgramVisitTypesService.getPatientVisitTypes(
       payload.patientUuid,

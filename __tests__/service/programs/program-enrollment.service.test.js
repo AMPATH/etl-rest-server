@@ -1,20 +1,20 @@
-const ProgramEnrollmentService = require('../../programs/program-enrollment.service');
+const ProgramEnrollmentService = require('../../../programs/program-enrollment.service');
 
 const {
   getAllDataDependencies
-} = require('../../programs/patient-data-resolver.service');
+} = require('../../../programs/patient-data-resolver.service');
 
 const mockGetAllDataDependencies = getAllDataDependencies;
 
 jest.mock(
-  '../../programs/patient-program-config.json',
+  '../../../programs/patient-program-config.json',
   () => ({
     ...testProgramsConfig
   }),
   { virtual: true }
 );
 
-jest.mock('../../programs/patient-data-resolver.service', () => ({
+jest.mock('../../../programs/patient-data-resolver.service', () => ({
   ...jest.requireActual,
   getAllDataDependencies: jest.fn()
 }));

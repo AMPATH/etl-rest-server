@@ -1,28 +1,28 @@
-const PatientProgramBaseService = require('../../programs/patient-program-base.service');
+const PatientProgramBaseService = require('../../../programs/patient-program-base.service');
 const {
   validateEnrollmentOptions
-} = require('../../programs/program-enrollment.service');
+} = require('../../../programs/program-enrollment.service');
 const {
   getPatientVisitTypes
-} = require('../../programs/program-visit-types.service');
+} = require('../../../programs/program-visit-types.service');
 
 const mockValidateEnrollmentOptions = validateEnrollmentOptions;
 const mockGetPatientVisitTypes = getPatientVisitTypes;
 
 jest.mock(
-  '../../programs/patient-program-config.json',
+  '../../../programs/patient-program-config.json',
   () => ({
     ...testProgramsConfig
   }),
   { virtual: true }
 );
 
-jest.mock('../../programs/program-enrollment.service', () => ({
+jest.mock('../../../programs/program-enrollment.service', () => ({
   ...jest.requireActual,
   validateEnrollmentOptions: jest.fn()
 }));
 
-jest.mock('../../programs/program-visit-types.service', () => ({
+jest.mock('../../../programs/program-visit-types.service', () => ({
   ...jest.requireActual,
   getPatientVisitTypes: jest.fn()
 }));
@@ -178,8 +178,9 @@ describe('PatientProgramBaseService: ', () => {
   });
 
   test('throws an error if there is a problem resolving program enrollment visit types', async () => {
-    const err = 'TEST_ERROR_MESSAGE';
-    mockGetPatientVisitTypes.mockRejectedValue(err);
+    const error = new Error('Error establishing a database connection');
+
+    mockGetPatientVisitTypes.mockRejectedValue(error);
 
     await PatientProgramBaseService.getPatientProgramVisits()
       .then((visitTypes) => {
@@ -187,7 +188,9 @@ describe('PatientProgramBaseService: ', () => {
       })
       .catch((err) => {
         expect(err).toBeDefined();
-        expect(err).toMatch(/test_error_message/i);
+        expect(err.message).toMatch(
+          /error establishing a database connection/i
+        );
       });
   });
 });

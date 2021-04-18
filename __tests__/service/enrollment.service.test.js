@@ -2,10 +2,6 @@ const enrollmentService = require('../../service/enrollment.service');
 import { BaseMysqlReport } from '../../app/reporting-framework/base-mysql.report';
 import { PatientlistMysqlReport } from '../../app/reporting-framework/patientlist-mysql.report';
 
-afterAll(() => {
-  jest.restoreAllMocks();
-});
-
 describe('EnrollmentService: ', () => {
   const testRequestParams = {
     endDate: '2021-04-16',
