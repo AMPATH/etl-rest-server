@@ -18,7 +18,6 @@ export class SurgeReportService extends MultiDatasetPatientlistReport {
   generateReport(additionalParams) {
     const that = this;
     return new Promise((resolve, reject) => {
-      console.log('Params:::', that.params);
       super
         .generateReport(additionalParams)
         .then((results) => {
@@ -102,7 +101,6 @@ export class SurgeReportService extends MultiDatasetPatientlistReport {
       _.each(sectionDefinitions, function (sectionDefinition) {
         _.each(sectionDefinition.indicators, function (indicator) {
           if (indicator.indicator === requestIndicator) {
-            // console.log('Found indicator', requestIndicator);
             results.push(indicator);
           }
         });

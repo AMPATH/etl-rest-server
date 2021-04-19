@@ -5,10 +5,10 @@
   var config = require('../../conf/config');
   var requestConfig = require('../../request-config');
 
-  var openmrsProtocal = config.openmrs.https ? 'https' : 'http';
+  var openmrsProtocol = config.openmrs.https ? 'https' : 'http';
   var appName = config.openmrs.applicationName || 'amrs';
   var openmrsBase =
-    openmrsProtocal +
+    openmrsProtocol +
     '://' +
     config.openmrs.host +
     ':' +

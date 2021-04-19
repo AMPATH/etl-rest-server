@@ -93,7 +93,6 @@ export class SurgeService extends SurgeMultiDatasetPatientlistReport {
         });
         resolve(results);
       }).catch((errors) => {
-        console.error('Error', errors);
         reject(errors);
       });
     });
@@ -120,15 +119,16 @@ export class SurgeService extends SurgeMultiDatasetPatientlistReport {
             });
         })
         .catch((err) => {
-          console.error('Surge patient list generation error', err);
           reject(err);
         });
     });
   }
 
   resolveLocationUuidsToName(uuids) {
+    console.log('********** called with uuids: ', uuids);
     return new Promise((resolve, reject) => {
       dao.resolveLocationUuidsToName(uuids.split(','), (loc) => {
+        console.log('loc: ', loc);
         resolve(loc);
       });
     });
