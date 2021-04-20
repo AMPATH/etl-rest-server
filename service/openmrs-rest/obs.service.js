@@ -22,12 +22,12 @@ module.exports = (function () {
     return link;
   }
 
-  function getPatientIdentifiers(patientUuid) {
+  function getPatientIdentifiers(patientUuId) {
     var uri = getRestResource(
       '/' +
         config.openmrs.applicationName +
         '/ws/rest/v1/patient/' +
-        patientUuid
+        patientUuId
     );
     var queryString = {
       v: 'full'
@@ -70,14 +70,14 @@ module.exports = (function () {
     });
   }
 
-  function getPatientTestObsByConceptUuid(conceptUuid, patientUuid) {
+  function getPatientTestObsByConceptUuId(conceptUuId, patientUuId) {
     var patientObs = [];
     var uri = getRestResource(
       '/' + config.openmrs.applicationName + '/ws/rest/v1/obs'
     );
     var queryString = {
-      patient: patientUuid,
-      concept: conceptUuid,
+      patient: patientUuId,
+      concept: conceptUuId,
       v: 'full'
     };
     return new Promise(function (resolve, reject) {
@@ -94,15 +94,15 @@ module.exports = (function () {
     });
   }
 
-  function getAmrsPatientObsByDate(conceptUuid, patientUuid) {
+  function getAmrsPatientObsByDate(conceptUuId, patientUuId) {
     var todaysDate = moment(new Date()).format('YYYY-MM-DD');
     var patientObs = [];
     var uri = getRestResource(
       '/' + config.openmrs.applicationName + '/ws/rest/v1/obs'
     );
     var queryString = {
-      patient: patientUuid,
-      concept: conceptUuid,
+      patient: patientUuId,
+      concept: conceptUuId,
       v: 'full'
     };
     return new Promise(function (resolve, reject) {
@@ -128,7 +128,11 @@ module.exports = (function () {
     });
   }
 
-  function getPatientAllTestObsByPatientUuid(patientUuid) {
+  function getPatientAllTestObsByPatientUuId(patientUuId) {
+    var allPatientObs = {
+      obs: []
+    };
+
     var labConcepts = {
       concepts: [
         { conceptId: 657, uuid: 'a896cce6-1350-11df-a1f1-0026b9348838' },
@@ -144,9 +148,9 @@ module.exports = (function () {
     return new Promise(function (resolve, reject) {
       _.each(labConcepts.concepts, function (testObject) {
         var labConceptUuId = testObject.uuid;
-        var result = getPatientTestObsByConceptUuid(
+        var result = getPatientTestObsByConceptUuId(
           labConceptUuId,
-          patientUuid
+          patientUuId
         );
         promiseArray.push(result);
       });
@@ -162,7 +166,11 @@ module.exports = (function () {
     });
   }
 
-  function getPatientTodaysTestObsByPatientUuid(patientUuid) {
+  function getPatientTodaysTestObsByPatientUuId(patientUuId) {
+    var allPatientObs = {
+      obs: []
+    };
+
     var labConcepts = {
       concepts: [
         { conceptId: 657, uuid: 'a896cce6-1350-11df-a1f1-0026b9348838' },
@@ -178,7 +186,7 @@ module.exports = (function () {
     return new Promise(function (resolve, reject) {
       _.each(labConcepts.concepts, function (testObject) {
         var labConceptUuId = testObject.uuid;
-        var result = getAmrsPatientObsByDate(labConceptUuId, patientUuid);
+        var result = getAmrsPatientObsByDate(labConceptUuId, patientUuId);
         promiseArray.push(result);
       });
 
@@ -193,7 +201,7 @@ module.exports = (function () {
     });
   }
 
-  function postObsToAMRS(payload, patientUuid) {
+  function postObsToAMRS(payload, patientUuId) {
     var uri = getRestResource(
       '/' + config.openmrs.applicationName + '/ws/rest/v1/obs'
     );
@@ -208,7 +216,7 @@ module.exports = (function () {
     });
   }
 
-  function postAllObsToAMRS(payload, patientUuid) {
+  function postAllObsToAMRS(payload, patientUuId) {
     var hasNumbersOnly = /^[0-9]*(?:\.\d{1,2})?$/;
     var hasLessThanSymbol = /</g;
     var promisesViralLoadlAll = [];
@@ -222,7 +230,7 @@ module.exports = (function () {
             promisesViralLoadlAll.push(
               generateAndPostLabObsPayload(
                 viralLoadPayload,
-                patientUuid,
+                patientUuId,
                 eidRestFormatter.convertViralLoadPayloadToRestConsumableObs
               )
             );
@@ -230,7 +238,7 @@ module.exports = (function () {
             promisesViralLoadlAll.push(
               generateAndPostLabObsPayload(
                 viralLoadPayload,
-                patientUuid,
+                patientUuId,
                 eidRestFormatter.convertViralLoadWithLessThanToRestConsumableObs
               )
             );
@@ -238,7 +246,7 @@ module.exports = (function () {
             promisesViralLoadlAll.push(
               generateAndPostLabObsPayload(
                 viralLoadPayload,
-                patientUuid,
+                patientUuId,
                 eidRestFormatter.convertViralLoadExceptionToRestConsumableObs
               )
             );
@@ -260,7 +268,7 @@ module.exports = (function () {
             promisesCd4All.push(
               generateAndPostLabObsPayload(
                 cd4Data,
-                patientUuid,
+                patientUuId,
                 eidRestFormatter.convertCD4PayloadTORestConsumableObs
               )
             );
@@ -272,7 +280,7 @@ module.exports = (function () {
             promisesCd4All.push(
               generateAndPostLabObsPayload(
                 cd4Exceptions,
-                patientUuid,
+                patientUuId,
                 eidRestFormatter.convertCD4ExceptionTORestConsumableObs
               )
             );
@@ -286,7 +294,7 @@ module.exports = (function () {
           promisesDnaPcrAll.push(
             generateAndPostLabObsPayload(
               pcrPayload,
-              patientUuid,
+              patientUuId,
               eidRestFormatter.convertDNAPCRPayloadTORestConsumableObs
             )
           );
@@ -339,13 +347,13 @@ module.exports = (function () {
 
   return {
     getPatientIdentifiers: getPatientIdentifiers,
-    getPatientAllTestObsByPatientUuid: getPatientAllTestObsByPatientUuid,
+    getPatientAllTestObsByPatientUuId: getPatientAllTestObsByPatientUuId,
     getRestResource: getRestResource,
-    getPatientTestObsByConceptUuid: getPatientTestObsByConceptUuid,
+    getPatientTestObsByConceptUuId: getPatientTestObsByConceptUuId,
     postAllObsToAMRS: postAllObsToAMRS,
     postObsToAMRS: postObsToAMRS,
     getAmrsPatientObsByDate: getAmrsPatientObsByDate,
-    getPatientTodaysTestObsByPatientUuid: getPatientTodaysTestObsByPatientUuid,
+    getPatientTodaysTestObsByPatientUuId: getPatientTodaysTestObsByPatientUuId,
     voidObs: voidObs
   };
 })();

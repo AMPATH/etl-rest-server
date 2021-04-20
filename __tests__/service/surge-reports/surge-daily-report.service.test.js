@@ -6,11 +6,6 @@ describe('SurgeDailyReportService: ', () => {
   const service = new SurgeDailyReportService();
 
   let testReportParams = {
-    // requestParams: {
-    //   startDate: '2021-04-01',
-    //   endDate: '2021-05-01',
-    //   locations: ['test-location-uuids']
-    // },
     endDate: '2021-03-31T23:59:59 03:00',
     locationUuids: 'test-location-a-uuid',
     startDate: '2021-03-01T00:00:00 03:00'

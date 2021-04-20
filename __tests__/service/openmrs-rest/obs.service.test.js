@@ -28,7 +28,7 @@ jest.mock('../../../eid-rest-formatter', () => ({
 
 const testConfig = {
   openmrs: {
-    host: '192.1.168.0',
+    host: '1.1.1.0',
     applicationName: 'test-amrs',
     port: 8080,
     https: false
@@ -107,7 +107,7 @@ describe('ObsService: ', () => {
       'test-patient-uuid';
 
     const expectedUrl =
-      'http://192.1.168.0:8080/test-amrs/prefix/rest/v1/patient/test-patient-uuid';
+      'http://1.1.1.0:8080/test-amrs/prefix/rest/v1/patient/test-patient-uuid';
 
     const url = ObsService.getRestResource(testPath);
     expect(url).toEqual(expectedUrl);
@@ -135,13 +135,14 @@ describe('ObsService: ', () => {
 
     await ObsService.getPatientIdentifiers('test-patient-uuid')
       .then((identifiers) => {
+        console.log('identifiers: ', identifiers);
         expect(identifiers.identifiers.length).toBeGreaterThan(0);
         expect(identifiers.identifiers).toContain('12345test-6');
         expect(identifiers.identifiers).toContain('12345 test-6');
         expect(requestSpy).toHaveBeenCalledTimes(1);
         expect(requestSpy).toHaveBeenCalledWith(
           { v: 'full' },
-          'http://192.1.168.0:8080/test-amrs/ws/rest/v1/patient/test-patient-uuid'
+          'http://1.1.1.0:8080/test-amrs/ws/rest/v1/patient/test-patient-uuid'
         );
       })
       .catch((err) => expect(err).not.toBeDefined());
@@ -165,7 +166,7 @@ describe('ObsService: ', () => {
     const requestSpy = jest.spyOn(requestConfig, 'getRequestPromise');
     requestSpy.mockResolvedValueOnce(testViralLoadObs);
 
-    await ObsService.getPatientTestObsByConceptUuid(
+    await ObsService.getPatientTestObsByConceptUuId(
       'test-viral-load-concept-uuid',
       'test-patient-a-uuid'
     )
@@ -181,7 +182,7 @@ describe('ObsService: ', () => {
     const requestSpy = jest.spyOn(requestConfig, 'getRequestPromise');
     requestSpy.mockRejectedValueOnce(error);
 
-    await ObsService.getPatientTestObsByConceptUuid(
+    await ObsService.getPatientTestObsByConceptUuId(
       'test-viral-load-concept-uuid',
       'test-patient-a-uuid'
     )
@@ -198,7 +199,7 @@ describe('ObsService: ', () => {
     const requestSpy = jest.spyOn(requestConfig, 'getRequestPromise');
     requestSpy.mockResolvedValue(testViralLoadObs);
 
-    await ObsService.getPatientAllTestObsByPatientUuid('test-patient-a')
+    await ObsService.getPatientAllTestObsByPatientUuId('test-patient-a')
       .then((labTestObs) => {
         expect(labTestObs).toBeDefined();
         expect(labTestObs[0]).toMatchObject(
@@ -215,7 +216,7 @@ describe('ObsService: ', () => {
     const requestSpy = jest.spyOn(requestConfig, 'getRequestPromise');
     requestSpy.mockRejectedValue(error);
 
-    await ObsService.getPatientAllTestObsByPatientUuid('test-patient-a')
+    await ObsService.getPatientAllTestObsByPatientUuId('test-patient-a')
       .then((labTestObs) => {
         expect(labTestObs).not.toBeDefined();
       })
@@ -259,7 +260,7 @@ describe('ObsService: ', () => {
     const requestSpy = jest.spyOn(requestConfig, 'getRequestPromise');
     requestSpy.mockResolvedValue(testViralLoadObs);
 
-    await ObsService.getPatientTodaysTestObsByPatientUuid(
+    await ObsService.getPatientTodaysTestObsByPatientUuId(
       'test-viral-load-concept-uuid',
       'test-patient-a-uuid'
     )
@@ -277,7 +278,7 @@ describe('ObsService: ', () => {
     const requestSpy = jest.spyOn(requestConfig, 'getRequestPromise');
     requestSpy.mockRejectedValue(error);
 
-    await ObsService.getPatientTodaysTestObsByPatientUuid('test-patient-a')
+    await ObsService.getPatientTodaysTestObsByPatientUuId('test-patient-a')
       .then((obs) => {
         expect(obs).not.toBeDefined();
       })
@@ -328,7 +329,7 @@ describe('ObsService: ', () => {
         expect(requestSpy).toHaveBeenCalledTimes(1);
         expect(requestSpy).toHaveBeenCalledWith(
           testObsPayload,
-          'http://192.1.168.0:8080/test-amrs/ws/rest/v1/obs'
+          'http://1.1.1.0:8080/test-amrs/ws/rest/v1/obs'
         );
       })
       .catch((err) => expect(err).not.toBeDefined());
@@ -369,7 +370,7 @@ describe('ObsService: ', () => {
         expect(response).toEqual({});
         expect(requestSpy).toHaveBeenCalledTimes(1);
         expect(requestSpy).toHaveBeenCalledWith(
-          'http://192.1.168.0:8080/test-amrs/ws/rest/v1/obs/test-viral-load-to-void-obs-uuid'
+          'http://1.1.1.0:8080/test-amrs/ws/rest/v1/obs/test-viral-load-to-void-obs-uuid'
         );
       })
       .catch((err) => {
@@ -439,7 +440,7 @@ describe('ObsService: ', () => {
         expect(response[0]).toEqual(expected);
         expect(requestSpy).toHaveBeenCalledWith(
           testConsumableObsPayload,
-          'http://192.1.168.0:8080/test-amrs/ws/rest/v1/obs'
+          'http://1.1.1.0:8080/test-amrs/ws/rest/v1/obs'
         );
       })
       .catch((err) => expect(err).not.toBeDefined());
