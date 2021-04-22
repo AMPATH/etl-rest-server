@@ -88,8 +88,8 @@
     "underscore.string": "^3.3.5",
     "vision": "^4.0.1",
     "walk": "^2.3.9",
-    "winston": "^2.1.1",
-    "winston-daily-rotate-file": "^1.0.1",
+    "winston": "^2.4.5",
+    "winston-daily-rotate-file": "^3.10.0",
     "yargs-parser": "^10.1.0"
   },
   "devDependencies": {
