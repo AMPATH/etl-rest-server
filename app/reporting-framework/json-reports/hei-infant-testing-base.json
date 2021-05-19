@@ -102,7 +102,7 @@
       "alias": "antibody_at_18_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(hmd.initial_antibody_screening_this_month = 1 AND hmd.age_in_months = 18,1,NULL)"
+        "expression": "IF(hmd.initial_antibody_screening_this_month = 1 AND hmd.age_in_months = 18,1,0)"
       }
     },
     {
@@ -110,7 +110,33 @@
       "alias": "antibody_post_18_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(hmd.initial_antibody_screening_this_month = 1 AND hmd.age_in_months > 18,1,NULL)"
+        "expression": "IF(hmd.initial_antibody_screening_this_month = 1 AND hmd.age_in_months > 18,1,0)"
+      }
+    },
+
+
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_this_month_hei",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmd.age_in_months <= 18 AND hmd.is_cross_border_this_month = 1, 1 , 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_pcr_less_than_8_wks_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmd.initial_pcr_this_month = 1 AND hmd.age_in_months < 2 AND hmd.is_cross_border_this_month = 1 ,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_pcr_8_wks_to_12_months_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmd.initial_pcr_this_month = 1 AND hmd.age_in_months between 2 and 12 AND hmd.is_cross_border_this_month = 1 ,1,NULL)"
       }
     }
   ],

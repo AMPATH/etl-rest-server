@@ -4,22 +4,18 @@
     "indicators": [
       {
         "label": "Cross Border Patients",
-        "ref": "HV06-013",
         "indicator": "is_cross_border_this_month"
       },
       {
         "label": "Uganda",
-        "ref": "HV06-014",
         "indicator": "is_cross_border_this_month_uganda"
       },
       {
         "label": "Kenya",
-        "ref": "HV06-013",
         "indicator": "is_cross_border_this_month_kenya"
       },
       {
         "label": "Other Countries",
-        "ref": "HV06-013",
         "indicator": "is_cross_border_this_month_other"
       }
     ]
@@ -29,17 +25,14 @@
     "indicators": [
       {
         "label": "Last 3 months",
-        "ref": "HV06-03",
         "indicator": "travelled_outside_last_3_months"
       },
       {
         "label": "Last 6 months",
-        "ref": "HV06-04",
         "indicator": "travelled_outside_last_6_months"
       },
       {
         "label": "Last 12 months",
-        "ref": "HV06-05",
         "indicator": "travelled_outside_last_12_months"
       }
     ]
@@ -49,73 +42,253 @@
     "indicators": [
       {
         "label": "Currently on ART",
-        "ref": "HV06-06",
         "indicator": "is_cross_border_on_art_this_month"
       },
       {
-        "label": "On ART at 12 months",
-        "ref": "HV06-06",
-        "indicator": "is_cross_border_active_on_art_12_month_cohort_this_month"
+        "label": "Starting ART",
+        "indicator": "is_cross_border_started_art"
       },
       {
-        "label": "Viral load < 1000 at 12 months",
-        "ref": "HV06-07",
-        "indicator": "is_cross_border_vl_suppressed_this_month"
+        "label": "Starting IPT",
+        "indicator": "is_cross_border_started_ipt"
+      },
+      {
+        "label": "Completed IPT 12months",
+        "indicator": "is_cross_border_completed_ipt_past_12_months"
+      },
+      {
+        "label": "Defaulters",
+        "indicator": "is_cross_border_defaulter"
+      },
+      {
+        "label": "Transfer Out",
+        "indicator": "is_cross_border_transferred_out"
+      },
+      {
+        "label": "Transfer In",
+        "indicator": "is_cross_border_transfer_in"
+      },
+      {
+        "label": "Dead",
+        "indicator": "is_cross_border_dead"
       }
     ]
   },
   {
-    "sectionTitle": "TB Cascade",
+    "sectionTitle": "TB Cascade", 
     "indicators": [
       {
-        "label": "On Tb Tx",
-        "ref": "HV06-11",
-        "indicator": "is_cross_border_on_tb_tx_this_month"
+        "label": "Screened for TB",
+        "indicator": "is_cross_border_screened_for_tb"
       },
       {
         "label": "Presumed TB positive",
-        "ref": "HV06-09",
         "indicator": "is_cross_border_presumed_tb_positive_this_month"
       },
       {
+        "label": "TB cases KP",
+        "indicator": "is_cross_border_confirmed_tb_positive"
+      },
+      {
+        "label": "TB cases tested HIV",
+        "indicator": ""
+      },
+      {
+        "label": "TB Known status",
+        "indicator": ""
+      },
+      {
+        "label": "TB new HIV Positive",
+        "indicator": "is_cross_border_confirmed_tb_positive"
+      },
+
+      {
+        "label": "TB total HIV positive",
+        "indicator": "is_cross_border_on_tb_tx_this_month"
+      },
+      {
         "label": "Started Tb Tx this month",
-        "ref": "HV06-10",
         "indicator": "is_cross_border_started_tb_tx_this_month"
       },
       {
-        "label": "Completed Tb Tx",
-        "ref": "HV06-015",
-        "indicator": "is_cross_border_completed_tb_tx"
+        "label": "TB already on ART",
+        "indicator": "is_cross_border_on_tb_tx_already_in_art_this_month"
       },
       {
-        "label": "Stopped Tb Tx",
-        "ref": "HV06-016",
-        "indicator": "is_cross_border_stopped_tb_tx"
+        "label": "TB starting ART",
+        "indicator": "is_cross_border_on_tb_tx_starting_art_this_month"
       },
       {
-        "label": "On Tb Tx and Transferred Out",
-        "ref": "HV06-017",
-        "indicator": "is_cross_border_on_tb_tx_transferred_out"
-      },
-      {
-        "label": "On Tb Tx and Turned LTFU",
-        "ref": "HV06-018",
-        "indicator": "is_cross_border_on_tb_tx_ltfu"
-      },
-      {
-        "label": "On Tb Tx and Died",
-        "ref": "HV06-019",
-        "indicator": "is_cross_border_on_tb_tx_dead"
+        "label": "TB total on ART",
+        "indicator": "is_cross_border_on_tb_tx_and_art_this_month"
       }
     ]
   },
   {
-    "sectionTitle": "FP/RH and MNCH",
+    "sectionTitle": "Current ARV Medication", 
     "indicators": [
       {
-        "label": "On Modern Contraception",
-        "ref": "HV06-12",
-        "indicator": "is_cross_border_on_modern_contraception_this_month"
+        "label": "Patients Optimized to DTG",
+        "indicator": "current_arv_medication_dtg"
+      },
+      {
+        "label": "On EFV 400",
+        "indicator": "current_arv_medication_efv_400"
+      },
+      {
+        "label": "Other Regimen",
+        "indicator": "current_arv_medication_other"
+      },
+      {
+        "label": "On Cotrimoxazole Prophylaxis (within 2 months)",
+        "indicator": "on_ctx_prophylaxis_cross_border"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "ANC Indicators",
+    "indicators": [
+      {
+        "label": "All new ANC Clients",
+        "indicator": "newly_enrolled_pmtct_this_month"
+      },
+      {
+        "label": "New ANC with Initial Tests",
+        "indicator": "newly_enrolled_pmtct_this_month_initial_tests"
+      },
+      {
+        "label": "New Positive (NP)",
+        "indicator": "newly_enrolled_pmtct_this_month_initial_tests"
+      },
+      {
+        "label": "Known Positive (KP)",
+        "indicator": "newly_enrolled_pmtct_this_month_positives"
+      },
+      {
+        "label": "New ANC Starting ART",
+        "indicator": "newly_enrolled_pmtct_starting_art"
+      },
+      {
+        "label": "New ANC on ART",
+        "indicator": "newly_enrolled_pmtct_on_art"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Cross Border (18months old and below negative clients)",
+    "indicators": [
+      {
+        "label": "Cross Border Patients 0 - 18 months",
+        "indicator": "is_cross_border_this_month_hei"
+      },
+      {
+        "label": "Initial PCR 0-2 months",
+        "indicator": "initial_pcr_less_than_8_wks_cross_border"
+      },
+      {
+        "label": "Initial PCR2-12 months",
+        "indicator": "initial_pcr_8_wks_to_12_months_cross_border"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Cross Border Survival and Retention on ART at 12 months",
+    "indicators": [
+      {
+        "label": "On ART at 12 months",
+        "indicator": "is_cross_border_active_on_art_12_month_cohort_this_month"
+      },
+      {
+        "label": "ART Net Cohort at 12 months",
+        "indicator": "net_cohort_cross_border"
+      },
+      {
+        "label": "Viral load less than 1000 at 12 months",
+        "indicator": "suppressed_cross_border"
+      },
+      {
+        "label": "Viral load results at 12 months",
+        "indicator": "total_with_vl_cross_border"
+      },
+      {
+        "label": "Viral done this month",
+        "indicator": "is_cross_border_with_vl_this_month"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Nutrition and HIV",
+    "indicators": [
+      {
+        "label": "Nutrition Assess Total",
+        "indicator": ""
+      },
+      {
+        "label": "Malnourished Total",
+        "indicator": ""
+      },
+      {
+        "label": "FBP Provided",
+        "indicator": ""
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Community Dispensing of ARVs",
+    "indicators": [
+      {
+        "label": "Community ART current(M)",
+        "indicator": "community_ART_dispensing_male"
+      },
+      {
+        "label": "Community ART current(F)",
+        "indicator": "community_ART_dispensing_female"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Family planning & CaCx screening",
+    "indicators": [
+      {
+        "label": "Screened CaCx New F18+",
+        "indicator": "dc__age_range__18_and_above__screened_for_cervical_ca_cross_border"
+      },
+      {
+        "label": "Clinical visits F18+",
+        "indicator": "dc__age_range__18_and_above__f_gte_18_visits_cross_border"
+      },
+      {
+        "label": "On modern FP F15+",
+        "indicator": "dc__age_range__older_than_15__on_modern_contraception_cross_border"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Post Exposure Prophylaxis",
+    "indicators": [
+      {
+        "label": "Exposed Occupational",
+        "indicator": "hiv_exposed_occupational_cross_border"
+      },
+      {
+        "label": "Exposed Other",
+        "indicator": "hiv_exposed_non_occupational_cross_border"
+      },
+      {
+        "label": "Exposed Total",
+        "indicator": "total_hiv_exposed_cross_border"
+      },
+      {
+        "label": "PEP Occupational",
+        "indicator": "started_PEP_occupational_cross_border"
+      },
+      {
+        "label": "PEP Other",
+        "indicator": "started_PEP_non_occupational_cross_border"
+      },
+      {
+        "label": "PEP Total",
+        "indicator": "total_started_PEP_cross_border"
       }
     ]
   }

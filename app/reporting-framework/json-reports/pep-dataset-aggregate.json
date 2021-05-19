@@ -87,6 +87,58 @@
       "expressionOptions": {
         "expression": "count(distinct concat(hmsd.started_PEP_non_occupational,hmsd.person_id))"
       }
+    },
+
+
+
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_exposed_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(distinct concat(hmsd.hiv_exposed_occupational_cross_border, hmsd.person_id))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_exposed_non_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(distinct concat(hmsd.hiv_exposed_non_occupational_cross_border,hmsd.person_id))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hiv_exposed_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(distinct concat(hmsd.total_hiv_exposed_cross_border,hmsd.person_id))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_started_PEP_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(distinct concat(hmsd.total_started_PEP_cross_border,hmsd.person_id))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_PEP_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(distinct concat( hmsd.started_PEP_occupational_cross_border,hmsd.person_id))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_PEP_non_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(distinct concat(hmsd.started_PEP_non_occupational_cross_border,hmsd.person_id))"
+      }
     }
   ],
   "groupBy": {

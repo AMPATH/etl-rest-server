@@ -252,10 +252,10 @@
     },
     {
       "type": "derived_column",
-      "alias": "is_cross_border_started_tb_tx_this_month",
+      "alias": "is_cross_border_confirmed_tb_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(hmsd.is_cross_border_started_tb_tx_this_month)"
+        "expression": "sum(hmsd.is_cross_border_confirmed_tb_positive)"
       }
     },
     {
@@ -284,26 +284,49 @@
     },
     {
       "type": "derived_column",
-      "alias": "is_cross_border_on_tb_tx_transferred_out",
+      "alias": "is_cross_border_on_tb_tx_starting_art_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(hmsd.is_cross_border_on_tb_tx_transferred_out)"
+        "expression": "sum(hmsd.is_cross_border_on_tb_tx_starting_art_this_month)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "is_cross_border_on_tb_tx_ltfu",
+      "alias": "is_cross_border_on_tb_tx_and_art_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(hmsd.is_cross_border_on_tb_tx_ltfu)"
+        "expression": "sum(hmsd.is_cross_border_on_tb_tx_and_art_this_month)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "is_cross_border_on_tb_tx_dead",
+      "alias": "is_cross_border_on_tb_tx_already_in_art_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(hmsd.is_cross_border_on_tb_tx_dead)"
+        "expression": "sum(hmsd.is_cross_border_on_tb_tx_already_in_art_this_month)"
+      }
+    },
+
+
+
+
+
+
+
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_transferred_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_transferred_out)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_defaulter",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_defaulter)"
       }
     },
     {
@@ -392,6 +415,166 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "sum(hmsd.screened_for_cervical_ca)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_started_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_started_art)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_with_vl_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_with_vl_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_transfer_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_transfer_out)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_transfer_in",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_transfer_in)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_dead",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_dead)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_On_ART_net_12months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(*)"
+      }
+    },
+    { 
+      "type": "derived_column",
+      "alias": "is_cross_border_started_ipt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_started_ipt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_completed_ipt_past_12_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_completed_ipt_past_12_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_screened_for_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_screened_for_tb)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_tb_screened_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_tb_screened_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_tb_screened_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_cross_border_tb_screened_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "current_arv_medication_dtg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.current_arv_medication_dtg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "current_arv_medication_efv_400",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.current_arv_medication_efv_400)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "current_arv_medication_other",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.current_arv_medication_other)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_enrolled_pmtct_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.newly_enrolled_pmtct_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_enrolled_pmtct_this_month_initial_tests",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.newly_enrolled_pmtct_this_month_initial_tests)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_enrolled_pmtct_this_month_positives",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.newly_enrolled_pmtct_this_month_positives)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_enrolled_pmtct_starting_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.newly_enrolled_pmtct_starting_art)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_enrolled_pmtct_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.newly_enrolled_pmtct_on_art)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ctx_prophylaxis_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.on_ctx_prophylaxis_cross_border)"
       }
     }
   ],

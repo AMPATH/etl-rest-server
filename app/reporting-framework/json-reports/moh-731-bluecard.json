@@ -9,6 +9,7 @@
     "StartingARTDisaggregationAge15",
     "pepDatasetAggregate",
     "everOnARTAggregate",
-    "everOnARTDisaggregation"
+    "everOnARTDisaggregation",
+    "heiInfantTestingAggregate"
   ]
 }
