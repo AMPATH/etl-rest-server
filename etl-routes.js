@@ -72,6 +72,7 @@ import {
     RetentionAppointmentTracingService 
 } from './service/retention-appointment-tracing-service';
 import { PrepReminderService } from './service/prep-reminder/prep-reminder.service';
+import { HIVGainsAndLossesService } from './service/gains-and-losses/hiv-gains-losses-service';
 
 var syncPreproc = require('./app/lab-integration/lab-sync-pre-processor.service');
 
@@ -4949,6 +4950,94 @@ module.exports = function () {
                     notes: 'Returns HEI summary patient list',
                     tags: ['api'],
                 }
+                },
+                {
+                  method: 'GET',
+                  path: '/etl/patient-gain-loses-numbers',
+                  config: {
+                    auth: 'simple',
+                    plugins: {},
+                    handler: function (request, reply) {
+                      if (request.query.locationUuid) {
+                        request.query.locationUuids = request.query.locationUuid;
+                        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+                          let requestParams = Object.assign(
+                            {},
+                            request.query,
+                            request.params
+                          );
+                          // console.log('requestParams', requestParams);
+                          let reportParams = etlHelpers.getReportParams(
+                            'monthly-gains-and-losses',
+                            ['startDate', 'endDate', 'locations'],
+                            requestParams
+                          );
+                          let hivGainsLossesService = new HIVGainsAndLossesService(
+                            'monthly-gains-and-losses',
+                            reportParams.requestParams
+                          );
+                          hivGainsLossesService
+                            .generateReport()
+                            .then((result) => {
+                              reply(result);
+                            })
+                            .catch((error) => {
+                              console.error('Error: ', error);
+                              reply(error);
+                            });
+                        });
+                      }
+                    },
+                    description: 'HIV Gains annd losses report',
+                    notes: 'HIV Gains annd losses report',
+                    tags: ['api']
+                  }
+                },
+                {
+                  method: 'GET',
+                  path: '/etl/patient-gain-loses-patient-list',
+                  config: {
+                    auth: 'simple',
+                    plugins: {},
+                    handler: function (request, reply) {
+                      if (request.query.locationUuid) {
+                        request.query.locationUuids = request.query.locationUuid;
+                        request.query.reportName = 'monthly-gains-and-losses';
+                        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+                          let requestParams = Object.assign(
+                            {},
+                            request.query,
+                            request.params
+                          );
+                          console.log('requestParams', requestParams);
+                          let requestCopy = _.cloneDeep(requestParams);
+                          let reportParams = etlHelpers.getReportParams(
+                            request.query.reportName,
+                            ['startDate', 'endDate', 'locationUuids', 'genders'],
+                            requestParams
+                          );
+                          requestCopy.locations = reportParams.requestParams.locations;
+            
+                          let hivGainsLossesService = new HIVGainsAndLossesService(
+                            'monthly-gains-and-losses',
+                            requestCopy
+                          );
+            
+                          hivGainsLossesService
+                            .generatePatientListReport(requestParams.indicators.split(','))
+                            .then((results) => {
+                              reply(results);
+                            })
+                            .catch((err) => {
+                              reply(Boom.internal('An error occured', err));
+                            });
+                        });
+                      }
+                    },
+                    description: 'HIV Gains annd losses Patient list',
+                    notes: 'Returns HIV Gains annd losses Patient List',
+                    tags: ['api']
+                  }
                 }
 
         ];
