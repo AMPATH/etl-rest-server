@@ -72,8 +72,6 @@ import { RetentionAppointmentTracingService } from './service/retention-appointm
 import { PrepReminderService } from './service/prep-reminder/prep-reminder.service';
 import { HIVGainsAndLossesService } from './service/gains-and-losses/hiv-gains-losses-service';
 
-var syncPreproc = require('./app/lab-integration/lab-sync-pre-processor.service');
-
 module.exports = (function () {
   var routes = [
     {
