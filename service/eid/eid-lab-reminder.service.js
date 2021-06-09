@@ -1,6 +1,6 @@
 'use strict';
 const _ = require('lodash');
-let EIDService = require('../eid.service');
+// let EIDService = require('../eid.service');
 let ObsService = require('../openmrs-rest/obs.service');
 import { LabClient } from '../../app/lab-integration/utils/lab-client';
 let serviceDef = {
