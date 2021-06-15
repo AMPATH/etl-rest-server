@@ -393,6 +393,14 @@
       "expressionOptions": {
         "expression": "sum(hmsd.screened_for_cervical_ca)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_modern_fp_female_15_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.on_modern_fp_female_15_and_above)"
+      }
     }
   ],
   "groupBy": {
