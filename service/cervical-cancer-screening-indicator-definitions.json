@@ -1,0 +1,610 @@
+[
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Locations",
+        "indicator": "location_name"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Period",
+        "indicator": "encounter_datetime"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "Clients screened",
+    "indicators": [
+      {
+        "label": "Total clients screened",
+        "indicator": "total_screened"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "clients_screened_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "clients_screened_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "clients_screened_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "clients_screened_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "clients_screened_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "clients_screened_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "clients_screened_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "clients_screened_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "clients_screened_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "SCREENING OUTCOME (VIA or VIA/VILI)",
+    "subsectionTitle": "Positive AWE",
+    "indicators": [
+      {
+        "label": "Total Positive AWE",
+        "indicator": "total_positive_awe"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "positive_awe_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "positive_awe_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "positive_awe_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "positive_awe_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "positive_awe_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "positive_awe_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "positive_awe_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "positive_awe_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "positive_awe_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "Positive Suspicious Ca",
+    "indicators": [
+      {
+        "label": "Total Positive Suspicious Ca",
+        "indicator": "total_positive_suspicious_ca"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "positive_suspicious_ca_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "positive_suspicious_ca_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "positive_suspicious_ca_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "positive_suspicious_ca_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "positive_suspicious_ca_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "positive_suspicious_ca_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "positive_suspicious_ca_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "positive_suspicious_ca_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "positive_suspicious_ca_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "VIA or VIA/VILI negative",
+    "indicators": [
+      {
+        "label": "Total VIA or VIA/VILI negative",
+        "indicator": "total_via_or_via_vili_negative"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "via_or_via_vili_negative_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "via_or_via_vili_negative_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "via_or_via_vili_negative_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "via_or_via_vili_negative_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "via_or_via_vili_negative_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "via_or_via_vili_negative_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "via_or_via_vili_negative_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "via_or_via_vili_negative_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "via_or_via_vili_negative_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "VISITS",
+    "subsectionTitle": "Initial screening",
+    "indicators": [
+      {
+        "label": "Total Initial screenings",
+        "indicator": "total_initial_screenings"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "initial_screening_visit_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "initial_screening_visit_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "initial_screening_visit_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "initial_screening_visit_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "initial_screening_visit_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "initial_screening_visit_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "initial_screening_visit_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "initial_screening_visit_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "initial_screening_visit_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "Routine screening",
+    "indicators": [
+      {
+        "label": "Total Routine screenings",
+        "indicator": "total_routine_screenings"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "routine_screening_visit_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "routine_screening_visit_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "routine_screening_visit_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "routine_screening_visit_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "routine_screening_visit_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "routine_screening_visit_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "routine_screening_visit_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "routine_screening_visit_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "routine_screening_visit_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "Post-Treatment screening",
+    "indicators": [
+      {
+        "label": "Total Post-Treatment screenings",
+        "indicator": "total_post_treatment_screenings"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "post_treatment_screening_visit_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "post_treatment_screening_visit_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "post_treatment_screening_visit_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "post_treatment_screening_visit_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "post_treatment_screening_visit_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "post_treatment_screening_visit_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "post_treatment_screening_visit_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "post_treatment_screening_visit_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "post_treatment_screening_visit_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "LEEP",
+    "subsectionTitle": "Booked for LEEP",
+    "indicators": [
+      {
+        "label": "Total booked for LEEP",
+        "indicator": "total_booked_for_leep"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "booked_for_leep_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "booked_for_leep_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "booked_for_leep_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "booked_for_leep_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "booked_for_leep_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "booked_for_leep_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "booked_for_leep_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "booked_for_leep_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "booked_for_leep_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "LEEP done",
+    "indicators": [
+      {
+        "label": "Total LEEPs done",
+        "indicator": "total_leeps_done"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "leep_done_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "leep_done_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "leep_done_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "leep_done_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "leep_done_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "leep_done_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "leep_done_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "leep_done_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "leep_done_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "CRYOTHERAPY",
+    "subsectionTitle": "Eligible for Cryotherapy",
+    "indicators": [
+      {
+        "label": "Total eligible for Cryotherapy",
+        "indicator": "total_eligible_for_cryo"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "eligible_for_cryo_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "eligible_for_cryo_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "eligible_for_cryo_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "eligible_for_cryo_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "eligible_for_cryo_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "eligible_for_cryo_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "eligible_for_cryo_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "eligible_for_cryo_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "eligible_for_cryo_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "Cryotherapies done",
+    "indicators": [
+      {
+        "label": "Total Cryotherapies done",
+        "indicator": "total_cryos_done"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "cryo_done_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "cryo_done_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "cryo_done_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "cryo_done_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "cryo_done_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "cryo_done_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "cryo_done_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "cryo_done_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "cryo_done_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "PAP SMEAR",
+    "subsectionTitle": "Eligible for Pap Smear",
+    "indicators": [
+      {
+        "label": "Total eligible for Pap Smear",
+        "indicator": "total_eligible_for_pap_smear"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "eligible_for_pap_smear_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "eligible_for_pap_smear_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "eligible_for_pap_smear_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "eligible_for_pap_smear_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "eligible_for_pap_smear_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "eligible_for_pap_smear_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "eligible_for_pap_smear_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "eligible_for_pap_smear_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "eligible_for_pap_smear_over_50_hiv_unknown"
+      }
+    ]
+  },
+  {
+    "subsectionTitle": "Pap Smears done",
+    "indicators": [
+      {
+        "label": "Total Pap Smears done",
+        "indicator": "total_pap_smears_done"
+      },
+      {
+        "label": "HIV Positive under 25 yrs",
+        "indicator": "pap_smear_done_under_25_hiv_pos"
+      },
+      {
+        "label": "HIV Negative under 25 yrs",
+        "indicator": "pap_smear_done_under_25_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown under 25 yrs",
+        "indicator": "pap_smear_done_under_25_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive 25 to 49 yrs",
+        "indicator": "pap_smear_done_25_to_49_hiv_pos"
+      },
+      {
+        "label": "HIV Negative 25 to 49 yrs",
+        "indicator": "pap_smear_done_25_to_49_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown 25 to 49 tyrs",
+        "indicator": "pap_smear_done_25_to_49_hiv_unknown"
+      },
+      {
+        "label": "HIV Positive over 50 yrs",
+        "indicator": "pap_smear_done_over_50_hiv_pos"
+      },
+      {
+        "label": "HIV Negative over 50 yrs",
+        "indicator": "pap_smear_done_over_50_hiv_neg"
+      },
+      {
+        "label": "HIV Unknown over 50 yrs",
+        "indicator": "pap_smear_done_over_50_hiv_unknown"
+      }
+    ]
+  }
+]

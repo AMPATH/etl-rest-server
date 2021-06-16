@@ -42,7 +42,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "total_cervical_screened",
+      "alias": "total_screened",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "count(person_id)"
@@ -50,247 +50,639 @@
     },
     {
       "type": "derived_column",
-      "alias": "normal_findings",
+      "alias": "clients_screened_under_25_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_findings)"
+        "expression": "count(clients_screened_under_25_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_findings",
+      "alias": "clients_screened_under_25_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_findings)"
+        "expression": "count(clients_screened_under_25_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_cervical_call_rate%",
+      "alias": "clients_screened_under_25_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "ROUND(count(normal_findings)/count(person_id) *100,2)"
+        "expression": "count(clients_screened_under_25_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_cervical_call_rate%",
+      "alias": "clients_screened_25_to_49_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "ROUND(count(abnormal_findings)/count(person_id) *100,2)"
+        "expression": "count(clients_screened_25_to_49_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_status",
+      "alias": "clients_screened_25_to_49_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(person_id)"
+        "expression": "count(clients_screened_25_to_49_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_negative",
+      "alias": "clients_screened_25_to_49_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_negative)"
+        "expression": "count(clients_screened_25_to_49_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_status_unknown",
+      "alias": "clients_screened_over_50_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_status_unknown)"
+        "expression": "count(clients_screened_over_50_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive",
+      "alias": "clients_screened_over_50_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_positive)"
+        "expression": "count(clients_screened_over_50_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_below_25",
+      "alias": "clients_screened_over_50_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_positive_below_25)"
+        "expression": "count(clients_screened_over_50_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_negative_below_25",
+      "alias": "total_positive_awe",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_negative_below_25)"
+        "expression": "count(total_positive_awe)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_unknown_below_25",
+      "alias": "positive_awe_under_25_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_unknown_below_25)"
+        "expression": "count(positive_awe_under_25_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_25_to_49",
+      "alias": "positive_awe_under_25_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_positive_25_to_49)"
+        "expression": "count(positive_awe_under_25_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_negative_25_to_49",
+      "alias": "positive_awe_under_25_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_negative_25_to_49)"
+        "expression": "count(positive_awe_under_25_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_unknown_25_to_49",
+      "alias": "positive_awe_25_to_49_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_unknown_25_to_49)"
+        "expression": "count(positive_awe_25_to_49_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_over_50",
+      "alias": "positive_awe_25_to_49_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_positive_over_50)"
+        "expression": "count(positive_awe_25_to_49_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_negative_over_50",
+      "alias": "positive_awe_25_to_49_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_negative_over_50)"
+        "expression": "count(positive_awe_25_to_49_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_unknown_over_50",
+      "alias": "positive_awe_over_50_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(hiv_unknown_over_50)"
+        "expression": "count(positive_awe_over_50_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_below_30yrs",
+      "alias": "positive_awe_over_50_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_below_30yrs)"
+        "expression": "count(positive_awe_over_50_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_below_30yrs",
+      "alias": "positive_awe_over_50_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_below_30yrs)"
+        "expression": "count(positive_awe_over_50_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_30_to_40yrs",
+      "alias": "total_positive_suspicious_ca",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_30_to_40yrs)"
+        "expression": "count(positive_suspicious_ca)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_30_to_40yrs",
+      "alias": "positive_suspicious_ca_under_25_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_30_to_40yrs)"
+        "expression": "count(positive_suspicious_ca_under_25_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_41_to_50yrs",
+      "alias": "positive_suspicious_ca_under_25_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_41_to_50yrs)"
+        "expression": "count(positive_suspicious_ca_under_25_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_41_to_50yrs",
+      "alias": "positive_suspicious_ca_under_25_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_41_to_50yrs)"
+        "expression": "count(positive_suspicious_ca_under_25_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_51_to_69yrs",
+      "alias": "positive_suspicious_ca_25_to_49_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_51_to_69yrs)"
+        "expression": "count(positive_suspicious_ca_25_to_49_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_51_to_69yrs",
+      "alias": "positive_suspicious_ca_25_to_49_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_51_to_69yrs)"
+        "expression": "count(positive_suspicious_ca_25_to_49_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "normal_above_70yrs",
+      "alias": "positive_suspicious_ca_25_to_49_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(normal_above_70yrs)"
+        "expression": "count(positive_suspicious_ca_25_to_49_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "abnormal_above_70yrs",
+      "alias": "positive_suspicious_ca_over_50_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(abnormal_above_70yrs)"
+        "expression": "count(positive_suspicious_ca_over_50_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "procedures_done",
+      "alias": "positive_suspicious_ca_over_50_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(procedures_done)"
+        "expression": "count(positive_suspicious_ca_over_50_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "excisional_biopsies",
+      "alias": "positive_suspicious_ca_over_50_hiv_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(excisional_biopsies_done)"
+        "expression": "count(positive_suspicious_ca_over_50_hiv_unknown)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "cryotherapies",
+      "alias": "total_via_or_via_vili_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(cryotherapies_done)"
+        "expression": "count(via_or_via_vili_negative)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "leeps",
+      "alias": "via_or_via_vili_negative_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_negative_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(via_or_via_vili_negative_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_initial_screenings",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screenings)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_screening_visit_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(initial_screening_visit_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_routine_screenings",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screenings)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "routine_screening_visit_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(routine_screening_visit_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_post_treatment_screenings",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screenings)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_treatment_screening_visit_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(post_treatment_screening_visit_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_booked_for_leep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "booked_for_leep_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(booked_for_leep_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_leeps_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "count(leeps_done)"
@@ -298,26 +690,394 @@
     },
     {
       "type": "derived_column",
-      "alias": "polypectomies",
+      "alias": "leep_done_under_25_hiv_pos",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(polypectomies_done)"
+        "expression": "count(leep_done_under_25_hiv_pos)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "core_needle_biopsies",
+      "alias": "leep_done_under_25_hiv_neg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(core_needle_biopsies_done)"
+        "expression": "count(leep_done_under_25_hiv_neg)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pap_smears",
+      "alias": "leep_done_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(leep_done_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_done_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(leep_done_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_done_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(leep_done_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_done_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(leep_done_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_done_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(leep_done_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_done_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(leep_done_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_done_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(leep_done_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_eligible_for_cryo",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_cryo_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_cryo_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cryos_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryos_done)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryo_done_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(cryo_done_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_eligible_for_pap_smear",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eligible_for_pap_smear_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(eligible_for_pap_smear_over_50_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_pap_smears_done",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "count(pap_smears_done)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_under_25_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_under_25_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_under_25_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_under_25_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_under_25_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_under_25_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_25_to_49_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_25_to_49_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_25_to_49_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_25_to_49_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_25_to_49_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_25_to_49_hiv_unknown)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_over_50_hiv_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_over_50_hiv_pos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_over_50_hiv_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_over_50_hiv_neg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_done_over_50_hiv_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(pap_smear_done_over_50_hiv_unknown)"
       }
     }
   ],
