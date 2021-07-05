@@ -96,7 +96,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "t2.program_id in ? OR t2.program_id IS NULL",
+        "conditionExpression": "(t2.program_id in ? and t2.program_id not in (10,11)) OR t2.program_id IS NULL",
         "parameterName": "programTypeIds"
       },
       {
