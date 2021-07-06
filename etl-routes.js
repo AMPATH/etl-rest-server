@@ -4075,6 +4075,9 @@ module.exports = (function () {
       path: '/etl/fileupload',
       config: {
         auth: 'simple',
+        payload: {
+          maxBytes: 5000000
+        },
         handler: function (request, reply) {
           let replyPayload = {};
           let data;
