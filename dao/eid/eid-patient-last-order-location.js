@@ -1,4 +1,4 @@
-import QueryService from "../../app/database-access/query.service";
+import QueryService from '../../app/database-access/query.service';
 
 export class PatientLastOrderLocationDao {
   constructor() {}
@@ -10,10 +10,13 @@ export class PatientLastOrderLocationDao {
       `SELECT e.location_id as location FROM amrs.encounter e
         LEFT JOIN amrs.orders o on o.encounter_id = e.encounter_id
         INNER JOIN amrs.person p on o.patient_id = p.person_id
-        WHERE p.uuid = '` +patientUuid + `' ORDER BY e.encounter_datetime DESC LIMIT 1;`;
-    
+        WHERE p.uuid = '` +
+      patientUuid +
+      `' ORDER BY e.encounter_datetime DESC LIMIT 1;`;
+
     return new Promise((resolve, reject) => {
-      queryRunner.executeQuery(sqlQuery)
+      queryRunner
+        .executeQuery(sqlQuery)
         .then((results) => {
           resolve(results);
         })

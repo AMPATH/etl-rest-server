@@ -10,7 +10,9 @@
     "start": "babel-node etl-server.js --presets es2015,stage-2",
     "test": "mocha --require babel-core/register --colors --recursive ./test/**/*.test.js",
     "test:watch": "mocha --require babel-core/register --colors -w --recursive ./test/**/*.test.js",
-    "watch": "npm-watch"
+    "watch": "npm-watch",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write ."
   },
   "pre-commit": "npm test",
   "author": "AMPATH DEVS",
@@ -101,6 +103,7 @@
     "mocha": "^2.3.3",
     "nock": "^10.0.6",
     "npm-watch": "^0.1.8",
+    "prettier": "2.1.1",
     "sinon": "^4.4.4",
     "sinon-as-promised": "^4.0.0",
     "sinon-chai": "^2.8.0"

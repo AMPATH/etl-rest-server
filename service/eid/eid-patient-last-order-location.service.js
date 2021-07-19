@@ -1,6 +1,6 @@
-import { PatientLastOrderLocationDao } from "../../dao/eid/eid-patient-last-order-location";
+import { PatientLastOrderLocationDao } from '../../dao/eid/eid-patient-last-order-location';
 
-const config = require("../../conf/config");
+const config = require('../../conf/config');
 
 export class PatientLastOrderLocationService {
   constructor() {}
@@ -24,20 +24,20 @@ export class PatientLastOrderLocationService {
     return new Promise((resolve, reject) => {
       this.getPatientLastOrderLocation(patientUuid)
         .then((results) => {
-          if(results.length > 0){
-              const lastOrderLocation = results[0].location;
-              if (lastOrderLocation) {
-                resolve(alupeLabLocations.includes(lastOrderLocation));
-              } else {
-                //If lastOrderLocation === undefined or 0 should resolve true
-                resolve(true);
-              }
-            }else{
+          if (results.length > 0) {
+            const lastOrderLocation = results[0].location;
+            if (lastOrderLocation) {
+              resolve(alupeLabLocations.includes(lastOrderLocation));
+            } else {
+              //If lastOrderLocation === undefined or 0 should resolve true
               resolve(true);
             }
+          } else {
+            resolve(true);
+          }
         })
         .catch((error) => {
-          console.log("Error getting patient last order location " + error);
+          console.log('Error getting patient last order location ' + error);
           reject(error);
         });
     });

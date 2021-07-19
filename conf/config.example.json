@@ -12,7 +12,7 @@
     "tls": false,
     "uploadsDirectory": ""
   },
-  "eidSyncSettings":{
+  "eidSyncSettings": {
     "retryInterval": 1200000,
     "maxTrialCount": 3,
     "timeout": 30000,
