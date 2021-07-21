@@ -21,6 +21,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
       that
         .fetchReportSchema(that.reportName)
         .then((reportSchemas) => {
+          console.log('reportschema', reportSchemas);
           that.reportSchemas = reportSchemas;
           // consolidate params and indicators
           indicators = that.consolidateParamsAndIndicators(
