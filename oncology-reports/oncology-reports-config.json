@@ -15,9 +15,14 @@
     "uuid": "cad71628-692c-4d8f-8dac-b2e20bece27f",
     "reports": [
       {
-        "name": "C1. Cervical cancer screening numbers",
+        "name": "C1. Cervical cancer screening monthly report",
         "type": "cervical-cancer-screening-numbers",
-        "description": "Cervical cancer screening numbers contains the following indicators - total cervical screened, normal cervical screened,abnormal cervical screening findings, cervical call rate, biopsy within 2 weeks, clients staged before treatment and total referred for follow up"
+        "description": "Cervical cancer screening monthly report contains the following indicators - clients screened, positive awe, via or via/vili negative, initial screening visit, routine screening visit, post-treatment screening visit, booked for leep, leep done, eligible for cryotherapy, cryotherapies done, eligible for pap smear, pap smears done (all disaggregated by age and hiv status)"
+      },
+      {
+        "name": "C2. HIV Cervical cancer screening monthly report",
+        "type": "cervical-cancer-screening-numbers-moh-412",
+        "description": "HIV cervical cancer screening monthly report contains the following indicators - clients screened, via or via/vili negative, via or via/vili positive, via or via/vili suspicious for cancer, pap smear positive, pap smear negative, hpv negative, hpv positive, hpv unknown, treated using cryotherapy, treated using thermocoagulation, treated using LEEP, suspicious lesions, treated using other treatment methods, hiv negative clients screened, hiv positive clients screened, hiv negative with negative findings, hiv negative with positive findings, hiv positive with negative findings, hiv positive with positive findings (all disaggregated by age, hiv status and visit type)"
       }
     ]
   },
