@@ -5,7 +5,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.flat_breast_cancer_screening",
+      "table": "etl.flat_breast_cancer_screening_test",
       "alias": "fbcs"
     },
     {
@@ -62,14 +62,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "diagnostic_interval",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "(SELECT CONCAT(TIMESTAMPDIFF(DAY, DATE(encounter_datetime), (SELECT date_patient_informed_and_referred_for_management FROM etl.flat_breast_cancer_screening WHERE encounter_type = 145 AND person_id = p.person_id ORDER BY encounter_datetime DESC LIMIT 1)), ' day(s)') FROM etl.flat_breast_cancer_screening WHERE person_id = p.person_id AND encounter_type = 86 and (select date_patient_informed_and_referred_for_management from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_breast_cancer_screening where encounter_type = 86 and person_id = p.person_id order by encounter_datetime desc limit 1) ORDER BY encounter_datetime DESC LIMIT 1)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "identifiers",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -93,125 +85,73 @@
     },
     {
       "type": "derived_column",
-      "alias": "type_of_abnormality",
-      "expressionType": "case_statement",
+      "alias": "breast_findings_this_visit",
+      "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "cur_physical_findings = 0",
+            "condition": "fbcs.breast_findings_this_visit = 1115",
             "value": "Normal"
           },
           {
-            "condition": "cur_physical_findings = 1",
-            "value": "Mastitis"
-          },
-          {
-            "condition": "cur_physical_findings = 2",
-            "value": "Breast lumps"
-          },
-          {
-            "condition": "cur_physical_findings = 3",
-            "value": "Cracked nipple"
-          },
-          {
-            "condition": "cur_physical_findings = 4",
-            "value": "Other"
-          },
-          {
-            "condition": "cur_physical_findings = 5",
-            "value": "Mass"
-          },
-          {
-            "condition": "cur_physical_findings = 6",
-            "value": "Nipple discharge"
-          },
-          {
-            "condition": "cur_physical_findings = 7",
-            "value": "Breast skin changes"
-          },
-          {
-            "condition": "cur_physical_findings = 8",
-            "value": "Not done"
-          },
-          {
-            "condition": "cur_physical_findings = 9",
-            "value": "Breast abscess"
-          },
-          {
-            "condition": "cur_physical_findings = 10",
-            "value": "Breast engorgement"
-          },
-          {
-            "condition": "cur_physical_findings = 11",
-            "value": "Abnormal"
-          },
-          {
-            "condition": "cur_physical_findings = 12",
-            "value": "Calor"
-          },
-          {
-            "condition": "cur_physical_findings = 13",
-            "value": "Peau dOrange"
-          },
-          {
-            "condition": "cur_physical_findings = 14",
-            "value": "Unknown"
-          },
-          {
-            "condition": "cur_physical_findings = 15",
+            "condition": "fbcs.breast_findings_this_visit = 9689",
             "value": "Fine nodularity"
           },
           {
-            "condition": "cur_physical_findings = 16",
+            "condition": "fbcs.breast_findings_this_visit = 9690",
             "value": "Dense nodularity"
           },
           {
-            "condition": "cur_physical_findings = 17",
+            "condition": "fbcs.breast_findings_this_visit = 9687",
             "value": "Skin edema"
           },
           {
-            "condition": "cur_physical_findings = 18",
-            "value": "Nipple areolar change"
+            "condition": "fbcs.breast_findings_this_visit = 9688",
+            "value": "Nipple/areolar change"
           },
           {
-            "condition": "cur_physical_findings = 19",
+            "condition": "fbcs.breast_findings_this_visit = 5313",
             "value": "Muscle tenderness"
           },
           {
-            "condition": "cur_physical_findings = 20",
-            "value": "Benign"
+            "condition": "fbcs.breast_findings_this_visit = 6493",
+            "value": "Nipple discharge"
+          },
+          {
+            "condition": "fbcs.breast_findings_this_visit = 582",
+            "value": "Breast mass"
+          },
+          {
+            "condition": "fbcs.breast_findings_this_visit = 6250",
+            "value": "Breast lumps"
+          },
+          {
+            "condition": "fbcs.breast_findings_this_visit = 5622",
+            "value": "Other (non-coded)"
           }
         ]
       }
     },
     {
       "type": "derived_column",
-      "alias": "screening_mode",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "case when (select screening_mode from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) = 1 AND (select date_patient_informed_and_referred_for_management from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_breast_cancer_screening where encounter_type = 86 and person_id = p.person_id order by encounter_datetime desc limit 1) then 'Mammogram' when (select screening_mode from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) = 2 and (select date_patient_informed_and_referred_for_management from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_breast_cancer_screening where encounter_type = 86 and person_id = p.person_id order by encounter_datetime desc limit 1) then 'Clinical breast exam' when (select screening_mode from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) = 3 and (select date_patient_informed_and_referred_for_management from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_breast_cancer_screening where encounter_type = 86 and person_id = p.person_id order by encounter_datetime desc limit 1) then 'Ultrasound, breast' else null end"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "lymph_nodes_findings",
+      "alias": "lymph_node_findings",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.lymph_nodes_findings = 1",
+            "condition": "fbcs.lymph_node_findings = 1",
             "value": "Normal"
           },
           {
-            "condition": "fbcs.lymph_nodes_findings = 2",
+            "condition": "fbcs.lymph_node_findings = 2",
             "value": "Lymphadenopathy"
           },
           {
-            "condition": "lymph_nodes_findings = 3",
+            "condition": "fbcs.lymph_node_findings = 3",
             "value": "Fixed"
           },
           {
-            "condition": "fbcs.lymph_nodes_findings = 4",
+            "condition": "fbcs.lymph_node_findings = 4",
             "value": "Mobile"
           }
         ]
@@ -224,53 +164,66 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.patient_education = 1",
+            "condition": "fbcs.patient_education = 9651",
             "value": "Annual screening"
           },
           {
-            "condition": "fbcs.patient_education = 2",
+            "condition": "fbcs.patient_education = 9692",
+            "value": "Self-examination"
+          },
+          {
+            "condition": "fbcs.patient_education = 2345",
             "value": "Follow-up"
           },
           {
-            "condition": "fbcs.patient_education = 3",
-            "value": "Self examination"
+            "condition": "fbcs.patient_education = '2345 ## 9651'",
+            "value": "Follow-up, Annual screening"
           },
           {
-            "condition": "fbcs.patient_education = 4",
-            "value": "Other (Non-coded)"
+            "condition": "fbcs.patient_education = '2345 ## 9692'",
+            "value": "Follow-up, Self-examination"
+          },
+          {
+            "condition": "fbcs.patient_education = '9651 ## 9692'",
+            "value": "Annual screening, Self-examination"
           }
         ]
       }
     },
     {
       "type": "derived_column",
-      "alias": "referral_ordered",
+      "alias": "referrals_ordered",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.referrals_ordered = 1",
+            "condition": "fbcs.referrals_ordered = 0",
             "value": "None"
           },
           {
-            "condition": "fbcs.referrals_ordered = 2",
-            "value": "Clinician"
+            "condition": "fbcs.referrals_ordered = 1",
+            "value": "Refer to clinician"
           }
         ]
       }
     },
     {
+      "type": "simple_column",
+      "alias": "referral_date",
+      "column": "DATE_FORMAT(fbcs.referral_date, '%Y-%m-%d')"
+    },
+    {
       "type": "derived_column",
-      "alias": "breast_complaints_three_months",
+      "alias": "presence_of_chief_complaint",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.breast_complaints_3months = 1",
+            "condition": "presence_of_chief_complaint = 1",
             "value": "Asymptomatic"
           },
           {
-            "condition": "fbcs.breast_complaints_3months = 2",
+            "condition": "presence_of_chief_complaint = 2",
             "value": "Symptomatic"
           }
         ]
@@ -278,163 +231,74 @@
     },
     {
       "type": "derived_column",
-      "alias": "breast_mass_location",
+      "alias": "breast_finding_location",
       "expressionType": "simpleExpression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.breast_mass_location = 1",
-            "value": "Bilateral"
-          },
-          {
-            "condition": "fbcs.breast_mass_location = 2",
-            "value": "Left"
-          },
-          {
-            "condition": "fbcs.breast_mass_location = 3",
+            "condition": "breast_finding_location = 5141",
             "value": "Right"
           },
           {
-            "condition": "fbcs.breast_mass_location = 4",
+            "condition": "breast_finding_location = 5139",
+            "value": "Left"
+          },
+          {
+            "condition": "breast_finding_location = 9625",
+            "value": "Cyclic"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breast_finding_quadrant",
+      "expressionType": "simpleExpression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "breast_finding_quadrant = 8266",
+            "value": "Superficial"
+          },
+          {
+            "condition": "breast_finding_quadrant = 8267",
+            "value": "Deep"
+          },
+          {
+            "condition": "breast_finding_quadrant = 6589",
             "value": "Upper inner quadrant"
           },
           {
-            "condition": "fbcs.breast_mass_location = 5",
-            "value": "Lower inner quadrant"
-          },
-          {
-            "condition": "fbcs.breast_mass_location = 6",
+            "condition": "breast_finding_quadrant = 6591",
             "value": "Upper outer quadrant"
           },
           {
-            "condition": "fbcs.breast_mass_location = 7",
-            "value": "Cyclic"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "nipple_discharge_location",
-      "expressionType": "simpleExpression",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "fbcs.nipple_discharge_location = 1",
-            "value": "Left"
+            "condition": "breast_finding_quadrant = 6590",
+            "value": "Lower inner quadrant"
           },
           {
-            "condition": "fbcs.nipple_discharge_location = 2",
-            "value": "Right"
+            "condition": "breast_finding_quadrant = 5622",
+            "value": "Other"
           },
           {
-            "condition": "fbcs.nipple_discharge_location = 3",
-            "value": "Cyclic"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "nipple_retraction_location",
-      "expressionType": "simpleExpression",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "fbcs.nipple_retraction_location = 1",
-            "value": "Left"
+            "condition": "breast_finding_quadrant = 5104",
+            "value": "Left lower quadrant"
           },
           {
-            "condition": "fbcs.nipple_retraction_location = 2",
-            "value": "Right"
+            "condition": "breast_finding_quadrant = 1883",
+            "value": "Left upper quadrant"
           },
           {
-            "condition": "fbcs.nipple_retraction_location = 3",
-            "value": "Cyclic"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "breast_erythrema_location",
-      "expressionType": "simpleExpression",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "fbcs.breast_erythrema_location = 1",
-            "value": "Left"
+            "condition": "breast_finding_quadrant = 5017",
+            "value": "Right upper quadrant"
           },
           {
-            "condition": "fbcs.breast_erythrema_location = 2",
-            "value": "Right"
+            "condition": "breast_finding_quadrant = 1882",
+            "value": "Right lower quadrant"
           },
           {
-            "condition": "fbcs.breast_erythrema_location = 3",
-            "value": "Cyclic"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "breast_rash_location",
-      "expressionType": "simpleExpression",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "fbcs.breast_rash_location = 1",
-            "value": "Left"
-          },
-          {
-            "condition": "fbcs.breast_rash_location = 2",
-            "value": "Right"
-          },
-          {
-            "condition": "fbcs.breast_rash_location = 3",
-            "value": "Cyclic"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "breast_pain_location",
-      "expressionType": "simpleExpression",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "fbcs.breast_pain_location = 1",
-            "value": "Left"
-          },
-          {
-            "condition": "fbcs.breast_pain_location = 2",
-            "value": "Right"
-          },
-          {
-            "condition": "fbcs.breast_pain_location = 3",
-            "value": "Cyclic"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "other_changes_location",
-      "expressionType": "simpleExpression",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "other_changes_location = 1",
-            "value": "Left"
-          },
-          {
-            "condition": "other_changes_location = 2",
-            "value": "Right"
-          },
-          {
-            "condition": "other_changes_location = 3",
-            "value": "Cyclic"
+            "condition": "breast_finding_quadrant = 9695",
+            "value": "Breast areola"
           }
         ]
       }
@@ -458,32 +322,32 @@
     },
     {
       "type": "derived_column",
-      "alias": "mammogram_results",
+      "alias": "past_mammogram_results",
       "expressionType": "simpleExpression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.mammogram_results = 1",
+            "condition": "fbcs.past_mammogram_results = 1",
             "value": "Normal"
           },
           {
-            "condition": "fbcs.mammogram_results = 2",
+            "condition": "fbcs.past_mammogram_results = 2",
             "value": "Abnormal"
           },
           {
-            "condition": "fbcs.mammogram_results = 3",
+            "condition": "fbcs.past_mammogram_results = 3",
             "value": "Not done"
           },
           {
-            "condition": "mammogram_results = 4",
+            "condition": "past_mammogram_results = 4",
             "value": "Indeterminate"
           },
           {
-            "condition": "fbcs.mammogram_results = 5",
+            "condition": "fbcs.past_mammogram_results = 5",
             "value": "Completed"
           },
           {
-            "condition": "fbcs.mammogram_results = 6",
+            "condition": "fbcs.past_mammogram_results = 6",
             "value": "Unknown"
           }
         ]
@@ -491,16 +355,16 @@
     },
     {
       "type": "derived_column",
-      "alias": "breast_ultrasound_history",
+      "alias": "history_of_breast_ultrasound",
       "expressionType": "simpleExpression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.breast_ultrasound_history = 0",
+            "condition": "fbcs.history_of_breast_ultrasound = 0",
             "value": "No"
           },
           {
-            "condition": "fbcs.breast_ultrasound_history = 1",
+            "condition": "fbcs.history_of_breast_ultrasound = 1",
             "value": "Yes"
           }
         ]
@@ -508,24 +372,24 @@
     },
     {
       "type": "derived_column",
-      "alias": "breast_ultrasound_result",
+      "alias": "past_breast_ultrasound_results",
       "expressionType": "simpleExpression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.breast_ultrasound_result = 1",
+            "condition": "fbcs.past_breast_ultrasound_results = 1",
             "value": "Normal"
           },
           {
-            "condition": "fbcs.breast_ultrasound_result = 2",
+            "condition": "fbcs.past_breast_ultrasound_results = 2",
             "value": "Abnormal"
           },
           {
-            "condition": "fbcs.breast_ultrasound_result = 3",
+            "condition": "fbcs.past_breast_ultrasound_results = 3",
             "value": "Unknown"
           },
           {
-            "condition": "fbcs.breast_ultrasound_result = 4",
+            "condition": "fbcs.past_breast_ultrasound_results = 4",
             "value": "Not done"
           }
         ]
@@ -550,32 +414,32 @@
     },
     {
       "type": "derived_column",
-      "alias": "breast_biopsy_results",
+      "alias": "past_breast_biopsy_results",
       "expressionType": "simpleExpression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.breast_biopsy_results = 1",
+            "condition": "fbcs.past_breast_biopsy_results = 1",
             "value": "Normal"
           },
           {
-            "condition": "fbcs.breast_biopsy_results = 2",
+            "condition": "fbcs.past_breast_biopsy_results = 2",
             "value": "Abnormal"
           },
           {
-            "condition": "fbcs.breast_biopsy_results = 3",
+            "condition": "fbcs.past_breast_biopsy_results = 3",
             "value": "Unknown"
           },
           {
-            "condition": "fbcs.breast_biopsy_results = 4",
+            "condition": "fbcs.past_breast_biopsy_results = 4",
             "value": "Benign"
           },
           {
-            "condition": "fbcs.breast_biopsy_results = 5",
+            "condition": "fbcs.past_breast_biopsy_results = 5",
             "value": "Malignant"
           },
           {
-            "condition": "fbcs.breast_biopsy_results = 6",
+            "condition": "fbcs.past_breast_biopsy_results = 6",
             "value": "Not done"
           }
         ]
@@ -583,45 +447,45 @@
     },
     {
       "type": "simple_column",
-      "alias": "number_of_biopsies",
-      "column": "number_of_biopsies"
+      "alias": "number_of_biopsies_done",
+      "column": "number_of_biopsies_done"
     },
     {
       "type": "derived_column",
-      "alias": "biopsy_type",
+      "alias": "breast_biopsy_type",
       "expressionType": "simpleExpression",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fbcs.biopsy_type = 1",
+            "condition": "fbcs.breast_biopsy_type = 6510",
             "value": "Core needle biopsy"
           },
           {
-            "condition": "fbcs.biopsy_type = 2",
+            "condition": "fbcs.breast_biopsy_type = 6511",
             "value": "Excisional / surgical biopsy"
           },
           {
-            "condition": "fbcs.biopsy_type = 3",
+            "condition": "fbcs.breast_biopsy_type = 6512",
             "value": "Skin punch biopsy"
           },
           {
-            "condition": "fbcs.biopsy_type = 4",
+            "condition": "fbcs.breast_biopsy_type = 6513",
             "value": "Bone marrow biopsy"
           },
           {
-            "condition": "fbcs.biopsy_type = 5",
+            "condition": "fbcs.breast_biopsy_type = 7190",
             "value": "Fine needle aspiration"
           },
           {
-            "condition": "fbcs.biopsy_type = 6",
+            "condition": "fbcs.breast_biopsy_type = 8184",
             "value": "Breast biopsy"
           },
           {
-            "condition": "fbcs.biopsy_type = 7",
+            "condition": "fbcs.breast_biopsy_type = 10075",
             "value": "Ultrasound guided biopsy"
           },
           {
-            "condition": "fbcs.biopsy_type = 8",
+            "condition": "fbcs.breast_biopsy_type = 10076",
             "value": "CT Scan guided biopsy"
           }
         ]
@@ -636,6 +500,11 @@
       "type": "simple_column",
       "alias": "location_name",
       "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "breast_rtc_date",
+      "column": "DATE_FORMAT(fbcs.next_appointment_date, '%Y-%m-%d')"
     },
     {
       "type": "simple_column",
@@ -687,7 +556,7 @@
       "alias": "normal_findings",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(cur_physical_findings = 0 or cur_physical_findings is null, 1, null)"
+        "expression": "if(breast_findings_this_visit = 1115 or breast_findings_this_visit is null, 1, null)"
       }
     },
     {
@@ -695,7 +564,7 @@
       "alias": "normal_below_30yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((cur_physical_findings = 0 or cur_physical_findings is null) and age < 30, 1, null)"
+        "expression": "if((breast_findings_this_visit = 1115 or breast_findings_this_visit is null) and age < 30, 1, null)"
       }
     },
     {
@@ -703,7 +572,7 @@
       "alias": "normal_30_to_40yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((cur_physical_findings = 0 or cur_physical_findings is null) and age >= 30 and age <= 40, 1, null)"
+        "expression": "if((breast_findings_this_visit = 1115 or breast_findings_this_visit is null) and age >= 30 and age <= 40, 1, null)"
       }
     },
     {
@@ -711,7 +580,7 @@
       "alias": "normal_41_to_50yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((cur_physical_findings = 0 or cur_physical_findings is null) and age >= 41 and age <= 50, 1, null)"
+        "expression": "if((breast_findings_this_visit = 1115 or breast_findings_this_visit is null) and age >= 41 and age <= 50, 1, null)"
       }
     },
     {
@@ -719,7 +588,7 @@
       "alias": "normal_51_to_69yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((cur_physical_findings = 0 or cur_physical_findings is null) and age >= 51 and age <= 69, 1, null)"
+        "expression": "if((breast_findings_this_visit = 1115 or breast_findings_this_visit is null) and age >= 51 and age <= 69, 1, null)"
       }
     },
     {
@@ -727,7 +596,7 @@
       "alias": "normal_above_70yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((cur_physical_findings = 0 or cur_physical_findings is null) and age >= 70, 1, null)"
+        "expression": "if((breast_findings_this_visit = 1115 or breast_findings_this_visit is null) and age >= 70, 1, null)"
       }
     },
     {
@@ -735,7 +604,7 @@
       "alias": "abnormal_findings",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(cur_physical_findings != 0, 1, null)"
+        "expression": "if(breast_findings_this_visit != 1115, 1, null)"
       }
     },
     {
@@ -743,7 +612,7 @@
       "alias": "abnormal_below_30yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(cur_physical_findings != 0 and age < 30, 1, null)"
+        "expression": "if(breast_findings_this_visit != 1115 and age < 30, 1, null)"
       }
     },
     {
@@ -751,7 +620,7 @@
       "alias": "abnormal_30_to_40yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(cur_physical_findings != 0 and age >= 30 and age <= 40, 1, null)"
+        "expression": "if(breast_findings_this_visit != 1115 and age >= 30 and age <= 40, 1, null)"
       }
     },
     {
@@ -759,7 +628,7 @@
       "alias": "abnormal_41_to_50yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(cur_physical_findings != 0 and age >= 41 and age <= 50, 1, null)"
+        "expression": "if(breast_findings_this_visit != 1115 and age >= 41 and age <= 50, 1, null)"
       }
     },
     {
@@ -767,7 +636,7 @@
       "alias": "abnormal_51_to_69yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(cur_physical_findings != 0 and age >= 51 and age <= 69, 1, null)"
+        "expression": "if(breast_findings_this_visit != 1115 and age >= 51 and age <= 69, 1, null)"
       }
     },
     {
@@ -775,20 +644,7 @@
       "alias": "abnormal_above_70yrs",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(cur_physical_findings != 0 and age >= 70, 1, null)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "biopsy_results_within_2wks",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "TIMESTAMPDIFF(WEEK, DATE(encounter_datetime), DATE(date_patient_notified_of_biopsy_results)) <= 2",
-            "value": 1
-          }
-        ]
+        "expression": "if(breast_findings_this_visit != 1115 and age >= 70, 1, null)"
       }
     },
     {
@@ -870,90 +726,6 @@
       "expressionOptions": {
         "expression": "if(fbcs.hiv_status = 3 and age > 50, 1, null)"
       }
-    },
-    {
-      "type": "derived_column",
-      "alias": "clients_staged_before_treatment",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "(IF(cancer_staging IN (1 , 2, 3, 4), 1, NULL))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "procedure_done",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "procedure_done = 1",
-            "value": "Ultrasound"
-          },
-          {
-            "condition": "procedure_done = 2",
-            "value": "Mammogram"
-          },
-          {
-            "condition": "procedure_done = 3",
-            "value": "Core Needle Biopsy"
-          },
-          {
-            "condition": "procedure_done = 4",
-            "value": "FNA"
-          },
-          {
-            "condition": "procedure_done = 5",
-            "value": "Surgical biopsy"
-          },
-          {
-            "condition": "procedure_done = 6",
-            "value": "Incisional biopsy"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "diagnosis",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "diagnosis IN (9618 , 6544, 6250, 6243, 2220, 115)",
-            "value": 1
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "cancer_stage",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "cancer_staging = 1",
-            "value": "Stage I"
-          },
-          {
-            "condition": "cancer_staging = 2",
-            "value": "Stage II"
-          },
-          {
-            "condition": "cancer_staging = 3",
-            "value": "Stage III"
-          },
-          {
-            "condition": "cancer_staging = 4",
-            "value": "Stage IV"
-          }
-        ]
-      }
-    },
-    {
-      "type": "simple_column",
-      "alias": "date_patient_informed_of_results",
-      "column": "(select DATE_FORMAT(date_patient_informed_and_referred_for_management, '%d-%M-%Y') from etl.flat_breast_cancer_screening where encounter_type = 145 and (select date_patient_informed_and_referred_for_management from etl.flat_breast_cancer_screening where encounter_type = 145 and person_id = p.person_id order by encounter_datetime desc limit 1) > (select encounter_datetime from etl.flat_breast_cancer_screening where encounter_type = 86 and person_id = p.person_id order by encounter_datetime desc limit 1) and person_id = p.person_id order by encounter_datetime desc limit 1)"
     },
     {
       "type": "derived_column",
