@@ -123,7 +123,7 @@ function getOncologyIntegratedProgramSnapshot(request) {
       }
     ],
     group: ['t1.visit_id'],
-    joins: [
+    leftOuterJoins: [
       ['amrs.visit', 't2', 't2.visit_id = t1.visit_id'],
       ['amrs.visit_type', 't3', 't3.visit_type_id = t2.visit_type_id'],
       ['amrs.person', 't4', 't4.person_id = t1.patient_id'],
@@ -142,7 +142,7 @@ function getOncologyIntegratedProgramSnapshot(request) {
     ],
     table: 'amrs.encounter',
     where: [
-      't4.uuid = ? and t2.visit_type_id in ? and t1.voided = ?',
+      't4.uuid = ? AND t2.visit_type_id in ? AND t6.encounter_type_id IN (69, 86) AND t1.voided = ?',
       patientUuid,
       // Visit types: Breast screening, Cervical screening, Lung screening, Sickle cell screening
       [5, 6, 70, 71],
