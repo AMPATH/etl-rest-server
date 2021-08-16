@@ -116,8 +116,7 @@ function getOncologyIntegratedProgramSnapshot(request) {
     let patientUuid = request.uuid;
     let queryParts = {};
     let sql =
-      "SELECT t1.encounter_id, t1.encounter_datetime, t1.encounter_type_name, t2.name as `location`, t1.breast_exam_findings_this_visit, CASE WHEN t1.via_or_via_vili_test_result = 1 THEN 'Negative' WHEN t1.via_or_via_vili_test_result = 2 THEN 'Positive' WHEN t1.via_or_via_vili_test_result = 3 THEN 'Suspicious of cancer' ELSE NULL END AS `via_or_via_vili_test_result`, t1.prior_via_result, t1.prior_via_date, CASE WHEN t1.hiv_status = 703 THEN 'Positive' WHEN t1.hiv_status = 664 then 'Negative' ELSE NULL END AS `hiv_status` FROM etl.flat_onc_patient_history `t1` LEFT JOIN amrs.location `t2` ON (t2.location_id = t1.location_id) WHERE t1.visit_id IN (5, 6, 70, 71) AND t1.uuid = " +
-      patientUuid;
+      "SELECT t1.encounter_id, t1.encounter_datetime, t1.encounter_type_name, t2.name as `location`, t1.breast_exam_findings_this_visit, CASE WHEN t1.via_or_via_vili_test_result = 1 THEN 'Negative' WHEN t1.via_or_via_vili_test_result = 2 THEN 'Positive' WHEN t1.via_or_via_vili_test_result = 3 THEN 'Suspicious of cancer' ELSE NULL END AS `via_or_via_vili_test_result`, t1.prior_via_result, t1.prior_via_date, CASE WHEN t1.hiv_status = 703 THEN 'Positive' WHEN t1.hiv_status = 664 then 'Negative' ELSE NULL END AS `hiv_status` FROM etl.flat_onc_patient_history `t1` LEFT JOIN amrs.location `t2` ON (t2.location_id = t1.location_id) WHERE t1.visit_type_id IN (5, 6, 70, 71) AND t1.uuid = '"+ patientUuid + "' ;"
 
     queryParts = {
       sql: sql
