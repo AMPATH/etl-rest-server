@@ -2653,6 +2653,11 @@
             "display": "BETWEENCAREVISIT"
           },
           {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 25 && age <= 49 && gender === 'F'"
+          },
+          {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
           },
