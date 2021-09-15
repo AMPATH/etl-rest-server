@@ -2714,10 +2714,6 @@
             "display": "DRUGPICKUP"
           },
           {
-            "uuid": "cb5c0abd-0817-40e3-9413-8669561fadb9",
-            "display": "HIVHOMEVISIT"
-          },
-          {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
           },
@@ -2830,6 +2826,10 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
+          },
+          {
+            "uuid": "cb5c0abd-0817-40e3-9413-8669561fadb9",
+            "display": "HIVHOMEVISIT"
           },
           {
             "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
