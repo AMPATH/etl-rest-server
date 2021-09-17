@@ -1,6 +1,6 @@
 {
   "name": "etl_rest_server",
-  "version": "2.4.0-SNAPSHOT",
+  "version": "2.15.2",
   "description": "etl rest server",
   "main": "etl-server.js",
   "watch": {
