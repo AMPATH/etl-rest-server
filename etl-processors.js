@@ -32,6 +32,7 @@ module.exports = (function () {
     queryResults,
     requestIndicators
   ) {
+    console.log('here: ');
     return new Promise(function (resolve, reject) {
       concept_name_dao
         .getConceptNames()
