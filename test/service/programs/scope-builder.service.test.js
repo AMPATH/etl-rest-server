@@ -101,7 +101,7 @@ describe('ScopeBuilderService: ', () => {
     builtScopeObj = ScopeBuilderService.buildScope(dataDictionary);
     expect(builtScopeObj.isFirstPrEPVisit).toBeTruthy();
     expect(builtScopeObj.isFirstPMTCTVisit).toBeTruthy();
-    expect(builtScopeObj.isFirstPEPVisit).toBeFalsy();
+    expect(builtScopeObj.isFirstPEPVisit).toBeTruthy();
     expect(builtScopeObj.isFirstAMPATHHIVVisit).toBeFalsy();
     expect(builtScopeObj.previousHIVClinicallocation).toMatch(/test location/i);
     expect(builtScopeObj.isEnrolledInViremiaPMTCT).toBeFalsy();

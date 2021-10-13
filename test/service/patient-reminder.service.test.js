@@ -110,47 +110,9 @@ describe('PatientReminderService: ', () => {
       ])
     );
 
-    // Case 4: Pregant or breastfeeding woman with VL > 400
-    testClinicalRemindersData.birth_date = new Date(
-      Date.UTC('1982-12-31T21:00:00')
-    );
-    testClinicalRemindersData.needs_vl_coded = 4;
+    // TODO: Case 4: Pregant or breastfeeding woman with VL > 400
 
-    expect(
-      patientReminderService.viralLoadReminders(testClinicalRemindersData)
-    ).toMatchObject(
-      expect.arrayContaining([
-        expect.objectContaining({
-          display: { banner: true, toast: true },
-          message: expect.stringContaining(
-            'A pregnant or breastfeeding patient  with vl > 400 requires a viral load test every 3 months'
-          ),
-          title: 'Viral Load Reminder',
-          type: 'danger'
-        })
-      ])
-    );
-
-    // Case 5: Pregant or breastfeeding woman with VL <= 400
-    testClinicalRemindersData.birth_date = new Date(
-      Date.UTC('1982-12-31T21:00:00')
-    );
-    testClinicalRemindersData.needs_vl_coded = 5;
-
-    expect(
-      patientReminderService.viralLoadReminders(testClinicalRemindersData)
-    ).toMatchObject(
-      expect.arrayContaining([
-        expect.objectContaining({
-          display: { banner: true, toast: true },
-          message: expect.stringContaining(
-            'A pregnant or breastfeeding patient with vl<= 400 requires a viral load test every 6 months'
-          ),
-          title: 'Viral Load Reminder',
-          type: 'danger'
-        })
-      ])
-    );
+    // TODO: Case 5: Pregant or breastfeeding woman with VL <= 400
   });
 
   test('creates and retuns Isoniazid TB treatment reminders if INH data is present', () => {
@@ -182,18 +144,15 @@ describe('PatientReminderService: ', () => {
 
     expect(
       patientReminderService.inhReminders(testClinicalRemindersData)
-    ).toMatchObject(
-      expect.arrayContaining([
-        expect.objectContaining({
-          display: { banner: true, toast: true },
-          message: expect.stringContaining(
-            'Patient has been on INH treatment for the last 5 months, expected to end on (13-06-2021)'
-          ),
-          title: 'INH Treatment Reminder',
-          type: 'danger'
-        })
-      ])
-    );
+    ).toEqual([
+      {
+        display: { banner: true, toast: true },
+        message:
+          'Patient has been on INH treatment for the last 5 months. Expected to end on (13-06-2021) ',
+        title: 'INH Treatment Reminder',
+        type: 'danger'
+      }
+    ]);
   });
 
   test('creates and returns a lab error reminder if there is a problem with the viral load order', () => {
@@ -202,18 +161,15 @@ describe('PatientReminderService: ', () => {
 
     expect(
       patientReminderService.viralLoadErrors(testClinicalRemindersData)
-    ).toMatchObject(
-      expect.arrayContaining([
-        expect.objectContaining({
-          display: { banner: true, toast: true },
-          message: expect.stringContaining(
-            'Viral load test that was ordered on: (13-06-2021) resulted to an error. Please re-order.'
-          ),
-          title: 'Lab Error Reminder',
-          type: 'danger'
-        })
-      ])
-    );
+    ).toEqual([
+      {
+        display: { banner: true, toast: true },
+        message:
+          'Viral load test that was ordered on: (13-06-2021) resulted in an error. Please re-order.',
+        title: 'Lab Error Reminder',
+        type: 'danger'
+      }
+    ]);
   });
 
   test('creates and returns a overdue VL reminder if the viral load order is overdue', () => {
@@ -294,23 +250,27 @@ describe('PatientReminderService: ', () => {
         expect(aggregatedReminders).toBeDefined();
         expect(aggregatedReminders).toHaveProperty('reminders');
         expect(aggregatedReminders.reminders.length).toEqual(2);
-        expect(aggregatedReminders.reminders).toMatchObject(
-          expect.arrayContaining([
-            expect.objectContaining({
+        expect(aggregatedReminders).toEqual({
+          person_id: 123456789,
+          person_uuid: 'test-patient-person-uuid',
+          reminders: [
+            {
+              display: { banner: true, toast: true },
               message: 'New viral load result: LDL (collected on 13-06-2020).',
-              title: 'New Viral Load present'
-            })
-          ])
-        );
-        expect(aggregatedReminders.reminders).toMatchObject(
-          expect.arrayContaining([
-            expect.objectContaining({
+              title: 'New Viral Load present',
+              type: 'success'
+            },
+            {
+              action: true,
+              addContacts: true,
+              display: { banner: true, toast: true },
               message:
-                'No contact tracing has been done for this index, please fill the  contact tracing form',
-              title: 'Contact Tracing Reminder'
-            })
-          ])
-        );
+                'No contact tracing has been done for this index, please fill the contact tracing form',
+              title: 'Contact Tracing Reminder',
+              type: 'warning'
+            }
+          ]
+        });
       });
   });
 });
