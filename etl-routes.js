@@ -74,6 +74,9 @@ import { PrepReminderService } from './service/prep-reminder/prep-reminder.servi
 import { HIVGainsAndLossesService } from './service/gains-and-losses/hiv-gains-losses-service';
 const cervicalCancerScreeningService = require('./service/cervical-cancer-screening-service');
 import { MOH412Service } from './service/moh-412/moh-412';
+const syncPreproc = require('./app/lab-integration/lab-sync-pre-processor.service');
+import { DefaulterListService } from './service/defaulter-list-service';
+import { ClinicFlowService } from './service/clinic-flow-service';
 
 module.exports = (function () {
   var routes = [
@@ -709,7 +712,37 @@ module.exports = (function () {
       config: {
         auth: 'simple',
         handler: function (request, reply) {
-          dao.getDefaulterList(request, reply);
+          if (request.query.locationUuids) {
+            request.query.reportName = 'defaulter-list';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+
+              let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                request.query.reportName,
+                ['locationUuids', 'locations'],
+                requestParams
+              );
+
+              const defaulterService = new DefaulterListService();
+
+              defaulterService
+                .getPatientListReport(requestParams)
+                .then((results) => {
+                  _.each(results.result, (item) => {
+                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                  });
+                  reply(results);
+                })
+                .catch((err) => {
+                  reply(Boom.internal('An error occured', err));
+                });
+            });
+          }
         },
         plugins: {
           hapiAuthorization: {
@@ -2103,6 +2136,43 @@ module.exports = (function () {
         description: "Get a location's patient movement and waiting time data",
         notes:
           "Returns a location's patient flow with the given location uuid.",
+        tags: ['api'],
+        validate: {
+          options: {
+            allowUnknown: true
+          },
+          params: {}
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/clinic-flow-provider-statistics/patient-list',
+      config: {
+        auth: 'simple',
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewClinicDashBoard
+          }
+        },
+        handler: function (request, reply) {
+          let requestParams = Object.assign({}, request.query, request.params);
+          requestParams.reportName = 'clinic-flow-provider-statistics-report';
+          const clinicFlowService = new ClinicFlowService();
+          clinicFlowService
+            .getPatientListReport(requestParams)
+            .then((results) => {
+              reply(results);
+            })
+            .catch((error) => {
+              console.error(error);
+              reply(error);
+            });
+        },
+        description:
+          'Get patient list for the provider statistics in clinic flow',
+        notes:
+          'Returns a patient list for the provider statistics in clinic flow.',
         tags: ['api'],
         validate: {
           options: {
@@ -3934,10 +4004,22 @@ module.exports = (function () {
         handler: function (request, reply) {
           if (config.eidSyncOn === true) {
             const labSyncService = new LabSyncService();
-            labSyncService.syncAllLabsByPatientUuid(
-              request.query.patientUuId,
-              reply
-            );
+            syncPreproc
+              .processLabSyncReqest(request.query)
+              .then((validRequest) => {
+                if (validRequest) {
+                  labSyncService.syncAllLabsByPatientUuid(
+                    request.query.patientUuId,
+                    reply
+                  );
+                } else {
+                  reply(validRequest);
+                }
+              })
+              .catch((error) => {
+                console.error('ERROR: ', error);
+                reply(error);
+              });
           } else {
             reply(
               Boom.notImplemented(
