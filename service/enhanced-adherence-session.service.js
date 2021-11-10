@@ -67,6 +67,8 @@ WHERE
         AND o.voided = 0
         order by o.obs_datetime desc limit 1;`;
 
+    console.log('sql', sql);
+
     queryParts = {
       sql: sql
     };
@@ -105,7 +107,7 @@ async function getPatientLatestEACSessionNo(patientUuid) {
     const vlData = await getPatientsLatestVl(patientUuid);
     sessionData = eacSessionData.size > 0 ? eacSessionData.result[0] : [];
     const latestVlData = vlData.size > 0 ? vlData.result[0] : null;
-    const latestVl = latestVlData.latest_vl ? latestVlData.latest_vl : null;
+    const latestVl = vlData.size > 0 ? latestVlData.latest_vl : null;
     latestEacSessionNo = determinePatientLatestEACSessionNo(
       sessionData,
       latestVl
