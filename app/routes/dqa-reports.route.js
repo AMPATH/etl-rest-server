@@ -19,8 +19,21 @@ const routes = [
             .then((result) => {
               let locations = result;
               let limit = 300;
+              let patientType = '';
+              let startDate = '';
+              let endDate = '';
               if (request.query.limit != null) {
                 limit = request.query.limit;
+              }
+              if (
+                request.query.startDate != null &&
+                request.query.endDate != null
+              ) {
+                startDate = request.query.startDate;
+                endDate = request.query.endDate;
+              }
+              if (request.query.patientType != null) {
+                patientType = request.query.patientType;
               }
               let offset = 0;
               if (request.query.startIndex != null) {
@@ -29,7 +42,14 @@ const routes = [
 
               let service = new DQAChartAbstractionService();
               service
-                .getDQAChartAbstractionReport(locations, limit, offset)
+                .getDQAChartAbstractionReport(
+                  locations,
+                  limit,
+                  offset,
+                  startDate,
+                  endDate,
+                  patientType
+                )
                 .then((result) => {
                   reply(result);
                 })
