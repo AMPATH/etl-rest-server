@@ -30,7 +30,7 @@ export class DQAChartAbstractionDAO {
       cc.identifier as person_id,
       EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), h.birthdate)))) AS age,
       IF( date(h.tb_screening_datetime) > date_sub(h.endDate, interval 6 month),"YES","NO") as tb_screened_this_visit,
-      h.gender,
+      h.gender as 'sex_gender',
       e.height,
       e.weight,
       DATE_FORMAT(h.birthdate,'%Y-%m-%d') AS birthdate,
