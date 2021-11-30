@@ -18,7 +18,7 @@ const routes = [
           resolveLocationUuidToId
             .resolveLocationUuidsParamsToIds(request.query)
             .then((result) => {
-              let locations = result;
+             let locations = result;
               let limit = 300;
               let patientType = '';
               let startDate = '';

@@ -102,7 +102,6 @@ export class DQAChartAbstractionDAO {
       ` offset ` +
       offset +
       `; `;
-    console.log(sqlQuery);
     return new Promise((resolve, reject) => {
       runner
         .executeQuery(sqlQuery)
