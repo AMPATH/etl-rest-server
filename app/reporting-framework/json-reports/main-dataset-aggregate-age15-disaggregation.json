@@ -161,6 +161,14 @@
       "expressionOptions": {
         "expression": "sum(hmsd.f_gte_18_visits)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_modern_contraception_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.on_modern_contraception_cross_border)"
+      }
     }
   ],
   "groupBy": {

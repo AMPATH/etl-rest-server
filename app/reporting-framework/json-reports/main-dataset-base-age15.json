@@ -201,6 +201,14 @@
       "type": "simple_column",
       "alias": "screened_for_cervical_ca",
       "column": "hmsd.ca_cx_screened_active_this_month"
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_modern_contraception_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmsd.on_modern_contraception_this_month = 1 and hmsd.age >= 15 and hmsd.is_cross_border_this_month = 1, 1 , 0)"
+      }
     }
   ],
   "filters": {

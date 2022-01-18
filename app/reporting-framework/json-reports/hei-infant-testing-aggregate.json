@@ -92,6 +92,30 @@
       "expressionOptions": {
         "expression": "COUNT(hmds.antibody_post_18_months)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_pcr_less_than_8_wks_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hmds.initial_pcr_less_than_8_wks_cross_border)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_pcr_8_wks_to_12_months_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hmds.initial_pcr_8_wks_to_12_months_cross_border)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cross_border_this_month_hei",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hmds.is_cross_border_this_month_hei)"
+      }
     }
   ],
   "groupBy": {

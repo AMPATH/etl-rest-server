@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.flat_pep_summary",
+      "table": "etl.flat_pep_summary_cbhip",
       "alias": "pep"
     },
     {
@@ -85,6 +85,54 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(hiv_exposed_occupational=0 and date(pep_start_date) between '{startDate}' and '{endDate}',1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_exposed_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hiv_exposed_occupational=1 and pep.is_cross_border=1,1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_exposed_non_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hiv_exposed_occupational=0 and pep.is_cross_border=1,1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hiv_exposed_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hiv_exposed_occupational is not null and pep.is_cross_border=1,1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_started_PEP_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hiv_exposed_occupational is not null and date(pep_start_date) between '{startDate}' and '{endDate}' and pep.is_cross_border=1,1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_PEP_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hiv_exposed_occupational=1 and date(pep_start_date) between '{startDate}' and '{endDate}' and pep.is_cross_border=1,1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_PEP_non_occupational_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hiv_exposed_occupational=0 and date(pep_start_date) between '{startDate}' and '{endDate}' and pep.is_cross_border=1,1,null)"
       }
     }
   ],

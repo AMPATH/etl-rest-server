@@ -127,6 +127,38 @@
       "expressionOptions": {
         "expression": "count(on_alternative_first_line)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "active_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(active_cross_border)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "net_cohort_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(net_cohort_cross_border)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suppressed_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(suppressed_cross_border)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_with_vl_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(total_with_vl_cross_border)"
+      }
     }
   ],
   "groupBy": {

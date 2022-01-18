@@ -180,6 +180,38 @@
       "expressionOptions": {
         "expression": "IF(status = 'active' AND hmsd.cur_arv_line >= 2,1,NULL)"
       }
+    },
+    {
+      "alias": "active_cross_border",
+      "expressionOptions": {
+        "expression": "if(status='active' and hmsd.is_cross_border_this_month = 1,1,null)"
+      },
+      "type": "derived_column",
+      "expressionType": "simple_expression"
+    },
+    {
+      "alias": "net_cohort_cross_border",
+      "expressionOptions": {
+        "expression": "if(hmsd.is_cross_border_this_month = 1,1,null)"
+      },
+      "type": "derived_column",
+      "expressionType": "simple_expression"
+    },
+    {
+      "alias": "suppressed_cross_border",
+      "expressionOptions": {
+        "expression": "if(hmsd.vl_1<1000 and vl_in_past_year=1 and hmsd.is_cross_border_this_month = 1,1,null)"
+      },
+      "type": "derived_column",
+      "expressionType": "simple_expression"
+    },
+    {
+      "alias": "total_with_vl_cross_border",
+      "expressionOptions": {
+        "expression": "if(vl_in_past_year=1 and hmsd.is_cross_border_this_month = 1,1,null)"
+      },
+      "type": "derived_column",
+      "expressionType": "simple_expression"
     }
   ],
   "filters": {
