@@ -13,7 +13,7 @@ export class Moh731Report extends MultiDatasetPatientlistReport {
       params.excludeParam = ['location_id', 'arv_first_regimen_location_id'];
       params.joinColumnParam = 'join_location';
     }
-    params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen'; // defaults to frozen
+    params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_cbb'; // defaults to frozen
 
     console.log('creating new moh 731 report service');
     super(reportName, params);
@@ -188,10 +188,10 @@ export class Moh731Report extends MultiDatasetPatientlistReport {
             Moment(lastReleasedMonth).isSameOrAfter(Moment(self.params.endDate))
           ) {
             self.params.hivMonthlyDatasetSource =
-              'etl.hiv_monthly_report_dataset_frozen';
+              'etl.hiv_monthly_report_dataset_cbb';
           } else {
             self.params.hivMonthlyDatasetSource =
-              'etl.hiv_monthly_report_dataset_v1_2';
+              'etl.hiv_monthly_report_dataset_cbb';
           }
           console.log(
             'Using Datasource::: ',

@@ -169,6 +169,22 @@
       "expressionOptions": {
         "expression": "sum(hmsd.screened_for_cervical_ca)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "f_gte_18_visits_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.f_gte_18_visits_cross_border)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_for_cervical_ca_cross_border",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.screened_for_cervical_ca_cross_border)"
+      }
     }
   ],
   "groupBy": {
