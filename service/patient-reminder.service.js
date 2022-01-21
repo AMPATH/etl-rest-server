@@ -724,7 +724,7 @@ async function generateReminders(etlResults, eidResults) {
   let unenrol_ovc_reminder = await ovcUnenrollmentReminder(data);
   let contact_tracing_reminder = await getFamilyTestingReminder(etlResults);
 
-  let cervical_screening_reminder = await getCerivalScreeningReminder(
+  let cervical_screening_reminder = await getCervicalScreeningReminder(
     person_id
   );
   let due_for_contraception_refill = generateContraceptionRefillReminder(data);
@@ -800,10 +800,10 @@ function getPatientPrograms(uuid, params) {
   });
 }
 
-function getCerivalScreeningReminder(personId) {
+function getCervicalScreeningReminder(personId) {
   return new Promise((resolve, reject) => {
     cervicalCancerScreeningService
-      .getPatientLatestCericalScreeningResult(personId)
+      .getPatientLatestCervicalScreeningResult(personId)
       .then((result) => {
         console.log(result);
         let reminder = [];

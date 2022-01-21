@@ -1,11 +1,11 @@
 const db = require('../etl-db');
 
 const defs = {
-  getPatientLatestCericalScreeningResult,
+  getPatientLatestCervicalScreeningResult,
   getPatientCervicalCancerScreeningSummary
 };
 
-function getPatientLatestCericalScreeningResult(personId) {
+function getPatientLatestCervicalScreeningResult(personId) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
          person_id, 
@@ -16,10 +16,11 @@ function getPatientLatestCericalScreeningResult(personId) {
            WHEN TIMESTAMPDIFF(YEAR,test_datetime,now()) >= 1 THEN 1
            ELSE NULL
          END AS 'qualifies_for_via_or_via_vili_retest'
-         FROM 
-         etl.flat_labs_and_imaging 
+         FROM etl.flat_labs_and_imaging 
+         inner join amrs.person using(person_id)
          WHERE 
          via_or_via_vili IS NOT NULL AND person_id = ${personId} 
+         AND extract(year from (from_days(datediff(now(),birthdate)))) <= 50
          ORDER BY test_datetime DESC LIMIT 1;`;
 
     const queryParts = {
