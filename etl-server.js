@@ -1,10 +1,10 @@
+const { Promise } = require('bluebird');
+const Boom = require('boom');
+
 try {
   var Hapi = require('hapi');
-  var mysql = require('mysql');
   var Good = require('good');
   var requestConfig = require('./request-config');
-  var Basic = require('hapi-auth-basic');
-  // var etlBroadcast =require('./etl-broadcast');
   var https = require('http');
   var config = require('./conf/config');
   var requestConfig = require('./request-config');
@@ -25,9 +25,7 @@ try {
   var os = require('os');
   var locationAuthorizer = require('./authorization/location-authorizer.plugin');
   var cache = require('./session-cache');
-  var request = require('request');
   var numCPUs = os.cpus().length;
-  var authencticated = false;
   var server = new Hapi.Server({
     connections: {
       //routes: {cors:{origin:["https://amrs.ampath.or.ke:8443"]}}
@@ -57,91 +55,78 @@ try {
     tls: tls_config,
     routes: { log: true }
   });
-  var pool = mysql.createPool(config.mysql);
 
-  var validate = function (username, password, callback) {
-    try {
-      //Openmrs context
-      var openmrsAppName = config.openmrs.applicationName || 'amrs';
-      var authBuffer = new Buffer(username + ':' + password).toString('base64');
-      var options = {
-        hostname: config.openmrs.host,
-        port: config.openmrs.port,
-        path: '/' + openmrsAppName + '/ws/rest/v1/session',
-        headers: {
-          Authorization: 'Basic ' + authBuffer
-        }
-      };
-      var key = username;
-      if (config.openmrs.https) {
-        https = require('https');
+  const authenticateWithCookie = (cookie) => {
+    const contextPath = config.openmrs.applicationName || 'amrs';
+    const options = {
+      hostname: config.openmrs.host,
+      port: config.openmrs.port,
+      path: '/' + contextPath + '/ws/rest/v1/session',
+      headers: {
+        Cookie: cookie
       }
-      var session = cache.getFromToCache(key);
-      if (session !== null) {
-        options.headers['Cookie'] = session.session;
-        delete options.headers.Authorization;
-      }
+    };
+
+    if (config.openmrs.https) {
+      https = require('https');
+    }
+
+    return new Promise((resolve, reject) => {
       https
-        .get(options, function (res) {
-          var body = '';
-          res.on('data', function (chunk) {
+        .get(options, (res) => {
+          let body = '';
+          //A chunk of data has been received.
+          res.on('data', (chunk) => {
             body += chunk;
           });
-          res.on('end', function () {
-            var result;
-            try {
-              result = JSON.parse(body);
-            } catch (err) {
-              if (session !== null) {
-                cache.removeFromCache(key);
-                return validate(username, password, callback);
-              } else {
-                return callback(null, false);
-              }
+
+          // The whole response has been received.
+          res.on('end', () => {
+            if (res.statusCode === 403) {
+              resolve(null);
             }
-            if (result.authenticated === true) {
+            try {
+              const result = JSON.parse(body);
+              console.log('User: ', result);
+              //Set current user
               authorizer.setUser(result.user);
-              authorizer.getUserAuthorizedLocations(
-                result.user.userProperties,
-                function (authorizedLocations) {
-                  var currentUser = {
-                    username: username,
-                    role: authorizer.isSuperUser()
-                      ? authorizer.getAllPrivilegesArray()
-                      : authorizer.getCurrentUserPreviliges(),
-                    authorizedLocations: authorizedLocations
-                  };
-                  var sessionCookie =
-                    res.headers['set-cookie'] &&
-                    res.headers['set-cookie'].length > 0
-                      ? res.headers['set-cookie'][0]
-                      : session.session;
-                  cache.saveToCache(key, {
-                    result: result,
-                    currentUser: currentUser,
-                    session: sessionCookie
-                  });
-                  currentUser.session = sessionCookie;
-                  requestConfig.setAuthorization(sessionCookie);
-                  callback(null, result.authenticated, currentUser);
-                }
+              const authorizedLocations = authorizer.getUserAuthorizedLocations(
+                result.user.userProperties
               );
-            } else {
-              console.log(
-                'An error occurred while trying to validate; user is not authenticated'
-              );
-              callback(null, false);
+
+              const currentUser = {
+                username: result.user.username,
+                role: authorizer.isSuperUser()
+                  ? authorizer.getAllPrivilegesArray()
+                  : authorizer.getCurrentUserPreviliges(),
+                authorizedLocations: authorizedLocations
+              };
+              const validSessionCookie = 'JSESSIONID=' + result.sessionId;
+              const sessionCookie =
+                res.headers['set-cookie'] &&
+                res.headers['set-cookie'].length > 0
+                  ? res.headers['set-cookie'][0]
+                  : validSessionCookie;
+              cache.saveToCache(result.user.username, {
+                result: result,
+                currentUser: currentUser,
+                session: sessionCookie
+              });
+              currentUser.session = sessionCookie;
+              requestConfig.setAuthorization(sessionCookie);
+              resolve({
+                authenticated: result.authenticated,
+                currentUser: currentUser
+              });
+            } catch (error) {
+              reject(error);
             }
           });
         })
-        .on('error', function (error) {
-          //console.log(error);
-          callback(null, false);
+        .on('error', (error) => {
+          reject(error);
         });
-    } catch (ex) {
-      console.log('An error occurred while trying to validate', ex);
-      callback(null, false);
-    }
+    });
   };
 
   var HapiSwaggerOptions = {
@@ -175,10 +160,6 @@ try {
         }
       },
       {
-        register: Basic,
-        options: {}
-      },
-      {
         register: hapiAuthorization,
         options: {
           roles: authorizer.getAllPrivilegesArray()
@@ -194,10 +175,6 @@ try {
         register: locationAuthorizer,
         options: {}
       }
-      // {
-      //   'register': Nes,
-      //   'options': etlBroadcast.getOptions(server)
-      // }
     ],
 
     function (err) {
@@ -205,9 +182,68 @@ try {
         console.error(err);
         throw err; // something bad happened loading the plugin
       }
-      server.auth.strategy('simple', 'basic', 'required', {
-        validateFunc: validate
-      });
+
+      const getCookieValue = (name) =>
+        name.match('(^|;)\\s*JSESSIONID\\s*=\\s*([^;]+)')?.pop() || '';
+
+      const scheme = function (server, options) {
+        return {
+          authenticate: function (request, reply) {
+            const req = request.raw.req;
+            const cookieHeader = req.headers.cookie;
+            // Extract JSessionID from the cookie
+            if (!cookieHeader) {
+              return reply(Boom.unauthorized('No cookie header', null));
+            }
+            const cookie = getCookieValue(cookieHeader);
+            if (!cookie) {
+              return reply(
+                Boom.unauthorized(null, 'Invalid cookie/No cookie set!')
+              );
+            }
+            //Construct valid cookie
+            const validCookie = 'JSESSIONID=' + cookie;
+
+            authenticateWithCookie(validCookie).then((data) => {
+              if (!data) {
+                return reply(
+                  Boom.unauthorized('User not authenticated!'),
+                  null,
+                  {}
+                );
+              }
+
+              try {
+                const result = data;
+                console.log('Current user: ', result.currentUser);
+                if (result.authenticated === true) {
+                  //Authentication successful
+                  return reply.continue({
+                    isAuthenticated: true,
+                    credentials: result.currentUser
+                  });
+                } else {
+                  //Authentication unsuccessful
+                  return reply.continue({
+                    isAuthenticated: false,
+                    credentials: {}
+                  });
+                }
+              } catch (error) {
+                console.log('Oop error!', error);
+                return reply(
+                  Boom.unauthorized('User not authenticated!'),
+                  null,
+                  {}
+                );
+              }
+            });
+          }
+        };
+      };
+
+      server.auth.scheme('custom', scheme);
+      server.auth.strategy('default', 'custom', 'required');
 
       //Adding routes
       for (var route in routes) {

@@ -88,7 +88,7 @@ module.exports = (function () {
           hapiAuthorization: false
         },
         handler: function (request, reply) {
-          console.log('default rote', request.path);
+          console.log('default route', request.path);
 
           reply('Welcome to Ampath ETL service.');
           //return reply(Boom.forbidden('Not this end point bruh'));
@@ -710,7 +710,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/defaulter-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           if (request.query.locationUuids) {
             request.query.reportName = 'defaulter-list';
@@ -771,7 +771,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{patientUuids}/cdm-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -811,7 +811,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{patientUuids}/medication-change',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -851,7 +851,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{patientUuid}/hiv-clinical-reminder/{referenceDate}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -984,7 +984,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/forms/error',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           dao.logError(request, reply);
         }
@@ -1024,7 +1024,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1039,7 +1039,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/program-visit-configs',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           // var requestParams = Object.assign({}, request.query, request.params);
@@ -1065,7 +1065,7 @@ module.exports = (function () {
       path:
         '/etl/patient/{patientUuid}/program/{programUuid}/enrollment/{enrollmentUuid}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1121,7 +1121,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}/clinical-notes',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1151,7 +1151,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}/hiv-patient-clinical-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
@@ -1166,7 +1166,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{id}/hiv-patient-clinical-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
@@ -1181,7 +1181,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}/vitals',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1210,7 +1210,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}/data',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1239,7 +1239,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}/hiv-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1279,7 +1279,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}/oncology/summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1310,7 +1310,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{uuid}/patient-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1343,7 +1343,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/clinic-encounter-data',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -1366,7 +1366,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-program-config',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           var requestParams = Object.assign({}, request.query);
@@ -1403,7 +1403,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/monthly-appointment-visits',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -1442,7 +1442,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/hiv-summary-indicators',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
@@ -1480,7 +1480,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinical-hiv-comparative-overview',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
@@ -1541,7 +1541,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinical-hiv-comparative-overview/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1614,7 +1614,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-referrals',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -1687,7 +1687,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/referral-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -1756,7 +1756,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-referral-details/{locationUuid}/{enrollmentUuid}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           patientReferralDao
@@ -1781,7 +1781,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/patient-referral',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           patientReferralDao
@@ -1809,7 +1809,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/patient-referral/{patientReferralId}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           // console.log('xxxxxxxxxxxx', request)
@@ -1841,7 +1841,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinical-patient-care-status-overview',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
@@ -1897,7 +1897,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinical-patient-care-status-overview/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -1959,7 +1959,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinical-art-overview',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
@@ -2014,7 +2014,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinical-art-overview/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -2075,7 +2075,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/appointment-schedule',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2114,7 +2114,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-flow-data',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2149,7 +2149,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinic-flow-provider-statistics/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2186,7 +2186,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/clinic-lab-orders-data',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2221,7 +2221,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{patient_uuid}/monthly-care-status',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -2255,7 +2255,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{patient_uuid}/daily-care-status',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -2297,7 +2297,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/daily-visits',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2336,7 +2336,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/has-not-returned',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2375,7 +2375,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/monthly-appointment-schedule',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2413,7 +2413,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/monthly-visits',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -2452,7 +2452,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{uuid}/defaulter-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           dao.getClinicDefaulterList(request, reply);
         },
@@ -2511,7 +2511,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/custom_data/{userParams*3}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           dao.getCustomData(request, reply);
         }
@@ -2527,7 +2527,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/creation/statistics',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewDataEntryStats, privileges.canViewPatient]
@@ -2567,7 +2567,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{location}/patient/creation/statistics',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewDataEntryStats, privileges.canViewPatient]
@@ -2603,7 +2603,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/get-report-by-report-name',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -2737,7 +2737,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/MOH-731-report',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -2849,7 +2849,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/MOH-731-report/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -2952,7 +2952,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-status-change-tracking',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -3033,7 +3033,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-status-change-tracking/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -3097,7 +3097,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/user-cohorts',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           request.query.reportName = 'cohort-report';
@@ -3132,7 +3132,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/cohort-user/{cohortUserId}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           patientList
@@ -3158,7 +3158,7 @@ module.exports = (function () {
       method: 'DELETE',
       path: '/etl/cohort-user/{cohortUserId}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           patientList
@@ -3180,7 +3180,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/cohort-user/{cohortUserId}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           patientList
@@ -3208,7 +3208,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/cohort-user',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           patientList
@@ -3237,7 +3237,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/cohort/{cohortUuid}/cohort-users',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           patientList
@@ -3319,7 +3319,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hiv-summary-indicators',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -3412,7 +3412,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hiv-summary-indicators/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -3497,7 +3497,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hiv-summary-monthly-indicators',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -3589,7 +3589,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hiv-summary-monthly-indicators/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -3660,7 +3660,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/location/{locationUuids}/patient-by-indicator',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
@@ -3707,7 +3707,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-by-indicator',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
@@ -3750,7 +3750,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/data-entry-statistics/{sub}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataEntryStats
@@ -3853,7 +3853,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/indicators-schema',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
@@ -3886,7 +3886,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/indicators-schema-with-sections',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
@@ -3901,7 +3901,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hiv-summary-data',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
@@ -3916,7 +3916,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/compare-patient-lists',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           var r = request;
           var handler;
@@ -3962,7 +3962,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-list-by-indicator',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
@@ -4014,7 +4014,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-lab-orders',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           if (config.eidSyncOn === true) {
             const labSyncService = new LabSyncService();
@@ -4048,7 +4048,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/sync-patient-labs',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           if (config.eidSyncOn === true) {
             const labSyncService = new LabSyncService();
@@ -4069,7 +4069,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/eid/order/{lab}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -4113,7 +4113,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/session/invalidate',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           dao.invalidateUserSession(request, reply);
         }
@@ -4186,7 +4186,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/eid/load-order-justifications',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           dao.loadOrderJustifications(request, reply);
         },
@@ -4199,7 +4199,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/fileupload',
       config: {
-        auth: 'simple',
+        auth: 'default',
         payload: {
           maxBytes: 5000000
         },
@@ -4255,7 +4255,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/files/{param*}',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: {
           directory: {
             path: config.etl.uploadsDirectory,
@@ -4269,7 +4269,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/eid/patients-with-results',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: false
         },
@@ -4296,7 +4296,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/motdNotifications',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: false
         },
@@ -4322,7 +4322,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patients-requiring-viral-load-order',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -4388,7 +4388,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-care-cascade-analysis',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
@@ -4449,7 +4449,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-care-cascade-analysis/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -4514,7 +4514,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/indicator-disaggregation-filter-options',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           reply(
             require('./service/indicator-processor/indicator-filter-options.json')
@@ -4532,7 +4532,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{patientUuid}/medical-history-report',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
@@ -4578,7 +4578,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/departments-programs-config',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           reply(departmentProgramsService.getAllDepartmentsConfig());
@@ -4598,7 +4598,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/department-programs',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           let department = request.query.department;
@@ -4679,7 +4679,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/lab-orders-by-patient',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [
@@ -4790,7 +4790,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/radiology-diagnostic-report',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           var requestParams = request.query;
@@ -4819,7 +4819,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/radiology-images',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           var requestParams = request.query;
@@ -4846,7 +4846,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/radiology-all-patient-images',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           var requestParams = request.query;
@@ -4869,7 +4869,7 @@ module.exports = (function () {
       method: 'POST',
       path: '/etl/radiology-comments',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           var payload = request.payload;
@@ -4891,7 +4891,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/oncology-reports',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           oncologyReportsService
@@ -4918,7 +4918,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/oncology-report',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.reportUuid) {
@@ -4951,7 +4951,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/breast-cancer-screening-numbers',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5009,7 +5009,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/breast-cancer-screening-numbers-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -5050,7 +5050,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/combined-breast-cervical-cancer-screening-numbers',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5111,7 +5111,7 @@ module.exports = (function () {
       path:
         '/etl/combined-breast-cervical-cancer-screening-numbers-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -5153,7 +5153,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/cervical-cancer-screening-numbers',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5212,7 +5212,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/cervical-cancer-screening-numbers-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -5254,7 +5254,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/lung-cancer-screening-numbers',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5312,7 +5312,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/lung-cancer-screening-numbers-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -5353,7 +5353,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/lung-cancer-treatment-numbers',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5412,7 +5412,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/lung-cancer-treatment-numbers-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -5453,7 +5453,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/kibana-dashboards',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5546,7 +5546,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-referrals-peer-navigator',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
             locationParameter: [
@@ -5700,7 +5700,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/retention-summary-report',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5754,7 +5754,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/retention-summary-report/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           request.query.reportName = 'retention-summary-report';
@@ -5798,7 +5798,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/retention-summary-report/indicator-definitions',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -5870,7 +5870,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hei-monthly-summary/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           request.query.reportName = 'hei-summary-patient-list';
@@ -5908,7 +5908,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-gain-loses-numbers',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.locationUuid) {
@@ -5949,7 +5949,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-gain-loses-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.locationUuid) {
@@ -5995,7 +5995,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient-cervical-cancer-screening-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           const patientUuid = request.query.uuid;
@@ -6014,7 +6014,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/moh-412-report',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.locationUuids) {
@@ -6061,7 +6061,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/moh-412-report/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.locationUuids) {
