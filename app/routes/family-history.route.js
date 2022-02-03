@@ -1,6 +1,8 @@
-var authorizer = require('../../authorization/etl-authorizer');
 import { FamilyTestingService } from '../family-history/family-history.service';
+var authorizer = require('../../authorization/etl-authorizer');
 var privileges = authorizer.getAllPrivileges();
+var etlHelpers = require('../../etl-helpers');
+var preRequest = require('../../pre-request-processing');
 
 const routes = [
   {
@@ -13,23 +15,35 @@ const routes = [
         }
       },
       handler: function (request, reply) {
-        let familyTestingService = new FamilyTestingService();
-        let params = {
-          locationUuid: request.query.locationUuid,
-          eligible: request.query.eligible,
-          start_date: request.query.start_date,
-          end_date: request.query.end_date,
-          programs: request.query.program_type,
-          child_status: request.query.child_status,
-          elicited_clients: request.query.elicited_clients
-        };
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          let requestParams = Object.assign({}, request.query, request.params);
 
-        familyTestingService.getPatientList(params).then((result) => {
-          if (result.error) {
-            reply(result);
-          } else {
-            reply(result);
-          }
+          let requestCopy = _.cloneDeep(requestParams);
+          let reportParams = etlHelpers.getReportParams(
+            '',
+            ['startDate', 'endDate', 'locationUuid', 'locations'],
+            requestParams
+          );
+
+          requestCopy.locationUuids = reportParams.requestParams.locationUuids;
+          let familyTestingService = new FamilyTestingService();
+          let params = {
+            locations: reportParams.requestParams.locations,
+            eligible: request.query.eligible,
+            start_date: request.query.start_date,
+            end_date: request.query.end_date,
+            programs: request.query.program_type,
+            child_status: request.query.child_status,
+            elicited_clients: request.query.elicited_clients
+          };
+
+          familyTestingService.getPatientList(params).then((result) => {
+            if (result.error) {
+              reply(result);
+            } else {
+              reply(result);
+            }
+          });
         });
       },
       description: 'Family testing patient list',

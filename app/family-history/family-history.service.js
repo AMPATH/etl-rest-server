@@ -48,12 +48,23 @@ export class FamilyTestingService {
       FROM
           etl.flat_family_testing
           WHERE
-       location_uuid = '${params.locationUuid}'
-      GROUP BY patient_id) t2 ON (t1.patient_id = t2.patient_id) `;
+       location_id in (${params.locations})
+      GROUP BY patient_id) t2 ON (t1.patient_id = t2.patient_id) 
+      inner join (SELECT 
+          location_id, person_id,is_clinical_encounter
+          FROM
+            etl.flat_hiv_summary_v15b t4
+          WHERE
+            is_clinical_encounter = 1
+              AND t4.location_id in (${params.locations})
+              AND date(encounter_datetime) > '2020-07-30'
+          group by t4.person_id
+          ORDER BY encounter_datetime DESC
+              ) t3 on (t3.person_id = tx.person_id) `;
 
       where = `
       WHERE
-      tx.location_uuid = '${params.locationUuid}' `;
+      t3.location_id in (${params.locations})  `;
 
       if (params.start_date != null && params.end_date != null) {
         where =
@@ -92,21 +103,11 @@ export class FamilyTestingService {
       }
 
       if (params.elicited_clients == 0) {
-        where = `${where}  group by tx.person_id`;
-        sql =
-          sql +
-          ' tx.*, extract(year from (from_days(datediff(now(),tx.birthdate)))) as age, tx.gender as index_gender ' +
-          from +
-          where;
+        sql = this.allReviewedClientsQuery(params, sql, from);
       } else if (params.elicited_clients < 0) {
-        where = `${where} and obs_group_id is null `;
-        sql =
-          sql +
-          ' tx.*, extract(year from (from_days(datediff(now(),tx.birthdate)))) as age, tx.gender as index_gender ' +
-          from +
-          where;
+        sql = this.clientsWithoutContactsQuery(params, sql, from);
       } else if (params.elicited_clients > 0) {
-        where = `${where} and tx.person_id in (select patient_id from etl.flat_family_testing where location_uuid = '${params.locationUuid}' ) group by tx.person_id`;
+        where = `${where} and tx.person_id in (select patient_id from etl.flat_family_testing where t3.location_id in (${params.locations})  ) group by tx.person_id`;
         sql =
           sql +
           ' tx.*, extract(year from (from_days(datediff(now(),tx.birthdate)))) as age, tx.gender as index_gender ' +
@@ -368,4 +369,66 @@ export class FamilyTestingService {
       });
     });
   };
+
+  allReviewedClientsQuery(params, sql, from) {
+    let w = ` WHERE t3.location_id in (${params.locations})  `;
+    if (params.start_date != null && params.end_date != null) {
+      w =
+        w +
+        `  AND ((DATE(t1.date_elicited) BETWEEN date('${params.start_date}') and date('${params.end_date}') AND obs_group_id IS NOT NULL)
+        OR (DATE(tx.encounter_datetime) BETWEEN date('${params.start_date}') and date('${params.end_date}') and obs_group_id IS NULL))`;
+    } else if (params.end_date != null) {
+      w =
+        w +
+        `  and (date(t1.date_elicited) <= date('${params.end_date}') or (date(tx.encounter_datetime) <= date('${params.end_date}') and obs_group_id IS NULL)) `;
+    }
+
+    switch (params.child_status) {
+      case '1':
+        w = w + `  and tx.child_status_reason = 11890`;
+        break;
+      case '0':
+        w = w + `  and tx.child_status_reason = 11891`;
+        break;
+    }
+
+    sql =
+      sql +
+      ' tx.*, extract(year from (from_days(datediff(now(),tx.birthdate)))) as age, tx.gender as index_gender ' +
+      from +
+      w +
+      '  group by tx.person_id';
+
+    return sql;
+  }
+
+  clientsWithoutContactsQuery(params, sql, from) {
+    let w = ` WHERE t3.location_id in (${params.locations})  `;
+    if (params.start_date != null && params.end_date != null) {
+      w =
+        w +
+        `  and date(tx.encounter_datetime) between date('${params.start_date}') and date('${params.end_date}')`;
+    } else if (params.end_date != null) {
+      w =
+        w + `  and date(tx.encounter_datetime) <= date('${params.end_date}') `;
+    }
+
+    switch (params.child_status) {
+      case '1':
+        w = w + `  and tx.child_status_reason = 11890`;
+        break;
+      case '0':
+        w = w + `  and tx.child_status_reason = 11891`;
+        break;
+    }
+
+    sql =
+      sql +
+      ' tx.*, extract(year from (from_days(datediff(now(),tx.birthdate)))) as age, tx.gender as index_gender ' +
+      from +
+      w +
+      '  and obs_group_id is null';
+
+    return sql;
+  }
 }
