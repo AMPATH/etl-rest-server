@@ -2749,36 +2749,6 @@
         ]
       },
       {
-        "uuid": "0bcccab0-59ce-4a25-a158-cc722427ff3f",
-        "name": "Treatment Supporter visit",
-        "encounterTypes": [
-          {
-            "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
-            "display": "TXSUPPORTERMEDREFILL"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
-            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
-            "display": "COVIDCASEREPORTING"
-          },
-          {
-            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
-            "display": "MOBILITYSCREENING"
-          },
-          {
-            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
-            "display": "HIVCLINICALREFERRAL"
-          }
-        ]
-      },
-      {
         "uuid": "0d608b80-1cb5-4c85-835a-29072683ca27",
         "name": "Community Visit for Differentiated Care",
         "groupVisit": true,
@@ -2790,11 +2760,6 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
-          },
-          {
-            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
-            "display": "ONCOLOGYVIA",
-            "allowedIf": "age >= 25 && age <= 49 && gender === 'F'"
           },
           {
             "uuid": "cb5c0abd-0817-40e3-9413-8669561fadb9",
@@ -2880,28 +2845,6 @@
         ]
       },
       {
-        "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
-        "name": "HIV Lab Visit",
-        "encounterTypes": [
-          {
-            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER"
-          },
-          {
-            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
-            "display": "POCLAB"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
-            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
-            "display": "COVIDCASEREPORTING"
-          }
-        ]
-      },
-      {
         "uuid": "380d79a7-6fb0-41bf-be3d-aa3d25da187c",
         "name": "Standard HIV Visit for Differentiated Care ",
         "allowedIf": "age >= 10 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit",
@@ -2939,6 +2882,11 @@
             "display": "YOUTHRETURN"
           },
           {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 25 && age <= 49 && gender === 'F'"
+          },
+          {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
           },
@@ -2953,6 +2901,58 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
+          }
+        ]
+      },
+      {
+        "uuid": "0bcccab0-59ce-4a25-a158-cc722427ff3f",
+        "name": "Treatment Supporter visit",
+        "encounterTypes": [
+          {
+            "uuid": "693559d3-4e44-4d33-83f9-bc70ca56fe34",
+            "display": "TXSUPPORTERMEDREFILL"
+          },
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
+          },
+          {
+            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
+            "display": "COVIDSCREENING"
+          },
+          {
+            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
+            "display": "COVIDCASEREPORTING"
+          },
+          {
+            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
+            "display": "MOBILITYSCREENING"
+          },
+          {
+            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
+            "display": "HIVCLINICALREFERRAL"
+          }
+        ]
+      },
+      {
+        "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
+        "name": "HIV Lab Visit",
+        "encounterTypes": [
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
+          },
+          {
+            "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
+            "display": "POCLAB"
+          },
+          {
+            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
+            "display": "COVIDSCREENING"
+          },
+          {
+            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
+            "display": "COVIDCASEREPORTING"
           }
         ]
       },
