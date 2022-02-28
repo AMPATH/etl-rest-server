@@ -76,7 +76,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "fd.location_id in (?)",
+        "conditionExpression": "de.transfer_out_date is null and fd.location_id in (?)",
         "parameterName": "locations"
       }
     ]
