@@ -98,10 +98,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -112,10 +108,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -155,10 +147,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -169,10 +157,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -224,10 +208,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -238,10 +218,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -276,10 +252,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -290,10 +262,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -327,10 +295,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -341,10 +305,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -383,10 +343,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -397,10 +353,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -435,10 +387,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -449,10 +397,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           },
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
@@ -491,10 +435,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -505,10 +445,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -547,10 +483,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -561,10 +493,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           },
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
@@ -608,16 +536,8 @@
             "display": "DRUGPICKUP"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -633,10 +553,6 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -655,10 +571,6 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -687,10 +599,6 @@
             "display": "POCLAB"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -707,10 +615,6 @@
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -1301,10 +1205,6 @@
             "display": "MDTFORM"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -1315,10 +1215,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -1370,10 +1266,6 @@
             "display": "MDTFORM"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -1384,10 +1276,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -1427,10 +1315,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -1441,10 +1325,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -1492,10 +1372,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -1506,10 +1382,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -1553,10 +1425,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -1567,10 +1435,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -1618,10 +1482,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -1632,10 +1492,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -1664,10 +1520,6 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -1718,10 +1570,6 @@
             "display": "DRUGPICKUP"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -1732,10 +1580,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -1750,14 +1594,6 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
-            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
-            "display": "COVIDCASEREPORTING"
           },
           {
             "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
@@ -1778,10 +1614,6 @@
             "display": "INPATIENTPEER"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -1798,10 +1630,6 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -1874,10 +1702,6 @@
             "display": "DERMATOLOGYREFERRAL"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -1910,10 +1734,6 @@
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -2072,10 +1892,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -2108,10 +1924,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -2130,10 +1942,6 @@
             "display": "POCLAB"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -2146,10 +1954,6 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -2264,10 +2068,6 @@
             "display": "OUTREACHFIELDFU"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -2312,10 +2112,6 @@
             "display": "OUTREACHFIELDFU"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -2342,10 +2138,6 @@
             "display": "POCLAB"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -2358,10 +2150,6 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -2481,10 +2269,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -2495,10 +2279,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -2515,10 +2295,6 @@
             "display": "POCLAB"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -2531,10 +2307,6 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -2723,10 +2495,6 @@
             "display": "HIVTRIAGE"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -2737,10 +2505,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           },
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
@@ -2791,10 +2555,6 @@
             "display": "HIVHOMEVISIT"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -2805,10 +2565,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           },
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
@@ -2864,10 +2620,6 @@
             "display": "DRUGPICKUP"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -2878,10 +2630,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -2896,10 +2644,6 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -2933,10 +2677,6 @@
             "display": "HIVHOMEVISIT"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -2957,10 +2697,6 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -3073,10 +2809,6 @@
             "display": "DRUGPICKUP"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -3093,10 +2825,6 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -3675,10 +3403,6 @@
             "allowedIf": "age >= 25 && age <= 49 && gender === 'F'"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -3720,10 +3444,6 @@
           {
             "uuid": "cb5c0abd-0817-40e3-9413-8669561fadb9",
             "display": "HIVHOMEVISIT"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -3818,10 +3538,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -3840,10 +3556,6 @@
             "display": "POCLAB"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -3856,10 +3568,6 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -3951,10 +3659,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -3973,10 +3677,6 @@
             "display": "POCLAB"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -3989,10 +3689,6 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -4199,10 +3895,6 @@
             "display": "FAMILYSTATUS"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -4213,10 +3905,6 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           },
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
@@ -4260,16 +3948,8 @@
             "display": "DRUGPICKUP"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
-          },
-          {
-            "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
-            "display": "COVIDASSESSMENT"
           }
         ]
       },
@@ -4284,10 +3964,6 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -4315,10 +3991,6 @@
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
             "display": "POCLAB"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -4381,10 +4053,6 @@
           {
             "uuid": "655c3451-172e-4c85-960a-392e4284ef92",
             "display": "PHARMACOVIGILANCEPEER"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -4489,10 +4157,6 @@
             "display": "OUTREACHFIELDFU"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
@@ -4515,10 +4179,6 @@
             "display": "DRUGPICKUP"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -4537,10 +4197,6 @@
             "display": "POCLAB"
           },
           {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           }
@@ -4553,10 +4209,6 @@
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
             "display": "INPATIENTPEER"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
