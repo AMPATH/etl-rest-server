@@ -2173,11 +2173,7 @@
         "encounterTypes": [
           {
             "uuid": "c3a78744-f94a-4a25-ac9d-1c48df887895",
-            "display": "PEPINITIAL",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "PEPINITIAL"
           },
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
@@ -2213,11 +2209,7 @@
         "encounterTypes": [
           {
             "uuid": "f091b833-9e1a-4eef-8364-fc289095a832",
-            "display": "PEPRETURN",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "PEPRETURN"
           },
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
@@ -2251,19 +2243,11 @@
         "encounterTypes": [
           {
             "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "LABORDERENCOUNTER"
           },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
-            "display": "POCLAB",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "POCLAB"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
@@ -2281,11 +2265,7 @@
         "encounterTypes": [
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "INPATIENTPEER"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
@@ -2386,11 +2366,7 @@
           },
           {
             "uuid": "00ee2fd6-9c95-4ffc-ab31-6b1ce2dede4d",
-            "display": "PREPINITIAL",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "PREPINITIAL"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -2438,11 +2414,7 @@
           },
           {
             "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
-            "display": "PREPRETURN",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "PREPRETURN"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -2484,19 +2456,11 @@
         "encounterTypes": [
           {
             "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "LABORDERENCOUNTER"
           },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
-            "display": "POCLAB",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "POCLAB"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
@@ -2514,11 +2478,7 @@
         "encounterTypes": [
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "INPATIENTPEER"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
@@ -3266,11 +3226,7 @@
           },
           {
             "uuid": "95f5847a-8952-4a3a-8610-caee271d351a",
-            "display": "TRANSITMEDICATION",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "TRANSITMEDICATION"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -3287,11 +3243,7 @@
           },
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "DRUGPICKUP"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
@@ -3309,19 +3261,11 @@
         "encounterTypes": [
           {
             "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "LABORDERENCOUNTER"
           },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
-            "display": "POCLAB",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "POCLAB"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
@@ -3339,11 +3283,7 @@
         "encounterTypes": [
           {
             "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "INPATIENTPEER"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
