@@ -7,7 +7,7 @@ var currentUserRoles = [];
 var analytics = require('../dao/analytics/etl-analytics-dao');
 var _ = require('underscore');
 
-var PRIVILEGES = {
+const PRIVILEGES = {
   canViewPatient: 'View Patients',
   canViewDataAnalytics: 'View Data Analytics',
   canViewDataEntryStats: 'View POC Data entry statitsisc',
@@ -61,7 +61,7 @@ var reportPrivileges = {
   'patient-referral-report': [PRIVILEGES.canViewDataAnalytics]
 };
 
-var SUPERUSER_ROLES = ['System Developer'];
+const SUPERUSER_ROLES = ['System Developer'];
 
 authorizer.setUser = function (openmrsUser) {
   currentUser = openmrsUser;
@@ -89,12 +89,12 @@ authorizer.getAllPrivileges = function () {
 };
 
 authorizer.getAllPrivilegesArray = function () {
-  var allPrivileges = [];
+  const allPrivileges = [];
 
-  for (var prop in PRIVILEGES) {
+  for (let prop in PRIVILEGES) {
     allPrivileges.push(PRIVILEGES[prop]);
   }
-  //console.log('All privileges', allPrivileges);
+
   return allPrivileges;
 };
 
@@ -118,7 +118,7 @@ authorizer.hasPrivileges = function (arrayOfPrivileges) {
     return true;
   }
 
-  var hasPrivilege = true;
+  let hasPrivilege = true;
 
   for (var i = 0; i < arrayOfPrivileges.length; i++) {
     if (!authorizer.hasPrivilege(arrayOfPrivileges[i])) {
@@ -152,30 +152,26 @@ authorizer.isSuperUser = function () {
    return false;**/
 };
 
-authorizer.getUserAuthorizedLocations = function (userProperties, callback) {
-  var authorized = [];
-  resolveLocationName(userProperties, 'aggregate', function (r) {
-    authorized.push.apply(authorized, r);
-    resolveLocationName(userProperties, 'operational', function (s) {
-      authorized.push.apply(authorized, s);
-      callback(authorized);
-    });
-  });
+authorizer.getUserAuthorizedLocations = function (userProperties) {
+  const authorized = [];
+  authorized.push(...resolveLocationName(userProperties, 'aggregate'));
+  authorized.push(...resolveLocationName(userProperties, 'operational'));
+
+  return authorized;
 };
 
-function resolveLocationName(userProperties, type, callback) {
-  var authorized = [];
+function resolveLocationName(userProperties, type) {
+  const authorized = [];
   for (var key in userProperties) {
     if (type === 'operational') {
       if (/^grantAccessToLocationOperationalData/.test(key)) {
         if (userProperties[key] === '*') {
-          return callback([
-            {
-              uuid: userProperties[key],
-              name: 'All',
-              type: 'operational'
-            }
-          ]);
+          const grantedAccessLocationOperationalData = {
+            uuid: userProperties[key],
+            name: 'All',
+            type: 'operational'
+          };
+          authorized.push(grantedAccessLocationOperationalData);
         } else {
           authorized.push(userProperties[key]);
         }
@@ -183,13 +179,12 @@ function resolveLocationName(userProperties, type, callback) {
     } else if (type === 'aggregate') {
       if (/^grantAccessToLocationAggregateData/.test(key)) {
         if (userProperties[key] === '*') {
-          return callback([
-            {
-              uuid: userProperties[key],
-              name: 'All',
-              type: 'aggregate'
-            }
-          ]);
+          const grantedAccessLocationAggregateData = {
+            uuid: userProperties[key],
+            name: 'All',
+            type: 'aggregate'
+          };
+          authorized.push(grantedAccessLocationAggregateData);
         } else {
           authorized.push(userProperties[key]);
         }
@@ -198,37 +193,36 @@ function resolveLocationName(userProperties, type, callback) {
   }
 
   if (authorized.length > 0) {
-    analytics.resolveLocationUuidsToName(authorized, function (results) {
-      var i = [];
-      _.each(results, function (result) {
+    analytics.resolveLocationUuidsToName(authorized, (results) => {
+      const resolveLocationUuids = [];
+      _.each(results, (result) => {
         if (type === 'operational') {
-          i.push({
+          resolveLocationUuids.push({
             uuid: result.uuid,
             name: result.name,
             type: 'operational'
           });
         } else if (type === 'aggregate') {
-          i.push({
+          resolveLocationUuids.push({
             uuid: result.uuid,
             name: result.name,
             type: 'aggregate'
           });
         }
       });
-      callback(i);
+      return resolveLocationUuids;
     });
   } else {
     //for users whose privileges are not set
-    callback(authorized);
+    return authorized;
   }
+  return authorized;
 }
-
-module.exports = authorizer;
 
 function _setCurrentUserPrivileges() {
   currentUserPrivileges = [];
   for (var i = 0; i < currentUser.privileges.length; i++) {
-    //console.log('Adding privilege: ', currentUser.privileges[i].display);
+    // console.log('Adding privilege: ', currentUser.privileges[i].display);
     currentUserPrivileges.push(currentUser.privileges[i].display);
   }
 }
@@ -239,3 +233,5 @@ function _setCurrentUserRoles() {
     currentUserRoles.push(currentUser.roles[i].display);
   }
 }
+
+module.exports = authorizer;
