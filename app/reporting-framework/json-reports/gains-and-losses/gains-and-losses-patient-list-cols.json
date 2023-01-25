@@ -82,6 +82,21 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
         "headerName": "Transfer Out Date",
         "width": 150,
         "field": "transfer_out_date"
@@ -95,6 +110,16 @@
         "headerName": "Transfer Out Type",
         "width": 200,
         "field": "transfer_out_type"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 200,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 200,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Nearest Center",
@@ -184,6 +209,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Transfer Out Date",
@@ -295,6 +345,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Transfer Out Facility",
         "width": 200,
         "field": "transfer_out_location"
@@ -392,6 +467,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Days since LTFU",
@@ -503,6 +603,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Days since LTFU",
         "width": 150,
         "field": "days_since_ltfu"
@@ -602,6 +727,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Days since LTFU",
         "width": 150,
         "field": "days_since_ltfu"
@@ -699,6 +849,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Days since LTFU",
@@ -815,6 +990,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
@@ -917,6 +1117,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Nearest Center",
@@ -1023,6 +1248,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
@@ -1115,6 +1365,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Days since RTC",
@@ -1216,6 +1491,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Days since RTC",
         "width": 150,
         "field": "days_since_rtc"
@@ -1313,6 +1613,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Days since RTC",
@@ -1449,6 +1774,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
@@ -1576,6 +1926,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Nearest Center",
@@ -1707,6 +2082,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
@@ -1806,6 +2206,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
@@ -1898,6 +2323,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Days since RTC",
@@ -1999,6 +2449,31 @@
         "field": "covid_19_vaccination_status"
       },
       {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
+      },
+      {
         "headerName": "Days since RTC",
         "width": 150,
         "field": "days_since_rtc"
@@ -2091,6 +2566,31 @@
         "headerName": "Covid-19 Assessment Status",
         "width": 200,
         "field": "covid_19_vaccination_status"
+      },
+      {
+        "headerName": "Cervical Screening Date",
+        "width": 200,
+        "field": "cervical_screening_date"
+      },
+      {
+        "headerName": "Cervical Screening Method",
+        "width": 200,
+        "field": "cervical_screening_method"
+      },
+      {
+        "headerName": "Cervical Screening Result",
+        "width": 200,
+        "field": "cervical_screening_result"
+      },
+      {
+        "headerName": "SMS Consent Provided",
+        "width": 150,
+        "field": "sms_consent_provided"
+      },
+      {
+        "headerName": "SMS Time",
+        "width": 100,
+        "field": "sms_receive_time"
       },
       {
         "headerName": "Days since RTC",
