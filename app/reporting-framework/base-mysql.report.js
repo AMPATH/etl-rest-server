@@ -232,6 +232,8 @@ import * as clinic_flow_provider_statistics_base from './json-reports/clinic-flo
 //covid 19 report
 import * as covid_19_summary_aggregate from './json-reports/covid-19-summary-report-aggregate.json';
 import * as covid_19_summary_base from './json-reports/covid-19-summary-report-base.json';
+import * as covid_19_cumulative_summary_aggregate from './json-reports/covid19-cumulative-summary-report-aggregate.json';
+import * as covid_19_cumulative_summary_base from './json-reports/covid19-cumulative-summary-report-base.json';
 import * as on_art_15_and_above_aggregate from './json-reports/hiv-monthly-on-art-15-and-above-report-aggregate.json';
 import * as on_art_15_and_above_base from './json-reports/hiv-monthly-on-art-15-and-above-report-base.json';
 import * as covid_19_monthly_report from './json-reports/covid-19/covid-19-monthly-report.json';
@@ -1232,6 +1234,14 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(covid_19_summary_aggregate),
             covid19SummaryReportBase: this.cloneJsonSchema(
               covid_19_summary_base
+            )
+          });
+          break;
+        case 'covid19CumulativeSummaryReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(covid_19_cumulative_summary_aggregate),
+            covid19CumulativeSummaryReportBase: this.cloneJsonSchema(
+              covid_19_cumulative_summary_base
             )
           });
           break;

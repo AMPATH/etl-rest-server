@@ -1,36 +1,29 @@
 {
-  "name": "covid19SummaryReportAggregate",
+  "name": "covid19CumulativeSummaryReportAggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "covid19SummaryReportBase",
+      "name": "covid19CumulativeSummaryReportBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "covid19SummaryReportBase",
+      "dataSet": "covid19CumulativeSummaryReportBase",
       "alias": "b"
     }
   ],
   "columns": [
     {
-      "type": "simple_column",
-      "alias": "person_id",
-      "column": "b.person_id"
-    },
-    {
-      "type": "simple_column",
-      "alias": "month",
-      "column": "b.month"
-    },
-    {
-      "type": "simple_column",
-      "alias": "location_id",
-      "column": "b.location_id"
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
     },
     {
       "type": "simple_column",
@@ -44,23 +37,53 @@
     },
     {
       "type": "simple_column",
-      "alias": "screened_this_month",
-      "column": "count(b.screened_this_month)"
+      "alias": "location_id",
+      "column": "b.location_id"
     },
     {
       "type": "simple_column",
-      "alias": "fully_vaccinated_this_month",
-      "column": "count(b.fully_vaccinated_this_month)"
+      "alias": "ever_screened",
+      "column": "count(b.ever_screened)"
     },
     {
       "type": "simple_column",
-      "alias": "partially_vaccinated_this_month",
-      "column": "count(b.partially_vaccinated_this_month)"
+      "alias": "fully_vaccinated_ever",
+      "column": "count(b.fully_vaccinated_ever)"
     },
     {
       "type": "simple_column",
-      "alias": "not_vaccinated_this_month",
-      "column": "count(b.not_vaccinated_this_month)"
+      "alias": "partially_vaccinated_ever",
+      "column": "count(b.partially_vaccinated_ever)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "not_vaccinated_ever",
+      "column": "count(b.not_vaccinated_ever)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "verified_1st_dose_ever",
+      "column": "count(b.verified_1st_dose_ever)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "verified_2nd_dose_ever",
+      "column": "count(b.verified_2nd_dose_ever)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ever_tested_positive",
+      "column": "count(b.ever_tested_positive)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ever_hospitalized",
+      "column": "count(b.ever_hospitalized)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "received_booster",
+      "column": "count(b.received_booster)"
     }
   ],
   "groupBy": {
