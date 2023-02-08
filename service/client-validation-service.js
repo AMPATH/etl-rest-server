@@ -2,10 +2,10 @@ var db = require('../etl-db');
 const Promise = require('bluebird');
 
 export class ClientValidationIssues {
-  generateAggregates() {
+  generateVerificationClients(params) {
     const that = this;
     return new Promise(function (resolve, reject) {
-      const sql = that.aggregateQuery();
+      const sql = that.verificationClientsQuery(params.locationUuid);
       const queryParts = {
         sql: sql
       };
@@ -15,7 +15,7 @@ export class ClientValidationIssues {
     });
   }
 
-  aggregateQuery() {
+  verificationClientsQuery(location) {
     return `SELECT
     County,
     l.name AS 'Health Facility',
@@ -66,6 +66,7 @@ FROM
     inner join etl.nupi_verification nv on nv.clientNumber=id.identifier
 WHERE
          fh.location_id != 195 
+         AND fh.location_id = '${location}'
         AND fh.next_clinical_datetime_hiv IS NULL
         AND fh.is_clinical_encounter = 1
         AND (TIMESTAMPDIFF(DAY, fh.rtc_date, CURDATE()) < 30)

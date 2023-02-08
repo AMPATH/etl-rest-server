@@ -7,7 +7,7 @@ const routes = [
       handler: function (request, reply) {
         let service = new ClientValidationIssues();
         service
-          .generateAggregates()
+          .generateVerificationClients(request.query)
           .then((res) => reply(res))
           .catch((err) => {
             console.log('ERROR l13', err);
