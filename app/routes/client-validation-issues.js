@@ -10,12 +10,11 @@ const routes = [
           .generateVerificationClients(request.query)
           .then((res) => reply(res))
           .catch((err) => {
-            console.log('ERROR l13', err);
             reply(err);
           });
       },
-      description: 'Get all verification aggregates ',
-      notes: 'Returns all verification aggregates',
+      description: 'Get all Clients with validation issues',
+      notes: 'Returns all  clients with validation issues',
       tags: ['api'],
       validate: {
         options: {
