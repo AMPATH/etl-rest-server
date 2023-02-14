@@ -1,0 +1,51 @@
+[
+  {
+    "facility_name": "Moi Teaching Refferal Hospital",
+    "mfl_code": "15204",
+    "clinics": [
+      {
+        "location_uuid": "08feae7c-1352-11df-a1f1-0026b9348838",
+        "mrsDisplay": "MTRH Module 1"
+      },
+      {
+        "location_uuid": "08feb14c-1352-11df-a1f1-0026b9348838",
+        "mrsDisplay": "MTRH Module 2"
+      },
+      {
+        "location_uuid": "08feb2dc-1352-11df-a1f1-0026b9348838",
+        "mrsDisplay": "MTRH Module 3"
+      },
+      {
+        "location_uuid": "08feb444-1352-11df-a1f1-0026b9348838",
+        "mrsDisplay": "MTRH Module 4"
+      }
+    ]
+  },
+  {
+    "facility_name": "Kitale County Referral Hospital",
+    "mfl_code": "14947",
+    "clinics": [
+      {
+        "location_uuid": "0900b636-1352-11df-a1f1-0026b9348838",
+        "mrsDisplay": "Saboti"
+      },
+      {
+        "location_uuid": "1be88533-0a70-40a4-9c45-1a7a936fd23a",
+        "mrsDisplay": "Tulwet"
+      },
+      {
+        "location_uuid": "c8ede412-a5da-47be-ae7f-f76a4ffc5065",
+        "mrsDisplay": "Sister Freda Medical"
+      },
+      {
+        "location_uuid": "535dc3bd-842b-4ca1-bc7c-357635ab985e",
+        "mrsDisplay": "Kitale MCH"
+      }
+    ]
+  },
+  {
+    "facility_name": "Hospitals Group",
+    "mfl_code": "15203",
+    "clinics": []
+  }
+]
