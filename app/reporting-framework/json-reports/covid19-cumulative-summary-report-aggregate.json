@@ -99,7 +99,7 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient-list-with-contacts-template",
+      "useTemplate": "patient-list-covid-template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {

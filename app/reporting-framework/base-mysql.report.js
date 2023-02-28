@@ -230,6 +230,7 @@ import * as clinic_flow_provider_statistics_aggregate from './json-reports/clini
 import * as clinic_flow_provider_statistics_base from './json-reports/clinic-flow-provider-statistics-base.json';
 
 //covid 19 report
+import * as patient_list_covid_template from './json-reports/patient-list-covid-template.json';
 import * as covid_19_summary_aggregate from './json-reports/covid-19-summary-report-aggregate.json';
 import * as covid_19_summary_base from './json-reports/covid-19-summary-report-base.json';
 import * as covid_19_cumulative_summary_aggregate from './json-reports/covid19-cumulative-summary-report-aggregate.json';
@@ -325,6 +326,11 @@ export class BaseMysqlReport {
         case 'patient-list-with-contacts-template':
           resolve({
             main: this.cloneJsonSchema(patient_list_with_contacts_template)
+          });
+          break;
+        case 'patient-list-covid-template':
+          resolve({
+            main: this.cloneJsonSchema(patient_list_covid_template)
           });
           break;
         case 'prep-report-patient-list-template':
