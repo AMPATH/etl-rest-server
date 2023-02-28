@@ -89,7 +89,7 @@
       "alias": "not_vaccinated_ever",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(_fce.received_covid_19_vaccine  = 1066,1,null)"
+        "expression": "if((_fce.received_covid_19_vaccine = 1066 AND _fce.vaccination_status is null),1,null)"
       }
     },
     {
