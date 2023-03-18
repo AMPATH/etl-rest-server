@@ -27,7 +27,7 @@
   "author": "AMPATH DEVS",
   "license": "ISC",
   "dependencies": {
-    "@slack/client": "^4.8.0",
+    "@slack/client": "^5.0.2",
     "@types/jest": "^26.0.22",
     "ampath-json-query-gen": "github:AMPATH/ampath-json-query-gen.git#v1.0.0-alpha11",
     "ampath-json2sql": "github:AMPATH/ampath-json2sql.git#v1.0.12",
