@@ -1,8 +1,6 @@
-var facilitymappings = require('../../service/eid/mfl-facility-mappings.json');
 var db = require('../../etl-db');
 
 var defs = {
-  getFacilityMapping: getFacilityMapping,
   getParentLocations: (params) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
@@ -34,11 +32,5 @@ var defs = {
     });
   }
 };
-
-function getFacilityMapping() {
-  return new Promise((resolve, reject) => {
-    resolve(facilitymappings);
-  });
-}
 
 module.exports = defs;

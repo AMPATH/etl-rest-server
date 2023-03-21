@@ -5,32 +5,6 @@ var facilitymappings = require('../facility-mappings/facility-mapping');
 const routes = [
   {
     method: 'GET',
-    path: '/etl/facility-mapping',
-    config: {
-      plugins: {},
-      handler: function (request, reply) {
-        facilitymappings
-          .getFacilityMapping()
-          .then((result) => {
-            reply(result);
-          })
-          .catch((error) => {
-            reply(error);
-          });
-      },
-      description: 'List of facilities with MFL code',
-      notes: 'Returns facilities list',
-      tags: ['api'],
-      validate: {
-        options: {
-          allowUnknown: true
-        },
-        params: {}
-      }
-    }
-  },
-  {
-    method: 'GET',
     path: '/etl/parentlocations',
     config: {
       plugins: {},
