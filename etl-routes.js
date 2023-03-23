@@ -79,6 +79,7 @@ import { DefaulterListService } from './service/defaulter-list-service';
 import { ClinicFlowService } from './service/clinic-flow-service';
 import { getPatientCovidVaccinationStatus } from './service/covid-19/covid-19-vaccination-summary';
 import { Covid19MonthlyReport } from './service/covid-19/covid-19-monthly-report';
+import { ExampleReportService } from './service/example/example-report-service';
 
 module.exports = (function () {
   var routes = [
@@ -6221,6 +6222,84 @@ module.exports = (function () {
         description: 'COVID-19 Monthly Report Patient List',
         notes:
           'Returns patient list of vaccinated i.e fully,partial and not vaccinated',
+        tags: ['api']
+      }
+    },
+
+    // Example reports
+    {
+      method: 'GET',
+      path: '/etl/example-report',
+      config: {
+        auth: 'simple',
+        handler: function (request, reply) {
+          request.query.reportName = 'exampleSummaryReport';
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'exampleSummaryReport',
+              ['startDate', 'endDate', 'locationUuids'],
+              requestParams
+            );
+            let service = new ExampleReportService();
+            service
+              .getAggregateReport(reportParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                console.error('Error: ', error);
+                reply(error);
+              });
+          });
+        },
+        description:
+          'Get example report summary based on location and time filters',
+        notes: 'Returns aggregates of example reports',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/example-report-patient-list',
+      config: {
+        auth: 'simple',
+        plugins: {
+          openmrsLocationAuthorizer: {
+            locationParameter: [
+              {
+                type: 'query', //can be in either query or params so you have to specify
+                name: 'locationUuids' //name of the location parameter
+              }
+            ]
+          }
+        },
+        handler: function (request, reply) {
+          request.query.reportName = 'exampleSummaryReport';
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let service = new ExampleReportService();
+            service
+              .getPatientListReport(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
+        },
+        description:
+          'Get example report patient list based on location and time filters',
+        notes: 'Returns details of patients',
         tags: ['api']
       }
     }

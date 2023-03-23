@@ -237,6 +237,11 @@ import * as on_art_15_and_above_base from './json-reports/hiv-monthly-on-art-15-
 import * as covid_19_monthly_report from './json-reports/covid-19/covid-19-monthly-report.json';
 import * as hiv_monthly_not_screened_for_covid_aggregate from './json-reports/hiv-monthly-not-screened-for-covid-aggregate.json';
 import * as hiv_monthly_not_screened_for_covid_base from './json-reports/hiv-monthly-not-screened-for-covid-base.json';
+
+//example reports
+import * as example_aggregate_report from './json-reports/example/example-report-aggregate.json';
+import * as example_base_report from './json-reports/example/example-report-base.json';
+import * as example_patient_list_template from './json-reports/example/example-patient-list-template.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1233,6 +1238,17 @@ export class BaseMysqlReport {
             covid19SummaryReportBase: this.cloneJsonSchema(
               covid_19_summary_base
             )
+          });
+          break;
+        case 'exampleReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(example_aggregate_report),
+            exampleReportBase: this.cloneJsonSchema(example_base_report)
+          });
+          break;
+        case 'example-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(example_patient_list_template) //Example of a patient list template, can be reuse.
           });
           break;
         case 'hivMonthlyOnART15AndAboveAggregate':
