@@ -102,7 +102,7 @@
       "alias": "needs_vl_coded",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "case when (ls.cur_arv_meds is null) then 0 when (timestampdiff(month,ls.vl_1_date, date('{referenceDate}')) > 3) and ls.vl_1 > 1000 and ls.arv_start_date < ls.vl_1_date then 1 when (timestampdiff(month,ls.arv_start_date,date('{referenceDate}')) between 6 and 12) and (ls.vl_1_date is null or ls.vl_1_date < ls.arv_start_date ) then 2 when (timestampdiff(month,ls.arv_start_date,'{referenceDate}') > 12) and (ls.vl_1_date is null or timestampdiff(month,ls.vl_1_date,'{referenceDate}') > 12) then 3 WHEN  (ls.is_pregnant OR (t6.relationship = 2 AND TIMESTAMPDIFF(MONTH, t6.date_created,'{referenceDate}') BETWEEN 0 AND 24 )) AND ls.vl_1 > 400 AND  (TIMESTAMPDIFF(MONTH, ls.vl_1_date,'{referenceDate}') >= 3) THEN 4 WHEN  (t1.is_pregnant OR (t6.relationship = 2 AND TIMESTAMPDIFF(MONTH, t6.date_created,'{referenceDate}') BETWEEN 0 AND 24 )) AND ls.vl_1 <= 400 AND  (TIMESTAMPDIFF(MONTH, ls.vl_1_date,'{referenceDate}') >= 6) THEN 5 else 0 end"
+        "expression": "case when (ls.cur_arv_meds is null) then 0 when (timestampdiff(month,ls.vl_1_date, date('{referenceDate}')) > 3) and ls.vl_1 > 1000 and ls.arv_start_date < ls.vl_1_date then 1 when (timestampdiff(month,ls.arv_start_date,date('{referenceDate}')) between 6 and 12) and (ls.vl_1_date is null or ls.vl_1_date < ls.arv_start_date ) then 2 when (timestampdiff(month,ls.arv_start_date,'{referenceDate}') > 12) and (ls.vl_1_date is null or timestampdiff(month,ls.vl_1_date,'{referenceDate}') > 12) then 3 WHEN  (ls.is_pregnant OR (t6.relationship = 2 AND TIMESTAMPDIFF(MONTH, t6.date_created,'{referenceDate}') BETWEEN 0 AND 24 )) AND  (TIMESTAMPDIFF(MONTH, ls.vl_1_date,'{referenceDate}') >= 3) THEN 4 WHEN  (t1.is_pregnant OR (t6.relationship = 2 AND TIMESTAMPDIFF(MONTH, t6.date_created,'{referenceDate}') BETWEEN 0 AND 24 )) AND ls.vl_1 <= 400 AND  (TIMESTAMPDIFF(MONTH, ls.vl_1_date,'{referenceDate}') >= 6) THEN 5 when (timestampdiff(month,ls.arv_start_date,'{referenceDate}') = 3) and (ls.vl_1_date is null) then 6 else 0 end"
       }
     },
     {
@@ -127,6 +127,32 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "case when ls.cur_arv_meds is not null and ls.vl_1 > 1000 and timestampdiff(day,ls.cd4_1_date, '{referenceDate}') >= 90 then 1 when timestampdiff(month,ls.arv_start_date, '{referenceDate}') <= 12 and (ls.cd4_1_date is null or timestampdiff(month,ls.cd4_1_date, '{referenceDate}') > 6) then 2 when timestampdiff(month,ls.arv_start_date, '{referenceDate}') > 12 and (ls.cd4_1_date is null or timestampdiff(month,ls.cd4_1_date, '{referenceDate}') > 12) then 3 else 0 end"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "months_since_cd4_count",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(MONTH, ls.cd4_1_date,'{referenceDate}')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "previous_cd4_count",
+      "column": "ls.cd4_2"
+    },
+    {
+      "type": "simple_column",
+      "alias": "latest_cd4_count",
+      "column": "ls.cd4_1"
+    },
+    {
+      "type": "derived_column",
+      "alias": "get_cd4_count_coded",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN ls.cd4_1 IS NULL THEN 1 WHEN (ls.cd4_1 <= 200) AND (TIMESTAMPDIFF(MONTH, ls.cd4_1_date, '{referenceDate}') > 6) THEN 2 WHEN (ls.cd4_1 > 200 AND ls.cd4_2 <= 200) AND (TIMESTAMPDIFF(MONTH, ls.cd4_1_date, '{referenceDate}') > 6) THEN 3 ELSE 0 END"
       }
     },
     {

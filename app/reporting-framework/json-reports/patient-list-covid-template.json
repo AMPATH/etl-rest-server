@@ -1,8 +1,8 @@
 {
-  "name": "patient_requiring_viral_load_template",
+  "name": "patient_list_covid_template",
   "version": "1.0",
-  "tag": "patient_requiring_viral_load_template",
-  "description": "Patient list template",
+  "tag": "patient_list_covid_template",
+  "description": "Patient list covid template",
   "sources": [
     {
       "table": "amrs.person",
@@ -12,7 +12,7 @@
       "table": "amrs.person_name",
       "alias": "person_name",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "t1.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
       }
     },
@@ -26,34 +26,50 @@
     },
     {
       "table": "amrs.person_attribute",
-      "alias": "contact",
+      "alias": "contacts",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = contact.person_id AND (contact.voided IS NULL || contact.voided = 0) AND contact.person_attribute_type_id in (10, 48)"
+        "joinCondition": "t1.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id in (10, 48)"
       }
     },
     {
       "table": "etl.flat_hiv_summary_v15b",
-      "alias": "fhsh",
+      "alias": "fh",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = fhsh.person_id AND fhsh.next_clinical_location_id IS NULL AND fhsh.encounter_type NOT IN (99999) "
+        "joinCondition": "t1.person_id = fh.person_id AND fh.next_clinical_location_id IS NULL AND fh.encounter_type NOT IN (99999) "
       }
     },
     {
       "table": "amrs.encounter_type",
-      "alias": "ety",
+      "alias": "et",
       "join": {
         "type": "LEFT",
-        "joinCondition": "fhsh.encounter_type = ety.encounter_type_id"
+        "joinCondition": "fh.encounter_type = et.encounter_type_id"
       }
     },
     {
       "table": "amrs.person_address",
-      "alias": "pad",
+      "alias": "pa",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = pad.person_id"
+        "joinCondition": "t1.person_id = pa.person_id"
+      }
+    },
+    {
+      "table": "etl.flat_covid_extract",
+      "alias": "c",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = c.person_id AND c.next_encounter_datetime IS NULL"
+      }
+    },
+    {
+      "table": "etl.flat_consent",
+      "alias": "consent",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "consent.person_id = t1.person_id"
       }
     }
   ],
@@ -62,6 +78,14 @@
       "type": "simple_column",
       "alias": "patient_uuid",
       "column": "t1.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "uuid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "t1.uuid"
+      }
     },
     {
       "type": "simple_column",
@@ -104,61 +128,21 @@
     },
     {
       "type": "derived_column",
-      "alias": "has_pending_vl_test",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "case when (timestampdiff(day,t2.vl_order_date,now()) between 0 and 14) and (t2.vl_1_date is null or t2.vl_order_date > t2.vl_1_date) then true else false end"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "current_vl",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "t2.vl_1 "
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "current_vl_date",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "date_format(t2.vl_1_date,'%d-%m-%Y')"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "last_vl_order_date",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "date_format(t2.vl_order_date,'%d-%m-%Y')"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "days_since_last_order",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "timestampdiff(day, t2.vl_order_date, now())"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "phone_number",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": " GROUP_CONCAT(DISTINCT contact.value SEPARATOR ', ')"
+        "expression": " GROUP_CONCAT(DISTINCT contacts.value SEPARATOR ', ')"
       }
     },
     {
       "type": "simple_column",
       "alias": "latest_rtc_date",
-      "column": "date_format(fhsh.rtc_date, '%Y-%m-%d')"
+      "column": "date_format(fh.rtc_date, '%Y-%m-%d')"
     },
     {
       "type": "simple_column",
       "alias": "latest_vl",
-      "column": "fhsh.vl_1"
+      "column": "fh.vl_1"
     },
     {
       "type": "derived_column",
@@ -167,19 +151,19 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fhsh.vl_1 < 50",
+            "condition": "fh.vl_1 < 50",
             "value": "LDL"
           },
           {
-            "condition": "(fhsh.vl_1 >= 50 and fhsh.vl_1 < 200)",
+            "condition": "(fh.vl_1 >= 50 and fh.vl_1 < 200)",
             "value": "Low Risk Low Level Viremia"
           },
           {
-            "condition": "(fhsh.vl_1 >= 200 and fhsh.vl_1 < 1000)",
+            "condition": "(fh.vl_1 >= 200 and fh.vl_1 < 1000)",
             "value": "High Risk Low Level Viremia"
           },
           {
-            "condition": "(fhsh.vl_1 > 1000)",
+            "condition": "(fh.vl_1 > 1000)",
             "value": "Suspected Treatment Failure"
           }
         ]
@@ -188,32 +172,79 @@
     {
       "type": "simple_column",
       "alias": "latest_vl_date",
-      "column": "date_format(fhsh.vl_1_date, '%Y-%m-%d')"
+      "column": "date_format(fh.vl_1_date, '%Y-%m-%d')"
     },
     {
       "type": "simple_column",
       "alias": "last_appointment",
-      "column": "CONCAT(COALESCE(DATE_FORMAT(fhsh.encounter_datetime, '%Y-%m-%d'),''),' ',COALESCE(ety.name, ''))"
+      "column": "CONCAT(COALESCE(DATE_FORMAT(fh.encounter_datetime, '%Y-%m-%d'),''),' ',COALESCE(et.name, ''))"
     },
     {
       "type": "simple_column",
       "alias": "cur_meds",
-      "column": "fhsh.cur_arv_meds"
+      "column": "fh.cur_arv_meds"
     },
     {
       "type": "simple_column",
       "alias": "previous_vl",
-      "column": "fhsh.vl_2"
+      "column": "fh.vl_2"
     },
     {
       "type": "simple_column",
       "alias": "previous_vl_date",
-      "column": "date_format(fhsh.vl_2_date, '%Y-%m-%d')"
+      "column": "date_format(fh.vl_2_date, '%Y-%m-%d')"
     },
     {
       "type": "simple_column",
       "alias": "nearest_center",
-      "column": "pad.address3"
+      "column": "pa.address3"
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccination_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.vaccination_status = 2208",
+            "value": "Fully Vaccinated"
+          },
+          {
+            "condition": "c.vaccination_status = 11907",
+            "value": "Partially Vaccinated"
+          },
+          {
+            "condition": "c.person_id IS NULL AND c.second_dose_vaccine_administered IS NULL AND c.vaccination_status is null AND EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), t1.birthdate)))) >= 15",
+            "value": "Unknown Covid 19 Vaccination"
+          },
+          {
+            "condition": "c.received_covid_19_vaccine = 1066 AND c.vaccination_status is null AND EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), t1.birthdate)))) >= 15",
+            "value": "Not vaccinated"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sms_consent_provided",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "consent.patient_sms_consent_provided = 1065",
+            "value": "YES"
+          },
+          {
+            "condition": "consent.patient_sms_consent_provided = 1066",
+            "value": "NO"
+          }
+        ]
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "sms_receive_time",
+      "column": "consent.sms_receive_time"
     }
   ],
   "groupBy": {

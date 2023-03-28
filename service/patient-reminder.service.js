@@ -12,6 +12,7 @@ import { FamilyTestingService } from './../app/family-history/family-history.ser
 var serviceDef = {
   generateReminders: generateReminders,
   viralLoadReminders: viralLoadReminders,
+  cd4TestReminder: cd4TestReminder,
   newViralLoadPresent: newViralLoadPresent,
   viralLoadErrors: viralLoadErrors,
   pendingViralOrder: pendingViralOrder,
@@ -39,7 +40,21 @@ function viralLoadReminders(data) {
 
   let isAdult = checkAge(new Date(data.birth_date));
 
-  if (!isAdult && data.months_since_last_vl_date >= 6) {
+  if (!isAdult && data.needs_vl_coded === 6) {
+    reminders.push({
+      message:
+        'Patient requires a viral load test' +
+        'Patients who are between 0-24 years old and 3 months after ART initiation ' +
+        'require a viral load test.' +
+        labMessage,
+      title: 'Viral Load Reminder',
+      type: 'danger',
+      display: {
+        banner: true,
+        toast: true
+      }
+    });
+  } else if (!isAdult && data.months_since_last_vl_date >= 6) {
     reminders.push({
       message:
         'Patient requires a viral load test. Patients who are between 0-24 years old ' +
@@ -52,23 +67,23 @@ function viralLoadReminders(data) {
         toast: true
       }
     });
-  } else if (
-    isAdult &&
-    data.needs_vl_coded === 2 &&
-    data.months_since_last_vl_date >= 6
-  ) {
-    reminders.push({
-      message:
-        'Patient requires a viral load test. Patients older than 25 years and newly on ART require ' +
-        'a viral load test every 6 months. ' +
-        labMessage,
-      title: 'Viral Load Reminder',
-      type: 'danger',
-      display: {
-        banner: true,
-        toast: true
-      }
-    });
+    // } else if (
+    //   isAdult &&
+    //   data.needs_vl_coded === 2 &&
+    //   data.months_since_last_vl_date >= 6
+    // ) {
+    //   reminders.push({
+    //     message:
+    //       'Patient requires a viral load test. Patients older than 25 years and newly on ART require ' +
+    //       'a viral load test every 6 months. ' +
+    //       labMessage,
+    //     title: 'Viral Load Reminder',
+    //     type: 'danger',
+    //     display: {
+    //       banner: true,
+    //       toast: true
+    //     }
+    //   });
   } else if (
     isAdult &&
     data.needs_vl_coded === 3 &&
@@ -86,10 +101,23 @@ function viralLoadReminders(data) {
         toast: true
       }
     });
+  } else if (isAdult && data.needs_vl_coded === 6) {
+    reminders.push({
+      message:
+        'Patient requires viral load. Patients older than 25 years and 3 months after ART initiation require ' +
+        'a viral load test every year. ' +
+        labMessage,
+      title: 'Viral Load Reminder',
+      type: 'danger',
+      display: {
+        banner: true,
+        toast: true
+      }
+    });
   } else if (data.needs_vl_coded === 4 && data.gender === 'F') {
     reminders.push({
       message:
-        'Patient requires viral load. A pregnant or breastfeeding patient with vl > 400 requires ' +
+        'Patient requires viral load. A pregnant or breastfeeding patient with vl > 200 requires ' +
         'a viral load test every 3 months. ' +
         labMessage,
       title: 'Viral Load Reminder',
@@ -102,7 +130,7 @@ function viralLoadReminders(data) {
   } else if (data.needs_vl_coded === 5 && data.gender === 'F') {
     reminders.push({
       message:
-        'Patient requires viral load. A pregnant or breastfeeding patient with vl <= 400 requires ' +
+        'Patient requires viral load. A pregnant or breastfeeding patient with vl <= 200 requires ' +
         'a viral load test every 6 months. ' +
         labMessage,
       title: 'Viral Load Reminder',
@@ -115,6 +143,75 @@ function viralLoadReminders(data) {
   }
 
   return reminders;
+}
+function cd4TestReminder(data) {
+  let reminders = [];
+
+  switch (data.get_cd4_count_coded) {
+    case 1:
+      reminders.push({
+        message: 'Patient requires a baseline CD4',
+        title: 'CD4 Reminder',
+        type: 'success',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+    case 2:
+      reminders.push({
+        message:
+          'Patient requires CD4. Latest CD4 is  ' +
+          data.latest_cd4_count +
+          ', done ' +
+          data.months_since_cd4_count +
+          ' months ago.',
+        title: 'CD4 Reminder',
+        type: 'success',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+    case 3:
+      reminders.push({
+        message:
+          'Patient requires CD4 confirmation. Previous CD4 was ' +
+          data.previous_cd4_count +
+          ' Latest CD4 is  ' +
+          data.latest_cd4_count +
+          ', done ' +
+          data.months_since_cd4_count +
+          ' months ago.',
+        title: 'CD4 Reminder',
+        type: 'success',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+    default:
+  }
+  return reminders;
+}
+
+function isBelow2Years(patientDateString) {
+  return calculateAge(patientDateString) <= 2;
+}
+
+function calculateMonths(date) {
+  const givenDate = new Date(date);
+  // Get the current date
+  const currentDate = new Date();
+
+  // Calculate the difference in months
+  return (
+    (currentDate.getFullYear() - givenDate.getFullYear()) * 12 +
+    (currentDate.getMonth() - givenDate.getMonth())
+  );
 }
 
 function checkAge(dateString) {
@@ -745,6 +842,7 @@ async function generateReminders(etlResults, eidResults) {
   );
   let inh_reminders = inhReminders(data);
   let vl_reminders = viralLoadReminders(data);
+  let cd4_reminder = cd4TestReminder(data);
   let qualifies_enhanced = qualifiesEnhancedReminders(data);
   let dna_pcr_reminder = dnaReminder(data);
   let dst_result = dstReminders(data);
@@ -772,6 +870,7 @@ async function generateReminders(etlResults, eidResults) {
       inh_reminders,
       qualifies_differenciated_care_reminders,
       vl_reminders,
+      cd4_reminder,
       qualifies_enhanced,
       dna_pcr_reminder,
       dst_result,

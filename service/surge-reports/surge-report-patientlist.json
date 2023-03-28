@@ -67,6 +67,11 @@
         "field": "latest_vl"
       },
       {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
+      },
+      {
         "headerName": "Latest VL Date",
         "width": 150,
         "field": "latest_vl_date"
@@ -159,6 +164,11 @@
         "headerName": "Latest VL",
         "width": 80,
         "field": "latest_vl"
+      },
+      {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
       },
       {
         "headerName": "Latest VL Date",
@@ -258,6 +268,11 @@
         "headerName": "Latest VL",
         "width": 80,
         "field": "latest_vl"
+      },
+      {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
       },
       {
         "headerName": "Latest VL Date",
@@ -379,6 +394,11 @@
         "field": "latest_vl"
       },
       {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
+      },
+      {
         "headerName": "Latest VL Date",
         "width": 150,
         "field": "latest_vl_date"
@@ -496,6 +516,11 @@
         "headerName": "Latest VL",
         "width": 80,
         "field": "latest_vl"
+      },
+      {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
       },
       {
         "headerName": "Latest VL Date",
@@ -617,6 +642,11 @@
         "field": "latest_vl"
       },
       {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
+      },
+      {
         "headerName": "Latest VL Date",
         "width": 150,
         "field": "latest_vl_date"
@@ -736,6 +766,11 @@
         "field": "latest_vl"
       },
       {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
+      },
+      {
         "headerName": "Latest VL Date",
         "width": 150,
         "field": "latest_vl_date"
@@ -853,6 +888,11 @@
         "headerName": "Latest VL",
         "width": 80,
         "field": "latest_vl"
+      },
+      {
+        "headerName": "VL Category",
+        "width": 200,
+        "field": "vl_category"
       },
       {
         "headerName": "Latest VL Date",

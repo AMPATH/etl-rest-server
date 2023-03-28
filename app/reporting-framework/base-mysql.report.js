@@ -1284,7 +1284,7 @@ export class BaseMysqlReport {
   }
 
   executeReportQuery(sqlQuery) {
-    // console.log('Executing Query', sqlQuery);
+    console.log('Executing Query', sqlQuery);
     let runner = this.getSqlRunner();
     return new Promise((resolve, reject) => {
       runner
@@ -1295,7 +1295,7 @@ export class BaseMysqlReport {
           });
         })
         .catch((error) => {
-          console.error('Error Executing Mysql Query', error);
+          // console.error('Error Executing Mysql Query', error);
           reject(error);
         });
     });
