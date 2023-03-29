@@ -96,6 +96,7 @@ function getPatientVisitTypes(
         dataObject.retroSpective = retroSpective;
         dataObject.visitDate = visitDate;
         // build scope
+        console.log('Weere', dataObject);
         const scopeObj = scopeBuilder.buildScope(dataObject);
         const visits = program.visitTypes;
 
