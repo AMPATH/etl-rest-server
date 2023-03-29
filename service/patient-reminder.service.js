@@ -7,11 +7,13 @@ var config = require('../conf/config.json');
 var encounter_service = require('./openmrs-rest/encounter');
 var program_service = require('./openmrs-rest/program.service');
 const cervicalCancerScreeningService = require('./cervical-cancer-screening-service');
+import { stringify } from 'hoek';
 import { FamilyTestingService } from './../app/family-history/family-history.service';
 
 var serviceDef = {
   generateReminders: generateReminders,
   viralLoadReminders: viralLoadReminders,
+  cd4TestReminder: cd4TestReminder,
   newViralLoadPresent: newViralLoadPresent,
   viralLoadErrors: viralLoadErrors,
   pendingViralOrder: pendingViralOrder,
@@ -115,6 +117,43 @@ function viralLoadReminders(data) {
   }
 
   return reminders;
+}
+function cd4TestReminder(data) {
+  let reminders = [];
+  // test for those without baseline cd4 values
+  switch (data.get_cd4_count_coded) {
+    case 1:
+      reminders.push({
+        message: 'Patient requires a baseline CD4',
+        title: 'CD4 Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+    case 2:
+      reminders.push({
+        message:
+          'Patient requires CD4. Latest CD4 was  ' +
+          data.latest_cd4_count +
+          ', done ' +
+          data.months_since_cd4_count +
+          ' months ago.',
+        title: 'CD4 Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+    default:
+    // console.log('no reminder');
+  }
+  return reminders;
+  // test for those whose last consequent results have not been >200
 }
 
 function checkAge(dateString) {
@@ -745,6 +784,7 @@ async function generateReminders(etlResults, eidResults) {
   );
   let inh_reminders = inhReminders(data);
   let vl_reminders = viralLoadReminders(data);
+  let cd4_reminder = cd4TestReminder(data);
   let qualifies_enhanced = qualifiesEnhancedReminders(data);
   let dna_pcr_reminder = dnaReminder(data);
   let dst_result = dstReminders(data);
@@ -772,6 +812,7 @@ async function generateReminders(etlResults, eidResults) {
       inh_reminders,
       qualifies_differenciated_care_reminders,
       vl_reminders,
+      cd4_reminder,
       qualifies_enhanced,
       dna_pcr_reminder,
       dst_result,

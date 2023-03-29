@@ -131,6 +131,32 @@
     },
     {
       "type": "derived_column",
+      "alias": "months_since_cd4_count",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(MONTH, ls.cd4_1_date,'{referenceDate}')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "previous_cd4_count",
+      "column": "ls.cd4_2"
+    },
+    {
+      "type": "simple_column",
+      "alias": "latest_cd4_count",
+      "column": "ls.cd4_1"
+    },
+    {
+      "type": "derived_column",
+      "alias": "get_cd4_count_coded",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN ls.cd4_1 IS NULL THEN 1 WHEN (ls.cd4_1 <= 200 OR ls.cd4_2 <= 200) AND (TIMESTAMPDIFF(MONTH, ls.cd4_1_date, '{referenceDate}') > 6) THEN 2 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "months_since_last_vl_date",
       "expressionType": "simple_expression",
       "expressionOptions": {
