@@ -152,7 +152,7 @@
       "alias": "get_cd4_count_coded",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE WHEN ls.cd4_1 IS NULL THEN 1 WHEN (ls.cd4_1 <= 200 OR ls.cd4_2 <= 200) AND (TIMESTAMPDIFF(MONTH, ls.cd4_1_date, '{referenceDate}') > 6) THEN 2 ELSE 0 END"
+        "expression": "CASE WHEN ls.cd4_1 IS NULL THEN 1 WHEN (ls.cd4_1 <= 200) AND (TIMESTAMPDIFF(MONTH, ls.cd4_1_date, '{referenceDate}') > 6) THEN 2 WHEN (ls.cd4_1 > 200 AND ls.cd4_2 <= 200) AND (TIMESTAMPDIFF(MONTH, ls.cd4_1_date, '{referenceDate}') > 6) THEN 3 ELSE 0 END"
       }
     },
     {

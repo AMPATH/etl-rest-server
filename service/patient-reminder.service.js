@@ -7,7 +7,6 @@ var config = require('../conf/config.json');
 var encounter_service = require('./openmrs-rest/encounter');
 var program_service = require('./openmrs-rest/program.service');
 const cervicalCancerScreeningService = require('./cervical-cancer-screening-service');
-import { stringify } from 'hoek';
 import { FamilyTestingService } from './../app/family-history/family-history.service';
 
 var serviceDef = {
@@ -120,13 +119,13 @@ function viralLoadReminders(data) {
 }
 function cd4TestReminder(data) {
   let reminders = [];
-  // test for those without baseline cd4 values
+
   switch (data.get_cd4_count_coded) {
     case 1:
       reminders.push({
         message: 'Patient requires a baseline CD4',
         title: 'CD4 Reminder',
-        type: 'danger',
+        type: 'success',
         display: {
           banner: true,
           toast: true
@@ -136,13 +135,31 @@ function cd4TestReminder(data) {
     case 2:
       reminders.push({
         message:
-          'Patient requires CD4. Latest CD4 was  ' +
+          'Patient requires CD4. Latest CD4 is  ' +
           data.latest_cd4_count +
           ', done ' +
           data.months_since_cd4_count +
           ' months ago.',
         title: 'CD4 Reminder',
-        type: 'danger',
+        type: 'success',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+    case 3:
+      reminders.push({
+        message:
+          'Patient requires CD4 confirmation. Previous CD4 was ' +
+          data.previous_cd4_count +
+          ' Latest CD4 is  ' +
+          data.latest_cd4_count +
+          ', done ' +
+          data.months_since_cd4_count +
+          ' months ago.',
+        title: 'CD4 Reminder',
+        type: 'success',
         display: {
           banner: true,
           toast: true
@@ -150,10 +167,8 @@ function cd4TestReminder(data) {
       });
       break;
     default:
-    // console.log('no reminder');
   }
   return reminders;
-  // test for those whose last consequent results have not been >200
 }
 
 function checkAge(dateString) {
