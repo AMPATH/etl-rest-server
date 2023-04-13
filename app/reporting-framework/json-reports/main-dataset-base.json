@@ -26,27 +26,11 @@
       }
     },
     {
-      "table": "amrs.patient_identifier",
-      "alias": "upi",
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
       "join": {
         "type": "LEFT",
-        "joinCondition": "hmsd.person_id = upi.patient_id AND (upi.voided IS NULL || upi.voided = 0) AND upi.identifier_type = 45"
-      }
-    },
-    {
-      "table": "amrs.patient_identifier",
-      "alias": "ovcid",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "hmsd.person_id = ovcid.patient_id AND (ovcid.voided IS NULL || ovcid.voided = 0) AND ovcid.identifier_type = 43"
-      }
-    },
-    {
-      "table": "amrs.patient_identifier",
-      "alias": "ccc",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "hmsd.person_id = ccc.patient_id AND (ccc.voided IS NULL || ccc.voided = 0) AND ccc.identifier_type = 28"
+        "joinCondition": "hmsd.person_id = flat_identifiers.patient_id"
       }
     }
   ],
@@ -64,17 +48,17 @@
     {
       "type": "simple_column",
       "alias": "ccc_number",
-      "column": "ccc.identifier"
+      "column": "flat_identifiers.ccc"
     },
     {
       "type": "simple_column",
       "alias": "ovcid_id",
-      "column": "ovcid.identifier"
+      "column": "flat_identifiers.ovcid"
     },
     {
       "type": "simple_column",
       "alias": "upi_number",
-      "column": "upi.identifier"
+      "column": "flat_identifiers.nupi"
     },
     {
       "type": "simple_column",
