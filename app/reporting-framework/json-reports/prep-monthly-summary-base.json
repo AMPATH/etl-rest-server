@@ -70,7 +70,7 @@
     {
       "type": "simple_column",
       "alias": "ccc_number",
-      "column": "flat_identifiers.ccc"
+      "column": "IFNULL(flat_identifiers.ccc, 'No CCC')"
     },
     {
       "type": "simple_column",
@@ -80,7 +80,7 @@
     {
       "type": "simple_column",
       "alias": "upi_number",
-      "column": "flat_identifiers.nupi"
+      "column": "IFNULL(flat_identifiers.nupi, 'No NUPI')"
     },
     {
       "type": "simple_column",
