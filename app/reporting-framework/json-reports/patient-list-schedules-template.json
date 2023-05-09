@@ -81,6 +81,14 @@
       }
     },
     {
+      "table": "etl.sms_delivery_report",
+      "alias": "delivery_report",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "delivery_report.person_id = t2.person_id"
+      }
+    },
+    {
       "table": "etl.flat_hiv_summary_v15b",
       "alias": "tb",
       "join": {
@@ -249,6 +257,14 @@
       "type": "simple_column",
       "alias": "sms_receive_time",
       "column": "consent.sms_receive_time"
+    },
+    {
+      "type": "derived_column",
+      "alias": "sms_delivery_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if( datediff((DATE_FORMAT(delivery_report.date_created,'%Y-%m-%d')),DATE_FORMAT('{startDate}','%Y-%m-%d')) = 0,delivery_report.delivery_status,null)"
+      }
     },
     {
       "type": "simple_column",
