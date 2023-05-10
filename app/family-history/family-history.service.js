@@ -116,39 +116,34 @@ export class FamilyTestingService {
           columns +
           from +
           where +
-          ' and obs_group_id is not null and extract(year from (from_days(datediff(t1.date_elicited,t1.fm_dob)))) < 20 AND t1.relationship_type in ("CHILD","MOTHER","FATHER") AND fm_name is not null LIMIT 2000 OFFSET ' +
-          params.startIndex;
+          ' and obs_group_id is not null and extract(year from (from_days(datediff(t1.date_elicited,t1.fm_dob)))) < 20 AND t1.relationship_type in ("CHILD","MOTHER","FATHER") AND fm_name is not null  ';
       } else if (params.elicited_clients == 5) {
         //'Sexual partners'
         sql +=
           columns +
           from +
           where +
-          ' and obs_group_id is not null and t1.relationship_type in ("PARTNER-SPOUSE","PARTNER-OTHER","FELLOW-WIFE") AND fm_name is not null LIMIT 2000 OFFSET ' +
-          params.startIndex;
+          ' and obs_group_id is not null and t1.relationship_type in ("PARTNER-SPOUSE","PARTNER-OTHER","FELLOW-WIFE") AND fm_name is not null  ';
       } else if (params.elicited_clients == 6) {
         //'Siblings'
         sql +=
           columns +
           from +
           where +
-          ' and obs_group_id is not null and t1.relationship_type in ("SIBLING") AND fm_name is not null LIMIT 2000 OFFSET ' +
-          params.startIndex;
+          ' and obs_group_id is not null and t1.relationship_type in ("SIBLING") AND fm_name is not null ';
       } else if (params.elicited_clients == 7) {
         //'Uncategorized contacts'
         sql +=
           columns +
           from +
           where +
-          ' and obs_group_id is not null and t1.relationship_type not in ("SIBLING","PARTNER-SPOUSE","PARTNER-OTHER","FELLOW-WIFE","CHILD","MOTHER","FATHER") AND fm_name is not null LIMIT 2000 OFFSET ' +
-          params.startIndex;
+          ' and obs_group_id is not null and t1.relationship_type not in ("SIBLING","PARTNER-SPOUSE","PARTNER-OTHER","FELLOW-WIFE","CHILD","MOTHER","FATHER") AND fm_name is not null ';
       } else {
         sql +=
           columns +
           from +
           where +
-          ' and obs_group_id is not null AND fm_name is not null LIMIT 2000 OFFSET ' +
-          params.startIndex;
+          ' and obs_group_id is not null AND fm_name is not null ';
       }
 
       queryParts = {
@@ -431,12 +426,7 @@ export class FamilyTestingService {
         break;
     }
 
-    sql +=
-      columns +
-      from +
-      w +
-      '  group by tx.person_id LIMIT 2000 OFFSET ' +
-      params.startIndex;
+    sql += columns + from + w + '  group by tx.person_id';
     return sql;
   }
 
@@ -460,12 +450,7 @@ export class FamilyTestingService {
         break;
     }
 
-    sql +=
-      columns +
-      from +
-      w +
-      ' group by tx.person_id LIMIT 2000 OFFSET ' +
-      params.startIndex;
+    sql += columns + from + w + ' group by tx.person_id';
 
     return sql;
   }
@@ -493,16 +478,12 @@ export class FamilyTestingService {
         break;
     }
 
-    sql +=
-      columns +
-      w +
-      ' group by tx.person_id LIMIT 2000 OFFSET ' +
-      params.startIndex;
+    sql += columns + from + w + ' group by tx.person_id';
 
     return sql;
   }
 
-  revießwedWithChildren(params, sql, columns, from, where) {
+  reviewedWithChildren(params, sql, columns, from, where) {
     let w =
       where +
       ` and t8.location_id in (${params.locations})  
@@ -525,12 +506,7 @@ export class FamilyTestingService {
         break;
     }
 
-    sql +=
-      columns +
-      from +
-      w +
-      ' group by tx.person_id LIMIT 2000 OFFSET ' +
-      params.startIndex;
+    sql += columns + from + w + ' group by tx.person_id';
 
     return sql;
   }
@@ -559,11 +535,7 @@ export class FamilyTestingService {
         break;
     }
 
-    sql +=
-      columns +
-      w +
-      ' group by tx.person_id LIMIT 2000 OFFSET ' +
-      params.startIndex;
+    sql += columns + from + w + ' group by tx.person_id';
 
     return sql;
   }
@@ -583,7 +555,7 @@ export class FamilyTestingService {
         SEPARATOR ', ') AS phone_number, 
     DATE_FORMAT(t1.arv_first_regimen_start_date, 
             '%d-%m-%y') AS arv_first_regimen_start_date, 
-    pr.name as patient_program_name, 
+    pr.name as patient_program, 
     1 AS hideContactColumns  
 FROM
     amrs.person t2 
@@ -614,9 +586,9 @@ FROM
         AND contacts.person_attribute_type_id IN (10 , 48)) 
         LEFT JOIN 
     etl.flat_family_testing_index ft ON (t1.person_id = ft.person_id) 
-WHERE 
+WHERE t1.location_id in(${params.locations}) and
     ft.person_id IS NULL 
-    AND pr.uuid IN ('${params.programs}')
-GROUP BY t1.person_id LIMIT 300 OFFSET ${params.startIndex};`;
+    
+GROUP BY t1.person_id;`;
   }
 }
