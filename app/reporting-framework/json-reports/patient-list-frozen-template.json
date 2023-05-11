@@ -327,27 +327,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "patient_category",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "tb.patient_category= 9070",
-            "value": "Well"
-          },
-          {
-            "condition": "tb.patient_category= 11550",
-            "value": "UnWell"
-          },
-          {
-            "condition": "tb.patient_category = 0",
-            "value": "N/A"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "tb_screening_result",
       "expressionType": "case_statement",
       "expressionOptions": {

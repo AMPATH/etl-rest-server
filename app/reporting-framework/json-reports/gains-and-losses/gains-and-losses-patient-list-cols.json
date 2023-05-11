@@ -77,11 +77,6 @@
         "field": "tb_screening_date"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Result",
         "width": 150,
         "field": "tb_screening_result"
@@ -209,11 +204,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -351,11 +341,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -488,11 +473,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -634,11 +614,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -768,11 +743,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -900,11 +870,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -1051,11 +1016,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -1188,11 +1148,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -1329,11 +1284,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -1456,11 +1406,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -1592,11 +1537,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -1724,11 +1664,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -1895,11 +1830,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -2057,11 +1987,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -2223,11 +2148,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -2350,11 +2270,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -2486,11 +2401,6 @@
         "field": "discordant_status"
       },
       {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
-      },
-      {
         "headerName": "TB Screening Date",
         "width": 150,
         "field": "tb_screening_date"
@@ -2618,11 +2528,6 @@
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "TB Screening Date",
@@ -2757,11 +2662,6 @@
         "headerName": "TB Screening Result",
         "width": 150,
         "field": "tb_screening_result"
-      },
-      {
-        "headerName": "Patient Category",
-        "width": 150,
-        "field": "patient_category"
       },
       {
         "headerName": "Covid-19 Assessment Status",
