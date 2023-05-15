@@ -10,6 +10,14 @@
       "alias": "hmsd"
     },
     {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmsd.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
       "table": "amrs.location",
       "alias": "l",
       "join": {
@@ -28,6 +36,21 @@
       "type": "simple_column",
       "alias": "birthdate",
       "column": "hmsd.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "flat_identifiers.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
     },
     {
       "type": "simple_column",
@@ -116,7 +139,7 @@
       "alias": "completed_ipt_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(hmsd.tb_screened_active_this_month = 1 and hmsd.presumed_tb_positive_this_month = 0 AND hmsd.tb_screening_datetime between date_format(endDate,'%Y-%m-01') and endDate and  hmsd.ipt_start_date is not null AND hmsd.ipt_completion_date is not null AND status = 'active',1,0)"
+        "expression": "IF(hmsd.ipt_completion_date between date_format(endDate,'%Y-%m-01') and endDate and hmsd.ipt_start_date is not null AND hmsd.ipt_completion_date is not null AND status = 'active',1,0)"
       }
     },
     {
