@@ -87,6 +87,14 @@
         "type": "LEFT",
         "joinCondition": "cs.person_id = t1.person_id AND cs.next_clinical_datetime_cervical_cancer_screening IS NULL"
       }
+    },
+    {
+      "table": "etl.sms_delivery_report",
+      "alias": "delivery_report",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "delivery_report.person_id = t1.person_id and DATE_FORMAT(delivery_report.date_created, '%Y-%m-%d')='{startDate}'"
+      }
     }
   ],
   "columns": [
@@ -205,11 +213,11 @@
             "value": "Partially Vaccinated"
           },
           {
-            "condition": "c.person_id IS NULL AND c.second_dose_vaccine_administered IS NULL AND EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), t1.birthdate)))) >= 15",
+            "condition": "c.person_id IS NULL AND c.second_dose_vaccine_administered IS NULL AND c.vaccination_status is null AND EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), t1.birthdate)))) >= 15",
             "value": "Unknown Covid 19 Vaccination"
           },
           {
-            "condition": "c.received_covid_19_vaccine = 1066 AND EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), t1.birthdate)))) >= 15",
+            "condition": "c.received_covid_19_vaccine = 1066 AND c.vaccination_status is null AND EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), t1.birthdate)))) >= 15",
             "value": "Not vaccinated"
           }
         ]
@@ -236,6 +244,11 @@
       "type": "simple_column",
       "alias": "sms_receive_time",
       "column": "consent.sms_receive_time"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sms_delivery_status",
+      "column": "delivery_report.delivery_status"
     },
     {
       "type": "simple_column",

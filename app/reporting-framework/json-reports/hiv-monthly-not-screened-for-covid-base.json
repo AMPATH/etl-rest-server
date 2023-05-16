@@ -18,11 +18,19 @@
       }
     },
     {
-      "table": "etl.monthly_covid_extract_report",
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmsd.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "etl.flat_covid_extract",
       "alias": "csm",
       "join": {
         "type": "LEFT",
-        "joinCondition": "hmsd.person_id = csm.person_id AND csm.endDate = hmsd.endDate"
+        "joinCondition": "hmsd.person_id = csm.person_id"
       }
     }
   ],
@@ -34,6 +42,21 @@
       "expressionOptions": {
         "expression": "DATE_FORMAT(hmsd.endDate,'%Y-%m')"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "flat_identifiers.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
     },
     {
       "type": "derived_column",

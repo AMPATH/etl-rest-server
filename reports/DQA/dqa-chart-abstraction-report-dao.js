@@ -30,8 +30,9 @@ export class DQAChartAbstractionDAO {
       `
     SELECT
           h.person_uuid as uuid,
-          cc.identifier as person_id,
-          np.identifier as NUPI,
+          cc.identifier as ccc_number,
+          np.identifier as upi_number,
+          ov.identifier as ovcid_id,
           EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), h.birthdate)))) AS age,
           IF( date(h.tb_screening_datetime) > date_sub(h.endDate, interval 6 month),"YES","NO") as tb_screened_this_visit,
           h.gender as 'sex_gender',
@@ -83,13 +84,19 @@ export class DQAChartAbstractionDAO {
           IF(h.ipt_stop_date = h.encounter_date
                   OR h.ipt_completion_date = h.encounter_date,
               1,
-              0) AS ipt_ended_this_visit
+              0) AS ipt_ended_this_visit,fv.systolic_bp as sysBP,fv.diastolic_bp as dysBP
       FROM
           etl.hiv_monthly_report_dataset_frozen h
           LEFT JOIN
            etl.flat_hiv_summary_v15b e on (h.encounter_id=e.encounter_id)
           LEFT JOIN
            etl.flat_hiv_summary_v15b ls on (ls.next_clinical_datetime_hiv is null and ls.person_id=e.person_id)
+           left JOIN (SELECT fv.person_id,
+            fv.systolic_bp,
+            fv.diastolic_bp,
+            MAX(fv.encounter_datetime) AS max_date
+            FROM etl.flat_vitals fv where diastolic_bp is not null
+            GROUP BY fv.person_id,fv.encounter_datetime order by fv.encounter_datetime desc limit 1) fv ON e.person_id = fv.person_id
           INNER JOIN
            amrs.person t1 ON (h.person_id = t1.person_id)
           INNER JOIN 
@@ -98,6 +105,8 @@ export class DQAChartAbstractionDAO {
           amrs.patient_identifier id ON (t1.person_id = id.patient_id AND id.voided = 0)
           LEFT JOIN
           amrs.patient_identifier cc ON (t1.person_id = cc.patient_id and cc.identifier_type in (28) AND cc.voided = 0)
+          LEFT JOIN
+          amrs.patient_identifier ov ON (t1.person_id = ov.patient_id and ov.identifier_type in (43) AND ov.voided = 0)
           LEFT JOIN
           amrs.patient_identifier np ON (t1.person_id = np.patient_id and np.identifier_type in (45) AND np.voided = 0)
         left join amrs.patient_program p on (p.patient_id = h.person_id and p.program_id in (4,9) and p.date_completed is null and p.voided = 0)

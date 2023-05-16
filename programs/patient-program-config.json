@@ -2390,11 +2390,7 @@
           },
           {
             "uuid": "00ee2fd6-9c95-4ffc-ab31-6b1ce2dede4d",
-            "display": "PREPINITIAL",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "PREPINITIAL"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -2442,11 +2438,7 @@
           },
           {
             "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
-            "display": "PREPRETURN",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "PREPRETURN"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -2488,19 +2480,11 @@
         "encounterTypes": [
           {
             "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
-            "display": "LABORDERENCOUNTER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "LABORDERENCOUNTER"
           },
           {
             "uuid": "5544894d-8add-4521-a0ea-c124c5886c8b",
-            "display": "POCLAB",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
+            "display": "POCLAB"
           },
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
@@ -2513,24 +2497,12 @@
         ]
       },
       {
-        "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
-        "name": "Inpatient peer visit",
+        "uuid": "7f5b3593-bb28-4efb-9cdd-afebf8853f0b",
+        "name": "Event Driven Visit",
         "encounterTypes": [
           {
-            "uuid": "10a86a62-b771-44d1-b1ad-3b8496c7bc47",
-            "display": "INPATIENTPEER",
-            "allowedIf": "screenedForCovidToday",
-            "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
-            }
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
-            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
-            "display": "COVIDCASEREPORTING"
+            "uuid": "0a80be13-6ff7-4758-9651-eb66d3712be0",
+            "display": "EVENTDRIVEN"
           }
         ]
       },
@@ -2545,6 +2517,10 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          },
+          {
+            "uuid": "a0b0475f-9aa1-43ab-a8f4-3d3be1261295",
+            "display": "PREPTRACING"
           }
         ]
       }
@@ -5319,6 +5295,48 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
+          }
+        ]
+      }
+    ]
+  },
+  "52aeb285-fb18-455b-893e-3e53ccc77ceb": {
+    "name": "ANTENATAL CARE PROGRAM",
+    "dataDependencies": [
+      "patient",
+      "enrollment",
+      "patientEncounters",
+      "patientEnrollment"
+    ],
+    "incompatibleWith": [],
+    "visitTypes": [
+      {
+        "uuid": "42de8e7e-24b2-4c16-b62b-137eb2c55ede",
+        "name": "ANC Initial Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && isFirstANCVisit && gender==='F'",
+        "encounterTypes": [
+          {
+            "uuid": "f5702679-6a16-43bd-8629-4b44c7a78ff1",
+            "display": "ANCINITIAL"
+          },
+          {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
+          }
+        ]
+      },
+      {
+        "uuid": "02e3ce61-fa24-445e-a1f0-6e3299142966",
+        "name": "ANC Return Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && !isFirstANCVisit && gender==='F'",
+        "encounterTypes": [
+          {
+            "uuid": "26bfc6b7-28d0-41ab-90c5-e101af46d06d",
+            "display": "ANCRETURN"
+          },
+          {
+            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
+            "display": "HIVTRIAGE"
           }
         ]
       }
