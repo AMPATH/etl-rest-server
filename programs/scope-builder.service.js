@@ -295,7 +295,6 @@ function isInitialVisit(
     initialEncounters.length > 0 &&
     dateEnrolled > latestEnc.encounterDatetime
   ) {
-    console.log('Date enrolled greater');
     return true;
   } else if (initialEncounters.length === 0) {
     return true;
