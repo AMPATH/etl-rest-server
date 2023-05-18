@@ -299,7 +299,6 @@ function isInitialVisit(
   } else if (initialEncounters.length === 0) {
     return true;
   } else {
-    console.log('Last resort', dateEnrolled, initialEncounters);
     return false;
   }
 }
