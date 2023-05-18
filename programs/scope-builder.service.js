@@ -399,7 +399,6 @@ function buildMNCHScopeMembers(scope, patientEncounters, programEnrollment) {
     '52aeb285-fb18-455b-893e-3e53ccc77ceb',
     'f5702679-6a16-43bd-8629-4b44c7a78ff1'
   );
-  console.log(programEnrollment, scope.isFirstANCVisit);
   scope.isFirstPNCVisit = isInitialVisit(
     patientEncounters,
     programEnrollment,
