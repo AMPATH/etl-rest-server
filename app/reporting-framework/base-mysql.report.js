@@ -240,6 +240,13 @@ import * as on_art_15_and_above_base from './json-reports/hiv-monthly-on-art-15-
 import * as covid_19_monthly_report from './json-reports/covid-19/covid-19-monthly-report.json';
 import * as hiv_monthly_not_screened_for_covid_aggregate from './json-reports/hiv-monthly-not-screened-for-covid-aggregate.json';
 import * as hiv_monthly_not_screened_for_covid_base from './json-reports/hiv-monthly-not-screened-for-covid-base.json';
+
+//tx-ml report
+import * as txml_aggregate_report from './json-reports/tx-reports/tx-ml/tx-ml-report-aggregate.json';
+import * as txml_base_report from './json-reports/tx-reports/tx-ml/tx-ml-report-base.json';
+import * as patient_list_txml_template from './json-reports/tx-reports/tx-ml/patient-list-txml-template.json';
+import * as txml_summary from './json-reports/txml-summary.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1274,6 +1281,22 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(covid_19_monthly_report)
           });
           break;
+        case 'txml-aggregate-report':
+          resolve({
+            main: this.cloneJsonSchema(txml_aggregate_report),
+            txmlReportBase: this.cloneJsonSchema(txml_base_report)
+          });
+          break;
+        case 'txml-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(txml_summary)
+          });
+          break;
+        case 'patient-list-txml-template':
+          resolve({
+            main: this.cloneJsonSchema(patient_list_txml_template)
+          });
+          break;
         default:
           reject('Unknown report ', reportName);
           break;
@@ -1300,7 +1323,7 @@ export class BaseMysqlReport {
   }
 
   executeReportQuery(sqlQuery) {
-    // console.log('Executing Query', sqlQuery);
+    console.log('Executing Query', sqlQuery);
     let runner = this.getSqlRunner();
     return new Promise((resolve, reject) => {
       runner

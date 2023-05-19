@@ -1,0 +1,24 @@
+[
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Died",
+    "indicators": [
+      {
+        "label": "30 - 34 years",
+        "indicator": ["dead_male_30_to_34", "dead_female_30_to_34"]
+      },
+      {
+        "label": "35 - 39 years",
+        "indicator": ["dead_male_30_to_34", "dead_female_30_to_34"]
+      }
+    ]
+  }
+]
