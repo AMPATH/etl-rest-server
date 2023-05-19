@@ -1,0 +1,93 @@
+{
+  "name": "txmlReportAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "txmlReportBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "txmlReportBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "b.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "b.location"
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_male_30_to_34",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'M' AND b.age BETWEEN 30 AND 34 THEN 1 ELSE NULL END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_female_30_to_34",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'F' AND b.age BETWEEN 30 AND 34 THEN 1 ELSE NULL END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_male_35_to_39",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'M' AND b.age BETWEEN 35 AND 39 THEN 1 ELSE NULL END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_female_35_to_39",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'F' AND b.age BETWEEN 35 AND 39 THEN 1 ELSE NULL END)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-txml-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
