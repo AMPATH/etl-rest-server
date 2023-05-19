@@ -1,0 +1,82 @@
+{
+  "name": "txmlReportBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "hmrdf"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "ll",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "hmrdf.location_id = ll.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "hmrdf.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "hmrdf.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "ll.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "ll.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "status",
+      "column": "hmrdf.status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "hmrdf.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "hmrdf.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "hmrdf.endDate"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrdf.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrdf.endDate = ?",
+        "parameterName": "endDate"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["person_id"]
+  }
+}

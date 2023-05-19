@@ -63,8 +63,10 @@ export class MultiDatasetPatientlistReport extends MultiDatasetReport {
 
     let that = this;
     return new Promise((resolve, reject) => {
+      console.log('additionalParams', additionalParams);
       this.generateReport(additionalParams)
         .then((results) => {
+          console.log('results', results);
           for (let i = 0; i < results.length; i++) {
             if (
               results[i].results &&
