@@ -30,7 +30,7 @@ const routes = [
             reportParams.requestParams
           );
           service
-            .generateReport()
+            .generateReport(reportParams.requestParams)
             .then((result) => {
               reply(result);
             })
@@ -69,7 +69,7 @@ const routes = [
             );
             let reportParams = etlHelpers.getReportParams(
               'txml-summary-report',
-              ['endingMonth', 'locationUuids', 'locations'],
+              ['endDate', 'locationUuids'],
               requestParams
             );
             delete reportParams.requestParams['gender'];

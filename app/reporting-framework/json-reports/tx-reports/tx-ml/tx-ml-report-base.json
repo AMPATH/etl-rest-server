@@ -7,14 +7,14 @@
   "sources": [
     {
       "table": "etl.hiv_monthly_report_dataset_frozen",
-      "alias": "hmrdf"
+      "alias": "hm"
     },
     {
       "table": "amrs.location",
       "alias": "ll",
       "join": {
         "type": "INNER",
-        "joinCondition": "hmrdf.location_id = ll.location_id"
+        "joinCondition": "hm.location_id = ll.location_id"
       }
     }
   ],
@@ -22,12 +22,12 @@
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "hmrdf.person_id"
+      "column": "hm.person_id"
     },
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "hmrdf.location_id"
+      "column": "hm.location_id"
     },
     {
       "type": "simple_column",
@@ -42,22 +42,54 @@
     {
       "type": "simple_column",
       "alias": "status",
-      "column": "hmrdf.status"
+      "column": "hm.status"
     },
     {
       "type": "simple_column",
       "alias": "gender",
-      "column": "hmrdf.gender"
+      "column": "hm.gender"
     },
     {
       "type": "simple_column",
       "alias": "age",
-      "column": "hmrdf.age"
+      "column": "hm.age"
     },
     {
       "type": "simple_column",
       "alias": "endDate",
-      "column": "hmrdf.endDate"
+      "column": "hm.endDate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_male_30_to_34",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'Dead' AND hm.gender = 'M' AND hm.age BETWEEN 30 AND 34),1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_female_30_to_34",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'Dead' AND hm.gender = 'F' AND hm.age BETWEEN 30 AND 34),1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_male_35_to_39",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'Dead' AND hm.gender = 'M' AND hm.age BETWEEN 35 AND 39),1,null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dead_female_35_to_39",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'Dead' AND hm.gender = 'F' AND hm.age BETWEEN 35 AND 39),1,null)"
+      }
     }
   ],
   "filters": {
@@ -65,12 +97,12 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrdf.location_id IN ?",
+        "conditionExpression": "hm.location_id IN ?",
         "parameterName": "locations"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrdf.endDate = ?",
+        "conditionExpression": "hm.endDate = ?",
         "parameterName": "endDate"
       }
     ]

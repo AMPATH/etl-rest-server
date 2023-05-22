@@ -17,7 +17,7 @@
       },
       {
         "label": "35 - 39 years",
-        "indicator": ["dead_male_30_to_34", "dead_female_30_to_34"]
+        "indicator": ["dead_male_35_to_39", "dead_female_35_to_39"]
       }
     ]
   }

@@ -1281,7 +1281,7 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(covid_19_monthly_report)
           });
           break;
-        case 'txml-aggregate-report':
+        case 'txmlReportAggregate':
           resolve({
             main: this.cloneJsonSchema(txml_aggregate_report),
             txmlReportBase: this.cloneJsonSchema(txml_base_report)
