@@ -18,6 +18,14 @@
   ],
   "columns": [
     {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
       "type": "simple_column",
       "alias": "location_uuid",
       "column": "b.location_uuid"
@@ -37,7 +45,7 @@
       "alias": "dead_male_30_to_34",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'M' AND b.age BETWEEN 30 AND 34 THEN 1 ELSE NULL END)"
+        "expression": "SUM(b.dead_male_30_to_34)"
       }
     },
     {
@@ -45,7 +53,7 @@
       "alias": "dead_female_30_to_34",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'F' AND b.age BETWEEN 30 AND 34 THEN 1 ELSE NULL END)"
+        "expression": "SUM(dead_female_30_to_34)"
       }
     },
     {
@@ -53,7 +61,7 @@
       "alias": "dead_male_35_to_39",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'M' AND b.age BETWEEN 35 AND 39 THEN 1 ELSE NULL END)"
+        "expression": "SUM(dead_male_35_to_39)"
       }
     },
     {
@@ -61,7 +69,7 @@
       "alias": "dead_female_35_to_39",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(CASE WHEN b.status = 'Dead' AND b.gender = 'F' AND b.age BETWEEN 35 AND 39 THEN 1 ELSE NULL END)"
+        "expression": "SUM(dead_female_35_to_39)"
       }
     }
   ],

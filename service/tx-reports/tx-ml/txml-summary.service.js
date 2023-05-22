@@ -101,7 +101,6 @@ export class TXMLSummaryReportService extends MultiDatasetPatientlistReport {
 
   generatePatientListReport(reportParams) {
     const indicators = reportParams.requestIndicators.split(',') || [];
-    console.log('indicators', indicators);
     let self = this;
     return new Promise((resolve, reject) => {
       super
