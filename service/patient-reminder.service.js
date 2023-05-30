@@ -8,7 +8,6 @@ var encounter_service = require('./openmrs-rest/encounter');
 var program_service = require('./openmrs-rest/program.service');
 const cervicalCancerScreeningService = require('./cervical-cancer-screening-service');
 import { FamilyTestingService } from './../app/family-history/family-history.service';
-import { hasEverUsedTptMeds } from '../app/tpt/tpt.service';
 
 var serviceDef = {
   generateReminders: generateReminders,
