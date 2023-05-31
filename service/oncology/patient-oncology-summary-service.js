@@ -115,7 +115,7 @@ function getOncologyIntegratedProgramSnapshot(request) {
   return new Promise((resolve, reject) => {
     let patientUuid = request.uuid;
     let queryParts = {};
-    let sql = `SELECT 
+    let sql = `SELECT
           t1.encounter_id,
           t1.encounter_datetime,
           t1.encounter_type_name,

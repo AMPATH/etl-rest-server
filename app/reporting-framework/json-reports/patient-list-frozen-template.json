@@ -285,6 +285,27 @@
     },
     {
       "type": "derived_column",
+      "alias": "hiv_diclosure_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "fh.hiv_status_disclosed = 1",
+            "value": "Disclosed"
+          },
+          {
+            "condition": "fh.hiv_status_disclosed = 0",
+            "value": "Not Disclosed"
+          },
+          {
+            "condition": "else",
+            "value": "null"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "discordant_status",
       "expressionType": "case_statement",
       "expressionOptions": {

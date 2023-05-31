@@ -99,7 +99,7 @@ export class DQAChartAbstractionDAO {
             GROUP BY fv.person_id,fv.encounter_datetime order by fv.encounter_datetime desc limit 1) fv ON e.person_id = fv.person_id
           INNER JOIN
            amrs.person t1 ON (h.person_id = t1.person_id)
-          INNER JOIN 
+          INNER JOIN
           amrs.person_name person_name ON (t1.person_id = person_name.person_id AND (person_name.voided = 0 || person_name.voided = 0))
           LEFT JOIN
           amrs.patient_identifier id ON (t1.person_id = id.patient_id AND id.voided = 0)
@@ -123,7 +123,7 @@ export class DQAChartAbstractionDAO {
       locations +
       `) AND ` +
       where +
-      ` 
+      `
     GROUP BY h.person_id
     ORDER BY RAND() DESC ` +
       limitOffSetDefinition;

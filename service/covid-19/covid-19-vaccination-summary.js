@@ -2,7 +2,7 @@ const db = require('../../etl-db');
 
 const getPatientVaccinationSummary = (patientUuid) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT 
+    const sql = `SELECT
     CASE
         WHEN c.vaccination_status = 2208 THEN 'Fully Vaccinated'
         WHEN c.vaccination_status = 11907 THEN 'Partially Vaccinated'

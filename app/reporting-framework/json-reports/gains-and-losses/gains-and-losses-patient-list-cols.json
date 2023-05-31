@@ -2839,6 +2839,11 @@
         "field": "ipt_stop_date"
       },
       {
+        "headerName": "Hiv Disclosure Status",
+        "width": 150,
+        "field": "hiv_diclosure_status"
+      },
+      {
         "headerName": "Discordant Status",
         "width": 150,
         "field": "discordant_status"
