@@ -243,7 +243,17 @@ import * as hiv_monthly_not_screened_for_covid_base from './json-reports/hiv-mon
 
 //tx-ml report
 import * as txml_aggregate_report from './json-reports/tx-reports/tx-ml/tx-ml-report-aggregate.json';
+import * as txml_rst_report_aggregate from './json-reports/tx-reports/tx-ml/tx-ml-rst-report-aggregate.json';
+import * as txml_to_report_aggregate from './json-reports/tx-reports/tx-ml/tx-ml-to-report-aggregate.json';
+import * as txml_iitabove6_report_aggregate from './json-reports/tx-reports/tx-ml/tx-ml-iitabove6-report-aggregate.json';
+import * as txml_iit35_report_aggregate from './json-reports/tx-reports/tx-ml/tx-ml-iit35-report-aggregate.json';
+import * as txml_iitless3_report_aggregate from './json-reports/tx-reports/tx-ml/tx-ml-iitless3-report-aggregate.json';
 import * as txml_base_report from './json-reports/tx-reports/tx-ml/tx-ml-report-base.json';
+import * as txml_rst_report_base from './json-reports/tx-reports/tx-ml/tx-ml-rst-report-base.json';
+import * as txml_to_report_base from './json-reports/tx-reports/tx-ml/tx-ml-to-report-base.json';
+import * as txml_iitabove6_report_base from './json-reports/tx-reports/tx-ml/tx-ml-iitabove6-report-base.json';
+import * as txml_iit35_report_base from './json-reports/tx-reports/tx-ml/tx-ml-iit35-report-base.json';
+import * as txml_iitless3_report_base from './json-reports/tx-reports/tx-ml/tx-ml-iitless3-report-base.json';
 import * as patient_list_txml_template from './json-reports/tx-reports/tx-ml/patient-list-txml-template.json';
 import * as txml_summary from './json-reports/txml-summary.json';
 
@@ -1285,6 +1295,40 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(txml_aggregate_report),
             txmlReportBase: this.cloneJsonSchema(txml_base_report)
+          });
+          break;
+        case 'txmlrstReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(txml_rst_report_aggregate),
+            txmlrstReportBase: this.cloneJsonSchema(txml_rst_report_base)
+          });
+          break;
+        case 'txmltoReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(txml_to_report_aggregate),
+            txmltoReportBase: this.cloneJsonSchema(txml_to_report_base)
+          });
+          break;
+        case 'txmlIITabove6ReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(txml_iitabove6_report_aggregate),
+            txmlIITabove6ReportBase: this.cloneJsonSchema(
+              txml_iitabove6_report_base
+            )
+          });
+          break;
+        case 'txmlIIT35ReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(txml_iit35_report_aggregate),
+            txmlIIT35ReportBase: this.cloneJsonSchema(txml_iit35_report_base)
+          });
+          break;
+        case 'txmlIITless3ReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(txml_iitless3_report_aggregate),
+            txmlIITless3ReportBase: this.cloneJsonSchema(
+              txml_iitless3_report_base
+            )
           });
           break;
         case 'txml-summary-report':

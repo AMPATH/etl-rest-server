@@ -53,7 +53,7 @@ export class TXMLSummaryReportService extends MultiDatasetPatientlistReport {
               resolve({
                 queriesAndSchemas: results,
                 result: finalResult,
-                sectionDefs: txmlReportSections,
+                sectionDefinitions: txmlReportSections,
                 indicatorDefinitions: []
               });
             }

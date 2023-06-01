@@ -1,18 +1,18 @@
 {
-  "name": "txmlReportAggregate",
+  "name": "txmlrstReportAggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "txmlReportBase",
+      "name": "txmlrstReportBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "txmlReportBase",
+      "dataSet": "txmlrstReportBase",
       "alias": "b"
     }
   ],
@@ -42,386 +42,386 @@
     },
     {
       "type": "derived_column",
-      "alias": "male_died_unknown_year",
+      "alias": "male_rst_unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_unknown_year)"
+        "expression": "SUM(b.male_rst_unknown_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_unknown_year",
+      "alias": "female_rst_unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_unknown_year)"
+        "expression": "SUM(b.female_rst_unknown_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_unknown_year",
+      "alias": "rst_unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_unknown_year)"
+        "expression": "SUM(b.rst_unknown_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_less_1_year",
+      "alias": "male_rst_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_less_1_year)"
+        "expression": "SUM(b.male_rst_less_1_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_less_1_year",
+      "alias": "female_rst_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_less_1_year)"
+        "expression": "SUM(b.female_rst_less_1_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_less_1_year",
+      "alias": "rst_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_less_1_year)"
+        "expression": "SUM(b.rst_less_1_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_one_four_year",
+      "alias": "male_rst_1_4_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_one_four_year)"
+        "expression": "SUM(b.male_rst_1_4_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_one_four_year",
+      "alias": "female_rst_1_4_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_one_four_year)"
+        "expression": "SUM(b.female_rst_1_4_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_one_four_year",
+      "alias": "rst_1_4_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_one_four_year)"
+        "expression": "SUM(b.rst_1_4_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_5_9_year",
+      "alias": "male_rst_5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_5_9_year)"
+        "expression": "SUM(b.male_rst_5_9_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_5_9_year",
+      "alias": "female_rst_5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_5_9_year)"
+        "expression": "SUM(b.female_rst_5_9_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_5_9_year",
+      "alias": "rst_5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_5_9_year)"
+        "expression": "SUM(b.rst_5_9_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_10_14_year",
+      "alias": "male_rst_10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_10_14_year)"
+        "expression": "SUM(b.male_rst_10_14_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_10_14_year",
+      "alias": "female_rst_10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_10_14_year)"
+        "expression": "SUM(b.female_rst_10_14_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_10_14_year",
+      "alias": "rst_10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_10_14_year)"
+        "expression": "SUM(b.rst_10_14_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_15_19_year",
+      "alias": "male_rst_15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_15_19_year)"
+        "expression": "SUM(b.male_rst_15_19_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_15_19_year",
+      "alias": "female_rst_15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_15_19_year)"
+        "expression": "SUM(b.female_rst_15_19_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_15_19_year",
+      "alias": "rst_15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_15_19_year)"
+        "expression": "SUM(b.rst_15_19_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_20_24_year",
+      "alias": "male_rst_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_20_24_year)"
+        "expression": "SUM(b.male_rst_20_24_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_20_24_year",
+      "alias": "female_rst_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_20_24_year)"
+        "expression": "SUM(b.female_rst_20_24_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_20_24_year",
+      "alias": "rst_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_20_24_year)"
+        "expression": "SUM(b.rst_20_24_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_25_29_year",
+      "alias": "male_rst_25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_25_29_year)"
+        "expression": "SUM(b.male_rst_25_29_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_25_29_year",
+      "alias": "female_rst_25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_25_29_year)"
+        "expression": "SUM(b.female_rst_25_29_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_25_29_year",
+      "alias": "rst_25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_25_29_year)"
+        "expression": "SUM(b.rst_25_29_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_30_34_year",
+      "alias": "male_rst_30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_30_34_year)"
+        "expression": "SUM(b.male_rst_30_34_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_30_34_year",
+      "alias": "female_rst_30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_30_34_year)"
+        "expression": "SUM(b.female_rst_30_34_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_30_34_year",
+      "alias": "rst_30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_30_34_year)"
+        "expression": "SUM(b.rst_30_34_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_35_39_year",
+      "alias": "male_rst_35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_35_39_year)"
+        "expression": "SUM(b.male_rst_35_39_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_35_39_year",
+      "alias": "female_rst_35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_35_39_year)"
+        "expression": "SUM(b.female_rst_35_39_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_35_39_year",
+      "alias": "rst_35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_35_39_year)"
+        "expression": "SUM(b.rst_35_39_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_40_44_year",
+      "alias": "male_rst_40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_40_44_year)"
+        "expression": "SUM(b.male_rst_40_44_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_40_44_year",
+      "alias": "female_rst_40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_40_44_year)"
+        "expression": "SUM(b.female_rst_40_44_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_40_44_year",
+      "alias": "rst_40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_40_44_year)"
+        "expression": "SUM(b.rst_40_44_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_45_49_year",
+      "alias": "male_rst_45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_45_49_year)"
+        "expression": "SUM(b.male_rst_45_49_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_45_49_year",
+      "alias": "female_rst_45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_45_49_year)"
+        "expression": "SUM(b.female_rst_45_49_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_45_49_year",
+      "alias": "rst_45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_45_49_year)"
+        "expression": "SUM(b.rst_45_49_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_50_54_year",
+      "alias": "male_rst_50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_50_54_year)"
+        "expression": "SUM(b.male_rst_50_54_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_50_54_year",
+      "alias": "female_rst_50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_50_54_year)"
+        "expression": "SUM(b.female_rst_50_54_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_50_54_year",
+      "alias": "rst_50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_50_54_year)"
+        "expression": "SUM(b.rst_50_54_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_55_59_year",
+      "alias": "male_rst_55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_55_59_year)"
+        "expression": "SUM(b.male_rst_55_59_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_55_59_year",
+      "alias": "female_rst_55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_55_59_year)"
+        "expression": "SUM(b.female_rst_55_59_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_55_59_year",
+      "alias": "rst_55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_55_59_year)"
+        "expression": "SUM(b.rst_55_59_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_60_64_year",
+      "alias": "male_rst_60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_60_64_year)"
+        "expression": "SUM(b.male_rst_60_64_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_60_64_year",
+      "alias": "female_rst_60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_60_64_year)"
+        "expression": "SUM(b.female_rst_60_64_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_60_64_year",
+      "alias": "rst_60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_60_64_year)"
+        "expression": "SUM(b.rst_60_64_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_died_above_65_year",
+      "alias": "male_rst_above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.male_died_above_65_year)"
+        "expression": "SUM(b.male_rst_above_65_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_died_above_65_year",
+      "alias": "female_rst_above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.female_died_above_65_year)"
+        "expression": "SUM(b.female_rst_above_65_year)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "died_above_65_year",
+      "alias": "rst_above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(b.died_above_65_year)"
+        "expression": "SUM(b.rst_above_65_year)"
       }
     }
   ],
