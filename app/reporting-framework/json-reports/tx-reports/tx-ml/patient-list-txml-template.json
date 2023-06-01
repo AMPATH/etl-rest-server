@@ -2,7 +2,7 @@
   "name": "patient_list_txml_template",
   "version": "1.0",
   "tag": "patient_list_txml_template",
-  "description": "Patient list template",
+  "description": "Txml patient list template",
   "sources": [
     {
       "table": "amrs.person",
@@ -25,6 +25,14 @@
       }
     },
     {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
       "table": "amrs.person_address",
       "alias": "pa",
       "join": {
@@ -38,6 +46,21 @@
       "type": "simple_column",
       "alias": "patient_uuid",
       "column": "t1.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "flat_identifiers.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
     },
     {
       "type": "derived_column",
