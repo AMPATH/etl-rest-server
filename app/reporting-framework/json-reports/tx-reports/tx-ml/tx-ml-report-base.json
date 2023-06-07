@@ -450,6 +450,30 @@
       "expressionOptions": {
         "expression": "if((hm.status = 'Dead' AND hm.age >= 65),1,0)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'Dead' AND hm.gender = 'F'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'Dead' AND hm.gender = 'M'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'Dead'),1,0)"
+      }
     }
   ],
   "filters": {
