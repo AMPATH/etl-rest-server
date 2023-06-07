@@ -450,6 +450,30 @@
       "expressionOptions": {
         "expression": "if((iitless3hm.status = 'defaulter' AND iitless3hm.age >= 65),1,0)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_iit_less_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((iitless3hm.status = 'defaulter' AND iitless3hm.gender = 'F'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_iit_less_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((iitless3hm.status = 'defaulter' AND iitless3hm.gender = 'M'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_iit_less_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((iitless3hm.status = 'defaulter'),1,0)"
+      }
     }
   ],
   "filters": {

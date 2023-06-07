@@ -423,6 +423,30 @@
       "expressionOptions": {
         "expression": "SUM(iitabove6b.iit_6_plus_above_65_year)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_iit_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(iitabove6b.female_iit_6_plus)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_iit_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(iitabove6b.male_iit_6_plus)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_iit_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(iitabove6b.total_iit_6_plus)"
+      }
     }
   ],
   "groupBy": {

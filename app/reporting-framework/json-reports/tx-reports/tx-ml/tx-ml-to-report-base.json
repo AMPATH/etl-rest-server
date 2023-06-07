@@ -450,6 +450,30 @@
       "expressionOptions": {
         "expression": "if((hm.status = 'transfer_out' AND hm.age >= 65),1,0)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'transfer_out' AND hm.gender = 'F'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'transfer_out' AND hm.gender = 'M'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((hm.status = 'transfer_out'),1,0)"
+      }
     }
   ],
   "filters": {

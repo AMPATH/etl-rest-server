@@ -138,6 +138,14 @@
           "female_died_above_65_year",
           "died_above_65_year"
         ]
+      },
+      {
+        "label": "Sub total",
+        "indicator": ["male_died", "female_died"]
+      },
+      {
+        "label": "Total",
+        "indicator": ["total_died", "placeholder", "total_died"]
       }
     ]
   },
@@ -203,7 +211,7 @@
       {
         "label": "25 - 29 years",
         "indicator": [
-          "male_died_25_29_year",
+          "male_iit_less_3_25_29_year",
           "female_iit_less_3_25_29_year",
           "iit_less_3_25_29_year"
         ]
@@ -271,6 +279,14 @@
           "female_iit_less_3_above_65_year",
           "iit_less_3_above_65_year"
         ]
+      },
+      {
+        "label": "Sub total",
+        "indicator": ["male_iit_less_3", "female_iit_less_3"]
+      },
+      {
+        "label": "Total",
+        "indicator": ["total_iit_less_3", "placeholder", "total_iit_less_3"]
       }
     ]
   },
@@ -404,6 +420,14 @@
           "female_iit_3_5_above_65_year",
           "iit_3_5_above_65_year"
         ]
+      },
+      {
+        "label": "Sub total",
+        "indicator": ["male_iit_3_5", "female_iit_3_5"]
+      },
+      {
+        "label": "Total",
+        "indicator": ["total_iit_3_5", "placeholder", "total_iit_3_5"]
       }
     ]
   },
@@ -537,6 +561,14 @@
           "female_iit_6_plus_above_65_year",
           "iit_6_plus_above_65_year"
         ]
+      },
+      {
+        "label": "Sub total",
+        "indicator": ["male_iit_6_plus", "female_iit_6_plus"]
+      },
+      {
+        "label": "Total",
+        "indicator": ["total_iit_6_plus", "placeholder", "total_iit_6_plus"]
       }
     ]
   },
@@ -662,6 +694,14 @@
           "female_to_above_65_year",
           "to_above_65_year"
         ]
+      },
+      {
+        "label": "Sub total",
+        "indicator": ["male_to", "female_to"]
+      },
+      {
+        "label": "Total",
+        "indicator": ["total_to", "placeholder", "total_to"]
       }
     ]
   },
@@ -795,6 +835,14 @@
           "female_rst_above_65_year",
           "rst_above_65_year"
         ]
+      },
+      {
+        "label": "Sub total",
+        "indicator": ["male_rst", "female_rst"]
+      },
+      {
+        "label": "Total",
+        "indicator": ["total_rst", "placeholder", "total_rst"]
       }
     ]
   }
