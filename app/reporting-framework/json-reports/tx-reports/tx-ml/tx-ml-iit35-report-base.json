@@ -450,6 +450,30 @@
       "expressionOptions": {
         "expression": "if((iit35hm.status = 'defaulter' AND iit35hm.age >= 65),1,0)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_iit_3_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((iit35hm.status = 'defaulter' AND iit35hm.gender = 'F'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_iit_3_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((iit35hm.status = 'defaulter' AND iit35hm.gender = 'M'),1,0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_iit_3_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((iit35hm.status = 'defaulter'),1,0)"
+      }
     }
   ],
   "filters": {

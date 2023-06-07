@@ -423,6 +423,30 @@
       "expressionOptions": {
         "expression": "SUM(b.to_above_65_year)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.female_to)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.male_to)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.total_to)"
+      }
     }
   ],
   "groupBy": {

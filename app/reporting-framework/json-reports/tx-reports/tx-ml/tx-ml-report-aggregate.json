@@ -423,6 +423,38 @@
       "expressionOptions": {
         "expression": "SUM(b.died_above_65_year)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.female_died)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.male_died)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.total_died)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "placeholder",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
     }
   ],
   "groupBy": {

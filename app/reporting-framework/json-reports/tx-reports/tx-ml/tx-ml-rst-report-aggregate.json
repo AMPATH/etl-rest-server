@@ -423,6 +423,30 @@
       "expressionOptions": {
         "expression": "SUM(b.rst_above_65_year)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_rst",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.female_rst)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_rst",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.male_rst)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_rst",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.total_rst)"
+      }
     }
   ],
   "groupBy": {
