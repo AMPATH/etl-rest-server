@@ -5308,6 +5308,9 @@
       "patientEncounters",
       "patientEnrollment"
     ],
+    "enrollmentOptions": {
+      "enrollIf": "gender === 'F'"
+    },
     "incompatibleWith": [],
     "visitTypes": [
       {
@@ -5350,6 +5353,9 @@
       "patientEncounters",
       "patientEnrollment"
     ],
+    "enrollmentOptions": {
+      "enrollIf": "gender === 'F'"
+    },
     "incompatibleWith": [],
     "visitTypes": [
       {
@@ -5392,6 +5398,9 @@
       "patientEncounters",
       "patientEnrollment"
     ],
+    "enrollmentOptions": {
+      "enrollIf": "gender === 'F'"
+    },
     "incompatibleWith": [],
     "visitTypes": [
       {
