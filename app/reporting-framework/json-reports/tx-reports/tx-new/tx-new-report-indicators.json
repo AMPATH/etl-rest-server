@@ -1,0 +1,100 @@
+[
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "TX_NEW Report",
+    "indicators": [
+      {
+        "label": "Unknown Age",
+        "indicator": [
+          "male_unknown_year",
+          "female_unknown_year",
+          "unknown_year"
+        ]
+      },
+      {
+        "label": "<1 year",
+        "indicator": ["male_less_1_year", "female_less_1_year", "less_1_year"]
+      },
+      {
+        "label": "1 - 4 years",
+        "indicator": [
+          "male_one_four_year",
+          "female_one_four_year",
+          "one_four_year"
+        ]
+      },
+      {
+        "label": "5 - 9 years",
+        "indicator": ["male_5_9_year", "female_5_9_year", "5_9_year"]
+      },
+      {
+        "label": "10 - 14 years",
+        "indicator": ["male_10_14_year", "female_10_14_year", "10_14_year"]
+      },
+      {
+        "label": "15 - 19 years",
+        "indicator": ["male_15_19_year", "female_15_19_year", "15_19_year"]
+      },
+      {
+        "label": "20 - 24 years",
+        "indicator": ["male_20_24_year", "female_20_24_year", "20_24_year"]
+      },
+      {
+        "label": "25 - 29 years",
+        "indicator": ["male_25_29_year", "female_25_29_year", "25_29_year"]
+      },
+      {
+        "label": "30 - 34 years",
+        "indicator": ["male_30_34_year", "female_30_34_year", "30_34_year"]
+      },
+      {
+        "label": "35 - 39 years",
+        "indicator": ["male_35_39_year", "female_35_39_year", "35_39_year"]
+      },
+      {
+        "label": "40 - 44 years",
+        "indicator": ["male_40_44_year", "female_40_44_year", "40_44_year"]
+      },
+      {
+        "label": "45 - 49 years",
+        "indicator": ["male_45_49_year", "female_45_49_year", "45_49_year"]
+      },
+      {
+        "label": "50 - 54 years",
+        "indicator": ["male_50_54_year", "female_50_54_year", "50_54_year"]
+      },
+      {
+        "label": "55 - 59 years",
+        "indicator": ["male_55_59_year", "female_55_59_year", "55_59_year"]
+      },
+      {
+        "label": "60 - 64 years",
+        "indicator": ["male_60_64_year", "female_60_64_year", "60_64_year"]
+      },
+      {
+        "label": "65+ years",
+        "indicator": [
+          "male_above_65_year",
+          "female_above_65_year",
+          "above_65_year"
+        ]
+      },
+      {
+        "label": "Sub total",
+        "indicator": ["male", "female"]
+      },
+      {
+        "label": "Total",
+        "indicator": ["total", "placeholder", "total"]
+      }
+    ]
+  }
+]
