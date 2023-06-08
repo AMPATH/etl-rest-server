@@ -257,6 +257,11 @@ import * as txml_iitless3_report_base from './json-reports/tx-reports/tx-ml/tx-m
 import * as patient_list_txml_template from './json-reports/tx-reports/tx-ml/patient-list-txml-template.json';
 import * as txml_summary from './json-reports/txml-summary.json';
 
+//tx-new report
+import * as txnew_aggregate_report from './json-reports/tx-reports/tx-new/tx-new-report-aggregate.json';
+import * as txnew_base_report from './json-reports/tx-reports/tx-new/tx-new-report-base.json';
+import * as txnew_summary from './json-reports/txnew-summary.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1339,6 +1344,17 @@ export class BaseMysqlReport {
         case 'patient-list-txml-template':
           resolve({
             main: this.cloneJsonSchema(patient_list_txml_template)
+          });
+          break;
+        case 'txnewReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(txnew_aggregate_report),
+            txnewReportBase: this.cloneJsonSchema(txnew_base_report)
+          });
+          break;
+        case 'txnew-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(txnew_summary)
           });
           break;
         default:
