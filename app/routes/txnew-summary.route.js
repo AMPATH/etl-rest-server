@@ -3,12 +3,12 @@ const etlHelpers = require('../../etl-helpers');
 const privileges = authorizer.getAllPrivileges();
 const preRequest = require('../../pre-request-processing');
 const {
-  TXMLSummaryReportService
-} = require('../../service/tx-reports/tx-ml/txml-summary.service');
+  TXNEWSummaryReportService
+} = require('../../service/tx-reports/tx-new/txnew-summary.service');
 const routes = [
   {
     method: 'GET',
-    path: '/etl/txml-quarterly-summary',
+    path: '/etl/txnew-summary',
     config: {
       plugins: {
         hapiAuthorization: {
@@ -19,14 +19,14 @@ const routes = [
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
           let reportParams = etlHelpers.getReportParams(
-            'txml-summary-report',
+            'txnew-summary-report',
             ['endDate', 'locationUuids'],
             requestParams
           );
           reportParams.requestParams.isAggregated = true;
 
-          let service = new TXMLSummaryReportService(
-            'txml-summary-report',
+          let service = new TXNEWSummaryReportService(
+            'txnew-summary-report',
             reportParams.requestParams
           );
           service
@@ -39,8 +39,8 @@ const routes = [
             });
         });
       },
-      description: 'txml quarterly summary dataset',
-      notes: 'txml quarterly summary dataset',
+      description: 'txnew quarterly summary dataset',
+      notes: 'txnew quarterly summary dataset',
       tags: ['api'],
       validate: {
         options: {
@@ -52,7 +52,7 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/etl/txml-quarterly-summary-patient-list',
+    path: '/etl/txnew-summary-patient-list',
     config: {
       plugins: {
         hapiAuthorization: {
@@ -68,13 +68,13 @@ const routes = [
               request.params
             );
             let reportParams = etlHelpers.getReportParams(
-              'txml-summary-report',
+              'txnew-summary-report',
               ['endDate', 'locationUuids'],
               requestParams
             );
             delete reportParams.requestParams['gender'];
-            const txmlReportService = new TXMLSummaryReportService(
-              'txml-summary-report',
+            const txmlReportService = new TXNEWSummaryReportService(
+              'txnew-summary-report',
               reportParams.requestParams
             );
             txmlReportService
@@ -89,8 +89,8 @@ const routes = [
         }
       },
       description:
-        'Get patient list for txml quarterly summary report of the location and month provided',
-      notes: 'Returns patient list of txml quarterly summary indicators',
+        'Get patient list for txnew summary report of the location and month provided',
+      notes: 'Returns patient list of txnew summary indicators',
       tags: ['api']
     }
   }
