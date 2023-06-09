@@ -267,6 +267,11 @@ import * as txcurr_aggregate_report from './json-reports/tx-reports/tx-curr/tx-c
 import * as txcurr_base_report from './json-reports/tx-reports/tx-curr/tx-curr-report-base.json';
 import * as txcurr_summary from './json-reports/txcurr-summary.json';
 
+//tx-mmd report
+import * as txmmd_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-mmd-report-aggregate.json';
+import * as txmmd_base_report from './json-reports/tx-reports/tx-mmd/tx-mmd-report-base.json';
+import * as txmmd_summary from './json-reports/txmmd-summary.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1371,6 +1376,17 @@ export class BaseMysqlReport {
         case 'txcurr-summary-report':
           resolve({
             main: this.cloneJsonSchema(txcurr_summary)
+          });
+          break;
+        case 'txmmdReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(txmmd_aggregate_report),
+            txmmdReportBase: this.cloneJsonSchema(txmmd_base_report)
+          });
+          break;
+        case 'txmmd-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(txmmd_summary)
           });
           break;
         default:
