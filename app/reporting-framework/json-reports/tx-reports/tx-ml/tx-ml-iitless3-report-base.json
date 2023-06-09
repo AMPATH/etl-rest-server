@@ -216,7 +216,7 @@
       "alias": "male_iit_less_3_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((iitless3hm.status = 'defaulter' AND iitless3hm.gender = 'M' AND iitless3hm.age BETWEEN 24 AND 24),1,0)"
+        "expression": "if((iitless3hm.status = 'defaulter' AND iitless3hm.gender = 'M' AND iitless3hm.age BETWEEN 20 AND 24),1,0)"
       }
     },
     {
