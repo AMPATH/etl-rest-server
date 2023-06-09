@@ -1,15 +1,15 @@
-import ReportProcessorHelpersService from '../../../app/reporting-framework/report-processor-helpers.service.js';
-import { MultiDatasetPatientlistReport } from '../../../app/reporting-framework/multi-dataset-patientlist.report.js';
+import ReportProcessorHelpersService from '../../app/reporting-framework/report-processor-helpers.service.js';
+import { MultiDatasetPatientlistReport } from '../../app/reporting-framework/multi-dataset-patientlist.report.js';
 
 const _ = require('lodash');
 const Moment = require('moment');
 
-const txnewReportSections = require('../../../app/reporting-framework/json-reports/tx-reports/tx-new/tx-new-report-indicators.json');
-const txnewReportPatientListCols = require('../../../app/reporting-framework/json-reports/tx-reports/tx-ml/tx-ml-report-patient-list-cols.json');
+const txmlReportSections = require('../../app/reporting-framework/json-reports/tx-reports/tx-ml/tx-ml-report-indicators.json');
+const txmlReportPatientListCols = require('../../app/reporting-framework/json-reports/tx-reports/tx-ml/tx-ml-report-patient-list-cols.json');
 
-const etlHelpers = require('../../../etl-helpers.js');
+const etlHelpers = require('../../etl-helpers.js');
 
-export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
+export class TXMLSummaryReportService extends MultiDatasetPatientlistReport {
   constructor(reportName, params) {
     super(reportName, params);
     params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen';
@@ -53,7 +53,7 @@ export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
               resolve({
                 queriesAndSchemas: results,
                 result: finalResult,
-                sectionDefinitions: txnewReportSections,
+                sectionDefinitions: txmlReportSections,
                 indicatorDefinitions: []
               });
             }
@@ -110,7 +110,7 @@ export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
           results['results'] = {
             results: result
           };
-          results['patientListCols'] = txnewReportPatientListCols;
+          results['patientListCols'] = txmlReportPatientListCols;
           delete results['result'];
           _.each(results.results.results, (row) => {
             row.cur_meds = etlHelpers.getARVNames(row.cur_meds);

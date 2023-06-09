@@ -4,7 +4,7 @@ const privileges = authorizer.getAllPrivileges();
 const preRequest = require('../../pre-request-processing');
 const {
   TXMLSummaryReportService
-} = require('../../service/tx-reports/tx-ml/txml-summary.service');
+} = require('../../service/datim-reports/txml-summary.service');
 const routes = [
   {
     method: 'GET',
