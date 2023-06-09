@@ -216,7 +216,7 @@
       "alias": "male_iit_3_5_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((iit35hm.status = 'defaulter' AND iit35hm.gender = 'M' AND iit35hm.age BETWEEN 24 AND 24),1,0)"
+        "expression": "if((iit35hm.status = 'defaulter' AND iit35hm.gender = 'M' AND iit35hm.age BETWEEN 20 AND 24),1,0)"
       }
     },
     {
