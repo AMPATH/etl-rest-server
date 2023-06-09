@@ -1,0 +1,116 @@
+{
+  "name": "prepMonthlyReportAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "prepMonthlyReportBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "prepMonthlyReportBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "b.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "month",
+      "column": "b.month"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "b.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "b.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eligible_this_month",
+      "column": "count(b.is_eligible_for_prep)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_15_19_female",
+      "column": "count(b.e_tg_15_19_female)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_15_19_male",
+      "column": "count(b.e_tg_15_19_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_20_24_female",
+      "column": "count(b.e_tg_20_24_female)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_20_24_male",
+      "column": "count(b.e_tg_20_24_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_25_29_female",
+      "column": "count(b.e_tg_25_29_female)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_25_29_male",
+      "column": "count(b.e_tg_25_29_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_30_34_female",
+      "column": "count(b.e_tg_30_34_female)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "e_tg_30_34_male",
+      "column": "count(b.e_tg_30_34_male)"
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-with-contacts-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

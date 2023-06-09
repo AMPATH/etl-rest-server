@@ -1,0 +1,429 @@
+[
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Month",
+        "indicator": "month"
+      },
+      {
+        "label": "Location",
+        "indicator": "location"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Age Disaggregation",
+        "indicators": [
+          "15 - 19",
+          "20 - 24",
+          "25 - 29",
+          "30 - 34",
+          "35 - 39",
+          "40 - 44",
+          "45 - 49",
+          "50 - 54",
+          "55 - 59",
+          "60 - 64",
+          "65+"
+        ]
+      },
+      {
+        "label": "Gender Disaggregation",
+        "indicators": [
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F",
+          "M",
+          "F"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "No. of clients tested HIV negative",
+    "indicators": [
+      {
+        "label": "Trans Gender (TG)",
+        "indicator": [
+          "ct_tg_15_19_male",
+          "ct_tg_15_19_female",
+          "ct_tg_20_24_male",
+          "ct_tg_20_24_female",
+          "ct_tg_25_29_male",
+          "ct_tg_25_29_female",
+          "ct_tg_30_34_male",
+          "ct_tg_30_34_female",
+          "ct_tg_35_39_male",
+          "ct_tg_35_39_female",
+          "ct_tg_40_44_male",
+          "ct_tg_40_44_female",
+          "ct_tg_45_49_male",
+          "ct_tg_45_49_female",
+          "ct_tg_50_54_male",
+          "ct_tg_50_54_female",
+          "ct_tg_55_59_male",
+          "ct_tg_55_59_female",
+          "ct_tg_60_64_male",
+          "ct_tg_60_64_female",
+          "ct_tg_above_65_male",
+          "ct_tg_above_65_female"
+        ]
+      },
+      {
+        "label": "Adolescent Girls and Young Women (AGYW)",
+        "indicator": [
+          "ct_agyw_15_19_male",
+          "ct_agyw_15_19_female",
+          "ct_agyw_20_24_male",
+          "ct_agyw_20_24_female",
+          "ct_agyw_25_29_male",
+          "ct_agyw_25_29_female",
+          "ct_agyw_30_34_male",
+          "ct_agyw_30_34_female",
+          "ct_agyw_35_39_male",
+          "ct_agyw_35_39_female",
+          "ct_agyw_40_44_male",
+          "ct_agyw_40_44_female",
+          "ct_agyw_45_49_male",
+          "ct_agyw_45_49_female",
+          "ct_agyw_50_54_male",
+          "ct_agyw_50_54_female",
+          "ct_agyw_55_59_male",
+          "ct_agyw_55_59_female",
+          "ct_agyw_60_64_male",
+          "ct_agyw_60_64_female",
+          "ct_agyw_above_65_male",
+          "ct_agyw_above_65_female"
+        ]
+      },
+      {
+        "label": "Men Sex Worker (MSM)",
+        "indicator": [
+          "ct_msm_15_19_male",
+          "ct_msm_15_19_female",
+          "ct_msm_20_24_male",
+          "ct_msm_20_24_female",
+          "ct_msm_25_29_male",
+          "ct_msm_25_29_female",
+          "ct_msm_30_34_male",
+          "ct_msm_30_34_female",
+          "ct_msm_35_39_male",
+          "ct_msm_35_39_female",
+          "ct_msm_40_44_male",
+          "ct_msm_40_44_female",
+          "ct_msm_45_49_male",
+          "ct_msm_45_49_female",
+          "ct_msm_50_54_male",
+          "ct_msm_50_54_female",
+          "ct_msm_55_59_male",
+          "ct_msm_55_59_female",
+          "ct_msm_60_64_male",
+          "ct_msm_60_64_female",
+          "ct_msm_above_65_male",
+          "ct_msm_above_65_female"
+        ]
+      },
+      {
+        "label": "Men at High Risk",
+        "indicator": [
+          "ct_mahr_15_19_male",
+          "ct_mahr_15_19_female",
+          "ct_mahr_20_24_male",
+          "ct_mahr_20_24_female",
+          "ct_mahr_25_29_male",
+          "ct_mahr_25_29_female",
+          "ct_mahr_30_34_male",
+          "ct_mahr_30_34_female",
+          "ct_mahr_35_39_male",
+          "ct_mahr_35_39_female",
+          "ct_mahr_40_44_male",
+          "ct_mahr_40_44_female",
+          "ct_mahr_45_49_male",
+          "ct_mahr_45_49_female",
+          "ct_mahr_50_54_male",
+          "ct_mahr_50_54_female",
+          "ct_mahr_55_59_male",
+          "ct_mahr_55_59_female",
+          "ct_mahr_60_64_male",
+          "ct_mahr_60_64_female",
+          "ct_mahr_above_65_male",
+          "ct_mahr_above_65_female"
+        ]
+      },
+      {
+        "label": "Female Sexual Workers (FSW)",
+        "indicator": [
+          "ct_fsw_15_19_male",
+          "ct_fsw_15_19_female",
+          "ct_fsw_20_24_male",
+          "ct_fsw_20_24_female",
+          "ct_fsw_25_29_male",
+          "ct_fsw_25_29_female",
+          "ct_fsw_30_34_male",
+          "ct_fsw_30_34_female",
+          "ct_fsw_35_39_male",
+          "ct_fsw_35_39_female",
+          "ct_fsw_40_44_male",
+          "ct_fsw_40_44_female",
+          "ct_fsw_45_49_male",
+          "ct_fsw_45_49_female",
+          "ct_fsw_50_54_male",
+          "ct_fsw_50_54_female",
+          "ct_fsw_55_59_male",
+          "ct_fsw_55_59_female",
+          "ct_fsw_60_64_male",
+          "ct_fsw_60_64_female",
+          "ct_fsw_above_65_male",
+          "ct_fsw_above_65_female"
+        ]
+      },
+      {
+        "label": "PWID",
+        "indicator": [
+          "ct_pwid_15_19_male",
+          "ct_pwid_15_19_female",
+          "ct_pwid_20_24_male",
+          "ct_pwid_20_24_female",
+          "ct_pwid_25_29_male",
+          "ct_pwid_25_29_female",
+          "ct_pwid_30_34_male",
+          "ct_pwid_30_34_female",
+          "ct_pwid_35_39_male",
+          "ct_pwid_35_39_female",
+          "ct_pwid_40_44_male",
+          "ct_pwid_40_44_female",
+          "ct_pwid_45_49_male",
+          "ct_pwid_45_49_female",
+          "ct_pwid_50_54_male",
+          "ct_pwid_50_54_female",
+          "ct_pwid_55_59_male",
+          "ct_pwid_55_59_female",
+          "ct_pwid_60_64_male",
+          "ct_pwid_60_64_female",
+          "ct_pwid_above_65_male",
+          "ct_pwid_above_65_female"
+        ]
+      },
+      {
+        "label": "Other Women",
+        "indicator": [
+          "ct_ow_15_19_male",
+          "ct_ow_15_19_female",
+          "ct_ow_20_24_male",
+          "ct_ow_20_24_female",
+          "ct_ow_25_29_male",
+          "ct_ow_25_29_female",
+          "ct_ow_30_34_male",
+          "ct_ow_30_34_female",
+          "ct_ow_35_39_male",
+          "ct_ow_35_39_female",
+          "ct_ow_40_44_male",
+          "ct_ow_40_44_female",
+          "ct_ow_45_49_male",
+          "ct_ow_45_49_female",
+          "ct_ow_50_54_male",
+          "ct_ow_50_54_female",
+          "ct_ow_55_59_male",
+          "ct_ow_55_59_female",
+          "ct_ow_60_64_male",
+          "ct_ow_60_64_female",
+          "ct_ow_above_65_male",
+          "ct_ow_above_65_female"
+        ]
+      },
+      {
+        "label": "Serodiscordant Couple",
+        "indicator": [
+          "ct_sdc_15_19_male",
+          "ct_sdc_15_19_female",
+          "ct_sdc_20_24_male",
+          "ct_sdc_20_24_female",
+          "ct_sdc_25_29_male",
+          "ct_sdc_25_29_female",
+          "ct_sdc_30_34_male",
+          "ct_sdc_30_34_female",
+          "ct_sdc_35_39_male",
+          "ct_sdc_35_39_female",
+          "ct_sdc_40_44_male",
+          "ct_sdc_40_44_female",
+          "ct_sdc_45_49_male",
+          "ct_sdc_45_49_female",
+          "ct_sdc_50_54_male",
+          "ct_sdc_50_54_female",
+          "ct_sdc_55_59_male",
+          "ct_sdc_55_59_female",
+          "ct_sdc_60_64_male",
+          "ct_sdc_60_64_female",
+          "ct_sdc_above_65_male",
+          "ct_sdc_above_65_female"
+        ]
+      },
+      {
+        "label": "PBFW",
+        "indicator": [
+          "ct_pbfw_15_19_male",
+          "ct_pbfw_15_19_female",
+          "ct_pbfw_20_24_male",
+          "ct_pbfw_20_24_female",
+          "ct_pbfw_25_29_male",
+          "ct_pbfw_25_29_female",
+          "ct_pbfw_30_34_male",
+          "ct_pbfw_30_34_female",
+          "ct_pbfw_35_39_male",
+          "ct_pbfw_35_39_female",
+          "ct_pbfw_40_44_male",
+          "ct_pbfw_40_44_female",
+          "ct_pbfw_45_49_male",
+          "ct_pbfw_45_49_female",
+          "ct_pbfw_50_54_male",
+          "ct_pbfw_50_54_female",
+          "ct_pbfw_55_59_male",
+          "ct_pbfw_55_59_female",
+          "ct_pbfw_60_64_male",
+          "ct_pbfw_60_64_female",
+          "ct_pbfw_above_65_male",
+          "ct_pbfw_above_65_female"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "No. tested HIV negative Offered/Screened for PrEP",
+    "indicators": [
+      {
+        "label": "Trans Gender (TG)",
+        "indicator": [
+          "he_tg_15_19_male",
+          "he_tg_15_19_female",
+          "he_tg_20_24_male",
+          "he_tg_20_24_female",
+          "he_tg_25_29_male",
+          "he_tg_25_29_female",
+          "he_tg_30_34_male",
+          "he_tg_30_34_female",
+          "he_tg_35_39_male",
+          "he_tg_35_39_female",
+          "he_tg_40_44_male",
+          "he_tg_40_44_female",
+          "he_tg_45_49_male",
+          "he_tg_45_49_female",
+          "he_tg_50_54_male",
+          "he_tg_50_54_female",
+          "he_tg_55_59_male",
+          "he_tg_55_59_female",
+          "he_tg_60_64_male",
+          "he_tg_60_64_female",
+          "he_tg_above_65_male",
+          "he_tg_above_65_female"
+        ]
+      },
+      {
+        "label": "Adolescent Girls and Young Women (AGYW)",
+        "indicator": [
+          "he_agyw_15_19_male",
+          "he_agyw_15_19_female",
+          "he_agyw_20_24_male",
+          "he_agyw_20_24_female",
+          "he_agyw_25_29_male",
+          "he_agyw_25_29_female",
+          "he_agyw_30_34_male",
+          "he_agyw_30_34_female",
+          "he_agyw_35_39_male",
+          "he_agyw_35_39_female",
+          "he_agyw_40_44_male",
+          "he_agyw_40_44_female",
+          "he_agyw_45_49_male",
+          "he_agyw_45_49_female",
+          "he_agyw_50_54_male",
+          "he_agyw_50_54_female",
+          "he_agyw_55_59_male",
+          "he_agyw_55_59_female",
+          "he_agyw_60_64_male",
+          "he_agyw_60_64_female",
+          "he_agyw_above_65_male",
+          "he_agyw_above_65_female"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "No. clients eligible for PrEP",
+    "indicators": [
+      {
+        "label": "Trans Gender (TG)",
+        "indicator": [
+          "e_tg_15_19_male",
+          "e_tg_15_19_female",
+          "e_tg_20_24_male",
+          "e_tg_20_24_female",
+          "e_tg_25_29_male",
+          "e_tg_25_29_female",
+          "e_tg_30_34_male",
+          "e_tg_30_34_female",
+          "e_tg_35_39_male",
+          "e_tg_35_39_female",
+          "e_tg_40_44_male",
+          "e_tg_40_44_female",
+          "e_tg_45_49_male",
+          "e_tg_45_49_female",
+          "e_tg_50_54_male",
+          "e_tg_50_54_female",
+          "e_tg_55_59_male",
+          "e_tg_55_59_female",
+          "e_tg_60_64_male",
+          "e_tg_60_64_female",
+          "e_tg_above_65_male",
+          "e_tg_above_65_female"
+        ]
+      },
+      {
+        "label": "Adolescent Girls and Young Women (AGYW)",
+        "indicator": [
+          "e_agyw_15_19_male",
+          "e_agyw_15_19_female",
+          "e_agyw_20_24_male",
+          "e_agyw_20_24_female",
+          "e_agyw_25_29_male",
+          "e_agyw_25_29_female",
+          "e_agyw_30_34_male",
+          "e_agyw_30_34_female",
+          "e_agyw_35_39_male",
+          "e_agyw_35_39_female",
+          "e_agyw_40_44_male",
+          "e_agyw_40_44_female",
+          "e_agyw_45_49_male",
+          "e_agyw_45_49_female",
+          "e_agyw_50_54_male",
+          "e_agyw_50_54_female",
+          "e_agyw_55_59_male",
+          "e_agyw_55_59_female",
+          "e_agyw_60_64_male",
+          "e_agyw_60_64_female",
+          "e_agyw_above_65_male",
+          "e_agyw_above_65_female"
+        ]
+      }
+    ]
+  }
+]
