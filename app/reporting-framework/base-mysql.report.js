@@ -229,6 +229,11 @@ import * as defaulter_list_base from './json-reports/defaulter-list-base.json';
 import * as clinic_flow_provider_statistics_aggregate from './json-reports/clinic-flow-provider-statistics-aggregate.json';
 import * as clinic_flow_provider_statistics_base from './json-reports/clinic-flow-provider-statistics-base.json';
 
+// (New) Prep monthly report
+import * as prep_monthly_report_aggregate from './json-reports/prep/schema/prep-monthly-aggregate.json';
+import * as prep_monthly_report_base from './json-reports/prep/schema/prep-monthly-base.json';
+import * as prep_monthly_report from './json-reports/prep/prep-report.json';
+
 //covid 19 report
 import * as patient_list_covid_template from './json-reports/patient-list-covid-template.json';
 import * as covid_19_summary_aggregate from './json-reports/covid-19-summary-report-aggregate.json';
@@ -1266,6 +1271,19 @@ export class BaseMysqlReport {
             ),
             hivMonthlyNotScreenedForCovidBase: this.cloneJsonSchema(
               hiv_monthly_not_screened_for_covid_base
+            )
+          });
+          break;
+        case 'prep-monthly-report':
+          resolve({
+            main: this.cloneJsonSchema(prep_monthly_report)
+          });
+          break;
+        case 'prepMonthlyReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(prep_monthly_report_aggregate),
+            prepMonthlyReportBase: this.cloneJsonSchema(
+              prep_monthly_report_base
             )
           });
           break;
