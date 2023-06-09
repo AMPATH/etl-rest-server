@@ -223,25 +223,9 @@
       "column": "date_format(fh.ipt_stop_date, '%Y-%m-%d')"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_diclosure_status",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "fh.hiv_status_disclosed = 1",
-            "value": "Disclosed"
-          },
-          {
-            "condition": "fh.hiv_status_disclosed = 0",
-            "value": "Not Disclosed"
-          },
-          {
-            "condition": "else",
-            "value": "null"
-          }
-        ]
-      }
+      "column": "fh.hiv_disclosure_status_value"
     },
     {
       "type": "derived_column",
