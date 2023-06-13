@@ -1,5 +1,5 @@
 {
-  "name": "prepMonthlyReportBase",
+  "name": "eligibleForPrepBase",
   "version": "1.0",
   "tag": "",
   "description": "",
@@ -1683,7 +1683,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "pd.location_id IN (?)",
+        "conditionExpression": "pd.location_id IN ?",
         "parameterName": "locations"
       },
       {

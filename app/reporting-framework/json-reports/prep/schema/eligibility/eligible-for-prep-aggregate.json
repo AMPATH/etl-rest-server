@@ -1,18 +1,18 @@
 {
-  "name": "prepMonthlyReportAggregate",
+  "name": "eligibleForPrepAggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "prepMonthlyReportBase",
+      "name": "eligibleForPrepBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "prepMonthlyReportBase",
+      "dataSet": "eligibleForPrepBase",
       "alias": "b"
     }
   ],

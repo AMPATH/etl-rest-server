@@ -230,8 +230,8 @@ import * as clinic_flow_provider_statistics_aggregate from './json-reports/clini
 import * as clinic_flow_provider_statistics_base from './json-reports/clinic-flow-provider-statistics-base.json';
 
 // (New) Prep monthly report
-import * as prep_monthly_report_aggregate from './json-reports/prep/schema/prep-monthly-aggregate.json';
-import * as prep_monthly_report_base from './json-reports/prep/schema/prep-monthly-base.json';
+import * as eligible_for_prep_aggregate from './json-reports/prep/schema/eligibility/eligible-for-prep-aggregate.json';
+import * as eligible_for_prep_base from './json-reports/prep/schema/eligibility/eligible-for-prep-base.json';
 import * as prep_monthly_report from './json-reports/prep/prep-report.json';
 
 //covid 19 report
@@ -1279,12 +1279,10 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(prep_monthly_report)
           });
           break;
-        case 'prepMonthlyReportAggregate':
+        case 'eligibleForPrepAggregate':
           resolve({
-            main: this.cloneJsonSchema(prep_monthly_report_aggregate),
-            prepMonthlyReportBase: this.cloneJsonSchema(
-              prep_monthly_report_base
-            )
+            main: this.cloneJsonSchema(eligible_for_prep_aggregate),
+            eligibleForPrepBase: this.cloneJsonSchema(eligible_for_prep_base)
           });
           break;
         case 'covid-19-monthly-report':
@@ -1318,7 +1316,7 @@ export class BaseMysqlReport {
   }
 
   executeReportQuery(sqlQuery) {
-    // console.log('Executing Query', sqlQuery);
+    console.log('Executing Query', sqlQuery);
     let runner = this.getSqlRunner();
     return new Promise((resolve, reject) => {
       runner
