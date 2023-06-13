@@ -90,7 +90,7 @@
       "alias": "e_tg_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -98,7 +98,7 @@
       "alias": "e_tg_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
