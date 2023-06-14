@@ -268,8 +268,18 @@ import * as txcurr_base_report from './json-reports/tx-reports/tx-curr/tx-curr-r
 import * as txcurr_summary from './json-reports/txcurr-summary.json';
 
 //tx-mmd report
-import * as txmmd_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-mmd-report-aggregate.json';
-import * as txmmd_base_report from './json-reports/tx-reports/tx-mmd/tx-mmd-report-base.json';
+import * as tx1mms_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-1mms-report-aggregate.json';
+import * as tx1mms_base_report from './json-reports/tx-reports/tx-mmd/tx-1mms-report-base.json';
+import * as tx2mms_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-2mms-report-aggregate.json';
+import * as tx2mms_base_report from './json-reports/tx-reports/tx-mmd/tx-2mms-report-base.json';
+import * as tx3mmd_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-3mmd-report-aggregate.json';
+import * as tx3mmd_base_report from './json-reports/tx-reports/tx-mmd/tx-3mmd-report-base.json';
+import * as tx4mmd_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-4mmd-report-aggregate.json';
+import * as tx4mmd_base_report from './json-reports/tx-reports/tx-mmd/tx-4mmd-report-base.json';
+import * as tx5mmd_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-5mmd-report-aggregate.json';
+import * as tx5mmd_base_report from './json-reports/tx-reports/tx-mmd/tx-5mmd-report-base.json';
+import * as tx6mmd_aggregate_report from './json-reports/tx-reports/tx-mmd/tx-6mmd-report-aggregate.json';
+import * as tx6mmd_base_report from './json-reports/tx-reports/tx-mmd/tx-6mmd-report-base.json';
 import * as txmmd_summary from './json-reports/txmmd-summary.json';
 
 export class BaseMysqlReport {
@@ -1378,10 +1388,40 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(txcurr_summary)
           });
           break;
-        case 'txmmdReportAggregate':
+        case 'tx1mmsReportAggregate':
           resolve({
-            main: this.cloneJsonSchema(txmmd_aggregate_report),
-            txmmdReportBase: this.cloneJsonSchema(txmmd_base_report)
+            main: this.cloneJsonSchema(tx1mms_aggregate_report),
+            tx1mmsReportBase: this.cloneJsonSchema(tx1mms_base_report)
+          });
+          break;
+        case 'tx2mmsReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tx2mms_aggregate_report),
+            tx2mmsReportBase: this.cloneJsonSchema(tx2mms_base_report)
+          });
+          break;
+        case 'tx3mmdReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tx3mmd_aggregate_report),
+            tx3mmdReportBase: this.cloneJsonSchema(tx3mmd_base_report)
+          });
+          break;
+        case 'tx4mmdReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tx4mmd_aggregate_report),
+            tx4mmdReportBase: this.cloneJsonSchema(tx4mmd_base_report)
+          });
+          break;
+        case 'tx5mmdReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tx5mmd_aggregate_report),
+            tx5mmdReportBase: this.cloneJsonSchema(tx5mmd_base_report)
+          });
+          break;
+        case 'tx6mmdReportAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tx6mmd_aggregate_report),
+            tx6mmdReportBase: this.cloneJsonSchema(tx6mmd_base_report)
           });
           break;
         case 'txmmd-summary-report':

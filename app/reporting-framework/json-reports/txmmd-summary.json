@@ -1,3 +1,10 @@
 {
-  "reports": ["txmmdReportAggregate"]
+  "reports": [
+    "tx1mmsReportAggregate",
+    "tx2mmsReportAggregate",
+    "tx3mmdReportAggregate",
+    "tx4mmdReportAggregate",
+    "tx5mmdReportAggregate",
+    "tx6mmdReportAggregate"
+  ]
 }
