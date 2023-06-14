@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.patient_program",
+      "table": "amrs_migration.patient_program",
       "alias": "pp"
     }
   ],

@@ -10,7 +10,7 @@
       "alias": "fhs"
     },
     {
-      "table": "amrs.location",
+      "table": "amrs_migration.location",
       "alias": "l",
       "join": {
         "type": "INNER",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs.person",
+      "table": "amrs_migration.person",
       "alias": "p",
       "join": {
         "type": "INNER",

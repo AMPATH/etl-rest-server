@@ -39,14 +39,14 @@ function getCohortUsersByCohortUuid(cohortUuid) {
           .field(
             'case when cu.role is null or cu.user_id != u.user_id  then  0 else cu.voided end as voided'
           )
-          .from('amrs.cohort', 'c')
+          .from('amrs_migration.cohort', 'c')
           .left_join(
             'etl.cohort_user',
             'cu',
             'c.cohort_id = cu.cohort_id and cu.voided = 0 '
           )
           .join(
-            'amrs.users',
+            'amrs_migration.users',
             'u',
             squel
               .expr()
@@ -85,8 +85,8 @@ function getCohortUser(cohortUserId) {
           .field('u.username')
           .field('cu.voided')
           .from('etl.cohort_user', 'cu')
-          .join('amrs.users', 'u', 'cu.user_id = u.user_id')
-          .join('amrs.cohort', 'c', 'c.cohort_id = cu.cohort_id')
+          .join('amrs_migration.users', 'u', 'cu.user_id = u.user_id')
+          .join('amrs_migration.cohort', 'c', 'c.cohort_id = cu.cohort_id')
           .where('cu.cohort_user_id = ?', cohortUserId)
           .toString();
 
@@ -257,8 +257,8 @@ function findCohortUser(userId, cohortId, voided) {
           .field('u.username')
           .field('cu.voided')
           .from('etl.cohort_user', 'cu')
-          .join('amrs.users', 'u', 'cu.user_id = u.user_id')
-          .join('amrs.cohort', 'c', 'c.cohort_id = cu.cohort_id')
+          .join('amrs_migration.users', 'u', 'cu.user_id = u.user_id')
+          .join('amrs_migration.cohort', 'c', 'c.cohort_id = cu.cohort_id')
           .where('cu.cohort_id = ?', cohortId)
           .where('cu.user_id = ?', userId)
           .where('cu.voided = ?', voided)
@@ -309,7 +309,7 @@ function getUserId(userUuid) {
         var query = squel
           .select()
           .field('u.user_id')
-          .from('amrs.users', 'u')
+          .from('amrs_migration.users', 'u')
           .where('u.uuid = ?', userUuid)
           .toString();
 
@@ -340,7 +340,7 @@ function getCohortId(cohortUuid) {
         var query = squel
           .select()
           .field('u.cohort_id')
-          .from('amrs.cohort', 'u')
+          .from('amrs_migration.cohort', 'u')
           .where('u.uuid = ?', cohortUuid)
           .toString();
 
@@ -482,6 +482,6 @@ function getCurrentUserIdSquel() {
   return squel
     .select()
     .field('MAX(user_id)')
-    .from('amrs.users')
+    .from('amrs_migration.users')
     .where('uuid = ?', authorizer.getUser().uuid);
 }

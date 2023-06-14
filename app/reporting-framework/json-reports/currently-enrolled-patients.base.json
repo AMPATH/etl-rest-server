@@ -6,11 +6,11 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.patient_program",
+      "table": "amrs_migration.patient_program",
       "alias": "pp"
     },
     {
-      "table": "amrs.program",
+      "table": "amrs_migration.program",
       "alias": "pr",
       "join": {
         "type": "INNER",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "table": "amrs.person",
+      "table": "amrs_migration.person",
       "alias": "p1",
       "join": {
         "type": "INNER",
@@ -34,7 +34,7 @@
       }
     },
     {
-      "table": "amrs.patient_identifier",
+      "table": "amrs_migration.patient_identifier",
       "alias": "i",
       "join": {
         "type": "INNER",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "table": "amrs.person_attribute",
+      "table": "amrs_migration.person_attribute",
       "alias": "t5",
       "join": {
         "type": "LEFT",

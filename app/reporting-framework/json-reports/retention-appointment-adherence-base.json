@@ -23,7 +23,7 @@
       }
     },
     {
-      "table": "amrs.location",
+      "table": "amrs_migration.location",
       "alias": "l",
       "join": {
         "type": "inner",
@@ -31,7 +31,7 @@
       }
     },
     {
-      "table": "amrs.program",
+      "table": "amrs_migration.program",
       "alias": "pr",
       "join": {
         "type": "inner",
@@ -39,7 +39,7 @@
       }
     },
     {
-      "table": "amrs.visit_type",
+      "table": "amrs_migration.visit_type",
       "alias": "vt",
       "join": {
         "type": "left",
@@ -47,7 +47,7 @@
       }
     },
     {
-      "table": "amrs.person",
+      "table": "amrs_migration.person",
       "alias": "p",
       "join": {
         "type": "inner",

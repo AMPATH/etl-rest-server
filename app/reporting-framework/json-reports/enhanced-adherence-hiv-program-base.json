@@ -61,7 +61,7 @@
       }
     },
     {
-      "table": "amrs.patient_program",
+      "table": "amrs_migration.patient_program",
       "alias": "pp",
       "join": {
         "type": "LEFT",
@@ -69,7 +69,7 @@
       }
     },
     {
-      "table": "amrs.encounter_type",
+      "table": "amrs_migration.encounter_type",
       "alias": "aet",
       "join": {
         "type": "LEFT",

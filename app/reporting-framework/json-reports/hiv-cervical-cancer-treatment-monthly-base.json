@@ -10,7 +10,7 @@
       "alias": "c"
     },
     {
-      "table": "amrs.location",
+      "table": "amrs_migration.location",
       "alias": "l",
       "join": {
         "type": "left",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs.location",
+      "table": "amrs_migration.location",
       "alias": "p",
       "join": {
         "type": "left",

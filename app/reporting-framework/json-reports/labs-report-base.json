@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs.location",
+      "table": "amrs_migration.location",
       "alias": "l",
       "join": {
         "type": "INNER",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "table": "amrs.person",
+      "table": "amrs_migration.person",
       "alias": "t3",
       "join": {
         "type": "INNER",
@@ -34,7 +34,7 @@
       }
     },
     {
-      "table": "amrs.person_attribute",
+      "table": "amrs_migration.person_attribute",
       "alias": "contacts",
       "join": {
         "type": "LEFT",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "table": "amrs.encounter_type",
+      "table": "amrs_migration.encounter_type",
       "alias": "et",
       "join": {
         "type": "LEFT",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "table": "amrs.person_address",
+      "table": "amrs_migration.person_address",
       "alias": "pa",
       "join": {
         "type": "LEFT",

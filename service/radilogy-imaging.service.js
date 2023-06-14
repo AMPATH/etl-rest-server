@@ -164,6 +164,6 @@ function getCurrentUserIdSquel() {
   return squel
     .select()
     .field('MAX(user_id)')
-    .from('amrs.users')
+    .from('amrs_migration.users')
     .where('uuid = ?', authorizer.getUser().uuid);
 }

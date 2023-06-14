@@ -34,7 +34,7 @@
       }
     },
     {
-      "table": "amrs.program",
+      "table": "amrs_migration.program",
       "alias": "p",
       "join": {
         "type": "LEFT",

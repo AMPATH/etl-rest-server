@@ -42,7 +42,7 @@
       }
     },
     {
-      "table": "amrs.program",
+      "table": "amrs_migration.program",
       "alias": "pr",
       "join": {
         "type": "LEFT",

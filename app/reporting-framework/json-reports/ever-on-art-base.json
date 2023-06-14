@@ -10,7 +10,7 @@
       "alias": "hmsd"
     },
     {
-      "table": "amrs.person",
+      "table": "amrs_migration.person",
       "alias": "ps",
       "join": {
         "type": "INNER",

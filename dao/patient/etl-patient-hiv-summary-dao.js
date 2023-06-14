@@ -44,12 +44,12 @@ function getPatientLastEncounter(patientUuid) {
   var queryObject = {
     columns:
       'TIMESTAMPDIFF(MONTH, MAX(encounter_datetime), DATE(NOW())) as `months_from_last_visit`',
-    table: 'amrs.encounter',
+    table: 'amrs_migration.encounter',
     alias: 'e',
     where: whereClause,
     leftOuterJoins: [
-      ['amrs.person', 'p', 'p.person_id = e.patient_id'],
-      ['amrs.visit', 'v', 'e.visit_id = v.visit_id']
+      ['amrs_migration.person', 'p', 'p.person_id = e.patient_id'],
+      ['amrs_migration.visit', 'v', 'e.visit_id = v.visit_id']
     ],
     order: [
       {

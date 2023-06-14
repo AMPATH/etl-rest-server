@@ -98,18 +98,18 @@ export class DQAChartAbstractionDAO {
             FROM etl.flat_vitals fv where diastolic_bp is not null
             GROUP BY fv.person_id,fv.encounter_datetime order by fv.encounter_datetime desc limit 1) fv ON e.person_id = fv.person_id
           INNER JOIN
-           amrs.person t1 ON (h.person_id = t1.person_id)
+           amrs_migration.person t1 ON (h.person_id = t1.person_id)
           INNER JOIN
-          amrs.person_name person_name ON (t1.person_id = person_name.person_id AND (person_name.voided = 0 || person_name.voided = 0))
+          amrs_migration.person_name person_name ON (t1.person_id = person_name.person_id AND (person_name.voided = 0 || person_name.voided = 0))
           LEFT JOIN
-          amrs.patient_identifier id ON (t1.person_id = id.patient_id AND id.voided = 0)
+          amrs_migration.patient_identifier id ON (t1.person_id = id.patient_id AND id.voided = 0)
           LEFT JOIN
-          amrs.patient_identifier cc ON (t1.person_id = cc.patient_id and cc.identifier_type in (28) AND cc.voided = 0)
+          amrs_migration.patient_identifier cc ON (t1.person_id = cc.patient_id and cc.identifier_type in (28) AND cc.voided = 0)
           LEFT JOIN
-          amrs.patient_identifier ov ON (t1.person_id = ov.patient_id and ov.identifier_type in (43) AND ov.voided = 0)
+          amrs_migration.patient_identifier ov ON (t1.person_id = ov.patient_id and ov.identifier_type in (43) AND ov.voided = 0)
           LEFT JOIN
-          amrs.patient_identifier np ON (t1.person_id = np.patient_id and np.identifier_type in (45) AND np.voided = 0)
-        left join amrs.patient_program p on (p.patient_id = h.person_id and p.program_id in (4,9) and p.date_completed is null and p.voided = 0)
+          amrs_migration.patient_identifier np ON (t1.person_id = np.patient_id and np.identifier_type in (45) AND np.voided = 0)
+        left join amrs_migration.patient_program p on (p.patient_id = h.person_id and p.program_id in (4,9) and p.date_completed is null and p.voided = 0)
         WHERE h.status = "active"
         AND e.height IS NOT NULL
         AND e.weight IS NOT NULL

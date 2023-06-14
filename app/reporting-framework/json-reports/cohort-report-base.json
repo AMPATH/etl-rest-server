@@ -5,7 +5,7 @@
   "description": "Cohort Report",
   "sources": [
     {
-      "table": "amrs.cohort",
+      "table": "amrs_migration.cohort",
       "alias": "t1"
     },
     {
@@ -17,7 +17,7 @@
       }
     },
     {
-      "table": "amrs.users",
+      "table": "amrs_migration.users",
       "alias": "t3",
       "join": {
         "type": "INNER",

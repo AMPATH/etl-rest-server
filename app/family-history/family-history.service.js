@@ -360,7 +360,9 @@ export class FamilyTestingService {
     return new Promise((resolve, reject) => {
       let queryParts = {};
       let sql =
-        "select uuid from amrs.obs where obs_id = '" + params.contact_id + "'";
+        "select uuid from amrs_migration.obs where obs_id = '" +
+        params.contact_id +
+        "'";
       queryParts = {
         sql: sql
       };
@@ -558,7 +560,7 @@ export class FamilyTestingService {
     pr.name as patient_program,
     1 AS hideContactColumns
 FROM
-    amrs.person t2
+    amrs_migration.person t2
         INNER JOIN
     etl.flat_hiv_summary_v15b t1 ON (t1.person_id = t2.person_id
         AND t1.last_non_transit_location_id IN ( ${params.locations} )
@@ -566,21 +568,21 @@ FROM
         AND is_clinical_encounter = 1
         AND TIMESTAMPDIFF(DAY, t1.rtc_date, NOW()) < 30)
         LEFT JOIN
-    amrs.patient_program pp ON (t1.person_id = pp.patient_id)
+    amrs_migration.patient_program pp ON (t1.person_id = pp.patient_id)
         LEFT JOIN
-    amrs.program pr ON (pr.program_id = pp.program_id)
+    amrs_migration.program pr ON (pr.program_id = pp.program_id)
 
         LEFT JOIN
-    amrs.person_name person_name ON (t1.person_id = person_name.person_id
+    amrs_migration.person_name person_name ON (t1.person_id = person_name.person_id
         AND (person_name.voided IS NULL
         || person_name.voided = 0)
 
         AND person_name.preferred = 1)
         LEFT JOIN
-    amrs.patient_identifier id ON (t1.person_id = id.patient_id
+    amrs_migration.patient_identifier id ON (t1.person_id = id.patient_id
         AND (id.voided IS NULL || id.voided = 0))
         LEFT JOIN
-    amrs.person_attribute contacts ON (t1.person_id = contacts.person_id
+    amrs_migration.person_attribute contacts ON (t1.person_id = contacts.person_id
         AND (contacts.voided IS NULL
         || contacts.voided = 0)
         AND contacts.person_attribute_type_id IN (10 , 48))

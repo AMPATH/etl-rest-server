@@ -30,7 +30,7 @@ try {
   var authencticated = false;
   var server = new Hapi.Server({
     connections: {
-      //routes: {cors:{origin:["https://amrs.ampath.or.ke:8443"]}}
+      //routes: {cors:{origin:["https://amrs_migration.ampath.or.ke:8443"]}}
       routes: {
         cors: {
           additionalHeaders: ['JSNLog-RequestId']
