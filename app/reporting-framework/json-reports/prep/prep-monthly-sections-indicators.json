@@ -91,12 +91,12 @@
         ]
       },
       {
-        "label": "Adolescent Girls and Young Women (msm)",
+        "label": "Adolescent Girls and Young Women (AGYW)",
         "indicator": [
-          "ct_msm_15_19_male",
-          "ct_msm_15_19_female",
-          "ct_msm_20_24_male",
-          "ct_msm_20_24_female",
+          "ct_agyw_15_19_male",
+          "ct_agyw_15_19_female",
+          "ct_agyw_20_24_male",
+          "ct_agyw_20_24_female",
           "ct_agyw_25_29_male",
           "ct_agyw_25_29_female",
           "ct_agyw_30_34_male",
