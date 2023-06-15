@@ -230,9 +230,9 @@ import * as clinic_flow_provider_statistics_aggregate from './json-reports/clini
 import * as clinic_flow_provider_statistics_base from './json-reports/clinic-flow-provider-statistics-base.json';
 
 // (New) Prep monthly report
-import * as eligible_for_prep_aggregate from './json-reports/prep/schema/eligibility/eligible-for-prep-aggregate.json';
-import * as eligible_for_prep_base from './json-reports/prep/schema/eligibility/eligible-for-prep-base.json';
-import * as prep_monthly_report from './json-reports/prep/prep-report.json';
+import * as eligible_for_prep_aggregate from './json-reports/prep-monthly/disaggregations/eligibility/eligible-for-prep-aggregate.json';
+import * as eligible_for_prep_base from './json-reports/prep-monthly/disaggregations/eligibility/eligible-for-prep-base.json';
+import * as prep_monthly_report from './json-reports/prep-monthly/prep-report.json';
 
 //covid 19 report
 import * as patient_list_covid_template from './json-reports/patient-list-covid-template.json';
@@ -1316,7 +1316,7 @@ export class BaseMysqlReport {
   }
 
   executeReportQuery(sqlQuery) {
-    console.log('Executing Query', sqlQuery);
+    // console.log('Executing Query', sqlQuery);
     let runner = this.getSqlRunner();
     return new Promise((resolve, reject) => {
       runner

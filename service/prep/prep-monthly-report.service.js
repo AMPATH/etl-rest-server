@@ -4,7 +4,7 @@ import { MultiDatasetPatientlistReport } from '../../app/reporting-framework/mul
 import ReportProcessorHelpersService from '../../app/reporting-framework/report-processor-helpers.service';
 
 const etlHelpers = require('../../etl-helpers.js');
-const prepMonthlyReportSections = require('../../app/reporting-framework/json-reports/prep/prep-monthly-sections-indicators.json');
+const prepMonthlyReportSections = require('../../app/reporting-framework/json-reports/prep-monthly/prep-monthly-sections-indicators.json');
 
 export class PrepMonthlyReportService extends MultiDatasetPatientlistReport {
   constructor(reportName, params) {
