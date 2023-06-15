@@ -464,7 +464,7 @@
       "alias": "5mmd_total",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.endDate <> ''),1,0)"
+        "expression": "if((hm.rtc_date is not null),1,0)"
       }
     }
   ],
@@ -483,7 +483,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hm.days_since_rtc_date between -150 and -121"
+        "conditionExpression": "hm.status = 'active' AND DATEDIFF(hm.rtc_date, hm.encounter_date) between 121 and 150"
       }
     ]
   },
