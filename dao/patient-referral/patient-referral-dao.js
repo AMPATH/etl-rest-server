@@ -181,20 +181,24 @@ function getPatientReferral(patientReferralId) {
           .field('pr.notification_status')
           .field('pr.referral_reason')
           .from('etl.patient_referral', 'pr')
-          // .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
-          .join('amrs.provider', 'ap', 'ap.provider_id = pr.provider_id')
+          // .join('amrs_migration.encounter', 'u', 'pr.encounter_id = u.encounter_id')
           .join(
-            'amrs.location',
+            'amrs_migration.provider',
+            'ap',
+            'ap.provider_id = pr.provider_id'
+          )
+          .join(
+            'amrs_migration.location',
             'lr',
             'pr.referred_to_location_id = lr.location_id'
           )
           .join(
-            'amrs.location',
+            'amrs_migration.location',
             'lt',
             'pr.referred_from_location_id = lt.location_id'
           )
           .join(
-            'amrs.patient_program',
+            'amrs_migration.patient_program',
             'p',
             'pr.patient_program_id = p.patient_program_id'
           )
@@ -241,20 +245,28 @@ function getPatientReferralByEnrollmentUuid(locationUuid, enrollmentUuid) {
           .field('lf.uuid as referred_from_location_uuid')
           .field('p.uuid as patient_program_uuid')
           .from('etl.patient_referral', 'pr')
-          .join('amrs.provider', 'ap', 'ap.provider_id = pr.provider_id')
           .join(
-            'amrs.location',
+            'amrs_migration.provider',
+            'ap',
+            'ap.provider_id = pr.provider_id'
+          )
+          .join(
+            'amrs_migration.location',
             'lt',
             'pr.referred_to_location_id = lt.location_id'
           )
-          .join('amrs.encounter', 'e', 'e.encounter_id = pr.encounter_id')
           .join(
-            'amrs.location',
+            'amrs_migration.encounter',
+            'e',
+            'e.encounter_id = pr.encounter_id'
+          )
+          .join(
+            'amrs_migration.location',
             'lf',
             'pr.referred_from_location_id = lf.location_id'
           )
           .join(
-            'amrs.patient_program',
+            'amrs_migration.patient_program',
             'p',
             'pr.patient_program_id = p.patient_program_id'
           )
@@ -456,20 +468,28 @@ function findPatientReferral(
           .field('pr.notification_status')
           .field('pr.referral_reason')
           .from('etl.patient_referral', 'pr')
-          .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
-          .join('amrs.provider', 'apr', 'apr.provider_id = pr.provider_id')
           .join(
-            'amrs.location',
+            'amrs_migration.encounter',
+            'u',
+            'pr.encounter_id = u.encounter_id'
+          )
+          .join(
+            'amrs_migration.provider',
+            'apr',
+            'apr.provider_id = pr.provider_id'
+          )
+          .join(
+            'amrs_migration.location',
             'lr',
             'pr.referred_to_location_id = lr.location_id'
           )
           .join(
-            'amrs.location',
+            'amrs_migration.location',
             'lt',
             'pr.referred_from_location_id = lt.location_id'
           )
           .join(
-            'amrs.patient_program',
+            'amrs_migration.patient_program',
             'p',
             'pr.patient_program_id = p.patient_program_id'
           )
@@ -512,25 +532,33 @@ function getPatientReferralStats(providerId, startDate, endDate) {
           .field('pr.notification_status')
           .field('pr.referral_reason')
           .from('etl.patient_referral', 'pr')
-          .join('amrs.encounter', 'u', 'pr.encounter_id = u.encounter_id')
-          .join('amrs.provider', 'apr', 'apr.provider_id = pr.provider_id')
           .join(
-            'amrs.location',
+            'amrs_migration.encounter',
+            'u',
+            'pr.encounter_id = u.encounter_id'
+          )
+          .join(
+            'amrs_migration.provider',
+            'apr',
+            'apr.provider_id = pr.provider_id'
+          )
+          .join(
+            'amrs_migration.location',
             'lr',
             'pr.referred_to_location_id = lr.location_id'
           )
           .join(
-            'amrs.location',
+            'amrs_migration.location',
             'lt',
             'pr.referred_from_location_id = lt.location_id'
           )
           .join(
-            'amrs.patient_program',
+            'amrs_migration.patient_program',
             'p',
             'pr.patient_program_id = p.patient_program_id'
           )
           .join(
-            'amrs.program_workflow_state',
+            'amrs_migration.program_workflow_state',
             'ps',
             'pr.program_workflow_state_id = ps.program_workflow_state_id'
           )
@@ -567,7 +595,7 @@ function getEncounterId(encounterUuid) {
         var query = squel
           .select()
           .field('u.encounter_id')
-          .from('amrs.encounter', 'u')
+          .from('amrs_migration.encounter', 'u')
           .where('u.uuid = ?', encounterUuid)
           .toString();
 
@@ -600,7 +628,7 @@ function getPatientProgramId(patientProgramUuid) {
         var query = squel
           .select()
           .field('u.patient_program_id')
-          .from('amrs.patient_program', 'u')
+          .from('amrs_migration.patient_program', 'u')
           .where('u.uuid = ?', patientProgramUuid)
           .toString();
 
@@ -633,7 +661,7 @@ function getProviderId(providerUuid) {
         var query = squel
           .select()
           .field('u.provider_id')
-          .from('amrs.provider', 'u')
+          .from('amrs_migration.provider', 'u')
           .where('u.uuid = ?', providerUuid)
           .toString();
 
@@ -664,7 +692,7 @@ function getWorkFlowState(workFlowStateUuid) {
         var query = squel
           .select()
           .field('u.program_workflow_state_id')
-          .from('amrs.program_workflow_state', 'u')
+          .from('amrs_migration.program_workflow_state', 'u')
           .where('u.uuid = ?', workFlowStateUuid)
           .toString();
 
@@ -697,7 +725,7 @@ function getLocation(locationUuid) {
         var query = squel
           .select()
           .field('u.location_id')
-          .from('amrs.location', 'u')
+          .from('amrs_migration.location', 'u')
           .where('u.uuid = ?', locationUuid)
           .toString();
 
@@ -724,7 +752,7 @@ function getCurrentUserIdSquel() {
   return squel
     .select()
     .field('MAX(user_id)')
-    .from('amrs.users')
+    .from('amrs_migration.users')
     .where('uuid = ?', authorizer.getUser().uuid);
 }
 

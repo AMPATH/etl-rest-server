@@ -7,12 +7,12 @@ const def = {
 
 function getPatientLatestCovidAssessmentDate(patientUuid) {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT 
+    const sql = `SELECT
     DATE_FORMAT(e.encounter_datetime,'%Y-%m-%d') as 'latest_covid_assessment_date'
 FROM
-    amrs.encounter e
+    amrs_migration.encounter e
         JOIN
-    amrs.person p ON (p.person_id = e.patient_id
+    amrs_migration.person p ON (p.person_id = e.patient_id
         AND p.voided = 0)
 WHERE
     p.uuid = '${patientUuid}'

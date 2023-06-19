@@ -208,7 +208,7 @@ function hasPendingVLOrder(personUuid) {
     let sql = '';
 
     sql =
-      "SELECT t3.uuid FROM amrs.orders t1 INNER JOIN amrs.person t3 ON t3.person_id = t1.patient_id LEFT OUTER JOIN amrs.obs t2 ON t1.order_id = t2.order_id where t2.order_id IS NULL AND t1.date_activated >= DATE('2020-01-01') AND t3.uuid = '" +
+      "SELECT t3.uuid FROM amrs_migration.orders t1 INNER JOIN amrs_migration.person t3 ON t3.person_id = t1.patient_id LEFT OUTER JOIN amrs_migration.obs t2 ON t1.order_id = t2.order_id where t2.order_id IS NULL AND t1.date_activated >= DATE('2020-01-01') AND t3.uuid = '" +
       personUuid +
       "';";
     queryParts = {

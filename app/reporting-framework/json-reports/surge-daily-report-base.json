@@ -10,7 +10,7 @@
       "alias": "sdr"
     },
     {
-      "table": "amrs.location",
+      "table": "amrs_migration.location",
       "alias": "l",
       "join": {
         "type": "INNER",

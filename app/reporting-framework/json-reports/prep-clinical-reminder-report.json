@@ -17,7 +17,7 @@
   ],
   "sources": [
     {
-      "table": "amrs.person",
+      "table": "amrs_migration.person",
       "alias": "t"
     },
     {

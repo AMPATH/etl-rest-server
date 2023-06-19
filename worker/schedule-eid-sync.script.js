@@ -506,7 +506,7 @@ var service = {
         console.log('Results...', results);
 
         var sql =
-          'replace into etl.eid_sync_queue(person_uuid) select distinct p.uuid from amrs.person p left join amrs.patient_identifier i on p.person_id = i.patient_id where identifier in (?)';
+          'replace into etl.eid_sync_queue(person_uuid) select distinct p.uuid from amrs_migration.person p left join amrs_migration.patient_identifier i on p.person_id = i.patient_id where identifier in (?)';
         sql = sql.replace('?', results);
         console.log('sql....', sql);
 
@@ -529,7 +529,7 @@ var service = {
   },
   schedulePatientsWithPendingOrders: function (startDate) {
     var sql =
-      "replace into  etl.eid_sync_queue(person_uuid) (select distinct uuid from (select t3.uuid, t1.patient_id, t1.order_id, t2.order_id as obs_order_id, t1.date_activated from amrs.orders t1  inner join amrs.person t3 on t3.person_id = t1.patient_id left outer join amrs.obs t2 on t1.order_id = t2.order_id having obs_order_id is null) t where t.date_activated > date('?'))";
+      "replace into  etl.eid_sync_queue(person_uuid) (select distinct uuid from (select t3.uuid, t1.patient_id, t1.order_id, t2.order_id as obs_order_id, t1.date_activated from amrs_migration.orders t1  inner join amrs_migration.person t3 on t3.person_id = t1.patient_id left outer join amrs_migration.obs t2 on t1.order_id = t2.order_id having obs_order_id is null) t where t.date_activated > date('?'))";
     sql = sql.replace('?', startDate);
     // console.log(sql);
 

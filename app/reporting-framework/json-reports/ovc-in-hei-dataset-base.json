@@ -10,7 +10,7 @@
       "alias": "hmsd"
     },
     {
-      "table": "amrs.location",
+      "table": "amrs_migration.location",
       "alias": "l",
       "join": {
         "type": "INNER",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs.patient_program",
+      "table": "amrs_migration.patient_program",
       "alias": "pp",
       "join": {
         "type": "INNER",

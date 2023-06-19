@@ -2,7 +2,7 @@ const db = require('../../etl-db');
 
 const getPatientVaccinationSummary = (patientUuid) => {
   return new Promise((resolve, reject) => {
-    const sql = `SELECT 
+    const sql = `SELECT
     CASE
         WHEN c.vaccination_status = 2208 THEN 'Fully Vaccinated'
         WHEN c.vaccination_status = 11907 THEN 'Partially Vaccinated'
@@ -101,7 +101,7 @@ FROM
     etl.flat_covid_extract c ON (fhs.person_id = c.person_id
         AND c.next_encounter_datetime IS NULL)
         JOIN
-    amrs.person p ON (p.person_id = fhs.person_id
+    amrs_migration.person p ON (p.person_id = fhs.person_id
         AND p.voided = 0)
 WHERE
     fhs.uuid = '${patientUuid}'

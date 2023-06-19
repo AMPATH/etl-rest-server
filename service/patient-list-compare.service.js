@@ -158,10 +158,10 @@ function resolvePersonIds(personIdsArray) {
     'select t1.person_id, t1.uuid as patient_uuid, t4.patient_id, t1.gender,' +
     ' t1.birthdate,  extract(year from (from_days(datediff(now(), t1.birthdate)))) as age,' +
     "concat(COALESCE(t2.given_name,''),' ',COALESCE(t2.middle_name,''),' ',COALESCE(t2.family_name,''))" +
-    "as person_name, group_concat(distinct t3.identifier separator ', ') as identifiers FROM amrs.person `t1`" +
-    'INNER JOIN amrs.person_name `t2` ON (t1.person_id = t2.person_id and (t2.voided is null || t2.voided = 0))' +
-    'LEFT OUTER JOIN amrs.patient `t4` ON (t1.person_id = t4.patient_id)' +
-    'LEFT OUTER JOIN amrs.patient_identifier `t3` ON (t1.person_id = t3.patient_id)' +
+    "as person_name, group_concat(distinct t3.identifier separator ', ') as identifiers FROM amrs_migration.person `t1`" +
+    'INNER JOIN amrs_migration.person_name `t2` ON (t1.person_id = t2.person_id and (t2.voided is null || t2.voided = 0))' +
+    'LEFT OUTER JOIN amrs_migration.patient `t4` ON (t1.person_id = t4.patient_id)' +
+    'LEFT OUTER JOIN amrs_migration.patient_identifier `t3` ON (t1.person_id = t3.patient_id)' +
     'WHERE t1.person_id in (?)  GROUP BY t1.person_id';
 
   sql = sql.replace('?', list);

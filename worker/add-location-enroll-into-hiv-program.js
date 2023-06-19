@@ -129,13 +129,13 @@ var s = fs
  t4.name AS locationName,
  MAX(t3.encounter_datetime) AS encounterDate
  FROM
- amrs.patient_program `t1`
+ amrs_migration.patient_program `t1`
  LEFT OUTER JOIN
- amrs.program `t2` ON (t1.program_id = t2.program_id)
+ amrs_migration.program `t2` ON (t1.program_id = t2.program_id)
  LEFT OUTER JOIN
- amrs.encounter `t3` ON (t1.patient_id = t3.patient_id)
+ amrs_migration.encounter `t3` ON (t1.patient_id = t3.patient_id)
  LEFT OUTER JOIN
- amrs.location `t4` ON (t3.location_id = t4.location_id)
+ amrs_migration.location `t4` ON (t3.location_id = t4.location_id)
  WHERE
  t1.date_completed IS NULL
  AND t1.location_id IS NULL
