@@ -5067,7 +5067,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "pd.location_id IN ?",
+        "conditionExpression": "pd.location_id in (?)",
         "parameterName": "locations"
       },
       {
