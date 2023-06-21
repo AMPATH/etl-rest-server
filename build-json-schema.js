@@ -1,22 +1,20 @@
 // Usage: node build-json-schema.js
-// const populationTypes = [
-//   'tg',
-//   'msm',
-//   'agyw',
-//   'mhr',
-//   'fsw',
-//   'pwid',
-//   'ow',
-//   'sc',
-//   'pbfw'
-// ];
-
-const e = require('express');
+const populationTypes = [
+  'tg',
+  'msm',
+  'agyw',
+  'mhr',
+  'fsw',
+  'pwid',
+  'ow',
+  'sc',
+  'pbfw'
+];
 
 maleOnlyPopulationTypes = [3, 4];
 femaleOnlyPopulationTypes = [2, 5, 9, 7];
 
-const populationTypes = ['sc', 'pbfw'];
+// const populationTypes = ['sc', 'pbfw'];
 
 const ageGroups = [
   '15_19',
@@ -182,10 +180,10 @@ const generateAggregate = (alias) => {
   return aggregates;
 };
 
-const colsSchema = generateColumns('reason_for_initiation', 5566, 'aa');
-const cols = JSON.stringify(colsSchema, null, 2);
-console.log(cols);
+// const colsSchema = generateColumns('reason_for_initiation', 7903, 'cc');
+// const cols = JSON.stringify(colsSchema, null, 2);
+// console.log(cols);
 
-// const aggsSchema = generateAggregate('aa');
-// const aggs = JSON.stringify(aggsSchema, null, 2);
-// console.log(aggs);
+const aggsSchema = generateAggregate('cc');
+const aggs = JSON.stringify(aggsSchema, null, 2);
+console.log(aggs);

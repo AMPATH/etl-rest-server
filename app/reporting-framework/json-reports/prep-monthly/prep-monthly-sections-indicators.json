@@ -7385,5 +7385,1761 @@
         ]
       }
     ]
+  },
+  {
+    "sectionTitle": "Sex partner(s) high risk;  HIV status is unknown, partner  multiple sex partners",
+    "indicators": [
+      {
+        "label": "Trans Gender (TG)",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_tg_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_tg_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_tg_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_tg_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_tg_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_tg_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_tg_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_tg_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_tg_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_tg_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_tg_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_tg_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_tg_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_tg_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_tg_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_tg_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_tg_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_tg_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_tg_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_tg_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_tg_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_tg_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_tg"
+          }
+        ]
+      },
+      {
+        "label": "AGYW",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_agyw_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_agyw_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_agyw_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_agyw_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_agyw_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_agyw_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_agyw_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_agyw_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_agyw_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_agyw_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_agyw_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_agyw_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_agyw_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_agyw_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_agyw_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_agyw_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_agyw_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_agyw_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_agyw_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_agyw_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_agyw_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_agyw_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_agyw"
+          }
+        ]
+      },
+      {
+        "label": "MSM",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_msm_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_msm_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_msm_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_msm_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_msm_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_msm_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_msm_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_msm_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_msm_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_msm_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_msm_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_msm_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_msm_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_msm_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_msm_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_msm_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_msm_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_msm_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_msm_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_msm_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_msm_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_msm_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_msm"
+          }
+        ]
+      },
+      {
+        "label": "Men at high risk",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_mhr_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_mhr_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_mhr_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_mhr_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_mhr_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_mhr_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_mhr_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_mhr_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_mhr_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_mhr_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_mhr_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_mhr_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_mhr_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_mhr_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_mhr_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_mhr_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_mhr_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_mhr_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_mhr_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_mhr_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_mhr_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_mhr_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_mhr"
+          }
+        ]
+      },
+      {
+        "label": "FSW",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_fsw_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_fsw_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_fsw_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_fsw_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_fsw_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_fsw_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_fsw_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_fsw_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_fsw_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_fsw_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_fsw_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_fsw_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_fsw_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_fsw_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_fsw_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_fsw_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_fsw_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_fsw_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_fsw_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_fsw_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_fsw_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_fsw_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_fsw"
+          }
+        ]
+      },
+      {
+        "label": "PWID",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_pwid_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_pwid_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_pwid_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_pwid_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_pwid_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_pwid_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_pwid_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_pwid_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_pwid_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_pwid_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_pwid_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_pwid_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_pwid_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_pwid_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_pwid_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_pwid_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_pwid_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_pwid_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_pwid_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_pwid_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_pwid_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_pwid_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_pwid"
+          }
+        ]
+      },
+      {
+        "label": "Other Women",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_ow_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_ow_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_ow_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_ow_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_ow_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_ow_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_ow_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_ow_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_ow_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_ow_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_ow_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_ow_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_ow_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_ow_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_ow_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_ow_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_ow_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_ow_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_ow_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_ow_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_ow_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_ow_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_ow"
+          }
+        ]
+      },
+      {
+        "label": "Serodiscordant Couple",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_sc_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_sc_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_sc_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_sc_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_sc_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_sc_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_sc_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_sc_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_sc_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_sc_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_sc_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_sc_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_sc_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_sc_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_sc_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_sc_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_sc_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_sc_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_sc_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_sc_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_sc_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_sc_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_sc"
+          }
+        ]
+      },
+      {
+        "label": "PBFW",
+        "indicators": [
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "indicator": "bb_pbfw_15_19_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "indicator": "bb_pbfw_15_19_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "indicator": "bb_pbfw_20_24_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "indicator": "bb_pbfw_20_24_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "indicator": "bb_pbfw_25_29_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "indicator": "bb_pbfw_25_29_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "indicator": "bb_pbfw_30_34_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "indicator": "bb_pbfw_30_34_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "indicator": "bb_pbfw_35_39_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "indicator": "bb_pbfw_35_39_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "indicator": "bb_pbfw_40_44_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "indicator": "bb_pbfw_40_44_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "indicator": "bb_pbfw_45_49_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "indicator": "bb_pbfw_45_49_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "indicator": "bb_pbfw_50_54_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "indicator": "bb_pbfw_50_54_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "indicator": "bb_pbfw_55_59_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "indicator": "bb_pbfw_55_59_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "indicator": "bb_pbfw_60_64_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "indicator": "bb_pbfw_60_64_female"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "indicator": "bb_pbfw_above_65_male"
+          },
+          {
+            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "indicator": "bb_pbfw_above_65_female"
+          },
+          {
+            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "indicator": "total_bb_pbfw"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Client has sex with more than one partner",
+    "indicators": [
+      {
+        "label": "TG",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_tg_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_tg_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_tg_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_tg_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_tg_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_tg_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_tg_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_tg_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_tg_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_tg_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_tg_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_tg_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_tg_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_tg_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_tg_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_tg_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_tg_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_tg_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_tg_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_tg_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_tg_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_tg_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_tg"
+          }
+        ]
+      },
+      {
+        "label": "AGYW",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_agyw_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_agyw_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_agyw_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_agyw_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_agyw_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_agyw_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_agyw_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_agyw_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_agyw_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_agyw_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_agyw_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_agyw_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_agyw_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_agyw_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_agyw_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_agyw_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_agyw_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_agyw_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_agyw_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_agyw_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_agyw_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_agyw_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_agyw"
+          }
+        ]
+      },
+      {
+        "label": "MSM",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_msm_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_msm_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_msm_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_msm_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_msm_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_msm_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_msm_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_msm_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_msm_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_msm_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_msm_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_msm_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_msm_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_msm_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_msm_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_msm_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_msm_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_msm_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_msm_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_msm_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_msm_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_msm_above_65_female"
+          },
+          {
+            "label": "Total Number of clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_msm"
+          }
+        ]
+      },
+      {
+        "label": "Men at high risk",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "bb_mhr_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "bb_mhr_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "bb_mhr_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "bb_mhr_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "bb_mhr_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "bb_mhr_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "bb_mhr_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "bb_mhr_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "bb_mhr_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "bb_mhr_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "bb_mhr_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "bb_mhr_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "bb_mhr_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "bb_mhr_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "bb_mhr_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "bb_mhr_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "bb_mhr_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "bb_mhr_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "bb_mhr_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "bb_mhr_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "bb_mhr_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "bb_mhr_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_bb_mhr"
+          }
+        ]
+      },
+      {
+        "label": "FSW",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_fsw_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_fsw_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_fsw_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_fsw_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_fsw_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_fsw_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_fsw_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_fsw_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_fsw_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_fsw_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_fsw_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_fsw_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_fsw_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_fsw_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_fsw_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_fsw_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_fsw_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_fsw_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_fsw_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_fsw_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_fsw_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_fsw_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_fsw"
+          }
+        ]
+      },
+      {
+        "label": "PWID",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_pwid_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_pwid_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_pwid_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_pwid_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_pwid_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_pwid_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_pwid_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_pwid_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_pwid_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_pwid_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_pwid_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_pwid_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_pwid_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_pwid_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_pwid_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_pwid_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_pwid_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_pwid_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_pwid_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_pwid_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_pwid_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_pwid_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_pwid"
+          }
+        ]
+      },
+      {
+        "label": "Other Women",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_ow_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_ow_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_ow_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_ow_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_ow_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_ow_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_ow_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_ow_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_ow_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_ow_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_ow_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_ow_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_ow_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_ow_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_ow_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_ow_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_ow_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_ow_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_ow_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_ow_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_ow_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_ow_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_ow"
+          }
+        ]
+      },
+      {
+        "label": "Serodiscordant Couple",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_sc_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_sc_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_sc_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_sc_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_sc_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_sc_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_sc_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_sc_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_sc_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_sc_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_sc_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_sc_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_sc_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_sc_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_sc_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_sc_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_sc_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_sc_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_sc_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_sc_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_sc_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_sc_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_sc"
+          }
+        ]
+      },
+      {
+        "label": "PBFW",
+        "indicators": [
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Male",
+            "indicator": "cc_pbfw_15_19_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 15 and 19 Female",
+            "indicator": "cc_pbfw_15_19_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Male",
+            "indicator": "cc_pbfw_20_24_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 20 and 24 Female",
+            "indicator": "cc_pbfw_20_24_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Male",
+            "indicator": "cc_pbfw_25_29_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 25 and 29 Female",
+            "indicator": "cc_pbfw_25_29_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Male",
+            "indicator": "cc_pbfw_30_34_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 30 and 34 Female",
+            "indicator": "cc_pbfw_30_34_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Male",
+            "indicator": "cc_pbfw_35_39_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 35 and 39 Female",
+            "indicator": "cc_pbfw_35_39_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Male",
+            "indicator": "cc_pbfw_40_44_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 40 and 44 Female",
+            "indicator": "cc_pbfw_40_44_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Male",
+            "indicator": "cc_pbfw_45_49_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 45 and 49 Female",
+            "indicator": "cc_pbfw_45_49_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Male",
+            "indicator": "cc_pbfw_50_54_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 50 and 54 Female",
+            "indicator": "cc_pbfw_50_54_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Male",
+            "indicator": "cc_pbfw_55_59_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 55 and 59 Female",
+            "indicator": "cc_pbfw_55_59_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Male",
+            "indicator": "cc_pbfw_60_64_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged between 60 and 64 Female",
+            "indicator": "cc_pbfw_60_64_female"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Male",
+            "indicator": "cc_pbfw_above_65_male"
+          },
+          {
+            "label": "Apply to those clients whose main reason for starting PrEP is multiple sexual partners aged above 65 Female",
+            "indicator": "cc_pbfw_above_65_female"
+          },
+          {
+            "label": "Total Number clients whose main reason for starting PrEP is multiple sexual partners ",
+            "indicator": "total_cc_pbfw"
+          }
+        ]
+      }
+    ]
   }
 ]
