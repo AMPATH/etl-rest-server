@@ -83,14 +83,14 @@
     {
       "type": "derived_column",
       "alias": "discontinued_prep_this_month",
-      "column": "pd.discontinued_from_prep_this-month"
+      "column": "pd.discontinued_from_prep_this_month"
     },
     {
       "type": "derived_column",
       "alias": "st_tg_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -98,7 +98,7 @@
       "alias": "st_tg_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -106,7 +106,7 @@
       "alias": "st_tg_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -114,7 +114,7 @@
       "alias": "st_tg_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -122,7 +122,7 @@
       "alias": "st_tg_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -130,7 +130,7 @@
       "alias": "st_tg_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -138,7 +138,7 @@
       "alias": "st_tg_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -146,7 +146,7 @@
       "alias": "st_tg_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -154,7 +154,7 @@
       "alias": "st_tg_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -162,7 +162,7 @@
       "alias": "st_tg_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -170,7 +170,7 @@
       "alias": "st_tg_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -178,7 +178,7 @@
       "alias": "st_tg_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -186,7 +186,7 @@
       "alias": "st_tg_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -194,7 +194,7 @@
       "alias": "st_tg_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -202,7 +202,7 @@
       "alias": "st_tg_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -210,7 +210,7 @@
       "alias": "st_tg_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -218,7 +218,7 @@
       "alias": "st_tg_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -226,7 +226,7 @@
       "alias": "st_tg_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -234,7 +234,7 @@
       "alias": "st_tg_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -242,7 +242,7 @@
       "alias": "st_tg_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -250,7 +250,7 @@
       "alias": "st_tg_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
       }
     },
     {
@@ -258,7 +258,7 @@
       "alias": "st_tg_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age >= 65 )), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1 AND pd.gender = 'F' AND (pd.age >= 65 )), 1, NULL)"
       }
     },
     {
@@ -266,7 +266,7 @@
       "alias": "total_st_tg",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 1), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 1), 1, NULL)"
       }
     },
     {
@@ -282,7 +282,7 @@
       "alias": "st_agyw_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -298,7 +298,7 @@
       "alias": "st_agyw_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -314,7 +314,7 @@
       "alias": "st_agyw_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -330,7 +330,7 @@
       "alias": "st_agyw_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -346,7 +346,7 @@
       "alias": "st_agyw_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -362,7 +362,7 @@
       "alias": "st_agyw_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -378,7 +378,7 @@
       "alias": "st_agyw_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -394,7 +394,7 @@
       "alias": "st_agyw_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -410,7 +410,7 @@
       "alias": "st_agyw_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -426,7 +426,7 @@
       "alias": "st_agyw_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -442,7 +442,7 @@
       "alias": "st_agyw_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -450,7 +450,7 @@
       "alias": "total_st_agyw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 2), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 2), 1, NULL)"
       }
     },
     {
@@ -458,7 +458,7 @@
       "alias": "st_msm_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -474,7 +474,7 @@
       "alias": "st_msm_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -490,7 +490,7 @@
       "alias": "st_msm_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -506,7 +506,7 @@
       "alias": "st_msm_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -522,7 +522,7 @@
       "alias": "st_msm_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -538,7 +538,7 @@
       "alias": "st_msm_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -554,7 +554,7 @@
       "alias": "st_msm_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -570,7 +570,7 @@
       "alias": "st_msm_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -586,7 +586,7 @@
       "alias": "st_msm_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -602,7 +602,7 @@
       "alias": "st_msm_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -618,7 +618,7 @@
       "alias": "st_msm_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -634,7 +634,7 @@
       "alias": "total_st_msm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 3), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 3), 1, NULL)"
       }
     },
     {
@@ -642,7 +642,7 @@
       "alias": "st_mahr_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -658,7 +658,7 @@
       "alias": "st_mahr_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -674,7 +674,7 @@
       "alias": "st_mahr_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -690,7 +690,7 @@
       "alias": "st_mahr_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -706,7 +706,7 @@
       "alias": "st_mahr_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -722,7 +722,7 @@
       "alias": "st_mahr_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -738,7 +738,7 @@
       "alias": "st_mahr_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -754,7 +754,7 @@
       "alias": "st_mahr_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -770,7 +770,7 @@
       "alias": "st_mahr_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -786,7 +786,7 @@
       "alias": "st_mahr_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -802,7 +802,7 @@
       "alias": "st_mahr_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -818,7 +818,7 @@
       "alias": "total_st_mahr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 4), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 4), 1, NULL)"
       }
     },
     {
@@ -834,7 +834,7 @@
       "alias": "st_fsw_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -850,7 +850,7 @@
       "alias": "st_fsw_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -866,7 +866,7 @@
       "alias": "st_fsw_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -882,7 +882,7 @@
       "alias": "st_fsw_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -898,7 +898,7 @@
       "alias": "st_fsw_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -914,7 +914,7 @@
       "alias": "st_fsw_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -930,7 +930,7 @@
       "alias": "st_fsw_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -946,7 +946,7 @@
       "alias": "st_fsw_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -962,7 +962,7 @@
       "alias": "st_fsw_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -978,7 +978,7 @@
       "alias": "st_fsw_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -994,7 +994,7 @@
       "alias": "st_fsw_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1002,7 +1002,7 @@
       "alias": "total_st_fsw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 5), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 5), 1, NULL)"
       }
     },
     {
@@ -1010,7 +1010,7 @@
       "alias": "st_pwid_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1018,7 +1018,7 @@
       "alias": "st_pwid_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1026,7 +1026,7 @@
       "alias": "st_pwid_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1034,7 +1034,7 @@
       "alias": "st_pwid_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1042,7 +1042,7 @@
       "alias": "st_pwid_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1050,7 +1050,7 @@
       "alias": "st_pwid_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1058,7 +1058,7 @@
       "alias": "st_pwid_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1066,7 +1066,7 @@
       "alias": "st_pwid_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1074,7 +1074,7 @@
       "alias": "st_pwid_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1082,7 +1082,7 @@
       "alias": "st_pwid_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1090,7 +1090,7 @@
       "alias": "st_pwid_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1098,7 +1098,7 @@
       "alias": "st_pwid_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1106,7 +1106,7 @@
       "alias": "st_pwid_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1114,7 +1114,7 @@
       "alias": "st_pwid_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1122,7 +1122,7 @@
       "alias": "st_pwid_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1130,7 +1130,7 @@
       "alias": "st_pwid_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1138,7 +1138,7 @@
       "alias": "st_pwid_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1146,7 +1146,7 @@
       "alias": "st_pwid_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1154,7 +1154,7 @@
       "alias": "st_pwid_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1162,7 +1162,7 @@
       "alias": "st_pwid_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1170,7 +1170,7 @@
       "alias": "st_pwid_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1178,7 +1178,7 @@
       "alias": "st_pwid_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1186,7 +1186,7 @@
       "alias": "total_st_pwid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 6), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 6), 1, NULL)"
       }
     },
     {
@@ -1202,7 +1202,7 @@
       "alias": "st_ow_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1218,7 +1218,7 @@
       "alias": "st_ow_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1234,7 +1234,7 @@
       "alias": "st_ow_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1250,7 +1250,7 @@
       "alias": "st_ow_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1266,7 +1266,7 @@
       "alias": "st_ow_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1282,7 +1282,7 @@
       "alias": "st_ow_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1298,7 +1298,7 @@
       "alias": "st_ow_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1314,7 +1314,7 @@
       "alias": "st_ow_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1330,7 +1330,7 @@
       "alias": "st_ow_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1346,7 +1346,7 @@
       "alias": "st_ow_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1362,7 +1362,7 @@
       "alias": "st_ow_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1370,7 +1370,7 @@
       "alias": "total_st_ow",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 7), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 7), 1, NULL)"
       }
     },
     {
@@ -1378,7 +1378,7 @@
       "alias": "st_sdc_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1386,7 +1386,7 @@
       "alias": "st_sdc_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1394,7 +1394,7 @@
       "alias": "st_sdc_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1402,7 +1402,7 @@
       "alias": "st_sdc_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1410,7 +1410,7 @@
       "alias": "st_sdc_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1418,7 +1418,7 @@
       "alias": "st_sdc_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1426,7 +1426,7 @@
       "alias": "st_sdc_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1434,7 +1434,7 @@
       "alias": "st_sdc_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1442,7 +1442,7 @@
       "alias": "st_sdc_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1450,7 +1450,7 @@
       "alias": "st_sdc_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1458,7 +1458,7 @@
       "alias": "st_sdc_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1466,7 +1466,7 @@
       "alias": "st_sdc_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1474,7 +1474,7 @@
       "alias": "st_sdc_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1482,7 +1482,7 @@
       "alias": "st_sdc_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1490,7 +1490,7 @@
       "alias": "st_sdc_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1498,7 +1498,7 @@
       "alias": "st_sdc_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1506,7 +1506,7 @@
       "alias": "st_sdc_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1514,7 +1514,7 @@
       "alias": "st_sdc_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1522,7 +1522,7 @@
       "alias": "st_sdc_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1530,7 +1530,7 @@
       "alias": "st_sdc_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1538,7 +1538,7 @@
       "alias": "st_sdc_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1546,7 +1546,7 @@
       "alias": "st_sdc_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1554,7 +1554,7 @@
       "alias": "total_st_sdc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 8), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 8), 1, NULL)"
       }
     },
     {
@@ -1570,7 +1570,7 @@
       "alias": "st_pbfw_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1586,7 +1586,7 @@
       "alias": "st_pbfw_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1602,7 +1602,7 @@
       "alias": "st_pbfw_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1618,7 +1618,7 @@
       "alias": "st_pbfw_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1634,7 +1634,7 @@
       "alias": "st_pbfw_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1650,7 +1650,7 @@
       "alias": "st_pbfw_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1666,7 +1666,7 @@
       "alias": "st_pbfw_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1682,7 +1682,7 @@
       "alias": "st_pbfw_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1698,7 +1698,7 @@
       "alias": "st_pbfw_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1714,7 +1714,7 @@
       "alias": "st_pbfw_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1730,7 +1730,7 @@
       "alias": "st_pbfw_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1738,7 +1738,7 @@
       "alias": "total_st_pbfw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this-month = 1 AND pd.population_type = 9), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9), 1, NULL)"
       }
     },
     {

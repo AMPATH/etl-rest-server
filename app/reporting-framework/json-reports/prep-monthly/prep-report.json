@@ -4,6 +4,7 @@
     "reasonForInitiationPrepAggregate",
     "newForPrepAggregate",
     "restartingPrepAggregate",
-    "whileOnPrepAggregate"
+    "whileOnPrepAggregate",
+    "discontinuedPrepAggregate"
   ]
 }
