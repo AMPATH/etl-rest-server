@@ -232,6 +232,8 @@ import * as clinic_flow_provider_statistics_base from './json-reports/clinic-flo
 // (New) Prep monthly report
 import * as eligible_for_prep_aggregate from './json-reports/prep-monthly/disaggregations/eligibility/eligible-for-prep-aggregate.json';
 import * as eligible_for_prep_base from './json-reports/prep-monthly/disaggregations/eligibility/eligible-for-prep-base.json';
+import * as reasons_for_initiation_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/prep-reasons-for-initiation-aggregate.json';
+import * as reasons_for_initiation_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/prep-reasons-for-initiation-base.json';
 import * as prep_monthly_report from './json-reports/prep-monthly/prep-report.json';
 
 //covid 19 report
@@ -1283,6 +1285,14 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(eligible_for_prep_aggregate),
             eligibleForPrepBase: this.cloneJsonSchema(eligible_for_prep_base)
+          });
+          break;
+        case 'reasonForInitiationPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(reasons_for_initiation_prep_aggregate),
+            reasonForInitiationPrepBase: this.cloneJsonSchema(
+              reasons_for_initiation_prep_base
+            )
           });
           break;
         case 'covid-19-monthly-report':

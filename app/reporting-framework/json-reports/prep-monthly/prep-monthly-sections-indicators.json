@@ -7084,5 +7084,306 @@
         ]
       }
     ]
+  },
+  {
+    "sectionTitle": "Sero- Serodiscordant Couples trying to conceive",
+    "indicators": [
+      {
+        "label": "Serodiscordant Couple",
+        "indicators": [
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 15 and 19 Male",
+            "indicator": "cvp_sc_15_19_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 15 and 19 Female",
+            "indicator": "cvp_sc_15_19_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 20 and 24 Male",
+            "indicator": "cvp_sc_20_24_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 20 and 24 Female",
+            "indicator": "cvp_sc_20_24_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 25 and 29 Male",
+            "indicator": "cvp_sc_25_29_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 25 and 29 Female",
+            "indicator": "cvp_sc_25_29_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 30 and 34 Male",
+            "indicator": "cvp_sc_30_34_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 30 and 34 Female",
+            "indicator": "cvp_sc_30_34_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 35 and 39 Male",
+            "indicator": "cvp_sc_35_39_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 35 and 39 Female",
+            "indicator": "cvp_sc_35_39_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 40 and 44 Male",
+            "indicator": "cvp_sc_40_44_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 40 and 44 Female",
+            "indicator": "cvp_sc_40_44_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 45 and 49 Male",
+            "indicator": "cvp_sc_45_49_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 45 and 49 Female",
+            "indicator": "cvp_sc_45_49_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 50 and 54 Male",
+            "indicator": "cvp_sc_50_54_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 50 and 54 Female",
+            "indicator": "cvp_sc_50_54_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 55 and 59 Male",
+            "indicator": "cvp_sc_55_49_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 55 and 59 Female",
+            "indicator": "cvp_sc_55_49_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 60 and 64 Male",
+            "indicator": "cvp_sc_60_64_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between 60 and 64 Female",
+            "indicator": "cvp_sc_60_64_female"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between above 65 Male",
+            "indicator": "cvp_sc_above_65_male"
+          },
+          {
+            "label": "Serodiscordant Couples trying to conceive aged between above 65 Female",
+            "indicator": "cvp_sc_above_65_female"
+          },
+          {
+            "label": "Total Number of Serodiscordant Couple",
+            "indicator": "total_cvp_sc"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Partner+ve (not on art, art_last 6mnt, Poor Viral suppression)",
+    "indicators": [
+      {
+        "label": "Serodiscordant Couple",
+        "indicators": [
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 15 and 19 Male",
+            "indicator": "aa_sc_15_19_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 15 and 19 Female",
+            "indicator": "aa_sc_15_19_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 20 and 24 Male",
+            "indicator": "aa_sc_20_24_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 20 and 24 Female",
+            "indicator": "aa_sc_20_24_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 25 and 29 Male",
+            "indicator": "aa_sc_25_29_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 25 and 29 Female",
+            "indicator": "aa_sc_25_29_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 30 and 34 Male",
+            "indicator": "aa_sc_30_34_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 30 and 34 Female",
+            "indicator": "aa_sc_30_34_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 35 and 39 Male",
+            "indicator": "aa_sc_35_39_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 35 and 39 Female",
+            "indicator": "aa_sc_35_39_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 40 and 44 Male",
+            "indicator": "aa_sc_40_44_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 40 and 44 Female",
+            "indicator": "aa_sc_40_44_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 45 and 49 Male",
+            "indicator": "aa_sc_45_49_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 45 and 49 Female",
+            "indicator": "aa_sc_45_49_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 50 and 54 Male",
+            "indicator": "aa_sc_50_54_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 50 and 54 Female",
+            "indicator": "aa_sc_50_54_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 55 and 59 Male",
+            "indicator": "aa_sc_55_59_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 55 and 59 Female",
+            "indicator": "aa_sc_55_59_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 60 and 64 Male",
+            "indicator": "aa_sc_60_64_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 60 and 64 Female",
+            "indicator": "aa_sc_60_64_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged above 65 Male",
+            "indicator": "aa_sc_above_65_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged above 65 Female",
+            "indicator": "aa_sc_above_65_female"
+          },
+          {
+            "label": "Total Number of Serodiscordant Couple with HIV positive partner",
+            "indicator": "total_aa_sc"
+          }
+        ]
+      },
+      {
+        "label": "PBFW",
+        "indicators": [
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 15 and 19 Male",
+            "indicator": "aa_pbfw_15_19_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 15 and 19 Female",
+            "indicator": "aa_pbfw_15_19_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 20 and 24 Male",
+            "indicator": "aa_pbfw_20_24_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 20 and 24 Female",
+            "indicator": "aa_pbfw_20_24_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 25 and 29 Male",
+            "indicator": "aa_pbfw_25_29_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 25 and 29 Female",
+            "indicator": "aa_pbfw_25_29_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 30 and 34 Male",
+            "indicator": "aa_pbfw_30_34_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 30 and 34 Female",
+            "indicator": "aa_pbfw_30_34_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 35 and 39 Male",
+            "indicator": "aa_pbfw_35_39_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 35 and 39 Female",
+            "indicator": "aa_pbfw_35_39_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 40 and 44 Male",
+            "indicator": "aa_pbfw_40_44_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 40 and 44 Female",
+            "indicator": "aa_pbfw_40_44_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 45 and 49 Male",
+            "indicator": "aa_pbfw_45_49_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 45 and 49 Female",
+            "indicator": "aa_pbfw_45_49_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 50 and 54 Male",
+            "indicator": "aa_pbfw_50_54_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 50 and 54 Female",
+            "indicator": "aa_pbfw_50_54_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 55 and 59 Male",
+            "indicator": "aa_pbfw_55_59_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 55 and 59 Female",
+            "indicator": "aa_pbfw_55_59_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 60 and 64 Male",
+            "indicator": "aa_pbfw_60_64_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged between 60 and 64 Female",
+            "indicator": "aa_pbfw_60_64_female"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged above 65 Male",
+            "indicator": "aa_pbfw_above_65_male"
+          },
+          {
+            "label": "Serodiscordant Couples where the HIV positive partner has not achieved  viral suppression aged above 65 Female",
+            "indicator": "aa_pbfw_above_65_female"
+          },
+          {
+            "label": "Total Number of Serodiscordant Couple with HIV positive partner",
+            "indicator": "total_aa_pbfw"
+          }
+        ]
+      }
+    ]
   }
 ]
