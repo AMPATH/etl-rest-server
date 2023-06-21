@@ -1194,6 +1194,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_ct_tg",
+      "column": "sum(b.total_ct_tg)"
+    },
+    {
+      "type": "simple_column",
       "alias": "ct_agyw_15_19_female",
       "column": "sum(b.ct_agyw_15_19_female)"
     },
@@ -1301,6 +1306,11 @@
       "type": "simple_column",
       "alias": "ct_agyw_above_65_male",
       "column": "sum(b.ct_agyw_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_ct_agyw",
+      "column": "sum(b.total_ct_agyw)"
     },
     {
       "type": "simple_column",
@@ -1414,6 +1424,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_ct_msm",
+      "column": "sum(b.total_ct_msm)"
+    },
+    {
+      "type": "simple_column",
       "alias": "ct_mahr_15_19_female",
       "column": "sum(b.ct_mahr_15_19_female)"
     },
@@ -1521,6 +1536,11 @@
       "type": "simple_column",
       "alias": "ct_mahr_above_65_male",
       "column": "sum(b.ct_mahr_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_ct_mahr",
+      "column": "sum(b.total_ct_mahr)"
     },
     {
       "type": "simple_column",
@@ -1634,6 +1654,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_ct_fsw",
+      "column": "sum(b.total_ct_fsw)"
+    },
+    {
+      "type": "simple_column",
       "alias": "ct_pwid_15_19_female",
       "column": "sum(b.ct_pwid_15_19_female)"
     },
@@ -1741,6 +1766,11 @@
       "type": "simple_column",
       "alias": "ct_pwid_above_65_male",
       "column": "sum(b.ct_pwid_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_ct_pwid",
+      "column": "sum(b.total_ct_pwid)"
     },
     {
       "type": "simple_column",
@@ -1854,6 +1884,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_ct_ow",
+      "column": "sum(b.total_ct_ow)"
+    },
+    {
+      "type": "simple_column",
       "alias": "ct_sdc_15_19_female",
       "column": "sum(b.ct_sdc_15_19_female)"
     },
@@ -1961,6 +1996,11 @@
       "type": "simple_column",
       "alias": "ct_sdc_above_65_male",
       "column": "sum(b.ct_sdc_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_ct_sdc",
+      "column": "sum(b.total_ct_sdc)"
     },
     {
       "type": "simple_column",
@@ -2074,6 +2114,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_ct_pbfw",
+      "column": "sum(b.total_ct_pbfw)"
+    },
+    {
+      "type": "simple_column",
       "alias": "he_tg_15_19_female",
       "column": "sum(b.he_tg_15_19_female)"
     },
@@ -2181,6 +2226,11 @@
       "type": "simple_column",
       "alias": "he_tg_above_65_male",
       "column": "sum(b.he_tg_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_he_tg",
+      "column": "sum(b.total_he_tg)"
     },
     {
       "type": "simple_column",
@@ -2294,6 +2344,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_he_agyw",
+      "column": "sum(b.total_he_agyw)"
+    },
+    {
+      "type": "simple_column",
       "alias": "he_msm_15_19_female",
       "column": "sum(b.he_msm_15_19_female)"
     },
@@ -2401,6 +2456,11 @@
       "type": "simple_column",
       "alias": "he_msm_above_65_male",
       "column": "sum(b.he_msm_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_he_msm",
+      "column": "sum(b.total_he_msm)"
     },
     {
       "type": "simple_column",
@@ -2514,6 +2574,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_he_mahr",
+      "column": "sum(b.total_he_mahr)"
+    },
+    {
+      "type": "simple_column",
       "alias": "he_fsw_15_19_female",
       "column": "sum(b.he_fsw_15_19_female)"
     },
@@ -2621,6 +2686,11 @@
       "type": "simple_column",
       "alias": "he_fsw_above_65_male",
       "column": "sum(b.he_fsw_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_he_fsw",
+      "column": "sum(b.total_he_fsw)"
     },
     {
       "type": "simple_column",
@@ -2734,6 +2804,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_he_pwid",
+      "column": "sum(b.total_he_pwid)"
+    },
+    {
+      "type": "simple_column",
       "alias": "he_ow_15_19_female",
       "column": "sum(b.he_ow_15_19_female)"
     },
@@ -2841,6 +2916,11 @@
       "type": "simple_column",
       "alias": "he_ow_above_65_male",
       "column": "sum(b.he_ow_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_he_ow",
+      "column": "sum(b.total_he_ow)"
     },
     {
       "type": "simple_column",
@@ -2954,6 +3034,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_he_sdc",
+      "column": "sum(b.total_he_sdc)"
+    },
+    {
+      "type": "simple_column",
       "alias": "he_pbfw_15_19_female",
       "column": "sum(b.he_pbfw_15_19_female)"
     },
@@ -3061,6 +3146,11 @@
       "type": "simple_column",
       "alias": "he_pbfw_above_65_male",
       "column": "sum(b.he_pbfw_above_65_male)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_he_pbfw",
+      "column": "sum(b.total_he_pbfw)"
     }
   ],
   "groupBy": {

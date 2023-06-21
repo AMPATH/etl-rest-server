@@ -5328,5 +5328,883 @@
         ]
       }
     ]
+  },
+  {
+    "sectionTitle": "No. clients diagnosed with STIs while on PrEP",
+    "indicators": [
+      {
+        "label": "Trans Gender (TG)",
+        "indicators": [
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_tg_15_19_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_tg_15_19_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_tg_20_24_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_tg_20_24_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_tg_25_29_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_tg_25_29_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_tg_30_34_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_tg_30_34_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_tg_35_39_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_tg_35_39_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_tg_40_44_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_tg_40_44_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_tg_45_49_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_tg_45_49_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_tg_50_54_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_tg_50_54_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 55 and 50",
+            "indicator": "d_tg_55_59_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_tg_55_59_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_tg_60_64_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_tg_60_64_female"
+          },
+          {
+            "label": "Male Trans Gender diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_tg_above_65_male"
+          },
+          {
+            "label": "Female Trans Gender diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_tg_above_65_female"
+          },
+          {
+            "label": "Total Number of Trans Gender diagnosed with STIs while on PrEP",
+            "indicator": "total_d_tg"
+          }
+        ]
+      },
+      {
+        "label": "Adolescent Girls and Young Women (AGYW)",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "d_agyw_15_19_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 15 and 19",
+            "indicator": "d_agyw_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_20_24_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 20 and 24",
+            "indicator": "d_agyw_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_25_29_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 25 and 29",
+            "indicator": "d_agyw_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_30_34_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 30 and 34",
+            "indicator": "d_agyw_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_35_39_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 35 and 39",
+            "indicator": "d_agyw_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_40_44_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 40 and 44",
+            "indicator": "d_agyw_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_45_49_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 45 and 49",
+            "indicator": "d_agyw_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_50_54_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 50 and 54",
+            "indicator": "d_agyw_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_55_59_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 55 and 59",
+            "indicator": "d_agyw_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_60_64_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged between 60 and 64",
+            "indicator": "d_agyw_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_agyw_above_65_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women diagnosed with STIs while on PrEP  aged above 65",
+            "indicator": "d_agyw_above_65_female"
+          },
+          {
+            "label": "Total Number of Adolescent Girls and Young Women diagnosed with STIs while on PrEP ",
+            "indicator": "total_d_agyw"
+          }
+        ]
+      },
+      {
+        "label": "Men Sex Worker (MSM)",
+        "indicators": [
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_msm_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_15_19_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_msm_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_20_24_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_msm_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_25_29_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_msm_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_30_34_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_msm_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_35_39_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_msm_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_40_44_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_msm_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_45_49_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_msm_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_50_54_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_msm_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_55_59_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_msm_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_60_64_female"
+          },
+          {
+            "label": "Men Sex Worker diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_msm_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_msm_above_65_female"
+          },
+          {
+            "label": "Total Number of Men Sex Worker diagnosed with STIs while on PrEP",
+            "indicator": "total_d_msm"
+          }
+        ]
+      },
+      {
+        "label": "Men at High Risk",
+        "indicators": [
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_mahr_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_15_19_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_mahr_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_20_24_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_mahr_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_25_29_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_mahr_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_30_34_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_mahr_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_35_39_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_mahr_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_40_44_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_mahr_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_45_49_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_mahr_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_50_54_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_mahr_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_55_59_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_mahr_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_60_64_female"
+          },
+          {
+            "label": "Men at High Risk diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_mahr_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "d_mahr_above_65_female"
+          },
+          {
+            "label": "Total Number of Men at High Risk diagnosed with STIs while on PrEP",
+            "indicator": "total_d_mahr"
+          }
+        ]
+      },
+      {
+        "label": "Female Sexual Workers (FSW)",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "d_fsw_15_19_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_fsw_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_20_24_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_fsw_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_25_29_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_fsw_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_30_34_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_fsw_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_35_39_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_fsw_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_40_44_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_fsw_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_45_49_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_fsw_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_50_54_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_fsw_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_55_59_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_fsw_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_60_64_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_fsw_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_fsw_above_65_male"
+          },
+          {
+            "label": "Female Sexual Workers diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_fsw_above_65_female"
+          },
+          {
+            "label": "Total Number of Female Sexual Workers diagnosed with STIs while on PrEP",
+            "indicator": "total_d_fsw"
+          }
+        ]
+      },
+      {
+        "label": "PWID",
+        "indicators": [
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_pwid_15_19_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_pwid_15_19_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_pwid_20_24_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_pwid_20_24_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_pwid_25_29_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_pwid_25_29_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_pwid_30_34_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_pwid_30_34_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_pwid_35_39_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_pwid_35_39_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_pwid_40_44_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_pwid_40_44_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_pwid_45_49_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_pwid_45_49_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_pwid_50_54_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_pwid_50_54_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 55 and 50",
+            "indicator": "d_pwid_55_59_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_pwid_55_59_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_pwid_60_64_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_pwid_60_64_female"
+          },
+          {
+            "label": "Male PWID diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_pwid_above_65_male"
+          },
+          {
+            "label": "Female PWID diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_pwid_above_65_female"
+          },
+          {
+            "label": "Total Number of PWID diagnosed with STIs while on PrEP",
+            "indicator": "total_d_pwid"
+          }
+        ]
+      },
+      {
+        "label": "Other Women",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "d_ow_15_19_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_ow_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_20_24_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_ow_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_25_29_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_ow_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_30_34_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_ow_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_35_39_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_ow_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_40_44_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_ow_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_45_49_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_ow_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_50_54_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_ow_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_55_59_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_ow_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_60_64_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_ow_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_ow_above_65_male"
+          },
+          {
+            "label": "Other Women diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_ow_above_65_female"
+          },
+          {
+            "label": "Total Number of Other Women diagnosed with STIs while on PrEP",
+            "indicator": "total_d_ow"
+          }
+        ]
+      },
+      {
+        "label": "Serodiscordant Couple",
+        "indicators": [
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_sdc_15_19_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_sdc_15_19_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_sdc_20_24_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_sdc_20_24_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_sdc_25_29_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_sdc_25_29_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_sdc_30_34_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_sdc_30_34_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_sdc_35_39_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_sdc_35_39_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_sdc_40_44_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_sdc_40_44_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_sdc_45_49_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_sdc_45_49_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_sdc_50_54_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_sdc_50_54_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 55 and 50",
+            "indicator": "d_sdc_55_59_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_sdc_55_59_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_sdc_60_64_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_sdc_60_64_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_sdc_above_65_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_sdc_above_65_female"
+          },
+          {
+            "label": "Total Number of Serodiscordant Couple diagnosed with STIs while on PrEP",
+            "indicator": "total_d_sdc"
+          }
+        ]
+      },
+      {
+        "label": "PBFW",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "d_pbfw_15_19_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 15 and 19",
+            "indicator": "d_pbfw_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_20_24_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 20 and 24",
+            "indicator": "d_pbfw_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_25_29_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 25 and 29",
+            "indicator": "d_pbfw_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_30_34_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 30 and 34",
+            "indicator": "d_pbfw_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_35_39_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 35 and 39",
+            "indicator": "d_pbfw_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_40_44_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 40 and 44",
+            "indicator": "d_pbfw_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_45_49_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 45 and 49",
+            "indicator": "d_pbfw_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_50_54_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 50 and 54",
+            "indicator": "d_pbfw_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_55_59_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 55 and 59",
+            "indicator": "d_pbfw_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_60_64_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged between 60 and 64",
+            "indicator": "d_pbfw_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "d_pbfw_above_65_male"
+          },
+          {
+            "label": "PBFW diagnosed with STIs while on PrEP aged above 65",
+            "indicator": "d_pbfw_above_65_female"
+          },
+          {
+            "label": "Total Number of PBFW diagnosed with STIs while on PrEP",
+            "indicator": "total_d_pbfw"
+          }
+        ]
+      }
+    ]
   }
 ]
