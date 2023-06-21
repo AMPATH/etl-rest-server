@@ -6206,5 +6206,883 @@
         ]
       }
     ]
+  },
+  {
+    "sectionTitle": "No. clients stopped/discontinued PrEP this month",
+    "indicators": [
+      {
+        "label": "Trans Gender (TG)",
+        "indicators": [
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_tg_15_19_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_tg_15_19_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_tg_20_24_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_tg_20_24_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_tg_25_29_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_tg_25_29_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_tg_30_34_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_tg_30_34_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_tg_35_39_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_tg_35_39_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_tg_40_44_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_tg_40_44_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_tg_45_49_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_tg_45_49_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_tg_50_54_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_tg_50_54_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 55 and 50",
+            "indicator": "st_tg_55_59_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_tg_55_59_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_tg_60_64_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_tg_60_64_female"
+          },
+          {
+            "label": "Male Trans Gender stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_tg_above_65_male"
+          },
+          {
+            "label": "Female Trans Gender stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_tg_above_65_female"
+          },
+          {
+            "label": "Total Number of Trans Gender stopped/discontinued PrEP this month",
+            "indicator": "total_st_tg"
+          }
+        ]
+      },
+      {
+        "label": "Adolescent Girls and Young Women (AGYW)",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "st_agyw_15_19_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_agyw_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_20_24_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_agyw_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_25_29_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_agyw_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_30_34_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_agyw_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_35_39_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_agyw_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_40_44_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month  aged between 40 and 44",
+            "indicator": "st_agyw_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_45_49_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_agyw_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_50_54_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_agyw_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_55_59_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_agyw_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_60_64_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_agyw_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_agyw_above_65_male"
+          },
+          {
+            "label": "Adolescent Girls and Young Women stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_agyw_above_65_female"
+          },
+          {
+            "label": "Total Number of Adolescent Girls and Young Women stopped/discontinued PrEP this month ",
+            "indicator": "total_st_agyw"
+          }
+        ]
+      },
+      {
+        "label": "Men Sex Worker (MSM)",
+        "indicators": [
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_msm_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_15_19_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_msm_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_20_24_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_msm_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_25_29_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_msm_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_30_34_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_msm_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_35_39_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_msm_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_40_44_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_msm_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_45_49_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_msm_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_50_54_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_msm_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_55_59_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_msm_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_60_64_female"
+          },
+          {
+            "label": "Men Sex Worker stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_msm_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_msm_above_65_female"
+          },
+          {
+            "label": "Total Number of Men Sex Worker stopped/discontinued PrEP this month",
+            "indicator": "total_st_msm"
+          }
+        ]
+      },
+      {
+        "label": "Men at High Risk",
+        "indicators": [
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_mahr_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_15_19_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_mahr_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_20_24_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_mahr_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_25_29_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_mahr_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_30_34_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_mahr_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_35_39_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_mahr_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_40_44_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_mahr_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_45_49_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_mahr_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_50_54_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_mahr_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_55_59_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_mahr_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_60_64_female"
+          },
+          {
+            "label": "Men at High Risk stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_mahr_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "st_mahr_above_65_female"
+          },
+          {
+            "label": "Total Number of Men at High Risk stopped/discontinued PrEP this month",
+            "indicator": "total_st_mahr"
+          }
+        ]
+      },
+      {
+        "label": "Female Sexual Workers (FSW)",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "st_fsw_15_19_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_fsw_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_20_24_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_fsw_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_25_29_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_fsw_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_30_34_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_fsw_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_35_39_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_fsw_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_40_44_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_fsw_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_45_49_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_fsw_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_50_54_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_fsw_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_55_59_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_fsw_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_60_64_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_fsw_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_fsw_above_65_male"
+          },
+          {
+            "label": "Female Sexual Workers stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_fsw_above_65_female"
+          },
+          {
+            "label": "Total Number of Female Sexual Workers stopped/discontinued PrEP this month",
+            "indicator": "total_st_fsw"
+          }
+        ]
+      },
+      {
+        "label": "PWID",
+        "indicators": [
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_pwid_15_19_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_pwid_15_19_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_pwid_20_24_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_pwid_20_24_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_pwid_25_29_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_pwid_25_29_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_pwid_30_34_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_pwid_30_34_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_pwid_35_39_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_pwid_35_39_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_pwid_40_44_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_pwid_40_44_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_pwid_45_49_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_pwid_45_49_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_pwid_50_54_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_pwid_50_54_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 55 and 50",
+            "indicator": "st_pwid_55_59_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_pwid_55_59_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_pwid_60_64_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_pwid_60_64_female"
+          },
+          {
+            "label": "Male PWID stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_pwid_above_65_male"
+          },
+          {
+            "label": "Female PWID stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_pwid_above_65_female"
+          },
+          {
+            "label": "Total Number of PWID stopped/discontinued PrEP this month",
+            "indicator": "total_st_pwid"
+          }
+        ]
+      },
+      {
+        "label": "Other Women",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "st_ow_15_19_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_ow_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_20_24_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_ow_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_25_29_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_ow_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_30_34_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_ow_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_35_39_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_ow_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_40_44_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_ow_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_45_49_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_ow_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_50_54_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_ow_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_55_59_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_ow_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_60_64_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_ow_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_ow_above_65_male"
+          },
+          {
+            "label": "Other Women stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_ow_above_65_female"
+          },
+          {
+            "label": "Total Number of Other Women stopped/discontinued PrEP this month",
+            "indicator": "total_st_ow"
+          }
+        ]
+      },
+      {
+        "label": "Serodiscordant Couple",
+        "indicators": [
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_sdc_15_19_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_sdc_15_19_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_sdc_20_24_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_sdc_20_24_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_sdc_25_29_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_sdc_25_29_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_sdc_30_34_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_sdc_30_34_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_sdc_35_39_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_sdc_35_39_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_sdc_40_44_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_sdc_40_44_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_sdc_45_49_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_sdc_45_49_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_sdc_50_54_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_sdc_50_54_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 55 and 50",
+            "indicator": "st_sdc_55_59_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_sdc_55_59_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_sdc_60_64_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_sdc_60_64_female"
+          },
+          {
+            "label": "Male Serodiscordant Couple stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_sdc_above_65_male"
+          },
+          {
+            "label": "Female Serodiscordant Couple stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_sdc_above_65_female"
+          },
+          {
+            "label": "Total Number of Serodiscordant Couple stopped/discontinued PrEP this month",
+            "indicator": "total_st_sdc"
+          }
+        ]
+      },
+      {
+        "label": "PBFW",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "st_pbfw_15_19_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 15 and 19",
+            "indicator": "st_pbfw_15_19_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_20_24_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 20 and 24",
+            "indicator": "st_pbfw_20_24_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_25_29_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 25 and 29",
+            "indicator": "st_pbfw_25_29_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_30_34_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 30 and 34",
+            "indicator": "st_pbfw_30_34_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_35_39_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 35 and 39",
+            "indicator": "st_pbfw_35_39_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_40_44_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 40 and 44",
+            "indicator": "st_pbfw_40_44_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_45_49_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 45 and 49",
+            "indicator": "st_pbfw_45_49_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_50_54_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 50 and 54",
+            "indicator": "st_pbfw_50_54_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_55_59_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 55 and 59",
+            "indicator": "st_pbfw_55_59_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_60_64_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged between 60 and 64",
+            "indicator": "st_pbfw_60_64_female"
+          },
+          {
+            "label": "",
+            "indicator": "st_pbfw_above_65_male"
+          },
+          {
+            "label": "PBFW stopped/discontinued PrEP this month aged above 65",
+            "indicator": "st_pbfw_above_65_female"
+          },
+          {
+            "label": "Total Number of PBFW stopped/discontinued PrEP this month",
+            "indicator": "total_st_pbfw"
+          }
+        ]
+      }
+    ]
   }
 ]
