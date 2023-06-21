@@ -2471,7 +2471,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "total_ct_mahr_above_65_male",
+      "alias": "total_ct_mahr",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4), 1, NULL)"

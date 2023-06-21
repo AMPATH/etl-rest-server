@@ -1,3 +1,9 @@
 {
-  "reports": ["eligibleForPrepAggregate", "reasonForInitiationPrepAggregate"]
+  "reports": [
+    "eligibleForPrepAggregate",
+    "reasonForInitiationPrepAggregate",
+    "newForPrepAggregate",
+    "restartingPrepAggregate",
+    "whileOnPrepAggregate"
+  ]
 }

@@ -1743,7 +1743,7 @@
       "alias": "total_tp_pbfw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.iturned_positive_this_month = 1 AND pd.population_type = 9), 1, NULL)"
+        "expression": "if((pd.turned_positive_this_month = 1 AND pd.population_type = 9), 1, NULL)"
       }
     },
     {
