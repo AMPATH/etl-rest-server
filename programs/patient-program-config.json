@@ -494,6 +494,10 @@
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
             "display": "YOUTHCOUNSELING"
+          },
+          {
+            "uuid": "01bed6c8-32a0-4958-8925-02f03f5d95f4",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -614,6 +618,10 @@
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
             "display": "YOUTHCOUNSELING"
+          },
+          {
+            "uuid": "01bed6c8-32a0-4958-8925-02f03f5d95f4",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -2925,6 +2933,10 @@
           {
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
             "display": "YOUTHCOUNSELING"
+          },
+          {
+            "uuid": "01bed6c8-32a0-4958-8925-02f03f5d95f4",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -3007,6 +3019,10 @@
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
             "allowedIf": "age >= 10 && age <= 24",
             "display": "YOUTHCOUNSELING"
+          },
+          {
+            "uuid": "01bed6c8-32a0-4958-8925-02f03f5d95f4",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -4457,6 +4473,10 @@
             "uuid": "c4efb6ba-e286-4933-8854-cd3af8e1ebef",
             "allowedIf": "screenedForCovidToday && age >= 10 && age <= 24",
             "display": "YOUTHCOUNSELING"
+          },
+          {
+            "uuid": "01bed6c8-32a0-4958-8925-02f03f5d95f4",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
