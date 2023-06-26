@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.prep_monthly_report_dataset_v2",
+      "table": "etl.prep_monthly_report_dataset_v3",
       "alias": "pd"
     },
     {
