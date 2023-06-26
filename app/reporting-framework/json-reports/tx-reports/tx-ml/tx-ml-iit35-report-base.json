@@ -495,7 +495,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "iit35hm.days_since_rtc_date between 90 and 180"
+        "conditionExpression": "(DATEDIFF(iit35hm.rtc_date, iit35hm.arv_first_regimen_start_date) between 90 and 179)"
       },
       {
         "filterType": "tableColumns",

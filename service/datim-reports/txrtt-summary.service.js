@@ -4,12 +4,12 @@ import { MultiDatasetPatientlistReport } from '../../app/reporting-framework/mul
 const _ = require('lodash');
 const Moment = require('moment');
 
-const txnewReportSections = require('../../app/reporting-framework/json-reports/tx-reports/tx-new/tx-new-report-indicators.json');
-const txnewReportPatientListCols = require('../../app/reporting-framework/json-reports/tx-reports/tx-ml/tx-ml-report-patient-list-cols.json');
+const txrttReportSections = require('../../app/reporting-framework/json-reports/tx-reports/tx-rtt/tx-rtt-report-indicators.json');
+const txrttReportPatientListCols = require('../../app/reporting-framework/json-reports/tx-reports/tx-ml/tx-ml-report-patient-list-cols.json');
 
 const etlHelpers = require('../../etl-helpers.js');
 
-export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
+export class TXRTTSummaryReportService extends MultiDatasetPatientlistReport {
   constructor(reportName, params) {
     super(reportName, params);
     params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen';
@@ -53,7 +53,7 @@ export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
               resolve({
                 queriesAndSchemas: results,
                 result: finalResult,
-                sectionDefinitions: txnewReportSections,
+                sectionDefinitions: txrttReportSections,
                 indicatorDefinitions: []
               });
             }
@@ -101,7 +101,6 @@ export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
 
   generatePatientListReport(reportParams) {
     const indicators = reportParams.requestIndicators.split(',') || [];
-    console.log('generatePatientListReport:', indicators);
     let self = this;
     return new Promise((resolve, reject) => {
       super
@@ -111,7 +110,7 @@ export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
           results['results'] = {
             results: result
           };
-          results['patientListCols'] = txnewReportPatientListCols;
+          results['patientListCols'] = txrttReportPatientListCols;
           delete results['result'];
           _.each(results.results.results, (row) => {
             row.cur_meds = etlHelpers.getARVNames(row.cur_meds);

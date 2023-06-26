@@ -495,7 +495,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "iitless3hm.days_since_rtc_date < 90"
+        "conditionExpression": "(DATEDIFF(iitless3hm.rtc_date, iitless3hm.arv_first_regimen_start_date) between 1 and 89)"
       },
       {
         "filterType": "tableColumns",

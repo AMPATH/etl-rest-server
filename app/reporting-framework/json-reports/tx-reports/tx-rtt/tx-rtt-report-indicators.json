@@ -9,7 +9,7 @@
     ]
   },
   {
-    "sectionTitle": "TX_CURR Report",
+    "sectionTitle": "TX_RTT Report",
     "indicators": [
       {
         "label": "Unknown Age",

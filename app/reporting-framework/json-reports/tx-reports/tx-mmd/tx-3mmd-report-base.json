@@ -472,7 +472,7 @@
       "alias": "3mmd_total",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((fhs.med_pickup_rtc_date is not null),1,0)"
+        "expression": "if((hm.status = 'active'),1,0)"
       }
     }
   ],
@@ -491,7 +491,11 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hm.status = 'active' AND fhs.med_pickup_rtc_date is not null AND DATEDIFF(fhs.med_pickup_rtc_date, fhs.encounter_datetime) > 0"
+        "conditionExpression": "hm.status = 'active'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fhs.med_pickup_rtc_date IS NULL AND DATEDIFF(hm.rtc_date, hm.encounter_date) BETWEEN 61 AND 90 OR fhs.med_pickup_rtc_date IS NOT NULL"
       }
     ]
   },

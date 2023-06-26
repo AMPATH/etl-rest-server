@@ -1,70 +1,51 @@
 {
-  "name": "txnewReportBase",
+  "name": "txrttReportAggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
-  "uses": [],
+  "uses": [
+    {
+      "name": "txrttReportBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
   "sources": [
     {
-      "table": "etl.hiv_monthly_report_dataset_frozen",
-      "alias": "hm"
-    },
-    {
-      "table": "amrs.location",
-      "alias": "ll",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "hm.location_id = ll.location_id"
-      }
+      "dataSet": "txrttReportBase",
+      "alias": "b"
     }
   ],
   "columns": [
     {
-      "type": "simple_column",
-      "alias": "person_id",
-      "column": "hm.person_id"
-    },
-    {
-      "type": "simple_column",
-      "alias": "location_id",
-      "column": "hm.location_id"
-    },
-    {
-      "type": "simple_column",
-      "alias": "location",
-      "column": "ll.name"
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
     },
     {
       "type": "simple_column",
       "alias": "location_uuid",
-      "column": "ll.uuid"
+      "column": "b.location_uuid"
     },
     {
       "type": "simple_column",
-      "alias": "status",
-      "column": "hm.status"
+      "alias": "location_id",
+      "column": "b.location_id"
     },
     {
       "type": "simple_column",
-      "alias": "gender",
-      "column": "hm.gender"
-    },
-    {
-      "type": "simple_column",
-      "alias": "age",
-      "column": "hm.age"
-    },
-    {
-      "type": "simple_column",
-      "alias": "endDate",
-      "column": "hm.endDate"
+      "alias": "location",
+      "column": "b.location"
     },
     {
       "type": "derived_column",
       "alias": "male_unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age < 0),1,0)"
+        "expression": "SUM(b.male_unknown_year)"
       }
     },
     {
@@ -72,7 +53,7 @@
       "alias": "female_unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age < 0),1,0)"
+        "expression": "SUM(b.female_unknown_year)"
       }
     },
     {
@@ -80,7 +61,7 @@
       "alias": "unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age < 0),1,0)"
+        "expression": "SUM(b.unknown_year)"
       }
     },
     {
@@ -88,7 +69,7 @@
       "alias": "male_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age >= 0 AND hm.age < 1),1,0)"
+        "expression": "SUM(b.male_less_1_year)"
       }
     },
     {
@@ -96,7 +77,7 @@
       "alias": "female_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age >= 0 AND hm.age < 1),1,0)"
+        "expression": "SUM(b.female_less_1_year)"
       }
     },
     {
@@ -104,7 +85,7 @@
       "alias": "less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age >= 0 AND hm.age < 1),1,0)"
+        "expression": "SUM(b.less_1_year)"
       }
     },
     {
@@ -112,7 +93,7 @@
       "alias": "male_one_four_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 1 AND 4),1,0)"
+        "expression": "SUM(b.male_one_four_year)"
       }
     },
     {
@@ -120,7 +101,7 @@
       "alias": "female_one_four_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 1 AND 4),1,0)"
+        "expression": "SUM(b.female_one_four_year)"
       }
     },
     {
@@ -128,7 +109,7 @@
       "alias": "one_four_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 1 AND 4),1,0)"
+        "expression": "SUM(b.one_four_year)"
       }
     },
     {
@@ -136,7 +117,7 @@
       "alias": "male_5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 5 AND 9),1,0)"
+        "expression": "SUM(b.male_5_9_year)"
       }
     },
     {
@@ -144,7 +125,7 @@
       "alias": "female_5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 5 AND 9),1,0)"
+        "expression": "SUM(b.female_5_9_year)"
       }
     },
     {
@@ -152,7 +133,7 @@
       "alias": "5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 5 AND 9),1,0)"
+        "expression": "SUM(b.5_9_year)"
       }
     },
     {
@@ -160,7 +141,7 @@
       "alias": "male_10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 10 AND 14),1,0)"
+        "expression": "SUM(b.male_10_14_year)"
       }
     },
     {
@@ -168,7 +149,7 @@
       "alias": "female_10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 10 AND 14),1,0)"
+        "expression": "SUM(b.female_10_14_year)"
       }
     },
     {
@@ -176,7 +157,7 @@
       "alias": "10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 10 AND 14),1,0)"
+        "expression": "SUM(b.10_14_year)"
       }
     },
     {
@@ -184,7 +165,7 @@
       "alias": "male_15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 15 AND 19),1,0)"
+        "expression": "SUM(b.male_15_19_year)"
       }
     },
     {
@@ -192,7 +173,7 @@
       "alias": "female_15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 15 AND 19),1,0)"
+        "expression": "SUM(b.female_15_19_year)"
       }
     },
     {
@@ -200,7 +181,7 @@
       "alias": "15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 15 AND 19),1,0)"
+        "expression": "SUM(b.15_19_year)"
       }
     },
     {
@@ -208,7 +189,7 @@
       "alias": "male_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 20 AND 24),1,0)"
+        "expression": "SUM(b.male_20_24_year)"
       }
     },
     {
@@ -216,7 +197,7 @@
       "alias": "female_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 20 AND 24),1,0)"
+        "expression": "SUM(b.female_20_24_year)"
       }
     },
     {
@@ -224,7 +205,7 @@
       "alias": "20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 20 AND 24),1,0)"
+        "expression": "SUM(b.20_24_year)"
       }
     },
     {
@@ -232,7 +213,7 @@
       "alias": "male_25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 25 AND 29),1,0)"
+        "expression": "SUM(b.male_25_29_year)"
       }
     },
     {
@@ -240,7 +221,7 @@
       "alias": "female_25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 25 AND 29),1,0)"
+        "expression": "SUM(b.female_25_29_year)"
       }
     },
     {
@@ -248,7 +229,7 @@
       "alias": "25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 25 AND 29),1,0)"
+        "expression": "SUM(b.25_29_year)"
       }
     },
     {
@@ -256,7 +237,7 @@
       "alias": "male_30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 30 AND 34),1,0)"
+        "expression": "SUM(b.male_30_34_year)"
       }
     },
     {
@@ -264,7 +245,7 @@
       "alias": "female_30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 30 AND 34),1,0)"
+        "expression": "SUM(b.female_30_34_year)"
       }
     },
     {
@@ -272,7 +253,7 @@
       "alias": "30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 30 AND 34),1,0)"
+        "expression": "SUM(b.30_34_year)"
       }
     },
     {
@@ -280,7 +261,7 @@
       "alias": "male_35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 35 AND 39),1,0)"
+        "expression": "SUM(b.male_35_39_year)"
       }
     },
     {
@@ -288,7 +269,7 @@
       "alias": "female_35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 35 AND 39),1,0)"
+        "expression": "SUM(b.female_35_39_year)"
       }
     },
     {
@@ -296,7 +277,7 @@
       "alias": "35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 35 AND 39),1,0)"
+        "expression": "SUM(b.35_39_year)"
       }
     },
     {
@@ -304,7 +285,7 @@
       "alias": "male_40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 40 AND 44),1,0)"
+        "expression": "SUM(b.male_40_44_year)"
       }
     },
     {
@@ -312,7 +293,7 @@
       "alias": "female_40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 40 AND 44),1,0)"
+        "expression": "SUM(b.female_40_44_year)"
       }
     },
     {
@@ -320,7 +301,7 @@
       "alias": "40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 40 AND 44),1,0)"
+        "expression": "SUM(b.40_44_year)"
       }
     },
     {
@@ -328,7 +309,7 @@
       "alias": "male_45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 45 AND 49),1,0)"
+        "expression": "SUM(b.male_45_49_year)"
       }
     },
     {
@@ -336,7 +317,7 @@
       "alias": "female_45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 45 AND 49),1,0)"
+        "expression": "SUM(b.female_45_49_year)"
       }
     },
     {
@@ -344,7 +325,7 @@
       "alias": "45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 45 AND 49),1,0)"
+        "expression": "SUM(b.45_49_year)"
       }
     },
     {
@@ -352,7 +333,7 @@
       "alias": "male_50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 50 AND 54),1,0)"
+        "expression": "SUM(b.male_50_54_year)"
       }
     },
     {
@@ -360,7 +341,7 @@
       "alias": "female_50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 50 AND 54),1,0)"
+        "expression": "SUM(b.female_50_54_year)"
       }
     },
     {
@@ -368,7 +349,7 @@
       "alias": "50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 50 AND 54),1,0)"
+        "expression": "SUM(b.50_54_year)"
       }
     },
     {
@@ -376,7 +357,7 @@
       "alias": "male_55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 55 AND 59),1,0)"
+        "expression": "SUM(b.male_55_59_year)"
       }
     },
     {
@@ -384,7 +365,7 @@
       "alias": "female_55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 55 AND 59),1,0)"
+        "expression": "SUM(b.female_55_59_year)"
       }
     },
     {
@@ -392,7 +373,7 @@
       "alias": "55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 55 AND 59),1,0)"
+        "expression": "SUM(b.55_59_year)"
       }
     },
     {
@@ -400,7 +381,7 @@
       "alias": "male_60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 60 AND 64),1,0)"
+        "expression": "SUM(b.male_60_64_year)"
       }
     },
     {
@@ -408,7 +389,7 @@
       "alias": "female_60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 60 AND 64),1,0)"
+        "expression": "SUM(b.female_60_64_year)"
       }
     },
     {
@@ -416,7 +397,7 @@
       "alias": "60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age BETWEEN 60 AND 64),1,0)"
+        "expression": "SUM(b.60_64_year)"
       }
     },
     {
@@ -424,7 +405,7 @@
       "alias": "male_above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M' AND hm.age >= 65),1,0)"
+        "expression": "SUM(b.male_above_65_year)"
       }
     },
     {
@@ -432,7 +413,7 @@
       "alias": "female_above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F' AND hm.age >= 65),1,0)"
+        "expression": "SUM(b.female_above_65_year)"
       }
     },
     {
@@ -440,7 +421,7 @@
       "alias": "above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.age >= 65),1,0)"
+        "expression": "SUM(b.above_65_year)"
       }
     },
     {
@@ -448,7 +429,7 @@
       "alias": "female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'F'),1,0)"
+        "expression": "SUM(b.female)"
       }
     },
     {
@@ -456,7 +437,7 @@
       "alias": "male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.gender = 'M'),1,0)"
+        "expression": "SUM(b.male)"
       }
     },
     {
@@ -464,31 +445,41 @@
       "alias": "total",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.enrolled_this_month = 1),1,0)"
+        "expression": "SUM(b.total)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "placeholder",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
       }
     }
   ],
-  "filters": {
-    "conditionJoinOperator": "and",
-    "conditions": [
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "hm.location_id IN ?",
-        "parameterName": "locations"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "hm.endDate = ?",
-        "parameterName": "endDate"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "hm.enrolled_this_month = 1"
-      }
-    ]
-  },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["person_id"]
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-txml-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
   }
 }

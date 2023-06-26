@@ -495,7 +495,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "iitabove6hm.days_since_rtc_date > 180"
+        "conditionExpression": "(DATEDIFF(iitabove6hm.rtc_date, iitabove6hm.arv_first_regimen_start_date) >= 180)"
       },
       {
         "filterType": "tableColumns",

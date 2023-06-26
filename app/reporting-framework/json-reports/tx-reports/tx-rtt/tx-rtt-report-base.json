@@ -1,5 +1,5 @@
 {
-  "name": "tx5mmdReportBase",
+  "name": "txrttReportBase",
   "version": "1.0",
   "tag": "",
   "description": "",
@@ -18,11 +18,11 @@
       }
     },
     {
-      "table": "etl.flat_hiv_summary_v15b",
-      "alias": "fhs",
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "tx",
       "join": {
         "type": "LEFT",
-        "joinCondition": "hm.encounter_id = fhs.encounter_id"
+        "joinCondition": "hm.person_id = tx.person_id AND tx.on_art_this_month = 0"
       }
     }
   ],
@@ -69,7 +69,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_unknown_year",
+      "alias": "male_unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age < 0),1,0)"
@@ -77,7 +77,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_unknown_year",
+      "alias": "female_unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age < 0),1,0)"
@@ -85,7 +85,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_unknown_year",
+      "alias": "unknown_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age < 0),1,0)"
@@ -93,7 +93,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_less_1_year",
+      "alias": "male_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age >= 0 AND hm.age < 1),1,0)"
@@ -101,7 +101,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_less_1_year",
+      "alias": "female_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age >= 0 AND hm.age < 1),1,0)"
@@ -109,7 +109,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_less_1_year",
+      "alias": "less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age >= 0 AND hm.age < 1),1,0)"
@@ -117,7 +117,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_one_four_year",
+      "alias": "male_one_four_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 1 AND 4),1,0)"
@@ -125,7 +125,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_one_four_year",
+      "alias": "female_one_four_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 1 AND 4),1,0)"
@@ -133,7 +133,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_one_four_year",
+      "alias": "one_four_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 1 AND 4),1,0)"
@@ -141,7 +141,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_5_9_year",
+      "alias": "male_5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 5 AND 9),1,0)"
@@ -149,7 +149,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_5_9_year",
+      "alias": "female_5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 5 AND 9),1,0)"
@@ -157,7 +157,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_5_9_year",
+      "alias": "5_9_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 5 AND 9),1,0)"
@@ -165,7 +165,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_10_14_year",
+      "alias": "male_10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 10 AND 14),1,0)"
@@ -173,7 +173,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_10_14_year",
+      "alias": "female_10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 10 AND 14),1,0)"
@@ -181,7 +181,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_10_14_year",
+      "alias": "10_14_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 10 AND 14),1,0)"
@@ -189,7 +189,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_15_19_year",
+      "alias": "male_15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 15 AND 19),1,0)"
@@ -197,7 +197,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_15_19_year",
+      "alias": "female_15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 15 AND 19),1,0)"
@@ -205,7 +205,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_15_19_year",
+      "alias": "15_19_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 15 AND 19),1,0)"
@@ -213,7 +213,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_20_24_year",
+      "alias": "male_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 20 AND 24),1,0)"
@@ -221,7 +221,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_20_24_year",
+      "alias": "female_20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 20 AND 24),1,0)"
@@ -229,7 +229,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_20_24_year",
+      "alias": "20_24_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 20 AND 24),1,0)"
@@ -237,7 +237,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_25_29_year",
+      "alias": "male_25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 25 AND 29),1,0)"
@@ -245,7 +245,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_25_29_year",
+      "alias": "female_25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 25 AND 29),1,0)"
@@ -253,7 +253,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_25_29_year",
+      "alias": "25_29_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 25 AND 29),1,0)"
@@ -261,7 +261,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_30_34_year",
+      "alias": "male_30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 30 AND 34),1,0)"
@@ -269,7 +269,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_30_34_year",
+      "alias": "female_30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 30 AND 34),1,0)"
@@ -277,7 +277,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_30_34_year",
+      "alias": "30_34_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 30 AND 34),1,0)"
@@ -285,7 +285,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_35_39_year",
+      "alias": "male_35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 35 AND 39),1,0)"
@@ -293,7 +293,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_35_39_year",
+      "alias": "female_35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 35 AND 39),1,0)"
@@ -301,7 +301,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_35_39_year",
+      "alias": "35_39_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 35 AND 39),1,0)"
@@ -309,7 +309,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_40_44_year",
+      "alias": "male_40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 40 AND 44),1,0)"
@@ -317,7 +317,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_40_44_year",
+      "alias": "female_40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 40 AND 44),1,0)"
@@ -325,7 +325,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_40_44_year",
+      "alias": "40_44_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 40 AND 44),1,0)"
@@ -333,7 +333,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_45_49_year",
+      "alias": "male_45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 45 AND 49),1,0)"
@@ -341,7 +341,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_45_49_year",
+      "alias": "female_45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 45 AND 49),1,0)"
@@ -349,7 +349,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_45_49_year",
+      "alias": "45_49_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 45 AND 49),1,0)"
@@ -357,7 +357,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_50_54_year",
+      "alias": "male_50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 50 AND 54),1,0)"
@@ -365,7 +365,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_50_54_year",
+      "alias": "female_50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 50 AND 54),1,0)"
@@ -373,7 +373,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_50_54_year",
+      "alias": "50_54_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 50 AND 54),1,0)"
@@ -381,7 +381,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_55_59_year",
+      "alias": "male_55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 55 AND 59),1,0)"
@@ -389,7 +389,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_55_59_year",
+      "alias": "female_55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 55 AND 59),1,0)"
@@ -397,7 +397,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_55_59_year",
+      "alias": "55_59_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 55 AND 59),1,0)"
@@ -405,7 +405,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_60_64_year",
+      "alias": "male_60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age BETWEEN 60 AND 64),1,0)"
@@ -413,7 +413,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_60_64_year",
+      "alias": "female_60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age BETWEEN 60 AND 64),1,0)"
@@ -421,7 +421,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_60_64_year",
+      "alias": "60_64_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age BETWEEN 60 AND 64),1,0)"
@@ -429,7 +429,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male_above_65_year",
+      "alias": "male_above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M' AND hm.age >= 65),1,0)"
@@ -437,7 +437,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female_above_65_year",
+      "alias": "female_above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F' AND hm.age >= 65),1,0)"
@@ -445,7 +445,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_above_65_year",
+      "alias": "above_65_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.age >= 65),1,0)"
@@ -453,7 +453,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_female",
+      "alias": "female",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'F'),1,0)"
@@ -461,7 +461,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_male",
+      "alias": "male",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((hm.gender = 'M'),1,0)"
@@ -469,10 +469,10 @@
     },
     {
       "type": "derived_column",
-      "alias": "5mmd_total",
+      "alias": "total",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((hm.rtc_date is not null),1,0)"
+        "expression": "if((hm.on_art_this_month = 1),1,0)"
       }
     }
   ],
@@ -487,11 +487,16 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "hm.endDate = ?",
-        "parameterName": "endDate"
+        "parameterName": "eDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hm.on_art_this_month = 1 AND hm.status = 'active' AND fhs.med_pickup_rtc_date is null AND DATEDIFF(hm.rtc_date, hm.encounter_date) between 121 and 150"
+        "conditionExpression": "tx.endDate = ?",
+        "parameterName": "sDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hm.on_art_this_month = 1"
       }
     ]
   },
