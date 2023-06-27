@@ -14,7 +14,7 @@
       "alias": "n",
       "join": {
         "type": "LEFT",
-        "joinCondition": "c.person_id = n.person_id AND n.endDate = '{endingMonth}'"
+        "joinCondition": "c.person_id = n.person_id"
       }
     },
     {
@@ -181,6 +181,16 @@
     },
     {
       "type": "simple_column",
+      "alias": "enrollment_date",
+      "column": "DATE_FORMAT(c.enrollment_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "transfer_out_date_v1",
+      "column": "DATE_FORMAT(c.transfer_out_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
       "alias": "location_uuid",
       "column": "cl.uuid"
     },
@@ -240,14 +250,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(n.status = 'dead' AND c.cur_arv_meds IS NULL AND c.location_id = n.location_id, 1, NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "death_date",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(n.status = 'dead',DATE_FORMAT(n.death_date,'%Y-%m-%d'),NULL)"
       }
     },
     {
@@ -518,8 +520,33 @@
     },
     {
       "type": "simple_column",
-      "alias": "days_since_rtc",
-      "column": "n.days_since_rtc_date"
+      "alias": "days_since_rtc_date",
+      "column": "c.days_since_rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "arv_first_regimen",
+      "column": "c.arv_first_regimen"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_line",
+      "column": "c.cur_arv_line"
+    },
+    {
+      "type": "simple_column",
+      "alias": "arv_first_regimen_start_date",
+      "column": "date_format(c.arv_first_regimen_start_date, '%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_status",
+      "column": "n.status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "death_date",
+      "column": "date_format(c.death_date, '%Y-%m-%d')"
     },
     {
       "type": "derived_column",
@@ -1195,14 +1222,6 @@
       },
       {
         "type": "derived_column",
-        "alias": "death_date",
-        "expressionType": "simple_expression",
-        "expressionOptions": {
-          "expression": "IF(n.status = 'dead',DATE_FORMAT(n.death_date,'%Y-%m-%d'),NULL)"
-        }
-      },
-      {
-        "type": "derived_column",
         "alias": "death_report_date",
         "expressionType": "simple_expression",
         "expressionOptions": {
@@ -1468,11 +1487,6 @@
         }
       },
       {
-        "type": "simple_column",
-        "alias": "days_since_rtc",
-        "column": "n.days_since_rtc_date"
-      },
-      {
         "type": "derived_column",
         "alias": "days_since_ltfu",
         "expressionType": "simple_expression",
@@ -1525,10 +1539,6 @@
           "filterType": "tableColumns",
           "conditionExpression": "c.location_id in ? ",
           "parameterName": "locations"
-        },
-        {
-          "filterType": "tableColumns",
-          "conditionExpression": "c.status = 'active'"
         }
       ]
     },
