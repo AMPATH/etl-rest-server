@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs_migration.patient_program",
+      "table": "amrs.patient_program",
       "alias": "t3"
     },
     {
@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs_migration.program",
+      "table": "amrs.program",
       "alias": "t5",
       "join": {
         "type": "INNER",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "table": "amrs_migration.location",
+      "table": "amrs.location",
       "alias": "t9",
       "join": {
         "type": "INNER",
@@ -34,7 +34,7 @@
       }
     },
     {
-      "table": "amrs_migration.location",
+      "table": "amrs.location",
       "alias": "location",
       "join": {
         "type": "INNER",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "table": "amrs_migration.location",
+      "table": "amrs.location",
       "alias": "referral_location",
       "join": {
         "type": "INNER",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_attribute",
+      "table": "amrs.person_attribute",
       "alias": "pa",
       "join": {
         "type": "LEFT",

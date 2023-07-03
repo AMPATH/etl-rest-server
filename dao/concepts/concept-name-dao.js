@@ -23,7 +23,7 @@ function getConceptNames() {
           .field('cn.concept_id')
           .field('cn.name')
           .field('cn.uuid')
-          .from('amrs_migration.concept_name', 'cn')
+          .from('amrs.concept_name', 'cn')
           .toString();
         conn.query(
           query + ' where concept_name_type is not null',

@@ -3810,7 +3810,7 @@ module.exports = (function () {
 
           if (request.query.formUuids) {
             dao.getIdsByUuidAsyc(
-              'amrs_migration.form',
+              'amrs.form',
               'form_id',
               'uuid',
               request.query.formUuids,
@@ -3821,7 +3821,7 @@ module.exports = (function () {
           }
           if (request.query.encounterTypeUuids) {
             dao.getIdsByUuidAsyc(
-              'amrs_migration.encounter_type',
+              'amrs.encounter_type',
               'encounter_type_id',
               'uuid',
               request.query.encounterTypeUuids,
@@ -3832,7 +3832,7 @@ module.exports = (function () {
           }
           if (request.query.visitTypeUuids) {
             dao.getIdsByUuidAsyc(
-              'amrs_migration.visit_type',
+              'amrs.visit_type',
               'visit_type_id',
               'uuid',
               request.query.visitTypeUuids,
@@ -3843,7 +3843,7 @@ module.exports = (function () {
           }
           if (request.query.locationUuids) {
             dao.getIdsByUuidAsyc(
-              'amrs_migration.location',
+              'amrs.location',
               'location_id',
               'uuid',
               request.query.locationUuids,

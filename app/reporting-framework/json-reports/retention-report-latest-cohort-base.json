@@ -10,7 +10,7 @@
       "alias": "fhsc"
     },
     {
-      "table": "amrs_migration.encounter_type",
+      "table": "amrs.encounter_type",
       "alias": "e",
       "join": {
         "type": "INNER",

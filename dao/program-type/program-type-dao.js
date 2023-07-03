@@ -24,7 +24,7 @@ function getProgramTypes() {
           .field('p.program_id')
           .field('p.name')
           .field('p.uuid')
-          .from('amrs_migration.program', 'p')
+          .from('amrs.program', 'p')
           .toString();
         conn.query(query, {}, function (err, rows, fields) {
           if (err) {

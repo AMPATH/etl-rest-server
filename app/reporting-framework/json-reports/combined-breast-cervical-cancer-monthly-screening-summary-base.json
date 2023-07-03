@@ -5,7 +5,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs_migration.encounter",
+      "table": "amrs.encounter",
       "alias": "e"
     },
     {
@@ -25,7 +25,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_name",
+      "table": "amrs.person_name",
       "alias": "patient_name",
       "join": {
         "type": "inner",
@@ -33,7 +33,7 @@
       }
     },
     {
-      "table": "amrs_migration.patient_identifier",
+      "table": "amrs.patient_identifier",
       "alias": "patient_id",
       "join": {
         "type": "inner",
@@ -41,7 +41,7 @@
       }
     },
     {
-      "table": "amrs_migration.location",
+      "table": "amrs.location",
       "alias": "l",
       "join": {
         "type": "inner",
@@ -49,7 +49,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_attribute",
+      "table": "amrs.person_attribute",
       "alias": "p",
       "join": {
         "type": "left",
@@ -57,7 +57,7 @@
       }
     },
     {
-      "table": "amrs_migration.person",
+      "table": "amrs.person",
       "alias": "person",
       "join": {
         "type": "left",

@@ -53,15 +53,15 @@ function getPatientQualifiedDcVisits(patientUuid) {
        ELSE 0
     END AS 'qualifies_for_standard_visit'
 FROM
-    amrs_migration.person p
+    amrs.person p
     LEFT JOIN (
     SELECT
     e.patient_id,
     e.encounter_datetime as 'latest_medication_visit'
 FROM
-    amrs_migration.encounter e
-    join amrs_migration.person p on (e.patient_id = p.person_id)
-    join amrs_migration.visit v on (e.visit_id = v.visit_id)
+    amrs.encounter e
+    join amrs.person p on (e.patient_id = p.person_id)
+    join amrs.visit v on (e.visit_id = v.visit_id)
     where e.encounter_type in (186)
     AND v.visit_type_id in (138,16,58,123)
     AND e.voided = 0
@@ -73,9 +73,9 @@ FROM
     e.patient_id,
     e.encounter_datetime AS 'latest_standard_visit'
 FROM
-    amrs_migration.encounter e
-    join amrs_migration.person p on (e.patient_id = p.person_id)
-    join amrs_migration.visit v on (e.visit_id = v.visit_id)
+    amrs.encounter e
+    join amrs.person p on (e.patient_id = p.person_id)
+    join amrs.visit v on (e.visit_id = v.visit_id)
     where e.encounter_type in (2)
     AND v.visit_type_id in (59)
     AND e.voided = 0
@@ -87,10 +87,10 @@ FROM
     e.patient_id,
     e.encounter_datetime AS 'latest_dc_enrolment_visit'
 FROM
-    amrs_migration.encounter e
-    join amrs_migration.person p on (e.patient_id = p.person_id)
-    join amrs_migration.visit v on (e.visit_id = v.visit_id)
-    join amrs_migration.patient_program pp on (pp.patient_id = e.patient_id and pp.program_id = 9 and date_completed is null and pp.voided = 0)
+    amrs.encounter e
+    join amrs.person p on (e.patient_id = p.person_id)
+    join amrs.visit v on (e.visit_id = v.visit_id)
+    join amrs.patient_program pp on (pp.patient_id = e.patient_id and pp.program_id = 9 and date_completed is null and pp.voided = 0)
     where e.encounter_type in (2)
     AND v.visit_type_id in (2)
     AND e.voided = 0
@@ -102,9 +102,9 @@ FROM
 	p.person_id,
     pp.date_enrolled as latest_new_dc_enrollment_date
 FROM
-	amrs_migration.person p
+	amrs.person p
 		INNER JOIN
-	amrs_migration.patient_program pp ON (pp.patient_id = p.person_id
+	amrs.patient_program pp ON (pp.patient_id = p.person_id
 		AND pp.program_id = 9
 		AND date_completed IS NULL
 		AND pp.voided = 0)

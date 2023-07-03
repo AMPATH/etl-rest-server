@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const db = require('../etl-db');
 export class PatientMonthlyStatusHistory {
   resolvePersonId(personUuid) {
-    let query = 'Select * from amrs_migration.person where uuid = ? limit 1';
+    let query = 'Select * from amrs.person where uuid = ? limit 1';
     let params = [personUuid];
     return new Promise(function (resolve, reject) {
       db.queryReportServer({ query: query, sqlParams: params }, (result) => {
@@ -493,9 +493,9 @@ FROM   (SELECT t1.person_id                AS p1,
                                AND t1.enddate = Date_sub(Date_format(t2.enddate,
                                                          '%Y-%m-01'),
                                                 INTERVAL 1 day)) t
-       JOIN amrs_migration.location AS l3
+       JOIN amrs.location AS l3
          ON l3.location_id = l2
-       JOIN amrs_migration.encounter_type AS et1
+       JOIN amrs.encounter_type AS et1
          ON et1.encounter_type_id = encounter_type;
                 `;
         return new Promise(function (resolve, reject) {

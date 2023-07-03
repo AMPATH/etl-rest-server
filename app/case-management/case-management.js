@@ -104,14 +104,14 @@ const caseDataDao = {
       sql =
         'select ' +
         columns +
-        'FROM etl.flat_case_manager `t1` LEFT JOIN amrs_migration.relationship `t2` on (t1.person_id = t2.person_a) ' +
-        'LEFT JOIN amrs_migration.person_attribute `t3` on (t1.person_id = t3.person_id AND t3.person_attribute_type_id = 68 AND t1.case_manager_user_id = t3.value)  ' +
-        'LEFT JOIN amrs_migration.encounter_type t5 ON (t1.encounter_type = t5.encounter_type_id) ' +
-        'INNER JOIN amrs_migration.person t4 ON (t1.person_id = t4.person_id AND dead = 0) ' +
-        'LEFT JOIN amrs_migration.patient_identifier id ON (t1.person_id = id.patient_id AND (id.voided IS NULL || id.voided = 0) AND id.identifier_type not in(28,43,45))' +
-        'LEFT JOIN amrs_migration.patient_identifier cc ON (t1.person_id = cc.patient_id and cc.identifier_type in (28) AND cc.voided = 0)' +
-        'LEFT JOIN amrs_migration.patient_identifier ov ON (t1.person_id = ov.patient_id and ov.identifier_type in (43) AND ov.voided = 0)' +
-        'LEFT JOIN amrs_migration.patient_identifier np ON (t1.person_id = np.patient_id and np.identifier_type in (45) AND np.voided = 0)' +
+        'FROM etl.flat_case_manager `t1` LEFT JOIN amrs.relationship `t2` on (t1.person_id = t2.person_a) ' +
+        'LEFT JOIN amrs.person_attribute `t3` on (t1.person_id = t3.person_id AND t3.person_attribute_type_id = 68 AND t1.case_manager_user_id = t3.value)  ' +
+        'LEFT JOIN amrs.encounter_type t5 ON (t1.encounter_type = t5.encounter_type_id) ' +
+        'INNER JOIN amrs.person t4 ON (t1.person_id = t4.person_id AND dead = 0) ' +
+        'LEFT JOIN amrs.patient_identifier id ON (t1.person_id = id.patient_id AND (id.voided IS NULL || id.voided = 0) AND id.identifier_type not in(28,43,45))' +
+        'LEFT JOIN amrs.patient_identifier cc ON (t1.person_id = cc.patient_id and cc.identifier_type in (28) AND cc.voided = 0)' +
+        'LEFT JOIN amrs.patient_identifier ov ON (t1.person_id = ov.patient_id and ov.identifier_type in (43) AND ov.voided = 0)' +
+        'LEFT JOIN amrs.patient_identifier np ON (t1.person_id = np.patient_id and np.identifier_type in (45) AND np.voided = 0)' +
         'LEFT JOIN etl.flat_hiv_summary_v15b t6 on (t1.person_id = t6.person_id and t6.is_clinical_encounter = 1 AND t6.next_clinical_datetime_hiv IS NULL and t6.transfer_transfer_out_bncd is not null)  ' +
         'WHERE ( ' +
         where +
@@ -135,12 +135,12 @@ const caseDataDao = {
       let sql =
         "select CONCAT(COALESCE(t6.given_name, ''), ' ', COALESCE(t6.middle_name,''), ' ',  " +
         "COALESCE(t6.family_name, '')) as person_name, t2.uuid as `user_uuid`, t5.value_reference as `location_uuid`, " +
-        'count(DISTINCT t1.person_id) as `number_assigned`,t4.provider_id,t2.user_id FROM amrs_migration.users `t2`  ' +
-        'INNER JOIN amrs_migration.person `t3` ON (t3.person_id = t2.person_id)  ' +
-        'INNER JOIN amrs_migration.provider `t4` ON (t4.person_id = t3.person_id) ' +
-        'INNER JOIN amrs_migration.provider_attribute `t5` ON (t5.provider_id = t4.provider_id and t5.voided = 0)  ' +
-        'INNER JOIN amrs_migration.person_name `t6` ON (t6.person_id = t3.person_id) ' +
-        'LEFT JOIN amrs_migration.person_attribute `t1` ON (t2.user_id = t1.value AND person_attribute_type_id = 68 AND t1.voided = 0 ) ' +
+        'count(DISTINCT t1.person_id) as `number_assigned`,t4.provider_id,t2.user_id FROM amrs.users `t2`  ' +
+        'INNER JOIN amrs.person `t3` ON (t3.person_id = t2.person_id)  ' +
+        'INNER JOIN amrs.provider `t4` ON (t4.person_id = t3.person_id) ' +
+        'INNER JOIN amrs.provider_attribute `t5` ON (t5.provider_id = t4.provider_id and t5.voided = 0)  ' +
+        'INNER JOIN amrs.person_name `t6` ON (t6.person_id = t3.person_id) ' +
+        'LEFT JOIN amrs.person_attribute `t1` ON (t2.user_id = t1.value AND person_attribute_type_id = 68 AND t1.voided = 0 ) ' +
         "WHERE ( t5.attribute_type_id = 1 AND t5.value_reference = '" +
         params.locationUuid +
         "') GROUP by t2.uuid; ";

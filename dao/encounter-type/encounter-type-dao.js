@@ -24,7 +24,7 @@ function getEncounterTypes() {
           .field('et.encounter_type_id')
           .field('et.name')
           .field('et.uuid')
-          .from('amrs_migration.encounter_type', 'et')
+          .from('amrs.encounter_type', 'et')
           .toString();
         conn.query(query, {}, function (err, rows, fields) {
           if (err) {

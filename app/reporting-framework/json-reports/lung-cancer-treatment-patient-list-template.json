@@ -5,11 +5,11 @@
   "description": "Lung Cancer Treatment patient list template",
   "sources": [
     {
-      "table": "amrs_migration.person",
+      "table": "amrs.person",
       "alias": "t1"
     },
     {
-      "table": "amrs_migration.person_name",
+      "table": "amrs.person_name",
       "alias": "person_name",
       "join": {
         "type": "INNER",
@@ -17,7 +17,7 @@
       }
     },
     {
-      "table": "amrs_migration.person",
+      "table": "amrs.person",
       "alias": "person",
       "join": {
         "type": "inner",
@@ -25,7 +25,7 @@
       }
     },
     {
-      "table": "amrs_migration.patient_identifier",
+      "table": "amrs.patient_identifier",
       "alias": "id",
       "join": {
         "type": "LEFT",

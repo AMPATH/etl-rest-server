@@ -7,9 +7,9 @@ export class PatientLastOrderLocationDao {
     let queryRunner = new QueryService();
 
     let sqlQuery =
-      `SELECT e.location_id as location FROM amrs_migration.encounter e
-        LEFT JOIN amrs_migration.orders o on o.encounter_id = e.encounter_id
-        INNER JOIN amrs_migration.person p on o.patient_id = p.person_id
+      `SELECT e.location_id as location FROM amrs.encounter e
+        LEFT JOIN amrs.orders o on o.encounter_id = e.encounter_id
+        INNER JOIN amrs.person p on o.patient_id = p.person_id
         WHERE p.uuid = '` +
       patientUuid +
       `' ORDER BY e.encounter_datetime DESC LIMIT 1;`;

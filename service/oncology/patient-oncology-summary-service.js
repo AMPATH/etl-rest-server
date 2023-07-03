@@ -7,7 +7,7 @@ function getOncMeds(request, medsFormat, encounterId) {
   if (medsFormat === 'summary') {
     queryParts = {
       columns: 't1.value_coded',
-      table: 'amrs_migration.obs',
+      table: 'amrs.obs',
       where: [
         't2.uuid = ? and t1.concept_id in ? and t1.encounter_id = ? and t1.voided = ?',
         patientUuid,
@@ -21,7 +21,7 @@ function getOncMeds(request, medsFormat, encounterId) {
           asc: false
         }
       ],
-      joins: [['amrs_migration.person', 't2', 't2.person_id=t1.person_id']],
+      joins: [['amrs.person', 't2', 't2.person_id=t1.person_id']],
       offset: request.startIndex,
       limit: request.limit
     };
@@ -29,7 +29,7 @@ function getOncMeds(request, medsFormat, encounterId) {
     queryParts = {
       columns:
         't1.concept_id, t1.value_coded, t1.value_numeric, t1.obs_group_id, t1.encounter_id, t1.obs_datetime',
-      table: 'amrs_migration.obs',
+      table: 'amrs.obs',
       where: [
         't2.uuid = ? and t5.programuuid = ? and t1.concept_id in ? and t1.voided = ?',
         patientUuid,
@@ -44,16 +44,12 @@ function getOncMeds(request, medsFormat, encounterId) {
         }
       ],
       joins: [
-        ['amrs_migration.person', 't2', 't2.person_id = t1.person_id'],
-        [
-          'amrs_migration.patient_program',
-          't3',
-          't3.patient_id ``= t2.person_id'
-        ]
+        ['amrs.person', 't2', 't2.person_id = t1.person_id'],
+        ['amrs.patient_program', 't3', 't3.patient_id ``= t2.person_id']
       ],
       leftOuterJoins: [
         [
-          '(SELECT program_id, uuid as `programuuid` FROM amrs_migration.program ) `t5` ON (t3.program_id = t5.program_id)'
+          '(SELECT program_id, uuid as `programuuid` FROM amrs.program ) `t5` ON (t3.program_id = t5.program_id)'
         ]
       ],
       offset: request.startIndex,
@@ -105,7 +101,7 @@ function getPatientOncologyDiagnosis(request) {
         asc: false
       }
     ],
-    joins: [['amrs_migration.person', 't2', 't2.person_id = t1.person_id']],
+    joins: [['amrs.person', 't2', 't2.person_id = t1.person_id']],
     table: 'etl.flat_onc_patient_history',
     where: ['t2.uuid = ?', patientUuid],
     offset: request.startIndex,
@@ -146,9 +142,9 @@ function getOncologyIntegratedProgramSnapshot(request) {
         FROM
           etl.flat_onc_patient_history \`t1\`
             LEFT JOIN
-          amrs_migration.location \`t2\` ON (t2.location_id = t1.location_id)
+          amrs.location \`t2\` ON (t2.location_id = t1.location_id)
             LEFT JOIN
-          amrs_migration.visit_type \`t3\` ON (t3.visit_type_id = t1.visit_type_id)
+          amrs.visit_type \`t3\` ON (t3.visit_type_id = t1.visit_type_id)
         WHERE
             t1.encounter_type IN (69, 86)
         AND t1.uuid = '${patientUuid}';`;

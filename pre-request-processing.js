@@ -25,7 +25,7 @@ function resolveLocationIdsToLocationUuids(request, callback) {
   if (asyncRequests === 0) callback();
   if (request.query.locationUuids) {
     dao.getIdsByUuidAsyc(
-      'amrs_migration.location',
+      'amrs.location',
       'location_id',
       'uuid',
       request.query.locationUuids,

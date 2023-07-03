@@ -39,7 +39,7 @@ module.exports = (function () {
 
     var qParts = {
       columns: '*',
-      table: 'amrs_migration.encounter_type',
+      table: 'amrs.encounter_type',
       where: ['retired = ?', 0],
       offset: request.query.startIndex,
       limit: 1000
@@ -203,10 +203,10 @@ module.exports = (function () {
       where: whereClause,
       leftOuterJoins: [
         [
-          '(SELECT program_id, uuid as `programuuid` FROM amrs_migration.program ) `t5` ON (t1.program_id = t5.program_id)'
+          '(SELECT program_id, uuid as `programuuid` FROM amrs.program ) `t5` ON (t1.program_id = t5.program_id)'
         ],
         [
-          '(SELECT uuid as `location_uuid`, location_id FROM amrs_migration.location) `loc` ON (loc.location_id = t1.location_id)'
+          '(SELECT uuid as `location_uuid`, location_id FROM amrs.location) `loc` ON (loc.location_id = t1.location_id)'
         ]
       ],
       offset: request.query.startIndex,
@@ -225,9 +225,9 @@ module.exports = (function () {
         ' when population_type = 3 then "GENERAL POPULATION" when population_type = 4 then "AT RISK PERSON FOR GETTING HIV INFECTION" end as `population_type_name` ',
       table: 'etl.flat_prep_summary_v1_1',
       leftOuterJoins: [
-        ['amrs_migration.location', 't3', 't1.location_id = t3.location_id'],
+        ['amrs.location', 't3', 't1.location_id = t3.location_id'],
         [
-          'amrs_migration.encounter_type',
+          'amrs.encounter_type',
           't2',
           't2.encounter_type_id = t1.encounter_type'
         ]
@@ -248,7 +248,7 @@ module.exports = (function () {
       table: 'etl.flat_pep_summary',
       leftOuterJoins: [
         [
-          'amrs_migration.encounter_type',
+          'amrs.encounter_type',
           't2',
           't2.encounter_type_id = t1.encounter_type'
         ]
@@ -600,7 +600,7 @@ module.exports = (function () {
 
     var queryParts = {
       columns: 't3.location_id,t3.name,count( distinct t1.patient_id) as total',
-      table: 'amrs_migration.patient',
+      table: 'amrs.patient',
       where: [
         "date_format(t1.date_created,'%Y-%m-%d') between date_format(?,'%Y-%m-%d') AND date_format(?,'%Y-%m-%d')",
         periodFrom,
@@ -614,10 +614,10 @@ module.exports = (function () {
         }
       ],
       joins: [
-        ['amrs_migration.encounter', 't2', 't1.patient_id = t2.patient_id'],
-        ['amrs_migration.location', 't3', 't2.location_id=t3.location_id'],
+        ['amrs.encounter', 't2', 't1.patient_id = t2.patient_id'],
+        ['amrs.location', 't3', 't2.location_id=t3.location_id'],
         [
-          'amrs_migration.person_name',
+          'amrs.person_name',
           't4',
           't4.person_id=t1.patient_id and (t4.voided is null || t4.voided = 0)'
         ]
@@ -641,7 +641,7 @@ module.exports = (function () {
     var queryParts = {
       columns:
         'distinct t4.uuid as patientUuid, t1.patient_id, t3.given_name, t3.middle_name, t3.family_name, t4.gender, extract(year from (from_days(datediff(now(),t4.birthdate)))) as age',
-      table: 'amrs_migration.patient',
+      table: 'amrs.patient',
       where: [
         "t2.location_id = ? AND date_format(t1.date_created,'%Y-%m-%d') between date_format(?,'%Y-%m-%d') AND date_format(?,'%Y-%m-%d')",
         location,
@@ -655,13 +655,13 @@ module.exports = (function () {
         }
       ],
       joins: [
-        ['amrs_migration.encounter', 't2', 't1.patient_id = t2.patient_id'],
+        ['amrs.encounter', 't2', 't1.patient_id = t2.patient_id'],
         q[
-          ('amrs_migration.person_name',
+          ('amrs.person_name',
           't3',
           't3.person_id=t1.patient_id and (t3.voided is null || t3.voided = 0)')
         ],
-        ['amrs_migration.person', 't4', 't4.person_id=t1.patient_id']
+        ['amrs.person', 't4', 't4.person_id=t1.patient_id']
       ],
       offset: request.query.startIndex,
       limit: request.query.limit

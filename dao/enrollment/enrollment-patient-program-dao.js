@@ -22,9 +22,9 @@ function getPatientProgramEnrollment(patientUuid, incompatibleprograms) {
         var query = squel
           .select()
           .field('pp.uuid')
-          .from('amrs_migration.patient_program', 'pp')
-          .join('amrs_migration.person', 'p', 'pp.patient_id = p.person_id')
-          .join('amrs_migration.program', 'pr', 'pp.program_id = pr.program_id')
+          .from('amrs.patient_program', 'pp')
+          .join('amrs.person', 'p', 'pp.patient_id = p.person_id')
+          .join('amrs.program', 'pr', 'pp.program_id = pr.program_id')
           .where('pr.uuid in ?', incompatibleprograms)
           .where('p.uuid = ?', patientUuid)
           .where('pp.date_completed IS NULL')

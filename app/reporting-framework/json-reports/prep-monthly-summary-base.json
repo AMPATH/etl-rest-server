@@ -16,7 +16,7 @@
       "alias": "prep"
     },
     {
-      "table": "amrs_migration.location",
+      "table": "amrs.location",
       "alias": "l",
       "join": {
         "type": "INNER",
@@ -48,7 +48,7 @@
       }
     },
     {
-      "table": "amrs_migration.encounter_type",
+      "table": "amrs.encounter_type",
       "alias": "e",
       "join": {
         "type": "LEFT",

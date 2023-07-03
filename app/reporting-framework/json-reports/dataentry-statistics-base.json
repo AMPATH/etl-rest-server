@@ -6,11 +6,11 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs_migration.encounter_provider",
+      "table": "amrs.encounter_provider",
       "alias": "ep"
     },
     {
-      "table": "amrs_migration.encounter",
+      "table": "amrs.encounter",
       "alias": "e",
       "join": {
         "type": "INNER",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs_migration.encounter_type",
+      "table": "amrs.encounter_type",
       "alias": "et",
       "join": {
         "type": "INNER",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "table": "amrs_migration.provider",
+      "table": "amrs.provider",
       "alias": "p",
       "join": {
         "type": "INNER",

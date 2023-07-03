@@ -10,7 +10,7 @@
       "alias": "fhs"
     },
     {
-      "table": "amrs_migration.orders",
+      "table": "amrs.orders",
       "alias": "orders",
       "join": {
         "type": "LEFT",

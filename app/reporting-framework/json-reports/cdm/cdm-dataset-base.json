@@ -10,7 +10,7 @@
       "alias": "t1"
     },
     {
-      "table": "amrs_migration.person",
+      "table": "amrs.person",
       "alias": "t2",
       "join": {
         "type": "INNER",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_name",
+      "table": "amrs.person_name",
       "alias": "t3",
       "join": {
         "type": "INNER",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "table": "amrs_migration.encounter_type",
+      "table": "amrs.encounter_type",
       "alias": "t4",
       "join": {
         "type": "INNER",

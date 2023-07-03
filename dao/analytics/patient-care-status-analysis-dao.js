@@ -245,9 +245,9 @@ module.exports = (function () {
         queryParams.endDate +
         "') " +
         ') t1 ' +
-        ' INNER JOIN amrs_migration.person_name `person_name` ON (t1.p1p2 = person_name.person_id and (person_name.voided is null || person_name.voided = 0)) ' +
-        'LEFT OUTER JOIN amrs_migration.patient_identifier `id` ON (t1.p1p2 = id.patient_id) ' +
-        'INNER JOIN amrs_migration.person `person` ON (t1.p1p2 = person.person_id) ' +
+        ' INNER JOIN amrs.person_name `person_name` ON (t1.p1p2 = person_name.person_id and (person_name.voided is null || person_name.voided = 0)) ' +
+        'LEFT OUTER JOIN amrs.patient_identifier `id` ON (t1.p1p2 = id.patient_id) ' +
+        'INNER JOIN amrs.person `person` ON (t1.p1p2 = person.person_id) ' +
         ' group by t1.p1p2 ';
 
       queryParts.sql = sql;
@@ -357,9 +357,9 @@ module.exports = (function () {
         requestIndicators[1] +
         "' " +
         ') t1 ' +
-        ' INNER JOIN amrs_migration.person_name `person_name` ON (t1.p1p2 = person_name.person_id and (person_name.voided is null || person_name.voided = 0)) ' +
-        'LEFT OUTER JOIN amrs_migration.patient_identifier `id` ON (t1.p1p2 = id.patient_id) ' +
-        'INNER JOIN amrs_migration.person `person` ON (t1.p1p2 = person.person_id) ' +
+        ' INNER JOIN amrs.person_name `person_name` ON (t1.p1p2 = person_name.person_id and (person_name.voided is null || person_name.voided = 0)) ' +
+        'LEFT OUTER JOIN amrs.patient_identifier `id` ON (t1.p1p2 = id.patient_id) ' +
+        'INNER JOIN amrs.person `person` ON (t1.p1p2 = person.person_id) ' +
         ' group by t1.p1p2 ';
 
       queryParts.sql = sql;

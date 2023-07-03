@@ -6,11 +6,11 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs_migration.visit",
+      "table": "amrs.visit",
       "alias": "t1"
     },
     {
-      "table": "amrs_migration.encounter",
+      "table": "amrs.encounter",
       "alias": "t4",
       "join": {
         "type": "LEFT",
@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_name",
+      "table": "amrs.person_name",
       "alias": "t2",
       "join": {
         "type": "LEFT",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "table": "amrs_migration.patient_identifier",
+      "table": "amrs.patient_identifier",
       "alias": "t3",
       "join": {
         "type": "LEFT",
@@ -34,7 +34,7 @@
       }
     },
     {
-      "table": "amrs_migration.person",
+      "table": "amrs.person",
       "alias": "t5",
       "join": {
         "type": "LEFT",
@@ -42,7 +42,7 @@
       }
     },
     {
-      "table": "amrs_migration.encounter_provider",
+      "table": "amrs.encounter_provider",
       "alias": "t6",
       "join": {
         "type": "LEFT",
@@ -50,7 +50,7 @@
       }
     },
     {
-      "table": "amrs_migration.provider",
+      "table": "amrs.provider",
       "alias": "t7",
       "join": {
         "type": "LEFT",
@@ -58,7 +58,7 @@
       }
     },
     {
-      "table": "amrs_migration.encounter_type",
+      "table": "amrs.encounter_type",
       "alias": "t9",
       "join": {
         "type": "LEFT",
@@ -74,7 +74,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_name",
+      "table": "amrs.person_name",
       "alias": "t8",
       "join": {
         "type": "LEFT",
@@ -82,7 +82,7 @@
       }
     },
     {
-      "table": "amrs_migration.users",
+      "table": "amrs.users",
       "alias": "t10",
       "join": {
         "type": "LEFT",
@@ -90,7 +90,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_name",
+      "table": "amrs.person_name",
       "alias": "t11",
       "join": {
         "type": "LEFT",
@@ -98,7 +98,7 @@
       }
     },
     {
-      "table": "amrs_migration.location",
+      "table": "amrs.location",
       "alias": "t12",
       "join": {
         "type": "LEFT",

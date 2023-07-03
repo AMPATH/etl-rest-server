@@ -32,7 +32,7 @@
       }
     },
     {
-      "table": "amrs_migration.person",
+      "table": "amrs.person",
       "alias": "t10",
       "join": {
         "type": "INNER",
@@ -40,7 +40,7 @@
       }
     },
     {
-      "table": "amrs_migration.visit",
+      "table": "amrs.visit",
       "alias": "t20",
       "join": {
         "type": "INNER",
@@ -72,7 +72,7 @@
       }
     },
     {
-      "table": "amrs_migration.program",
+      "table": "amrs.program",
       "alias": "pr",
       "join": {
         "type": "LEFT",

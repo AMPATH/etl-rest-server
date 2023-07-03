@@ -11,7 +11,7 @@ module.exports = (function () {
   return {
     getCustomData: function getCustomData(request, callback) {
       var passed_params = request.params.userParams.split('/');
-      var table_ = 'amrs_migration.' + passed_params[0];
+      var table_ = 'amrs.' + passed_params[0];
       var column_name = passed_params[1];
       var column_value = passed_params[2];
 
@@ -37,7 +37,7 @@ module.exports = (function () {
     ) {
       var queryParts = {
         columns: 'name,uuid',
-        table: 'amrs_migration.location',
+        table: 'amrs.location',
         where: ['uuid in ?', uuids],
         offset: 0,
         limit: 300
@@ -390,8 +390,8 @@ module.exports = (function () {
         table: 'etl.flat_hiv_summary_v15b',
         where: whereClause,
         joins: [
-          ['amrs_migration.location', 't2', 't1.location_uuid = t2.uuid'],
-          ['amrs_migration.person', 't3', 't3.person_id=t1.person_id']
+          ['amrs.location', 't2', 't1.location_uuid = t2.uuid'],
+          ['amrs.person', 't3', 't3.person_id=t1.person_id']
         ],
         offset: request.query.startIndex,
         limit: request.query.limit

@@ -24,7 +24,7 @@ function getLocations() {
           .field('l.location_id')
           .field('l.name')
           .field('l.uuid')
-          .from('amrs_migration.location', 'l')
+          .from('amrs.location', 'l')
           .toString();
         conn.query(query, {}, function (err, rows, fields) {
           if (err) {
