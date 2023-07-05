@@ -5449,7 +5449,7 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && (!isFirstAMPATHHIVVisit || !isFirstPNCVisit) && gender==='F'",
         "encounterTypes": [
           {
-            "uuid": "ded4ecf7-8129-4a9e-8aa3-a21a7adb7759",
+            "uuid": "db215741-de99-424a-a109-1f23eb3b680b",
             "display": "PNC ADULTRETURN"
           },
           {

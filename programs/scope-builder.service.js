@@ -292,12 +292,10 @@ function isInitialVisit(
   });
   // get latest initial encounter and compare with dateenrolled to check whether it's a new enrollment
   let latestEnc = initialEncounters[initialEncounters.length - 1];
-  console.log('has initial', initialEncounters, dateEnrolled);
   if (
     initialEncounters.length > 0 &&
     dateEnrolled > latestEnc.encounterDatetime
   ) {
-    console.log('wapo');
     return true;
   } else if (initialEncounters.length === 0) {
     return true;
@@ -410,7 +408,6 @@ function buildMNCHScopeMembers(scope, patientEncounters, programEnrollment) {
     'ded4ecf7-8129-4a9e-8aa3-a21a7adb7759',
     '8d5b27bc-c2cc-11de-8d13-0010c6dffd0f'
   );
-  console.log(scope);
 }
 function isInitialHivVisit(patientEncounters) {
   const adultInitial = '8d5b27bc-c2cc-11de-8d13-0010c6dffd0f';
