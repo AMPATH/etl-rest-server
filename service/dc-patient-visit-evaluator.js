@@ -77,7 +77,7 @@ FROM
     join amrs.person p on (e.patient_id = p.person_id)
     join amrs.visit v on (e.visit_id = v.visit_id)
     where e.encounter_type in (2, 106)
-    AND v.visit_type_id in (59, 9, 15)
+    AND v.visit_type_id in (59,2, 9, 15)
     AND e.voided = 0
     AND p.uuid = '${patientUuid}'
     order by encounter_datetime desc limit 1
