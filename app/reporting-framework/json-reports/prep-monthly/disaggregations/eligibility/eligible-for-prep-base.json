@@ -90,7 +90,7 @@
       "alias": "e_tg_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -98,7 +98,7 @@
       "alias": "e_tg_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -106,7 +106,7 @@
       "alias": "e_tg_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -114,7 +114,7 @@
       "alias": "e_tg_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -122,7 +122,7 @@
       "alias": "e_tg_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -130,7 +130,7 @@
       "alias": "e_tg_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -138,7 +138,7 @@
       "alias": "e_tg_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -146,7 +146,7 @@
       "alias": "e_tg_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -154,7 +154,7 @@
       "alias": "e_tg_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -162,7 +162,7 @@
       "alias": "e_tg_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -170,7 +170,7 @@
       "alias": "e_tg_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -178,7 +178,7 @@
       "alias": "e_tg_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -186,7 +186,7 @@
       "alias": "e_tg_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -194,7 +194,7 @@
       "alias": "e_tg_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -202,7 +202,7 @@
       "alias": "e_tg_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -210,7 +210,7 @@
       "alias": "e_tg_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -218,7 +218,7 @@
       "alias": "e_tg_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -226,7 +226,7 @@
       "alias": "e_tg_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -234,7 +234,7 @@
       "alias": "e_tg_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -242,7 +242,7 @@
       "alias": "e_tg_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -250,7 +250,7 @@
       "alias": "e_tg_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
       }
     },
     {
@@ -458,7 +458,7 @@
       "alias": "e_msm_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -474,7 +474,7 @@
       "alias": "e_msm_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -490,7 +490,7 @@
       "alias": "e_msm_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -506,7 +506,7 @@
       "alias": "e_msm_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -522,7 +522,7 @@
       "alias": "e_msm_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -538,7 +538,7 @@
       "alias": "e_msm_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -554,7 +554,7 @@
       "alias": "e_msm_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -570,7 +570,7 @@
       "alias": "e_msm_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -586,7 +586,7 @@
       "alias": "e_msm_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -602,7 +602,7 @@
       "alias": "e_msm_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -618,7 +618,7 @@
       "alias": "e_msm_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -634,7 +634,7 @@
       "alias": "total_e_msm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3)), 1, NULL)"
       }
     },
     {
@@ -642,7 +642,7 @@
       "alias": "e_mahr_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -658,7 +658,7 @@
       "alias": "e_mahr_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -674,7 +674,7 @@
       "alias": "e_mahr_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -690,7 +690,7 @@
       "alias": "e_mahr_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -706,7 +706,7 @@
       "alias": "e_mahr_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -722,7 +722,7 @@
       "alias": "e_mahr_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -738,7 +738,7 @@
       "alias": "e_mahr_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -754,7 +754,7 @@
       "alias": "e_mahr_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -770,7 +770,7 @@
       "alias": "e_mahr_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -786,7 +786,7 @@
       "alias": "e_mahr_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -802,7 +802,7 @@
       "alias": "e_mahr_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -818,7 +818,7 @@
       "alias": "total_e_mahr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4)), 1, NULL)"
       }
     },
     {
@@ -834,7 +834,7 @@
       "alias": "e_fsw_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -850,7 +850,7 @@
       "alias": "e_fsw_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -866,7 +866,7 @@
       "alias": "e_fsw_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -882,7 +882,7 @@
       "alias": "e_fsw_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -898,7 +898,7 @@
       "alias": "e_fsw_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -914,7 +914,7 @@
       "alias": "e_fsw_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -930,7 +930,7 @@
       "alias": "e_fsw_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -946,7 +946,7 @@
       "alias": "e_fsw_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -962,7 +962,7 @@
       "alias": "e_fsw_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -978,7 +978,7 @@
       "alias": "e_fsw_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -994,7 +994,7 @@
       "alias": "e_fsw_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1002,7 +1002,7 @@
       "alias": "total_e_fsw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30)), 1, NULL)"
       }
     },
     {
@@ -1010,7 +1010,7 @@
       "alias": "e_pwid_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1018,7 +1018,7 @@
       "alias": "e_pwid_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1026,7 +1026,7 @@
       "alias": "e_pwid_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1034,7 +1034,7 @@
       "alias": "e_pwid_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1042,7 +1042,7 @@
       "alias": "e_pwid_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1050,7 +1050,7 @@
       "alias": "e_pwid_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1058,7 +1058,7 @@
       "alias": "e_pwid_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1066,7 +1066,7 @@
       "alias": "e_pwid_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1074,7 +1074,7 @@
       "alias": "e_pwid_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1082,7 +1082,7 @@
       "alias": "e_pwid_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1090,7 +1090,7 @@
       "alias": "e_pwid_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1098,7 +1098,7 @@
       "alias": "e_pwid_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1106,7 +1106,7 @@
       "alias": "e_pwid_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1114,7 +1114,7 @@
       "alias": "e_pwid_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1122,7 +1122,7 @@
       "alias": "e_pwid_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1130,7 +1130,7 @@
       "alias": "e_pwid_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1138,7 +1138,7 @@
       "alias": "e_pwid_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1146,7 +1146,7 @@
       "alias": "e_pwid_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1154,7 +1154,7 @@
       "alias": "e_pwid_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1162,7 +1162,7 @@
       "alias": "e_pwid_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1170,7 +1170,7 @@
       "alias": "e_pwid_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1178,7 +1178,7 @@
       "alias": "e_pwid_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1186,7 +1186,7 @@
       "alias": "total_e_pwid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40)), 1, NULL)"
       }
     },
     {
@@ -1202,7 +1202,7 @@
       "alias": "e_ow_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1218,7 +1218,7 @@
       "alias": "e_ow_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1234,7 +1234,7 @@
       "alias": "e_ow_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1250,7 +1250,7 @@
       "alias": "e_ow_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1266,7 +1266,7 @@
       "alias": "e_ow_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1282,7 +1282,7 @@
       "alias": "e_ow_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1298,7 +1298,7 @@
       "alias": "e_ow_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1314,7 +1314,7 @@
       "alias": "e_ow_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1330,7 +1330,7 @@
       "alias": "e_ow_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1346,7 +1346,7 @@
       "alias": "e_ow_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1362,7 +1362,7 @@
       "alias": "e_ow_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1370,7 +1370,7 @@
       "alias": "total_e_ow",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7)), 1, NULL)"
       }
     },
     {
@@ -1378,7 +1378,7 @@
       "alias": "e_sdc_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1386,7 +1386,7 @@
       "alias": "e_sdc_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1394,7 +1394,7 @@
       "alias": "e_sdc_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1402,7 +1402,7 @@
       "alias": "e_sdc_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1410,7 +1410,7 @@
       "alias": "e_sdc_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1418,7 +1418,7 @@
       "alias": "e_sdc_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1426,7 +1426,7 @@
       "alias": "e_sdc_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1434,7 +1434,7 @@
       "alias": "e_sdc_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1442,7 +1442,7 @@
       "alias": "e_sdc_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1450,7 +1450,7 @@
       "alias": "e_sdc_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1458,7 +1458,7 @@
       "alias": "e_sdc_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1466,7 +1466,7 @@
       "alias": "e_sdc_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1474,7 +1474,7 @@
       "alias": "e_sdc_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1482,7 +1482,7 @@
       "alias": "e_sdc_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1490,7 +1490,7 @@
       "alias": "e_sdc_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1498,7 +1498,7 @@
       "alias": "e_sdc_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1506,7 +1506,7 @@
       "alias": "e_sdc_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1514,7 +1514,7 @@
       "alias": "e_sdc_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1522,7 +1522,7 @@
       "alias": "e_sdc_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1530,7 +1530,7 @@
       "alias": "e_sdc_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1538,7 +1538,7 @@
       "alias": "e_sdc_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1546,7 +1546,7 @@
       "alias": "e_sdc_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -1554,7 +1554,7 @@
       "alias": "total_e_sdc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8)), 1, NULL)"
       }
     },
     {
@@ -1746,7 +1746,7 @@
       "alias": "ct_tg_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1754,7 +1754,7 @@
       "alias": "ct_tg_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -1762,7 +1762,7 @@
       "alias": "ct_tg_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1770,7 +1770,7 @@
       "alias": "ct_tg_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -1778,7 +1778,7 @@
       "alias": "ct_tg_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1786,7 +1786,7 @@
       "alias": "ct_tg_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -1794,7 +1794,7 @@
       "alias": "ct_tg_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1802,7 +1802,7 @@
       "alias": "ct_tg_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -1810,7 +1810,7 @@
       "alias": "ct_tg_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1818,7 +1818,7 @@
       "alias": "ct_tg_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -1826,7 +1826,7 @@
       "alias": "ct_tg_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1834,7 +1834,7 @@
       "alias": "ct_tg_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -1842,7 +1842,7 @@
       "alias": "ct_tg_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1850,7 +1850,7 @@
       "alias": "ct_tg_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -1858,7 +1858,7 @@
       "alias": "ct_tg_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1866,7 +1866,7 @@
       "alias": "ct_tg_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -1874,7 +1874,7 @@
       "alias": "ct_tg_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1882,7 +1882,7 @@
       "alias": "ct_tg_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -1890,7 +1890,7 @@
       "alias": "ct_tg_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1898,7 +1898,7 @@
       "alias": "ct_tg_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -1906,7 +1906,7 @@
       "alias": "ct_tg_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
       }
     },
     {
@@ -1914,7 +1914,7 @@
       "alias": "ct_tg_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age >= 65 )), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age >= 65 )), 1, NULL)"
       }
     },
     {
@@ -2114,7 +2114,7 @@
       "alias": "ct_msm_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -2130,7 +2130,7 @@
       "alias": "ct_msm_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -2146,7 +2146,7 @@
       "alias": "ct_msm_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -2162,7 +2162,7 @@
       "alias": "ct_msm_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -2178,7 +2178,7 @@
       "alias": "ct_msm_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -2194,7 +2194,7 @@
       "alias": "ct_msm_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -2210,7 +2210,7 @@
       "alias": "ct_msm_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -2226,7 +2226,7 @@
       "alias": "ct_msm_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -2242,7 +2242,7 @@
       "alias": "ct_msm_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -2258,7 +2258,7 @@
       "alias": "ct_msm_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -2274,7 +2274,7 @@
       "alias": "ct_msm_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -2290,7 +2290,7 @@
       "alias": "total_ct_msm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3)), 1, NULL)"
       }
     },
     {
@@ -2298,7 +2298,7 @@
       "alias": "ct_mahr_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -2314,7 +2314,7 @@
       "alias": "ct_mahr_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -2330,7 +2330,7 @@
       "alias": "ct_mahr_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -2346,7 +2346,7 @@
       "alias": "ct_mahr_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -2362,7 +2362,7 @@
       "alias": "ct_mahr_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -2378,7 +2378,7 @@
       "alias": "ct_mahr_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -2394,7 +2394,7 @@
       "alias": "ct_mahr_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -2410,7 +2410,7 @@
       "alias": "ct_mahr_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -2426,7 +2426,7 @@
       "alias": "ct_mahr_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -2442,7 +2442,7 @@
       "alias": "ct_mahr_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -2458,7 +2458,7 @@
       "alias": "ct_mahr_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -2474,7 +2474,7 @@
       "alias": "total_ct_mahr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4)), 1, NULL)"
       }
     },
     {
@@ -2490,7 +2490,7 @@
       "alias": "ct_fsw_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -2506,7 +2506,7 @@
       "alias": "ct_fsw_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -2522,7 +2522,7 @@
       "alias": "ct_fsw_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -2538,7 +2538,7 @@
       "alias": "ct_fsw_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -2554,7 +2554,7 @@
       "alias": "ct_fsw_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -2570,7 +2570,7 @@
       "alias": "ct_fsw_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -2586,7 +2586,7 @@
       "alias": "ct_fsw_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -2602,7 +2602,7 @@
       "alias": "ct_fsw_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -2618,7 +2618,7 @@
       "alias": "ct_fsw_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -2634,7 +2634,7 @@
       "alias": "ct_fsw_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -2650,7 +2650,7 @@
       "alias": "ct_fsw_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -2658,7 +2658,7 @@
       "alias": "total_ct_fsw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30)), 1, NULL)"
       }
     },
     {
@@ -2666,7 +2666,7 @@
       "alias": "ct_pwid_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -2674,7 +2674,7 @@
       "alias": "ct_pwid_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -2682,7 +2682,7 @@
       "alias": "ct_pwid_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -2690,7 +2690,7 @@
       "alias": "ct_pwid_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -2698,7 +2698,7 @@
       "alias": "ct_pwid_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -2706,7 +2706,7 @@
       "alias": "ct_pwid_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -2714,7 +2714,7 @@
       "alias": "ct_pwid_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -2722,7 +2722,7 @@
       "alias": "ct_pwid_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -2730,7 +2730,7 @@
       "alias": "ct_pwid_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -2738,7 +2738,7 @@
       "alias": "ct_pwid_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -2746,7 +2746,7 @@
       "alias": "ct_pwid_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -2754,7 +2754,7 @@
       "alias": "ct_pwid_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -2762,7 +2762,7 @@
       "alias": "ct_pwid_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -2770,7 +2770,7 @@
       "alias": "ct_pwid_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -2778,7 +2778,7 @@
       "alias": "ct_pwid_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -2786,7 +2786,7 @@
       "alias": "ct_pwid_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -2794,7 +2794,7 @@
       "alias": "ct_pwid_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -2802,7 +2802,7 @@
       "alias": "ct_pwid_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -2810,7 +2810,7 @@
       "alias": "ct_pwid_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -2818,7 +2818,7 @@
       "alias": "ct_pwid_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -2826,7 +2826,7 @@
       "alias": "ct_pwid_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -2834,7 +2834,7 @@
       "alias": "ct_pwid_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -2842,7 +2842,7 @@
       "alias": "total_ct_pwid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40)), 1, NULL)"
       }
     },
     {
@@ -2858,7 +2858,7 @@
       "alias": "ct_ow_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -2874,7 +2874,7 @@
       "alias": "ct_ow_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -2890,7 +2890,7 @@
       "alias": "ct_ow_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -2906,7 +2906,7 @@
       "alias": "ct_ow_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -2922,7 +2922,7 @@
       "alias": "ct_ow_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -2938,7 +2938,7 @@
       "alias": "ct_ow_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -2954,7 +2954,7 @@
       "alias": "ct_ow_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -2970,7 +2970,7 @@
       "alias": "ct_ow_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -2986,7 +2986,7 @@
       "alias": "ct_ow_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -3002,7 +3002,7 @@
       "alias": "ct_ow_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -3018,7 +3018,7 @@
       "alias": "ct_ow_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -3026,7 +3026,7 @@
       "alias": "total_ct_ow",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7)), 1, NULL)"
       }
     },
     {
@@ -3034,7 +3034,7 @@
       "alias": "ct_sdc_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -3042,7 +3042,7 @@
       "alias": "ct_sdc_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -3050,7 +3050,7 @@
       "alias": "ct_sdc_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -3058,7 +3058,7 @@
       "alias": "ct_sdc_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -3066,7 +3066,7 @@
       "alias": "ct_sdc_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -3074,7 +3074,7 @@
       "alias": "ct_sdc_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -3082,7 +3082,7 @@
       "alias": "ct_sdc_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -3090,7 +3090,7 @@
       "alias": "ct_sdc_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -3098,7 +3098,7 @@
       "alias": "ct_sdc_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -3106,7 +3106,7 @@
       "alias": "ct_sdc_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -3114,7 +3114,7 @@
       "alias": "ct_sdc_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -3122,7 +3122,7 @@
       "alias": "ct_sdc_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -3130,7 +3130,7 @@
       "alias": "ct_sdc_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -3138,7 +3138,7 @@
       "alias": "ct_sdc_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -3146,7 +3146,7 @@
       "alias": "ct_sdc_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -3154,7 +3154,7 @@
       "alias": "ct_sdc_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -3162,7 +3162,7 @@
       "alias": "ct_sdc_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -3170,7 +3170,7 @@
       "alias": "ct_sdc_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -3178,7 +3178,7 @@
       "alias": "ct_sdc_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -3186,7 +3186,7 @@
       "alias": "ct_sdc_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -3194,7 +3194,7 @@
       "alias": "ct_sdc_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -3202,7 +3202,7 @@
       "alias": "ct_sdc_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -3210,7 +3210,7 @@
       "alias": "total_ct_sdc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8)), 1, NULL)"
       }
     },
     {
@@ -3402,7 +3402,7 @@
       "alias": "he_tg_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -3410,7 +3410,7 @@
       "alias": "he_tg_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -3418,7 +3418,7 @@
       "alias": "he_tg_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -3426,7 +3426,7 @@
       "alias": "he_tg_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -3434,7 +3434,7 @@
       "alias": "he_tg_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -3442,7 +3442,7 @@
       "alias": "he_tg_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -3450,7 +3450,7 @@
       "alias": "he_tg_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -3458,7 +3458,7 @@
       "alias": "he_tg_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -3466,7 +3466,7 @@
       "alias": "he_tg_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -3474,7 +3474,7 @@
       "alias": "he_tg_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -3482,7 +3482,7 @@
       "alias": "he_tg_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -3490,7 +3490,7 @@
       "alias": "he_tg_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -3498,7 +3498,7 @@
       "alias": "he_tg_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -3506,7 +3506,7 @@
       "alias": "he_tg_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -3514,7 +3514,7 @@
       "alias": "he_tg_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -3522,7 +3522,7 @@
       "alias": "he_tg_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -3530,7 +3530,7 @@
       "alias": "he_tg_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -3538,7 +3538,7 @@
       "alias": "he_tg_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -3546,7 +3546,7 @@
       "alias": "he_tg_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -3554,7 +3554,7 @@
       "alias": "he_tg_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -3562,7 +3562,7 @@
       "alias": "he_tg_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 60) AND pd.gender = 'M' AND (pd.age >= 65 )), 1, NULL)"
       }
     },
     {
@@ -3570,7 +3570,7 @@
       "alias": "he_tg_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50 OR pd.sub_population_type = 60) AND pd.gender = 'F' AND (pd.age >= 65 )), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 1 OR pd.sub_population_type = 50) AND pd.gender = 'F' AND (pd.age >= 65 )), 1, NULL)"
       }
     },
     {
@@ -3770,7 +3770,7 @@
       "alias": "he_msm_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -3786,7 +3786,7 @@
       "alias": "he_msm_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -3802,7 +3802,7 @@
       "alias": "he_msm_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -3818,7 +3818,7 @@
       "alias": "he_msm_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -3834,7 +3834,7 @@
       "alias": "he_msm_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -3850,7 +3850,7 @@
       "alias": "he_msm_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -3866,7 +3866,7 @@
       "alias": "he_msm_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -3882,7 +3882,7 @@
       "alias": "he_msm_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -3898,7 +3898,7 @@
       "alias": "he_msm_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -3914,7 +3914,7 @@
       "alias": "he_msm_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -3930,7 +3930,7 @@
       "alias": "he_msm_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -3946,7 +3946,7 @@
       "alias": "total_he_msm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 3), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.sub_population_type = 10 OR pd.sub_population_type = 20 OR pd.population_type = 3)), 1, NULL)"
       }
     },
     {
@@ -3954,7 +3954,7 @@
       "alias": "he_mahr_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -3970,7 +3970,7 @@
       "alias": "he_mahr_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -3986,7 +3986,7 @@
       "alias": "he_mahr_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -4002,7 +4002,7 @@
       "alias": "he_mahr_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -4018,7 +4018,7 @@
       "alias": "he_mahr_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -4034,7 +4034,7 @@
       "alias": "he_mahr_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -4050,7 +4050,7 @@
       "alias": "he_mahr_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -4066,7 +4066,7 @@
       "alias": "he_mahr_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -4082,7 +4082,7 @@
       "alias": "he_mahr_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -4098,7 +4098,7 @@
       "alias": "he_mahr_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -4114,7 +4114,7 @@
       "alias": "he_mahr_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -4130,7 +4130,7 @@
       "alias": "total_he_mahr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 4), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4)), 1, NULL)"
       }
     },
     {
@@ -4146,7 +4146,7 @@
       "alias": "he_fsw_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -4162,7 +4162,7 @@
       "alias": "he_fsw_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -4178,7 +4178,7 @@
       "alias": "he_fsw_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -4194,7 +4194,7 @@
       "alias": "he_fsw_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -4210,7 +4210,7 @@
       "alias": "he_fsw_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -4226,7 +4226,7 @@
       "alias": "he_fsw_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -4242,7 +4242,7 @@
       "alias": "he_fsw_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -4258,7 +4258,7 @@
       "alias": "he_fsw_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -4274,7 +4274,7 @@
       "alias": "he_fsw_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -4290,7 +4290,7 @@
       "alias": "he_fsw_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -4306,7 +4306,7 @@
       "alias": "he_fsw_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -4314,7 +4314,7 @@
       "alias": "total_he_fsw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 5), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30)), 1, NULL)"
       }
     },
     {
@@ -4322,7 +4322,7 @@
       "alias": "he_pwid_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -4330,7 +4330,7 @@
       "alias": "he_pwid_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -4338,7 +4338,7 @@
       "alias": "he_pwid_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -4346,7 +4346,7 @@
       "alias": "he_pwid_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -4354,7 +4354,7 @@
       "alias": "he_pwid_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -4362,7 +4362,7 @@
       "alias": "he_pwid_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -4370,7 +4370,7 @@
       "alias": "he_pwid_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -4378,7 +4378,7 @@
       "alias": "he_pwid_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -4386,7 +4386,7 @@
       "alias": "he_pwid_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -4394,7 +4394,7 @@
       "alias": "he_pwid_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -4402,7 +4402,7 @@
       "alias": "he_pwid_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -4410,7 +4410,7 @@
       "alias": "he_pwid_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -4418,7 +4418,7 @@
       "alias": "he_pwid_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -4426,7 +4426,7 @@
       "alias": "he_pwid_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -4434,7 +4434,7 @@
       "alias": "he_pwid_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -4442,7 +4442,7 @@
       "alias": "he_pwid_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -4450,7 +4450,7 @@
       "alias": "he_pwid_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -4458,7 +4458,7 @@
       "alias": "he_pwid_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -4466,7 +4466,7 @@
       "alias": "he_pwid_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -4474,7 +4474,7 @@
       "alias": "he_pwid_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -4482,7 +4482,7 @@
       "alias": "he_pwid_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -4490,7 +4490,7 @@
       "alias": "he_pwid_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -4498,7 +4498,7 @@
       "alias": "total_he_pwid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 6), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 6 OR pd.sub_population_type = 40)), 1, NULL)"
       }
     },
     {
@@ -4514,7 +4514,7 @@
       "alias": "he_ow_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -4530,7 +4530,7 @@
       "alias": "he_ow_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -4546,7 +4546,7 @@
       "alias": "he_ow_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -4562,7 +4562,7 @@
       "alias": "he_ow_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -4578,7 +4578,7 @@
       "alias": "he_ow_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -4594,7 +4594,7 @@
       "alias": "he_ow_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -4610,7 +4610,7 @@
       "alias": "he_ow_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -4626,7 +4626,7 @@
       "alias": "he_ow_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -4642,7 +4642,7 @@
       "alias": "he_ow_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -4658,7 +4658,7 @@
       "alias": "he_ow_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -4674,7 +4674,7 @@
       "alias": "he_ow_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -4682,7 +4682,7 @@
       "alias": "total_he_ow",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 7), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 300 OR pd.population_type = 7)), 1, NULL)"
       }
     },
     {
@@ -4690,7 +4690,7 @@
       "alias": "he_sdc_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -4698,7 +4698,7 @@
       "alias": "he_sdc_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -4706,7 +4706,7 @@
       "alias": "he_sdc_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -4714,7 +4714,7 @@
       "alias": "he_sdc_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -4722,7 +4722,7 @@
       "alias": "he_sdc_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -4730,7 +4730,7 @@
       "alias": "he_sdc_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -4738,7 +4738,7 @@
       "alias": "he_sdc_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -4746,7 +4746,7 @@
       "alias": "he_sdc_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -4754,7 +4754,7 @@
       "alias": "he_sdc_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -4762,7 +4762,7 @@
       "alias": "he_sdc_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -4770,7 +4770,7 @@
       "alias": "he_sdc_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -4778,7 +4778,7 @@
       "alias": "he_sdc_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -4786,7 +4786,7 @@
       "alias": "he_sdc_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -4794,7 +4794,7 @@
       "alias": "he_sdc_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -4802,7 +4802,7 @@
       "alias": "he_sdc_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -4810,7 +4810,7 @@
       "alias": "he_sdc_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -4818,7 +4818,7 @@
       "alias": "he_sdc_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -4826,7 +4826,7 @@
       "alias": "he_sdc_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -4834,7 +4834,7 @@
       "alias": "he_sdc_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -4842,7 +4842,7 @@
       "alias": "he_sdc_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -4850,7 +4850,7 @@
       "alias": "he_sdc_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -4858,7 +4858,7 @@
       "alias": "he_sdc_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8 AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8) AND pd.gender = 'F' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -4866,7 +4866,7 @@
       "alias": "total_he_sdc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND pd.population_type = 8), 1, NULL)"
+        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.old_population_type = 100 OR pd.population_type = 8)), 1, NULL)"
       }
     },
     {
