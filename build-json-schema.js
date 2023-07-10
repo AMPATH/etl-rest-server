@@ -146,8 +146,8 @@ const getAgeGroup = (ageGroup) => {
 const getOldPopulationType = (population) => {
   if (population === 'mhr' || population === 'ow') {
     return 300;
-  } else {
-    return;
+  } else if (population === 'sc') {
+    return 100;
   }
 };
 
@@ -164,6 +164,16 @@ const getSubPopulationType = (population) => {
       return `pd.sub_population_type = 50 OR pd.sub_population_type = 60`;
     default:
       return ``;
+  }
+};
+
+const generateTotalExpression = (data) => {
+  if (data.isOldPop) {
+    return `if((pd.${data.column} = '${data.value}' AND (pd.population_type=${data.populationType} OR pd.old_population_type=${data.oldPopulationType})), 1, NULL)`;
+  } else if (data.isSubPop) {
+    return `if((pd.${data.column} = '${data.value}' AND (pd.population_type=${data.populationType} OR ${data.subPopulationType})), 1, NULL)`;
+  } else {
+    return `if((pd.${data.column} = '${data.value}' AND pd.population_type = ${data.populationType}), 1, NULL)`;
   }
 };
 
@@ -188,7 +198,7 @@ const generateColumns = (column, value, alias) => {
               gender: g,
               value: value,
               ageGroup: getAgeGroup(ag),
-              isOldPop: pt === 'ow' || pt === 'mhr',
+              isOldPop: pt === 'ow' || pt === 'mhr' || pt === 'sc',
               isSubPop: subPopulationTypes.includes(pt),
               oldPopulationType: getOldPopulationType(pt),
               subPopulationType: getSubPopulationType(pt)
@@ -203,9 +213,15 @@ const generateColumns = (column, value, alias) => {
       alias: `total_${alias}_${pt}`,
       expressionType: 'simple_expression',
       expressionOptions: {
-        expression: `if((pd.${column} = '${value}' AND pd.population_type = ${getPopulationType(
-          pt
-        )}), 1, NULL)`
+        expression: generateTotalExpression({
+          isOldPop: pt === 'ow' || pt === 'mhr' || pt === 'sc',
+          isSubPop: subPopulationTypes.includes(pt),
+          oldPopulationType: getOldPopulationType(pt),
+          subPopulationType: getSubPopulationType(pt),
+          populationType: getPopulationType(pt),
+          column: column,
+          value: value
+        })
       }
     });
   }
@@ -235,10 +251,10 @@ const generateAggregate = (alias) => {
   return aggregates;
 };
 
-// const colsSchema = generateColumns('reason_for_initiation', 9761, 'dd');
-// const cols = JSON.stringify(colsSchema, null, 2);
-// console.log(cols);
+const colsSchema = generateColumns('reason_for_initiation', 105, 'kk');
+const cols = JSON.stringify(colsSchema, null, 2);
+console.log(cols);
 
-const aggsSchema = generateAggregate('dd');
-const aggs = JSON.stringify(aggsSchema, null, 2);
-console.log(aggs);
+// const aggsSchema = generateAggregate('jj');
+// const aggs = JSON.stringify(aggsSchema, null, 2);
+// console.log(aggs);

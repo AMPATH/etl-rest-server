@@ -250,6 +250,24 @@ import * as discounted_prep_base from './json-reports/prep-monthly/disaggregatio
 import * as gbv_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/gbv-aggregate.json';
 import * as gbv_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/gbv-base.json';
 
+import * as transactional_sex_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/transactional-sex-aggregate.json';
+import * as transactional_sex_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/transactional-sex-base.json';
+
+import * as recent_sti_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/recent-sti-aggregate.json';
+import * as recent_sti_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/recent-sti-base.json';
+
+import * as recurrent_use_of_pep_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/recurrent-use-of-pep-aggregate.json';
+import * as recurrent_use_of_pep_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/recurrent-use-of-pep-base.json';
+
+import * as inconsistent_or_no_condom_use_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/inconsistent-or-no-condom-use-aggregate.json';
+import * as inconsistent_or_no_condom_use_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/inconsistent-or-no-condom-use-base.json';
+
+import * as other_reasons_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/other-reasons-aggregate.json';
+import * as other_reasons_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/other-reasons-base.json';
+
+import * as shared_needles_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/shared-needles-aggregate.json';
+import * as shared_needles_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/shared-needles-base.json';
+
 import * as prep_monthly_report from './json-reports/prep-monthly/prep-report.json';
 
 //covid 19 report
@@ -1339,6 +1357,56 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(gbv_prep_aggregate),
             gbvPrepBase: this.cloneJsonSchema(gbv_prep_base)
+          });
+          break;
+        case 'transactionalSexPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(transactional_sex_prep_aggregate),
+            transactionalSexPrepBase: this.cloneJsonSchema(
+              transactional_sex_prep_base
+            )
+          });
+          break;
+        case 'recentSTIPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(recurrent_use_of_pep_prep_aggregate),
+            recentSTIPrepBase: this.cloneJsonSchema(
+              recurrent_use_of_pep_prep_base
+            )
+          });
+          break;
+        case 'recurrentUseOfPepPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(recent_sti_prep_aggregate),
+            recurrentUseOfPepPrepBase: this.cloneJsonSchema(
+              recent_sti_prep_base
+            )
+          });
+          break;
+        case 'inconsistentOrNoCondomUsePrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              inconsistent_or_no_condom_use_prep_aggregate
+            ),
+            inconsistentOrNoCondomUsePrepBase: this.cloneJsonSchema(
+              inconsistent_or_no_condom_use_prep_base
+            )
+          });
+          break;
+        case 'otherReasonsForPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(other_reasons_prep_aggregate),
+            otherReasonsForPrepBase: this.cloneJsonSchema(
+              other_reasons_prep_base
+            )
+          });
+          break;
+        case 'sharedNeedlesPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(shared_needles_prep_aggregate),
+            sharedNeedlesPrepBase: this.cloneJsonSchema(
+              shared_needles_prep_base
+            )
           });
           break;
         case 'covid-19-monthly-report':

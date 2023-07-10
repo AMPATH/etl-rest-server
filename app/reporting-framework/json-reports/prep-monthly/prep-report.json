@@ -6,6 +6,12 @@
     "restartingPrepAggregate",
     "whileOnPrepAggregate",
     "discontinuedPrepAggregate",
-    "gbvPrepAggregate"
+    "gbvPrepAggregate",
+    "transactionalSexPrepAggregate",
+    "recentSTIPrepAggregate",
+    "recurrentUseOfPepPrepAggregate",
+    "inconsistentOrNoCondomUsePrepAggregate",
+    "otherReasonsForPrepAggregate",
+    "sharedNeedlesPrepAggregate"
   ]
 }
