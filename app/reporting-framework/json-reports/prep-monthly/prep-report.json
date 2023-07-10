@@ -5,6 +5,7 @@
     "newForPrepAggregate",
     "restartingPrepAggregate",
     "whileOnPrepAggregate",
-    "discontinuedPrepAggregate"
+    "discontinuedPrepAggregate",
+    "gbvPrepAggregate"
   ]
 }

@@ -31,6 +31,8 @@ const ageGroups = [
 ];
 const genders = ['male', 'female'];
 
+const subPopulationTypes = ['msm', 'fsw', 'pwid', 'tg'];
+
 checkForCompability = (population_type, gender) => {
   if (gender === 'male') {
     if (femaleOnlyPopulationTypes.includes(population_type)) {
@@ -47,15 +49,39 @@ checkForCompability = (population_type, gender) => {
   }
 };
 
+//const
+
 const generateExpression = (data) => {
   if (checkForCompability(data.populationType, data.gender) === -1) {
     return `if((pd.person_id is not null), -1, NULL)`;
   } else {
-    return `if((pd.${data.column} = '${data.value}' AND pd.population_type = ${
-      data.populationType
-    } AND pd.gender = '${getGender(data.gender)}' AND (pd.age ${
-      data.ageGroup
-    })), ${checkForCompability(data.populationType, data.gender)}, NULL)`;
+    if (data.isOldPop) {
+      return `if((pd.${data.column} = '${
+        data.value
+      }' AND (pd.population_type = ${
+        data.populationType
+      } OR pd.old_population_type = ${
+        data.oldPopulationType
+      } ) AND pd.gender = '${getGender(data.gender)}' AND (pd.age ${
+        data.ageGroup
+      })), ${checkForCompability(data.populationType, data.gender)}, NULL)`;
+    } else if (data.isSubPop) {
+      return `if((pd.${data.column} = '${
+        data.value
+      }' AND (pd.population_type = ${data.populationType} OR ${
+        data.subPopulationType
+      }) AND pd.gender = '${getGender(data.gender)}' AND (pd.age ${
+        data.ageGroup
+      })), ${checkForCompability(data.populationType, data.gender)}, NULL)`;
+    } else {
+      return `if((pd.${data.column} = '${
+        data.value
+      }' AND pd.population_type = ${
+        data.populationType
+      } AND pd.gender = '${getGender(data.gender)}' AND (pd.age ${
+        data.ageGroup
+      })), ${checkForCompability(data.populationType, data.gender)}, NULL)`;
+    }
   }
 };
 
@@ -116,6 +142,31 @@ const getAgeGroup = (ageGroup) => {
       return 0;
   }
 };
+
+const getOldPopulationType = (population) => {
+  if (population === 'mhr' || population === 'ow') {
+    return 300;
+  } else {
+    return;
+  }
+};
+
+const getSubPopulationType = (population) => {
+  ///'msm', 'fsw', 'pwid', 'tg'
+  switch (population) {
+    case 'msm':
+      return `pd.sub_population_type = 10 OR pd.sub_population_type = 20`;
+    case 'fsw':
+      return `pd.sub_population_type = 30`;
+    case 'pwid':
+      return `pd.sub_population_type = 40`;
+    case 'tg':
+      return `pd.sub_population_type = 50 OR pd.sub_population_type = 60`;
+    default:
+      return ``;
+  }
+};
+
 /**
  * @param {database column} column
  * @returns An array of derived columns
@@ -136,7 +187,11 @@ const generateColumns = (column, value, alias) => {
               populationType: getPopulationType(pt),
               gender: g,
               value: value,
-              ageGroup: getAgeGroup(ag)
+              ageGroup: getAgeGroup(ag),
+              isOldPop: pt === 'ow' || pt === 'mhr',
+              isSubPop: subPopulationTypes.includes(pt),
+              oldPopulationType: getOldPopulationType(pt),
+              subPopulationType: getSubPopulationType(pt)
             })
           }
         });
@@ -180,10 +235,10 @@ const generateAggregate = (alias) => {
   return aggregates;
 };
 
-// const colsSchema = generateColumns('reason_for_initiation', 7903, 'cc');
+// const colsSchema = generateColumns('reason_for_initiation', 9761, 'dd');
 // const cols = JSON.stringify(colsSchema, null, 2);
 // console.log(cols);
 
-const aggsSchema = generateAggregate('cc');
+const aggsSchema = generateAggregate('dd');
 const aggs = JSON.stringify(aggsSchema, null, 2);
 console.log(aggs);

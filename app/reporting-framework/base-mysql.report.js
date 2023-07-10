@@ -247,6 +247,9 @@ import * as while_on_prep_base from './json-reports/prep-monthly/disaggregations
 import * as discounted_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/discontinued-prep-aggregate.json';
 import * as discounted_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/discontinued-prep-base.json';
 
+import * as gbv_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/gbv-aggregate.json';
+import * as gbv_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/gbv-base.json';
+
 import * as prep_monthly_report from './json-reports/prep-monthly/prep-report.json';
 
 //covid 19 report
@@ -1330,6 +1333,12 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(discounted_prep_aggregate),
             discontinuedPrepBase: this.cloneJsonSchema(discounted_prep_base)
+          });
+          break;
+        case 'gbvPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(gbv_prep_aggregate),
+            gbvPrepBase: this.cloneJsonSchema(gbv_prep_base)
           });
           break;
         case 'covid-19-monthly-report':
