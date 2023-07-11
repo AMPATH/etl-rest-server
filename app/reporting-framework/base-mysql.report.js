@@ -1369,17 +1369,15 @@ export class BaseMysqlReport {
           break;
         case 'recentSTIPrepAggregate':
           resolve({
-            main: this.cloneJsonSchema(recurrent_use_of_pep_prep_aggregate),
-            recentSTIPrepBase: this.cloneJsonSchema(
-              recurrent_use_of_pep_prep_base
-            )
+            main: this.cloneJsonSchema(recent_sti_prep_aggregate),
+            recentSTIPrepBase: this.cloneJsonSchema(recent_sti_prep_base)
           });
           break;
         case 'recurrentUseOfPepPrepAggregate':
           resolve({
-            main: this.cloneJsonSchema(recent_sti_prep_aggregate),
+            main: this.cloneJsonSchema(recurrent_use_of_pep_prep_aggregate),
             recurrentUseOfPepPrepBase: this.cloneJsonSchema(
-              recent_sti_prep_base
+              recurrent_use_of_pep_prep_base
             )
           });
           break;
