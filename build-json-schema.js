@@ -251,10 +251,10 @@ const generateAggregate = (alias) => {
   return aggregates;
 };
 
-const colsSchema = generateColumns('reason_for_initiation', 105, 'kk');
-const cols = JSON.stringify(colsSchema, null, 2);
-console.log(cols);
+// const colsSchema = generateColumns('reason_for_discontinuation', 5622, 'yy');
+// const cols = JSON.stringify(colsSchema, null, 2);
+// console.log(cols);
 
-// const aggsSchema = generateAggregate('jj');
-// const aggs = JSON.stringify(aggsSchema, null, 2);
-// console.log(aggs);
+const aggsSchema = generateAggregate('yy');
+const aggs = JSON.stringify(aggsSchema, null, 2);
+console.log(aggs);

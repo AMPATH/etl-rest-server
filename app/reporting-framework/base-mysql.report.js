@@ -268,6 +268,42 @@ import * as other_reasons_prep_base from './json-reports/prep-monthly/disaggrega
 import * as shared_needles_prep_aggregate from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/shared-needles-aggregate.json';
 import * as shared_needles_prep_base from './json-reports/prep-monthly/disaggregations/reasons_for_initiation/shared-needles-base.json';
 
+import * as tested_hiv_positive_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/tested-positive-aggregate.json';
+import * as tested_hiv_positive_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/discontinued-prep-base.json';
+
+import * as low_risk_for_hiv_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/low-risk-for-hiv-aggregate.json';
+import * as low_risk_for_hiv_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/low-risk-for-hiv-base.json';
+
+import * as prep_side_effects_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/prep-side-effects-aggregate.json';
+import * as prep_side_effects_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/prep-side-effects-base.json';
+
+import * as non_adherence_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/non-adherence-aggregate.json';
+import * as non_adherence_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/non-adherence-base.json';
+
+import * as viral_suppression_of_hiv_positive_partner_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/viral-suppression-of-hiv-positive-partner-aggregate.json';
+import * as viral_suppression_of_hiv_positive_partner_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/viral-suppression-of-hiv-positive-partner-base.json';
+
+import * as too_many_hiv_tests_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/too-many-hiv-tests-aggregate.json';
+import * as too_many_hiv_tests_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/too-many-hiv-tests-base.json';
+
+import * as partner_refusal_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/partner-refusal-aggregate.json';
+import * as partner_refusal_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/partner-refusal-base.json';
+
+import * as partner_violence_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/partner-violence-aggregate.json';
+import * as partner_violence_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/partner-violence-base.json';
+
+import * as died_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/died-aggregate.json';
+import * as died_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/died-base.json';
+
+import * as transfer_outs_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/transfer-outs-aggregate.json';
+import * as transfer_outs_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/transfer-outs-base.json';
+
+import * as missed_drug_pickups_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/missed-drug-pickups-aggregate.json';
+import * as missed_drug_pickups_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/low-risk-for-hiv-base.json';
+
+import * as any_other_reason_prep_aggregate from './json-reports/prep-monthly/disaggregations/discontinued/any-other-reason-aggregate.json';
+import * as any_other_reason_prep_base from './json-reports/prep-monthly/disaggregations/discontinued/any-other-reason-base.json';
+
 import * as prep_monthly_report from './json-reports/prep-monthly/prep-report.json';
 
 //covid 19 report
@@ -1404,6 +1440,98 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(shared_needles_prep_aggregate),
             sharedNeedlesPrepBase: this.cloneJsonSchema(
               shared_needles_prep_base
+            )
+          });
+          break;
+        case 'testedHIVPositivePrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tested_hiv_positive_prep_aggregate),
+            testedHIVPositivePrepBase: this.cloneJsonSchema(
+              tested_hiv_positive_prep_base
+            )
+          });
+          break;
+        case 'lowRiskForHIVPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(low_risk_for_hiv_prep_aggregate),
+            lowRiskForHIVPrepBase: this.cloneJsonSchema(
+              low_risk_for_hiv_prep_base
+            )
+          });
+          break;
+        case 'prepSideEffectsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(prep_side_effects_prep_aggregate),
+            prepSideEffectsPrepBase: this.cloneJsonSchema(
+              prep_side_effects_prep_base
+            )
+          });
+          break;
+        case 'nonAdherencePrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(non_adherence_prep_aggregate),
+            nonAdherencePrepBase: this.cloneJsonSchema(non_adherence_prep_base)
+          });
+          break;
+        case 'viralSuppressionOfHIVPositivePartnerPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              viral_suppression_of_hiv_positive_partner_prep_aggregate
+            ),
+            viralSuppressionOfHIVPositivePartnerPrepBase: this.cloneJsonSchema(
+              viral_suppression_of_hiv_positive_partner_prep_base
+            )
+          });
+          break;
+        case 'tooManyHIVTestsPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(too_many_hiv_tests_prep_aggregate),
+            tooManyHIVTestsPrepBase: this.cloneJsonSchema(
+              too_many_hiv_tests_prep_base
+            )
+          });
+          break;
+        case 'partnerRefusalPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(partner_refusal_prep_aggregate),
+            partnerRefusalPrepBase: this.cloneJsonSchema(
+              partner_refusal_prep_base
+            )
+          });
+          break;
+        case 'partnerViolencePrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(partner_violence_prep_aggregate),
+            partnerViolencePrepBase: this.cloneJsonSchema(
+              partner_violence_prep_base
+            )
+          });
+          break;
+        case 'diedPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(died_prep_aggregate),
+            diedPrepBase: this.cloneJsonSchema(died_prep_base)
+          });
+          break;
+        case 'transferOutsPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(transfer_outs_prep_aggregate),
+            transferOutsPrepBase: this.cloneJsonSchema(transfer_outs_prep_base)
+          });
+          break;
+        case 'missedDrugPickupsPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(missed_drug_pickups_prep_aggregate),
+            missedDrugPickupsPrepBase: this.cloneJsonSchema(
+              missed_drug_pickups_prep_base
+            )
+          });
+          break;
+        case 'anyOtherReasonPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(any_other_reason_prep_aggregate),
+            anyOtherReasonPrepBase: this.cloneJsonSchema(
+              any_other_reason_prep_base
             )
           });
           break;

@@ -12,6 +12,18 @@
     "recurrentUseOfPepPrepAggregate",
     "inconsistentOrNoCondomUsePrepAggregate",
     "otherReasonsForPrepAggregate",
-    "sharedNeedlesPrepAggregate"
+    "sharedNeedlesPrepAggregate",
+    "testedHIVPositivePrepAggregate",
+    "lowRiskForHIVPrepAggregate",
+    "prepSideEffectsAggregate",
+    "nonAdherencePrepAggregate",
+    "viralSuppressionOfHIVPositivePartnerPrepAggregate",
+    "tooManyHIVTestsPrepAggregate",
+    "partnerRefusalPrepAggregate",
+    "partnerViolencePrepAggregate",
+    "diedPrepAggregate",
+    "transferOutsPrepAggregate",
+    "missedDrugPickupsPrepAggregate",
+    "anyOtherReasonPrepAggregate"
   ]
 }
