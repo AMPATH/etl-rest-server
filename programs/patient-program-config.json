@@ -3139,6 +3139,10 @@
             "display": "COVIDSCREENING"
           },
           {
+            "uuid": "2c4501d6-2c93-449c-ab55-94bdb074db7c",
+            "display": "Peds Lab Orders v1.1 Component"
+          },
+          {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
           },
