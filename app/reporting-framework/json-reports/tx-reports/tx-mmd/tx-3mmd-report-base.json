@@ -494,7 +494,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "fhs.med_pickup_rtc_date IS NULL AND DATEDIFF(hm.rtc_date, hm.encounter_date) BETWEEN 61 AND 90 OR fhs.med_pickup_rtc_date IS NOT NULL"
+        "conditionExpression": "fhs.med_pickup_rtc_date IS NULL AND DATEDIFF(hm.rtc_date, hm.encounter_date) BETWEEN 84 AND 111 OR fhs.med_pickup_rtc_date IS NOT NULL"
       }
     ]
   },
