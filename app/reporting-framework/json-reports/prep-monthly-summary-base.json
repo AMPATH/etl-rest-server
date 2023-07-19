@@ -88,9 +88,17 @@
       "column": "l.name"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "active_on_prep_this_month",
-      "column": "prep.active_on_prep_this_month"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((prep.active_on_prep_this_month = 1 AND prep_summary.discontinued_reason is null) OR (prep.active_on_prep_this_month = 1 AND prep_summary.discontinued_reason is not null AND prep.cumulative_prep_discontinued_this_month = 0 AND prep_summary.cur_prep_meds is not null) ,1, 0)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "discontinued_reason",
+      "column": "prep_summary.discontinued_reason"
     },
     {
       "type": "simple_column",
@@ -108,14 +116,20 @@
       "column": "prep.prep_ltfu_this_month"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "prep_discontinued_this_month",
-      "column": "prep.prep_discontinued_this_month"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(prep.prep_discontinued_this_month = 1 OR (prep.active_on_prep_this_month = 1 AND prep_summary.discontinued_reason is not null AND prep.cumulative_prep_discontinued_this_month = 0 AND prep_summary.cur_prep_meds is null) ,1, 0)"
+      }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "cumulative_prep_discontinued_this_month",
-      "column": "prep.cumulative_prep_discontinued_this_month"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(prep.cumulative_prep_discontinued_this_month = 1 OR (prep.active_on_prep_this_month = 1 AND prep_summary.discontinued_reason is not null AND prep.cumulative_prep_discontinued_this_month = 0 AND prep_summary.cur_prep_meds is null) ,1, 0)"
+      }
     },
     {
       "type": "simple_column",
