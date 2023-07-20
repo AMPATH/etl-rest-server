@@ -792,6 +792,16 @@
             "display": "COVIDSCREENING"
           }
         ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
+          }
+        ]
       }
     ]
   },
@@ -1953,6 +1963,16 @@
             "display": "COVIDSCREENING"
           }
         ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
+          }
+        ]
       }
     ]
   },
@@ -2729,6 +2749,16 @@
             "display": "COVIDSCREENING"
           }
         ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
+          }
+        ]
       }
     ]
   },
@@ -3189,6 +3219,16 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
       }
@@ -4597,6 +4637,16 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
       }
