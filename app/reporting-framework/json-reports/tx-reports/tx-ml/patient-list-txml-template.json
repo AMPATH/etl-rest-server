@@ -271,6 +271,10 @@
             "value": "HEALTH ISSUES"
           },
           {
+            "condition": "d.cause_of_death = 5622",
+            "value": "OTHER NON-CODED"
+          },
+          {
             "condition": "d.cause_of_death = 84",
             "value": "ACCIDENT"
           },
