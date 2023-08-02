@@ -9,6 +9,14 @@
       "alias": "t1"
     },
     {
+      "table": "(SELECT fli.person_id, fli.hiv_viral_load as vl_1, fli.test_datetime as vl_1_date FROM etl.flat_labs_and_imaging fli INNER JOIN (SELECT person_id, MAX(test_datetime) AS max_vl_1_date,max(encounter_id) as encounter_id FROM etl.flat_labs_and_imaging fli where fli.hiv_viral_load is not null GROUP BY person_id) max_dates ON fli.person_id = max_dates.person_id AND fli.encounter_id = max_dates.encounter_id)",
+      "alias": "fli",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fli.person_id = t1.person_id and fli.vl_1 is not null"
+      }
+    },
+    {
       "table": "amrs.person_name",
       "alias": "person_name",
       "join": {
@@ -166,7 +174,7 @@
     {
       "type": "simple_column",
       "alias": "latest_vl",
-      "column": "fh.vl_1"
+      "column": "fli.vl_1"
     },
     {
       "type": "derived_column",
@@ -175,19 +183,19 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "fh.vl_1 < 50",
+            "condition": "fli.vl_1 < 50",
             "value": "LDL"
           },
           {
-            "condition": "(fh.vl_1 >= 50 and fh.vl_1 < 200)",
+            "condition": "(fli.vl_1 >= 50 and fli.vl_1 < 200)",
             "value": "Low Risk Low Level Viremia"
           },
           {
-            "condition": "(fh.vl_1 >= 200 and fh.vl_1 < 1000)",
+            "condition": "(fli.vl_1 >= 200 and fli.vl_1 < 1000)",
             "value": "High Risk Low Level Viremia"
           },
           {
-            "condition": "(fh.vl_1 > 1000)",
+            "condition": "(fli.vl_1 > 1000)",
             "value": "Suspected Treatment Failure"
           }
         ]
@@ -196,7 +204,7 @@
     {
       "type": "simple_column",
       "alias": "latest_vl_date",
-      "column": "date_format(fh.vl_1_date, '%Y-%m-%d')"
+      "column": "date_format(fli.vl_1_date, '%Y-%m-%d')"
     },
     {
       "type": "simple_column",
