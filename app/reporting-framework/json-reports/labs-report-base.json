@@ -69,7 +69,7 @@
       "alias": "needs_vl_in_period",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(case when (t2.cur_arv_meds is not null and t2.vl_1 > 1000) and (timestampdiff(day,t2.vl_1_date, '{endDate}') >= 90) then true when (timestampdiff(month,t2.arv_start_date, '{endDate}') <= 12) and (t2.vl_1_date is null or timestampdiff(month,t2.vl_1_date, '{endDate}') >= 6)  and (timestampdiff(month,t2.arv_start_date, '{endDate}')>=6) then true when (timestampdiff(month,t2.arv_start_date, '{endDate}') >= 12) and (t2.vl_1_date is null or timestampdiff(month,t2.vl_1_date, '{endDate}') >= 12) then true else false end,1,0)"
+        "expression": "if(case when (t2.cur_arv_meds is not null and t2.vl_1 > 1000) and (timestampdiff(day,t2.vl_1_date, '{reportMonth}') >= 90) then true when (timestampdiff(month,t2.arv_start_date, '{reportMonth}') <= 12) and (t2.vl_1_date is null or timestampdiff(month,t2.vl_1_date, '{reportMonth}') >= 6)  and (timestampdiff(month,t2.arv_start_date, '{reportMonth}')>=6) then true when (timestampdiff(month,t2.arv_start_date, '{reportMonth}') >= 12) and (t2.vl_1_date is null or timestampdiff(month,t2.vl_1_date, '{reportMonth}') >= 12) then true else false end,1,0)"
       }
     },
     {
@@ -152,7 +152,7 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "(t2.next_clinical_datetime_hiv is null or date(t2.next_clinical_datetime_hiv) > ?)",
-        "parameterName": "endDate"
+        "parameterName": "reportMonth"
       },
       {
         "filterType": "tableColumns",
