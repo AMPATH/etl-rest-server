@@ -341,7 +341,6 @@ function qualifiesDifferenciatedReminders(data) {
 }
 
 function TPTReminders(data) {
-  console.log('data', data);
   let reminders = [];
   let months = 6;
   let treatment = 'INH';
@@ -901,8 +900,48 @@ function getFPExpiryDate(data) {
   }
 }
 
+function generateAppointmentNoShowUpRiskReminder(data) {
+  let reminders = [];
+  const predicted_score = (data.predicted_prob_disengage * 100).toFixed(2);
+  if (data.predicted_risk) {
+    if (data.predicted_risk === 'Medium Risk') {
+      reminders.push({
+        message:
+          'Appointment no-show risk is ' +
+          predicted_score +
+          '% (generated on ' +
+          Moment(data.prediction_generated_date).format('DD-MM-YYYY') +
+          '). Please call to confirm upcoming appointment.',
+        title: 'Appointment no show risk reminder',
+        type: 'warning',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+    }
+    if (data.predicted_risk === 'High Risk') {
+      reminders.push({
+        message:
+          'Appointment no-show risk is ' +
+          predicted_score +
+          '% generated on ' +
+          Moment(data.prediction_generated_date).format('DD-MM-YYYY') +
+          '. Please call to confirm upcoming appointment.',
+        title: 'Appointment no show risk reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+    }
+  }
+  return reminders;
+}
+
 async function generateReminders(etlResults, eidResults) {
-  console.log('REMINDERS generateReminders');
+  // console.log('REMINDERS generateReminders');
   let reminders = [];
   let patientReminder;
   if (etlResults && etlResults.length > 0) {
@@ -941,6 +980,9 @@ async function generateReminders(etlResults, eidResults) {
   let fp_discontinuation_reminder = generateDiscontinueContraceptionReminder(
     data
   );
+  let appointmentNoShowUpRiskReminder = generateAppointmentNoShowUpRiskReminder(
+    data
+  );
 
   let currentReminder = [];
   if (pending_vl_lab_result.length > 0) {
@@ -968,6 +1010,9 @@ async function generateReminders(etlResults, eidResults) {
   }
 
   reminders = reminders.concat(currentReminder);
+
+  // Add appointment no show up risk reminder
+  reminders = reminders.concat(appointmentNoShowUpRiskReminder);
 
   patientReminder.reminders = reminders;
   return patientReminder;
@@ -1024,7 +1069,7 @@ function getCerivalScreeningReminder(personId) {
       })
       .catch((error) => {
         resolve([]);
-        console.log('Error', error);
+        console.error('Error', error);
       });
   });
 }
