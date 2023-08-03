@@ -792,6 +792,17 @@
             "display": "COVIDSCREENING"
           }
         ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
       }
     ]
   },
@@ -1941,6 +1952,17 @@
         ]
       },
       {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      },
+      {
         "uuid": "d7fdac11-2df0-4f18-968e-ad5e064bedf1",
         "name": "Phone Follow Up Visit",
         "encounterTypes": [
@@ -1951,6 +1973,16 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
       }
@@ -2310,6 +2342,17 @@
         ]
       },
       {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      },
+      {
         "uuid": "9cbec0ea-9091-4a1d-9d2d-a3bbc295a04f",
         "name": "Phone Follow Up Visit",
         "encounterTypes": [
@@ -2320,6 +2363,18 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "allowedIf": "age > 24",
+        "message": "Patient has to be 25 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
       }
@@ -2511,6 +2566,16 @@
           {
             "uuid": "0a80be13-6ff7-4758-9651-eb66d3712be0",
             "display": "EVENTDRIVEN"
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       },
@@ -2717,6 +2782,16 @@
         ]
       },
       {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      },
+      {
         "uuid": "e547296d-c7b2-42da-9147-3d73dc55de33",
         "name": "Phone Follow Up Visit",
         "encounterTypes": [
@@ -2727,6 +2802,16 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
       }
@@ -3088,6 +3173,17 @@
         ]
       },
       {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      },
+      {
         "uuid": "0bcccab0-59ce-4a25-a158-cc722427ff3f",
         "name": "Treatment Supporter visit",
         "encounterTypes": [
@@ -3137,6 +3233,10 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          },
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "LABORDERENCOUNTER"
           },
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
@@ -3189,6 +3289,18 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "allowedIf": "age > 24",
+        "message": "Patient has to be 25 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
       }
@@ -4093,6 +4205,17 @@
         ]
       },
       {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      },
+      {
         "uuid": "40353c46-cd54-4629-a5d1-0a1f1108b19f",
         "name": "Inpatient peer visit",
         "encounterTypes": [
@@ -4217,6 +4340,16 @@
           {
             "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
             "display": "COVIDCASEREPORTING"
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       },
@@ -4587,6 +4720,16 @@
         ]
       },
       {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      },
+      {
         "uuid": "0b26e1ca-8b32-40e9-af4d-aa1c2cc68a58",
         "name": "Phone Follow Up Visit",
         "encounterTypes": [
@@ -4597,6 +4740,18 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "0ee7598d-2345-4740-8627-f166cf5d3dc5",
+        "name": "HIV Mental health screening Visit",
+        "allowedIf": "age > 24",
+        "message": "Patient has to be 25 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
       }
@@ -4817,6 +4972,16 @@
         ]
       },
       {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      },
+      {
         "uuid": "8ec3bb23-6d7d-4638-9b2a-16b070760e34",
         "name": "HEI Phone Follow Up Visit",
         "encounterTypes": [
@@ -4906,6 +5071,17 @@
           {
             "uuid": "3339810c-4980-4325-9825-0f0ed0c2da4a",
             "display": "CDMSCREENINGCONFIRMATORY"
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       },

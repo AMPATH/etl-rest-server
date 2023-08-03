@@ -72,6 +72,14 @@
       }
     },
     {
+      "table": "predictions.ml_weekly_predictions",
+      "alias": "mwl",
+      "join": {
+        "type": "left",
+        "joinCondition": "mwl.person_id = t1.person_id"
+      }
+    },
+    {
       "table": "amrs.relationship",
       "alias": "t6",
       "join": {
@@ -284,6 +292,21 @@
     },
     {
       "type": "simple_column",
+      "alias": "predicted_risk",
+      "column": "mwl.predicted_risk"
+    },
+    {
+      "type": "simple_column",
+      "alias": "predicted_prob_disengage",
+      "column": "mwl.predicted_prob_disengage"
+    },
+    {
+      "type": "simple_column",
+      "alias": "prediction_generated_date",
+      "column": "mwl.prediction_generated_date"
+    },
+    {
+      "type": "simple_column",
       "alias": "test_date",
       "column": "DATE_FORMAT(t2.test_datetime,'%Y-%m-%d')"
     },
@@ -484,6 +507,10 @@
     "columns": [
       {
         "column": "t1.encounter_datetime",
+        "order": "desc"
+      },
+      {
+        "column": "mwl.prediction_generated_date",
         "order": "desc"
       }
     ]
