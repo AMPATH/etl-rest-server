@@ -18,6 +18,14 @@
       }
     },
     {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "hm.encounter_id = o.encounter_id"
+      }
+    },
+    {
       "table": "ndwr.mfl_codes",
       "alias": "mc",
       "join": {
@@ -501,6 +509,10 @@
         "filterType": "tableColumns",
         "conditionExpression": "tx.location_id IN ?",
         "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id = 1252 and o.value_coded in (843,983,102,5622,1253,1434,7043,58,7061,7076,1504,1267,1065,1066,7391,7877,1664,44,1930,8296,8297,5240,1679,8308,8389,6419,6295,6451,7065,1259,10395) and o.voided = 0"
       }
     ]
   },
