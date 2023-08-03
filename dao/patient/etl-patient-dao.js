@@ -20,7 +20,7 @@ module.exports = (function () {
       includeNonClinicalEncounter === true
         ? ['t1.uuid = ?', uuid]
         : [
-            't1..uuid = ?  and t1.encounter_type in (1,2,3,4,17,21,110,117,99999)',
+            't1.uuid = ?  and t1.encounter_type in (1,2,3,4,17,21,110,117,99999)',
             uuid
           ];
     var queryParts = {
