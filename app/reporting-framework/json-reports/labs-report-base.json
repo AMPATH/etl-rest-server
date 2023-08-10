@@ -7,14 +7,30 @@
   "sources": [
     {
       "table": "etl.flat_hiv_summary_v15b",
-      "alias": "t2"
+      "alias": "fhs"
+    },
+    {
+      "table": "(SELECT a.person_id, MAX(encounter_id) AS max_encounter_id FROM etl.flat_hiv_summary_v15b a LEFT JOIN amrs.person p ON p.person_id = a.person_id WHERE p.dead = 0 and p.birthdate is not null GROUP BY a.person_id)",
+      "alias": "max_encounters",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fhs.person_id = max_encounters.person_id AND fhs.encounter_id = max_encounters.max_encounter_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = fhs.person_id"
+      }
     },
     {
       "table": "etl.flat_patient_identifiers_v1",
       "alias": "flat_identifiers",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t2.person_id = flat_identifiers.patient_id"
+        "joinCondition": "fhs.person_id = flat_identifiers.patient_id"
       }
     },
     {
@@ -22,39 +38,7 @@
       "alias": "l",
       "join": {
         "type": "INNER",
-        "joinCondition": "t2.location_uuid = l.uuid"
-      }
-    },
-    {
-      "table": "amrs.person",
-      "alias": "t3",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "t3.person_id = t2.person_id"
-      }
-    },
-    {
-      "table": "amrs.person_attribute",
-      "alias": "contacts",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "t2.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id in (10, 48)"
-      }
-    },
-    {
-      "table": "amrs.encounter_type",
-      "alias": "et",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "t2.encounter_type = et.encounter_type_id"
-      }
-    },
-    {
-      "table": "amrs.person_address",
-      "alias": "pa",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "t2.person_id = pa.person_id"
+        "joinCondition": "fhs.location_uuid = l.uuid"
       }
     }
   ],
@@ -62,15 +46,7 @@
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "t2.person_id"
-    },
-    {
-      "type": "derived_column",
-      "alias": "needs_vl_in_period",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(case when (t2.cur_arv_meds is not null and t2.vl_1 > 1000) and (timestampdiff(day,t2.vl_1_date, '{reportMonth}') >= 90) then true when (timestampdiff(month,t2.arv_start_date, '{reportMonth}') <= 12) and (t2.vl_1_date is null or timestampdiff(month,t2.vl_1_date, '{reportMonth}') >= 6)  and (timestampdiff(month,t2.arv_start_date, '{reportMonth}')>=6) then true when (timestampdiff(month,t2.arv_start_date, '{reportMonth}') >= 12) and (t2.vl_1_date is null or timestampdiff(month,t2.vl_1_date, '{reportMonth}') >= 12) then true else false end,1,0)"
-      }
+      "column": "fhs.person_id"
     },
     {
       "type": "simple_column",
@@ -89,61 +65,48 @@
     },
     {
       "type": "simple_column",
+      "alias": "location_id",
+      "column": "fhs.location_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "location",
       "column": "l.name"
     },
     {
       "type": "simple_column",
-      "alias": "location_id",
-      "column": "t2.location_id"
-    },
-    {
-      "type": "simple_column",
       "alias": "location_uuid",
-      "column": "t2.location_uuid"
+      "column": "fhs.location_uuid"
     },
     {
       "type": "simple_column",
       "alias": "encounter_datetime",
-      "column": "t2.encounter_datetime"
+      "column": "fhs.encounter_datetime"
     },
     {
       "type": "simple_column",
       "alias": "month",
-      "column": "MONTH(t2.encounter_datetime)"
+      "column": "MONTH(fhs.encounter_datetime)"
     },
     {
       "type": "simple_column",
       "alias": "reporting_month",
-      "column": "date_format(t2.encounter_datetime, '%m/%Y')"
+      "column": "date_format(fhs.encounter_datetime, '%m/%Y')"
     },
     {
       "type": "simple_column",
       "alias": "year",
-      "column": "YEAR(t2.encounter_datetime)"
-    },
-    {
-      "type": "derived_column",
-      "alias": "phone_number",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": " GROUP_CONCAT(DISTINCT contacts.value SEPARATOR ', ')"
-      }
+      "column": "YEAR(fhs.encounter_datetime)"
     },
     {
       "type": "simple_column",
       "alias": "latest_rtc_date",
-      "column": "date_format(t2.rtc_date, '%Y-%m-%d')"
-    },
-    {
-      "type": "simple_column",
-      "alias": "last_appointment",
-      "column": "CONCAT(COALESCE(DATE_FORMAT(t2.encounter_datetime, '%Y-%m-%d'),''),' ',COALESCE(et.name, ''))"
+      "column": "date_format(fhs.rtc_date, '%Y-%m-%d')"
     },
     {
       "type": "simple_column",
       "alias": "cur_meds",
-      "column": "t2.cur_arv_meds"
+      "column": "fhs.cur_arv_meds"
     }
   ],
   "filters": {
@@ -151,18 +114,13 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "(t2.next_clinical_datetime_hiv is null or date(t2.next_clinical_datetime_hiv) > ?)",
-        "parameterName": "reportMonth"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "t2.location_uuid in ?",
+        "conditionExpression": "fhs.location_uuid in ? AND fhs.transfer_out is null AND fhs.out_of_care is null",
         "parameterName": "locationUuids"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "coalesce(t2.death_date, t2.out_of_care) is null",
-        "parameterName": ""
+        "conditionExpression": "(TIMESTAMPDIFF(YEAR, p.birthdate, DATE('{reportMonth}')) BETWEEN 0 AND 24 AND ((TIMESTAMPDIFF(MONTH, fhs.arv_start_date, DATE('{reportMonth}')) >= 3 AND fhs.vl_1 IS NULL AND fhs.arv_start_date) OR (TIMESTAMPDIFF(MONTH, fhs.vl_1_date, '{reportMonth}') >= 6 AND fhs.vl_1 IS NOT NULL AND fhs.vl_1_date IS NOT NULL))) OR (TIMESTAMPDIFF(YEAR, p.birthdate, DATE('{reportMonth}')) >= 25 AND ((TIMESTAMPDIFF(MONTH, fhs.arv_start_date, DATE('{reportMonth}')) >= 3 AND fhs.arv_start_date IS NOT NULL AND fhs.vl_1 IS NULL) OR (TIMESTAMPDIFF(MONTH, fhs.arv_start_date, DATE('{reportMonth}')) >= 12 AND fhs.arv_start_date IS NOT NULL AND fhs.vl_1 IS NOT NULL AND fhs.vl_2 IS NULL) OR (TIMESTAMPDIFF(MONTH, fhs.vl_1_date, DATE('{reportMonth}')) >= 12 AND fhs.vl_1 IS NOT NULL AND fhs.vl_2 IS NOT NULL AND fhs.vl_1_date IS NOT NULL AND fhs.vl_1 < 200) OR (TIMESTAMPDIFF(MONTH, fhs.vl_1_date, DATE('{reportMonth}')) >= 3 AND fhs.vl_1 IS NOT NULL AND fhs.vl_2 IS NOT NULL AND fhs.vl_1_date IS NOT NULL AND fhs.vl_1 >= 200) OR ((fhs.is_pregnant = 1 OR fhs.is_mother_breastfeeding = 1) AND TIMESTAMPDIFF(MONTH, fhs.vl_1_date, DATE('{reportMonth}')) >= 6 AND fhs.vl_1_date IS NOT NULL))) OR (fhs.prev_arv_meds <> fhs.cur_arv_meds AND TIMESTAMPDIFF(MONTH, fhs.encounter_datetime, DATE('{reportMonth}')) >= 3)",
+        "parameterName": "reportMonth"
       }
     ]
   }
