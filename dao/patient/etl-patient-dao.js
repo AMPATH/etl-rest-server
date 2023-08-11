@@ -46,7 +46,7 @@ module.exports = (function () {
       offset: request.query.startIndex,
       limit: request.query.limit
     };
-    console.log('query', queryParts);
+
     var qParts = {
       columns: '*',
       table: 'amrs.encounter_type',
