@@ -65,7 +65,7 @@ module.exports = (function () {
               [
                 '(SELECT person_id, weight, height FROM etl.flat_vitals WHERE uuid = "' +
                   uuid +
-                  '"order by encounter_datetime desc limit 1)',
+                  '" and weight is not null order by encounter_datetime desc limit 1)',
                 't3',
                 't1.person_id = t3.person_id'
               ],
