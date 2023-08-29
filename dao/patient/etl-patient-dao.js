@@ -56,16 +56,13 @@ module.exports = (function () {
             columns:
               request.query.fields ||
               't1.*, t3.height, t3.weight, t4.obs, t4.pcp_prophylaxis',
-            table:
-              '(select * FROM etl.flat_hei_summary WHERE uuid = "' +
-              uuid +
-              '" order by encounter_datetime desc)',
+            table: 'etl.flat_hei_summary',
             where: whereClause,
             leftOuterJoins: [
               [
                 '(SELECT person_id, weight, height FROM etl.flat_vitals WHERE uuid = "' +
                   uuid +
-                  '" and weight is not null order by encounter_datetime desc limit 1)',
+                  '" order by encounter_datetime desc limit 1)',
                 't3',
                 't1.person_id = t3.person_id'
               ],
