@@ -1,8 +1,6 @@
 const _ = require('lodash');
 const Moment = require('moment');
 
-// CALL encounter service to get patient encounters
-
 const def = {
   buildScope: buildScope
 };
