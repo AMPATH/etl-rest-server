@@ -8,6 +8,7 @@ const def = {
 module.exports = def;
 
 function buildScope(dataDictionary) {
+  console.log(dataDictionary);
   const scope = {
     isPatientTransferredOut: false,
     isFirstAMPATHHIVVisit: true,
