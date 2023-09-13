@@ -8,7 +8,6 @@ const def = {
 module.exports = def;
 
 function buildScope(dataDictionary) {
-  console.log(dataDictionary);
   const scope = {
     isPatientTransferredOut: false,
     isFirstAMPATHHIVVisit: true,
@@ -16,10 +15,16 @@ function buildScope(dataDictionary) {
     qualifiesMedicationRefillVisit: false,
     lastCovidScreeningDate: '',
     retroSpective: false,
-    screenedForCovidToday: false
+    screenedForCovidToday: false,
+    inPrediction: false
   };
-  let isStandardDcVisit = false;
 
+  if (
+    dataDictionary.weeklyPredictedPatients &&
+    dataDictionary.weeklyPredictedPatients.length > 0
+  ) {
+    scope.inPrediction = true;
+  }
   // Restrict to Pilot locations
   scope.MlLocations = [
     '08feb8ae-1352-11df-a1f1-0026b9348838',
