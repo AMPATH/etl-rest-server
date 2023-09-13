@@ -6,8 +6,11 @@ const etlHivSummary = require('../dao/patient/etl-patient-hiv-summary-dao');
 const encounterService = require('../service/openmrs-rest/encounter');
 const dcPatientvisitEvaluator = require('../service/dc-patient-visit-evaluator');
 const covidAssessmentService = require('../service/covid-assessment-service');
-const MlWeeklyPredictionsService = require('..service/ml-weekly-predictions.service');
+const weeklyPredictionsService = require('../service/ml-weekly-predictions.service');
 var _ = require('underscore');
+const {
+  default: MlWeeklyPredictionsService
+} = require('../service/ml-weekly-predictions.service');
 
 const availableKeys = {
   patient: getPatient,
