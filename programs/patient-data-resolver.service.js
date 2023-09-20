@@ -206,15 +206,18 @@ function getLatestCovidAssessment(patientUuid) {
 }
 
 function getWeeklyPredictedPatients(patientUuid) {
-  console.log('patientuuid:', patientUuid);
   return new Promise((resolve, reject) => {
     let ml = new MlWeeklyPredictionsService();
-    ml.getPatientsWithPredictions(patientUuid).then((result) => {
-      if (result.length > 0) {
-        resolve(result);
-      } else {
-        resolve([]);
-      }
-    });
+    ml.getPatientsWithPredictions(patientUuid)
+      .then((result) => {
+        if (result.length > 0) {
+          resolve(result);
+        } else {
+          resolve([]);
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 }

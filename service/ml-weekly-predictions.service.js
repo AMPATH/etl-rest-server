@@ -68,7 +68,6 @@ GROUP BY t1.person_id
       const queryParts = {
         sql: predictedPatients
       };
-      console.log('query', queryParts);
       db.queryServer(queryParts, function (result) {
         result.sql = predictedPatients;
         resolve(result.result);

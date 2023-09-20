@@ -12,6 +12,7 @@ function buildScope(dataDictionary) {
     isPatientTransferredOut: false,
     isFirstAMPATHHIVVisit: true,
     qualifiesForStandardVisit: false,
+    isStandardDcVisit: false,
     qualifiesMedicationRefillVisit: false,
     lastCovidScreeningDate: '',
     retroSpective: false,
@@ -73,16 +74,10 @@ function buildScope(dataDictionary) {
     if (result) {
       isStandardDcVisit = true;
     }
-    if (
-      dataDictionary.dcQualifedVisits.qualifies_for_standard_visit === 1 ||
-      isStandardDcVisit
-    ) {
+    if (dataDictionary.dcQualifedVisits.qualifies_for_standard_visit === 1) {
       scope.qualifiesForStandardVisit = true;
     }
-    if (
-      dataDictionary.dcQualifedVisits.qualifies_for_medication_refill === 1 &&
-      !isStandardDcVisit
-    ) {
+    if (dataDictionary.dcQualifedVisits.qualifies_for_medication_refill === 1) {
       scope.qualifiesMedicationRefillVisit = true;
     }
   }
