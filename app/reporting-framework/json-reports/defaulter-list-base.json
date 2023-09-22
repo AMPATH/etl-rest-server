@@ -18,11 +18,11 @@
       }
     },
     {
-      "table": "amrs.encounter",
+      "table": "(SELECT MAX(am.encounter_datetime ), am.encounter_type, am.patient_id, fd.person_id , fd.rtc_date , fd.encounter_datetime FROM etl.flat_defaulters fd INNER JOIN amrs.encounter am on (am.patient_id = fd.person_id) WHERE am.encounter_type = 21 and am.encounter_datetime >= fd.rtc_date group by am.patient_id)",
       "alias": "am",
       "join": {
         "type": "INNER",
-        "joinCondition": "am.patient_id = fd.person_id and am.encounter_type = 21"
+        "joinCondition": "am.patient_id = fd.person_id"
       }
     },
     {
@@ -96,7 +96,7 @@
       "alias": "outreach_follow_up",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(am.encounter_type = 21 and am.encounter_datetime < de.encounter_datetime, 'Yes', 'No')"
+        "expression": "case when am.encounter_type = 21 then 'Yes' else 'No' end"
       }
     }
   ],
