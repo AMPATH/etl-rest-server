@@ -6320,8 +6320,8 @@ module.exports = (function () {
             other: 10
           });
         },
-        description: 'PLHIV NCD report',
-        notes: `Generates a monthly non-communicable disease (NCDs) report for People Living with HIV (PLHIV) with the following indicators:
+        description: 'Generates a monthly non-communicable disease (NCDs) report for People Living with HIV (PLHIV)',
+        notes: ` The following indicators are shown:
                   Number of active PLHIV and hypertensive
                   Number of active PLHIV and diabetic
                   Number of active PLHIV that are hypertensive and diabetic
