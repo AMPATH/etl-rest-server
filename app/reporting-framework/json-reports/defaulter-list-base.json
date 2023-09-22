@@ -92,16 +92,6 @@
       "column": "DATE_FORMAT(fd.rtc_date,'%Y-%m-%d')"
     },
     {
-      "type": "simple_column",
-      "alias": "encounter_type",
-      "column": "max_encounter_datetime"
-    },
-    {
-      "type": "simple_column",
-      "alias": "encounter_typ",
-      "column": "am.encounter_type"
-    },
-    {
       "type": "derived_column",
       "alias": "outreach_follow_up",
       "expressionType": "simple_expression",
