@@ -4082,6 +4082,7 @@ module.exports = (function () {
             pocEidPayloadHelper
               .generatePocToEidPayLoad(rawPayload)
               .then((eidPayLoad) => {
+                console.log('eidpayload: ', eidPayLoad);
                 let configObj = config.hivLabSystem[labName];
                 if (typeof configObj !== 'undefined') {
                   let client = new LabClient(configObj);
@@ -6289,6 +6290,44 @@ module.exports = (function () {
         },
         description: 'Patient predicted score of missing appointment.',
         notes: 'Returns the patients predictions data.',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/plhiv-ncd-report',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: function (request, reply) {
+          // if (request.query.patientUuid) {
+          //   const patientUuid = request.query.patientUuid;
+          //   getPatientPredictedScore(patientUuid)
+          //     .then((results) => {
+          //       reply(results);
+          //     })
+          //     .catch((error) => {
+          //       reply(Boom.internal('An error occured', error));
+          //     });
+          // } else {
+          //   reply(Boom.internal('Request misssing patient uuid'));
+          // }
+          reply({
+            hypertensive: 1,
+            diabetic: 2,
+            hypertensiveAndDiabetic: 3,
+            mentalDisorder: 2,
+            other: 10
+          });
+        },
+        description: 'PLHIV NCD report',
+        notes: `Generates a monthly non-communicable disease (NCDs) report for People Living with HIV (PLHIV) with the following indicators:
+                  Number of active PLHIV and hypertensive
+                  Number of active PLHIV and diabetic
+                  Number of active PLHIV that are hypertensive and diabetic
+                  Number of active PLHIV with mental disorders
+                  Number of active PLHIV with Other
+                The data is being collected on the clinical forms under additional medications and other commorbities`,
         tags: ['api']
       }
     }
