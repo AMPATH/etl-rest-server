@@ -18,7 +18,7 @@
       }
     },
     {
-      "table": "(SELECT MAX(am.encounter_datetime ), am.encounter_type, am.patient_id, fd.person_id , fd.rtc_date , fd.encounter_datetime FROM etl.flat_defaulters fd INNER JOIN amrs.encounter am on (am.patient_id = fd.person_id) WHERE am.encounter_type = 21 and am.encounter_datetime >= fd.rtc_date group by am.patient_id)",
+      "table": "(SELECT MAX(am.encounter_datetime) AS max_encounter_datetime, am.encounter_datetime, am.encounter_type, am.patient_id, fd.person_id , fd.rtc_date FROM etl.flat_defaulters fd INNER JOIN amrs.encounter am on (am.patient_id = fd.person_id) WHERE am.encounter_type = 21 group by am.patient_id)",
       "alias": "am",
       "join": {
         "type": "INNER",
@@ -92,11 +92,21 @@
       "column": "DATE_FORMAT(fd.rtc_date,'%Y-%m-%d')"
     },
     {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "max_encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_typ",
+      "column": "am.encounter_type"
+    },
+    {
       "type": "derived_column",
       "alias": "outreach_follow_up",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "case when am.encounter_type = 21 then 'Yes' else 'No' end"
+        "expression": "case when max_encounter_datetime >= fd.rtc_date  then 'Yes' else 'No' end"
       }
     }
   ],
