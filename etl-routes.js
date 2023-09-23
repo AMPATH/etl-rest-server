@@ -6312,6 +6312,15 @@ module.exports = (function () {
             }],
             sectionDefinitions: [
               {
+                "sectionTitle": "",
+                "indicators": [
+                    {
+                        "label": "Location",
+                        "indicator": "location"
+                    }
+                ]
+            },
+              {
                 sectionTitle: "PLHIV NCD",
                 indicators: [
                   {
