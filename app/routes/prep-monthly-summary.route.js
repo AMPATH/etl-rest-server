@@ -58,7 +58,6 @@ const routes = [
         }
       },
       handler: function (request, reply) {
-        request.query.reportName = 'prep-summary-patient-list';
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
 

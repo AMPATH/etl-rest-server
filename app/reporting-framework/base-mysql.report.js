@@ -1795,6 +1795,14 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(txrtt_summary)
           });
           break;
+          case 'plhivNcdMonthlySummaryReport':
+            resolve({
+              main: this.cloneJsonSchema(prep_monthly_summary),
+              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                prep_latest_clinical_encounter_date_base
+              )
+            });
+            break;
         default:
           reject('Unknown report ', reportName);
           break;

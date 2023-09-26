@@ -1,10 +1,10 @@
 const Promise = require('bluebird');
 const _ = require('lodash');
-import { MultiDatasetPatientlistReport } from '../app/reporting-framework/multi-dataset-patientlist.report.js';
-import ReportProcessorHelpersService from '../app/reporting-framework/report-processor-helpers.service';
-const indicatorDefinitions = require('./prep-indicator-definitions.json');
-var etlHelpers = require('../etl-helpers');
-export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
+import { MultiDatasetPatientlistReport } from '../../app/reporting-framework/multi-dataset-patientlist.report.js';
+import ReportProcessorHelpersService from '../../app/reporting-framework/report-processor-helpers.service';
+const indicatorDefinitions = require('./plhiv-ncd-indicator-definitions.json');
+var etlHelpers = require('../../etl-helpers');
+export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport {
   constructor(reportName, params) {
     if (params.isAggregated) {
       params.excludeParam = ['location_id'];
@@ -52,7 +52,7 @@ export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
           }
         })
         .catch((error) => {
-          console.error('prep monthly report generation error: ', error);
+          console.error('PLHIV NCD monthly report generation error: ', error);
           reject(error);
         });
     });

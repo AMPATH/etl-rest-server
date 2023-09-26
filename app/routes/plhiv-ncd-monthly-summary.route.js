@@ -1,5 +1,6 @@
 var authorizer = require('../../authorization/etl-authorizer');
-import { PrepMonthlySummaryService } from '../../service/prep-monthly-summary.service';
+ import { PrepMonthlySummaryService } from '../../service/prep-monthly-summary.service';
+import { PlhivNcdMonthlySummaryService } from '../../service/plhiv-ncd/plhiv-ncd-monthly-summary.service';
 var etlHelpers = require('../../etl-helpers');
 var privileges = authorizer.getAllPrivileges();
 var preRequest = require('../../pre-request-processing');
@@ -100,52 +101,74 @@ const routes = [
             }
           },
       handler: function (request, reply) {
-        reply({
-          indicatorDefinitions: [],
-          queriesAndSchemas: [],
-          result: [{
-            plhiv_with_hypertensive: 1,
-            plhiv_with_diabetic: 2,
-            plhiv_with_hypertensive_and_diabetic: 3,
-            plhiv_with_mental_disorder: 2,
-            plhiv_with_other_ncd: 10
-          }],
-          sectionDefinitions: [
-            {
-              "sectionTitle": "",
-              "indicators": [
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          let requestParams = Object.assign({}, request.query, request.params);
+          let reportParams = etlHelpers.getReportParams(
+            'plhiv-ncd-monthly-summary',
+            ['endDate', 'locationUuids'],
+            requestParams
+          );
+          reportParams.requestParams.isAggregated = true;
+          console.log("reportParams: ", reportParams)
+          let service = new PrepMonthlySummaryService(
+            'plhivNcdMonthlySummaryReport',
+            reportParams.requestParams
+          );
+          service
+            .getAggregateReport()
+            .then((result) => {
+              console.log("prepres: ", result)
+              reply({
+                indicatorDefinitions: [],
+                queriesAndSchemas: [],
+                result: [{
+                  plhiv_with_hypertensive: 1,
+                  plhiv_with_diabetic: 2,
+                  plhiv_with_hypertensive_and_diabetic: 3,
+                  plhiv_with_mental_disorder: 2,
+                  plhiv_with_other_ncd: 10
+                }],
+                sectionDefinitions: [
                   {
-                      "label": "Location",
-                      "indicator": "location"
+                    "sectionTitle": "",
+                    "indicators": [
+                        {
+                            "label": "Location",
+                            "indicator": "location"
+                        }
+                    ]
+                },
+                  {
+                    sectionTitle: "PLHIV NCD",
+                    indicators: [
+                      {
+                        label: "PLHIV having Hypertension",
+                        indicator: "plhiv_with_hypertensive",
+                      },
+                      {
+                        label: "PLHIV having Diabetes",
+                        indicator: "plhiv_with_diabetic"
+                      },
+                      {
+                        label: "PLHIV having Hypertension and Diabetes",
+                        indicator: "plhiv_with_hypertensive_and_diabetic"
+                      },
+                      {
+                        label: "PLHIV having Mental Disorder",
+                        indicator: "plhiv_with_mental_disorder"
+                      },
+                      {
+                        label: "PLHIV having Other NCD",
+                        indicator: "plhiv_with_other_ncd"
+                      }
+                    ]
                   }
-              ]
-          },
-            {
-              sectionTitle: "PLHIV NCD",
-              indicators: [
-                {
-                  label: "PLHIV having Hypertension",
-                  indicator: "plhiv_with_hypertensive",
-                },
-                {
-                  label: "PLHIV having Diabetes",
-                  indicator: "plhiv_with_diabetic"
-                },
-                {
-                  label: "PLHIV having Hypertension and Diabetes",
-                  indicator: "plhiv_with_hypertensive_and_diabetic"
-                },
-                {
-                  label: "PLHIV having Mental Disorder",
-                  indicator: "plhiv_with_mental_disorder"
-                },
-                {
-                  label: "PLHIV having Other NCD",
-                  indicator: "plhiv_with_other_ncd"
-                }
-              ]
-            }
-          ]
+                ]
+              })
+            })
+            .catch((error) => {
+              reply(error);
+            });
         });
       },
       description: 'Generates a monthly non-communicable disease (NCDs) report for People Living with HIV (PLHIV)',
