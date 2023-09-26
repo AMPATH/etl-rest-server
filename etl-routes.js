@@ -79,8 +79,10 @@ import { DefaulterListService } from './service/defaulter-list-service';
 import { ClinicFlowService } from './service/clinic-flow-service';
 import { getPatientCovidVaccinationStatus } from './service/covid-19/covid-19-vaccination-summary';
 import { Covid19MonthlyReport } from './service/covid-19/covid-19-monthly-report';
-import { MlWeeklyPredictionsService } from './service/ml-weekly-predictions.service';
 import { getPatientPredictedScore } from './service/predictions/ml-prediction-service';
+const {
+  default: MlWeeklyPredictionsService
+} = require('./service/ml-weekly-predictions.service');
 
 module.exports = (function () {
   var routes = [
