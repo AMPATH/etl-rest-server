@@ -12,24 +12,24 @@
     "sectionTitle": "PLHIV NCD",
     "indicators": [
       {
-        "label": "PLHIV having Hypertension",
-        "indicator": "plhiv_with_hypertension"
+        "label": "PLHIV Hypertension",
+        "indicator": "plhiv_hypertension"
       },
       {
-        "label": "PLHIV having Diabetes",
-        "indicator": "plhiv_with_diabetes"
+        "label": "PLHIV Diabetes",
+        "indicator": "plhiv_diabetes"
       },
       {
-        "label": "PLHIV having Hypertension and Diabetes",
-        "indicator": "plhiv_with_hypertension_and_diabetes"
+        "label": "PLHIV Hypertension and Diabetes",
+        "indicator": "plhiv_hypertension_and_diabetes"
       },
       {
-        "label": "PLHIV having Mental Disorder",
-        "indicator": "plhiv_with_mental_disorder"
+        "label": "PLHIV Mental Disorder",
+        "indicator": "plhiv_mental_disorder"
       },
       {
-        "label": "PLHIV having Other NCD",
-        "indicator": "plhiv_with_other_ncd"
+        "label": "PLHIV Other NCD",
+        "indicator": "plhiv_other_ncd"
       }
     ]
   }

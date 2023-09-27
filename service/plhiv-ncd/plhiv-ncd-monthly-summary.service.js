@@ -19,6 +19,7 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
       super
         .generateReport(reportParams)
         .then((results) => {
+          console.log("results: ", JSON.stringify(results))
           if (reportParams && reportParams.type === 'patient-list') {
             resolve(results);
           } else {
@@ -31,13 +32,16 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
                 result.report.reportSchemas.main &&
                 result.report.reportSchemas.main.transFormDirectives.joinColumn
               ) {
+                console.log("joinColumnParam: ",result.report.reportSchemas.main.transFormDirectives.joinColumnParam, "joinColumn: ", result.report.reportSchemas.main.transFormDirectives.joinColumn,
+                "finalResult: ", finalResult,
+                "results: ", result.results.results.results)
                 finalResult = reportProcessorHelpersService.joinDataSets(
                   that.params[
-                    result.report.reportSchemas.main.transFormDirectives
-                      .joinColumnParam
+                  result.report.reportSchemas.main.transFormDirectives
+                    .joinColumnParam
                   ] ||
-                    result.report.reportSchemas.main.transFormDirectives
-                      .joinColumn,
+                  result.report.reportSchemas.main.transFormDirectives
+                    .joinColumn,
                   finalResult,
                   result.results.results.results
                 );
@@ -45,7 +49,16 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
             }
             resolve({
               queriesAndSchemas: results,
-              result: finalResult,
+              result: [{
+                location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+                location_id: 195,
+                location: 'Location Test',
+                plhiv_hypertension: 1,
+                plhiv_diabetes: 0,
+                plhiv_hypertension_and_diabetes: 4,
+                plhiv_mental_disorder: 1,
+                plhiv_other_ncd: 2
+              }],
               sectionDefinitions: indicatorDefinitions,
               indicatorDefinitions: []
             });
@@ -86,11 +99,11 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
               resolve(results);
             })
             .catch((err) => {
-              resolve(results);
+              resolve(err);
             });
         })
         .catch((err) => {
-          reject(results);
+          reject(err);
         });
     });
   }

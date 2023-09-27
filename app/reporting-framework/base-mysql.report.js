@@ -384,6 +384,15 @@ import * as txrtt_aggregate_report from './json-reports/tx-reports/tx-rtt/tx-rtt
 import * as txrtt_base_report from './json-reports/tx-reports/tx-rtt/tx-rtt-report-base.json';
 import * as txrtt_summary from './json-reports/txrtt-summary.json';
 
+//plhiv-ncd report
+import * as plhiv_ncd_monthly_summary from './json-reports/plhiv-ncd-monthly-summary.json';
+import * as plhiv_ncd_monthly_summary_aggregate_report from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-summary-aggregate.json';
+import * as plhiv_ncd_monthly_summary_base_report from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-summary-base.json';
+import * as plhiv_ncd_monthly_populationtype_disaggregation from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-population-type-disaggregation.json';
+import * as plhiv_ncd_monthly_breastfeeding_disaggregation from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-breastfeeding-disaggregation.json';
+import * as plhiv_ncd_monthly_pregnancy_disaggregation from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-pregnancy-disaggregation.json';
+import * as plhiv_ncd_monthly_newly_enrolled_breastfeeding_disaggregation from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-newly-enrolled-breastfeeding-disaggregation.json';
+import * as plhiv_ncd_monthly_newly_enrolled_pregnancy_disaggregation from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-newly-enrolled-pregnancy-disaggregation.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1795,14 +1804,90 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(txrtt_summary)
           });
           break;
-          case 'plhivNcdMonthlySummaryReport':
+
+        case 'plhivNcdMonthlySummaryReport':
             resolve({
-              main: this.cloneJsonSchema(prep_monthly_summary),
+              main: this.cloneJsonSchema(plhiv_ncd_monthly_summary),
               prepLatestClinicalEncounterDate: this.cloneJsonSchema(
                 prep_latest_clinical_encounter_date_base
               )
             });
             break;
+        case 'plhivNcdMonthlySummaryNoDisaggregation':
+            resolve({
+              main: this.cloneJsonSchema(plhiv_ncd_monthly_summary_aggregate_report),
+              plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+                plhiv_ncd_monthly_summary_base_report
+              ),
+              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                prep_latest_clinical_encounter_date_base
+              )
+            });
+            break;
+        case 'plhivNcdMonthlySummaryPopulationTypeDisaggregation':
+            resolve({
+              main: this.cloneJsonSchema(
+                plhiv_ncd_monthly_populationtype_disaggregation
+              ),
+              plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+                plhiv_ncd_monthly_summary_base_report
+              ),
+              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                prep_latest_clinical_encounter_date_base
+              )
+            });
+            break;
+        case 'plhivNcdMonthlySummaryBreastFeedingDisaggregation':
+            resolve({
+              main: this.cloneJsonSchema(
+                plhiv_ncd_monthly_breastfeeding_disaggregation
+              ),
+              plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+                plhiv_ncd_monthly_summary_base_report
+              ),
+              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                prep_latest_clinical_encounter_date_base
+              )
+            });
+            break;
+        case 'plhivNcdMonthlyNewlyEnrolledBreastFeedingDisaggregation':
+            resolve({
+              main: this.cloneJsonSchema(
+                plhiv_ncd_monthly_newly_enrolled_breastfeeding_disaggregation
+              ),
+              plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+                plhiv_ncd_monthly_summary_base_report
+              ),
+              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                prep_latest_clinical_encounter_date_base
+              )
+            });
+            break;
+        case 'plhivNcdMonthlyNewlyEnrolledPregnancyDisaggregation':
+            resolve({
+              main: this.cloneJsonSchema(
+                plhiv_ncd_monthly_newly_enrolled_pregnancy_disaggregation
+              ),
+              plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+                plhiv_ncd_monthly_summary_base_report
+              ),
+              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                prep_latest_clinical_encounter_date_base
+              )
+            });
+            break;
+        case 'plhivNcdMonthlySummaryPregnancyDisaggregation':
+            resolve({
+              main: this.cloneJsonSchema(plhiv_ncd_monthly_pregnancy_disaggregation),
+              plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+                plhiv_ncd_monthly_summary_base_report
+              ),
+              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                prep_latest_clinical_encounter_date_base
+              )
+            });
+            break;
+
         default:
           reject('Unknown report ', reportName);
           break;
