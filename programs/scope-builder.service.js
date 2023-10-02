@@ -15,7 +15,8 @@ function buildScope(dataDictionary) {
     qualifiesMedicationRefillVisit: false,
     lastCovidScreeningDate: '',
     retroSpective: false,
-    screenedForCovidToday: false
+    screenedForCovidToday: false,
+    isAdultReturnVisitBeforeInitialVisit: false
   };
   let isStandardDcVisit = false;
 
@@ -120,6 +121,15 @@ function buildScope(dataDictionary) {
     scope.retroSpective = dataDictionary.retroSpective;
   }
 
+  if (dataDictionary.retroSpective === 'true') {
+    const isAdultEncounterDateB4InitialEncounterDate = checkRetrospectiveInitialEncounterDate(
+      dataDictionary.patientEncounters
+    );
+    if (isAdultEncounterDateB4InitialEncounterDate) {
+      scope.isAdultReturnVisitBeforeInitialVisit = true;
+    }
+  }
+
   if (dataDictionary.isPatientTransferredOut) {
     scope['isPatientTransferredOut'] = dataDictionary.isPatientTransferredOut;
   }
@@ -171,6 +181,26 @@ function conditionalDCVisits(patient) {
       latestEncounter.encounterType.uuid === expectedEncounterToBeDrugPickup
     );
   }
+}
+
+function checkRetrospectiveInitialEncounterDate(patientEncounters) {
+  const adultInitial = '8d5b27bc-c2cc-11de-8d13-0010c6dffd0f';
+  const adultReturn = '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f';
+  return patientEncounters.map((encounter) => {
+    const encounterType = encounter?.encounterType?.uuid;
+    const encounterDate = encounter?.encounterDatetime;
+    if (encounterType === adultInitial) {
+      const adultReturnEncounter = patientEncounters.find((encounter) => {
+        const encounterType = encounter?.encounterType?.uuid;
+        return encounterType === adultReturn;
+      });
+      if (encounterDate > adultReturnEncounter?.encounterDatetime) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  });
 }
 
 function buildPatientScopeMembers(scope, patient) {

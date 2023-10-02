@@ -1452,9 +1452,10 @@
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN",
-            "allowedIf": "screenedForCovidToday",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
             "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "Oops! You cannot schedule an Adult return visit for a date that comes before the initial visit"
             }
           },
           {
@@ -1588,15 +1589,16 @@
       {
         "uuid": "02e3ce61-fa24-445e-a1f0-6e3299142966",
         "message": "Patient must have prior clinical encounter.",
-        "allowedIf": "!isFirstPMTCTVisit && !isEnrolledInViremiaPMTCT && programLocation === intendedVisitLocationUuid",
+        "allowedIf": "!isFirstPMTCTVisit && !isEnrolledInViremiaPMTCT && programLocation === intendedVisitLocationUuid ",
         "name": "PMTCT Antenatal Return Visit",
         "encounterTypes": [
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN",
-            "allowedIf": "screenedForCovidToday",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
             "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "Oops! You cannot schedule an Adult return visit for a date that comes before the initial visit"
             }
           },
           {
@@ -1748,9 +1750,10 @@
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN",
-            "allowedIf": "screenedForCovidToday",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
             "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "Oops! You cannot schedule an Adult return visit for a date that comes before the initial visit"
             }
           },
           {
