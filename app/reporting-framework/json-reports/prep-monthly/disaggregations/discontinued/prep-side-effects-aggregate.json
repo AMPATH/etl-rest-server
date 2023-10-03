@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_nn_pbfw",
       "column": "sum(b.total_nn_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_discontinuation_side_effects",
+      "column": "sum(b.total_reason_for_discontinuation_side_effects)"
     }
   ],
   "groupBy": {

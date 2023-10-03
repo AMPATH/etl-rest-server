@@ -1081,6 +1081,11 @@
       "type": "simple_column",
       "alias": "total_st_pbfw",
       "column": "sum(b.total_st_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_discontinued_prep_this_month",
+      "column": "sum(b.total_discontinued_prep_this_month)"
     }
   ],
   "groupBy": {

@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_gg_pbfw",
       "column": "sum(b.total_gg_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_initiation_recurrent_pep",
+      "column": "sum(b.total_reason_for_initiation_recurrent_pep)"
     }
   ],
   "groupBy": {

@@ -1089,6 +1089,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_tested_positive_on_prep",
+      "column": "sum(b.total_tested_positive_on_prep)"
+    },
+    {
+      "type": "simple_column",
       "alias": "d_tg_15_19_female",
       "column": "sum(b.d_tg_15_19_female)"
     },
@@ -2121,6 +2126,11 @@
       "type": "simple_column",
       "alias": "total_d_pbfw",
       "column": "sum(b.total_d_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_diagnosed_with_sti_on_prep",
+      "column": "sum(b.total_diagnosed_with_sti_on_prep)"
     }
   ],
   "groupBy": {

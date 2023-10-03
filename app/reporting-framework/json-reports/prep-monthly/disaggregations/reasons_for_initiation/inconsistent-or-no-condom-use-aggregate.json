@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_hh_pbfw",
       "column": "sum(b.total_hh_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_initiation_inconsistent_condom_use",
+      "column": "sum(b.total_reason_for_initiation_inconsistent_condom_use)"
     }
   ],
   "groupBy": {

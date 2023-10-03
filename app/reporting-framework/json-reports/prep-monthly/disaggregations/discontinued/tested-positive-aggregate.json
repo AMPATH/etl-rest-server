@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_ll_pbfw",
       "column": "sum(b.total_ll_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_discontinuation_tested_positive",
+      "column": "sum(b.total_reason_for_discontinuation_tested_positive)"
     }
   ],
   "groupBy": {

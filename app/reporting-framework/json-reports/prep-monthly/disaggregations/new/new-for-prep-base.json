@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.prep_monthly_report_dataset_v3",
+      "table": "etl.prep_monthly_report_dataset_v5",
       "alias": "pd"
     },
     {
@@ -642,7 +642,7 @@
       "alias": "i_mahr_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
@@ -658,7 +658,7 @@
       "alias": "i_mahr_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
@@ -674,7 +674,7 @@
       "alias": "i_mahr_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
@@ -690,7 +690,7 @@
       "alias": "i_mahr_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
@@ -706,7 +706,7 @@
       "alias": "i_mahr_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
@@ -722,7 +722,7 @@
       "alias": "i_mahr_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
@@ -738,7 +738,7 @@
       "alias": "i_mahr_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
@@ -754,7 +754,7 @@
       "alias": "i_mahr_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
@@ -770,7 +770,7 @@
       "alias": "i_mahr_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
@@ -786,7 +786,7 @@
       "alias": "i_mahr_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
@@ -802,7 +802,7 @@
       "alias": "i_mahr_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1) AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
@@ -818,7 +818,7 @@
       "alias": "total_i_mahr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4 OR pd.is_event_driven_prep = 1)), 1, NULL)"
       }
     },
     {
@@ -1739,6 +1739,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.population_type = 9), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_initiated_on_prep_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((pd.enrolled_in_prep_this_month = 1), 1, NULL)"
       }
     },
     {

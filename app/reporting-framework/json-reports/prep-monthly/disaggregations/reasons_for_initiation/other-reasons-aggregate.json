@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_jj_pbfw",
       "column": "sum(b.total_jj_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_initiation_other_reasons",
+      "column": "sum(b.total_reason_for_initiation_other_reasons)"
     }
   ],
   "groupBy": {

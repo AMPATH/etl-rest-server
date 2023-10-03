@@ -1,5 +1,5 @@
 {
-  "name": "sharedNeedlesPrepBase",
+  "name": "eventDrivenPrepBase",
   "version": "1.0",
   "tag": "",
   "description": "",
@@ -90,186 +90,186 @@
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_15_19_male",
+      "alias": "edp_mhr_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1 AND pd.gender = 'M' AND (pd.age between 15 AND 19)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_15_19_female",
+      "alias": "edp_mhr_15_19_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 15 AND 19)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_20_24_male",
+      "alias": "edp_mhr_20_24_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 20 AND 24)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_20_24_female",
+      "alias": "edp_mhr_20_24_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 20 AND 24)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_25_29_male",
+      "alias": "edp_mhr_25_29_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 25 AND 29)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_25_29_female",
+      "alias": "edp_mhr_25_29_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 25 AND 29)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_30_34_male",
+      "alias": "edp_mhr_30_34_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 30 AND 34)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_30_34_female",
+      "alias": "edp_mhr_30_34_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 30 AND 34)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_35_39_male",
+      "alias": "edp_mhr_35_39_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 35 AND 39)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_35_39_female",
+      "alias": "edp_mhr_35_39_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 35 AND 39)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_40_44_male",
+      "alias": "edp_mhr_40_44_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 40 AND 44)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_40_44_female",
+      "alias": "edp_mhr_40_44_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 40 AND 44)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_45_49_male",
+      "alias": "edp_mhr_45_49_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 45 AND 49)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_45_49_female",
+      "alias": "edp_mhr_45_49_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 45 AND 49)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_50_54_male",
+      "alias": "edp_mhr_50_54_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 50 AND 54)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_50_54_female",
+      "alias": "edp_mhr_50_54_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 50 AND 54)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_55_59_male",
+      "alias": "edp_mhr_55_59_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 55 AND 59)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_55_59_female",
+      "alias": "edp_mhr_55_59_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 55 AND 59)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_60_64_male",
+      "alias": "edp_mhr_60_64_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age between 60 AND 64)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_60_64_female",
+      "alias": "edp_mhr_60_64_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age between 60 AND 64)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_above_65_male",
+      "alias": "edp_mhr_above_65_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'M' AND (pd.age > 65)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1  AND pd.gender = 'M' AND (pd.age >= 65)), 1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "kk_pwid_above_65_female",
+      "alias": "edp_mhr_above_65_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type = 6 OR pd.sub_population_type = 40) AND pd.gender = 'F' AND (pd.age > 65)), 1, NULL)"
+        "expression": "if((pd.person_id is not null), -1, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "total_kk_pwid",
+      "alias": "total_edp_mhr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.reason_for_initiation = '105' AND (pd.population_type=6 OR pd.sub_population_type = 40)), 1, NULL)"
+        "expression": "if((pd.enrolled_in_prep_this_month = 1 AND pd.is_event_driven_prep = 1 ), 1, NULL)"
       }
     }
   ],

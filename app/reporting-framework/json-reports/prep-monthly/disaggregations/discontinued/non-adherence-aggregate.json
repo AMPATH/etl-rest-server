@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_pp_pbfw",
       "column": "sum(b.total_pp_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_discontinuation_non_adherence",
+      "column": "sum(b.total_reason_for_discontinuation_non_adherence)"
     }
   ],
   "groupBy": {

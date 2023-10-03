@@ -251,10 +251,10 @@ const generateAggregate = (alias) => {
   return aggregates;
 };
 
-// const colsSchema = generateColumns('reason_for_discontinuation', 5622, 'yy');
+// const colsSchema = generateColumns('is_event_driven_prep', 12065, 'edp');
 // const cols = JSON.stringify(colsSchema, null, 2);
 // console.log(cols);
 
-const aggsSchema = generateAggregate('yy');
+const aggsSchema = generateAggregate('edp');
 const aggs = JSON.stringify(aggsSchema, null, 2);
 console.log(aggs);
