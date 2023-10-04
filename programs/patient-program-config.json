@@ -74,6 +74,10 @@
             "display": "HIVTRIAGE"
           },
           {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
             "uuid": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTINITIAL",
             "allowedIf": "screenedForCovidToday",
@@ -200,6 +204,10 @@
             "display": "HIVTRIAGE"
           },
           {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
           },
@@ -283,6 +291,10 @@
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
           },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
@@ -400,6 +412,10 @@
             "display": "HIVTRIAGE"
           },
           {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
           },
@@ -462,6 +478,10 @@
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
           },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
@@ -582,6 +602,10 @@
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
           },
           {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
@@ -1539,6 +1563,10 @@
             "display": "HIVTRIAGE"
           },
           {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
             "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
             "display": "TRANSFERENCOUNTER"
           },
@@ -1602,6 +1630,10 @@
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
           },
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
@@ -1681,6 +1713,10 @@
             "display": "HIVTRIAGE"
           },
           {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
             "uuid": "8d5b2dde-c2cc-11de-8d13-0010c6dffd0f",
             "display": "PEDSINITIAL",
             "allowedIf": "screenedForCovidToday",
@@ -1756,6 +1792,10 @@
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
           },
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
@@ -3123,6 +3163,10 @@
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -4600,6 +4644,10 @@
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
             "display": "HIVTRIAGE"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
           },
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
