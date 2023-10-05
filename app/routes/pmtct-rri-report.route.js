@@ -7,7 +7,7 @@ var preRequest = require('../../pre-request-processing');
 const routes = [
   {
     method: 'GET',
-    //   path: '/etl/pmtct_rri_aggregate',
+
     path: '/etl/pmtct_rri_summary',
     config: {
       plugins: {
@@ -94,52 +94,10 @@ const routes = [
       tags: ['api']
     }
   },
-  // {
-  //   method: 'GET',
-  //   path: '/etl/pmtct_rri_summary/patient-list',
-  //   config: {
-  //     plugins: {
-  //       hapiAuthorization: {
-  //         role: privileges.canViewClinicDashBoard
-  //       }
-  //     },
-  //     handler: function (request, reply) {
-  //       c
-  //       request.query.reportName = 'pmtct_rri_aggregate_summary';
-  //       preRequest.resolveLocationIdsToLocationUuids(request, function () {
-  //         let requestParams = Object.assign({}, request.query, request.params);
 
-  //         let requestCopy = _.cloneDeep(requestParams);
-  //         let reportParams = etlHelpers.getReportParams(
-  //           request.query.reportName,
-  //           ['startDate', 'endDate', 'indicators'],
-  //           requestParams
-  //         );
-  //         requestCopy.locationUuids = reportParams.requestParams.locationUuids;
-  //         let pmtctrriService = new PmtctRriSummaryService(
-  //           'pmtct_rri_aggregate_summary',
-  //           requestCopy
-  //         );
-
-  //         pmtctrriService
-  //           .generatePatientList(requestParams.indicators.split(','))
-  //           .then((results) => {
-  //             reply(results);
-  //           })
-  //           .catch((err) => {
-  //             reply(err);
-  //           });
-  //       });
-  //     },
-  //     description:
-  //       'Get patient list for pmtct monthly summary report of the location and month provided',
-  //     notes: 'Returns patient list of pmtct monthly summary indicators',
-  //     tags: ['api']
-  //   }
-  // },
   {
     method: 'GET',
-    // path: '/etl/pmtct_rri_summary',
+
     path: '/etl/pmtct_rri_aggregate',
     config: {
       plugins: {

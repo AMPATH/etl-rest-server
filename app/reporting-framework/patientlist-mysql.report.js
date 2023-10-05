@@ -16,7 +16,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
     // 5. Generate report sql using json2sql
     // 6. Execute sql statement using sql generator
     const that = this;
-    console.log('reportName', that.reportName);
     return new Promise((resolve, error) => {
       // fetch reports
       that

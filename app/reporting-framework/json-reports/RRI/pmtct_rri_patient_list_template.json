@@ -5,11 +5,11 @@
   "description": "PMTCT patient list template",
   "sources": [
     {
-      "table": "amrs_migration.person",
+      "table": "amrs.person",
       "alias": "t1"
     },
     {
-      "table": "amrs_migration.person_name",
+      "table": "amrs.person_name",
       "alias": "person_name",
       "join": {
         "type": "LEFT",
@@ -17,7 +17,7 @@
       }
     },
     {
-      "table": "amrs_migration.patient_identifier",
+      "table": "amrs.patient_identifier",
       "alias": "id",
       "join": {
         "type": "LEFT",
@@ -33,7 +33,7 @@
       }
     },
     {
-      "table": "amrs_migration.person_address",
+      "table": "amrs.person_address",
       "alias": "pa",
       "join": {
         "type": "LEFT",
