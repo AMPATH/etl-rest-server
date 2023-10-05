@@ -254,4 +254,3 @@ const generateAggregate = (alias) => {
 
 const aggsSchema = generateAggregate('edp');
 const aggs = JSON.stringify(aggsSchema, null, 2);
-console.log(aggs);
