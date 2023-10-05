@@ -1,0 +1,787 @@
+{
+  "name": "ahdMonthlyDataSetBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "hmd"
+    },
+
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "fhs",
+      "join": {
+        "type": "left",
+        "joinCondition": "hmd.person_id = fhs.person_id AND fhs.is_clinical_encounter = 1"
+      }
+    },
+    {
+      "table": "etl.dates",
+      "alias": "dts",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fhs.encounter_datetime <= dts.endDate"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_ext_v1",
+      "alias": "fhse",
+      "join": {
+        "type": "left",
+        "joinCondition": "fhs.encounter_id = fhse.encounter_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "hmd.location_id = l.location_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = hmd.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "hmd.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "fhs.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "month",
+      "column": "fhs.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "hmd.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "enrollment_date",
+      "column": "DATE_FORMAT(hmd.enrollment_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 and (p.gender = 'F' AND hmd.age <= 15)  THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 and (p.gender = 'F' AND hmd.age > 15)  THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 and (p.gender = 'M' AND hmd.age <= 15)  THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 and (p.gender = 'M' AND hmd.age > 15)  THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 AND (fhs.cur_who_stage = 3 OR fhs.cur_who_stage = 4) AND (p.gender = 'F' AND hmd.age <= 15)  THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 AND (fhs.cur_who_stage = 3 OR fhs.cur_who_stage = 4) AND (p.gender = 'M' AND hmd.age <= 15) THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 AND (fhs.cur_who_stage = 3 OR fhs.cur_who_stage = 4) AND (p.gender = 'F' AND hmd.age >= 15) THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 AND (fhs.cur_who_stage = 3 OR fhs.cur_who_stage = 4) AND (p.gender = 'M' AND hmd.age >= 15)THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month=1 AND (fhs.cur_who_stage = 3 OR fhs.cur_who_stage = 4) THEN  1 ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE  WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH,fhs.cd4_1_date,DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE  WHEN  hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL THEN 1 ELSE 0 END "
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE  WHEN  hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN  hmd.started_art_this_month = 1 AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL THEN 1 ELSE 0 END "
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE  WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1<200 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH,fhs.cd4_1_date,DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1<200 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE  WHEN  hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1<200  THEN 1 ELSE 0 END "
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE  WHEN  hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1<200  THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN  hmd.started_art_this_month = 1 AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1<200  THEN 1 ELSE 0 END "
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15)  AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date,  DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) and fhs.tb_screen=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 THEN 1 ELSE 0 END"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15) AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) and fhs.tb_screen=1 and fhs.tb_test_result=703 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 THEN 1 ELSE 0 END"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15) AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15) AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 and (fhs.tb_tx_start_date< fhs.arv_start_date) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 and (fhs.tb_tx_start_date< fhs.arv_start_date) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 and (fhs.tb_tx_start_date< fhs.arv_start_date) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 and (fhs.tb_tx_start_date< fhs.arv_start_date) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200 and fhs.tb_screen=1 and fhs.tb_test_result=703 and fhs.on_tb_tx =1 and (fhs.tb_tx_start_date< fhs.arv_start_date) THEN 1 ELSE 0 END"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 THEN 1 ELSE 0 END"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'F' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (p.gender = 'M' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 and fhse.on_cm_treatment=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 and fhse.on_cm_treatment=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 and fhse.on_cm_treatment=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 and fhse.on_cm_treatment=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) AND fhse.cm_test=1 and fhse.cm_result=2 and fhse.on_cm_treatment=1 THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (TIMESTAMPDIFF(MONTH, fhse.toxo_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhse.toxo_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhse.toxo_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhse.toxo_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhse.toxo_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (TIMESTAMPDIFF(MONTH, fhse.pcp_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhse.pcp_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN ( hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhse.pcp_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhse.pcp_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhse.pcp_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND fhs.is_pregnant = 1 THEN 1  ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "  CASE WHEN hmd.started_art_this_month = 1 AND fhs.is_mother_breastfeeding = 1 THEN 1  ELSE 0  END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND fhs.vl_1 >1000 then 1 ELSE 0 end"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND TIMESTAMPDIFF(MONTH, fhse.ks_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhse.ks_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age <= 15) and (TIMESTAMPDIFF(MONTH, fhse.ks_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'F' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhse.ks_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (hmd.started_art_this_month = 1 AND p.gender = 'M' AND hmd.age >= 15) and (TIMESTAMPDIFF(MONTH, fhse.ks_tx_start_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL AND fhs.cd4_1 < 200) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "unsuppressed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND fhs.cd4_1 < 200 then 1 ELSE 0 end"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "art_start_date",
+      "column": "hmd.arv_start_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "new_on_art_this_month",
+      "column": "hmd.started_art_this_month"
+    },
+    {
+      "type": "derived_column",
+      "alias": "received_cd4_results",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hmd.started_art_this_month = 1 AND (TIMESTAMPDIFF(MONTH, fhs.cd4_1_date, DATE(dts.endDate)) < 1 AND fhs.cd4_2_date IS NULL)  AND fhs.cd4_1 IS NOT NULL  THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_range",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "extract(year from (from_days(datediff(now(),p.birthdate)))) >= 15",
+            "value": "15_and_above"
+          },
+          {
+            "condition": "else",
+            "value": "below_15"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MONTH(fhs.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reporting_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "date_format(fhs.encounter_datetime, '%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_year",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "YEAR(fhs.encounter_datetime)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmd.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fhs.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fhs.encounter_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid in ?",
+        "parameterName": "locationUuids"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "round(datediff(fhs.encounter_datetime,p.birthdate)/365) >= 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "round(datediff(fhs.encounter_datetime,p.birthdate)/365) <= 120"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["hmd.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}

@@ -1,0 +1,300 @@
+{
+  "name": "ahdCohortMonthlyAggregate",
+  "version": "1.0",
+  "tag": "",
+  "uses": [
+    {
+      "name": "ahdCohortMonthlyDataSetBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "ahdCohortMonthlyDataSetBase",
+      "alias": "ahd_base"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "Reporting_Month",
+      "column": "ahd_base.reporting_month"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "ahd_base.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "ahd_base.location"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_justification_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_justification_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_justification_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_justification_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_justification_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_justification_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_justification_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_justification_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_justification",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_justification)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_due_to_cm_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_due_to_cm_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_due_to_cm_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_due_to_cm_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_due_to_cm_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_due_to_cm_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_due_to_cm_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_due_to_cm_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_due_to_cm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_due_to_cm)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_cd4_done_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_cd4_done_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_cd4_done_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_cd4_done_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_cd4_done_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_cd4_done_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_cd4_done_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_cd4_done_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_6mons_cd4_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_6mons_cd4_done)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_cd4_done_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_cd4_done_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_cd4_done_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_cd4_done_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_cd4_done_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_cd4_done_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_cd4_done_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_cd4_done_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_cm_12mons_cd4_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.started_cm_12mons_cd4_done)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["ahd_base.location_id", "ahd_base.reporting_month"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "ahd-monthly-report-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

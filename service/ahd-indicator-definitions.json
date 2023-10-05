@@ -1,0 +1,289 @@
+[
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "NEW",
+    "indicators": [
+      {
+        "refno": "1",
+        "label": "Number of NEW Clients New on ART",
+        "indicator": [
+          "new_on_art_this_month_female_less_than_15",
+          "new_on_art_this_month_male_less_than_15",
+          "new_on_art_this_month_female_more_than_15",
+          "new_on_art_this_month_male_more_than_15",
+          "new_on_art_this_month"
+        ]
+      },
+      {
+        "refno": "1.1 ",
+        "label": "Number of New Clients who are Assessed & Classified WHO clinical Stage III/IV",
+        "indicator": [
+          "classified_as_who_stage_3_or_4_female_less_than_15",
+          "classified_as_who_stage_3_or_4_male_less_than_15",
+          "classified_as_who_stage_3_or_4_female_more_than_15",
+          "classified_as_who_stage_3_or_4_male_more_than_15",
+          "classified_as_who_stage_3_or_4"
+        ]
+      },
+      {
+        "refno": "1.3",
+        "label": "Number of NEW clients who received Baseline CD4 Count Test & Results available",
+        "indicator": [
+          "baseline_cd4_done_this_month_female_less_than_15",
+          "baseline_cd4_done_this_month_male_less_than_15",
+          "baseline_cd4_done_this_month_female_more_than_15",
+          "baseline_cd4_done_this_month_male_more_than_15",
+          "baseline_cd4_done_this_month"
+        ]
+      },
+      {
+        "refno": "2",
+        "label": "Number of clients CD4 Test Done for Suspected Treatment Failure or any other reasons(COHORT)",
+        "indicator": [
+          "cd4_justification_female_less_than_15",
+          "cd4_justification_male_less_than_15",
+          "cd4_justification_female_more_than_15",
+          "cd4_justification_male_more_than_15",
+          "cd4_justification"
+        ]
+      },
+      {
+        "refno": "3",
+        "label": "Number of NEW clients whose CD4 count is below 200",
+        "indicator": [
+          "cd4_below_200_female_less_than_15",
+          "cd4_below_200_male_less_than_15",
+          "cd4_below_200_female_more_than_15",
+          "cd4_below_200_male_more_than_15",
+          "cd4_below_200"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "NEW TUBERCULOSIS",
+    "indicators": [
+      {
+        "refno": "4",
+        "label": "Number of NEW clients whose CD4 count is below 200 who are screened for tuberculosis",
+        "indicator": [
+          "tb_screened_cd4_below_200_female_less_than_15",
+          "tb_screened_cd4_below_200_male_less_than_15",
+          "tb_screened_cd4_below_200_female_more_than_15",
+          "tb_screened_cd4_below_200_male_more_than_15",
+          "tb_screened_cd4_below_200"
+        ]
+      },
+      {
+        "refno": "4.1",
+        "label": "Number of NEW clients who are screened for TB who test positive for tuberculosis",
+        "indicator": [
+          "positive_tb_screened_cd4_below_200_female_less_than_15",
+          "positive_tb_screened_cd4_below_200_male_less_than_15",
+          "positive_tb_screened_cd4_below_200_female_more_than_15",
+          "positive_tb_screened_cd4_below_200_male_more_than_15",
+          "positive_tb_screened_cd4_below_200"
+        ]
+      },
+      {
+        "refno": "4.2",
+        "label": "Number of NEW client who tested positive for tuberculosis who are treated for tuberculosis",
+        "indicator": [
+          "ontx_positive_tb_screened_cd4_below_200_female_less_than_15",
+          "ontx_positive_tb_screened_cd4_below_200_male_less_than_15",
+          "ontx_positive_tb_screened_cd4_below_200_female_more_than_15",
+          "ontx_positive_tb_screened_cd4_below_200_male_more_than_15",
+          "ontx_positive_tb_screened_cd4_below_200"
+        ]
+      },
+      {
+        "refno": "4.3",
+        "label": "Number of NEW client whose ART initiation was delayed due to tuberculosis treatment",
+        "indicator": [
+          "delayed_art_female_less_than_15",
+          "delayed_art_male_less_than_15",
+          "delayed_art_female_more_than_15",
+          "delayed_art_male_more_than_15",
+          "delayed_art"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "NEW CRYPTOCOCCAL MENINGITIS",
+    "indicators": [
+      {
+        "refno": "5",
+        "label": "Number of NEW clients CD4 < 200 who received a Crag Test for cryptococcal meningitis",
+        "indicator": [
+          "crag_test_done_female_less_than_15",
+          "crag_test_done_male_less_than_15",
+          "crag_test_done_female_more_than_15",
+          "crag_test_done_male_more_than_15",
+          "crag_test_done"
+        ]
+      },
+      {
+        "refno": "5.1",
+        "label": "Number of NEW clients CD4 < 200 Crag Test positive for cryptococcal meningitis",
+        "indicator": [
+          "crag_test_positive_female_less_than_15",
+          "crag_test_positive_male_less_than_15",
+          "crag_test_positive_female_more_than_15",
+          "crag_test_positive_male_more_than_15",
+          "crag_test_positive"
+        ]
+      },
+      {
+        "refno": "5.2",
+        "label": "Number of NEW clients CD4 < 200 Treated for cryptococcal meningitis",
+        "indicator": [
+          "on_cm_treatment_female_less_than_15",
+          "on_cm_treatment_male_less_than_15",
+          "on_cm_treatment_female_more_than_15",
+          "on_cm_treatment_male_more_than_15",
+          "on_cm_treatment"
+        ]
+      },
+      {
+        "refno": "5.3",
+        "label": "Number of client whose ART initiation was delayed due to cryptococcal meningitis treatment",
+        "indicator": [
+          "delayed_art_due_to_cm_female_less_than_15",
+          "delayed_art_due_to_cm_male_less_than_15",
+          "delayed_art_due_to_cm_female_more_than_15",
+          "delayed_art_due_to_cm_male_more_than_15",
+          "delayed_art_due_to_cm"
+        ]
+      },
+      {
+        "refno": "6",
+        "label": "Number of clients Started Cryptococcal Treatment 6 months ago and still current on Cryptococcal Mengitis treatment",
+        "indicator": [
+          "started_cm_6mons_female_less_than_15",
+          "started_cm_6mons_male_less_than_15",
+          "started_cm_6mons_female_more_than_15",
+          "started_cm_6mons_male_more_than_15",
+          "started_cm_6mons"
+        ]
+      },
+      {
+        "refno": "6.1",
+        "label": "Number of clients Started Cryptococcal Treatment 6 months ago and have CD4 Test done at month 6",
+        "indicator": [
+          "started_cm_6mons_cd4_done_female_less_than_15",
+          "started_cm_6mons_cd4_done_male_less_than_15",
+          "started_cm_6mons_cd4_done_female_more_than_15",
+          "started_cm_6mons_cd4_done_male_more_than_15",
+          "started_cm_6mons_cd4_done"
+        ]
+      },
+      {
+        "refno": "7",
+        "label": "Number of clients Started Cryptococcal Treatment 12 months ago and still current on Cryptococcal Mengitis treatment",
+        "indicator": [
+          "started_cm_12mons_female_less_than_15",
+          "started_cm_12mons_male_less_than_15",
+          "started_cm_12mons_female_more_than_15",
+          "started_cm_12mons_male_more_than_15",
+          "started_cm_12mons"
+        ]
+      },
+      {
+        "refno": "7.1",
+        "label": "Number of clients Started Cryptococcal Treatment 12 months ago and have CD4 Test done at month 12",
+        "indicator": [
+          "started_cm_12mons_cd4_done_female_less_than_15",
+          "started_cm_12mons_cd4_done_male_less_than_15",
+          "started_cm_12mons_cd4_done_female_more_than_15",
+          "started_cm_12mons_cd4_done_male_more_than_15",
+          "started_cm_12mons_cd4_done"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "NEW TOXOPLASMOSIS",
+    "indicators": [
+      {
+        "refno": "8",
+        "label": "Number of NEW Clients with CD4<200  Diagnosed with Toxoplasmosis",
+        "indicator": [
+          "on_toxoplasmosis_treatment_female_less_than_15",
+          "on_toxoplasmosis_treatment_male_less_than_15",
+          "on_toxoplasmosis_treatment_female_more_than_15",
+          "on_toxoplasmosis_treatment_male_more_than_15",
+          "on_toxoplasmosis_treatment"
+        ]
+      },
+      {
+        "refno": "8.1",
+        "label": "Number of NEW Clients with CD4<200  on Treatment for Toxoplasmosis",
+        "indicator": [
+          "on_toxoplasmosis_treatment_female_less_than_15",
+          "on_toxoplasmosis_treatment_male_less_than_15",
+          "on_toxoplasmosis_treatment_female_more_than_15",
+          "on_toxoplasmosis_treatment_male_more_than_15",
+          "on_toxoplasmosis_treatment"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "NEW PCP/PJP",
+    "indicators": [
+      {
+        "refno": "9",
+        "label": "Number of NEW Clients with CD4<200  Diagnosed with PCP/PJP",
+        "indicator": [
+          "on_pcp_treatment_female_less_than_15",
+          "on_pcp_treatment_male_less_than_15",
+          "on_pcp_treatment_female_more_than_15",
+          "on_pcp_treatment_male_more_than_15",
+          "on_pcp_treatment"
+        ]
+      },
+      {
+        "refno": "9.1",
+        "label": "Number of NEW Clients with CD4<200  on Treatment for PCP/PJP",
+        "indicator": [
+          "on_pcp_treatment_female_less_than_15",
+          "on_pcp_treatment_male_less_than_15",
+          "on_pcp_treatment_female_more_than_15",
+          "on_pcp_treatment_male_more_than_15",
+          "on_pcp_treatment"
+        ]
+      },
+      {
+        "refno": "10",
+        "label": "Number of NEW Clients with CD4<200  Diagnosed with KS",
+        "indicator": [
+          "on_ks_treatment_female_less_than_15",
+          "on_ks_treatment_male_less_than_15",
+          "on_ks_treatment_female_more_than_15",
+          "on_ks_treatment_male_more_than_15",
+          "on_ks_treatment"
+        ]
+      },
+      {
+        "refno": "10",
+        "label": "Number of NEW Clients with CD4<200  on Treatment for KS",
+        "indicator": [
+          "on_ks_treatment_female_less_than_15",
+          "on_ks_treatment_male_less_than_15",
+          "on_ks_treatment_female_more_than_15",
+          "on_ks_treatment_male_more_than_15",
+          "on_ks_treatment"
+        ]
+      }
+    ]
+  }
+]

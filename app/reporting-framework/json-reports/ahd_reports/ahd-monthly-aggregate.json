@@ -1,0 +1,624 @@
+{
+  "name": "ahdMonthlyAggregate",
+  "version": "1.0",
+  "tag": "",
+  "uses": [
+    {
+      "name": "ahdMonthlyDataSetBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "ahdMonthlyDataSetBase",
+      "alias": "ahd_base"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "Reporting_Month",
+      "column": "ahd_base.reporting_month"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "ahd_base.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "ahd_base.location"
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.new_on_art_this_month_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.new_on_art_this_month_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.new_on_art_this_month_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.new_on_art_this_month_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_on_art_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.new_on_art_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.classified_as_who_stage_3_or_4_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.classified_as_who_stage_3_or_4_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.classified_as_who_stage_3_or_4_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.classified_as_who_stage_3_or_4_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "classified_as_who_stage_3_or_4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.classified_as_who_stage_3_or_4)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.baseline_cd4_done_this_month_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.baseline_cd4_done_this_month_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.baseline_cd4_done_this_month_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.baseline_cd4_done_this_month_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_cd4_done_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.baseline_cd4_done_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_below_200_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_below_200_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_below_200_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_below_200_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.cd4_below_200)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.tb_screened_cd4_below_200_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.tb_screened_cd4_below_200_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.tb_screened_cd4_below_200_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.tb_screened_cd4_below_200_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screened_cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.tb_screened_cd4_below_200)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.positive_tb_screened_cd4_below_200_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.positive_tb_screened_cd4_below_200_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.positive_tb_screened_cd4_below_200_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.positive_tb_screened_cd4_below_200_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_screened_cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.positive_tb_screened_cd4_below_200)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.ontx_positive_tb_screened_cd4_below_200_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.ontx_positive_tb_screened_cd4_below_200_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.ontx_positive_tb_screened_cd4_below_200_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.ontx_positive_tb_screened_cd4_below_200_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ontx_positive_tb_screened_cd4_below_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.ontx_positive_tb_screened_cd4_below_200)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delayed_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.delayed_art)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_done_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_done_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_done_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_done_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_done)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_positive_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_positive_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_positive_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_positive_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.crag_test_positive)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_cm_treatment_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_cm_treatment_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_cm_treatment_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_cm_treatment_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_cm_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_cm_treatment)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_toxoplasmosis_treatment_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_toxoplasmosis_treatment_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_toxoplasmosis_treatment_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_toxoplasmosis_treatment_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_toxoplasmosis_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_toxoplasmosis_treatment)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_pcp_treatment_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_pcp_treatment_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_pcp_treatment_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_pcp_treatment_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_pcp_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_pcp_treatment)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_female_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_ks_treatment_female_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_male_less_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_ks_treatment_male_less_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_female_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_ks_treatment_female_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment_male_more_than_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_ks_treatment_male_more_than_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ks_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ahd_base.on_ks_treatment)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["ahd_base.location_id", "ahd_base.reporting_month"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "ahd-monthly-report-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "name": "pmtct-rri-report-patient-list-template",
+  "name": "pmtct-rri-patient-list-template",
   "version": "1.0",
-  "tag": "pmtct-rri-report-patient-list-template",
+  "tag": "pmtct_rri_patient-list-template",
   "description": "PMTCT patient list template",
   "sources": [
     {
