@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_ff_pbfw",
       "column": "sum(b.total_ff_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_initiation_recent_sti",
+      "column": "sum(b.total_reason_for_initiation_recent_sti)"
     }
   ],
   "groupBy": {

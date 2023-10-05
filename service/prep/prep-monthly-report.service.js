@@ -41,7 +41,7 @@ export class PrepMonthlyReportService extends MultiDatasetPatientlistReport {
                     result.report.reportSchemas.main.transFormDirectives
                       .joinColumn,
                   finalResult,
-                  result.results.results.results
+                  result?.results?.results?.results
                 );
               }
             }

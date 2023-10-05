@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_dd_pbfw",
       "column": "sum(b.total_dd_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_initiation_gbv",
+      "column": "sum(b.total_reason_for_initiation_gbv)"
     }
   ],
   "groupBy": {

@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.prep_monthly_report_dataset_v3",
+      "table": "etl.prep_monthly_report_dataset_v5",
       "alias": "pd"
     },
     {
@@ -818,7 +818,7 @@
       "alias": "total_st_mahr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4)), 1, NULL)"
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND (pd.old_population_type = 300 OR pd.population_type = 4) AND pd.gender = 'M'), 1, NULL)"
       }
     },
     {
@@ -1739,6 +1739,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.population_type = 9), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_discontinued_prep_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((pd.discontinued_from_prep_this_month = 1), 1, NULL)"
       }
     },
     {

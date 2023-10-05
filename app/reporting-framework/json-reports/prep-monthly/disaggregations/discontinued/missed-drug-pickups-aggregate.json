@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_xx_pbfw",
       "column": "sum(b.total_xx_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_discontinuation_missed_drug_pickup",
+      "column": "sum(b.total_reason_for_discontinuation_missed_drug_pickup)"
     }
   ],
   "groupBy": {

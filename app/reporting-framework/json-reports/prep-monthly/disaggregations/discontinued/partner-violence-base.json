@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.prep_monthly_report_dataset_v3",
+      "table": "etl.prep_monthly_report_dataset_v5",
       "alias": "pd"
     },
     {
@@ -1742,6 +1742,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(((pd.discontinued_from_prep_this_month = 1 AND pd.reason_for_discontinuation = '9761') AND pd.population_type = 9), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_reason_for_discontinuation_partner_violence",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((pd.discontinued_from_prep_this_month = 1 AND pd.reason_for_discontinuation = '9761'), 1, NULL)"
       }
     }
   ],

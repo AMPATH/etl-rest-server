@@ -384,6 +384,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_initiated_prep_partner_positive",
+      "column": "sum(b.total_initiated_prep_partner_positive)"
+    },
+    {
+      "type": "simple_column",
       "alias": "total_aa_pbfw",
       "column": "sum(b.total_aa_pbfw)"
     },
@@ -1424,6 +1429,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "total_initiated_prep_partner_high_risk",
+      "column": "sum(b.total_initiated_prep_partner_high_risk)"
+    },
+    {
+      "type": "simple_column",
       "alias": "cc_tg_15_19_male",
       "column": "sum(b.cc_tg_15_19_male)"
     },
@@ -2456,6 +2466,11 @@
       "type": "simple_column",
       "alias": "total_cc_pbfw",
       "column": "sum(b.total_cc_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_initiated_prep_multiple_sex_partners",
+      "column": "sum(b.total_initiated_prep_multiple_sex_partners)"
     }
   ],
   "groupBy": {

@@ -3,6 +3,7 @@
     "eligibleForPrepAggregate",
     "reasonForInitiationPrepAggregate",
     "newForPrepAggregate",
+    "eventDrivenPrepAggregate",
     "restartingPrepAggregate",
     "whileOnPrepAggregate",
     "discontinuedPrepAggregate",

@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_mm_pbfw",
       "column": "sum(b.total_mm_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_discontinuation_low_risk",
+      "column": "sum(b.total_reason_for_discontinuation_low_risk)"
     }
   ],
   "groupBy": {

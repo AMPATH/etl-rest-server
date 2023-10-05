@@ -238,6 +238,9 @@ import * as reasons_for_initiation_prep_base from './json-reports/prep-monthly/d
 import * as new_for_prep_aggregate from './json-reports/prep-monthly/disaggregations/new/new-for-prep-aggregate.json';
 import * as new_for_prep_base from './json-reports/prep-monthly/disaggregations/new/new-for-prep-base.json';
 
+import * as prep_event_driven_aggregate from './json-reports/prep-monthly/disaggregations/event-driven/prep-event-driven-aggregate.json';
+import * as prep_event_driven_base from './json-reports/prep-monthly/disaggregations/event-driven/prep-event-driven-base.json';
+
 import * as restarting_prep_aggregate from './json-reports/prep-monthly/disaggregations/restarting/restarting-prep-aggregate.json';
 import * as restarting_prep_base from './json-reports/prep-monthly/disaggregations/restarting/restarting-prep-base.json';
 
@@ -1416,6 +1419,12 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(new_for_prep_aggregate),
             newForPrepBase: this.cloneJsonSchema(new_for_prep_base)
+          });
+          break;
+        case 'eventDrivenPrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(prep_event_driven_aggregate),
+            eventDrivenPrepBase: this.cloneJsonSchema(prep_event_driven_base)
           });
           break;
         case 'restartingPrepAggregate':

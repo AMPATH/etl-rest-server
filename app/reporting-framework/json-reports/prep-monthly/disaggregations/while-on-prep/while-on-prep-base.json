@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.prep_monthly_report_dataset_v3",
+      "table": "etl.prep_monthly_report_dataset_v5",
       "alias": "pd"
     },
     {
@@ -1748,6 +1748,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_tested_positive_on_prep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((pd.turned_positive_this_month = 1), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "d_tg_15_19_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -2663,7 +2671,7 @@
       "alias": "total_d_fsw",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pd.is_eligible_for_prep = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30)), 1, NULL)"
+        "expression": "if((pd.diagnosed_with_sti = 1 AND (pd.population_type = 5 OR pd.sub_population_type = 30)), 1, NULL)"
       }
     },
     {
@@ -3400,6 +3408,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if((pd.diagnosed_with_sti = 1 AND pd.population_type = 9), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_diagnosed_with_sti_on_prep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((pd.diagnosed_with_sti = 1), 1, NULL)"
       }
     },
     {

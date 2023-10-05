@@ -1076,6 +1076,11 @@
       "type": "simple_column",
       "alias": "total_ss_pbfw",
       "column": "sum(b.total_ss_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_reason_for_discontinuation_partner_refusal",
+      "column": "sum(b.total_reason_for_discontinuation_partner_refusal)"
     }
   ],
   "groupBy": {

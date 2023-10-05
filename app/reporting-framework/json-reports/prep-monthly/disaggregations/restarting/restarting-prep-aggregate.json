@@ -1081,6 +1081,11 @@
       "type": "simple_column",
       "alias": "total_re_pbfw",
       "column": "sum(b.total_re_pbfw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_restarting_prep_this_month",
+      "column": "sum(b.total_restarting_prep_this_month)"
     }
   ],
   "groupBy": {

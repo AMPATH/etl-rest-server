@@ -936,6 +936,103 @@
             "indicator": "total_i_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients initiated on PrEP",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number of clients initiated on PrEP",
+            "indicator": "total_initiated_on_prep_this_month"
+          }
+        ]
       }
     ]
   },
@@ -1812,6 +1909,205 @@
           {
             "label": "Total Number of PBFW Restarting PrEP",
             "indicator": "total_re_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients restarting on PrEP",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number of clients restarting PrEP",
+            "indicator": "total_restarting_prep_this_month"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "No. of clients initiated on event driven prep",
+    "indicators": [
+      {
+        "label": "Men at high risk",
+        "indicators": [
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 15 and 19 Male",
+            "indicator": "edp_mhr_15_19_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 15 and 19 Female",
+            "indicator": "edp_mhr_15_19_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 20 and 24 Male",
+            "indicator": "edp_mhr_20_24_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 20 and 24 Female",
+            "indicator": "edp_mhr_20_24_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 25 and 29 Male",
+            "indicator": "edp_mhr_25_29_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 25 and 29 Female",
+            "indicator": "edp_mhr_25_29_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 30 and 34 Male",
+            "indicator": "edp_mhr_30_34_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 30 and 34 Female",
+            "indicator": "edp_mhr_30_34_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 35 and 39 Male",
+            "indicator": "edp_mhr_35_39_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 35 and 39 Female",
+            "indicator": "edp_mhr_35_39_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 40 and 44 Male",
+            "indicator": "edp_mhr_40_44_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 40 and 44 Female",
+            "indicator": "edp_mhr_40_44_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 45 and 49 Male",
+            "indicator": "edp_mhr_45_49_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 45 and 49 Female",
+            "indicator": "edp_mhr_45_49_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 50 and 54 Male",
+            "indicator": "edp_mhr_50_54_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 50 and 54 Female",
+            "indicator": "edp_mhr_50_54_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 55 and 59 Male",
+            "indicator": "edp_mhr_55_59_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 55 and 59 Female",
+            "indicator": "edp_mhr_55_59_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 60 and 64 Male",
+            "indicator": "edp_mhr_60_64_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged between 60 and 64 Female",
+            "indicator": "edp_mhr_60_64_female"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged above 65 Male",
+            "indicator": "edp_mhr_above_65_male"
+          },
+          {
+            "label": "Apply to those clients who have been initiated on event driven prep aged above 65 Female",
+            "indicator": "edp_mhr_above_65_female"
+          },
+          {
+            "label": "Total Number clients who have been initiated on event driven prep ",
+            "indicator": "total_edp_mhr"
           }
         ]
       }
@@ -2692,6 +2988,103 @@
             "indicator": "total_tp_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients tested HIV positive while on PrEP",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number of clients tested HIV positive while on PrEP",
+            "indicator": "total_tested_positive_on_prep"
+          }
+        ]
       }
     ]
   },
@@ -3568,6 +3961,103 @@
           {
             "label": "Total Number of PBFW diagnosed with STIs while on PrEP",
             "indicator": "total_d_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients diagnosed with STIs while on PrEP",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number of clients diagnosed with STIs while on PrEP",
+            "indicator": "total_diagnosed_with_sti_on_prep"
           }
         ]
       }
@@ -4448,6 +4938,103 @@
             "indicator": "total_st_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients stopped/discontinued PrEP this month",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "i_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number of clients stopped/discontinued PrEP this month",
+            "indicator": "total_discontinued_prep_this_month"
+          }
+        ]
       }
     ]
   },
@@ -4749,6 +5336,103 @@
             "indicator": "total_aa_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients Partner+ve",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Partner+ve (not on art, art_last 6mnt, Poor Viral suppression)",
+            "indicator": "total_initiated_prep_partner_positive"
+          }
+        ]
       }
     ]
   },
@@ -4759,95 +5443,95 @@
         "label": "Trans Gender (TG)",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 male",
             "indicator": "bb_tg_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_tg_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_tg_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_tg_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_tg_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_tg_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_tg_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_tg_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_tg_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_tg_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_tg_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_tg_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_tg_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_tg_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_tg_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_tg_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_tg_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_tg_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_tg_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_tg_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_tg_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_tg_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_tg"
           }
         ]
@@ -4856,95 +5540,95 @@
         "label": "AGYW",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_agyw_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_agyw_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_agyw_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_agyw_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_agyw_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_agyw_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_agyw_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_agyw_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_agyw_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_agyw_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_agyw_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_agyw_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_agyw_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_agyw_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_agyw_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_agyw_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_agyw_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_agyw_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_agyw_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_agyw_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_agyw_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_agyw_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_agyw"
           }
         ]
@@ -4953,95 +5637,95 @@
         "label": "MSM",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_msm_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_msm_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_msm_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_msm_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_msm_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_msm_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_msm_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_msm_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_msm_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_msm_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_msm_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_msm_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_msm_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_msm_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_msm_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_msm_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_msm_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_msm_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_msm_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_msm_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_msm_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_msm_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_msm"
           }
         ]
@@ -5050,95 +5734,95 @@
         "label": "Men at high risk",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_mhr_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_mhr_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_mhr_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_mhr_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_mhr_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_mhr_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_mhr_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_mhr_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_mhr_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_mhr_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_mhr_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_mhr_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_mhr_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_mhr_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_mhr_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_mhr_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_mhr_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_mhr_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_mhr_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_mhr_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_mhr_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_mhr_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_mhr"
           }
         ]
@@ -5147,95 +5831,95 @@
         "label": "FSW",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_fsw_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_fsw_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_fsw_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_fsw_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_fsw_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_fsw_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_fsw_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_fsw_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_fsw_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_fsw_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_fsw_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_fsw_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_fsw_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_fsw_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_fsw_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_fsw_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_fsw_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_fsw_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_fsw_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_fsw_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_fsw_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_fsw_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_fsw"
           }
         ]
@@ -5244,95 +5928,95 @@
         "label": "PWID",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_pwid_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_pwid_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_pwid_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_pwid_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_pwid_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_pwid_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_pwid_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_pwid_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_pwid_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_pwid_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_pwid_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_pwid_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_pwid_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_pwid_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_pwid_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_pwid_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_pwid_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_pwid_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_pwid_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_pwid_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_pwid_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_pwid_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_pwid"
           }
         ]
@@ -5341,95 +6025,95 @@
         "label": "Other Women",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_ow_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_ow_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_ow_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_ow_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_ow_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_ow_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_ow_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_ow_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_ow_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_ow_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_ow_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_ow_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_ow_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_ow_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_ow_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_ow_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_ow_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_ow_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_ow_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_ow_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_ow_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_ow_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_ow"
           }
         ]
@@ -5438,95 +6122,95 @@
         "label": "Serodiscordant Couple",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_sc_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_sc_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_sc_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_sc_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_sc_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_sc_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_sc_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_sc_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_sc_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_sc_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_sc_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_sc_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_sc_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_sc_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_sc_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_sc_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_sc_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_sc_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_sc_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_sc_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_sc_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_sc_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_sc"
           }
         ]
@@ -5535,96 +6219,193 @@
         "label": "PBFW",
         "indicators": [
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Male",
             "indicator": "bb_pbfw_15_19_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 15 and 19 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 15 and 19 Female",
             "indicator": "bb_pbfw_15_19_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Male",
             "indicator": "bb_pbfw_20_24_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 20 and 24 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 20 and 24 Female",
             "indicator": "bb_pbfw_20_24_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Male",
             "indicator": "bb_pbfw_25_29_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 25 and 29 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 25 and 29 Female",
             "indicator": "bb_pbfw_25_29_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Male",
             "indicator": "bb_pbfw_30_34_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 30 and 34 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 30 and 34 Female",
             "indicator": "bb_pbfw_30_34_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Male",
             "indicator": "bb_pbfw_35_39_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 35 and 39 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 35 and 39 Female",
             "indicator": "bb_pbfw_35_39_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Male",
             "indicator": "bb_pbfw_40_44_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 40 and 44 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 40 and 44 Female",
             "indicator": "bb_pbfw_40_44_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Male",
             "indicator": "bb_pbfw_45_49_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 45 and 49 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 45 and 49 Female",
             "indicator": "bb_pbfw_45_49_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Male",
             "indicator": "bb_pbfw_50_54_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 50 and 54 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 50 and 54 Female",
             "indicator": "bb_pbfw_50_54_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Male",
             "indicator": "bb_pbfw_55_59_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 55 and 59 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 55 and 59 Female",
             "indicator": "bb_pbfw_55_59_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Male",
             "indicator": "bb_pbfw_60_64_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged between 60 and 64 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged between 60 and 64 Female",
             "indicator": "bb_pbfw_60_64_female"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Male",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Male",
             "indicator": "bb_pbfw_above_65_male"
           },
           {
-            "label": "Apply to those started due to their sexual partners HIV discordance status aged above 65 Female",
+            "label": "Apply to those started due to their suspicion of their sexual partner's HIV status aged above 65 Female",
             "indicator": "bb_pbfw_above_65_female"
           },
           {
-            "label": "Total Number of those started due to their sexual partners HIV discordance status ",
+            "label": "Total Number of those started due to their suspicion of their sexual partner's HIV status ",
             "indicator": "total_bb_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients Sex partner(s) high risk",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients partner(s) high risk",
+            "indicator": "total_initiated_prep_partner_high_risk"
           }
         ]
       }
@@ -6505,6 +7286,103 @@
             "indicator": "total_cc_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients with more than one partner",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients with more than one partner",
+            "indicator": "total_initiated_prep_multiple_sex_partners"
+          }
+        ]
       }
     ]
   },
@@ -7381,6 +8259,103 @@
           {
             "label": "Total Number clients whose main reason for starting PrEP is on going IPV/GBV ",
             "indicator": "total_dd_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients ongoing IPV/GBV",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients ongoing IPV/GBV",
+            "indicator": "total_reason_for_initiation_gbv"
           }
         ]
       }
@@ -8261,6 +9236,103 @@
             "indicator": "total_ee_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients engaging in transactional sex",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total number clients engaging in transactional sex",
+            "indicator": "total_reason_for_initiation_transactional_sex"
+          }
+        ]
       }
     ]
   },
@@ -9139,11 +10211,108 @@
             "indicator": "total_ff_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients Recent STI",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total number clients Recent STI",
+            "indicator": "total_reason_for_initiation_recent_sti"
+          }
+        ]
       }
     ]
   },
   {
-    "sectionTitle": "Recussent use of PEP",
+    "sectionTitle": "Recurrent use of PEP",
     "indicators": [
       {
         "label": "TG",
@@ -10015,6 +11184,103 @@
           {
             "label": "Total Number clients whose main reason for starting PrEP is recurrent use of PEP ",
             "indicator": "total_gg_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients Recurrent use of PEP",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total number clients Recurrent use of PEP",
+            "indicator": "total_reason_for_initiation_recurrent_pep"
           }
         ]
       }
@@ -10895,11 +12161,108 @@
             "indicator": "total_hh_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients inconsistent condom use",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients inconsistent condom use",
+            "indicator": "total_reason_for_initiation_inconsistent_condom_use"
+          }
+        ]
       }
     ]
   },
   {
-    "sectionTitle": "Other Reasons",
+    "sectionTitle": "Starting PrEP for Other Reasons",
     "indicators": [
       {
         "label": "TG",
@@ -11771,6 +13134,103 @@
           {
             "label": "Total Number clients whose main reason for starting PrEP is other reasons ",
             "indicator": "total_jj_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients Starting PrEP for Other Reasons",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Starting PrEP for Other Reasons",
+            "indicator": "total_reason_for_initiation_other_reasons"
           }
         ]
       }
@@ -12753,6 +14213,103 @@
             "indicator": "total_ll_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients HIV test is positive",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients HIV test is positive",
+            "indicator": "total_reason_for_discontinuation_tested_positive"
+          }
+        ]
       }
     ]
   },
@@ -13629,6 +15186,103 @@
           {
             "label": "Total Number clients whose main reason for discontinuing PrEP is low risk for HIV ",
             "indicator": "total_mm_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients Low risk of HIV",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Low risk of HIV",
+            "indicator": "total_reason_for_discontinuation_low_risk"
           }
         ]
       }
@@ -14509,6 +16163,103 @@
             "indicator": "total_nn_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number clients PrEP drugs side effects",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients PrEP drugs side effects",
+            "indicator": "total_reason_for_discontinuation_side_effects"
+          }
+        ]
       }
     ]
   },
@@ -15385,6 +17136,103 @@
           {
             "label": "Total Number clients whose main reason for discontinuing PrEP is being found to be non-adherent to PrEP ",
             "indicator": "total_pp_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number clients Non-Adherence",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Non-Adherence",
+            "indicator": "total_reason_for_discontinuation_non_adherence"
           }
         ]
       }
@@ -16367,6 +18215,103 @@
             "indicator": "total_rr_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number of clients Too many HIV test",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Too many HIV test",
+            "indicator": "total_reason_for_discontinuation_many_tests"
+          }
+        ]
       }
     ]
   },
@@ -17243,6 +19188,103 @@
           {
             "label": "Total Number clients whose main reason for discontinuing PrEP is partner refusal for them to continue using PrEP ",
             "indicator": "total_ss_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number of clients Partner refusal",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Partner refusal",
+            "indicator": "total_reason_for_discontinuation_partner_refusal"
           }
         ]
       }
@@ -18123,6 +20165,103 @@
             "indicator": "total_tt_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number of clients Partner violence",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Partner violence",
+            "indicator": "total_reason_for_discontinuation_partner_violence"
+          }
+        ]
       }
     ]
   },
@@ -18999,6 +21138,103 @@
           {
             "label": "Total Number clients whose main reason for discontinuing PrEP is died while on prep ",
             "indicator": "total_vv_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number of clients Died",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Died",
+            "indicator": "total_reason_for_discontinuation_died"
           }
         ]
       }
@@ -19879,6 +22115,103 @@
             "indicator": "total_ww_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number of clients Transfer outs",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Transfer outs",
+            "indicator": "total_reason_for_discontinuation_transfer_outs"
+          }
+        ]
       }
     ]
   },
@@ -20757,11 +23090,108 @@
             "indicator": "total_xx_pbfw"
           }
         ]
+      },
+      {
+        "label": "Total Number of clients Missed drug pick ups",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Missed drug pick ups",
+            "indicator": "total_reason_for_discontinuation_missed_drug_pickup"
+          }
+        ]
       }
     ]
   },
   {
-    "sectionTitle": "Any other reason",
+    "sectionTitle": "Any other reason for discontinuing PrEP",
     "indicators": [
       {
         "label": "TG",
@@ -21633,6 +24063,103 @@
           {
             "label": "Total Number clients whose main reason for discontinuing PrEP is any other reason ",
             "indicator": "total_yy_pbfw"
+          }
+        ]
+      },
+      {
+        "label": "Total Number of clients Any other reason",
+        "indicators": [
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_20_24_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_25_29_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_30_34_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_35_39_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_40_44_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_45_49_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_50_54_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_55_59_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_60_64_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_above_65_male"
+          },
+          {
+            "label": "",
+            "indicator": "re_pbfw_15_19_male"
+          },
+          {
+            "label": "Total Number clients Any other reason",
+            "indicator": "total_reason_for_discontinuation_other_reasons"
           }
         ]
       }
