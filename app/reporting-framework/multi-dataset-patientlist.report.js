@@ -60,7 +60,6 @@ export class MultiDatasetPatientlistReport extends MultiDatasetReport {
       type: 'patient-list',
       indicators: indicators
     };
-    console.log('self_this: ', this);
     let that = this;
     return new Promise((resolve, reject) => {
       this.generateReport(additionalParams)
