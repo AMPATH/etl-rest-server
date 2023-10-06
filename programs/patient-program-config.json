@@ -1372,9 +1372,10 @@
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN",
-            "allowedIf": "screenedForCovidToday",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
             "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill an adult return visit form for a date earlier than the initial visit!"
             }
           },
           {
