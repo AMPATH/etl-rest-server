@@ -125,6 +125,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "61ad56ae-a2c3-4ddb-a351-8c8ae253378c",
+            "display": "ADULTARTPREPARATION"
           }
         ]
       },
@@ -277,7 +281,7 @@
       {
         "uuid": "18faa058-4eea-4339-a959-84b3e5cb30be",
         "name": "Pediatric HIV Initial Visit ",
-        "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
+        "allowedIf": "age >= 14 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
         "message": "Patient has to be 14rs and below ,in the location he enrolled into the HIV Care and Treatment program and there must not be prior clinical encounter.",
         "encounterTypes": [
           {
@@ -331,6 +335,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "bda00ff3-c811-4223-a602-3eb31c96d1f2",
+            "display": "PEDARTPREPARATION"
           }
         ]
       },
@@ -514,6 +522,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "a400ea27-7052-4745-b51f-d9370aaef4dc",
+            "display": "YOUTHARTPREPARATION"
           }
         ]
       },
