@@ -16,8 +16,9 @@ function buildScope(dataDictionary) {
     lastCovidScreeningDate: '',
     retroSpective: false,
     screenedForCovidToday: false,
-    isAdultReturnVisitBeforeInitialVisit: false
+    isAdultReturnVisitBeforeInitialVisit: false,
     isViremicHighVL: false
+  };
   let isStandardDcVisit = false;
 
   // Restrict to Pilot locations
