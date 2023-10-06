@@ -281,7 +281,7 @@
       {
         "uuid": "18faa058-4eea-4339-a959-84b3e5cb30be",
         "name": "Pediatric HIV Initial Visit ",
-        "allowedIf": "age >= 14 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
+        "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
         "message": "Patient has to be 14rs and below ,in the location he enrolled into the HIV Care and Treatment program and there must not be prior clinical encounter.",
         "encounterTypes": [
           {
