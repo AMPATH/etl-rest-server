@@ -213,7 +213,12 @@
           },
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
+            "display": "ADULTRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
@@ -1334,7 +1339,12 @@
           },
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
+            "display": "ADULTRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
@@ -1411,7 +1421,12 @@
           },
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
+            "display": "ADULTRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
@@ -1548,12 +1563,17 @@
       {
         "uuid": "02e3ce61-fa24-445e-a1f0-6e3299142966",
         "message": "Patient must have prior clinical encounter.",
-        "allowedIf": "!isFirstPMTCTVisit && !isEnrolledInViremiaPMTCT && programLocation === intendedVisitLocationUuid",
+        "allowedIf": "!isFirstPMTCTVisit && !isEnrolledInViremiaPMTCT && programLocation === intendedVisitLocationUuid ",
         "name": "PMTCT Antenatal Return Visit",
         "encounterTypes": [
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
+            "display": "ADULTRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
@@ -1703,7 +1723,12 @@
         "encounterTypes": [
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
+            "display": "ADULTRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
@@ -2237,7 +2262,12 @@
         "encounterTypes": [
           {
             "uuid": "f091b833-9e1a-4eef-8364-fc289095a832",
-            "display": "PEPRETURN"
+            "display": "PEPRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
@@ -2465,7 +2495,12 @@
           },
           {
             "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
-            "display": "PREPRETURN"
+            "display": "PREPRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -2629,7 +2664,12 @@
           },
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
-            "display": "ADULTRETURN"
+            "display": "ADULTRETURN",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
+            "errors": {
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
+            }
           },
           {
             "uuid": "b690e24a-6dc7-40a8-8cbd-0924dd507dca",
@@ -2971,9 +3011,10 @@
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN",
-            "allowedIf": " age > 24",
+            "allowedIf": "age > 24 && screenedForCovidToday && !isAdultReturnVisit",
             "errors": {
-              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form"
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
             }
           },
           {
@@ -4444,9 +4485,10 @@
           {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN",
-            "allowedIf": "!isViremicHighVL && age > 24",
+            "allowedIf": "screenedForCovidToday && !isAdultReturnVisit",
             "errors": {
-              "viremiaError": "To access clinical forms kindly fill Enhanced Adherence Encounter Form"
+              "covidError": "To access clinical forms kindly fill Covid 19 Assessment Form",
+              "isAdultReturnVisitBeforeInitialVisit": "You cannot fill a return visit form for a date earlier than the initial visit!"
             }
           },
           {
