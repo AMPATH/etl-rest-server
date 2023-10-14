@@ -180,7 +180,7 @@
   ],
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient-list-template",
+      "useTemplate": "patient-gain-loses-patient-list-template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {
