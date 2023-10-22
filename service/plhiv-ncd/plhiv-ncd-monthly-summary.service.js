@@ -16,133 +16,133 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
   getAggregateReport(reportParams) {
     const that = this;
     return new Promise((resolve, reject) => {
-      // super
-      // .generateReport(reportParams)
-      // .then((results) => {
-      //   if (reportParams && reportParams.type === 'patient-list') {
-      //     resolve(results);
-      //   } else {
-      //     let finalResult = [];
-      //     const reportProcessorHelpersService = new ReportProcessorHelpersService();
-      //     for (let result of results) {
-      //       if (
-      //         result.report &&
-      //         result.report.reportSchemas &&
-      //         result.report.reportSchemas.main &&
-      //         result.report.reportSchemas.main.transFormDirectives.joinColumn
-      //       ) {
-      //         // console.log("joinColumnParam: ",result.report.reportSchemas.main.transFormDirectives.joinColumnParam, "joinColumn: ", result.report.reportSchemas.main.transFormDirectives.joinColumn,
-      //         // "finalResult: ", finalResult,
-      //         // "results: ", result.results.results.results)
-      //         finalResult = reportProcessorHelpersService.joinDataSets(
-      //           that.params[
-      //           result.report.reportSchemas.main.transFormDirectives
-      //             .joinColumnParam
-      //           ] ||
-      //           result.report.reportSchemas.main.transFormDirectives
-      //             .joinColumn,
-      //           finalResult,
-      //           result?.results?.results?.results
-      //         );
-      //       }
-      //     }
-      //     resolve({
-      //       queriesAndSchemas: results,
-      //       result: [{
-      //         location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
-      //         location_id: 195,
-      //         location: 'Location Test',
-      //         plhiv_hypertension: 1,
-      //         plhiv_diabetes: 0,
-      //         plhiv_hypertension_and_diabetes: 0,
-      //         plhiv_mental_disorder: 0,
-      //         plhiv_other_ncd: 0
-      //       }],
-      //       sectionDefinitions: indicatorDefinitions,
-      //       indicatorDefinitions: []
-      //     });
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.error('PLHIV NCD monthly report generation error: ', error);
-      //   reject(error);
-      // });
+      super
+      .generateReport(reportParams)
+      .then((results) => {
+        console.log('plhiv ===', JSON.stringify(results))
+        if (reportParams && reportParams.type === 'patient-list') {
+          resolve(results);
+        } else {
+          let finalResult = [];
+          const reportProcessorHelpersService = new ReportProcessorHelpersService();
+          for (let result of results) {
+            console.log("loop: ", result?.results?.results?.results)
+            if (
+              result.report &&
+              result.report.reportSchemas &&
+              result.report.reportSchemas.main &&
+              result.report.reportSchemas.main.transFormDirectives.joinColumn
+            ) {
+              finalResult = reportProcessorHelpersService.joinDataSets(
+                that.params[
+                result.report.reportSchemas.main.transFormDirectives
+                  .joinColumnParam
+                ] ||
+                result.report.reportSchemas.main.transFormDirectives
+                  .joinColumn,
+                finalResult,
+                result?.results?.results?.results
+              );
+            }
+          }
+          resolve({
+            queriesAndSchemas: results,
+            // result: [{
+            //   location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+            //   location_id: 195,
+            //   location: 'Location Test',
+            //   plhiv_hypertension: 1,
+            //   plhiv_diabetes: 0,
+            //   plhiv_hypertension_and_diabetes: 0,
+            //   plhiv_mental_disorder: 0,
+            //   plhiv_other_ncd: 0
+            // }],
+            result: finalResult,
+            sectionDefinitions: indicatorDefinitions,
+            indicatorDefinitions: []
+          });
+        }
+      })
+      .catch((error) => {
+        console.error('PLHIV NCD monthly report generation error: ', error);
+        reject(error);
+      });
 
       //--mock-- 
 
-      this.params.locationUuids.length === 3 ?
-      resolve({
-        queriesAndSchemas: [],
-        result: [{
-          location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
-          location_id: 195,
-          location: 'Location Test',
-          plhiv_hypertension: 1,
-          plhiv_diabetes: 0,
-          plhiv_hypertension_and_diabetes: 0,
-          plhiv_mental_disorder: 0,
-          plhiv_other_ncd: 0
-        },{
-          location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
-          location_id: 195,
-          location: 'Location Test B',
-          plhiv_hypertension: 0,
-          plhiv_diabetes: 1,
-          plhiv_hypertension_and_diabetes: 0,
-          plhiv_mental_disorder: 0,
-          plhiv_other_ncd: 0
-        },{
-          location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
-          location_id: 195,
-          location: 'Location Test C',
-          plhiv_hypertension: 0,
-          plhiv_diabetes: 0,
-          plhiv_hypertension_and_diabetes: 1,
-          plhiv_mental_disorder: 0,
-          plhiv_other_ncd: 0
-        }],
-        sectionDefinitions: indicatorDefinitions,
-        indicatorDefinitions: []
-      }) : this.params.locationUuids.length === 2 ? 
-      resolve({
-        queriesAndSchemas: [],
-        result: [{
-          location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
-          location_id: 195,
-          location: 'Location Test',
-          plhiv_hypertension: 1,
-          plhiv_diabetes: 0,
-          plhiv_hypertension_and_diabetes: 0,
-          plhiv_mental_disorder: 1,
-          plhiv_other_ncd: 0
-        },{
-          location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
-          location_id: 195,
-          location: 'Location B',
-          plhiv_hypertension: 1,
-          plhiv_diabetes: 0,
-          plhiv_hypertension_and_diabetes: 0,
-          plhiv_mental_disorder: 1,
-          plhiv_other_ncd: 0
-        }],
-        sectionDefinitions: indicatorDefinitions,
-        indicatorDefinitions: []
-      }) :  
-      resolve({
-        queriesAndSchemas: [],
-        result: [{
-          location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
-          location_id: 195,
-          location: 'Location Test',
-          plhiv_hypertension: 1,
-          plhiv_diabetes: 0,
-          plhiv_hypertension_and_diabetes: 0,
-          plhiv_mental_disorder: 0,
-          plhiv_other_ncd: 0
-        }],
-        sectionDefinitions: indicatorDefinitions,
-        indicatorDefinitions: []
-      });
+      // this.params.locationUuids.length === 3 ?
+      // resolve({
+      //   queriesAndSchemas: [],
+      //   result: [{
+      //     location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+      //     location_id: 195,
+      //     location: 'Location Test',
+      //     plhiv_hypertension: 1,
+      //     plhiv_diabetes: 0,
+      //     plhiv_hypertension_and_diabetes: 0,
+      //     plhiv_mental_disorder: 0,
+      //     plhiv_other_ncd: 0
+      //   },{
+      //     location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+      //     location_id: 195,
+      //     location: 'Location Test B',
+      //     plhiv_hypertension: 0,
+      //     plhiv_diabetes: 1,
+      //     plhiv_hypertension_and_diabetes: 0,
+      //     plhiv_mental_disorder: 0,
+      //     plhiv_other_ncd: 0
+      //   },{
+      //     location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+      //     location_id: 195,
+      //     location: 'Location Test C',
+      //     plhiv_hypertension: 0,
+      //     plhiv_diabetes: 0,
+      //     plhiv_hypertension_and_diabetes: 1,
+      //     plhiv_mental_disorder: 0,
+      //     plhiv_other_ncd: 0
+      //   }],
+      //   sectionDefinitions: indicatorDefinitions,
+      //   indicatorDefinitions: []
+      // }) : this.params.locationUuids.length === 2 ? 
+      // resolve({
+      //   queriesAndSchemas: [],
+      //   result: [{
+      //     location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+      //     location_id: 195,
+      //     location: 'Location Test',
+      //     plhiv_hypertension: 1,
+      //     plhiv_diabetes: 0,
+      //     plhiv_hypertension_and_diabetes: 0,
+      //     plhiv_mental_disorder: 1,
+      //     plhiv_other_ncd: 0
+      //   },{
+      //     location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+      //     location_id: 195,
+      //     location: 'Location B',
+      //     plhiv_hypertension: 1,
+      //     plhiv_diabetes: 0,
+      //     plhiv_hypertension_and_diabetes: 0,
+      //     plhiv_mental_disorder: 1,
+      //     plhiv_other_ncd: 0
+      //   }],
+      //   sectionDefinitions: indicatorDefinitions,
+      //   indicatorDefinitions: []
+      // }) :  
+      // resolve({
+      //   queriesAndSchemas: [],
+      //   result: [{
+      //     location_uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
+      //     location_id: 195,
+      //     location: 'Location Test',
+      //     plhiv_hypertension: 1,
+      //     plhiv_diabetes: 0,
+      //     plhiv_hypertension_and_diabetes: 0,
+      //     plhiv_mental_disorder: 0,
+      //     plhiv_other_ncd: 0
+      //   }],
+      //   sectionDefinitions: indicatorDefinitions,
+      //   indicatorDefinitions: []
+      // });
     });
   }
 

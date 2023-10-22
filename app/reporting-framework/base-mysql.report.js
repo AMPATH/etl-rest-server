@@ -1807,23 +1807,36 @@ export class BaseMysqlReport {
 
         case 'plhivNcdMonthlySummaryReport':
             resolve({
-              main: this.cloneJsonSchema(plhiv_ncd_monthly_summary),
-              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
-                prep_latest_clinical_encounter_date_base
-              )
+              main: this.cloneJsonSchema(plhiv_ncd_monthly_summary)
+              // ,
+              // prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+              //   prep_latest_clinical_encounter_date_base
+              // )
             });
             break;
-        case 'plhivNcdMonthlySummaryNoDisaggregation':
-            resolve({
-              main: this.cloneJsonSchema(plhiv_ncd_monthly_summary_aggregate_report),
-              plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
-                plhiv_ncd_monthly_summary_base_report
-              ),
-              prepLatestClinicalEncounterDate: this.cloneJsonSchema(
-                prep_latest_clinical_encounter_date_base
-              )
-            });
-            break;
+        // case 'plhivNcdMonthlySummaryNoDisaggregation':
+        //     resolve({
+        //       main: this.cloneJsonSchema(plhiv_ncd_monthly_summary_aggregate_report),
+        //       plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+        //         plhiv_ncd_monthly_summary_base_report
+        //       ),
+        //       prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+        //         prep_latest_clinical_encounter_date_base
+        //       )
+        //     });
+        //     break;
+          case 'plhivNcdMonthlySummaryAggregation':
+              resolve({
+                main: this.cloneJsonSchema(plhiv_ncd_monthly_summary_aggregate_report)
+                // ,
+                // plhivNcdMonthlySummaryBaseReport: this.cloneJsonSchema(
+                //   plhiv_ncd_monthly_summary_base_report
+                // ),
+                // prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+                //   prep_latest_clinical_encounter_date_base
+                // )
+              });
+              break;
         case 'plhivNcdMonthlySummaryPopulationTypeDisaggregation':
             resolve({
               main: this.cloneJsonSchema(

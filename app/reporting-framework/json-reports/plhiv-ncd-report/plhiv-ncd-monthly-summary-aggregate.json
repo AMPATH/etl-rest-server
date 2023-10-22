@@ -1,27 +1,24 @@
 {
-  "name": "plhivNcdMonthlySummaryNoDisaggregation",
+  "name": "plhivNcdMonthlySummaryAggregation",
   "version": "1.0",
   "tag": "",
   "description": "",
-  "uses": [
-    {
-      "name": "plhivNcdMonthlySummaryBaseReport",
-      "version": "1.0",
-      "type": "dataset_def"
-    }
-  ],
+  "uses": [],
   "sources": [
     {
-      "dataSet": "plhivNcdMonthlySummaryBaseReport",
+      "table": "etl.prep_monthly_report_dataset",
       "alias": "t2"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "t2.location_id = l.location_id"
+      }
     }
   ],
   "columns": [
-    {
-      "type": "simple_column",
-      "alias": "location_uuid",
-      "column": "t2.location_uuid"
-    },
     {
       "type": "simple_column",
       "alias": "location_id",
@@ -29,12 +26,17 @@
     },
     {
       "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
       "alias": "location",
-      "column": "t2.location"
+      "column": "l.name"
     },
     {
       "type": "derived_column",
-      "alias": "active_on_prep_this_month",
+      "alias": "plhiv_hypertension",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(t2.active_on_prep_this_month)"
@@ -42,7 +44,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "enrolled_in_prep_this_month",
+      "alias": "plhiv_diabetes",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(t2.enrolled_in_prep_this_month)"
@@ -50,15 +52,15 @@
     },
     {
       "type": "derived_column",
-      "alias": "cumulative_prep_ltfu_this_month",
+      "alias": "plhiv_hypertension_and_diabetes",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t2.cumulative_prep_ltfu_this_month)"
+        "expression": "SUM(t2.active_on_prep_this_month + t2.enrolled_in_prep_this_month)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "prep_ltfu_this_month",
+      "alias": "plhiv_mental_disorder",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(t2.prep_ltfu_this_month)"
@@ -66,68 +68,35 @@
     },
     {
       "type": "derived_column",
-      "alias": "prep_discontinued_this_month",
+      "alias": "plhiv_other_ncd",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(t2.prep_discontinued_this_month)"
       }
-    },
-    {
-      "type": "derived_column",
-      "alias": "cumulative_prep_discontinued_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(t2.cumulative_prep_discontinued_this_month)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "prev_on_prep_and_turned_positive",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(t2.prev_on_prep_and_turned_positive)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "turned_positive_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(t2.turned_positive_this_month)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "cumulative_turned_positive_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(t2.cumulative_turned_positive_this_month)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "general_pop_active",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(t2.general_pop_active)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "has_hiv_rapid_test_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(t2.has_hiv_rapid_test_this_month)"
-      }
     }
   ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "week = ? ",
+        "parameterName": "year_week"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid in ?",
+        "parameterName": "locationUuids"
+      }
+    ]
+  },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["location_uuid"],
+    "columns": ["t2.location_id"],
     "excludeParam": "excludeParam"
   },
   "transFormDirectives": {
-    "joinColumn": "location_uuid",
+    "joinColumn": "location_id",
     "skipColumns": [],
     "disaggregationColumns": []
   },

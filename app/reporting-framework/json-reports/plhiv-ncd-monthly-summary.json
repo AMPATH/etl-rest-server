@@ -1,11 +1,3 @@
 {
-    "reports": [
-      "plhivNcdMonthlySummaryNoDisaggregation",
-      "plhivNcdMonthlySummaryPopulationTypeDisaggregation",
-      "plhivNcdMonthlySummaryBreastFeedingDisaggregation",
-      "plhivNcdMonthlySummaryPregnancyDisaggregation",
-      "plhivNcdMonthlyNewlyEnrolledBreastFeedingDisaggregation",
-      "plhivNcdMonthlyNewlyEnrolledPregnancyDisaggregation"
-    ]
-  }
-  
+  "reports": ["plhivNcdMonthlySummaryAggregation"]
+}
