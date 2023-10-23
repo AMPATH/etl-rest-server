@@ -169,7 +169,7 @@
       "alias": "number_of_failed_phone_attempts",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((pre.is_successful_phone_follow_up = 'NO' OR (pre.attempted_home_visit = 'YES' AND pre.was_client_found = 'YES')), 1, 0)"
+        "expression": "if((pre.is_successful_phone_follow_up = 'NO'), 1, 0)"
       }
     },
     {
