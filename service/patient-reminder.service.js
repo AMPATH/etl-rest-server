@@ -741,11 +741,11 @@ function getIptCompletionReminder(data) {
       message:
         'Patient started ' +
         months +
-        ' month IPT on ' +
+        ' month TPT on ' +
         Moment(data.ipt_start_date).format('DD-MM-YYYY') +
         ' and was supposed to be completed on ' +
         Moment(data.ipt_start_date).add(months, 'months').format('DD-MM-YYYY'),
-      title: 'IPT Completion Reminder',
+      title: 'TPT Completion Reminder',
       type: 'danger',
       display: {
         banner: true,
@@ -753,7 +753,7 @@ function getIptCompletionReminder(data) {
       }
     });
   } else {
-    console.info.call('No IPT Completion Reminder For Selected Patient');
+    console.info.call('No TPT Completion Reminder For Selected Patient');
   }
 
   return reminders;
