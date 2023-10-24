@@ -1,0 +1,115 @@
+{
+    "name": "plhivNcdMonthlySummaryBaseReport",
+    "version": "1.0",
+    "tag": "",
+    "description": "",
+    "uses": [],
+    "sources": [
+      {
+        "table": "etl.prep_monthly_report_dataset",
+        "alias": "t2"
+      },
+      {
+        "table": "amrs.location",
+        "alias": "l",
+        "join": {
+          "type": "INNER",
+          "joinCondition": "l.location_id = t2.location_id"
+        }
+      },
+      {
+        "table": "etl.flat_patient_identifiers_v1",
+        "alias": "flat_identifiers",
+        "join": {
+          "type": "LEFT",
+          "joinCondition": "t2.person_id = flat_identifiers.patient_id"
+        }
+      }
+    ],
+    "columns": [
+      {
+        "type": "simple_column",
+        "alias": "location_uuid",
+        "column": "l.uuid"
+      },
+      {
+        "type": "simple_column",
+        "alias": "location_id",
+        "column": "l.location_id"
+      },
+      {
+        "type": "simple_column",
+        "alias": "ccc_number",
+        "column": "IFNULL(flat_identifiers.ccc, 'No CCC')"
+      },
+      {
+        "type": "simple_column",
+        "alias": "ovcid_id",
+        "column": "flat_identifiers.ovcid"
+      },
+      {
+        "type": "simple_column",
+        "alias": "upi_number",
+        "column": "IFNULL(flat_identifiers.nupi, 'No NUPI')"
+      },
+      {
+        "type": "simple_column",
+        "alias": "location",
+        "column": "l.name"
+      },
+      {
+        "type": "derived_column",
+        "alias": "plhiv_hypertension",
+        "expressionType": "simple_expression",
+        "expressionOptions": {
+          "expression": "t2.active_on_prep_this_month"
+        }
+      },
+      {
+        "type": "derived_column",
+        "alias": "plhiv_diabetes",
+        "expressionType": "simple_expression",
+        "expressionOptions": {
+          "expression": "t2.enrolled_in_prep_this_month"
+        }
+      },
+      {
+        "type": "derived_column",
+        "alias": "plhiv_mental_disorder",
+        "expressionType": "simple_expression",
+        "expressionOptions": {
+          "expression": "t2.prep_ltfu_this_month"
+        }
+      },
+      {
+        "type": "derived_column",
+        "alias": "plhiv_other_ncd",
+        "expressionType": "simple_expression",
+        "expressionOptions": {
+          "expression": "t2.prep_discontinued_this_month"
+        }
+      }
+    ],
+    "groupBy": {
+      "groupParam": "groupByParam",
+      "columns": ["t2.person_id"],
+      "excludeParam": "excludeParam"
+    },
+    "filters": {
+      "conditionJoinOperator": "and",
+      "conditions": [
+        {
+          "filterType": "tableColumns",
+          "conditionExpression": "endDate = ? ",
+          "parameterName": "endDate"
+        },
+        {
+          "filterType": "tableColumns",
+          "conditionExpression": "l.uuid in ?",
+          "parameterName": "locationUuids"
+        }
+      ]
+    }
+  
+  }
+  

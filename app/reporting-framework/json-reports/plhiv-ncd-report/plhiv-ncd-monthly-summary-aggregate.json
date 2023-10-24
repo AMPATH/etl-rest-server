@@ -3,43 +3,41 @@
   "version": "1.0",
   "tag": "",
   "description": "",
-  "uses": [],
+  "uses": [
+    {
+      "name": "plhivNcdMonthlySummaryBaseReport",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
   "sources": [
     {
-      "table": "etl.prep_monthly_report_dataset",
-      "alias": "t2"
-    },
-    {
-      "table": "amrs.location",
-      "alias": "l",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "t2.location_id = l.location_id"
-      }
+      "dataSet": "plhivNcdMonthlySummaryBaseReport",
+      "alias": "t3"
     }
   ],
   "columns": [
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "t2.location_id"
+      "column": "t3.location_id"
     },
     {
       "type": "simple_column",
       "alias": "location_uuid",
-      "column": "l.uuid"
+      "column": "t3.location_uuid"
     },
     {
       "type": "simple_column",
       "alias": "location",
-      "column": "l.name"
+      "column": "t3.location"
     },
     {
       "type": "derived_column",
       "alias": "plhiv_hypertension",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t2.active_on_prep_this_month)"
+        "expression": "SUM(t3.plhiv_hypertension)"
       }
     },
     {
@@ -47,15 +45,15 @@
       "alias": "plhiv_diabetes",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t2.enrolled_in_prep_this_month)"
+        "expression": "SUM(t3.plhiv_diabetes)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "plhiv_hypertension_and_diabetes",
+      "alias": "dc__plhiv_hypertension__plhiv_hypertension__plhiv_diabetes",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t2.active_on_prep_this_month + t2.enrolled_in_prep_this_month)"
+        "expression": "SUM(IF(t3.plhiv_diabetes = 1 AND t3.plhiv_hypertension = 1, 1, 0))"
       }
     },
     {
@@ -63,7 +61,7 @@
       "alias": "plhiv_mental_disorder",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t2.prep_ltfu_this_month)"
+        "expression": "SUM(t3.plhiv_mental_disorder)"
       }
     },
     {
@@ -71,38 +69,23 @@
       "alias": "plhiv_other_ncd",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t2.prep_discontinued_this_month)"
+        "expression": "SUM(t3.plhiv_other_ncd)"
       }
     }
   ],
-  "filters": {
-    "conditionJoinOperator": "and",
-    "conditions": [
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "week = ? ",
-        "parameterName": "year_week"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "l.uuid in ?",
-        "parameterName": "locationUuids"
-      }
-    ]
-  },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["t2.location_id"],
+    "columns": ["location_uuid"],
     "excludeParam": "excludeParam"
   },
   "transFormDirectives": {
-    "joinColumn": "location_id",
+    "joinColumn": "location_uuid",
     "skipColumns": [],
     "disaggregationColumns": []
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "prep-report-patient-list-template",
+      "useTemplate": "plhiv-ncd-report-patient-list-template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {
@@ -115,4 +98,5 @@
       "skipParams": []
     }
   }
+
 }
