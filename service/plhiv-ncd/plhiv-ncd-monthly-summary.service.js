@@ -91,7 +91,7 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
             });
         })
         .catch((err) => {
-          reject(err);
+          reject(results);
         });
     });
   }
