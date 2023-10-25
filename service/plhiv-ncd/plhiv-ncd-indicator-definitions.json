@@ -21,7 +21,7 @@
       },
       {
         "label": "PLHIV Hypertension and Diabetes",
-        "indicator": "dc__plhiv_hypertension__plhiv_hypertension__plhiv_diabetes"
+        "indicator": "dc__plhiv_hypertension__null__plhiv_diabetes"
       },
       {
         "label": "PLHIV Mental Disorder",

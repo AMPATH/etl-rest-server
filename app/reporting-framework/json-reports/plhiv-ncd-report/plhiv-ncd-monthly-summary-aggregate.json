@@ -50,7 +50,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "dc__plhiv_hypertension__plhiv_hypertension__plhiv_diabetes",
+      "alias": "dc__plhiv_hypertension__null__plhiv_diabetes",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(IF(t3.plhiv_diabetes = 1 AND t3.plhiv_hypertension = 1, 1, 0))"
