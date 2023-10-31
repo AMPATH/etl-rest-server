@@ -13,23 +13,23 @@
     "indicators": [
       {
         "label": "PLHIV Hypertension",
-        "indicator": "plhiv_hypertension"
+        "indicator": "hypertensive_comorbidity"
       },
       {
         "label": "PLHIV Diabetes",
-        "indicator": "plhiv_diabetes"
+        "indicator": "diabetic_comorbidity"
       },
       {
         "label": "PLHIV Hypertension and Diabetes",
-        "indicator": "dc__plhiv_hypertension__null__plhiv_diabetes"
+        "indicator": "hypertensive_and_diabetic_comorbidity"
       },
       {
         "label": "PLHIV Mental Disorder",
-        "indicator": "plhiv_mental_disorder"
+        "indicator": "mental_disorder_comorbidity"
       },
       {
         "label": "PLHIV Other NCD",
-        "indicator": "plhiv_other_ncd"
+        "indicator": "other_ncd_comorbidity"
       }
     ]
   }

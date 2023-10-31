@@ -1,0 +1,156 @@
+{
+    "name": "plhivNcdBaseSummary",
+    "version": "1.0",
+    "tag": "",
+    "description": "",
+    "uses": [],
+    "sources": [
+      {
+        "table": "amrs.obs",
+        "alias": "obs"
+      },
+      {
+        "table": "amrs.encounter",
+        "alias": "enc",
+        "join": {
+          "type": "INNER",
+          "joinCondition": "obs.encounter_id = enc.encounter_id"
+        }
+      },
+      {
+        "table": "amrs.location",
+        "alias": "loc",
+        "join": {
+          "type": "INNER",
+          "joinCondition": "loc.location_id = obs.location_id"
+        }
+      }
+    ],
+    "columns": [
+      {
+        "type": "simple_column",
+        "alias": "endDate",
+        "column": "last_day(enc.encounter_datetime)"
+      },
+      {
+        "type": "simple_column",
+        "alias": "obs_id",
+        "column": "obs.obs_id"
+      },
+      {
+        "type": "simple_column",
+        "alias": "location_id",
+        "column": "obs.location_id"
+      },
+      {
+        "type": "simple_column",
+        "alias": "location_uuid",
+        "column": "loc.uuid"
+      },
+      {
+        "type": "simple_column",
+        "alias": "location",
+        "column": "loc.name"
+      },
+      {
+        "type": "simple_column",
+        "alias": "person_id",
+        "column": "obs.person_id"
+      },
+      {
+        "type": "simple_column",
+        "alias": "concept_id",
+        "column": "obs.concept_id"
+      },
+      {
+        "type": "simple_column",
+        "alias": "value_coded",
+        "column": "obs.value_coded"
+      },
+      {
+        "type": "simple_column",
+        "alias": "encounter_id",
+        "column": "obs.encounter_id"
+      },
+      {
+        "type": "simple_column",
+        "alias": "encounter_datetime",
+        "column": "enc.encounter_datetime"
+      },
+      {
+        "type": "derived_column",
+        "alias": "hyp",
+        "expressionType": "case_statement",
+        "expressionOptions": {
+          "caseOptions": [
+            {
+              "condition": "concept_id IN (10239) AND value_coded IN (175 , 7281, 7282)",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      {
+        "type": "derived_column",
+        "alias": "dm",
+        "expressionType": "case_statement",
+        "expressionOptions": {
+          "caseOptions": [
+            {
+              "condition": "concept_id IN (10239) AND value_coded IN (903 , 7971)",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      {
+        "type": "derived_column",
+        "alias": "md",
+        "expressionType": "case_statement",
+        "expressionOptions": {
+          "caseOptions": [
+            {
+              "condition": "concept_id IN (10239 , 9328) AND value_coded IN (77 , 10860)",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      {
+        "type": "derived_column",
+        "alias": "other",
+        "expressionType": "case_statement",
+        "expressionOptions": {
+          "caseOptions": [
+            {
+              "condition": "concept_id IN (10239 , 9328) AND value_coded NOT IN (77 , 175, 903, 1107, 7971, 7281, 7282, 10860)",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    ],
+    "filters": {
+      "conditionJoinOperator": "AND",
+      "conditions": [
+        {
+          "filterType": "tableColumns",
+          "conditionExpression": "loc.uuid IN ?",
+          "parameterName": "locationUuids"
+        },
+        {
+          "filterType": "tableColumns",
+          "conditionExpression": "obs.concept_id IN (9328,10239)"
+        },
+        {
+          "filterType": "tableColumns",
+          "conditionExpression": "obs.voided IN (0)"
+        }
+      ]
+    },
+    "groupBy": {
+      "groupParam": "groupByParam",
+      "columns": ["person_id, concept_id, value_coded"]
+    }
+  }
+  

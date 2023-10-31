@@ -1,0 +1,109 @@
+{
+  "name": "plhivNcdMonthlyReportDataset",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "plhivNcdMonthlyReportBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "plhivNcdMonthlyReportBase",
+      "alias": "pnmrb"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pnmrb.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "pnmrb.endDate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "pnmrb.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "pnmrb.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "pnmrb.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "IFNULL(flat_identifiers.ccc, 'No CCC')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "flat_identifiers.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "IFNULL(flat_identifiers.nupi, 'No NUPI')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "pnmrb.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hypertensive_comorbidity",
+      "column": "pnmrb.hypertensive_comorbidity"
+    },
+    {
+      "type": "simple_column",
+      "alias": "diabetic_comorbidity",
+      "column": "pnmrb.diabetic_comorbidity"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hypertensive_and_diabetic_comorbidity",
+      "column": "pnmrb.hypertensive_and_diabetic_comorbidity"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mental_disorder_comorbidity",
+      "column": "pnmrb.mental_disorder_comorbidity"
+    },
+    {
+      "type": "simple_column",
+      "alias": "other_ncd_comorbidity",
+      "column": "pnmrb.other_ncd_comorbidity"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "AND",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "endDate = ? ",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "pnmrb.location_uuid in ?",
+        "parameterName": "locationUuids"
+      }
+    ]
+  }
+}

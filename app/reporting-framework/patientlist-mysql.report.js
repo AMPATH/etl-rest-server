@@ -33,7 +33,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
             that.reportSchemas,
             indicators
           );
-          console.log("patientL-seed-sch: ", JSON.stringify(aggs));
           if (aggs.length > 0) {
             // console.log('Potential schemas with supplied indicators', aggs.length);
             that.plSchemasRaw = this.determineBaseAndAggrSchema(
@@ -56,6 +55,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                   that.plTemplate,
                   that.params
                 );
+                console.log("generated----xxxx: ", generated)
                 // console.log('GENERATED', generated.generated.filters, that.params);
                 // if (this.hasEmptyDynamicExpressions(generated) && aggs.length > 1) {
                 //     for (let i = 1; i < aggs.length; i++) {
@@ -151,7 +151,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
 
   determineBaseAndAggrSchema(schemas, indicators) {
     // console.log('finding aggregate report with indicators', indicators);
-    console.log("[sch=> ", JSON.stringify(schemas), "indicators=> ", indicators);
     let aggs = this.getAggregateWithIndicator(schemas, indicators);
 
     let found = [];
@@ -225,6 +224,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
       tempateSchema,
       params
     );
+    console.log("gener-->: ", gen)
     return gen.generatePatientListSchema();
   }
 
@@ -243,7 +243,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
       let generatedParams = [];
       if (this.isDynamicallyCreatedIndicator(indicator)) {
         let extracted = this.extractIndicators(indicator);
-        console.log("indicator:::", indicators, "extracted: ", JSON.stringify(extracted))
         for (let o in extracted) {
           generatedParams.push({ key: o, value: extracted[o] });
           consolidatedIndicators.push(o);

@@ -1,75 +1,80 @@
 {
-  "name": "plhivNcdMonthlySummaryAggregation",
+  "name": "plhivNcdMonthlyAggregateReport",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "plhivNcdMonthlySummaryBaseReport",
+      "name": "plhivNcdMonthlyReportDataset",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "plhivNcdMonthlySummaryBaseReport",
-      "alias": "t3"
+      "dataSet": "plhivNcdMonthlyReportDataset",
+      "alias": "pnmrd"
     }
   ],
   "columns": [
     {
       "type": "simple_column",
+      "alias": "person_id",
+      "column": "pnmrd.person_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "location_id",
-      "column": "t3.location_id"
+      "column": "pnmrd.location_id"
     },
     {
       "type": "simple_column",
       "alias": "location_uuid",
-      "column": "t3.location_uuid"
+      "column": "pnmrd.location_uuid"
     },
     {
       "type": "simple_column",
       "alias": "location",
-      "column": "t3.location"
+      "column": "pnmrd.location"
     },
     {
       "type": "derived_column",
-      "alias": "plhiv_hypertension",
+      "alias": "hypertensive_comorbidity",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t3.plhiv_hypertension)"
+        "expression": "SUM(pnmrd.hypertensive_comorbidity)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "plhiv_diabetes",
+      "alias": "diabetic_comorbidity",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t3.plhiv_diabetes)"
+        "expression": "SUM(pnmrd.diabetic_comorbidity)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "dc__plhiv_hypertension__null__plhiv_diabetes",
+      "alias": "hypertensive_and_diabetic_comorbidity",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t3.plhiv_diabetes = 1 AND t3.plhiv_hypertension = 1, 1, 0))"
+        "expression": "SUM(pnmrd.hypertensive_and_diabetic_comorbidity)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "plhiv_mental_disorder",
+      "alias": "mental_disorder_comorbidity",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t3.plhiv_mental_disorder)"
+        "expression": "SUM(pnmrd.mental_disorder_comorbidity)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "plhiv_other_ncd",
+      "alias": "other_ncd_comorbidity",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t3.plhiv_other_ncd)"
+        "expression": "SUM(pnmrd.other_ncd_comorbidity)"
       }
     }
   ],

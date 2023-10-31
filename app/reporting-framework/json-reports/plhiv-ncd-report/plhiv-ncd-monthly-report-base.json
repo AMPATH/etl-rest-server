@@ -1,0 +1,131 @@
+{
+  "name": "plhivNcdMonthlyReportBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "plhivNcdBaseSummary",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "plhivNcdBaseSummary",
+      "alias": "pnbs"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "pnbs.endDate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obs_id",
+      "column": "pnbs.obs_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "pnbs.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "pnbs.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "pnbs.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "pnbs.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "concept_id",
+      "column": "pnbs.concept_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "value_coded",
+      "column": "pnbs.value_coded"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "pnbs.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "pnbs.encounter_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hypertensive_comorbidity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(pnbs.hyp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diabetic_comorbidity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(pnbs.dm)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hypertensive_and_diabetic_comorbidity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((MAX(pnbs.hyp) = 1 AND MAX(pnbs.dm) = 1), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mental_disorder_comorbidity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(pnbs.md)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_ncd_comorbidity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(pnbs.other)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["pnbs.person_id"],
+    "excludeParam": "excludeParam"
+  },
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "pnbs.endDate = ? ",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "pnbs.location_uuid in ?",
+        "parameterName": "locationUuids"
+      }
+    ]
+  }
+}
