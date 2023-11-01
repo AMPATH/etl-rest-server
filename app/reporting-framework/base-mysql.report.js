@@ -389,8 +389,8 @@ import * as plhiv_ncd_monthly_summary from './json-reports/plhiv-ncd-monthly-sum
 import * as plhiv_ncd_monthly_report_base from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-report-base.json';
 import * as plhiv_ncd_monthly_aggregate_report from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-aggregate-report.json';
 import * as plhiv_ncd_monthly_report_dataset from './json-reports/plhiv-ncd-report/plhiv-ncd-monthly-report-dataset.json';
-import * as plhiv_ncd_report_patient_list_template from './json-reports/plhiv-ncd-report/plhiv-ncd-report-patient-list-template.json'
-import * as plhiv_ncd_base_summary from './json-reports/plhiv-ncd-report/plhiv-ncd-base-summary.json'
+import * as plhiv_ncd_report_patient_list_template from './json-reports/plhiv-ncd-report/plhiv-ncd-report-patient-list-template.json';
+import * as plhiv_ncd_base_summary from './json-reports/plhiv-ncd-report/plhiv-ncd-base-summary.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1828,8 +1828,12 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(plhiv_ncd_monthly_aggregate_report),
             plhivNcdBaseSummary: this.cloneJsonSchema(plhiv_ncd_base_summary),
-            plhivNcdMonthlyReportBase: this.cloneJsonSchema(plhiv_ncd_monthly_report_base),
-            plhivNcdMonthlyReportDataset: this.cloneJsonSchema(plhiv_ncd_monthly_report_dataset)
+            plhivNcdMonthlyReportBase: this.cloneJsonSchema(
+              plhiv_ncd_monthly_report_base
+            ),
+            plhivNcdMonthlyReportDataset: this.cloneJsonSchema(
+              plhiv_ncd_monthly_report_dataset
+            )
           });
           break;
 

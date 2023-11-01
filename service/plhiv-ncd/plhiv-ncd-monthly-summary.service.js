@@ -18,44 +18,44 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
     const that = this;
     return new Promise((resolve, reject) => {
       super
-      .generateReport(reportParams)
-      .then((results) => {
-        if (reportParams && reportParams.type === 'patient-list') {
-          resolve(results);
-        } else {
-          let finalResult = [];
-          const reportProcessorHelpersService = new ReportProcessorHelpersService();
-          for (let result of results) {
-            if (
-              result.report &&
-              result.report.reportSchemas &&
-              result.report.reportSchemas.main &&
-              result.report.reportSchemas.main.transFormDirectives.joinColumn
-            ) {
-              finalResult = reportProcessorHelpersService.joinDataSets(
-                that.params[
-                result.report.reportSchemas.main.transFormDirectives
-                  .joinColumnParam
-                ] ||
-                result.report.reportSchemas.main.transFormDirectives
-                  .joinColumn,
-                finalResult,
-                result?.results?.results?.results
-              );
+        .generateReport(reportParams)
+        .then((results) => {
+          if (reportParams && reportParams.type === 'patient-list') {
+            resolve(results);
+          } else {
+            let finalResult = [];
+            const reportProcessorHelpersService = new ReportProcessorHelpersService();
+            for (let result of results) {
+              if (
+                result.report &&
+                result.report.reportSchemas &&
+                result.report.reportSchemas.main &&
+                result.report.reportSchemas.main.transFormDirectives.joinColumn
+              ) {
+                finalResult = reportProcessorHelpersService.joinDataSets(
+                  that.params[
+                    result.report.reportSchemas.main.transFormDirectives
+                      .joinColumnParam
+                  ] ||
+                    result.report.reportSchemas.main.transFormDirectives
+                      .joinColumn,
+                  finalResult,
+                  result?.results?.results?.results
+                );
+              }
             }
+            resolve({
+              queriesAndSchemas: results,
+              result: finalResult,
+              sectionDefinitions: indicatorDefinitions,
+              indicatorDefinitions: []
+            });
           }
-          resolve({
-            queriesAndSchemas: results,
-            result: finalResult,
-            sectionDefinitions: indicatorDefinitions,
-            indicatorDefinitions: []
-          });
-        }
-      })
-      .catch((error) => {
-        console.error('PLHIV NCD monthly report generation error: ', error);
-        reject(error);
-      });
+        })
+        .catch((error) => {
+          console.error('PLHIV NCD monthly report generation error: ', error);
+          reject(error);
+        });
     });
   }
 
@@ -79,7 +79,7 @@ export class PlhivNcdMonthlySummaryService extends MultiDatasetPatientlistReport
               );
             });
           }
-  
+
           self
             .resolveLocationUuidsToName(self.params.locationUuids)
             .then((locations) => {

@@ -55,7 +55,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                   that.plTemplate,
                   that.params
                 );
-                console.log("generated----xxxx: ", generated)
+                console.log('generated----xxxx: ', generated);
                 // console.log('GENERATED', generated.generated.filters, that.params);
                 // if (this.hasEmptyDynamicExpressions(generated) && aggs.length > 1) {
                 //     for (let i = 1; i < aggs.length; i++) {
@@ -224,7 +224,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
       tempateSchema,
       params
     );
-    console.log("gener-->: ", gen)
+    console.log('gener-->: ', gen);
     return gen.generatePatientListSchema();
   }
 
