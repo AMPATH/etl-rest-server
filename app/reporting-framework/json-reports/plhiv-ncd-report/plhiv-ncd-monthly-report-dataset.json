@@ -78,7 +78,7 @@
     {
       "type": "simple_column",
       "alias": "hypertensive_and_diabetic_comorbidity",
-      "column": "pnmrb.hypertensive_and_diabetic_comorbidity"
+      "column": "IF((pnmrb.hypertensive_comorbidity = 1 AND pnmrb.diabetic_comorbidity = 1), 1, NULL)"
     },
     {
       "type": "simple_column",
@@ -97,7 +97,7 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "endDate = ? ",
-        "parameterName": "endDate"
+        "parameterName": "pnmrb.endDate"
       },
       {
         "filterType": "tableColumns",

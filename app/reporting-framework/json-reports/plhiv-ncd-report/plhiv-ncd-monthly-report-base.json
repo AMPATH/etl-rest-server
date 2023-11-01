@@ -85,14 +85,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "hypertensive_and_diabetic_comorbidity",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF((MAX(pnbs.hyp) = 1 AND MAX(pnbs.dm) = 1), 1, NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mental_disorder_comorbidity",
       "expressionType": "simple_expression",
       "expressionOptions": {

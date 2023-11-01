@@ -58,7 +58,7 @@
       "alias": "hypertensive_and_diabetic_comorbidity",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(pnmrd.hypertensive_and_diabetic_comorbidity)"
+        "expression": "SUM(IF((pnmrd.hypertensive_comorbidity = 1 AND pnmrd.diabetic_comorbidity = 1), 1, NULL))"
       }
     },
     {
@@ -103,5 +103,4 @@
       "skipParams": []
     }
   }
-
 }

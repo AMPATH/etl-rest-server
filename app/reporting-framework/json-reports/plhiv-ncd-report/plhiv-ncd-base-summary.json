@@ -135,6 +135,11 @@
       "conditions": [
         {
           "filterType": "tableColumns",
+          "conditionExpression": "last_day(enc.encounter_datetime) IN (?)",
+          "parameterName": "endDate"
+        },
+        {
+          "filterType": "tableColumns",
           "conditionExpression": "loc.uuid IN ?",
           "parameterName": "locationUuids"
         },

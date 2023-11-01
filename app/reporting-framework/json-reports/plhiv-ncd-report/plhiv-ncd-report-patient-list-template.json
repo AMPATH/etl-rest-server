@@ -77,11 +77,24 @@
         "column": "t1.person_id"
       },
       {
+        "type": "simple_column",
+        "alias": "gender",
+        "column": "t1.gender"
+      },
+      {
         "type": "derived_column",
         "alias": "person_name",
         "expressionType": "simple_expression",
         "expressionOptions": {
           "expression": " CONCAT(COALESCE(person_name.given_name, ''), ' ', COALESCE(person_name.middle_name, ''), ' ', COALESCE(person_name.family_name, ''))"
+        }
+      },
+      {
+        "type": "derived_column",
+        "alias": "age",
+        "expressionType": "simple_expression",
+        "expressionOptions": {
+          "expression":"TIMESTAMPDIFF(YEAR,t1.birthdate,CURDATE())"
         }
       },
       {
