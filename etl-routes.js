@@ -4082,7 +4082,6 @@ module.exports = (function () {
             pocEidPayloadHelper
               .generatePocToEidPayLoad(rawPayload)
               .then((eidPayLoad) => {
-                console.log('eidpayload: ', eidPayLoad);
                 let configObj = config.hivLabSystem[labName];
                 if (typeof configObj !== 'undefined') {
                   let client = new LabClient(configObj);

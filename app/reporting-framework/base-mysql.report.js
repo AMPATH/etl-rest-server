@@ -1812,18 +1812,6 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(plhiv_ncd_monthly_summary)
           });
           break;
-        // case 'plhivNcdMonthlyReportBase':
-        //   resolve({
-        //     main: this.cloneJsonSchema(plhiv_ncd_monthly_report_base),
-        //     plhivNcdBaseSummary: this.cloneJsonSchema(plhiv_ncd_base_summary),
-        //   });
-        //   break;
-        // case 'plhivNcdMonthlyReportBase':
-        //   resolve({
-        //     main: this.cloneJsonSchema(plhiv_ncd_monthly_report_dataset),
-        //     plhivNcdMonthlyReportBase: this.cloneJsonSchema(plhiv_ncd_monthly_report_base),
-        //   });
-        //   break;
         case 'plhivNcdMonthlyAggregationReport':
           resolve({
             main: this.cloneJsonSchema(plhiv_ncd_monthly_aggregate_report),
