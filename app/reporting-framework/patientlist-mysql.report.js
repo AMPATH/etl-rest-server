@@ -223,7 +223,6 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
       tempateSchema,
       params
     );
-    console.log('gener-->: ', gen);
     return gen.generatePatientListSchema();
   }
 
