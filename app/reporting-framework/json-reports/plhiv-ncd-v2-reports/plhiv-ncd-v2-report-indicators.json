@@ -1,0 +1,943 @@
+[
+  {
+    "sectionTitle": "Hypertensive",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Contolled",
+        "indicator": [
+          "nw_ctld_htn_f",
+          "nw_ctld_htn_m",
+          "tot_nw_ctld_htn",
+          "ct_ctld_htn_f",
+          "ct_ctld_htn_m",
+          "tot_ct_ctld_htn"
+        ]
+      },
+      {
+        "label": "Uncontrolled",
+        "indicator": [
+          "nw_unctld_htn_f",
+          "nw_unctld_htn_m",
+          "tot_nw_unctld_htn",
+          "ct_unctld_htn_f",
+          "ct_unctld_htn_m",
+          "tot_ct_unctld_htn"
+        ]
+      },
+      {
+        "label": "Unknown / Not Established",
+        "indicator": [
+          "nw_unk_htn_f",
+          "nw_unk_htn_m",
+          "tot_nw_unk_htn",
+          "ct_unk_htn_f",
+          "ct_unk_htn_m",
+          "tot_ct_unk_htn"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "nw_htn_m",
+          "nw_htn_f",
+          "nw_htn",
+          "ct_htn_m",
+          "ct_htn_f",
+          "ct_htn"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_htn", "tot_ct_htn"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_htn"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Diabetic",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Contolled",
+        "indicator": [
+          "nw_ctld_dm_f",
+          "nw_ctld_dm_m",
+          "tot_nw_ctld_dm",
+          "ct_ctld_dm_f",
+          "ct_ctld_dm_m",
+          "tot_ct_ctld_dm"
+        ]
+      },
+      {
+        "label": "Uncontrolled",
+        "indicator": [
+          "nw_unctld_dm_f",
+          "nw_unctld_dm_m",
+          "tot_nw_unctld_dm",
+          "ct_unctld_dm_f",
+          "ct_unctld_dm_m",
+          "tot_ct_unctld_dm"
+        ]
+      },
+      {
+        "label": "Unknown / Not Established",
+        "indicator": [
+          "nw_unk_dm_f",
+          "nw_unk_dm_m",
+          "tot_nw_unk_dm",
+          "ct_unk_dm_f",
+          "ct_unk_dm_m",
+          "tot_ct_unk_dm"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "nw_dm_m",
+          "nw_dm_f",
+          "nw_dm",
+          "ct_dm_m",
+          "ct_dm_f",
+          "ct_dm"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_dm", "tot_ct_dm"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_dm"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Kidney Disease",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "State",
+        "indicator": ["Chronic", "Acute"]
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT", "New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": [
+          "F",
+          "M",
+          "T",
+          "F",
+          "M",
+          "T",
+          "F",
+          "M",
+          "T",
+          "F",
+          "M",
+          "T"
+        ]
+      },
+      {
+        "label": "Stage 1",
+        "indicator": [
+          "stg_1_nw_chr_m",
+          "stg_1_nw_chr_f",
+          "tot_stg_1_nw_chr",
+          "stg_1_ct_chr_m",
+          "stg_1_ct_chr_f",
+          "tot_stg_1_ct_chr",
+          "stg_1_nw_acu_m",
+          "stg_1_nw_acu_f",
+          "tot_stg_1_nw_acu",
+          "stg_1_ct_acu_m",
+          "stg_1_ct_acu_f",
+          "tot_stg_1_ct_acu"
+        ]
+      },
+      {
+        "label": "Stage 2",
+        "indicator": [
+          "stg_2_nw_chr_m",
+          "stg_2_nw_chr_f",
+          "tot_stg_2_nw_chr",
+          "stg_2_ct_chr_m",
+          "stg_2_ct_chr_f",
+          "tot_stg_2_ct_chr",
+          "stg_2_nw_acu_m",
+          "stg_2_nw_acu_f",
+          "tot_stg_2_nw_acu",
+          "stg_2_ct_acu_m",
+          "stg_2_ct_acu_f",
+          "tot_stg_2_ct_acu"
+        ]
+      },
+      {
+        "label": "Stage 3",
+        "indicator": [
+          "stg_3_nw_chr_m",
+          "stg_3_nw_chr_f",
+          "tot_stg_3_nw_chr",
+          "stg_3_ct_chr_m",
+          "stg_3_ct_chr_f",
+          "tot_stg_3_ct_chr",
+          "stg_3_nw_acu_m",
+          "stg_3_nw_acu_f",
+          "tot_stg_3_nw_acu",
+          "stg_3_ct_acu_m",
+          "stg_3_ct_acu_f",
+          "tot_stg_3_ct_acu"
+        ]
+      },
+      {
+        "label": "Stage 4",
+        "indicator": [
+          "stg_4_nw_chr_m",
+          "stg_4_nw_chr_f",
+          "tot_stg_4_nw_chr",
+          "stg_4_ct_chr_m",
+          "stg_4_ct_chr_f",
+          "tot_stg_4_ct_chr",
+          "stg_4_nw_acu_m",
+          "stg_4_nw_acu_f",
+          "tot_stg_4_nw_acu",
+          "stg_4_ct_acu_m",
+          "stg_4_ct_acu_f",
+          "tot_stg_4_ct_acu"
+        ]
+      },
+      {
+        "label": "Stage 5",
+        "indicator": [
+          "stg_5_nw_chr_m",
+          "stg_5_nw_chr_f",
+          "tot_stg_5_nw_chr",
+          "stg_5_ct_chr_m",
+          "stg_5_ct_chr_f",
+          "tot_stg_5_ct_chr",
+          "stg_5_nw_acu_m",
+          "stg_5_nw_acu_f",
+          "tot_stg_5_nw_acu",
+          "stg_5_ct_acu_m",
+          "stg_5_ct_acu_f",
+          "tot_stg_5_ct_acu"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_chr_m",
+          "sub_tot_nw_chr_f",
+          "sub_tot_nw_chr",
+          "sub_tot_ct_chr_m",
+          "sub_tot_ct_chr_f",
+          "sub_tot_ct_chr",
+          "sub_tot_nw_acu_m",
+          "sub_tot_nw_acu_f",
+          "sub_tot_nw_acu",
+          "sub_tot_ct_acu_m",
+          "sub_tot_ct_acu_f",
+          "sub_tot_ct_acu"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          "sub_tot_nw_chr",
+          "sub_tot_ct_chr",
+          "sub_tot_nw_acu",
+          "sub_tot_ct_acu"
+        ]
+      },
+      {
+        "label": "State Sub Total",
+        "indicator": ["sub_tot_chr", "sub_tot_acu"]
+      },
+      {
+        "label": "Grand Total",
+        "indicator": "tot_kd"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Cardiovascular Disease (other than Hypertension)",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Heart Failure",
+        "indicator": [
+          "hf_nw_m",
+          "hf_nw_f",
+          "tot_hf_nw",
+          "hf_ct_m",
+          "hf_ct_f",
+          "tot_hf_ct"
+        ]
+      },
+      {
+        "label": "Myocardinal Infarction",
+        "indicator": [
+          "myo_inf_nw_m",
+          "myo_inf_nw_f",
+          "tot_myo_inf_nw",
+          "myo_inf_ct_m",
+          "myo_inf_ct_f",
+          "tot_myo_inf_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_cvd_m",
+          "sub_tot_nw_cvd_f",
+          "sub_tot_nw_cvd",
+          "sub_tot_ct_cvd_m",
+          "sub_tot_ct_cvd_f",
+          "sub_tot_ct_cvd"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_cvd", "tot_ct_cvd"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_cvd"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Neurologic Disease",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Migraine",
+        "indicator": [
+          "mg_nw_m",
+          "mg_nw_f",
+          "tot_mg_nw",
+          "mg_ct_m",
+          "mg_ct_f",
+          "tot_mg_ct"
+        ]
+      },
+      {
+        "label": "Convulsive",
+        "indicator": [
+          "cnv_nw_m",
+          "cnv_nw_f",
+          "tot_cnv_nw",
+          "cnv_ct_m",
+          "cnv_ct_f",
+          "tot_cnv_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_cnv_m",
+          "sub_tot_nw_cnv_f",
+          "sub_tot_nw_cnv",
+          "sub_tot_ct_cnv_m",
+          "sub_tot_ct_cnv_f",
+          "sub_tot_ct_cnv"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_cnv", "tot_ct_cnv"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_cnv"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Rheumatologic",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Arthritis",
+        "indicator": [
+          "ra_nw_m",
+          "ra_nw_f",
+          "tot_ra_nw",
+          "ra_ct_m",
+          "ra_ct_f",
+          "tot_ra_ct"
+        ]
+      },
+      {
+        "label": "SLE",
+        "indicator": [
+          "sle_nw_m",
+          "sle_nw_f",
+          "tot_sle_nw",
+          "sle_ct_m",
+          "sle_ct_f",
+          "tot_sle_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_rhe_m",
+          "sub_tot_nw_rhe_f",
+          "sub_tot_nw_rhe",
+          "sub_tot_ct_rhe_m",
+          "sub_tot_ct_rhe_f",
+          "sub_tot_ct_rhe"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_rhe", "tot_ct_rhe"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_rhe"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "GI Malignacies",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Oesophageal",
+        "indicator": [
+          "oe_nw_m",
+          "oe_nw_f",
+          "tot_oe_nw",
+          "oe_ct_m",
+          "oe_ct_f",
+          "tot_oe_ct"
+        ]
+      },
+      {
+        "label": "Pancreatic",
+        "indicator": [
+          "pc_nw_m",
+          "pc_nw_f",
+          "tot_pc_nw",
+          "pc_ct_m",
+          "pc_ct_f",
+          "tot_pc_ct"
+        ]
+      },
+      {
+        "label": "Stomach/Gastric",
+        "indicator": [
+          "gs_nw_m",
+          "gs_nw_f",
+          "tot_gs_nw",
+          "gs_ct_m",
+          "gs_ct_f",
+          "tot_gs_ct"
+        ]
+      },
+      {
+        "label": "Colorectal",
+        "indicator": [
+          "col_nw_m",
+          "col_nw_f",
+          "tot_col_nw",
+          "col_ct_m",
+          "col_ct_f",
+          "tot_col_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_gi_m",
+          "sub_tot_nw_gi_f",
+          "sub_tot_nw_gi",
+          "sub_tot_ct_gi_m",
+          "sub_tot_ct_gi_f",
+          "sub_tot_ct_gi"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_gi", "tot_ct_gi"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_gi"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Female Reproductive",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Ovarian",
+        "indicator": ["ov_nw", "ov_ct"]
+      },
+      {
+        "label": "Cervical",
+        "indicator": ["cv_nw", "cv_ct"]
+      },
+      {
+        "label": "Endometrial",
+        "indicator": ["endo_nw", "endo_ct"]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": ["tot_f_rep_nw", "tot_f_rep_ct"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_f_rep"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Male Reproductive",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Prostate",
+        "indicator": ["pro_nw", "pro_ct"]
+      },
+      {
+        "label": "Testicular",
+        "indicator": ["ts_nw", "ts_ct"]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": ["tot_m_rep_nw", "tot_m_rep_ct"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_m_rep"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "ENT Malignancies",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Throat",
+        "indicator": [
+          "th_nw_m",
+          "th_nw_f",
+          "tot_th_nw",
+          "th_ct_m",
+          "th_ct_f",
+          "tot_th_ct"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_ent", "tot_ct_ent"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_ent"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Endocrine",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Pituitary",
+        "indicator": [
+          "pit_nw_m",
+          "pit_nw_f",
+          "tot_pit_nw",
+          "pit_ct_m",
+          "pit_ct_f",
+          "tot_pit_ct"
+        ]
+      },
+      {
+        "label": "Thyroid",
+        "indicator": [
+          "thy_nw_m",
+          "thy_nw_f",
+          "tot_thy_nw",
+          "thy_ct_m",
+          "thy_ct_f",
+          "tot_thy_ct"
+        ]
+      },
+      {
+        "label": "Adrenal",
+        "indicator": [
+          "adr_nw_m",
+          "adr_nw_f",
+          "tot_adr_nw",
+          "adr_ct_m",
+          "adr_ct_f",
+          "tot_adr_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_endo_m",
+          "sub_tot_nw_endo_f",
+          "sub_tot_nw_endo",
+          "sub_tot_ct_endo_m",
+          "sub_tot_ct_endo_f",
+          "sub_tot_ct_endo"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_endo", "tot_ct_endo"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_endo"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Musculoskeletal",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Osteosarcoma",
+        "indicator": [
+          "ost_nw_m",
+          "ost_nw_f",
+          "tot_ost_nw",
+          "ost_ct_m",
+          "ost_ct_f",
+          "tot_ost_ct"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_musk", "tot_ct_musk"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_musk"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Haematological",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Leukamia",
+        "indicator": [
+          "leu_nw_m",
+          "leu_nw_f",
+          "tot_leu_nw",
+          "leu_ct_m",
+          "leu_ct_f",
+          "tot_leu_ct"
+        ]
+      },
+      {
+        "label": "Lymphoma",
+        "indicator": [
+          "lym_nw_m",
+          "lym_nw_f",
+          "tot_lym_nw",
+          "lym_ct_m",
+          "lym_ct_f",
+          "tot_lym_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_hae_m",
+          "sub_tot_nw_hae_f",
+          "sub_tot_nw_hae",
+          "sub_tot_ct_hae_m",
+          "sub_tot_ct_hae_f",
+          "sub_tot_ct_hae"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_hae", "tot_ct_hae"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_hae"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Neurological",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Gliomas, Glioneuronal and Neuronal Tumors",
+        "indicator": [
+          "ggn_nw_m",
+          "ggn_nw_f",
+          "tot_ggn_nw",
+          "ggn_ct_m",
+          "ggn_ct_f",
+          "tot_ggn_ct"
+        ]
+      },
+      {
+        "label": "Choroid Plexus Tumors",
+        "indicator": [
+          "cpt_nw_m",
+          "cpt_nw_f",
+          "tot_cpt_nw",
+          "cpt_ct_m",
+          "cpt_ct_f",
+          "tot_cpt_ct"
+        ]
+      },
+      {
+        "label": "Embryonal Tumors",
+        "indicator": [
+          "emb_nw_m",
+          "emb_nw_f",
+          "tot_emb_nw",
+          "emb_ct_m",
+          "emb_ct_f",
+          "tot_emb_ct"
+        ]
+      },
+      {
+        "label": "Pineal Tumors",
+        "indicator": [
+          "pin_nw_m",
+          "pin_nw_f",
+          "tot_pin_nw",
+          "pin_ct_m",
+          "pin_ct_f",
+          "tot_pin_ct"
+        ]
+      },
+      {
+        "label": "Meningiomas",
+        "indicator": [
+          "men_nw_m",
+          "men_nw_f",
+          "tot_men_nw",
+          "men_ct_m",
+          "men_ct_f",
+          "tot_men_ct"
+        ]
+      },
+      {
+        "label": "Mesenchymal Tumors",
+        "indicator": [
+          "mes_nw_m",
+          "mes_nw_f",
+          "tot_mes_nw",
+          "mes_ct_m",
+          "mes_ct_f",
+          "tot_mes_ct"
+        ]
+      },
+      {
+        "label": "Melanocytic",
+        "indicator": [
+          "mel_nw_m",
+          "mel_nw_f",
+          "tot_mel_nw",
+          "mel_ct_m",
+          "mel_ct_f",
+          "tot_mel_ct"
+        ]
+      },
+      {
+        "label": "Haematolymphoid",
+        "indicator": [
+          "hly_nw_m",
+          "hly_nw_f",
+          "tot_hly_nw",
+          "hly_ct_m",
+          "hly_ct_f",
+          "tot_hly_ct"
+        ]
+      },
+      {
+        "label": "Germ Cell Tumors",
+        "indicator": [
+          "gct_nw_m",
+          "gct_nw_f",
+          "tot_gct_nw",
+          "gct_ct_m",
+          "gct_ct_f",
+          "tot_gct_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_neu_m",
+          "sub_tot_nw_neu_f",
+          "sub_tot_nw_neu",
+          "sub_tot_ct_neu_m",
+          "sub_tot_ct_neu_f",
+          "sub_tot_ct_neu"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_neu", "tot_ct_neu"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_neu"
+      }
+    ]
+  }
+]
