@@ -14,43 +14,36 @@
       {
         "label": "Contolled",
         "indicator": [
-          "nw_ctld_htn_f",
-          "nw_ctld_htn_m",
-          "tot_nw_ctld_htn",
-          "ct_ctld_htn_f",
-          "ct_ctld_htn_m",
-          "tot_ct_ctld_htn"
+          "nw_ctld_htn_f","nw_ctld_htn_m","tot_nw_ctld_htn",
+          "ct_ctld_htn_f","ct_ctld_htn_m","tot_ct_ctld_htn"
         ]
       },
       {
         "label": "Uncontrolled",
         "indicator": [
-          "nw_unctld_htn_f",
-          "nw_unctld_htn_m",
-          "tot_nw_unctld_htn",
-          "ct_unctld_htn_f",
-          "ct_unctld_htn_m",
-          "tot_ct_unctld_htn"
+          "nw_unctld_htn_f","nw_unctld_htn_m","tot_nw_unctld_htn",
+          "ct_unctld_htn_f","ct_unctld_htn_m","tot_ct_unctld_htn"
         ]
       },
       {
         "label": "Unknown / Not Established",
         "indicator": [
-          "nw_unk_htn_f",
-          "nw_unk_htn_m",
-          "tot_nw_unk_htn",
-          "ct_unk_htn_f",
-          "ct_unk_htn_m",
-          "tot_ct_unk_htn"
+          "nw_unk_htn_f","nw_unk_htn_m","tot_nw_unk_htn",
+          "ct_unk_htn_f","ct_unk_htn_m","tot_ct_unk_htn"
         ]
       },
       {
         "label": "Sub Total",
-        "indicator": ["nw_htn_m", "nw_htn_f", "nw_htn", "ct_htn_m", "ct_htn_f", "ct_htn"]
+        "indicator": [
+          "nw_htn_m", "nw_htn_f", "nw_htn", 
+          "ct_htn_m", "ct_htn_f", "ct_htn"
+        ]
       },
       {
-        "label": "tot",
-        "indicator": ["tot_died", "placeholder", "tot_died"]
+        "label": "Total",
+        "indicator": [
+          "tot_htn"
+        ]
       }
     ]
   },
@@ -60,43 +53,36 @@
       {
         "label": "Contolled",
         "indicator": [
-          "nw_ctld_dm_f",
-          "nw_ctld_dm_m",
-          "tot_nw_ctld_dm",
-          "ct_ctld_dm_f",
-          "ct_ctld_dm_m",
-          "tot_ct_ctld_dm"
+          "nw_ctld_dm_f","nw_ctld_dm_m","tot_nw_ctld_dm",
+          "ct_ctld_dm_f","ct_ctld_dm_m","tot_ct_ctld_dm"
         ]
       },
       {
         "label": "Uncontrolled",
         "indicator": [
-          "nw_unctld_dm_f",
-          "nw_unctld_dm_m",
-          "tot_nw_unctld_dm",
-          "ct_unctld_dm_f",
-          "ct_unctld_dm_m",
-          "tot_ct_unctld_dm"
+          "nw_unctld_dm_f","nw_unctld_dm_m","tot_nw_unctld_dm",
+          "ct_unctld_dm_f","ct_unctld_dm_m","tot_ct_unctld_dm"
         ]
       },
       {
         "label": "Unknown / Not Established",
         "indicator": [
-          "nw_unk_dm_f",
-          "nw_unk_dm_m",
-          "tot_nw_unk_dm",
-          "ct_unk_dm_f",
-          "ct_unk_dm_m",
-          "tot_ct_unk_dm"
+          "nw_unk_dm_f","nw_unk_dm_m","tot_nw_unk_dm",
+          "ct_unk_dm_f","ct_unk_dm_m","tot_ct_unk_dm"
         ]
       },
       {
         "label": "Sub Total",
-        "indicator": ["nw_dm_m", "nw_dm_f", "nw_dm", "ct_dm_m", "ct_dm_f", "ct_dm"]
+        "indicator": [
+          "nw_dm_m", "nw_dm_f", "nw_dm", 
+          "ct_dm_m", "ct_dm_f", "ct_dm"
+        ]
       },
       {
-        "label": "tot",
-        "indicator": ["tot_died", "placeholder", "tot_died"]
+        "label": "Tot",
+        "indicator": [
+          "tot_dm"
+        ]
       }
     ]
   },
@@ -106,478 +92,467 @@
       {
         "label": "Stage 1",
         "indicator": [
-          "stg_1_nw_chro_m",
-          "stg_1_nw_chro_f",
-          "tot_stg_1_nw_chro",
-          "stg_1_ct_chro_m",
-          "stg_1_ct_chro_f",
-          "tot_stg_1_ct_chro",
-          "stg_1_nw_act_m",
-          "stg_1_nw_act_f",
-          "tot_stg_1_nw_act",
-          "stg_1_ct_act_m",
-          "stg_1_ct_act_f",
-          "tot_stg_1_ct_act"
+          "stg_1_nw_chr_m","stg_1_nw_chr_f","tot_stg_1_nw_chr",
+          "stg_1_ct_chr_m","stg_1_ct_chr_f","tot_stg_1_ct_chr",
+          "stg_1_nw_acu_m","stg_1_nw_acu_f","tot_stg_1_nw_acu",
+          "stg_1_ct_acu_m","stg_1_ct_acu_f","tot_stg_1_ct_acu"
         ]
       },
       {
         "label": "Stage 2",
         "indicator": [
-          "stg_2_nw_chro_m",
-          "stg_2_nw_chro_f",
-          "tot_stg_2_nw_chro",
-          "stg_2_ct_chro_m",
-          "stg_2_ct_chro_f",
-          "tot_stg_2_ct_chro",
-          "stg_2_nw_act_m",
-          "stg_2_nw_act_f",
-          "tot_stg_2_nw_act",
-          "stg_2_ct_act_m",
-          "stg_2_ct_act_f",
-          "tot_stg_2_ct_act"
+          "stg_2_nw_chr_m","stg_2_nw_chr_f","tot_stg_2_nw_chr",
+          "stg_2_ct_chr_m","stg_2_ct_chr_f","tot_stg_2_ct_chr",
+          "stg_2_nw_acu_m","stg_2_nw_acu_f","tot_stg_2_nw_acu",
+          "stg_2_ct_acu_m","stg_2_ct_acu_f","tot_stg_2_ct_acu"
         ]
       },
       {
         "label": "Stage 3",
         "indicator": [
-          "stg_3_nw_chro_m",
-          "stg_3_nw_chro_f",
-          "tot_stg_3_nw_chro",
-          "stg_3_ct_chro_m",
-          "stg_3_ct_chro_f",
-          "tot_stg_3_ct_chro",
-          "stg_3_nw_act_m",
-          "stg_3_nw_act_f",
-          "tot_stg_3_nw_act",
-          "stg_3_ct_act_m",
-          "stg_3_ct_act_f",
-          "tot_stg_3_ct_act"
+          "stg_3_nw_chr_m","stg_3_nw_chr_f","tot_stg_3_nw_chr",
+          "stg_3_ct_chr_m","stg_3_ct_chr_f","tot_stg_3_ct_chr",
+          "stg_3_nw_acu_m","stg_3_nw_acu_f","tot_stg_3_nw_acu",
+          "stg_3_ct_acu_m","stg_3_ct_acu_f","tot_stg_3_ct_acu"
         ]
       },
       {
         "label": "Stage 4",
         "indicator": [
-          "stg_4_nw_chro_m",
-          "stg_4_nw_chro_f",
-          "tot_stg_4_nw_chro",
-          "stg_4_ct_chro_m",
-          "stg_4_ct_chro_f",
-          "tot_stg_4_ct_chro",
-          "stg_4_nw_act_m",
-          "stg_4_nw_act_f",
-          "tot_stg_4_nw_act",
-          "stg_4_ct_act_m",
-          "stg_4_ct_act_f",
-          "tot_stg_4_ct_act"
+          "stg_4_nw_chr_m","stg_4_nw_chr_f","tot_stg_4_nw_chr",
+          "stg_4_ct_chr_m","stg_4_ct_chr_f","tot_stg_4_ct_chr",
+          "stg_4_nw_acu_m","stg_4_nw_acu_f","tot_stg_4_nw_acu",
+          "stg_4_ct_acu_m","stg_4_ct_acu_f","tot_stg_4_ct_acu"
         ]
       },
       {
         "label": "Stage 5",
         "indicator": [
-          "stg_5_nw_chro_m",
-          "stg_5_nw_chro_f",
-          "tot_stg_5_nw_chro",
-          "stg_5_ct_chro_m",
-          "stg_5_ct_chro_f",
-          "tot_stg_5_ct_chro",
-          "stg_5_nw_act_m",
-          "stg_5_nw_act_f",
-          "tot_stg_5_nw_act",
-          "stg_5_ct_act_m",
-          "stg_5_ct_act_f",
-          "tot_stg_5_ct_act"
+          "stg_5_nw_chr_m","stg_5_nw_chr_f","tot_stg_5_nw_chr",
+          "stg_5_ct_chr_m","stg_5_ct_chr_f","tot_stg_5_ct_chr",
+          "stg_5_nw_acu_m","stg_5_nw_acu_f","tot_stg_5_nw_acu",
+          "stg_5_ct_acu_m","stg_5_ct_acu_f","tot_stg_5_ct_acu"
+        ]
+      },
+      {
+        "label": "Sub Sub Total",
+        "indicator": [
+          "sub_tot_nw_chr_m", "sub_tot_nw_chr_f", "sub_tot_nw_chr",
+          "sub_tot_ct_chr_m", "sub_tot_ct_chr_f", "sub_tot_ct_chr",
+          "sub_tot_nw_acu_m", "sub_tot_nw_acu_f", "sub_tot_nw_acu",
+          "sub_tot_ct_acu_m", "sub_tot_ct_acu_f", "sub_tot_ct_acu"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_chr", "sub_tot_acu"
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": [
+          "tot_kd"
         ]
       }
     ]
   },
   {
-    "sectionTitle": "Cardiovascular Disease (other than hypertension)",
+    "sectionTitle": "Cardiovascular Disease (other than Hypertension)",
     "indicators": [
       {
-        "label": "<1 year",
+        "label": "Heart Failure",
         "indicator": [
-          "f_iit_6_plus_less_1_year",
-          "m_iit_6_plus_less_1_year",
-          "iit_6_plus_less_1_year"
+          "hf_nw_m", "hf_nw_f", "tot_hf_nw",
+          "hf_ct_m", "hf_ct_f", "tot_hf_ct"
         ]
       },
       {
-        "label": "1 - 4 years",
+        "label": "Myocardinal Infarction",
         "indicator": [
-          "f_iit_6_plus_one_four_year",
-          "m_iit_6_plus_one_four_year",
-          "iit_6_plus_one_four_year"
+          "myo_inf_nw_m", "myo_inf_nw_f", "tot_myo_inf_nw",
+          "myo_inf_ct_m", "myo_inf_ct_f", "tot_myo_inf_ct"
         ]
       },
       {
-        "label": "5 - 9 years",
+        "label": "Sub Total",
         "indicator": [
-          "f_iit_6_plus_5_9_year",
-          "m_iit_6_plus_5_9_year",
-          "iit_6_plus_5_9_year"
+          "sub_tot_nw_cvd_m", "sub_tot_nw_cvd_f", "sub_tot_nw_cvd",
+          "sub_tot_ct_cvd_m", "sub_tot_ct_cvd_f", "sub_tot_ct_cvd"
         ]
       },
       {
-        "label": "10 - 14 years",
+        "label": "Total",
         "indicator": [
-          "f_iit_6_plus_10_14_year",
-          "m_iit_6_plus_10_14_year",
-          "iit_6_plus_10_14_year"
+          "tot_cvd"
         ]
-      },
-      {
-        "label": "15 - 19 years",
-        "indicator": [
-          "f_iit_6_plus_15_19_year",
-          "m_iit_6_plus_15_19_year",
-          "iit_6_plus_15_19_year"
-        ]
-      },
-      {
-        "label": "20 - 24 years",
-        "indicator": [
-          "f_iit_6_plus_20_24_year",
-          "m_iit_6_plus_20_24_year",
-          "iit_6_plus_20_24_year"
-        ]
-      },
-      {
-        "label": "25 - 29 years",
-        "indicator": [
-          "f_iit_6_plus_25_29_year",
-          "m_iit_6_plus_25_29_year",
-          "iit_6_plus_25_29_year"
-        ]
-      },
-      {
-        "label": "30 - 34 years",
-        "indicator": [
-          "f_iit_6_plus_30_34_year",
-          "m_iit_6_plus_30_34_year",
-          "iit_6_plus_30_34_year"
-        ]
-      },
-      {
-        "label": "35 - 39 years",
-        "indicator": [
-          "f_iit_6_plus_35_39_year",
-          "m_iit_6_plus_35_39_year",
-          "iit_6_plus_35_39_year"
-        ]
-      },
-      {
-        "label": "40 - 44 years",
-        "indicator": [
-          "f_iit_6_plus_40_44_year",
-          "m_iit_6_plus_40_44_year",
-          "iit_6_plus_40_44_year"
-        ]
-      },
-      {
-        "label": "45 - 49 years",
-        "indicator": [
-          "f_iit_6_plus_45_49_year",
-          "m_iit_6_plus_45_49_year",
-          "iit_6_plus_45_49_year"
-        ]
-      },
-      {
-        "label": "50 - 54 years",
-        "indicator": [
-          "f_iit_6_plus_50_54_year",
-          "m_iit_6_plus_50_54_year",
-          "iit_6_plus_50_54_year"
-        ]
-      },
-      {
-        "label": "55 - 59 years",
-        "indicator": [
-          "f_iit_6_plus_55_59_year",
-          "m_iit_6_plus_55_59_year",
-          "iit_6_plus_55_59_year"
-        ]
-      },
-      {
-        "label": "60 - 64 years",
-        "indicator": [
-          "f_iit_6_plus_60_64_year",
-          "m_iit_6_plus_60_64_year",
-          "iit_6_plus_60_64_year"
-        ]
-      },
-      {
-        "label": "65+ years",
-        "indicator": [
-          "f_iit_6_plus_above_65_year",
-          "m_iit_6_plus_above_65_year",
-          "iit_6_plus_above_65_year"
-        ]
-      },
-      {
-        "label": "Sub tot",
-        "indicator": ["f_iit_6_plus", "m_iit_6_plus"]
-      },
-      {
-        "label": "tot",
-        "indicator": ["tot_iit_6_plus", "placeholder", "tot_iit_6_plus"]
       }
     ]
   },
   {
-    "sectionTitle": "Transferred Out",
+    "sectionTitle": "Neurologic Disease",
     "indicators": [
       {
-        "label": "<1 year",
+        "label": "Migraine",
         "indicator": [
-          "f_to_less_1_year",
-          "m_to_less_1_year",
-          "to_less_1_year"
+          "mg_nw_m", "mg_nw_f", "tot_mg_nw",
+          "mg_ct_m", "mg_ct_f", "tot_mg_ct"
         ]
       },
       {
-        "label": "1 - 4 years",
-        "indicator": ["f_to_1_4_year", "m_to_1_4_year", "to_1_4_year"]
-      },
-      {
-        "label": "5 - 9 years",
-        "indicator": ["f_to_5_9_year", "m_to_5_9_year", "to_5_9_year"]
-      },
-      {
-        "label": "10 - 14 years",
+        "label": "Convulsive",
         "indicator": [
-          "f_to_10_14_year",
-          "m_to_10_14_year",
-          "to_10_14_year"
+          "cnv_nw_m", "cnv_nw_f", "tot_cnv_nw",
+          "cnv_ct_m", "cnv_ct_f", "tot_cnv_ct"
         ]
       },
       {
-        "label": "15 - 19 years",
+        "label": "Sub Total",
         "indicator": [
-          "f_to_15_19_year",
-          "m_to_15_19_year",
-          "to_15_19_year"
+          "sub_tot_nw_cnv_m", "sub_tot_nw_cnv_f", "sub_tot_nw_cnv",
+          "sub_tot_ct_cnv_m", "sub_tot_ct_cnv_f", "sub_tot_ct_cnv"
         ]
       },
       {
-        "label": "20 - 24 years",
+        "label": "Total",
         "indicator": [
-          "f_to_20_24_year",
-          "m_to_20_24_year",
-          "to_20_24_year"
+          "tot_cnv"
         ]
-      },
-      {
-        "label": "25 - 29 years",
-        "indicator": [
-          "f_to_25_29_year",
-          "m_to_25_29_year",
-          "to_25_29_year"
-        ]
-      },
-      {
-        "label": "30 - 34 years",
-        "indicator": [
-          "f_to_30_34_year",
-          "m_to_30_34_year",
-          "to_30_34_year"
-        ]
-      },
-      {
-        "label": "35 - 39 years",
-        "indicator": [
-          "f_to_35_39_year",
-          "m_to_35_39_year",
-          "to_35_39_year"
-        ]
-      },
-      {
-        "label": "40 - 44 years",
-        "indicator": [
-          "f_to_40_44_year",
-          "m_to_40_44_year",
-          "to_40_44_year"
-        ]
-      },
-      {
-        "label": "45 - 49 years",
-        "indicator": [
-          "f_to_45_49_year",
-          "m_to_45_49_year",
-          "to_45_49_year"
-        ]
-      },
-      {
-        "label": "50 - 54 years",
-        "indicator": [
-          "f_to_50_54_year",
-          "m_to_50_54_year",
-          "to_50_54_year"
-        ]
-      },
-      {
-        "label": "55 - 59 years",
-        "indicator": [
-          "f_to_55_59_year",
-          "m_to_55_59_year",
-          "to_55_59_year"
-        ]
-      },
-      {
-        "label": "60 - 64 years",
-        "indicator": [
-          "f_to_60_64_year",
-          "m_to_60_64_year",
-          "to_60_64_year"
-        ]
-      },
-      {
-        "label": "65+ years",
-        "indicator": [
-          "f_to_above_65_year",
-          "m_to_above_65_year",
-          "to_above_65_year"
-        ]
-      },
-      {
-        "label": "Sub tot",
-        "indicator": ["f_to", "m_to"]
-      },
-      {
-        "label": "tot",
-        "indicator": ["tot_to", "placeholder", "tot_to"]
       }
     ]
   },
   {
-    "sectionTitle": "Refused (Stopped) Treatment",
+    "sectionTitle": "Rheumatologic",
     "indicators": [
       {
-        "label": "<1 year",
+        "label": "Arthritis",
         "indicator": [
-          "f_rst_less_1_year",
-          "m_rst_less_1_year",
-          "rst_less_1_year"
+          "ra_nw_m", "ra_nw_f", "tot_ra_nw",
+          "ra_ct_m", "ra_ct_f", "tot_ra_ct"
         ]
       },
       {
-        "label": "1 - 4 years",
+        "label": "SLE",
         "indicator": [
-          "f_rst_1_4_year",
-          "m_rst_1_4_year",
-          "rst_1_4_year"
+          "sle_nw_m", "sle_nw_f", "tot_sle_nw",
+          "sle_ct_m", "sle_ct_f", "tot_sle_ct"
         ]
       },
       {
-        "label": "5 - 9 years",
+        "label": "Sub Total",
         "indicator": [
-          "f_rst_5_9_year",
-          "m_rst_5_9_year",
-          "rst_5_9_year"
+          "sub_tot_nw_rhe_m", "sub_tot_nw_rhe_f", "sub_tot_nw_rhe",
+          "sub_tot_ct_rhe_m", "sub_tot_ct_rhe_f", "sub_tot_ct_rhe"
         ]
       },
       {
-        "label": "10 - 14 years",
+        "label": "Total",
         "indicator": [
-          "f_rst_10_14_year",
-          "m_rst_10_14_year",
-          "rst_10_14_year"
+          "tot_rhe"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Oncology/Malignacies",
+    "indicators": [
+    ]
+  },
+  {
+    "sectionTitle": "GI Malignacies",
+    "indicators": [
+      {
+        "label": "Oesophageal",
+        "indicator": [
+          "oe_nw_m", "oe_nw_f", "tot_oe_nw",
+          "oe_ct_m", "oe_ct_f", "tot_oe_ct"
         ]
       },
       {
-        "label": "15 - 19 years",
+        "label": "Pancreatic",
         "indicator": [
-          "f_rst_15_19_year",
-          "m_rst_15_19_year",
-          "rst_15_19_year"
+          "pc_nw_m", "pc_nw_f", "tot_pc_nw",
+          "pc_ct_m", "pc_ct_f", "tot_pc_ct"
         ]
       },
       {
-        "label": "20 - 24 years",
+        "label": "Stomach/Gastric",
         "indicator": [
-          "f_rst_20_24_year",
-          "m_rst_20_24_year",
-          "rst_20_24_year"
+          "gs_nw_m", "gs_nw_f", "tot_gs_nw",
+          "gs_ct_m", "gs_ct_f", "tot_gs_ct"
         ]
       },
       {
-        "label": "25 - 29 years",
+        "label": "Colorectal",
         "indicator": [
-          "f_rst_25_29_year",
-          "m_rst_25_29_year",
-          "rst_25_29_year"
+          "col_nw_m", "col_nw_f", "tot_col_nw",
+          "col_ct_m", "col_ct_f", "tot_col_ct"
         ]
       },
       {
-        "label": "30 - 34 years",
+        "label": "Sub Total",
         "indicator": [
-          "f_rst_30_34_year",
-          "m_rst_30_34_year",
-          "rst_30_34_year"
+          "sub_tot_nw_gi_m", "sub_tot_nw_gi_f", "sub_tot_nw_gi",
+          "sub_tot_ct_gi_m", "sub_tot_ct_gi_f", "sub_tot_ct_gi"
         ]
       },
       {
-        "label": "35 - 39 years",
+        "label": "Total",
         "indicator": [
-          "f_rst_35_39_year",
-          "m_rst_35_39_year",
-          "rst_35_39_year"
+          "tot_gi"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Female Reproductive",
+    "indicators": [
+      {
+        "label": "Ovarian",
+        "indicator": [
+          "ov_nw", "ov_ct"
         ]
       },
       {
-        "label": "40 - 44 years",
+        "label": "Cervical",
         "indicator": [
-          "f_rst_40_44_year",
-          "m_rst_40_44_year",
-          "rst_40_44_year"
+          "cv_nw", "cv_ct"
         ]
       },
       {
-        "label": "45 - 49 years",
+        "label": "Endometrial",
         "indicator": [
-          "f_rst_45_49_year",
-          "m_rst_45_49_year",
-          "rst_45_49_year"
+          "endo_nw", "endo_ct"
         ]
       },
       {
-        "label": "50 - 54 years",
+        "label": "Sub Total",
         "indicator": [
-          "f_rst_50_54_year",
-          "m_rst_50_54_year",
-          "rst_50_54_year"
+          "tot_f_rep_nw", "tot_f_rep_ct"
         ]
       },
       {
-        "label": "55 - 59 years",
+        "label": "Total",
         "indicator": [
-          "f_rst_55_59_year",
-          "m_rst_55_59_year",
-          "rst_55_59_year"
+          "tot_f_rep"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Male Reproductive",
+    "indicators": [
+      {
+        "label": "Prostate",
+        "indicator": [
+          "pro_nw", "pro_ct"
         ]
       },
       {
-        "label": "60 - 64 years",
+        "label": "Testicular",
         "indicator": [
-          "f_rst_60_64_year",
-          "m_rst_60_64_year",
-          "rst_60_64_year"
+          "ts_nw", "ts_ct"
         ]
       },
       {
-        "label": "65+ years",
+        "label": "Sub Total",
         "indicator": [
-          "f_rst_above_65_year",
-          "m_rst_above_65_year",
-          "rst_above_65_year"
+          "tot_m_rep_nw", "tot_m_rep_ct"
         ]
       },
       {
-        "label": "Sub tot",
-        "indicator": ["f_rst", "m_rst"]
+        "label": "Total",
+        "indicator": [
+          "tot_m_rep"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "ENT Malignancies",
+    "indicators": [
+      {
+        "label": "Throat",
+        "indicator": [
+          "th_nw_m", "th_nw_f", "tot_th_nw",
+          "th_ct_m", "th_ct_f", "tot_th_ct"
+        ]
       },
       {
-        "label": "tot",
-        "indicator": ["tot_rst", "placeholder", "tot_rst"]
+        "label": "Total",
+        "indicator": [
+          "tot_ent"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Endocrine",
+    "indicators": [
+      {
+        "label": "Pituitary",
+        "indicator": [
+          "pit_nw_m", "pit_nw_f", "tot_pit_nw",
+          "pit_ct_m", "pit_ct_f", "tot_pit_ct"
+        ]
+      },
+      {
+        "label": "Thyroid",
+        "indicator": [
+          "thy_nw_m", "thy_nw_f", "tot_thy_nw",
+          "thy_ct_m", "thy_ct_f", "tot_thy_ct"
+        ]
+      },
+      {
+        "label": "Adrenal",
+        "indicator": [
+          "adr_nw_m", "adr_nw_f", "tot_adr_nw",
+          "adr_ct_m", "adr_ct_f", "tot_adr_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_endo_m", "sub_tot_nw_endo_f", "sub_tot_nw_endo",
+          "sub_tot_ct_endo_m", "sub_tot_ct_endo_f", "sub_tot_ct_endo"
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": [
+          "tot_endo"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Musculoskeletal",
+    "indicators": [
+      {
+        "label": "Osteosarcoma",
+        "indicator": [
+          "ost_nw_m", "ost_nw_f", "tot_ost_nw",
+          "ost_ct_m", "ost_ct_f", "tot_ost_ct"
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": [
+          "tot_musk"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Haematological",
+    "indicators": [
+      {
+        "label": "Leukamia",
+        "indicator": [
+          "leu_nw_m", "leu_nw_f", "tot_leu_nw",
+          "leu_ct_m", "leu_ct_f", "tot_leu_ct"
+        ]
+      },
+      {
+        "label": "Lymphoma",
+        "indicator": [
+          "lym_nw_m", "lym_nw_f", "tot_lym_nw",
+          "lym_ct_m", "lym_ct_f", "tot_lym_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_hae_m", "sub_tot_nw_hae_f", "sub_tot_nw_hae",
+          "sub_tot_ct_hae_m", "sub_tot_ct_hae_f", "sub_tot_ct_hae"
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": [
+          "tot_hae"
+        ]
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Neurological",
+    "indicators": [
+      {
+        "label": "Gliomas, Glioneuronal and Neuronal Tumors",
+        "indicator": [
+          "ggn_nw_m", "ggn_nw_f", "tot_ggn_nw",
+          "ggn_ct_m", "ggn_ct_f", "tot_ggn_ct"
+        ]
+      },
+      {
+        "label": "Choroid Plexus Tumors",
+        "indicator": [
+          "cpt_nw_m", "cpt_nw_f", "tot_cpt_nw",
+          "cpt_ct_m", "cpt_ct_f", "tot_cpt_ct"
+        ]
+      },
+      {
+        "label": "Embryonal Tumors",
+        "indicator": [
+          "emb_nw_m", "emb_nw_f", "tot_emb_nw",
+          "emb_ct_m", "emb_ct_f", "tot_emb_ct"
+        ]
+      },
+      {
+        "label": "Pineal Tumors",
+        "indicator": [
+          "pin_nw_m", "pin_nw_f", "tot_pin_nw",
+          "pin_ct_m", "pin_ct_f", "tot_pin_ct"
+        ]
+      },
+      {
+        "label": "Meningiomas",
+        "indicator": [
+          "men_nw_m", "men_nw_f", "tot_men_nw",
+          "men_ct_m", "men_ct_f", "tot_men_ct"
+        ]
+      },
+      {
+        "label": "Mesenchymal Tumors",
+        "indicator": [
+          "mes_nw_m", "mes_nw_f", "tot_mes_nw",
+          "mes_ct_m", "mes_ct_f", "tot_mes_ct"
+        ]
+      },
+      {
+        "label": "Melanocytic",
+        "indicator": [
+          "mel_nw_m", "mel_nw_f", "tot_mel_nw",
+          "mel_ct_m", "mel_ct_f", "tot_mel_ct"
+        ]
+      },
+      {
+        "label": "Haematolymphoid",
+        "indicator": [
+          "hly_nw_m", "hly_nw_f", "tot_hly_nw",
+          "hly_ct_m", "hly_ct_f", "tot_hly_ct"
+        ]
+      },
+      {
+        "label": "Germ Cell Tumors",
+        "indicator": [
+          "gct_nw_m", "gct_nw_f", "tot_gct_nw",
+          "gct_ct_m", "gct_ct_f", "tot_gct_ct"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "sub_tot_nw_neu_m", "sub_tot_nw_neu_f", "sub_tot_nw_neu",
+          "sub_tot_ct_neu_m", "sub_tot_ct_neu_f", "sub_tot_ct_neu"
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": [
+          "tot_neu"
+        ]
       }
     ]
   }
