@@ -24,6 +24,14 @@
         "type": "INNER",
         "joinCondition": "loc.location_id = obs.location_id"
       }
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_v1_2",
+      "alias": "hm",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "hm.person_id = obs.person_id"
+      }
     }
   ],
   "columns": [
@@ -135,7 +143,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "last_day(enc.encounter_datetime) IN (?)",
+        "conditionExpression": "hm.endDate = ?",
         "parameterName": "endDate"
       },
       {
@@ -150,6 +158,10 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "obs.voided IN (0)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hm.status = 'active'"
       }
     ]
   },
