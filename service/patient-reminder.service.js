@@ -944,7 +944,10 @@ function getFPExpiryDate(data) {
 function generateAppointmentNoShowUpRiskReminder(data) {
   let reminders = [];
   const predicted_score = (data.predicted_prob_disengage * 100).toFixed(2);
-  if (data.predicted_risk) {
+  if (
+    data.predicted_risk &&
+    data.last_encounter_date < data.prediction_generated_date
+  ) {
     if (data.predicted_risk === 'Medium Risk') {
       reminders.push({
         message:
