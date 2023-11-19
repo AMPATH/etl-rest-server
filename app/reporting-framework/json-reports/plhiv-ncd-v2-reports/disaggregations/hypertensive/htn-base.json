@@ -1,0 +1,328 @@
+{
+  "name": "htnPlhivBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_v1_2",
+      "alias": "hmrd"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "fi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmrd.person_id = fi.patient_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "hmrd.location_id = l.location_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "per",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "hmrd.person_id = per.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "hmrd.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "fi.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "fi.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "fi.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "hmrd.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "hmrd.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_ctld_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmrd.gender = 'F',1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_ctld_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_ctld_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_ctld_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_ctld_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_ctld_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_unctld_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_unctld_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_unctld_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_unctld_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_unctld_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_unctld_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_unk_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_unk_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_unk_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_unk_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_unk_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_unk_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmrd.gender = 'F',1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_htn_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_htn_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmrd.gender = 'F',1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(hmrd.gender = 'F',1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.location_id in ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.status = 'active' AND hmrd.on_art_this_month = 1"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["hmrd.person_id"],
+    "excludeParam": "excludeParam"
+  },
+  "paging": {
+    "offSetParam": "offSetParam",
+    "limitParam": "limitParam"
+  }
+}

@@ -384,6 +384,20 @@ import * as txrtt_aggregate_report from './json-reports/tx-reports/tx-rtt/tx-rtt
 import * as txrtt_base_report from './json-reports/tx-reports/tx-rtt/tx-rtt-report-base.json';
 import * as txrtt_summary from './json-reports/txrtt-summary.json';
 
+//plhiv-ncd report
+import * as plhiv_ncd_v2_monthly_report from './json-reports/plhiv-ncd-v2-reports/plhiv-ncd-v2-report.json';
+
+import * as htn_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/hypertensive/htn-base.json';
+import * as htn_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/hypertensive/htn-aggregate.json';
+
+import * as dm_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/diabetic/dm-base.json';
+import * as dm_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/diabetic/dm-aggregate.json';
+
+import * as cvd_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/cardiovascular-disease/cvd-base.json';
+import * as cvd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/cardiovascular-disease/cvd-aggregate.json';
+
+import * as kd_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/kidney-disease/kd-base.json';
+import * as kd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/kidney-disease/kd-aggregate.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1793,6 +1807,35 @@ export class BaseMysqlReport {
         case 'txrtt-summary-report':
           resolve({
             main: this.cloneJsonSchema(txrtt_summary)
+          });
+          break;
+        case 'plhiv-ncd-v2-monthly-report':
+          resolve({
+            main: this.cloneJsonSchema(plhiv_ncd_v2_monthly_report)
+          });
+          break;
+        case 'htnPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(htn_plhiv_aggregate),
+            htnPlhivBase: this.cloneJsonSchema(htn_plhiv_base)
+          });
+          break;
+        case 'dmPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(dm_plhiv_aggregate),
+            dmPlhivBase: this.cloneJsonSchema(dm_plhiv_base)
+          });
+          break;
+        case 'cvdPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(cvd_plhiv_aggregate),
+            cvdPlhivBase: this.cloneJsonSchema(cvd_plhiv_base)
+          });
+          break;
+        case 'kdPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(kd_plhiv_aggregate),
+            kdPlhivBase: this.cloneJsonSchema(kd_plhiv_base)
           });
           break;
         default:

@@ -1,0 +1,17 @@
+{
+  "reports": [
+    "htnPlhivAggregate",
+    "dmPlhivAggregate",
+    "cvdPlhivAggregate",
+    "kdPlhivAggregate",
+    "mhPlhivAggregate",
+    "endoPlhivAggregate",
+    "entPlhivAggregate",
+    "frmPlhivAggregate",
+    "mrmPlhivAggregate",
+    "haemPlhivAggregate",
+    "muscPlhivAggregate",
+    "neuPlhivAggregate",
+    "rhePlhivAggregate"
+  ]
+}

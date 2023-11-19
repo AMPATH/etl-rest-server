@@ -8,7 +8,7 @@ const {
 const routes = [
   {
     method: 'GET',
-    path: '/etl/plhiv-ncd-v2-summary',
+    path: '/etl/plhiv-ncd-v2-monthly-report',
     config: {
       plugins: {
         hapiAuthorization: {
@@ -19,14 +19,14 @@ const routes = [
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
           let reportParams = etlHelpers.getReportParams(
-            'plhiv-ncd-v2-summary-report',
+            'plhiv-ncd-v2-monthly-report',
             ['endDate', 'locationUuids'],
             requestParams
           );
           reportParams.requestParams.isAggregated = true;
 
           let service = new PLHIVNCDv2SummaryReportService(
-            'plhiv-ncd-v2-summary-report',
+            'plhiv-ncd-v2-monthly-report',
             reportParams.requestParams
           );
           service
@@ -52,7 +52,7 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/etl/plhiv-ncd-v2-summary-patient-list',
+    path: '/etl/plhiv-ncd-v2-monthly-report-patient-list',
     config: {
       plugins: {
         hapiAuthorization: {
@@ -68,13 +68,13 @@ const routes = [
               request.params
             );
             let reportParams = etlHelpers.getReportParams(
-              'plhiv-ncd-v2-summary-report',
+              'plhiv-ncd-v2-monthly-report',
               ['endDate', 'locationUuids'],
               requestParams
             );
             delete reportParams.requestParams['gender'];
             const plhivncdV2ReportService = new PLHIVNCDv2SummaryReportService(
-              'plhiv-ncd-v2-summary-report',
+              'plhiv-ncd-v2-monthly-report',
               reportParams.requestParams
             );
             plhivncdV2ReportService

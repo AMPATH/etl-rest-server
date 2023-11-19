@@ -138,6 +138,108 @@
     ]
   },
   {
+    "sectionTitle": "Mental Health Disorder",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Depressive",
+        "indicator": [
+          "nw_dp_mh_f",
+          "nw_dp_mh_m",
+          "tot_nw_dp_mh",
+          "ct_dp_mh_f",
+          "ct_dp_mh_m",
+          "tot_ct_dp_mh"
+        ]
+      },
+      {
+        "label": "Anxiety",
+        "indicator": [
+          "nw_anx_mh_f",
+          "nw_anx_mh_m",
+          "tot_nw_anx_mh",
+          "ct_anx_mh_f",
+          "ct_anx_mh_m",
+          "tot_ct_anx_mh"
+        ]
+      },
+      {
+        "label": "Bipolar and Related Disorder",
+        "indicator": [
+          "nw_bip_mh_f",
+          "nw_bip_mh_m",
+          "tot_nw_bip_mh",
+          "ct_bip_mh_f",
+          "ct_bip_mh_m",
+          "tot_ct_bip_mh"
+        ]
+      },
+      {
+        "label": "Personality Disorder",
+        "indicator": [
+          "nw_per_mh_f",
+          "nw_per_mh_m",
+          "tot_nw_per_mh",
+          "ct_per_mh_f",
+          "ct_per_mh_m",
+          "tot_ct_per_mh"
+        ]
+      },
+      {
+        "label": "Feeding and Eating Disorder",
+        "indicator": [
+          "nw_fe_mh_f",
+          "nw_fe_mh_m",
+          "tot_nw_fe_mh",
+          "ct_fe_mh_f",
+          "ct_fe_mh_m",
+          "tot_ct_fe_mh"
+        ]
+      },
+      {
+        "label": "Obsessive - Compulsive and Related Disorder",
+        "indicator": [
+          "nw_obs_mh_f",
+          "nw_obs_mh_m",
+          "tot_nw_obs_mh",
+          "ct_obs_mh_f",
+          "ct_obs_mh_m",
+          "tot_ct_obs_mh"
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          "nw_mh_m",
+          "nw_mh_f",
+          "nw_mh",
+          "ct_mh_m",
+          "ct_mh_f",
+          "ct_mh"
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": ["tot_nw_mh", "tot_ct_mh"]
+      },
+      {
+        "label": "Total",
+        "indicator": "tot_mh"
+      }
+    ]
+  },
+  {
     "sectionTitle": "Kidney Disease",
     "indicators": [
       {
@@ -308,23 +410,23 @@
       {
         "label": "Heart Failure",
         "indicator": [
-          "hf_nw_m",
-          "hf_nw_f",
-          "tot_hf_nw",
-          "hf_ct_m",
-          "hf_ct_f",
-          "tot_hf_ct"
+          "nw_hf_m",
+          "nw_hf_f",
+          "tot_nw_hf",
+          "ct_hf_m",
+          "ct_hf_f",
+          "tot_ct_hf"
         ]
       },
       {
         "label": "Myocardinal Infarction",
         "indicator": [
-          "myo_inf_nw_m",
-          "myo_inf_nw_f",
-          "tot_myo_inf_nw",
-          "myo_inf_ct_m",
-          "myo_inf_ct_f",
-          "tot_myo_inf_ct"
+          "nw_myo_inf_m",
+          "nw_myo_inf_f",
+          "tot_nw_myo_inf",
+          "ct_myo_inf_m",
+          "ct_myo_inf_f",
+          "tot_ct_myo_inft"
         ]
       },
       {
