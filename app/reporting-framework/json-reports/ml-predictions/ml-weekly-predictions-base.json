@@ -46,7 +46,7 @@
       "alias": "pre",
       "join": {
         "type": "LEFT",
-        "joinCondition": "pre.person_id = ml.person_id "
+        "joinCondition": "pre.person_id = ml.person_id and(DATEDIFF(ml.start_date, pre.encounter_datetime) <= 7)"
       }
     },
     {
