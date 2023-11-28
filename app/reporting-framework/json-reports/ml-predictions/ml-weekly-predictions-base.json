@@ -46,10 +46,9 @@
       "alias": "pre",
       "join": {
         "type": "LEFT",
-        "joinCondition": "pre.person_id = ml.person_id and(DATEDIFF(ml.start_date, pre.encounter_datetime) <= 7)"
+        "joinCondition": "pre.person_id = ml.person_id "
       }
     },
-
     {
       "table": "( select max(is_successful_phone_follow_up) as latest_phone_follow_up, person_id, follow_up_type from  etl.pre_appointment_summary group by person_id )",
       "alias": "s",
@@ -59,11 +58,11 @@
       }
     },
     {
-      "table": "(SELECT  et.person_id, en.encounter_type, et.is_successful_phone_follow_up AS phone_follow_up, case when et.is_successful_phone_follow_up = 'NO' then count(*) else 0 end as count FROM amrs.encounter en inner JOIN etl.pre_appointment_summary et ON en.patient_id = et.person_id  AND en.encounter_type = 276 group by en.patient_id)",
-      "alias": "amrs_enc",
+      "table": "(SELECT et.person_id, SUM(CASE WHEN et.is_successful_phone_follow_up = 'YES' THEN 0 WHEN et.is_successful_phone_follow_up = 'NO' THEN 1 ELSE 0 END) AS counter FROM etl.pre_appointment_summary et left join predictions.ml_weekly_predictions mwl on et.person_id = mwl.person_id WHERE et.encounter_datetime BETWEEN mwl.prediction_generated_date AND DATE_ADD(mwl.prediction_generated_date, INTERVAL 14 DAY) GROUP BY et.person_id)",
+      "alias": "etc",
       "join": {
         "type": "LEFT",
-        "joinCondition": "pre.person_id = amrs_enc.person_id"
+        "joinCondition": "ml.person_id = etc.person_id"
       }
     }
   ],
@@ -179,7 +178,7 @@
     {
       "type": "simple_column",
       "alias": "number_of_failed_phone_attempts",
-      "column": "amrs_enc.count"
+      "column": "etc.counter"
     },
     {
       "type": "simple_column",
