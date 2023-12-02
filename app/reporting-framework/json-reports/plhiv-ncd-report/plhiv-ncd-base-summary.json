@@ -26,7 +26,7 @@
       }
     },
     {
-      "table": "etl.hiv_monthly_report_dataset_v1_2",
+      "table": "etl.hiv_monthly_report_dataset_frozen",
       "alias": "hm",
       "join": {
         "type": "INNER",
@@ -38,7 +38,7 @@
     {
       "type": "simple_column",
       "alias": "endDate",
-      "column": "last_day(enc.encounter_datetime)"
+      "column": "hm.endDate"
     },
     {
       "type": "simple_column",
@@ -143,25 +143,15 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hm.endDate = ?",
-        "parameterName": "endDate"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "loc.uuid IN ?",
-        "parameterName": "locationUuids"
-      },
-      {
-        "filterType": "tableColumns",
         "conditionExpression": "obs.concept_id IN (9328,10239)"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "obs.voided IN (0)"
+        "conditionExpression": "hm.on_art_this_month = 1"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hm.status = 'active'"
+        "conditionExpression": "obs.voided IN (0)"
       }
     ]
   },
