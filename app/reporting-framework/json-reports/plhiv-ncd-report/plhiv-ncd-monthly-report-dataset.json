@@ -68,27 +68,27 @@
     {
       "type": "simple_column",
       "alias": "hypertensive_comorbidity",
-      "column": "pnmrb.hypertensive_comorbidity"
+      "column": "IFNULL(pnmrb.hypertensive_comorbidity, 0)"
     },
     {
       "type": "simple_column",
       "alias": "diabetic_comorbidity",
-      "column": "pnmrb.diabetic_comorbidity"
+      "column": "IFNULL(pnmrb.diabetic_comorbidity, 0)"
     },
     {
       "type": "simple_column",
       "alias": "hypertensive_and_diabetic_comorbidity",
-      "column": "IF(pnmrb.hypertensive_comorbidity = 1 AND pnmrb.diabetic_comorbidity = 1, 1, NULL)"
+      "column": "IF(pnmrb.hypertensive_comorbidity = 1 AND pnmrb.diabetic_comorbidity = 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "mental_disorder_comorbidity",
-      "column": "pnmrb.mental_disorder_comorbidity"
+      "column": "IFNULL(pnmrb.mental_disorder_comorbidity, 0)"
     },
     {
       "type": "simple_column",
       "alias": "other_ncd_comorbidity",
-      "column": "pnmrb.other_ncd_comorbidity"
+      "column": "IFNULL(pnmrb.other_ncd_comorbidity, 0)"
     }
   ],
   "filters": {

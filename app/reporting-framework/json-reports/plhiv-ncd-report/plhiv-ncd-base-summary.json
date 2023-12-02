@@ -152,6 +152,11 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "obs.voided IN (0)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hm.endDate = ? ",
+        "parameterName": "endDate"
       }
     ]
   },
