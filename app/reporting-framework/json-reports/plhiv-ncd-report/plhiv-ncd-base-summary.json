@@ -87,7 +87,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "hyp",
+      "alias": "dm",
       "expressionType": "case_statement",
       "expressionOptions": {
         "caseOptions": [
@@ -100,7 +100,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "dm",
+      "alias": "hyp",
       "expressionType": "case_statement",
       "expressionOptions": {
         "caseOptions": [
