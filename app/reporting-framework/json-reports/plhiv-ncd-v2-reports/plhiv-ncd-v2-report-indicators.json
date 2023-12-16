@@ -15,7 +15,7 @@
         "indicator": ["F", "M", "T", "F", "M", "T"]
       },
       {
-        "label": "Contolled",
+        "label": "Controlled (SBP <130 mmHg and DBP <80 mmHg)",
         "indicator": [
           "nw_ctld_htn_f",
           "nw_ctld_htn_m",
@@ -26,7 +26,7 @@
         ]
       },
       {
-        "label": "Uncontrolled",
+        "label": "Not well controlled",
         "indicator": [
           "nw_unctld_htn_f",
           "nw_unctld_htn_m",
@@ -63,7 +63,7 @@
         "indicator": ["tot_nw_htn", "tot_ct_htn"]
       },
       {
-        "label": "Total",
+        "label": "Total HTN",
         "indicator": "tot_htn"
       }
     ]
@@ -84,7 +84,7 @@
         "indicator": ["F", "M", "T", "F", "M", "T"]
       },
       {
-        "label": "Contolled",
+        "label": "Controlled (HbA1c 7% - 8%)",
         "indicator": [
           "nw_ctld_dm_f",
           "nw_ctld_dm_m",
@@ -132,7 +132,7 @@
         "indicator": ["tot_nw_dm", "tot_ct_dm"]
       },
       {
-        "label": "Total",
+        "label": "Total DM",
         "indicator": "tot_dm"
       }
     ]
@@ -234,7 +234,7 @@
         "indicator": ["tot_nw_mh", "tot_ct_mh"]
       },
       {
-        "label": "Total",
+        "label": "Total MHD",
         "indicator": "tot_mh"
       }
     ]
@@ -387,7 +387,7 @@
         "indicator": ["sub_tot_chr", "sub_tot_acu"]
       },
       {
-        "label": "Grand Total",
+        "label": "Grand Total KD",
         "indicator": "tot_kd"
       }
     ]
@@ -445,7 +445,7 @@
         "indicator": ["tot_nw_cvd", "tot_ct_cvd"]
       },
       {
-        "label": "Total",
+        "label": "Total CVD",
         "indicator": "tot_cvd"
       }
     ]
