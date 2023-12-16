@@ -6,15 +6,23 @@
   "uses": [],
   "sources": [
     {
+      "table": "etl.ncd_monthly_report_dataset",
+      "alias": "nmrd"
+    },
+    {
       "table": "etl.hiv_monthly_report_dataset_v1_2",
-      "alias": "hmrd"
+      "alias": "hmrd",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmrd.person_id = nmrd.person_id AND nmrd.endDate = hmrd.endDate AND nmrd.location_id = hmrd.location_id"
+      }
     },
     {
       "table": "etl.flat_patient_identifiers_v1",
       "alias": "fi",
       "join": {
         "type": "LEFT",
-        "joinCondition": "hmrd.person_id = fi.patient_id"
+        "joinCondition": "nmrd.person_id = fi.patient_id"
       }
     },
     {
@@ -22,7 +30,7 @@
       "alias": "l",
       "join": {
         "type": "INNER",
-        "joinCondition": "hmrd.location_id = l.location_id"
+        "joinCondition": "nmrd.location_id = l.location_id"
       }
     },
     {
@@ -30,7 +38,7 @@
       "alias": "per",
       "join": {
         "type": "INNER",
-        "joinCondition": "hmrd.person_id = per.person_id"
+        "joinCondition": "nmrd.person_id = per.person_id"
       }
     }
   ],
@@ -38,12 +46,12 @@
     {
       "type": "simple_column",
       "alias": "location_uuid",
-      "column": "l.uuid"
+      "column": "nmrd.location_uuid"
     },
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "hmrd.person_id"
+      "column": "nmrd.person_id"
     },
     {
       "type": "simple_column",
@@ -63,29 +71,24 @@
     {
       "type": "simple_column",
       "alias": "age",
-      "column": "hmrd.age"
+      "column": "nmrd.age"
     },
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "hmrd.location_id"
+      "column": "nmrd.location_id"
     },
     {
       "type": "simple_column",
       "alias": "location",
-      "column": "l.name"
-    },
-    {
-      "type": "simple_column",
-      "alias": "location_uuid",
-      "column": "l.uuid"
+      "column": "nmrd.clinic"
     },
     {
       "type": "derived_column",
       "alias": "stg_1_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender ='M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -93,7 +96,7 @@
       "alias": "stg_1_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender ='F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -101,7 +104,7 @@
       "alias": "tot_stg_1_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -109,7 +112,7 @@
       "alias": "stg_1_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender ='M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -117,7 +120,7 @@
       "alias": "stg_1_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender ='F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -125,7 +128,7 @@
       "alias": "tot_stg_1_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -133,7 +136,7 @@
       "alias": "stg_1_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -141,7 +144,7 @@
       "alias": "stg_1_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -149,7 +152,7 @@
       "alias": "tot_stg_1_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -157,7 +160,7 @@
       "alias": "stg_1_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -165,7 +168,7 @@
       "alias": "stg_1_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -173,7 +176,7 @@
       "alias": "tot_stg_1_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -181,7 +184,7 @@
       "alias": "stg_2_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender ='M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -189,7 +192,7 @@
       "alias": "stg_2_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender ='F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -197,7 +200,7 @@
       "alias": "tot_stg_2_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -205,7 +208,7 @@
       "alias": "stg_2_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -213,7 +216,7 @@
       "alias": "stg_2_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -221,7 +224,7 @@
       "alias": "tot_stg_2_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -229,7 +232,7 @@
       "alias": "stg_2_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -237,7 +240,7 @@
       "alias": "stg_2_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -245,7 +248,7 @@
       "alias": "tot_stg_2_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -253,7 +256,7 @@
       "alias": "stg_2_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -261,7 +264,7 @@
       "alias": "stg_2_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -269,7 +272,7 @@
       "alias": "tot_stg_2_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -277,7 +280,7 @@
       "alias": "stg_3_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -285,7 +288,7 @@
       "alias": "stg_3_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -293,7 +296,7 @@
       "alias": "tot_stg_3_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "2"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -301,7 +304,7 @@
       "alias": "stg_3_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -309,7 +312,7 @@
       "alias": "stg_3_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -317,7 +320,7 @@
       "alias": "tot_stg_3_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -325,7 +328,7 @@
       "alias": "stg_3_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -333,7 +336,7 @@
       "alias": "stg_3_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -341,7 +344,7 @@
       "alias": "tot_stg_3_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -349,7 +352,7 @@
       "alias": "stg_3_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -357,7 +360,7 @@
       "alias": "stg_3_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -365,7 +368,199 @@
       "alias": "tot_stg_3_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "-1"
       }
     },
     {
@@ -373,7 +568,7 @@
       "alias": "stg_4_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -381,7 +576,7 @@
       "alias": "stg_4_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -389,7 +584,7 @@
       "alias": "tot_stg_4_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -397,7 +592,7 @@
       "alias": "stg_4_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -405,7 +600,7 @@
       "alias": "stg_4_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -413,7 +608,7 @@
       "alias": "tot_stg_4_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -421,7 +616,7 @@
       "alias": "stg_4_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -429,7 +624,7 @@
       "alias": "stg_4_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -437,7 +632,7 @@
       "alias": "tot_stg_4_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -445,7 +640,7 @@
       "alias": "stg_4_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -453,7 +648,7 @@
       "alias": "stg_4_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -461,7 +656,7 @@
       "alias": "tot_stg_4_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -469,7 +664,7 @@
       "alias": "stg_5_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -477,7 +672,7 @@
       "alias": "stg_5_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -485,7 +680,7 @@
       "alias": "tot_stg_5_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -493,7 +688,7 @@
       "alias": "stg_5_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -501,7 +696,7 @@
       "alias": "stg_5_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -509,7 +704,7 @@
       "alias": "tot_stg_5_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -517,7 +712,7 @@
       "alias": "stg_5_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -525,7 +720,7 @@
       "alias": "stg_5_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -533,7 +728,7 @@
       "alias": "tot_stg_5_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -541,7 +736,7 @@
       "alias": "stg_5_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -549,7 +744,7 @@
       "alias": "stg_5_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -557,7 +752,7 @@
       "alias": "tot_stg_5_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "-1"
       }
     },
     {
@@ -565,7 +760,7 @@
       "alias": "sub_tot_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -573,7 +768,7 @@
       "alias": "sub_tot_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -581,7 +776,7 @@
       "alias": "sub_tot_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -589,7 +784,7 @@
       "alias": "sub_tot_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -597,7 +792,7 @@
       "alias": "sub_tot_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -605,7 +800,7 @@
       "alias": "sub_tot_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -658,7 +853,23 @@
     },
     {
       "type": "derived_column",
-      "alias": "sub_tot_nw_chr",
+      "alias": "tot_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "0"
@@ -666,7 +877,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "sub_tot_ct_chr",
+      "alias": "tot_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "0"
@@ -674,31 +885,15 @@
     },
     {
       "type": "derived_column",
-      "alias": "sub_tot_nw_acu",
+      "alias": "tot_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.is_ckd = 1, 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "sub_tot_ct_acu",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "0"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "sub_tot_chr",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "0"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "sub_tot_acu",
+      "alias": "tot_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "0"
@@ -709,7 +904,7 @@
       "alias": "tot_kd",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(nmrd.has_kd = 1, 1, 0)"
       }
     }
   ],
@@ -718,23 +913,19 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.location_id in ?",
+        "conditionExpression": "nmrd.location_id in ?",
         "parameterName": "locations"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.endDate = ?",
+        "conditionExpression": "nmrd.endDate = ?",
         "parameterName": "endDate"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "hmrd.status = 'active' AND hmrd.on_art_this_month = 1"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["hmrd.person_id"],
+    "columns": ["nmrd.person_id, nmrd.has_kd, nmrd.is_ckd"],
     "excludeParam": "excludeParam"
   }
 }

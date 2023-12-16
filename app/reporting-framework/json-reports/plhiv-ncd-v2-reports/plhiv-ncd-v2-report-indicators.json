@@ -15,7 +15,7 @@
         "indicator": ["F", "M", "T", "F", "M", "T"]
       },
       {
-        "label": "Contolled",
+        "label": "Controlled (SBP <130 mmHg and DBP <80 mmHg)",
         "indicator": [
           "nw_ctld_htn_f",
           "nw_ctld_htn_m",
@@ -26,7 +26,7 @@
         ]
       },
       {
-        "label": "Uncontrolled",
+        "label": "Not well controlled",
         "indicator": [
           "nw_unctld_htn_f",
           "nw_unctld_htn_m",
@@ -50,11 +50,11 @@
       {
         "label": "Sub Total",
         "indicator": [
-          "nw_htn_m",
           "nw_htn_f",
+          "nw_htn_m",
           "nw_htn",
-          "ct_htn_m",
           "ct_htn_f",
+          "ct_htn_m",
           "ct_htn"
         ]
       },
@@ -63,7 +63,7 @@
         "indicator": ["tot_nw_htn", "tot_ct_htn"]
       },
       {
-        "label": "Total",
+        "label": "Total HTN",
         "indicator": "tot_htn"
       }
     ]
@@ -84,7 +84,7 @@
         "indicator": ["F", "M", "T", "F", "M", "T"]
       },
       {
-        "label": "Contolled",
+        "label": "Controlled (HbA1c 7% - 8%)",
         "indicator": [
           "nw_ctld_dm_f",
           "nw_ctld_dm_m",
@@ -119,11 +119,11 @@
       {
         "label": "Sub Total",
         "indicator": [
-          "nw_dm_m",
           "nw_dm_f",
+          "nw_dm_m",
           "nw_dm",
-          "ct_dm_m",
           "ct_dm_f",
+          "ct_dm_m",
           "ct_dm"
         ]
       },
@@ -132,7 +132,7 @@
         "indicator": ["tot_nw_dm", "tot_ct_dm"]
       },
       {
-        "label": "Total",
+        "label": "Total DM",
         "indicator": "tot_dm"
       }
     ]
@@ -234,7 +234,7 @@
         "indicator": ["tot_nw_mh", "tot_ct_mh"]
       },
       {
-        "label": "Total",
+        "label": "Total MHD",
         "indicator": "tot_mh"
       }
     ]
@@ -323,6 +323,40 @@
         ]
       },
       {
+        "label": "Stage 3a",
+        "indicator": [
+          "stg_3a_nw_chr_m",
+          "stg_3a_nw_chr_f",
+          "tot_stg_3a_nw_chr",
+          "stg_3a_ct_chr_m",
+          "stg_3a_ct_chr_f",
+          "tot_stg_3a_ct_chr",
+          "stg_3a_nw_acu_m",
+          "stg_3a_nw_acu_f",
+          "tot_stg_3a_nw_acu",
+          "stg_3a_ct_acu_m",
+          "stg_3a_ct_acu_f",
+          "tot_stg_3a_ct_acu"
+        ]
+      },
+      {
+        "label": "Stage 3b",
+        "indicator": [
+          "stg_3b_nw_chr_m",
+          "stg_3b_nw_chr_f",
+          "tot_stg_3b_nw_chr",
+          "stg_3b_ct_chr_m",
+          "stg_3b_ct_chr_f",
+          "tot_stg_3b_ct_chr",
+          "stg_3b_nw_acu_m",
+          "stg_3b_nw_acu_f",
+          "tot_stg_3b_nw_acu",
+          "stg_3b_ct_acu_m",
+          "stg_3b_ct_acu_f",
+          "tot_stg_3b_ct_acu"
+        ]
+      },
+      {
         "label": "Stage 4",
         "indicator": [
           "stg_4_nw_chr_m",
@@ -376,18 +410,18 @@
       {
         "label": "Status Sub Total",
         "indicator": [
-          "sub_tot_nw_chr",
-          "sub_tot_ct_chr",
-          "sub_tot_nw_acu",
-          "sub_tot_ct_acu"
+          "tot_nw_chr",
+          "tot_ct_chr",
+          "tot_nw_acu",
+          "tot_ct_acu"
         ]
       },
       {
         "label": "State Sub Total",
-        "indicator": ["sub_tot_chr", "sub_tot_acu"]
+        "indicator": ["tot_chr", "tot_acu"]
       },
       {
-        "label": "Grand Total",
+        "label": "Grand Total KD",
         "indicator": "tot_kd"
       }
     ]
@@ -445,7 +479,7 @@
         "indicator": ["tot_nw_cvd", "tot_ct_cvd"]
       },
       {
-        "label": "Total",
+        "label": "Total CVD",
         "indicator": "tot_cvd"
       }
     ]
