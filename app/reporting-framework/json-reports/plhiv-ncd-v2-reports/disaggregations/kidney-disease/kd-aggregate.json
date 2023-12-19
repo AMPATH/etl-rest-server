@@ -93,7 +93,7 @@
       "alias": "stg_1_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_1_nw_acu_m)"
+        "expression": "b.stg_1_nw_acu_m"
       }
     },
     {
@@ -101,7 +101,7 @@
       "alias": "stg_1_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_1_nw_acu_f)"
+        "expression": "b.stg_1_nw_acu_f"
       }
     },
     {
@@ -109,7 +109,7 @@
       "alias": "tot_stg_1_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_1_nw_acu)"
+        "expression": "b.tot_stg_1_nw_acu"
       }
     },
     {
@@ -117,7 +117,7 @@
       "alias": "stg_1_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_1_ct_acu_m)"
+        "expression": "b.stg_1_ct_acu_m"
       }
     },
     {
@@ -125,7 +125,7 @@
       "alias": "stg_1_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_1_ct_acu_f)"
+        "expression": "b.stg_1_ct_acu_f"
       }
     },
     {
@@ -133,7 +133,7 @@
       "alias": "tot_stg_1_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_1_ct_acu)"
+        "expression": "b.tot_stg_1_ct_acu"
       }
     },
     {
@@ -189,7 +189,7 @@
       "alias": "stg_2_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_2_nw_acu_m)"
+        "expression": "b.stg_2_nw_acu_m"
       }
     },
     {
@@ -197,7 +197,7 @@
       "alias": "stg_2_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_2_nw_acu_f)"
+        "expression": "b.stg_2_nw_acu_f"
       }
     },
     {
@@ -205,7 +205,7 @@
       "alias": "tot_stg_2_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_2_nw_acu)"
+        "expression": "b.tot_stg_2_nw_acu"
       }
     },
     {
@@ -213,7 +213,7 @@
       "alias": "stg_2_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_2_ct_acu_m)"
+        "expression": "b.stg_2_ct_acu_m"
       }
     },
     {
@@ -221,7 +221,7 @@
       "alias": "stg_2_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_2_ct_acu_f)"
+        "expression": "b.stg_2_ct_acu_f"
       }
     },
     {
@@ -229,7 +229,7 @@
       "alias": "tot_stg_2_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_2_ct_acu)"
+        "expression": "b.tot_stg_2_ct_acu"
       }
     },
     {
@@ -285,7 +285,7 @@
       "alias": "stg_3_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_3_nw_acu_m)"
+        "expression": "b.stg_3_nw_acu_m"
       }
     },
     {
@@ -293,7 +293,7 @@
       "alias": "stg_3_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_3_nw_acu_f)"
+        "expression": "b.stg_3_nw_acu_f"
       }
     },
     {
@@ -301,7 +301,7 @@
       "alias": "tot_stg_3_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_3_nw_acu)"
+        "expression": "b.tot_stg_3_nw_acu"
       }
     },
     {
@@ -309,7 +309,7 @@
       "alias": "stg_3_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_3_ct_acu_m)"
+        "expression": "b.stg_3_ct_acu_m"
       }
     },
     {
@@ -317,7 +317,7 @@
       "alias": "stg_3_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_3_ct_acu_f)"
+        "expression": "b.stg_3_ct_acu_f"
       }
     },
     {
@@ -325,7 +325,199 @@
       "alias": "tot_stg_3_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_3_ct_acu)"
+        "expression": "b.tot_stg_3_ct_acu"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3a_nw_chr_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3a_nw_chr_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_stg_3a_nw_chr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3a_ct_chr_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3a_ct_chr_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_stg_3a_ct_chr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3a_nw_acu_m"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3a_nw_acu_f"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.tot_stg_3a_nw_acu"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3a_ct_acu_m"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3a_ct_acu_f"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.tot_stg_3a_ct_acu"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3b_nw_chr_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3b_nw_chr_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_stg_3b_nw_chr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3b_ct_chr_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.stg_3b_ct_chr_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_stg_3b_ct_chr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3b_nw_acu_m"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3b_nw_acu_f"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.tot_stg_3b_nw_acu"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3b_ct_acu_m"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.stg_3b_ct_acu_f"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "b.tot_stg_3b_ct_acu"
       }
     },
     {
@@ -381,7 +573,7 @@
       "alias": "stg_4_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_4_nw_acu_m)"
+        "expression": "b.stg_4_nw_acu_m"
       }
     },
     {
@@ -389,7 +581,7 @@
       "alias": "stg_4_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_4_nw_acu_f)"
+        "expression": "b.stg_4_nw_acu_f"
       }
     },
     {
@@ -397,7 +589,7 @@
       "alias": "tot_stg_4_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_4_nw_acu)"
+        "expression": "b.tot_stg_4_nw_acu"
       }
     },
     {
@@ -405,7 +597,7 @@
       "alias": "stg_4_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_4_ct_acu_m)"
+        "expression": "b.stg_4_ct_acu_m"
       }
     },
     {
@@ -413,7 +605,7 @@
       "alias": "stg_4_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_4_ct_acu_f)"
+        "expression": "b.stg_4_ct_acu_f"
       }
     },
     {
@@ -421,7 +613,7 @@
       "alias": "tot_stg_4_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_4_ct_acu)"
+        "expression": "b.tot_stg_4_ct_acu"
       }
     },
     {
@@ -477,7 +669,7 @@
       "alias": "stg_5_nw_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_5_nw_acu_m)"
+        "expression": "b.stg_5_nw_acu_m"
       }
     },
     {
@@ -485,7 +677,7 @@
       "alias": "stg_5_nw_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_5_nw_acu_f)"
+        "expression": "b.stg_5_nw_acu_f"
       }
     },
     {
@@ -493,7 +685,7 @@
       "alias": "tot_stg_5_nw_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_5_nw_acu)"
+        "expression": "b.tot_stg_5_nw_acu"
       }
     },
     {
@@ -501,7 +693,7 @@
       "alias": "stg_5_ct_acu_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_5_ct_acu_m)"
+        "expression": "b.stg_5_ct_acu_m"
       }
     },
     {
@@ -509,7 +701,7 @@
       "alias": "stg_5_ct_acu_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.stg_5_ct_acu_f)"
+        "expression": "b.stg_5_ct_acu_f"
       }
     },
     {
@@ -517,7 +709,7 @@
       "alias": "tot_stg_5_ct_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.tot_stg_5_ct_acu)"
+        "expression": "b.tot_stg_5_ct_acu"
       }
     },
     {
@@ -650,18 +842,18 @@
     },
     {
       "type": "derived_column",
-      "alias": "sub_tot_chr",
+      "alias": "tot_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.sub_tot_chr)"
+        "expression": "sum(b.tot_chr)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "sub_tot_acu",
+      "alias": "tot_acu",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(b.sub_tot_acu)"
+        "expression": "sum(b.tot_acu)"
       }
     },
     {
