@@ -296,7 +296,7 @@
       "alias": "tot_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_hypertensive = 1),1, 0)"
+        "expression": "IF((nmrd.is_hypertensive = 1 AND (hmrd.started_art_this_month = 1 OR hmrd.on_art_this_month = 1)),1, 0)"
       }
     }
   ],

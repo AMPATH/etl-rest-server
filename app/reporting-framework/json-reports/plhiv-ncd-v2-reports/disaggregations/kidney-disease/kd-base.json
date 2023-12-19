@@ -392,7 +392,7 @@
       "alias": "tot_stg_3a_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' OR nmrd.gender = 'F') AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {

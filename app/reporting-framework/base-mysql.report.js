@@ -393,6 +393,9 @@ import * as htn_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disagg
 import * as dm_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/diabetic/dm-base.json';
 import * as dm_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/diabetic/dm-aggregate.json';
 
+import * as mh_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/mh-base.json';
+import * as mh_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/mh-aggregate.json';
+
 import * as cvd_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/cardiovascular-disease/cvd-base.json';
 import * as cvd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/cardiovascular-disease/cvd-aggregate.json';
 
@@ -1824,6 +1827,12 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(dm_plhiv_aggregate),
             dmPlhivBase: this.cloneJsonSchema(dm_plhiv_base)
+          });
+          break;
+        case 'mhPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(mh_plhiv_aggregate),
+            mhPlhivBase: this.cloneJsonSchema(mh_plhiv_base)
           });
           break;
         case 'cvdPlhivAggregate':

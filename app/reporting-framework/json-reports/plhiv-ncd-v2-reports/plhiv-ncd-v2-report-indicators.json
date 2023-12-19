@@ -221,11 +221,11 @@
       {
         "label": "Sub Total",
         "indicator": [
-          "nw_mh_m",
           "nw_mh_f",
+          "nw_mh_m",
           "nw_mh",
-          "ct_mh_m",
           "ct_mh_f",
+          "ct_mh_m",
           "ct_mh"
         ]
       },
