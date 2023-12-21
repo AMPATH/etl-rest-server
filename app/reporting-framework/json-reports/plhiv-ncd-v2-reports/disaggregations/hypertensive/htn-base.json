@@ -224,7 +224,7 @@
       "alias": "tot_ct_unk_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_hypertensive = 1 AND nmrd.htn_state = 3 AND hmrd.on_art_this_month = 1) ,1, 0)"
+        "expression": "IF(((nmrd.gender = 'M' OR nmrd.gender = 'F') AND nmrd.is_hypertensive = 1 AND nmrd.htn_state = 3 AND hmrd.on_art_this_month = 1) ,1, 0)"
       }
     },
     {
@@ -296,7 +296,7 @@
       "alias": "tot_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_hypertensive = 1 AND (hmrd.started_art_this_month = 1 OR hmrd.on_art_this_month = 1)),1, 0)"
+        "expression": "IF((nmrd.is_hypertensive = 1 ),1, 0)"
       }
     }
   ],

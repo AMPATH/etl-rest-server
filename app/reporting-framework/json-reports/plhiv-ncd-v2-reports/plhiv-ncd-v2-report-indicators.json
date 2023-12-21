@@ -524,21 +524,21 @@
       {
         "label": "Sub Total",
         "indicator": [
-          "sub_tot_nw_cnv_m",
-          "sub_tot_nw_cnv_f",
-          "sub_tot_nw_cnv",
-          "sub_tot_ct_cnv_m",
-          "sub_tot_ct_cnv_f",
-          "sub_tot_ct_cnv"
+          "sub_tot_nw_neu_m",
+          "sub_tot_nw_neu_f",
+          "sub_tot_nw_neu",
+          "sub_tot_ct_neu_m",
+          "sub_tot_ct_neu_f",
+          "sub_tot_ct_neu"
         ]
       },
       {
         "label": "Status Sub Total",
-        "indicator": ["tot_nw_cnv", "tot_ct_cnv"]
+        "indicator": ["tot_nw_neu", "tot_ct_neu"]
       },
       {
-        "label": "Total",
-        "indicator": "tot_cnv"
+        "label": "Total Neurological Disorder",
+        "indicator": "tot_neu"
       }
     ]
   },
