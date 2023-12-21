@@ -14,7 +14,7 @@
       "alias": "hmrd",
       "join": {
         "type": "INNER",
-        "joinCondition": "hmrd.person_id = nmrd.person_id AND hmrd.endDate = nmrd.endDate AND hmrd.status = 'active'"
+        "joinCondition": "nmrd.person_id = hmrd.person_id AND nmrd.endDate = hmrd.endDate AND hmrd.status = 'active'"
       }
     },
     {
@@ -112,7 +112,7 @@
       "alias": "ct_dp_mh_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_depressive_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_depressive_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -120,7 +120,7 @@
       "alias": "ct_dp_mh_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_depressive_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_depressive_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -128,7 +128,7 @@
       "alias": "tot_ct_dp_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_depressive_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_depressive_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -160,7 +160,7 @@
       "alias": "ct_anx_mh_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_anxiety_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_anxiety_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -168,7 +168,7 @@
       "alias": "ct_anx_mh_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_anxiety_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_anxiety_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -176,7 +176,7 @@
       "alias": "tot_ct_anx_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_anxiety_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_anxiety_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -208,7 +208,7 @@
       "alias": "ct_bip_mh_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_bipolar_and_related_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_bipolar_and_related_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -216,7 +216,7 @@
       "alias": "ct_bip_mh_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_bipolar_and_related_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_bipolar_and_related_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -224,7 +224,7 @@
       "alias": "tot_ct_bip_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_bipolar_and_related_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_bipolar_and_related_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -256,7 +256,7 @@
       "alias": "ct_per_mh_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -264,7 +264,7 @@
       "alias": "ct_per_mh_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -272,7 +272,7 @@
       "alias": "tot_ct_per_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -304,7 +304,7 @@
       "alias": "ct_fe_mh_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_feeding_and_eating_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_feeding_and_eating_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -312,7 +312,7 @@
       "alias": "ct_fe_mh_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_feeding_and_eating_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_feeding_and_eating_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -320,7 +320,7 @@
       "alias": "tot_ct_fe_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_feeding_and_eating_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_feeding_and_eating_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -352,7 +352,7 @@
       "alias": "ct_obs_mh_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ocd_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ocd_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -360,7 +360,7 @@
       "alias": "ct_obs_mh_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ocd_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ocd_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -368,7 +368,7 @@
       "alias": "tot_ct_obs_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ocd_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_ocd_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -400,7 +400,7 @@
       "alias": "ct_mh_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -408,7 +408,7 @@
       "alias": "ct_mh_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -416,7 +416,7 @@
       "alias": "ct_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -429,10 +429,10 @@
     },
     {
       "type": "derived_column",
-      "alias": "tot_ct_mh",
+      "alias": "tot_ct_mh", 
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -440,7 +440,7 @@
       "alias": "tot_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.has_mhd = 1 and (hmrd.started_art_this_month = 1 OR hmrd.on_art_this_month = 1)), 1, 0)"
+        "expression": "IF((nmrd.has_mhd = 1), 1, 0)"
       }
     }
   ],
@@ -461,7 +461,7 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["hmrd.person_id"],
+    "columns": ["nmrd.person_id"],
     "excludeParam": "excludeParam"
   },
   "paging": {

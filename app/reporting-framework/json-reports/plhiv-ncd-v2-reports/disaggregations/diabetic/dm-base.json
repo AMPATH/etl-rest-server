@@ -88,7 +88,7 @@
       "alias": "nw_ctld_dm_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "null"
       }
     },
     {
@@ -96,7 +96,7 @@
       "alias": "nw_ctld_dm_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "null"
       }
     },
     {
@@ -104,7 +104,7 @@
       "alias": "tot_nw_ctld_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_diabetic = 1 AND nmrd.dm_state = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_diabetic = 1 AND dm_state = 1 AND hmrd.started_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -112,7 +112,7 @@
       "alias": "ct_ctld_dm_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND nmrd.dm_state = 1 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND dm_state = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -120,7 +120,7 @@
       "alias": "ct_ctld_dm_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND nmrd.dm_state = 1 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND dm_state = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -128,7 +128,7 @@
       "alias": "tot_ct_ctld_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_diabetic = 1 AND nmrd.dm_state = 1 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_diabetic = 1 AND dm_state = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -136,7 +136,7 @@
       "alias": "nw_unctld_dm_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "null"
       }
     },
     {
@@ -144,7 +144,7 @@
       "alias": "nw_unctld_dm_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "null"
       }
     },
     {
@@ -152,7 +152,7 @@
       "alias": "tot_nw_unctld_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "null"
       }
     },
     {
@@ -160,7 +160,7 @@
       "alias": "ct_unctld_dm_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND nmrd.dm_state = 2 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND dm_state = 2 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -168,7 +168,7 @@
       "alias": "ct_unctld_dm_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND nmrd.dm_state = 2 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND dm_state = 2 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -176,7 +176,7 @@
       "alias": "tot_ct_unctld_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_diabetic = 1 AND nmrd.dm_state = 2 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_diabetic = 1 AND dm_state = 2 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -184,7 +184,7 @@
       "alias": "nw_unk_dm_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND dm_state = 3 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -192,7 +192,7 @@
       "alias": "nw_unk_dm_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND dm_state = 3 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -200,7 +200,7 @@
       "alias": "tot_nw_unk_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "-1"
+        "expression": "IF((nmrd.is_diabetic = 1 AND dm_state = 3 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -208,7 +208,7 @@
       "alias": "ct_unk_dm_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND nmrd.dm_state = 3 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND dm_state = 3 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -216,7 +216,7 @@
       "alias": "ct_unk_dm_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND nmrd.dm_state = 3 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND dm_state = 3 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -224,7 +224,7 @@
       "alias": "tot_ct_unk_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_diabetic = 1 AND nmrd.dm_state = 3 AND hmrd.on_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.is_diabetic = 1 AND dm_state = 3 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -248,7 +248,7 @@
       "alias": "nw_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(((nmrd.gender = 'M' OR nmrd.gender = 'F') AND nmrd.is_diabetic = 1 AND hmrd.started_art_this_month = 1),1, 0)"
+        "expression": "IF((nmrd.is_diabetic = 1 AND hmrd.started_art_this_month = 1),1, 0)"
       }
     },
     {
@@ -256,7 +256,7 @@
       "alias": "ct_dm_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1),1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0),1, 0)"
       }
     },
     {
@@ -264,7 +264,7 @@
       "alias": "ct_dm_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1),1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0),1, 0)"
       }
     },
     {
@@ -272,7 +272,7 @@
       "alias": "ct_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(((nmrd.gender = 'M' OR nmrd.gender = 'F') AND nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1),1, 0)"
+        "expression": "IF((nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0),1, 0)"
       }
     },
     {
@@ -288,7 +288,7 @@
       "alias": "tot_ct_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1),1, 0)"
+        "expression": "IF((nmrd.is_diabetic = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0),1, 0)"
       }
     },
     {
@@ -317,7 +317,7 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["hmrd.person_id"],
+    "columns": ["nmrd.person_id"],
     "excludeParam": "excludeParam"
   },
   "paging": {

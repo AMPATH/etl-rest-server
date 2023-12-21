@@ -402,6 +402,9 @@ import * as cvd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disagg
 import * as neu_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/neurological-disease/neuro-base.json';
 import * as neu_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/neurological-disease/neuro-aggregate.json';
 
+import * as rhe_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/rheumatologic-disease/rheu-base.json';
+import * as rhe_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/rheumatologic-disease/rheu-aggregate.json';
+
 import * as kd_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/kidney-disease/kd-base.json';
 import * as kd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/kidney-disease/kd-aggregate.json';
 export class BaseMysqlReport {
@@ -1850,6 +1853,12 @@ export class BaseMysqlReport {
             neuPlhivBase: this.cloneJsonSchema(neu_plhiv_base)
           });
           break;
+        case 'rhePlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(rhe_plhiv_aggregate),
+            rhePlhivBase: this.cloneJsonSchema(rhe_plhiv_base)
+          });
+            break;
         case 'kdPlhivAggregate':
           resolve({
             main: this.cloneJsonSchema(kd_plhiv_aggregate),

@@ -6,23 +6,23 @@
   "uses": [],
   "sources": [
     {
+      "table": "etl.ncd_monthly_report_dataset",
+      "alias": "nmrd"
+    },
+    {
       "table": "etl.hiv_monthly_report_dataset_v1_2",
-      "alias": "hmrd"
+      "alias": "hmrd",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nmrd.person_id = hmrd.person_id AND nmrd.endDate = hmrd.endDate AND hmrd.status = 'active'"
+      }
     },
     {
       "table": "etl.flat_patient_identifiers_v1",
       "alias": "fi",
       "join": {
         "type": "LEFT",
-        "joinCondition": "hmrd.person_id = fi.patient_id"
-      }
-    },
-    {
-      "table": "amrs.location",
-      "alias": "l",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "hmrd.location_id = l.location_id"
+        "joinCondition": "nmrd.person_id = fi.patient_id"
       }
     },
     {
@@ -30,7 +30,7 @@
       "alias": "per",
       "join": {
         "type": "INNER",
-        "joinCondition": "hmrd.person_id = per.person_id"
+        "joinCondition": "nmrd.person_id = per.person_id"
       }
     }
   ],
@@ -38,12 +38,12 @@
     {
       "type": "simple_column",
       "alias": "location_uuid",
-      "column": "l.uuid"
+      "column": "nmrd.location_uuid"
     },
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "hmrd.person_id"
+      "column": "nmrd.person_id"
     },
     {
       "type": "simple_column",
@@ -63,22 +63,17 @@
     {
       "type": "simple_column",
       "alias": "age",
-      "column": "hmrd.age"
+      "column": "nmrd.age"
     },
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "hmrd.location_id"
+      "column": "nmrd.location_id"
     },
     {
       "type": "simple_column",
       "alias": "location",
-      "column": "l.name"
-    },
-    {
-      "type": "simple_column",
-      "alias": "location_uuid",
-      "column": "l.uuid"
+      "column": "nmrd.clinic"
     },
     {
       "type": "derived_column",
@@ -181,7 +176,7 @@
       "alias": "sub_tot_nw_cvd_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.has_cvd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -189,7 +184,7 @@
       "alias": "sub_tot_nw_cvd_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.has_cvd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -197,7 +192,7 @@
       "alias": "sub_tot_nw_cvd",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(((nmrd.gender = 'F' OR nmrd.gender = 'M') AND nmrd.has_cvd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     }
 
@@ -207,7 +202,7 @@
       "alias": "sub_tot_ct_cvd_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.has_cvd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -215,7 +210,7 @@
       "alias": "sub_tot_ct_cvd_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.has_cvd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -223,7 +218,7 @@
       "alias": "sub_tot_ct_cvd",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF(((nmrd.gender = 'F' OR nmrd.gender = 'M') AND nmrd.has_cvd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -231,7 +226,7 @@
       "alias": "tot_nw_cvd",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF((nmrd.has_cvd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -239,7 +234,7 @@
       "alias": "tot_ct_cvd",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF((nmrd.has_cvd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -247,7 +242,7 @@
       "alias": "tot_cvd",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "0"
+        "expression": "IF((nmrd.has_cvd = 1), 1, 0)"
       }
     }
   ],
@@ -256,23 +251,19 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.location_id in ?",
+        "conditionExpression": "nmrd.location_id in ?",
         "parameterName": "locations"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.endDate = ?",
+        "conditionExpression": "nmrd.endDate = ?",
         "parameterName": "endDate"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "hmrd.status = 'active' AND hmrd.on_art_this_month = 1"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["hmrd.person_id"],
+    "columns": ["nmrd.person_id"],
     "excludeParam": "excludeParam"
   },
   "paging": {
