@@ -15,9 +15,28 @@ function buildScope(dataDictionary) {
     qualifiesMedicationRefillVisit: false,
     lastCovidScreeningDate: '',
     retroSpective: false,
-    screenedForCovidToday: false
+    screenedForCovidToday: false,
+    isViremicHighVL: false
   };
+  let isStandardDcVisit = false;
 
+  // Restrict to Pilot locations
+  scope.MlLocations = [
+    '08feb8ae-1352-11df-a1f1-0026b9348838',
+    '08feb9a8-1352-11df-a1f1-0026b9348838',
+    '08fec60a-1352-11df-a1f1-0026b9348838',
+    '090090d4-1352-11df-a1f1-0026b9348838',
+    'db2bdd7c-5fe6-4ea3-adc1-d2d8dfb3d658',
+    '17c97881-90e5-43c8-b8a3-cc0322f89a89',
+    'e9f515c2-7c48-4099-ac76-41db9977f96f',
+    'f7aabb83-7915-4c24-88b2-bcde8b3a9977',
+    '08feae7c-1352-11df-a1f1-0026b9348838',
+    '1ce5034b-f05d-46b6-910f-fc959e091641',
+    '29124daf-6422-4896-b70e-daad3b252c9d',
+    '08fec42a-1352-11df-a1f1-0026b9348838',
+    'a36c86bb-7ca3-4319-8674-28c66ba14deb',
+    '345514ae-8f37-42fc-9bbe-993828c2910d'
+  ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
   }
@@ -51,16 +70,43 @@ function buildScope(dataDictionary) {
   }
 
   if (dataDictionary.dcQualifedVisits) {
-    if (dataDictionary.dcQualifedVisits.qualifies_for_standard_visit === 1) {
+    const result = conditionalDCVisits(dataDictionary);
+    if (result) {
+      isStandardDcVisit = true;
+    }
+    if (
+      dataDictionary.dcQualifedVisits.qualifies_for_standard_visit === 1 ||
+      isStandardDcVisit
+    ) {
       scope.qualifiesForStandardVisit = true;
     }
-    if (dataDictionary.dcQualifedVisits.qualifies_for_medication_refill === 1) {
+    if (
+      dataDictionary.dcQualifedVisits.qualifies_for_medication_refill === 1 &&
+      !isStandardDcVisit
+    ) {
       scope.qualifiesMedicationRefillVisit = true;
     }
   }
 
   if (dataDictionary.intendedVisitLocationUuid) {
     scope.intendedVisitLocationUuid = dataDictionary.intendedVisitLocationUuid;
+    // Restrict to Pilot locations
+    scope.MlLocations = [
+      '08feb8ae-1352-11df-a1f1-0026b9348838',
+      '08feb9a8-1352-11df-a1f1-0026b9348838',
+      '08fec60a-1352-11df-a1f1-0026b9348838',
+      '090090d4-1352-11df-a1f1-0026b9348838',
+      'db2bdd7c-5fe6-4ea3-adc1-d2d8dfb3d658',
+      '17c97881-90e5-43c8-b8a3-cc0322f89a89',
+      'e9f515c2-7c48-4099-ac76-41db9977f96f',
+      'f7aabb83-7915-4c24-88b2-bcde8b3a9977',
+      '08feae7c-1352-11df-a1f1-0026b9348838',
+      '1ce5034b-f05d-46b6-910f-fc959e091641',
+      '29124daf-6422-4896-b70e-daad3b252c9d',
+      '08fec42a-1352-11df-a1f1-0026b9348838',
+      'a36c86bb-7ca3-4319-8674-28c66ba14deb',
+      '345514ae-8f37-42fc-9bbe-993828c2910d'
+    ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
   if (dataDictionary.patientEncounters) {
@@ -122,9 +168,28 @@ function buildScope(dataDictionary) {
       }
     }
   }
-
+  // Add Restrictions For Users who are not Suppressed vl > 200 System to Restrict Filling of Enhance Adherance Form
+  if (
+    dataDictionary.programUuid === 'c4246ff0-b081-460c-bcc5-b0678012659e' &&
+    dataDictionary.isViremicHighVL
+  ) {
+    scope.isViremicHighVL = true;
+  }
   // add other methods to build the scope objects
   return scope;
+}
+
+function conditionalDCVisits(patient) {
+  // get the latest encounter by sorting the encounters by date
+  const patientEncounters = patient.patientEncounters;
+  const latestEncounter = getLatestEncounter(patientEncounters);
+  const expectedEncounterToBeDrugPickup =
+    '987009c6-6f24-43f7-9640-c285d6553c63';
+  if (latestEncounter) {
+    return (
+      latestEncounter.encounterType.uuid === expectedEncounterToBeDrugPickup
+    );
+  }
 }
 
 function buildPatientScopeMembers(scope, patient) {
