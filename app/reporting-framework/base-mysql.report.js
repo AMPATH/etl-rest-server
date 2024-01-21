@@ -396,6 +396,33 @@ import * as dm_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggr
 import * as mh_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/mh-base.json';
 import * as mh_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/mh-aggregate.json';
 
+import * as dep_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/depressive-base.json';
+import * as dep_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/depressive-aggregate.json';
+
+import * as anx_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/anxiety-base.json';
+import * as anx_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/anxiety-aggregate.json';
+
+import * as bip_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/bipolar-and-related-mh-base.json';
+import * as bip_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/bipolar-and-related-mh-aggregate.json';
+
+import * as per_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/personality-mh-base.json';
+import * as per_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/personality-mh-aggregate.json';
+
+import * as fed_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/feeding-and-eating-mh-base.json';
+import * as fed_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/feeding-and-eating-mh-aggregate.json';
+
+import * as ocd_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/ocd-base.json';
+import * as ocd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/ocd-aggregate.json';
+
+import * as genMD_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/general-mental-disorder-base.json';
+import * as genMD_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/general-mental-disorder-aggregate.json';
+
+import * as stMD_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/status-sub-total-base.json';
+import * as stMD_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/status-sub-total-aggregate.json';
+
+import * as totMD_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/total-mh-base.json';
+import * as totMD_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/mental-health-disorder/total-mh-aggregate.json';
+
 import * as cvd_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/cardiovascular-disease/cvd-base.json';
 import * as cvd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/cardiovascular-disease/cvd-aggregate.json';
 
@@ -1835,10 +1862,73 @@ export class BaseMysqlReport {
             dmPlhivBase: this.cloneJsonSchema(dm_plhiv_base)
           });
           break;
-        case 'mhPlhivAggregate':
+        // case 'mhPlhivAggregate':
+        //   resolve({
+        //     main: this.cloneJsonSchema(mh_plhiv_aggregate),
+        //     mhPlhivBase: this.cloneJsonSchema(mh_plhiv_base)
+        //   });
+        //   break;
+        case 'depPlhivAggregate':
           resolve({
-            main: this.cloneJsonSchema(mh_plhiv_aggregate),
-            mhPlhivBase: this.cloneJsonSchema(mh_plhiv_base)
+            main: this.cloneJsonSchema(dep_plhiv_aggregate),
+            depPlhivBase: this.cloneJsonSchema(dep_plhiv_base)
+          });
+          break;
+
+        case 'anxPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(anx_plhiv_aggregate),
+            anxPlhivBase: this.cloneJsonSchema(anx_plhiv_base)
+          });
+          break;
+
+        case 'bipPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(bip_plhiv_aggregate),
+            bipPlhivBase: this.cloneJsonSchema(bip_plhiv_base)
+          });
+          break;
+
+        case 'perPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(per_plhiv_aggregate),
+            perPlhivBase: this.cloneJsonSchema(per_plhiv_base)
+          });
+          break;
+        case 'fedPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(fed_plhiv_aggregate),
+            fedPlhivBase: this.cloneJsonSchema(fed_plhiv_base)
+          });
+          break;
+
+        case 'ocdPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(ocd_plhiv_aggregate),
+            ocdPlhivBase: this.cloneJsonSchema(ocd_plhiv_base)
+          });
+          break;
+
+        case 'genMDPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(genMD_plhiv_aggregate),
+            genMDPlhivBase: this.cloneJsonSchema(
+              genMD_plhiv_base
+            )
+          });
+          break;
+        case 'stMDPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(stMD_plhiv_aggregate),
+            stMDPlhivBase: this.cloneJsonSchema(stMD_plhiv_base)
+          });
+          break;
+        case 'totMDPlhivAggregate':
+          resolve({
+            main: this.cloneJsonSchema(totMD_plhiv_aggregate),
+            totMDPlhivBase: this.cloneJsonSchema(
+              totMD_plhiv_base
+            )
           });
           break;
         case 'cvdPlhivAggregate':
@@ -1858,7 +1948,7 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(rhe_plhiv_aggregate),
             rhePlhivBase: this.cloneJsonSchema(rhe_plhiv_base)
           });
-            break;
+          break;
         case 'kdPlhivAggregate':
           resolve({
             main: this.cloneJsonSchema(kd_plhiv_aggregate),

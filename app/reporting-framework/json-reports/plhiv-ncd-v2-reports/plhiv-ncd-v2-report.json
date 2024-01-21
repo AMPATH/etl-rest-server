@@ -4,7 +4,17 @@
     "dmPlhivAggregate",
     "cvdPlhivAggregate",
     "kdPlhivAggregate",
-    "mhPlhivAggregate",
+
+    "depPlhivAggregate",
+    "anxPlhivAggregate",
+    "bipPlhivAggregate",
+    "perPlhivAggregate",
+    "fedPlhivAggregate",
+    "ocdPlhivAggregate",
+    "genMDPlhivAggregate",
+    "stMDPlhivAggregate",
+    "totMDPlhivAggregate",
+
     "endoPlhivAggregate",
     "entPlhivAggregate",
     "frmPlhivAggregate",
