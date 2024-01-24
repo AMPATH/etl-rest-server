@@ -110,8 +110,18 @@
         },
         {
           "filterType": "tableColumns",
-          "conditionExpression": "nmrd.endDate = ?",
+          "conditionExpression": "nmrd.endDate >= ?",
+          "parameterName": "startDate"
+        },
+        {
+          "filterType": "tableColumns",
+          "conditionExpression": "nmrd.endDate <= ?",
           "parameterName": "endDate"
+        },
+        {
+          "filterType": "tableColumns",
+          "conditionExpression": "nmrd.visit_this_month in ?",
+          "parameterName": "visitState"
         }
       ]
     },

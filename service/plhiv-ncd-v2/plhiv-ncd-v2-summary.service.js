@@ -16,6 +16,7 @@ export class PLHIVNCDv2SummaryReportService extends MultiDatasetPatientlistRepor
   }
 
   generateReport(additionalParams) {
+    console.log("params: ", this.params, additionalParams)
     const that = this;
     return new Promise((resolve, reject) => {
       that

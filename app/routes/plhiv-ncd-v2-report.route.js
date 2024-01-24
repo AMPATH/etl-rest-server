@@ -18,9 +18,11 @@ const routes = [
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
+          requestParams.visitState =
+            requestParams.currentView === 'monthly' ? [0, 1] : [1];
           let reportParams = etlHelpers.getReportParams(
             'plhiv-ncd-v2-monthly-report',
-            ['endDate', 'locationUuids'],
+            ['startDate', 'endDate', 'locationUuids'],
             requestParams
           );
           reportParams.requestParams.isAggregated = true;
@@ -67,9 +69,11 @@ const routes = [
               request.query,
               request.params
             );
+            requestParams.visitState =
+              requestParams.currentView === 'monthly' ? [0, 1] : [1];
             let reportParams = etlHelpers.getReportParams(
               'plhiv-ncd-v2-monthly-report',
-              ['endDate', 'locationUuids'],
+              ['startDate','endDate', 'locationUuids'],
               requestParams
             );
             delete reportParams.requestParams['gender'];

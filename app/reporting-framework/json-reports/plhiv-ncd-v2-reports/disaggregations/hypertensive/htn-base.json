@@ -14,7 +14,7 @@
       "alias": "hmrd",
       "join": {
         "type": "INNER",
-        "joinCondition": "nmrd.person_id = hmrd.person_id AND nmrd.endDate = hmrd.endDate AND hmrd.status = 'active'"
+        "joinCondition": "nmrd.person_id = hmrd.person_id AND hmrd.status = 'active'"
       }
     },
     {
@@ -310,13 +310,23 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "nmrd.endDate = ?",
+        "conditionExpression": "nmrd.endDate >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.endDate <= ?",
         "parameterName": "endDate"
-            }
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.visit_this_month in ?",
+        "parameterName": "visitState"
+      }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["nmrd.person_id, nmrd.is_hypertensive,nmrd.htn_state"]
+    "columns": ["nmrd.person_id"]
   }
 }

@@ -136,15 +136,25 @@
       "conditionJoinOperator": "and",
       "conditions": [
         {
-          "filterType": "tableColumns",
-          "conditionExpression": "nmrd.location_id in ?",
-          "parameterName": "locations"
-        },
-        {
-          "filterType": "tableColumns",
-          "conditionExpression": "nmrd.endDate = ?",
-          "parameterName": "endDate"
-        }
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.location_id in ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.endDate >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.endDate <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.visit_this_month in ?",
+        "parameterName": "visitState"
+      }
       ]
     },
     "groupBy": {
