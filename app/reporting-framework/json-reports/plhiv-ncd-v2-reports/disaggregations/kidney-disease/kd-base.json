@@ -14,7 +14,7 @@
       "alias": "hmrd",
       "join": {
         "type": "INNER",
-        "joinCondition": "nmrd.person_id = hmrd.person_id AND hmrd.status = 'active'"
+        "joinCondition": "nmrd.person_id = hmrd.person_id AND nmrd.endDate = hmrd.endDate AND hmrd.status = 'active'"
       }
     },
     {
