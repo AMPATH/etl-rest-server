@@ -88,7 +88,7 @@
       "alias": "stg_1_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender ='M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF((nmrd.gender ='M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -96,7 +96,7 @@
       "alias": "stg_1_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender ='F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF((nmrd.gender ='F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -104,7 +104,7 @@
       "alias": "tot_stg_1_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -112,7 +112,7 @@
       "alias": "stg_1_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender ='M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF((nmrd.gender ='M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -120,7 +120,7 @@
       "alias": "stg_1_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender ='F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF((nmrd.gender ='F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -128,7 +128,7 @@
       "alias": "tot_stg_1_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -184,7 +184,7 @@
       "alias": "stg_2_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender ='M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF((nmrd.gender ='M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -192,7 +192,7 @@
       "alias": "stg_2_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender ='F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF((nmrd.gender ='F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -200,7 +200,7 @@
       "alias": "tot_stg_2_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -208,7 +208,7 @@
       "alias": "stg_2_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -216,7 +216,7 @@
       "alias": "stg_2_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -224,7 +224,7 @@
       "alias": "tot_stg_2_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -280,7 +280,7 @@
       "alias": "stg_3_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -288,7 +288,7 @@
       "alias": "stg_3_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -296,7 +296,7 @@
       "alias": "tot_stg_3_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -304,7 +304,7 @@
       "alias": "stg_3_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
       }
     },
     {
@@ -312,7 +312,7 @@
       "alias": "stg_3_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
       }
     },
     {
@@ -320,7 +320,7 @@
       "alias": "tot_stg_3_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
       }
     },
     {
@@ -376,7 +376,7 @@
       "alias": "stg_3a_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1)AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -384,7 +384,7 @@
       "alias": "stg_3a_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
       }
     },
     {
@@ -392,7 +392,7 @@
       "alias": "tot_stg_3a_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -400,7 +400,7 @@
       "alias": "stg_3a_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
       }
     },
     {
@@ -408,7 +408,7 @@
       "alias": "stg_3a_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
       }
     },
     {
@@ -416,7 +416,7 @@
       "alias": "tot_stg_3a_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+        "expression": "IF((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
       }
     },
     {
@@ -472,7 +472,7 @@
       "alias": "stg_3b_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -480,7 +480,7 @@
       "alias": "stg_3b_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -488,7 +488,7 @@
       "alias": "tot_stg_3b_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -496,7 +496,7 @@
       "alias": "stg_3b_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -504,7 +504,7 @@
       "alias": "stg_3b_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -512,7 +512,7 @@
       "alias": "tot_stg_3b_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -568,7 +568,7 @@
       "alias": "stg_4_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -576,7 +576,7 @@
       "alias": "stg_4_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -584,7 +584,7 @@
       "alias": "tot_stg_4_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -592,7 +592,7 @@
       "alias": "stg_4_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -600,7 +600,7 @@
       "alias": "stg_4_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -608,7 +608,7 @@
       "alias": "tot_stg_4_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -664,7 +664,7 @@
       "alias": "stg_5_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -672,7 +672,7 @@
       "alias": "stg_5_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -680,7 +680,7 @@
       "alias": "tot_stg_5_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -688,7 +688,7 @@
       "alias": "stg_5_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -696,7 +696,7 @@
       "alias": "stg_5_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -704,7 +704,7 @@
       "alias": "tot_stg_5_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1)AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -760,7 +760,7 @@
       "alias": "sub_tot_nw_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -768,7 +768,7 @@
       "alias": "sub_tot_nw_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -776,7 +776,7 @@
       "alias": "sub_tot_nw_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.started_art_this_month = 1), 1, 0)"
       }
     },
     {
@@ -784,7 +784,7 @@
       "alias": "sub_tot_ct_chr_m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -792,7 +792,7 @@
       "alias": "sub_tot_ct_chr_f",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -800,7 +800,7 @@
       "alias": "sub_tot_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
       }
     },
     {
@@ -864,7 +864,7 @@
       "alias": "tot_ct_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+        "expression": "IF((nmrd.is_ckd = 1), 1, 0)"
       }
     },
     {
@@ -888,7 +888,7 @@
       "alias": "tot_chr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((nmrd.is_ckd = 1), 1, 0)"
+        "expression": "IF((nmrd.is_ckd = 1 || has_kd = 1), 1, 0)"
       }
     },
     {
