@@ -429,7 +429,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "tot_ct_mh", 
+      "alias": "tot_ct_mh",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF((nmrd.has_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"

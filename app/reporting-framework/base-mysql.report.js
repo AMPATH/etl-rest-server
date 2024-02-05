@@ -1912,9 +1912,7 @@ export class BaseMysqlReport {
         case 'genMDPlhivAggregate':
           resolve({
             main: this.cloneJsonSchema(genMD_plhiv_aggregate),
-            genMDPlhivBase: this.cloneJsonSchema(
-              genMD_plhiv_base
-            )
+            genMDPlhivBase: this.cloneJsonSchema(genMD_plhiv_base)
           });
           break;
         case 'stMDPlhivAggregate':
@@ -1926,9 +1924,7 @@ export class BaseMysqlReport {
         case 'totMDPlhivAggregate':
           resolve({
             main: this.cloneJsonSchema(totMD_plhiv_aggregate),
-            totMDPlhivBase: this.cloneJsonSchema(
-              totMD_plhiv_base
-            )
+            totMDPlhivBase: this.cloneJsonSchema(totMD_plhiv_base)
           });
           break;
         case 'cvdPlhivAggregate':

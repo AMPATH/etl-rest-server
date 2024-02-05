@@ -159,9 +159,8 @@
       "expressionOptions": {
         "expression": "sum(b.sub_tot_nw_cvd)"
       }
-    }
+    },
 
-    ,
     {
       "type": "derived_column",
       "alias": "sub_tot_ct_cvd_m",

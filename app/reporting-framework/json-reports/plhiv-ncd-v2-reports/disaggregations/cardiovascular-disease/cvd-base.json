@@ -194,9 +194,8 @@
       "expressionOptions": {
         "expression": "IF(((nmrd.gender = 'F' OR nmrd.gender = 'M') AND nmrd.has_cvd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
       }
-    }
+    },
 
-    ,
     {
       "type": "derived_column",
       "alias": "sub_tot_ct_cvd_m",

@@ -73,7 +73,7 @@ const routes = [
               requestParams.currentView === 'monthly' ? [0, 1] : [1];
             let reportParams = etlHelpers.getReportParams(
               'plhiv-ncd-v2-monthly-report',
-              ['startDate','endDate', 'locationUuids'],
+              ['startDate', 'endDate', 'locationUuids'],
               requestParams
             );
             delete reportParams.requestParams['gender'];
