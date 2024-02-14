@@ -511,29 +511,36 @@
       },
       {
         "label": "Mentally Ill",
+        "required": "0",
         "indicator": [
           {
             "type": "nw_mh_f",
+            "required": "1",
             "description": "Female new in care and have mental health disorder"
           },
           {
             "type": "nw_mh_m",
+            "required": "1",
             "description": "Male new in care and have mental health disorder"
           },
           {
             "type": "nw_mh",
+            "required": "1",
             "description": "PLHIV new in care and have mental health disorder"
           },
           {
             "type": "ct_mh_f",
+            "required": "1",
             "description": "Female continuing in care and have mental health disorder"
           },
           {
             "type": "ct_mh_m",
+            "required": "1",
             "description": "Male continuing in care and have mental health disorder"
           },
           {
             "type": "ct_mh",
+            "required": "1",
             "description": "PLHIV continuing in care and have mental health disorder"
           }
         ]
@@ -556,6 +563,130 @@
         "indicator": {
           "type": "tot_mh",
           "description": "PLHIV having mental health disorder"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Other Cardiovascular Diseases",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Heart Failure",
+        "indicator": [
+          {
+            "type": "nw_hf_f",
+            "description": "Female new in care and have heart failure"
+          },
+          {
+            "type": "nw_hf_m",
+            "description": "Male new in care and have heart failure"
+          },
+          {
+            "type": "tot_nw_hf",
+            "description": "PLHIV new in care and have heart failure"
+          },
+          {
+            "type": "ct_hf_f",
+            "description": "Female continuing in care and have heart failure"
+          },
+          {
+            "type": "ct_hf_m",
+            "description": "Male continuing in care and have heart failure"
+          },
+          {
+            "type": "tot_ct_hf",
+            "description": "PLHIV continuing in care and have heart failure"
+          }
+        ]
+      },
+      {
+        "label": "Myocardinal Infarction",
+        "indicator": [
+          {
+            "type": "nw_myo_inf_f",
+            "description": "Female new in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "nw_myo_inf_m",
+            "description": "Male new in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "tot_nw_myo_inf",
+            "description": "PLHIV new in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "ct_myo_inf_f",
+            "description": "Female continuing in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "ct_myo_inf_m",
+            "description": "Male continuing in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "tot_ct_myo_inft",
+            "description": "PLHIV continuing in care and have Myocardinal Infarction"
+          }
+        ]
+      },
+      {
+        "label": "General Cardiovascular Disorder ",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_cvd_f",
+            "description": "Female new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_nw_cvd_m",
+            "description": "Male new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_nw_cvd",
+            "description": "PLHIV new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_ct_cvd_f",
+            "description": "Female continuing in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_ct_cvd_m",
+            "description": "Male continuing in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_ct_cvd",
+            "description": "PLHIV continuing in care and have Cardiovascular Disease"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_cvd",
+            "description": "PLHIV new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "tot_ct_cvd",
+            "description": "PLHIV continuing in care and have Cardiovascular Disease"
+          }
+        ]
+      },
+      {
+        "label": "Total Cardiovascular Disease",
+        "indicator": {
+          "type": "tot_cvd",
+          "description": "PLHIV having Cardiovascular Disease"
         }
       }
     ]
@@ -1097,130 +1228,6 @@
         "indicator": {
           "type": "tot_kd",
           "description": "PLHIV and have kidney disease"
-        }
-      }
-    ]
-  },
-  {
-    "sectionTitle": "Cardiovascular Disease (other than Hypertension)",
-    "indicators": [
-      {
-        "label": "Location",
-        "indicator": "location"
-      },
-      {
-        "label": "Status",
-        "indicator": ["New", "CT"]
-      },
-      {
-        "label": "Header",
-        "indicator": ["F", "M", "T", "F", "M", "T"]
-      },
-      {
-        "label": "Heart Failure",
-        "indicator": [
-          {
-            "type": "nw_hf_f",
-            "description": "Female new in care and have heart failure"
-          },
-          {
-            "type": "nw_hf_m",
-            "description": "Male new in care and have heart failure"
-          },
-          {
-            "type": "tot_nw_hf",
-            "description": "PLHIV new in care and have heart failure"
-          },
-          {
-            "type": "ct_hf_f",
-            "description": "Female continuing in care and have heart failure"
-          },
-          {
-            "type": "ct_hf_m",
-            "description": "Male continuing in care and have heart failure"
-          },
-          {
-            "type": "tot_ct_hf",
-            "description": "PLHIV continuing in care and have heart failure"
-          }
-        ]
-      },
-      {
-        "label": "Myocardinal Infarction",
-        "indicator": [
-          {
-            "type": "nw_myo_inf_f",
-            "description": "Female new in care and have Myocardinal Infarction"
-          },
-          {
-            "type": "nw_myo_inf_m",
-            "description": "Male new in care and have Myocardinal Infarction"
-          },
-          {
-            "type": "tot_nw_myo_inf",
-            "description": "PLHIV new in care and have Myocardinal Infarction"
-          },
-          {
-            "type": "ct_myo_inf_f",
-            "description": "Female continuing in care and have Myocardinal Infarction"
-          },
-          {
-            "type": "ct_myo_inf_m",
-            "description": "Male continuing in care and have Myocardinal Infarction"
-          },
-          {
-            "type": "tot_ct_myo_inft",
-            "description": "PLHIV continuing in care and have Myocardinal Infarction"
-          }
-        ]
-      },
-      {
-        "label": "General Cardiovascular Disorder ",
-        "indicator": [
-          {
-            "type": "sub_tot_nw_cvd_f",
-            "description": "Female new in care and have Cardiovascular Disease"
-          },
-          {
-            "type": "sub_tot_nw_cvd_m",
-            "description": "Male new in care and have Cardiovascular Disease"
-          },
-          {
-            "type": "sub_tot_nw_cvd",
-            "description": "PLHIV new in care and have Cardiovascular Disease"
-          },
-          {
-            "type": "sub_tot_ct_cvd_f",
-            "description": "Female continuing in care and have Cardiovascular Disease"
-          },
-          {
-            "type": "sub_tot_ct_cvd_m",
-            "description": "Male continuing in care and have Cardiovascular Disease"
-          },
-          {
-            "type": "sub_tot_ct_cvd",
-            "description": "PLHIV continuing in care and have Cardiovascular Disease"
-          }
-        ]
-      },
-      {
-        "label": "Status Sub Total",
-        "indicator": [
-          {
-            "type": "tot_nw_cvd",
-            "description": "PLHIV new in care and have Cardiovascular Disease"
-          },
-          {
-            "type": "tot_ct_cvd",
-            "description": "PLHIV continuing in care and have Cardiovascular Disease"
-          }
-        ]
-      },
-      {
-        "label": "Total Cardiovascular Disease",
-        "indicator": {
-          "type": "tot_cvd",
-          "description": "PLHIV having Cardiovascular Disease"
         }
       }
     ]
