@@ -1,0 +1,2532 @@
+[
+  {
+    "sectionTitle": "Hypertension",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Controlled BP(SBP <130 mmHg and DBP <80 mmHg)",
+        "indicator": [
+          {
+            "type": "nw_ctld_htn_f",
+            "required": "0",
+            "description": "Female new in care and having controlled blood pressure"
+          },
+          {
+            "type": "nw_ctld_htn_m",
+            "required": "0",
+            "description": "Male new in care and having controlled blood pressure"
+          },
+          {
+            "type": "tot_nw_ctld_htn",
+            "required": "0",
+            "description": "PLHIV New in care and having controlled blood pressure"
+          },
+          {
+            "type": "ct_ctld_htn_f",
+            "description": "Female continuing in care and having controlled blood pressure"
+          },
+          {
+            "type": "ct_ctld_htn_m",
+            "description": "Male continuing in care and having controlled blood pressure"
+          },
+          {
+            "type": "tot_ct_ctld_htn",
+            "description": "PLHIV New in care and having controlled blood pressure"
+          }
+        ]
+      },
+      {
+        "label": "Not well controlled BP(SBP >130 mmHg and DBP >80 mmHg)",
+        "indicator": [
+          {
+            "type": "nw_unctld_htn_f",
+            "required": "0",
+            "description": "Female new in care and having uncontrolled blood pressure"
+          },
+          {
+            "type": "nw_unctld_htn_m",
+            "required": "0",
+            "description": "Male new in care and having uncontrolled blood pressure"
+          },
+          {
+            "type": "tot_nw_unctld_htn",
+            "required": "0",
+            "description": "PLHIV new in care and having controlled blood pressure"
+          },
+          {
+            "type": "ct_unctld_htn_f",
+            "description": "Female continuing in care and having uncontrolled blood pressure"
+          },
+          {
+            "type": "ct_unctld_htn_m",
+            "description": "Male continuing in care and having uncontrolled blood pressure"
+          },
+          {
+            "type": "tot_ct_unctld_htn",
+            "description": "PLHIV continuing in care and having uncontrolled blood pressure"
+          }
+        ]
+      },
+      {
+        "label": "Unknown / Not Established BP(missing either SBP, DBP, or Both)",
+        "indicator": [
+          {
+            "type": "nw_unk_htn_f",
+            "required": "1",
+            "description": "Female new in care and having hypertension but unknown blood pressure"
+          },
+          {
+            "type": "nw_unk_htn_m",
+            "required": "1",
+            "description": "Male new in care and having hypertension but unknown blood pressure"
+          },
+          {
+            "type": "tot_nw_unk_htn",
+            "required": "1",
+            "description": "PLHIV new in care and having hypertension but unknown blood pressure"
+          },
+          {
+            "type": "ct_unk_htn_f",
+            "description": "Female continuing in care and having hypertension but unknown blood pressure"
+          },
+          {
+            "type": "ct_unk_htn_m",
+            "description": "Male continuing in care and having hypertension but unknown blood pressure"
+          },
+          {
+            "type": "tot_ct_unk_htn",
+            "description": "PLHIV continuing in care and having hypertension but unknown blood pressure"
+          }
+        ]
+      },
+      {
+        "label": "Hypertensive",
+        "indicator": [
+          {
+            "type": "nw_htn_f",
+            "description": "Female new in care and having hypertension"
+          },
+          {
+            "type": "nw_htn_m",
+            "description": "Male new in care and having hypertension"
+          },
+          {
+            "type": "nw_htn",
+            "description": "PLHIV new in care and having hypertension"
+          },
+          {
+            "type": "ct_htn_f",
+            "description": "Female continuing in care and having hypertension"
+          },
+          {
+            "type": "ct_htn_m",
+            "description": "Male continuing in care and having hypertension"
+          },
+          {
+            "type": "ct_htn",
+            "description": "PLHIV continuing in care and having hypertension"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_htn",
+            "description": "PLHIV new in care and are hypertensive"
+          },
+          {
+            "type": "tot_ct_htn",
+            "description": "PLHIV continuing in care and are hypertensive"
+          }
+        ]
+      },
+      {
+        "label": "Total Hypertensive",
+        "indicator": {
+          "type": "tot_htn",
+          "description": "PLHIV who are hypertensive"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Diabetes",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Controlled HbA1c(HbA1c <= 7%)",
+        "indicator": [
+          {
+            "type": "nw_ctld_dm_f",
+            "required": "0",
+            "description": "Female new in care and are having controlled Diabetic"
+          },
+          {
+            "type": "nw_ctld_dm_m",
+            "required": "0",
+            "description": "Male new in care and are having controlled Diabetic"
+          },
+          {
+            "type": "tot_nw_ctld_dm",
+            "required": "0",
+            "description": "PLHIV new in care and are having controlled Diabetic"
+          },
+          {
+            "type": "ct_ctld_dm_f",
+            "description": "Female continuing in care and are having controlled Diabetic"
+          },
+          {
+            "type": "ct_ctld_dm_m",
+            "description": "Male continuing in care and are having controlled Diabetic"
+          },
+          {
+            "type": "tot_ct_ctld_dm",
+            "description": "PLHIV continuing in care and are having controlled Diabetic"
+          }
+        ]
+      },
+      {
+        "label": "Uncontrolled HbA1c(HbA1c > 7%)",
+        "indicator": [
+          {
+            "type": "nw_unctld_dm_f",
+            "required": "0",
+            "description": "Female new in care and are having uncontrolled Diabetes"
+          },
+          {
+            "type": "nw_unctld_dm_m",
+            "required": "0",
+            "description": "Male new in care and are having uncontrolled Diabetes"
+          },
+          {
+            "type": "tot_nw_unctld_dm",
+            "required": "0",
+            "description": "PLHIV new in care and are having uncontrolled Diabetes"
+          },
+          {
+            "type": "ct_unctld_dm_f",
+            "description": "Female continuing in care and are having uncontrolled Diabetes"
+          },
+          {
+            "type": "ct_unctld_dm_m",
+            "description": "Male continuing in care and are having uncontrolled Diabetes"
+          },
+          {
+            "type": "tot_ct_unctld_dm",
+            "description": "PLHIV continuing in care and are having uncontrolled Diabetes"
+          }
+        ]
+      },
+      {
+        "label": "Unknown / Not Established HbA1c(missing HbA1c results)",
+        "indicator": [
+          {
+            "type": "nw_unk_dm_f",
+            "description": "Female new in care and are having Unknown/Not Established Diabetes"
+          },
+          {
+            "type": "nw_unk_dm_m",
+            "description": "Male new in care and are having Unknown/Not Established Diabetes"
+          },
+          {
+            "type": "tot_nw_unk_dm",
+            "description": "PLHIV new in care and are having Unknown/Not Established Diabetes"
+          },
+          {
+            "type": "ct_unk_dm_f",
+            "description": "Female continuing in care and are having Unknown/Not Established Diabetes"
+          },
+          {
+            "type": "ct_unk_dm_m",
+            "description": "Male continuing in care and are having Unknown/Not Established Diabetes"
+          },
+          {
+            "type": "tot_ct_unk_dm",
+            "description": "PLHIV continuing in care and are having Unknown/Not Established Diabetes"
+          }
+        ]
+      },
+      {
+        "label": "Diabetic",
+        "indicator": [
+          {
+            "type": "nw_dm_f",
+            "description": "Female new in care and are diabetic"
+          },
+          {
+            "type": "nw_dm_m",
+            "description": "Male new in care and are diabetic"
+          },
+          {
+            "type": "nw_dm",
+            "description": "PLHIV new in care and are diabetic"
+          },
+          {
+            "type": "ct_dm_f",
+            "description": "Female continuing in care and are diabetic"
+          },
+          {
+            "type": "ct_dm_m",
+            "description": "Male continuing in care and are diabetic"
+          },
+          {
+            "type": "ct_dm",
+            "description": "PLHIV continuing in care and are diabetic"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_dm",
+            "description": "PLHIV new in care and are diabetic"
+          },
+          {
+            "type": "tot_ct_dm",
+            "description": "PLHIV continuing in care and are diabetic"
+          }
+        ]
+      },
+      {
+        "label": "Total Diabetic",
+        "indicator": {
+          "type": "tot_dm",
+          "description": "Diabetic PLHIV"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Mental Health Disorder",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Depressive",
+        "indicator": [
+          {
+            "type": "nw_dp_mh_f",
+            "description": "Female new in care and have depressive disorder"
+          },
+          {
+            "type": "nw_dp_mh_m",
+            "description": "Male new in care and have depressive disorder"
+          },
+          {
+            "type": "tot_nw_dp_mh",
+            "description": "PLHIV new in care and have depressive disorder"
+          },
+          {
+            "type": "ct_dp_mh_f",
+            "description": "Female continuing in care and have depressive disorder"
+          },
+          {
+            "type": "ct_dp_mh_m",
+            "description": "Male continuing in care and have depressive disorder"
+          },
+          {
+            "type": "tot_ct_dp_mh",
+            "description": "PLHIV continuing in care and have depressive disorder"
+          }
+        ]
+      },
+      {
+        "label": "Anxiety",
+        "indicator": [
+          {
+            "type": "nw_anx_mh_f",
+            "description": "Female new in care and have anxiety disorder"
+          },
+          {
+            "type": "nw_anx_mh_m",
+            "description": "Male new in care and have anxiety disorder"
+          },
+          {
+            "type": "tot_nw_anx_mh",
+            "description": "PLHIV new in care and have anxiety disorder"
+          },
+          {
+            "type": "ct_anx_mh_f",
+            "description": "Female continuing in care and have anxiety disorder"
+          },
+          {
+            "type": "ct_anx_mh_m",
+            "description": "Male continuing in care and have anxiety disorder"
+          },
+          {
+            "type": "tot_ct_anx_mh",
+            "description": "PLHIV continuing in care and have anxiety disorder"
+          }
+        ]
+      },
+      {
+        "label": "Bipolar and Related Disorder",
+        "indicator": [
+          {
+            "type": "nw_bip_mh_f",
+            "description": "Female new in care and have bipolar and related disorder"
+          },
+          {
+            "type": "nw_bip_mh_m",
+            "description": "Male new in care and have bipolar and related disorder"
+          },
+          {
+            "type": "tot_nw_bip_mh",
+            "description": "PLHIV new in care and have bipolar and related disorder"
+          },
+          {
+            "type": "ct_bip_mh_f",
+            "description": "Female continuing in care and have bipolar and related disorder"
+          },
+          {
+            "type": "ct_bip_mh_m",
+            "description": "Male continuing in care and have bipolar and related disorder"
+          },
+          {
+            "type": "tot_ct_bip_mh",
+            "description": "PLHIV continuing in care and have bipolar and related disorder"
+          }
+        ]
+      },
+      {
+        "label": "Personality Disorder",
+        "indicator": [
+          {
+            "type": "nw_per_mh_f",
+            "description": "Female new in care and have personality disorder"
+          },
+          {
+            "type": "nw_per_mh_m",
+            "description": "Male new in care and have personality disorder"
+          },
+          {
+            "type": "tot_nw_per_mh",
+            "description": "PLHIV new in care and have personality disorder"
+          },
+          {
+            "type": "ct_per_mh_f",
+            "description": "Female continuing in care and have personality disorder"
+          },
+          {
+            "type": "ct_per_mh_m",
+            "description": "Male continuing in care and have personality disorder"
+          },
+          {
+            "type": "tot_ct_per_mh",
+            "description": "PLHIV continuing in care and have personality disorder"
+          }
+        ]
+      },
+      {
+        "label": "Feeding and Eating Disorder",
+        "indicator": [
+          {
+            "type": "nw_fe_mh_f",
+            "description": "Female new in care and have feeding and eating disorder"
+          },
+          {
+            "type": "nw_fe_mh_m",
+            "description": "Male new in care and have feeding and eating disorder"
+          },
+          {
+            "type": "tot_nw_fe_mh",
+            "description": "PLHIV new in care and have feeding and eating disorder"
+          },
+          {
+            "type": "ct_fe_mh_f",
+            "description": "Female continuing in care and have feeding and eating disorder"
+          },
+          {
+            "type": "ct_fe_mh_m",
+            "description": "Male continuing in care and have feeding and eating disorder"
+          },
+          {
+            "type": "tot_ct_fe_mh",
+            "description": "PLHIV continuing in care and have feeding and eating disorder"
+          }
+        ]
+      },
+      {
+        "label": "Obsessive - Compulsive and Related Disorder",
+        "indicator": [
+          {
+            "type": "nw_obs_mh_f",
+            "description": "Female new in care and have obsessive and eating disorder"
+          },
+          {
+            "type": "nw_obs_mh_m",
+            "description": "Male new in care and have obsessive and eating disorder"
+          },
+          {
+            "type": "tot_nw_obs_mh",
+            "description": "PLHIV new in care and have obsessive and eating disorder"
+          },
+          {
+            "type": "ct_obs_mh_f",
+            "description": "Female continuing in care and have obsessive and eating disorder"
+          },
+          {
+            "type": "ct_obs_mh_m",
+            "description": "Male continuing in care and have obsessive and eating disorder"
+          },
+          {
+            "type": "tot_ct_obs_mh",
+            "description": "PLHIV continuing in care and have obsessive and eating disorder"
+          }
+        ]
+      },
+      {
+        "label": "Mentally Ill",
+        "required": "0",
+        "indicator": [
+          {
+            "type": "nw_mh_f",
+            "required": "1",
+            "description": "Female new in care and have mental health disorder"
+          },
+          {
+            "type": "nw_mh_m",
+            "required": "1",
+            "description": "Male new in care and have mental health disorder"
+          },
+          {
+            "type": "nw_mh",
+            "required": "1",
+            "description": "PLHIV new in care and have mental health disorder"
+          },
+          {
+            "type": "ct_mh_f",
+            "required": "1",
+            "description": "Female continuing in care and have mental health disorder"
+          },
+          {
+            "type": "ct_mh_m",
+            "required": "1",
+            "description": "Male continuing in care and have mental health disorder"
+          },
+          {
+            "type": "ct_mh",
+            "required": "1",
+            "description": "PLHIV continuing in care and have mental health disorder"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_mh",
+            "description": "PLHIV new in care and have mental health disorder"
+          },
+          {
+            "type": "tot_ct_mh",
+            "description": "PLHIV continuing in care and have mental health disorder"
+          }
+        ]
+      },
+      {
+        "label": "Total Mental Health Disorder",
+        "indicator": {
+          "type": "tot_mh",
+          "description": "PLHIV having mental health disorder"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Other Cardiovascular Diseases",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Heart Failure",
+        "indicator": [
+          {
+            "type": "nw_hf_f",
+            "description": "Female new in care and have heart failure"
+          },
+          {
+            "type": "nw_hf_m",
+            "description": "Male new in care and have heart failure"
+          },
+          {
+            "type": "tot_nw_hf",
+            "description": "PLHIV new in care and have heart failure"
+          },
+          {
+            "type": "ct_hf_f",
+            "description": "Female continuing in care and have heart failure"
+          },
+          {
+            "type": "ct_hf_m",
+            "description": "Male continuing in care and have heart failure"
+          },
+          {
+            "type": "tot_ct_hf",
+            "description": "PLHIV continuing in care and have heart failure"
+          }
+        ]
+      },
+      {
+        "label": "Myocardinal Infarction",
+        "indicator": [
+          {
+            "type": "nw_myo_inf_f",
+            "description": "Female new in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "nw_myo_inf_m",
+            "description": "Male new in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "tot_nw_myo_inf",
+            "description": "PLHIV new in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "ct_myo_inf_f",
+            "description": "Female continuing in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "ct_myo_inf_m",
+            "description": "Male continuing in care and have Myocardinal Infarction"
+          },
+          {
+            "type": "tot_ct_myo_inft",
+            "description": "PLHIV continuing in care and have Myocardinal Infarction"
+          }
+        ]
+      },
+      {
+        "label": "General Cardiovascular Disorder ",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_cvd_f",
+            "description": "Female new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_nw_cvd_m",
+            "description": "Male new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_nw_cvd",
+            "description": "PLHIV new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_ct_cvd_f",
+            "description": "Female continuing in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_ct_cvd_m",
+            "description": "Male continuing in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "sub_tot_ct_cvd",
+            "description": "PLHIV continuing in care and have Cardiovascular Disease"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_cvd",
+            "description": "PLHIV new in care and have Cardiovascular Disease"
+          },
+          {
+            "type": "tot_ct_cvd",
+            "description": "PLHIV continuing in care and have Cardiovascular Disease"
+          }
+        ]
+      },
+      {
+        "label": "Total Cardiovascular Disease",
+        "indicator": {
+          "type": "tot_cvd",
+          "description": "PLHIV having Cardiovascular Disease"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Kidney Disease",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "State",
+        "indicator": ["Chronic", "Acute"]
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT", "New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": [
+          "F",
+          "M",
+          "T",
+          "F",
+          "M",
+          "T",
+          "F",
+          "M",
+          "T",
+          "F",
+          "M",
+          "T"
+        ]
+      },
+      {
+        "label": "Stage 1",
+        "indicator": [
+          {
+            "type": "stg_1_nw_chr_f",
+            "description": "Female new in care and have stage 1 chronic kidney disease"
+          },
+          {
+            "type": "stg_1_nw_chr_m",
+            "description": "Male new in care and have stage 1 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_1_nw_chr",
+            "description": "PLHIV new in care and have stage 1 chronic kidney disease"
+          },
+          {
+            "type": "stg_1_ct_chr_f",
+            "description": "Female continuing in care and have stage 1 chronic kidney disease"
+          },
+          {
+            "type": "stg_1_ct_chr_m",
+            "description": "Male continuing in care and have stage 1 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_1_ct_chr",
+            "description": "PLHIV continuing in care and have stage 1 chronic kidney disease"
+          },
+          {
+            "type": "stg_1_nw_acu_f",
+            "required": "0",
+            "description": "Female new in care and have stage 1 acute kidney disease"
+          },
+          {
+            "type": "stg_1_nw_acu_m",
+            "required": "0",
+            "description": "Male new in care and have stage 1 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_1_nw_acu",
+            "required": "0",
+            "description": "PLHIV new in care and have stage 1 acute kidney disease"
+          },
+          {
+            "type": "stg_1_ct_acu_f",
+            "required": "0",
+            "description": "Female continuing in care and have stage 1 acute kidney disease"
+          },
+          {
+            "type": "stg_1_ct_acu_m",
+            "required": "0",
+            "description": "Male continuing in care and have stage 1 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_1_ct_acu",
+            "required": "0",
+            "description": "PLHIV continuing in care and have stage 1 acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Stage 2",
+        "indicator": [
+          {
+            "type": "stg_2_nw_chr_f",
+            "description": "Female new in care and have stage 2 chronic kidney disease"
+          },
+          {
+            "type": "stg_2_nw_chr_m",
+            "description": "Male new in care and have stage 2 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_2_nw_chr",
+            "description": "PLHIV new in care and have stage 2 chronic kidney disease"
+          },
+          {
+            "type": "stg_2_ct_chr_f",
+            "description": "Female continuing in care and have stage 2 chronic kidney disease"
+          },
+          {
+            "type": "stg_2_ct_chr_m",
+            "description": "Male continuing in care and have stage 2 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_2_ct_chr",
+            "description": "PLHIV continuing in care and have stage 2 chronic kidney disease"
+          },
+          {
+            "type": "stg_2_nw_acu_f",
+            "required": "0",
+            "description": "Female new in care and have stage 2 acute kidney disease"
+          },
+          {
+            "type": "stg_2_nw_acu_m",
+            "required": "0",
+            "description": "Male new in care and have stage 2 acute kidney disease"
+          },
+          {
+            "tupe": "tot_stg_2_nw_acu",
+            "required": "0",
+            "description": "PLHIV new in care and have stage 2 acute kidney disease"
+          },
+          {
+            "type": "stg_2_ct_acu_f",
+            "required": "0",
+            "description": "femlae continuing in care and have stage 2 acute kidney disease"
+          },
+          {
+            "type": "stg_2_ct_acu_m",
+            "required": "0",
+            "description": "Male continuing in care and have stage 2 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_2_ct_acu",
+            "required": "0",
+            "description": "PLHIV continuing in care and have stage 2 acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Stage 3",
+        "indicator": [
+          {
+            "type": "stg_3_nw_chr_f",
+            "description": "Female new in care and have stage 3 chronic kidney disease"
+          },
+          {
+            "type": "stg_3_nw_chr_m",
+            "description": "Male new in care and have stage 3 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_3_nw_chr",
+            "description": "PLHIV new in care and have stage 3 chronic kidney disease"
+          },
+          {
+            "type": "stg_3_ct_chr_f",
+            "description": "Female continuing in care and have stage 3 chronic kidney disease"
+          },
+          {
+            "type": "stg_3_ct_chr_m",
+            "description": "Male continuing in care and have stage 3 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_3_ct_chr",
+            "description": "PLHIV continuing in care and have stage 3 chronic kidney disease"
+          },
+          {
+            "type": "stg_3_nw_acu_f",
+            "required": "0",
+            "description": "Female new in care and have stage 3 acute kidney disease"
+          },
+          {
+            "type": "stg_3_nw_acu_m",
+            "required": "0",
+            "description": "Male new in care and have stage 3 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_3_nw_acu",
+            "required": "0",
+            "description": "PLHIV new in care and have stage 3 acute kidney disease"
+          },
+          {
+            "type": "stg_3_ct_acu_f",
+            "required": "0",
+            "description": "Female continuing in care and have stage 3 acute kidney disease"
+          },
+          {
+            "type": "stg_3_ct_acu_m",
+            "required": "0",
+            "description": "Male continuing in care and have stage 3 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_3_ct_acu",
+            "required": "0",
+            "description": "PLHIV continuing in care and have stage 3 acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Stage 3a",
+        "indicator": [
+          {
+            "type": "stg_3a_nw_chr_f",
+            "description": "Female new in care and have stage 3a chronic kidney disease"
+          },
+          {
+            "type": "stg_3a_nw_chr_m",
+            "description": "Male new in care and have stage 3a chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_3a_nw_chr",
+            "description": "PLHIV new in care and have stage 3a chronic kidney disease"
+          },
+          {
+            "type": "stg_3a_ct_chr_f",
+            "description": "Female continuing in care and have stage 3a chronic kidney disease"
+          },
+          {
+            "type": "stg_3a_ct_chr_m",
+            "description": "Male continuing in care and have stage 3a chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_3a_ct_chr",
+            "description": "PLHIV continuing in care and have stage 3a chronic kidney disease"
+          },
+          {
+            "type": "stg_3a_nw_acu_f",
+            "required": "0",
+            "description": "Female new in care and have stage 3a acute kidney disease"
+          },
+          {
+            "type": "stg_3a_nw_acu_m",
+            "required": "0",
+            "description": "Male new in care and have stage 3a acute kidney disease"
+          },
+          {
+            "type": "tot_stg_3a_nw_acu",
+            "required": "0",
+            "description": "PLHIV new in care and have stage 3a acute kidney disease"
+          },
+          {
+            "type": "stg_3a_ct_acu_f",
+            "required": "0",
+            "description": "Female continuing in care and have stage 3a acute kidney disease"
+          },
+          {
+            "type": "stg_3a_ct_acu_m",
+            "required": "0",
+            "description": "Male continuing in care and have stage 3a acute kidney disease"
+          },
+          {
+            "type": "tot_stg_3a_ct_acu",
+            "required": "0",
+            "description": "PLHIV continuing in care and have stage 3a acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Stage 3b",
+        "indicator": [
+          {
+            "type": "stg_3b_nw_chr_f",
+            "description": "Female new in care and have stage 3b chronic kidney disease"
+          },
+          {
+            "type": "stg_3b_nw_chr_m",
+            "description": "Male new in care and have stage 3b chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_3b_nw_chr",
+            "description": "PLHIV new in care and have stage 3b chronic kidney disease"
+          },
+          {
+            "type": "stg_3b_ct_chr_f",
+            "description": "Female continuing in care and have stage 3b chronic kidney disease"
+          },
+          {
+            "type": "stg_3b_ct_chr_m",
+            "description": "Male continuing in care and have stage 3b chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_3b_ct_chr",
+            "description": "PLHIV continuing in care and have stage 3b chronic kidney disease"
+          },
+          {
+            "type": "stg_3b_nw_acu_f",
+            "required": "0",
+            "description": "Female new in care and have stage 3b acute kidney disease"
+          },
+          {
+            "type": "stg_3b_nw_acu_m",
+            "required": "0",
+            "description": "Male new in care and have stage 3b acute kidney disease"
+          },
+          {
+            "type": "tot_stg_3b_nw_acu",
+            "required": "0",
+            "description": "PLHIV new in care and have stage 3b acute kidney disease"
+          },
+          {
+            "type": "stg_3b_ct_acu_f",
+            "required": "0",
+            "description": "Female continuing in care and have stage 3b acute kidney disease"
+          },
+          {
+            "type": "stg_3b_ct_acu_m",
+            "required": "0",
+            "description": "Male continuing in care and have stage 3b acute kidney disease"
+          },
+          {
+            "type": "tot_stg_3b_ct_acu",
+            "required": "0",
+            "description": "PLHIV continuing in care and have stage 3b acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Stage 4",
+        "indicator": [
+          {
+            "type": "stg_4_nw_chr_f",
+            "description": "Female new in care and have stage 4 chronic kidney disease"
+          },
+          {
+            "type": "stg_4_nw_chr_m",
+            "description": "Male new in care and have stage 4 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_4_nw_chr",
+            "description": "PLHIV new in care and have stage 4 chronic kidney disease"
+          },
+          {
+            "type": "stg_4_ct_chr_f",
+            "description": "Female continuing in care and have stage 4 chronic kidney disease"
+          },
+          {
+            "type": "stg_4_ct_chr_m",
+            "description": "Male continuing in care and have stage 4 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_4_ct_chr",
+            "description": "PLHIV continuing in care and have stage 4 chronic kidney disease"
+          },
+          {
+            "type": "stg_4_nw_acu_f",
+            "required": "0",
+            "description": "Female new in care and have stage 4 acute kidney disease"
+          },
+          {
+            "type": "stg_4_nw_acu_m",
+            "required": "0",
+            "description": "Male new in care and have stage 4 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_4_nw_acu",
+            "required": "0",
+            "description": "PLHIV new in care and have stage 4 acute kidney disease"
+          },
+          {
+            "type": "stg_4_ct_acu_f",
+            "required": "0",
+            "description": "Female continuing in care and have stage 4 acute kidney disease"
+          },
+          {
+            "type": "stg_4_ct_acu_m",
+            "required": "0",
+            "description": "Male continuing in care and have stage 4 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_4_ct_acu",
+            "required": "0",
+            "description": "PLHIV continuing in care and have stage 4 acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Stage 5",
+        "indicator": [
+          {
+            "type": "stg_5_nw_chr_f",
+            "description": "Female new in care and have stage 5 chronic kidney disease"
+          },
+          {
+            "type": "stg_5_nw_chr_m",
+            "description": "Male new in care and have stage 5 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_5_nw_chr",
+            "description": "PLHIV new in care and have stage 5 chronic kidney disease"
+          },
+          {
+            "type": "stg_5_ct_chr_f",
+            "description": "Female continuing in care and have stage 5 chronic kidney disease"
+          },
+          {
+            "type": "stg_5_ct_chr_m",
+            "description": "Male continuing in care and have stage 5 chronic kidney disease"
+          },
+          {
+            "type": "tot_stg_5_ct_chr",
+            "description": "PLHIV continuing in care and have stage 5 chronic kidney disease"
+          },
+          {
+            "type": "stg_5_nw_acu_f",
+            "required": "0",
+            "description": "Female new in care and have stage 5 acute kidney disease"
+          },
+          {
+            "type": "stg_5_nw_acu_m",
+            "required": "0",
+            "description": "Male new in care and have stage 5 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_5_nw_acu",
+            "required": "0",
+            "description": "PLHIV new in care and have stage 5 acute kidney disease"
+          },
+          {
+            "type": "stg_5_ct_acu_f",
+            "required": "0",
+            "description": "Female continuing in care and have stage 5 acute kidney disease"
+          },
+          {
+            "type": "stg_5_ct_acu_m",
+            "required": "0",
+            "description": "Male continuing in care and have stage 5 acute kidney disease"
+          },
+          {
+            "type": "tot_stg_5_ct_acu",
+            "required": "0",
+            "description": "PLHIV continuing in care and have stage 5 acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Kidney Disease",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_chr_f",
+            "description": "Femle new in care and have chronic kidney disease"
+          },
+          {
+            "type": "sub_tot_nw_chr_m",
+            "description": "Male new in care and have chronic kidney disease"
+          },
+          {
+            "type": "sub_tot_nw_chr",
+            "description": "PLHIV new in care and have chronic kidney disease"
+          },
+          {
+            "type": "sub_tot_ct_chr_f",
+            "description": "Female continuing in care and have chronic kidney disease"
+          },
+          {
+            "type": "sub_tot_ct_chr_m",
+            "description": "Male continuing in care and have chronic kidney disease"
+          },
+          {
+            "type": "sub_tot_ct_chr",
+            "description": "PLHIV continuing in care and have chronic kidney disease"
+          },
+          {
+            "type": "sub_tot_nw_acu_f",
+            "description": "Female new in care and have acute kidney disease"
+          },
+          {
+            "type": "sub_tot_nw_acu_m",
+            "description": "Male new in care and have acute kidney disease"
+          },
+          {
+            "type": "sub_tot_nw_acu",
+            "description": "PLHIV new in care and have acute kidney disease"
+          },
+          {
+            "type": "sub_tot_ct_acu_f",
+            "description": "Female continuing in care and have acute kidney disease"
+          },
+          {
+            "type": "sub_tot_ct_acu_m",
+            "description": "Male continuing in care and have acute kidney disease"
+          },
+          {
+            "type": "sub_tot_ct_acu",
+            "description": "PLHIV continuing in care and have acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_chr",
+            "description": "PLHIV new in care and have chronic kidney disease"
+          },
+          {
+            "type": "tot_ct_chr",
+            "description": "PLHIV continuing in care and have chronic kidney disease"
+          },
+          {
+            "type": "tot_nw_acu",
+            "description": "PLHIV new in care and have acute kidney disease"
+          },
+          {
+            "type": "tot_ct_acu",
+            "description": "PLHIV continuing in care and have acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "State Sub Total",
+        "indicator": [
+          {
+            "type": "tot_chr",
+            "description": "PLHIV and have chronic kidney disease"
+          },
+          {
+            "type": "tot_acu",
+            "description": "PLHIV and have acute kidney disease"
+          }
+        ]
+      },
+      {
+        "label": "Grand Total Kidney Disorder",
+        "indicator": {
+          "type": "tot_kd",
+          "description": "PLHIV and have kidney disease"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Neurologic Disease",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Migraine",
+        "indicator": [
+          {
+            "type": "mg_nw_f",
+            "description": "Female new in care and have Migraine"
+          },
+          {
+            "type": "mg_nw_m",
+            "description": "Male new in care and have Migraine"
+          },
+          {
+            "type": "tot_mg_nw",
+            "description": "PLHIV new in care and have Migraine"
+          },
+          {
+            "type": "mg_ct_f",
+            "description": "Female continuing in care and have Migraine"
+          },
+          {
+            "type": "mg_ct_m",
+            "description": "Male continuing in care and have Migraine"
+          },
+          {
+            "type": "tot_mg_ct",
+            "description": "PLHIV continuing in care and have Migraine"
+          }
+        ]
+      },
+      {
+        "label": "Convulsive",
+        "indicator": [
+          {
+            "type": "cnv_nw_f",
+            "description": "Female new in care and are Convulsive"
+          },
+          {
+            "type": "cnv_nw_m",
+            "description": "Male new in care and are Convulsive"
+          },
+          {
+            "type": "tot_cnv_nw",
+            "description": "PLHIV new in care and are Convulsive"
+          },
+          {
+            "type": "cnv_ct_f",
+            "description": "Female continuing in care and are Convulsive"
+          },
+          {
+            "type": "cnv_ct_m",
+            "description": "Male continuing in care and are Convulsive"
+          },
+          {
+            "type": "tot_cnv_ct",
+            "description": "PLHIV continuing in care and are Convulsive"
+          }
+        ]
+      },
+      {
+        "label": "Neurological Disease",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_neu_f",
+            "description": "Female new in care and are neurological disorder"
+          },
+          {
+            "type": "sub_tot_nw_neu_m",
+            "description": "Male new in care and are neurological disorder"
+          },
+          {
+            "type": "sub_tot_nw_neu",
+            "description": "PLHIV new in care and are neurological disorder"
+          },
+          {
+            "type": "sub_tot_ct_neu_f",
+            "description": "Female continuing in care and are neurological disorder"
+          },
+          {
+            "type": "sub_tot_ct_neu_m",
+            "description": "Male continuing in care and are neurological disorder"
+          },
+          {
+            "type": "sub_tot_ct_neu",
+            "description": "PLHIV continuing in care and are neurological disorder"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_neu",
+            "description": "PLHIV new in care and are neurological disorder"
+          },
+          {
+            "type": "tot_ct_neu",
+            "description": "PLHIV continuing in care and are neurological disorder"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_neu",
+          "description": "PLHIV having neurological disorder"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Rheumatologic Disorders",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Arthritis",
+        "indicator": [
+          {
+            "type": "ra_nw_f",
+            "description": "Female new in care and have Arthritis"
+          },
+          {
+            "type": "ra_nw_m",
+            "description": "Male new in care and have Arthritis"
+          },
+          {
+            "type": "tot_ra_nw",
+            "description": "PLHIV new in care and have Arthritis"
+          },
+          {
+            "type": "ra_ct_f",
+            "description": "Female continuing in care and have Arthritis"
+          },
+          {
+            "type": "ra_ct_m",
+            "description": "Male continuing in care and have Arthritis"
+          },
+          {
+            "type": "tot_ra_ct",
+            "description": "PLHIV continuing in care and have Arthritis"
+          }
+        ]
+      },
+      {
+        "label": "SLE",
+        "indicator": [
+          {
+            "type": "sle_nw_f",
+            "description": "Female new in care and have SLE"
+          },
+          {
+            "type": "sle_nw_m",
+            "description": "Male new in care and have SLE"
+          },
+          {
+            "type": "tot_sle_nw",
+            "description": "PLHIV new in care and have SLE"
+          },
+          {
+            "type": "sle_ct_f",
+            "description": "Female continuing in care and have SLE"
+          },
+          {
+            "type": "sle_ct_m",
+            "description": "Male continuing in care and have SLE"
+          },
+          {
+            "type": "tot_sle_ct",
+            "description": "PLHIV continuing in care and have SLE"
+          }
+        ]
+      },
+      {
+        "label": "Rheumatologic Disorder",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_rhe_f",
+            "description": "Female new in care and have rheumatologic disorder"
+          },
+          {
+            "type": "sub_tot_nw_rhe_m",
+            "description": "Male new in care and have rheumatologic disorder"
+          },
+          {
+            "type": "sub_tot_nw_rhe",
+            "description": "PLHIV new in care and have rheumatologic disorder"
+          },
+          {
+            "type": "sub_tot_ct_rhe_f",
+            "description": "Female continuing in care and have rheumatologic disorder"
+          },
+          {
+            "type": "sub_tot_ct_rhe_m",
+            "description": "Male continuing in care and have rheumatologic disorder"
+          },
+          {
+            "type": "sub_tot_ct_rhe",
+            "description": "PLHIV continuing in care and have rheumatologic disorder"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_rhe",
+            "description": "PLHIV new in care and have rheumatologic disorder"
+          },
+          {
+            "type": "tot_ct_rhe",
+            "description": "PLHIV continuing in care and have rheumatologic disorder"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_rhe",
+          "description": "PLHIV having rheumatologic disorder"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "GI Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Oesophageal",
+        "indicator": [
+          {
+            "type": "oe_nw_f",
+            "description": "Female new in care and have Oesophageal Malignacies"
+          },
+          {
+            "type": "oe_nw_m",
+            "description": "Male new in care and have Oesophageal Malignacies"
+          },
+          {
+            "type": "tot_oe_nw",
+            "description": "PLHIV new in care and have Oesophageal Malignacies"
+          },
+          {
+            "type": "oe_ct_f",
+            "description": "Female continuing in care and have Oesophageal Malignacies"
+          },
+          {
+            "type": "oe_ct_m",
+            "description": "Male continuing in care and have Oesophageal Malignacies"
+          },
+          {
+            "type": "tot_oe_ct",
+            "description": "PLHIV continuing in care and have Oesophageal Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Pancreatic",
+        "indicator": [
+          {
+            "Type": "pc_nw_f",
+            "description": "Female new in care and have Pancreatic Malignacies"
+          },
+          {
+            "type": "pc_nw_m",
+            "description": "Male new in care and have Pancreatic Malignacies"
+          },
+          {
+            "type": "tot_pc_nw",
+            "description": "PLHIV new in care and have Pancreatic Malignacies"
+          },
+          {
+            "type": "pc_ct_f",
+            "description": "Female continuing in care and have Pancreatic Malignacies"
+          },
+          {
+            "type": "pc_ct_m",
+            "description": "Male continuing in care and have Pancreatic Malignacies"
+          },
+          {
+            "type": "tot_pc_ct",
+            "description": "PLHIV continuing in care and have Pancreatic Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Stomach/Gastric",
+        "indicator": [
+          {
+            "type": "gs_nw_f",
+            "description": "Female new in care and have Stomach/Gastric Malignacies"
+          },
+          {
+            "type": "gs_nw_m",
+            "description": "Male new in care and have Stomach/Gastric Malignacies"
+          },
+          {
+            "type": "tot_gs_nw",
+            "description": "PLHIV new in care and have Stomach/Gastric Malignacies"
+          },
+          {
+            "type": "gs_ct_f",
+            "description": "Female continuing in care and have Stomach/Gastric Malignacies"
+          },
+          {
+            "type": "gs_ct_m",
+            "description": "Male continuing in care and have Stomach/Gastric Malignacies"
+          },
+          {
+            "type": "tot_gs_ct",
+            "description": "PLHIV continuing in care and have Stomach/Gastric Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Colorectal",
+        "indicator": [
+          {
+            "type": "col_nw_f",
+            "description": "Female new in care and have Colorectal Malignacies"
+          },
+          {
+            "type": "col_nw_m",
+            "description": "Male new in care and have Colorectal Malignacies"
+          },
+          {
+            "type": "tot_col_nw",
+            "description": "PLHIV new in care and have Colorectal Malignacies"
+          },
+          {
+            "type": "col_ct_f",
+            "description": "Femla continuing in care and have Colorectal Malignacies"
+          },
+          {
+            "type": "col_ct_m",
+            "description": "Male continuing in care and have Colorectal Malignacies"
+          },
+          {
+            "type": "tot_col_ct",
+            "description": "PLHIV continuing in care and have Colorectal Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_gi_f",
+            "description": "Female new in care and have GI Malignacies"
+          },
+          {
+            "type": "sub_tot_nw_gi_m",
+            "description": "Male new in care and have GI Malignacies"
+          },
+          {
+            "type": "sub_tot_nw_gi",
+            "description": "PLHIV new in care and have GI Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_gi_f",
+            "description": "Female continuing in care and have GI Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_gi_m",
+            "description": "Male continuing in care and have GI Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_gi",
+            "description": "PLHIV continuing in care and have GI Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_gi",
+            "description": "PLHIV new in care and have GI Malignacies"
+          },
+          {
+            "type": "tot_ct_gi",
+            "description": "PLHIV continuing in care and have GI Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_gi",
+          "description": "PLHIV having GI Malignacies"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Female Reproductive Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Ovarian",
+        "indicator": [
+          {
+            "type": "ov_nw",
+            "description": "Female new in care and have Ovarian Malignacies"
+          },
+          {
+            "type": "ov_ct",
+            "description": "Female continuing in care and have Ovarian Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Cervical",
+        "indicator": [
+          {
+            "type": "cv_nw",
+            "description": "Female new in care and have Cervical Malignacies"
+          },
+          {
+            "type": "cv_ct",
+            "description": "Female continuing in care and have Cervical Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Endometrial",
+        "indicator": [
+          {
+            "type": "endo_nw",
+            "description": "Female new in care and have Endometrial Malignacies"
+          },
+          {
+            "type": "endo_ct",
+            "description": "Female continuing in care and have Endometrial Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          {
+            "type": "tot_f_rep_nw",
+            "description": "Female new in care and having Reproductive Malignacies"
+          },
+          {
+            "type": "tot_f_rep_ct",
+            "description": "Female continuing in care and having Reproductive Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_f_rep",
+          "description": "Female having Reproductive Malignacies"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Male Reproductive Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Prostate",
+        "indicator": [
+          {
+            "type": "pro_nw",
+            "description": "Male new in care and having Prostate Malignacies"
+          },
+          {
+            "type": "pro_ct",
+            "description": "Male continuing in care and having Prostate Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Testicular",
+        "indicator": [
+          {
+            "type": "ts_nw",
+            "description": "Male new in care and having Testicular Malignacies"
+          },
+          {
+            "type": "ts_ct",
+            "description": "Male continuing in care and having Testicular Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          {
+            "type": "tot_m_rep_nw",
+            "description": "Male new in care and having Reproductive Malignacies"
+          },
+          {
+            "type": "tot_m_rep_ct",
+            "description": "Male continuing in care and having Reproductive Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_m_rep",
+          "description": "Male having Reproductive Malignacies"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "ENT Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Throat",
+        "indicator": [
+          {
+            "type": "th_nw_f",
+            "description": "Female new in care and having Throat Malignacies"
+          },
+          {
+            "type": "th_nw_m",
+            "description": "Male new in care and having Throat Malignacies"
+          },
+          {
+            "type": "tot_th_nw",
+            "description": "PLHIV new in care and having Throat Malignacies"
+          },
+          {
+            "type": "th_ct_f",
+            "description": "Female continuing in care and having Throat Malignacies"
+          },
+          {
+            "type": "th_ct_m",
+            "description": "Male continuing in care and having Throat Malignacies"
+          },
+          {
+            "type": "tot_th_ct",
+            "description": "PLHIV continuing in care and having Throat Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_ent",
+            "description": "PLHIV new in care and having Throat Malignacies"
+          },
+          {
+            "type": "tot_ct_ent",
+            "description": "PLHIV continuing in care and having Throat Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_ent",
+          "description": "PLHIV having Throat Malignacies"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Endocrine Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Pituitary",
+        "indicator": [
+          {
+            "type": "pit_nw_f",
+            "description": "Female new in care and having Pituitary Malignacies"
+          },
+          {
+            "type": "pit_nw_m",
+            "description": "Male new in care and having Pituitary Malignacies"
+          },
+          {
+            "type": "tot_pit_nw",
+            "description": "PLHIV new in care and having Pituitary Malignacies"
+          },
+          {
+            "type": "pit_ct_f",
+            "description": "Female continuing in care and having Pituitary Malignacies"
+          },
+          {
+            "type": "pit_ct_m",
+            "description": "Male continuing in care and having Pituitary Malignacies"
+          },
+          {
+            "type": "tot_pit_ct",
+            "description": "PLHIV continuing in care and having Pituitary Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Thyroid",
+        "indicator": [
+          {
+            "type": "thy_nw_f",
+            "description": "Female new in care and having Thyroid Malignacies"
+          },
+          {
+            "type": "thy_nw_m",
+            "description": "Male new in care and having Thyroid Malignacies"
+          },
+          {
+            "type": "tot_thy_nw",
+            "description": "PLHIV new in care and having Thyroid Malignacies"
+          },
+          {
+            "type": "thy_ct_f",
+            "description": "Female continuing in care and having Thyroid Malignacies"
+          },
+          {
+            "type": "thy_ct_m",
+            "description": "Male continuing in care and having Thyroid Malignacies"
+          },
+          {
+            "type": "tot_thy_ct",
+            "description": "PLHIV continuing in care and having Thyroid Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Adrenal",
+        "indicator": [
+          {
+            "type": "adr_nw_f",
+            "description": "Female new in care and having Adrenal Malignacies"
+          },
+          {
+            "type": "adr_nw_m",
+            "description": "Male new in care and having Adrenal Malignacies"
+          },
+          {
+            "type": "tot_adr_nw",
+            "description": "PLHIV new in care and having Adrenal Malignacies"
+          },
+          {
+            "type": "adr_ct_f",
+            "description": "Female continuing in care and having Adrenal Malignacies"
+          },
+          {
+            "type": "adr_ct_m",
+            "description": "Male continuing in care and having Adrenal Malignacies"
+          },
+          {
+            "type": "tot_adr_ct",
+            "description": "PLHIV continuing in care and having Adrenal Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_endo_f",
+            "description": "Female new in care and having Endocrine Malignacies"
+          },
+          {
+            "type": "sub_tot_nw_endo_m",
+            "description": "Male new in care and having Endocrine Malignacies"
+          },
+          {
+            "type": "sub_tot_nw_endo",
+            "description": "PLHIV new in care and having Endocrine Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_endo_f",
+            "description": "Female continuing in care and having Endocrine Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_endo_m",
+            "description": "Male continuing in care and having Endocrine Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_endo",
+            "description": "PLHIV continuing in care and having Endocrine Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_endo",
+            "description": "PLHIV new in care and having Endocrine Malignacies"
+          },
+          {
+            "type": "tot_ct_endo",
+            "description": "PLHIV new in care and having Endocrine Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_endo",
+          "description": "PLHIV having Endocrine Malignacies"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Musculoskeletal Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Osteosarcoma",
+        "indicator": [
+          {
+            "type": "ost_nw_f",
+            "description": "Female new in care and having Osteosarcoma"
+          },
+          {
+            "type": "ost_nw_m",
+            "description": "Male new in care and having Osteosarcoma"
+          },
+          {
+            "type": "tot_ost_nw",
+            "description": "PLHIV new in care and having Osteosarcoma"
+          },
+          {
+            "type": "ost_ct_f",
+            "description": "Female continuing in care and having Osteosarcoma"
+          },
+          {
+            "type": "ost_ct_m",
+            "description": "Male continuing in care and having Osteosarcoma"
+          },
+          {
+            "type": "tot_ost_ct",
+            "description": "PLHIV continuing in care and having Osteosarcoma"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_musk",
+            "description": "PLHIV new in care and having Musculoskeletal disorder"
+          },
+          {
+            "type": "tot_ct_musk",
+            "description": "PLHIV continuing in care and having Musculoskeletal disorder"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_musk",
+          "description": "PLHIV having Musculoskeletal disorder"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Haematological Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Leukamia",
+        "indicator": [
+          {
+            "type": "leu_nw_f",
+            "description": "Female new in care and having leukemia"
+          },
+          {
+            "type": "leu_nw_m",
+            "description": "Male new in care and having leukemia"
+          },
+          {
+            "type": "tot_leu_nw",
+            "description": "PLHIV new in care and having leukemia"
+          },
+          {
+            "type": "leu_ct_f",
+            "description": "Female continuing in care and having leukemia"
+          },
+          {
+            "type": "leu_ct_m",
+            "description": "Male continuing in care and having leukemia"
+          },
+          {
+            "type": "tot_leu_ct",
+            "description": "PLHIV continuing in care and having leukemia"
+          }
+        ]
+      },
+      {
+        "label": "Lymphoma",
+        "indicator": [
+          {
+            "type": "lym_nw_f",
+            "description": "Female new in care and having Lymphoma"
+          },
+          {
+            "type": "lym_nw_m",
+            "description": "Male new in care and having Lymphoma"
+          },
+          {
+            "type": "tot_lym_nw",
+            "description": "PLHIV new in care and having Lymphoma"
+          },
+          {
+            "type": "lym_ct_f",
+            "description": "Female continuing in care and having Lymphoma"
+          },
+          {
+            "type": "lym_ct_m",
+            "description": "Male continuing in care and having Lymphoma"
+          },
+          {
+            "type": "tot_lym_ct",
+            "description": "PLHIV continuing in care and having Lymphoma"
+          }
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_hae_f",
+            "description": "Female new in care and having Haematological disorder"
+          },
+          {
+            "type": "sub_tot_nw_hae_m",
+            "description": "Male new in care and having Haematological disorder"
+          },
+          {
+            "type": "sub_tot_nw_hae",
+            "description": "PLHIV new in care and having Haematological disorder"
+          },
+          {
+            "type": "sub_tot_ct_hae_f",
+            "description": "Female continuing in care and having Haematological disorder"
+          },
+          {
+            "type": "sub_tot_ct_hae_m",
+            "description": "Male continuing in care and having Haematological disorder"
+          },
+          {
+            "type": "sub_tot_ct_hae",
+            "description": "PLHIV continuing in care and having Haematological disorder"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_hae",
+            "description": "PLHIV new in care and having Haematological disorder"
+          },
+          {
+            "type": "tot_ct_hae",
+            "description": "PLHIV continuing in care and having Haematological disorder"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_hae",
+          "description": "PLHIV having Haematological disorder"
+        }
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Neurological Malignancy",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      },
+      {
+        "label": "Status",
+        "indicator": ["New", "CT"]
+      },
+      {
+        "label": "Header",
+        "indicator": ["F", "M", "T", "F", "M", "T"]
+      },
+      {
+        "label": "Gliomas, Glioneuronal and Neuronal Tumors",
+        "indicator": [
+          {
+            "type": "ggn_nw_f",
+            "description": "Female new in care and having Gliomas/Glioneuronal/Neuronal Tumors"
+          },
+          {
+            "type": "ggn_nw_m",
+            "description": "Male new in care and having Gliomas/Glioneuronal/Neuronal Tumors"
+          },
+          {
+            "type": "tot_ggn_nw",
+            "description": "PLHIV new in care and having Gliomas/Glioneuronal/Neuronal Tumors"
+          },
+          {
+            "type": "ggn_ct_f",
+            "description": "Female continuing in care and having Gliomas/Glioneuronal/Neuronal Tumors"
+          },
+          {
+            "type": "ggn_ct_m",
+            "description": "Male continuing in care and having Gliomas/Glioneuronal/Neuronal Tumors"
+          },
+          {
+            "type": "tot_ggn_ct",
+            "description": "PLHIV continuing in care and having Gliomas/Glioneuronal/Neuronal Tumors"
+          }
+        ]
+      },
+      {
+        "label": "Choroid Plexus Tumors",
+        "indicator": [
+          {
+            "type": "cpt_nw_f",
+            "description": "Female new in care and having Choroid Plexus Tumors"
+          },
+          {
+            "type": "cpt_nw_m",
+            "description": "Male new in care and having Choroid Plexus Tumors"
+          },
+          {
+            "type": "tot_cpt_nw",
+            "description": "PLHIV new in care and having Choroid Plexus Tumors"
+          },
+          {
+            "type": "cpt_ct_f",
+            "description": "Female continuing in care and having Choroid Plexus Tumors"
+          },
+          {
+            "type": "cpt_ct_m",
+            "description": "Male continuing in care and having Choroid Plexus Tumors"
+          },
+          {
+            "type": "tot_cpt_ct",
+            "description": "PLHIV continuing in care and having Choroid Plexus Tumors"
+          }
+        ]
+      },
+      {
+        "label": "Embryonal Tumors",
+        "indicator": [
+          {
+            "type": "emb_nw_f",
+            "description": "Female new in care and having Embryonal Tumors"
+          },
+          {
+            "type": "emb_nw_m",
+            "description": "Male new in care and having Embryonal Tumors"
+          },
+          {
+            "type": "tot_emb_nw",
+            "description": "PLHIV new in care and having Embryonal Tumors"
+          },
+          {
+            "type": "emb_ct_f",
+            "description": "Female continuing in care and having Embryonal Tumors"
+          },
+          {
+            "type": "emb_ct_m",
+            "description": "Male continuing in care and having Embryonal Tumors"
+          },
+          {
+            "type": "tot_emb_ct",
+            "description": "PLHIV continuing in care and having Embryonal Tumors"
+          }
+        ]
+      },
+      {
+        "label": "Pineal Tumors",
+        "indicator": [
+          {
+            "type": "pin_nw_f",
+            "description": "Female new in care and having Pineal Tumors"
+          },
+          {
+            "type": "pin_nw_m",
+            "description": "Male new in care and having Pineal Tumors"
+          },
+          {
+            "type": "tot_pin_nw",
+            "description": "PLHIV new in care and having Pineal Tumors"
+          },
+          {
+            "type": "pin_ct_f",
+            "description": "Female continuing in care and having Pineal Tumors"
+          },
+          {
+            "type": "pin_ct_m",
+            "description": "Male continuing in care and having Pineal Tumors"
+          },
+          {
+            "type": "tot_pin_ct",
+            "description": "PLHIV continuing in care and having Pineal Tumors"
+          }
+        ]
+      },
+      {
+        "label": "Meningiomas",
+        "indicator": [
+          {
+            "type": "men_nw_f",
+            "description": "Female new in care and having Meningiomas Tumors"
+          },
+          {
+            "type": "men_nw_m",
+            "description": "Male new in care and having Meningiomas Tumors"
+          },
+          {
+            "type": "tot_men_nw",
+            "description": "PLHIV new in care and having Meningiomas Tumors"
+          },
+          {
+            "type": "men_ct_f",
+            "description": "Female continuing in care and having Meningiomas Tumors"
+          },
+          {
+            "type": "men_ct_m",
+            "description": "Male continuing in care and having Meningiomas Tumors"
+          },
+          {
+            "type": "tot_men_ct",
+            "description": "PLHIV continuing in care and having Meningiomas Tumors"
+          }
+        ]
+      },
+      {
+        "label": "Mesenchymal Tumors",
+        "indicator": [
+          {
+            "type": "mes_nw_f",
+            "description": "Female new in care and having Mesenchymal Tumors"
+          },
+          {
+            "type": "mes_nw_m",
+            "description": "Male new in care and having Mesenchymal Tumors"
+          },
+          {
+            "type": "tot_mes_nw",
+            "description": "PLHIV new in care and having Mesenchymal Tumors"
+          },
+          {
+            "type": "mes_ct_f",
+            "description": "Female continuing in care and having Mesenchymal Tumors"
+          },
+          {
+            "type": "mes_ct_m",
+            "description": "Male continuing in care and having Mesenchymal Tumors"
+          },
+          {
+            "type": "tot_mes_ct",
+            "description": "PLHIV continuing in care and having Mesenchymal Tumors"
+          }
+        ]
+      },
+      {
+        "label": "Melanocytic",
+        "indicator": [
+          {
+            "type": "mel_nw_f",
+            "description": "Female new in care and having Melanocytic Malignacies"
+          },
+          {
+            "type": "mel_nw_m",
+            "description": "Male new in care and having Melanocytic Malignacies"
+          },
+          {
+            "type": "tot_mel_nw",
+            "description": "PLHIV new in care and having Melanocytic Malignacies"
+          },
+          {
+            "type": "mel_ct_f",
+            "description": "Female continuing in care and having Melanocytic Malignacies"
+          },
+          {
+            "type": "mel_ct_m",
+            "description": "Male continuing in care and having Melanocytic Malignacies"
+          },
+          {
+            "type": "tot_mel_ct",
+            "description": "PLHIV continuing in care and having Melanocytic Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Haematolymphoid",
+        "indicator": [
+          {
+            "type": "hly_nw_f",
+            "description": "Female new in care and having Haematolymphoid Malignacies"
+          },
+          {
+            "type": "hly_nw_m",
+            "description": "Male new in care and having Haematolymphoid Malignacies"
+          },
+          {
+            "type": "tot_hly_nw",
+            "description": "PLHIV new in care and having Haematolymphoid Malignacies"
+          },
+          {
+            "type": "hly_ct_f",
+            "description": "Female continuing in care and having Haematolymphoid Malignacies"
+          },
+          {
+            "type": "hly_ct_m",
+            "description": "Male continuing in care and having Haematolymphoid Malignacies"
+          },
+          {
+            "type": "tot_hly_ct",
+            "description": "PLHIV continuing in care and having Haematolymphoid Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Germ Cell Tumors",
+        "indicator": [
+          {
+            "type": "gct_nw_f",
+            "description": "Female new in care and having Germ Cell Tumors"
+          },
+          {
+            "type": "gct_nw_m",
+            "description": "Male new in care and having Germ Cell Tumors"
+          },
+          {
+            "type": "tot_gct_nw",
+            "description": "PLHIV new in care and having Germ Cell Tumors"
+          },
+          {
+            "type": "gct_ct_f",
+            "description": "Female continuing in care and having Germ Cell Tumors"
+          },
+          {
+            "type": "gct_ct_m",
+            "description": "Male continuing in care and having Germ Cell Tumors"
+          },
+          {
+            "type": "tot_gct_ct",
+            "description": "PLHIV continuing in care and having Germ Cell Tumors"
+          }
+        ]
+      },
+      {
+        "label": "Sub Total",
+        "indicator": [
+          {
+            "type": "sub_tot_nw_neu_malig_f",
+            "description": "Female new in care and having neurological Malignacies"
+          },
+          {
+            "type": "sub_tot_nw_neu_malig_m",
+            "description": "Male new in care and having neurological Malignacies"
+          },
+          {
+            "type": "sub_tot_nw_neu_malig",
+            "description": "PLHIV new in care and having neurological Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_neu_malig_f",
+            "description": "Female continuing in care and having neurological Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_neu_malig_m",
+            "description": "Male continuing in care and having neurological Malignacies"
+          },
+          {
+            "type": "sub_tot_ct_neu_malig",
+            "description": "PLHIV continuing in care and having neurological Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Status Sub Total",
+        "indicator": [
+          {
+            "type": "tot_nw_neu_malig",
+            "description": "PLHIV new in care and having neurological Malignacies"
+          },
+          {
+            "type": "tot_ct_neu_malig",
+            "description": "PLHIV continuing in care and having neurological Malignacies"
+          }
+        ]
+      },
+      {
+        "label": "Total",
+        "indicator": {
+          "type": "tot_neu_malig",
+          "description": "PLHIV having neurological Malignacies"
+        }
+      }
+    ]
+  }
+]
