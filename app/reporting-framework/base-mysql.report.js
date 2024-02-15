@@ -1862,12 +1862,7 @@ export class BaseMysqlReport {
             dmPlhivBase: this.cloneJsonSchema(dm_plhiv_base)
           });
           break;
-        // case 'mhPlhivAggregate':
-        //   resolve({
-        //     main: this.cloneJsonSchema(mh_plhiv_aggregate),
-        //     mhPlhivBase: this.cloneJsonSchema(mh_plhiv_base)
-        //   });
-        //   break;
+
         case 'depPlhivAggregate':
           resolve({
             main: this.cloneJsonSchema(dep_plhiv_aggregate),
