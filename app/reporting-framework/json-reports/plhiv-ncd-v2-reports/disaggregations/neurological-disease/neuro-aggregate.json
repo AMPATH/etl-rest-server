@@ -1,0 +1,174 @@
+{
+  "name": "neuPlhivAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "neuPlhivBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "neuPlhivBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "b.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "b.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mg_nw_m",
+      "column": "sum(b.mg_nw_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mg_nw_f",
+      "column": "sum(b.mg_nw_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_mg_nw",
+      "column": "sum(b.tot_mg_nw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mg_ct_m",
+      "column": "sum(b.mg_ct_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mg_ct_f",
+      "column": "sum(b.mg_ct_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_mg_ct",
+      "column": "sum(b.tot_mg_ct)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cnv_nw_m",
+      "column": "sum(b.cnv_nw_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cnv_nw_f",
+      "column": "sum(b.cnv_nw_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_cnv_nw",
+      "column": "sum(b.tot_cnv_nw)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cnv_ct_m",
+      "column": "sum(b.cnv_ct_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cnv_ct_f",
+      "column": "sum(b.cnv_ct_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_cnv_ct",
+      "column": "sum(b.tot_cnv_ct)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_tot_nw_neu_m",
+      "column": "sum(b.sub_tot_nw_neu_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_tot_nw_neu_f",
+      "column": "sum(b.sub_tot_nw_neu_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_tot_nw_neu",
+      "column": "sum(b.sub_tot_nw_neu)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_tot_ct_neu_m",
+      "column": "sum(b.sub_tot_ct_neu_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_tot_ct_neu_f",
+      "column": "sum(b.sub_tot_ct_neu_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_tot_ct_neu",
+      "column": "sum(b.sub_tot_ct_neu)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_nw_neu",
+      "column": "sum(b.tot_nw_neu)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_ct_neu",
+      "column": "sum(b.tot_ct_neu)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_neu",
+      "column": "sum(b.tot_neu)"
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-with-contacts-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

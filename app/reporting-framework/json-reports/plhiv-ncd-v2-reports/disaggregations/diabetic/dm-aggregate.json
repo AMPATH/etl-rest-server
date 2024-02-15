@@ -1,0 +1,204 @@
+{
+  "name": "dmPlhivAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "dmPlhivBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dmPlhivBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "b.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "b.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_ctld_dm_f",
+      "column": "sum(b.nw_ctld_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_ctld_dm_m",
+      "column": "sum(b.nw_ctld_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_nw_ctld_dm",
+      "column": "sum(b.tot_nw_ctld_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_ctld_dm_f",
+      "column": "sum(b.ct_ctld_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_ctld_dm_m",
+      "column": "sum(b.ct_ctld_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_ct_ctld_dm",
+      "column": "sum(b.tot_ct_ctld_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_unctld_dm_f",
+      "column": "sum(b.nw_unctld_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_unctld_dm_m",
+      "column": "sum(b.nw_unctld_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_nw_unctld_dm",
+      "column": "sum(b.tot_nw_unctld_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_unctld_dm_f",
+      "column": "sum(b.ct_unctld_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_unctld_dm_m",
+      "column": "sum(b.ct_unctld_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_ct_unctld_dm",
+      "column": "sum(b.tot_ct_unctld_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_unk_dm_f",
+      "column": "sum(b.nw_unk_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_unk_dm_m",
+      "column": "sum(b.nw_unk_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_nw_unk_dm",
+      "column": "sum(b.tot_nw_unk_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_unk_dm_f",
+      "column": "sum(b.ct_unk_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_unk_dm_m",
+      "column": "sum(b.ct_unk_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_ct_unk_dm",
+      "column": "sum(b.tot_ct_unk_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_dm_m",
+      "column": "sum(b.nw_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_dm_f",
+      "column": "sum(b.nw_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nw_dm",
+      "column": "sum(b.nw_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_dm_m",
+      "column": "sum(b.ct_dm_m)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_dm_f",
+      "column": "sum(b.ct_dm_f)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ct_dm",
+      "column": "sum(b.ct_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_nw_dm",
+      "column": "sum(b.tot_nw_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_ct_dm",
+      "column": "sum(b.tot_ct_dm)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tot_dm",
+      "column": "sum(b.tot_dm)"
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-with-contacts-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

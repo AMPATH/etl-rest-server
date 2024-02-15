@@ -1,0 +1,169 @@
+{
+  "name": "perPlhivBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.ncd_monthly_report_dataset",
+      "alias": "nmrd"
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_v1_2",
+      "alias": "hmrd",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nmrd.person_id = hmrd.person_id AND hmrd.status = 'active'"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "fi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nmrd.person_id = fi.patient_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nmrd.location_id = l.location_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "per",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nmrd.person_id = per.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "nmrd.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "nmrd.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "fi.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "fi.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "fi.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "nmrd.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "nmrd.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "nmrd.clinic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_per_mh_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_personality_mhd = 1 and hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_per_mh_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_personality_mhd = 1 and hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_per_mh",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_personality_mhd = 1 and hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_per_mh_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_per_mh_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_per_mh",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_personality_mhd = 1 and hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.location_id in ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.endDate >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.endDate <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.visit_this_month in ?",
+        "parameterName": "visitState"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["nmrd.person_id"],
+    "excludeParam": "excludeParam"
+  },
+  "paging": {
+    "offSetParam": "offSetParam",
+    "limitParam": "limitParam"
+  }
+}

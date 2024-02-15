@@ -1,0 +1,238 @@
+{
+  "name": "cvdPlhivAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "cvdPlhivBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "cvdPlhivBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "b.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "b.location"
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_hf_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.nw_hf_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_hf_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.nw_hf_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_hf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_nw_hf)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_hf_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.ct_hf_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_hf_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.ct_hf_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_hf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_ct_hf)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_myo_inf_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.nw_myo_inf_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nw_myo_inf_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.nw_myo_inf_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_myo_inf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_nw_myo_inf)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_myo_inf_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.ct_myo_inf_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ct_myo_inf_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.ct_myo_inf_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_myo_inf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_ct_myo_inf)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_cvd_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.sub_tot_nw_cvd_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_cvd_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.sub_tot_nw_cvd_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_cvd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.sub_tot_nw_cvd)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_cvd_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.sub_tot_ct_cvd_m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_cvd_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.sub_tot_ct_cvd_f)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_cvd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.sub_tot_ct_cvd)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_cvd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_nw_cvd)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_cvd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_ct_cvd)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_cvd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(b.tot_cvd)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-with-contacts-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
