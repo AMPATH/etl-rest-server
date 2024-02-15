@@ -434,6 +434,13 @@ import * as rhe_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disagg
 
 import * as kd_plhiv_base from './json-reports/plhiv-ncd-v2-reports/disaggregations/kidney-disease/kd-base.json';
 import * as kd_plhiv_aggregate from './json-reports/plhiv-ncd-v2-reports/disaggregations/kidney-disease/kd-aggregate.json';
+//ahd report
+import * as ahd_monthly_summary from './json-reports/ahd_reports/ahd-monthly.json';
+import * as ahd_monthly_aggregate from './json-reports/ahd_reports/ahd-monthly-aggregate.json';
+import * as ahd_cohort_monthly_aggregate from './json-reports/ahd_reports/ahd-cohort-monthly-aggregate.json';
+import * as ahd_monthly_dataset_base from './json-reports/ahd_reports/ahd-monthly-dataset-base.json';
+import * as ahd_cohort_monthly_dataset_base from './json-reports/ahd_reports/ahd-cohort-monthly-dataset-base.json';
+import * as ahd_monthly_patient_list_template from './json-reports/ahd_reports/ahd_monthly_patient_list_template_post.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1025,6 +1032,40 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(prep_aggregate_report),
             prepBaseReport: this.cloneJsonSchema(prep_base_report),
             prepDatasetReport: this.cloneJsonSchema(prep_dataset_report)
+          });
+          break;
+        case 'ahd-monthly-summary':
+          resolve({
+            main: this.cloneJsonSchema(ahd_monthly_summary)
+          });
+          break;
+        case 'ahdMonthlySummaryReport':
+          resolve({
+            main: this.cloneJsonSchema(ahd_monthly_summary),
+            ahdMonthlyDataSetBase: this.cloneJsonSchema(
+              ahd_monthly_dataset_base
+            )
+          });
+          break;
+        case 'ahd-monthly-report-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(ahd_monthly_patient_list_template)
+          });
+          break;
+        case 'ahdMonthlyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(ahd_monthly_aggregate),
+            ahdMonthlyDataSetBase: this.cloneJsonSchema(
+              ahd_monthly_dataset_base
+            )
+          });
+          break;
+        case 'ahdCohortMonthlyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(ahd_cohort_monthly_aggregate),
+            ahdCohortMonthlyDataSetBase: this.cloneJsonSchema(
+              ahd_cohort_monthly_dataset_base
+            )
           });
           break;
         case 'surgeBaselineReport':
@@ -1980,7 +2021,7 @@ export class BaseMysqlReport {
           });
         })
         .catch((error) => {
-          // console.error('Error Executing Mysql Query', error);
+          console.error('Error Executing Mysql Query', error);
           reject(error);
         });
     });

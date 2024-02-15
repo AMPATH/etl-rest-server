@@ -1,0 +1,146 @@
+{
+  "name": "ahd_monthly_report_patient_list_template_post",
+  "version": "1.0",
+  "tag": "ahd_monthly_report_patient_list_template_post",
+  "description": "AHD patient list template",
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "t1"
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "t1.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "contacts",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "fh",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = fh.person_id AND fh.next_clinical_datetime_hiv IS NULL AND fh.is_clinical_encounter = 1 "
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "t1.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "uuid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "t1.uuid"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "t1.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "t1.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "t1.birthdate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "phone_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if (contacts.value IS NULL, '', contacts.value)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "extract(year from (from_days(datediff(now(),t1.birthdate))))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "person_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(COALESCE(person_name.given_name, ''), ' ', COALESCE(person_name.middle_name, ''), ' ', COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "flat_identifiers.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "who_stage",
+      "column": "fh.cur_who_stage"
+    },
+    {
+      "type": "simple_column",
+      "alias": "arv_first_regimen_start_date",
+      "column": "fh.arv_first_regimen_start_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_meds",
+      "column": "fh.cur_arv_meds"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_line",
+      "column": "fh.cur_arv_line"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_date",
+      "column": "DATE_FORMAT(fh.cd4_1_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_results",
+      "column": "fh.cd4_1"
+    }
+  ],
+  "groupBy": {
+    "columns": ["t1.person_id"]
+  }
+}
