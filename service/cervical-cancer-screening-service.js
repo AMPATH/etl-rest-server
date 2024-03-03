@@ -49,18 +49,6 @@ function getPatientCervicalCancerScreeningSummary(patientUuId) {
       reject('Patient Uuid is missing');
     } else {
       const sql = `SELECT 
-      fli.person_id,
-      fli.test_date,
-      fli.via_or_via_vili,
-      fli.pap_smear,
-      fli.hpv,
-      fli.test,
-      fli.via_test_result,
-      GROUP_CONCAT(concat_ws('=',concept_id,value_coded,obs_datetime)  ORDER BY obs_datetime desc SEPARATOR ' ## ') as reason
-  FROM
-      amrs.obs o
-          LEFT JOIN
-      (SELECT 
           person_id,
               DATE_FORMAT(test_datetime, '%d-%m-%Y') AS 'test_date',
               via_or_via_vili,
@@ -94,18 +82,7 @@ function getPatientCervicalCancerScreeningSummary(patientUuId) {
               OR hpv IS NOT NULL)
               AND uuid = '${patientUuId}'
       ORDER BY test_datetime DESC
-      LIMIT 1) fli ON fli.person_id = o.person_id
-  WHERE
-      value_coded IN (5276 , 12109, 1504, 5989)
-          AND voided = 0
-          AND o.person_id = (SELECT 
-              person_id
-          FROM
-              etl.flat_labs_and_imaging
-          WHERE
-              uuid = '${patientUuId}'
-          LIMIT 1)
-  ORDER BY o.obs_datetime DESC;`;
+      LIMIT 10;`;
 
       const queryParts = {
         sql: sql
