@@ -75,14 +75,14 @@ function buildScope(dataDictionary) {
       isStandardDcVisit = true;
     }
     if (
-      dataDictionary.dcQualifedVisits.qualifies_for_standard_visit === 1 ||
-      isStandardDcVisit
+      dataDictionary.dcQualifedVisits.qualifies_for_standard_visit === 0 ||
+      !isStandardDcVisit
     ) {
       scope.qualifiesForStandardVisit = true;
     }
     if (
       dataDictionary.dcQualifedVisits.qualifies_for_medication_refill === 1 &&
-      !isStandardDcVisit
+      isStandardDcVisit
     ) {
       scope.qualifiesMedicationRefillVisit = true;
     }
