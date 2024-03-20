@@ -6331,6 +6331,35 @@ module.exports = (function () {
         notes: 'Api endpoint that returns cohort viral load suppression rate',
         tags: ['api']
       }
+    },
+    {
+      method: 'GET',
+      path: '/etl/amrs_id',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: async function (request, reply) {
+          const axios = require('axios');
+          try {
+            const querystring = require('querystring');
+            const formData = {
+              user: '1'
+            };
+            const formBody = querystring.stringify(formData);
+            request = await axios.post(
+              'https://ngx.ampath.or.ke/amrs-id-generator/generateidentifier',
+              formBody
+            );
+            const identifier = request.data.identifier;
+            reply.response(identifier);
+          } catch (error) {
+            reply.response('Internal Server Error').code(500);
+          }
+        },
+        description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
+        notes: 'Api endpoint that returns AMRS ID in string format',
+        tags: ['api']
+      }
     }
   ];
 
