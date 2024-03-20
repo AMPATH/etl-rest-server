@@ -48,70 +48,18 @@ function getPatientCervicalCancerScreeningSummary(patientUuId) {
     if (patientUuId === '' || patientUuId === null) {
       reject('Patient Uuid is missing');
     } else {
-      const sql = `SELECT 
-      fli.person_id,
-      fli.test_date,
-      fli.via_or_via_vili,
-      fli.pap_smear,
-      fli.hpv,
-      fli.test,
-      fli.via_test_result,
-      GROUP_CONCAT(concat_ws('=',concept_id,value_coded,obs_datetime)  ORDER BY obs_datetime desc SEPARATOR ' ## ') as reason
-  FROM
-      amrs.obs o
-          LEFT JOIN
-      (SELECT 
-          person_id,
-              DATE_FORMAT(test_datetime, '%d-%m-%Y') AS 'test_date',
-              via_or_via_vili,
-              pap_smear,
-              hpv,
-              uuid,
-              CASE
-                  WHEN via_or_via_vili IS NOT NULL THEN 'VIA or VIA/VILI'
-                  WHEN pap_smear IS NOT NULL THEN 'PAP SMEAR'
-                  WHEN hpv IS NOT NULL THEN 'HPV'
-                  ELSE NULL
-              END AS 'test',
-              CASE
-                  WHEN via_or_via_vili = 7469 THEN 'ACETOWHITE LESION'
-                  WHEN via_or_via_vili = 1115 THEN 'NORMAL'
-                  WHEN via_or_via_vili = 6497 THEN 'DYSFUNCTIONAL UTERINE BLEEDING'
-                  WHEN via_or_via_vili = 703 THEN 'POSITIVE'
-                  WHEN via_or_via_vili = 7470 THEN 'PUNCTUATED CAPILLARIES'
-                  WHEN via_or_via_vili = 664 THEN 'NEGATIVE'
-                  WHEN via_or_via_vili = 7472 THEN 'ATYPICAL BLOOD VESSELS'
-                  WHEN via_or_via_vili = 7293 THEN 'ULCER'
-                  WHEN via_or_via_vili = 9593 THEN 'FRIABLE TISSUE'
-                  WHEN via_or_via_vili = 6971 THEN 'POSSIBLE'
-                  ELSE NULL
-              END AS 'via_test_result'
-      FROM
-          etl.flat_labs_and_imaging
-      WHERE
-          (via_or_via_vili IS NOT NULL
-              OR pap_smear IS NOT NULL
-              OR hpv IS NOT NULL)
-              AND uuid = '${patientUuId}'
-      ORDER BY test_datetime DESC
-      LIMIT 1) fli ON fli.person_id = o.person_id
-  WHERE
-      value_coded IN (5276 , 12109, 1504, 5989)
-          AND voided = 0
-          AND o.person_id = (SELECT 
-              person_id
-          FROM
-              etl.flat_labs_and_imaging
-          WHERE
-              uuid = '${patientUuId}'
-          LIMIT 1)
-  ORDER BY o.obs_datetime DESC;`;
+      const sql = `CALL etl.sp_get_cacx_info('${patientUuId}')`;
 
       const queryParts = {
         sql: sql
       };
       db.queryServer(queryParts, function (result) {
-        resolve(result);
+        const results = {
+          startIndex: result.startIndex,
+          size: result.result[0].length,
+          result: result.result[0]
+        };
+        resolve(results);
       });
     }
   });
