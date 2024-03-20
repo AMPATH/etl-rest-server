@@ -48,8 +48,9 @@ function getPatientCervicalCancerScreeningSummary(patientUuId) {
     if (patientUuId === '' || patientUuId === null) {
       reject('Patient Uuid is missing');
     } else {
+      
       const sql = `CALL etl.sp_get_cacx_info('${patientUuId}')`;
-
+      
       const queryParts = {
         sql: sql
       };
