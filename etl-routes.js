@@ -6356,8 +6356,8 @@ module.exports = (function () {
             reply.response('Internal Server Error').code(500);
           }
         },
-        description: 'Get AMRS ID For AMRS 3.X Use Autogeneration',
-        notes: 'Api endpoint that returns AMRS ID in string formart',
+        description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
+        notes: 'Api endpoint that returns AMRS ID in string format',
         tags: ['api']
       }
     }
