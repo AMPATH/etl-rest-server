@@ -110,6 +110,21 @@
     },
     {
       "type": "simple_column",
+      "alias": "weight",
+      "column": "fh.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "height",
+      "column": "fh.height"
+    },
+    {
+      "type": "simple_column",
+      "alias": "stage",
+      "column": "fh.cur_who_stage"
+    },
+    {
+      "type": "simple_column",
       "alias": "gender",
       "column": "t1.gender"
     },

@@ -130,6 +130,21 @@
       "type": "simple_column",
       "alias": "hiv_disclosure_status",
       "column": "fhs.hiv_disclosure_status_value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "height",
+      "column": "fhs.height"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "fhs.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "stage",
+      "column": "fhs.cur_who_stage"
     }
   ],
   "indexDirectives": [

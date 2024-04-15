@@ -7,6 +7,21 @@
         "field": "phone_number"
       },
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -154,6 +169,21 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
       },
       {
         "headerName": "Latest Appointment",
@@ -306,6 +336,21 @@
         "field": "phone_number"
       },
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -453,6 +498,21 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
       },
       {
         "headerName": "Latest Appointment",
@@ -604,6 +664,21 @@
         "field": "phone_number"
       },
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -741,6 +816,21 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
       },
       {
         "headerName": "Latest Appointment",
@@ -882,6 +972,21 @@
         "field": "phone_number"
       },
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -1015,6 +1120,21 @@
   },
   "dead": {
     "patientListCols": [
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
       {
         "headerName": "Death Date",
         "width": 150,
@@ -1160,6 +1280,21 @@
   "dead_not_on_art": {
     "patientListCols": [
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Death Date",
         "width": 150,
         "field": "death_date"
@@ -1303,6 +1438,21 @@
   },
   "dead_on_art": {
     "patientListCols": [
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
       {
         "headerName": "Death Date",
         "width": 150,
@@ -1453,6 +1603,21 @@
   "gain": {
     "patientListCols": [
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Gain Type",
         "width": 150,
         "field": "gain_status"
@@ -1596,6 +1761,21 @@
   },
   "gain_on_art": {
     "patientListCols": [
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
       {
         "headerName": "Gain Type",
         "width": 150,
@@ -1741,6 +1921,21 @@
   "gain_not_on_art": {
     "patientListCols": [
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Gain Type",
         "width": 150,
         "field": "gain_status"
@@ -1884,6 +2079,21 @@
   },
   "loss": {
     "patientListCols": [
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
       {
         "headerName": "Loss Type",
         "width": 150,
@@ -2059,6 +2269,21 @@
   "loss_on_art": {
     "patientListCols": [
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Loss Type",
         "width": 150,
         "field": "loss_status"
@@ -2227,6 +2452,21 @@
   },
   "loss_not_on_art": {
     "patientListCols": [
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
       {
         "headerName": "Loss Type",
         "width": 150,
@@ -2407,6 +2647,21 @@
         "field": "phone_number"
       },
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Facility Patient is transferring in from",
         "width": 300,
         "field": "transferred_in_location"
@@ -2549,6 +2804,21 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
       },
       {
         "headerName": "Facility Patient is transferring in from",
@@ -2695,6 +2965,21 @@
         "field": "phone_number"
       },
       {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
+      },
+      {
         "headerName": "Facility Patient is transferring in from",
         "width": 300,
         "field": "transferred_in_location"
@@ -2837,6 +3122,21 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "Weight",
+        "width": 200,
+        "field": "weight"
+      },
+      {
+        "headerName": "Height",
+        "width": 200,
+        "field": "height"
+      },
+      {
+        "headerName": "WHO Stage",
+        "width": 200,
+        "field": "stage"
       },
       {
         "headerName": "Latest Appointment",
