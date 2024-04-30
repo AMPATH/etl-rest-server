@@ -46,7 +46,8 @@ function buildScope(dataDictionary) {
     'd560891a-28b9-41cc-8cfc-1efd441bc906',
     'e467502b-ac9a-47f8-ad13-9a8e3eda889f',
     '2313bdd9-54f2-4534-9193-07246f2485d6',
-    '4e21fbba-66e4-43d5-94a9-219b25a02ddc'
+    '4e21fbba-66e4-43d5-94a9-219b25a02ddc',
+    '18c343eb-b353-462a-9139-b16606e6b6c2'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -116,7 +117,19 @@ function buildScope(dataDictionary) {
       '29124daf-6422-4896-b70e-daad3b252c9d',
       '08fec42a-1352-11df-a1f1-0026b9348838',
       'a36c86bb-7ca3-4319-8674-28c66ba14deb',
-      '345514ae-8f37-42fc-9bbe-993828c2910d'
+      '345514ae-8f37-42fc-9bbe-993828c2910d',
+      '08feb444-1352-11df-a1f1-0026b9348838',
+      '0900880a-1352-11df-a1f1-0026b9348838',
+      '0900948a-1352-11df-a1f1-0026b9348838',
+      'dfa41633-bef8-4465-b773-8254cef7cc7f',
+      '1ee4e702-913b-40a6-ab9c-26f9b4fced1c',
+      'af0d01d4-7c15-491d-be73-50512ab67e3a',
+      '8241f06b-d74d-4f6d-9def-7254d9833e10',
+      'd560891a-28b9-41cc-8cfc-1efd441bc906',
+      'e467502b-ac9a-47f8-ad13-9a8e3eda889f',
+      '2313bdd9-54f2-4534-9193-07246f2485d6',
+      '4e21fbba-66e4-43d5-94a9-219b25a02ddc',
+      '18c343eb-b353-462a-9139-b16606e6b6c2'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
