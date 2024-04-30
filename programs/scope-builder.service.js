@@ -46,7 +46,8 @@ function buildScope(dataDictionary) {
     'd560891a-28b9-41cc-8cfc-1efd441bc906',
     'e467502b-ac9a-47f8-ad13-9a8e3eda889f',
     '2313bdd9-54f2-4534-9193-07246f2485d6',
-    '4e21fbba-66e4-43d5-94a9-219b25a02ddc'
+    '4e21fbba-66e4-43d5-94a9-219b25a02ddc',
+    '18c343eb-b353-462a-9139-b16606e6b6c2'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
