@@ -47,7 +47,11 @@ function buildScope(dataDictionary) {
     'e467502b-ac9a-47f8-ad13-9a8e3eda889f',
     '2313bdd9-54f2-4534-9193-07246f2485d6',
     '4e21fbba-66e4-43d5-94a9-219b25a02ddc',
-    '18c343eb-b353-462a-9139-b16606e6b6c2'
+    '18c343eb-b353-462a-9139-b16606e6b6c2',
+    '08febb92-1352-11df-a1f1-0026b9348838',
+    '535dc3bd-842b-4ca1-bc7c-357635ab985e',
+    'e466e113-dcfa-4dd0-9404-66a45a9a6a88',
+    'd9076981-4a84-4f6c-9f22-8980376727ae'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -129,7 +133,11 @@ function buildScope(dataDictionary) {
       'e467502b-ac9a-47f8-ad13-9a8e3eda889f',
       '2313bdd9-54f2-4534-9193-07246f2485d6',
       '4e21fbba-66e4-43d5-94a9-219b25a02ddc',
-      '18c343eb-b353-462a-9139-b16606e6b6c2'
+      '18c343eb-b353-462a-9139-b16606e6b6c2',
+      '08febb92-1352-11df-a1f1-0026b9348838',
+      '535dc3bd-842b-4ca1-bc7c-357635ab985e',
+      'e466e113-dcfa-4dd0-9404-66a45a9a6a88',
+      'd9076981-4a84-4f6c-9f22-8980376727ae'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
