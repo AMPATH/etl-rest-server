@@ -51,7 +51,17 @@ function buildScope(dataDictionary) {
     '08febb92-1352-11df-a1f1-0026b9348838',
     '535dc3bd-842b-4ca1-bc7c-357635ab985e',
     'e466e113-dcfa-4dd0-9404-66a45a9a6a88',
-    'd9076981-4a84-4f6c-9f22-8980376727ae'
+    'd9076981-4a84-4f6c-9f22-8980376727ae',
+    '09008fda-1352-11df-a1f1-0026b9348838',
+    'dfc0f21e-2e6c-4052-bdfe-23ee1b8084e8',
+    '25972cec-2e14-4047-a537-404c6ad18389',
+    '0449c609-d190-4412-80ae-c14444e6a5f2',
+    'b77f94ea-62ea-469a-8a88-5aa2d33bdaaf',
+    '3d8cdb07-bbe5-495c-b4ae-b9d6a2dc694f',
+    '0900831e-1352-11df-a1f1-0026b9348838',
+    '8f5694dc-cba7-47b5-a97c-677cfb9a8d7c',
+    '0900b74e-1352-11df-a1f1-0026b9348838',
+    'cb4a90fd-28b8-4c01-b15c-242ff5e5e731'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -137,7 +147,17 @@ function buildScope(dataDictionary) {
       '08febb92-1352-11df-a1f1-0026b9348838',
       '535dc3bd-842b-4ca1-bc7c-357635ab985e',
       'e466e113-dcfa-4dd0-9404-66a45a9a6a88',
-      'd9076981-4a84-4f6c-9f22-8980376727ae'
+      'd9076981-4a84-4f6c-9f22-8980376727ae',
+      '09008fda-1352-11df-a1f1-0026b9348838',
+      'dfc0f21e-2e6c-4052-bdfe-23ee1b8084e8',
+      '25972cec-2e14-4047-a537-404c6ad18389',
+      '0449c609-d190-4412-80ae-c14444e6a5f2',
+      'b77f94ea-62ea-469a-8a88-5aa2d33bdaaf',
+      '3d8cdb07-bbe5-495c-b4ae-b9d6a2dc694f',
+      '0900831e-1352-11df-a1f1-0026b9348838',
+      '8f5694dc-cba7-47b5-a97c-677cfb9a8d7c',
+      '0900b74e-1352-11df-a1f1-0026b9348838',
+      'cb4a90fd-28b8-4c01-b15c-242ff5e5e731'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
