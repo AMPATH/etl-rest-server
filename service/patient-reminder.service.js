@@ -763,6 +763,7 @@ function getIptCompletionReminder(data) {
 function getFamilyTestingReminder(data) {
   let reminders = [];
   return getEncountersByEncounterType(data[0].person_uuid).then((res) => {
+    console.log('RES: ', res);
     if (res.results.length === 0) {
       reminders.push({
         message:
@@ -1100,12 +1101,46 @@ function transformZeroVl(vl) {
 }
 
 function getEncountersByEncounterType(patient_uuid) {
-  const family_testing_encounter = '975ae894-7660-4224-b777-468c2e710a2a';
-  return new Promise(function (resolve, reject) {
+  const primaryFamilyTestingEncounter = '975ae894-7660-4224-b777-468c2e710a2a';
+  const secondaryFamilyTestingEncounter =
+    '5a58f6f5-f5a6-47eb-a644-626abd83f83b';
+  const specificConceptUuid = '0df3af2d-4eeb-4552-8395-51ef32270842';
+
+  function findSpecificObservation(encounters) {
+    for (const encounter of encounters) {
+      if (Array.isArray(encounter.obs)) {
+        for (const observation of encounter.obs) {
+          if (observation.concept.uuid === specificConceptUuid) {
+            console.log('CHILDREN LESS THAN 19 YEARS, CODED');
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  return new Promise((resolve, reject) => {
     encounter_service
-      .getEncountersByEncounterType(patient_uuid, family_testing_encounter)
+      .getEncountersByEncounterType(patient_uuid, primaryFamilyTestingEncounter)
       .then((encounters) => {
-        resolve(encounters);
+        if (encounters == null || encounters.results.length === 0) {
+          return encounter_service.getEncountersByEncounterType(
+            patient_uuid,
+            secondaryFamilyTestingEncounter
+          );
+        }
+        return encounters;
+      })
+      .then((encounters) => {
+        if (encounters == null || encounters.results.length === 0) {
+          resolve(null);
+        } else {
+          if (findSpecificObservation(encounters.results)) {
+            console.log('Encounters from Family testing: ', encounters);
+          }
+          resolve(encounters);
+        }
       })
       .catch((err) => {
         reject(err);
