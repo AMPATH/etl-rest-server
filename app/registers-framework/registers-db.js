@@ -99,6 +99,7 @@ var defs = {
     });
   },
   getCareTreatmentDetails: (params) => {
+    console.log('CareNATreatment: ', params);
     return new Promise((resolve, reject) => {
       let queryParts = {};
       let sql = `
@@ -146,7 +147,7 @@ var defs = {
   WHERE
      fhs.is_clinical_encounter=1
       and DATE(fhs.encounter_datetime) = '2024-04-02'
-      and fhs.location_id in (315);
+      and fhs.location_id in (315) group by fhs.person_id;
 `;
 
       queryParts = {
