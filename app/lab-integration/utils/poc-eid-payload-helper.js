@@ -34,6 +34,17 @@
               amrs_location: getLocation(payload, 'mrsId')
             };
             break;
+          case 'HPV':
+            eidPayload = {
+              test: 5,
+              mflCode: getLocation(payload, 'mflCode'),
+              patient_identifier: payload.patientIdentifier,
+              dob: payload.birthDate,
+              order_no: payload.orderNumber,
+              datecollected: payload.dateDrawn,
+              sex: getGenderCode(payload.sex)
+            };
+            break;
           case 'DNAPCR':
             eidPayload = {
               test: 1,
