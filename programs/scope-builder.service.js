@@ -61,7 +61,25 @@ function buildScope(dataDictionary) {
     '0900831e-1352-11df-a1f1-0026b9348838',
     '8f5694dc-cba7-47b5-a97c-677cfb9a8d7c',
     '0900b74e-1352-11df-a1f1-0026b9348838',
-    'cb4a90fd-28b8-4c01-b15c-242ff5e5e731'
+    'cb4a90fd-28b8-4c01-b15c-242ff5e5e731',
+    '49fa8ba9-06f4-4072-afe7-fd3e51ed4482',
+    '8c7ec4f7-270c-45e9-a4f9-8589242d50d5',
+    '96d2964e-8cec-4eca-ad05-a9c1fb29a045',
+    '2b1d2083-b4df-4e5c-96fe-af88122ef75b',
+    '0db6a78c-6b64-420c-bc30-ac403417c237',
+    '2c89c870-560d-4521-90f9-b62f56939595',
+    'ce8089a9-d105-4d79-8a0a-d4a389d691b4',
+    '3db5339b-491c-4e80-8c55-7ef21d7141e6',
+    'a580930d-9a57-48ec-aa3e-c170802f45b0',
+    '6b9bebc0-bea7-4c90-8dc8-4c14f33c96de',
+    '090089ea-1352-11df-a1f1-0026b9348838',
+    'e93d79ea-13c8-4f0c-a757-0858a7f387eb',
+    '19874e26-f614-47bb-99c7-a3756bfe3c64',
+    'b8135ddf-e02c-4098-b4ce-17880a9ddb0f',
+    '09004e76-1352-11df-a1f1-0026b9348838',
+    'e907044b-4170-49e1-98e8-93258596bb23',
+    '0900b000-1352-11df-a1f1-0026b9348838',
+    'b4f7483a-00b8-4ff4-be70-dfefc85c60fa'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -157,7 +175,25 @@ function buildScope(dataDictionary) {
       '0900831e-1352-11df-a1f1-0026b9348838',
       '8f5694dc-cba7-47b5-a97c-677cfb9a8d7c',
       '0900b74e-1352-11df-a1f1-0026b9348838',
-      'cb4a90fd-28b8-4c01-b15c-242ff5e5e731'
+      'cb4a90fd-28b8-4c01-b15c-242ff5e5e731',
+      '49fa8ba9-06f4-4072-afe7-fd3e51ed4482',
+      '8c7ec4f7-270c-45e9-a4f9-8589242d50d5',
+      '96d2964e-8cec-4eca-ad05-a9c1fb29a045',
+      '2b1d2083-b4df-4e5c-96fe-af88122ef75b',
+      '0db6a78c-6b64-420c-bc30-ac403417c237',
+      '2c89c870-560d-4521-90f9-b62f56939595',
+      'ce8089a9-d105-4d79-8a0a-d4a389d691b4',
+      '3db5339b-491c-4e80-8c55-7ef21d7141e6',
+      'a580930d-9a57-48ec-aa3e-c170802f45b0',
+      '6b9bebc0-bea7-4c90-8dc8-4c14f33c96de',
+      '090089ea-1352-11df-a1f1-0026b9348838',
+      'e93d79ea-13c8-4f0c-a757-0858a7f387eb',
+      '19874e26-f614-47bb-99c7-a3756bfe3c64',
+      'b8135ddf-e02c-4098-b4ce-17880a9ddb0f',
+      '09004e76-1352-11df-a1f1-0026b9348838',
+      'e907044b-4170-49e1-98e8-93258596bb23',
+      '0900b000-1352-11df-a1f1-0026b9348838',
+      'b4f7483a-00b8-4ff4-be70-dfefc85c60fa'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
