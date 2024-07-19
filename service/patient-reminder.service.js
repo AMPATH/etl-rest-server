@@ -542,7 +542,6 @@ function newViralLoadPresent(data) {
 }
 
 function pendingViralLoadLabResult(eidResults) {
-  // console.log('EID Results', eidResults);
   let incompleteResult = eidResults.find((result) => {
     if (result) {
       if (result.sample_status) {
@@ -763,7 +762,6 @@ function getIptCompletionReminder(data) {
 function getFamilyTestingReminder(data) {
   let reminders = [];
   return getEncountersByEncounterType(data[0].person_uuid).then((res) => {
-    console.log('RES: ', res);
     if (res.results.length === 0) {
       reminders.push({
         message:
@@ -1111,7 +1109,6 @@ function getEncountersByEncounterType(patient_uuid) {
       if (Array.isArray(encounter.obs)) {
         for (const observation of encounter.obs) {
           if (observation.concept.uuid === specificConceptUuid) {
-            console.log('CHILDREN LESS THAN 19 YEARS, CODED');
             return true;
           }
         }
