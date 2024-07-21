@@ -79,7 +79,28 @@ function buildScope(dataDictionary) {
     '09004e76-1352-11df-a1f1-0026b9348838',
     'e907044b-4170-49e1-98e8-93258596bb23',
     '0900b000-1352-11df-a1f1-0026b9348838',
-    'b4f7483a-00b8-4ff4-be70-dfefc85c60fa'
+    'b4f7483a-00b8-4ff4-be70-dfefc85c60fa',
+    '9d1025b7-280d-46f7-8f0d-33b3b7aeab41',
+    'd0d133f1-22f3-49c3-b9f1-d2f64944eb0d',
+    '7a8c0cc5-be43-48e1-aa41-33cb1e9cc26f',
+    '22a1255d-e56b-446a-a32b-e7ea8bd1a89c',
+    '6cd0b441-d644-487c-8466-5820a73f9ce5',
+    '523d5060-07ee-46d9-b439-12867c4e83ac',
+    'b56b5219-0c8f-4520-810e-ba43302c63eb',
+    '516c889a-f9ea-4861-b89c-e39f08dfb15c',
+    'e05cbb83-9418-4ebc-9240-ae2512d70321',
+    'de051b8a-78ab-4fa8-bb08-5364c8e87297',
+    'fc26648e-aa47-4928-8595-5c96943b44b2',
+    '20bd486d-5c84-44f4-9ffa-2f1c1d9e79f8',
+    'f0e8d70a-dd24-4f59-bcf3-3566b8a1d5cc',
+    '0a2d9adf-d758-4c81-8429-2ff54e2c58d6',
+    '0900b104-1352-11df-a1f1-0026b9348838',
+    '0943a3b0-3630-4d71-ad09-cc55cfd3bde1',
+    '0900aace-1352-11df-a1f1-0026b9348838',
+    '8b6f450b-8a61-4051-b4bd-b1a79cb541ee',
+    '0900b212-1352-11df-a1f1-0026b9348838',
+    '48305e5b-2ca5-44e1-8f6b-008c4d2789ba',
+    '38eec9dd-8b52-4f8c-ad25-f045486299c1'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -193,7 +214,28 @@ function buildScope(dataDictionary) {
       '09004e76-1352-11df-a1f1-0026b9348838',
       'e907044b-4170-49e1-98e8-93258596bb23',
       '0900b000-1352-11df-a1f1-0026b9348838',
-      'b4f7483a-00b8-4ff4-be70-dfefc85c60fa'
+      'b4f7483a-00b8-4ff4-be70-dfefc85c60fa',
+      '9d1025b7-280d-46f7-8f0d-33b3b7aeab41',
+      'd0d133f1-22f3-49c3-b9f1-d2f64944eb0d',
+      '7a8c0cc5-be43-48e1-aa41-33cb1e9cc26f',
+      '22a1255d-e56b-446a-a32b-e7ea8bd1a89c',
+      '6cd0b441-d644-487c-8466-5820a73f9ce5',
+      '523d5060-07ee-46d9-b439-12867c4e83ac',
+      'b56b5219-0c8f-4520-810e-ba43302c63eb',
+      '516c889a-f9ea-4861-b89c-e39f08dfb15c',
+      'e05cbb83-9418-4ebc-9240-ae2512d70321',
+      'de051b8a-78ab-4fa8-bb08-5364c8e87297',
+      'fc26648e-aa47-4928-8595-5c96943b44b2',
+      '20bd486d-5c84-44f4-9ffa-2f1c1d9e79f8',
+      'f0e8d70a-dd24-4f59-bcf3-3566b8a1d5cc',
+      '0a2d9adf-d758-4c81-8429-2ff54e2c58d6',
+      '0900b104-1352-11df-a1f1-0026b9348838',
+      '0943a3b0-3630-4d71-ad09-cc55cfd3bde1',
+      '0900aace-1352-11df-a1f1-0026b9348838',
+      '8b6f450b-8a61-4051-b4bd-b1a79cb541ee',
+      '0900b212-1352-11df-a1f1-0026b9348838',
+      '48305e5b-2ca5-44e1-8f6b-008c4d2789ba',
+      '38eec9dd-8b52-4f8c-ad25-f045486299c1'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
