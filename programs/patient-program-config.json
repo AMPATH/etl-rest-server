@@ -129,7 +129,7 @@
             "display": "MENTALHEALTHSCREENING"
           },
           {
-            "uuid": "61ad56ae-a2c3-4ddb-a351-8c8ae253378c",
+            "uuid": "2e920152-0c37-404f-8bfe-b622319298b0",
             "display": "ADULTARTPREPARATION"
           }
         ]
@@ -191,6 +191,7 @@
           }
         ]
       },
+
       {
         "uuid": "d4ac2aa5-2899-42fb-b08a-d40161815b48",
         "name": "Adult HIV Return Visit ",
@@ -327,7 +328,7 @@
             "display": "MENTALHEALTHSCREENING"
           },
           {
-            "uuid": "bda00ff3-c811-4223-a602-3eb31c96d1f2",
+            "uuid": "55dee410-cdb8-4c21-990f-c34727a8fd66",
             "display": "PEDARTPREPARATION"
           }
         ]
@@ -510,7 +511,7 @@
             "display": "MENTALHEALTHSCREENING"
           },
           {
-            "uuid": "a400ea27-7052-4745-b51f-d9370aaef4dc",
+            "uuid": "5cc82ebd-f821-454d-adcf-b67b537c14fe",
             "display": "YOUTHARTPREPARATION"
           }
         ]
