@@ -207,10 +207,6 @@
             "display": "ADHERENCE"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
             "display": "LABORDERENCOUNTER"
           },
@@ -1356,10 +1352,6 @@
             "display": "MOH257BLUECARD"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
           },
@@ -1431,10 +1423,6 @@
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
             "display": "MOH257BLUECARD"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -1583,10 +1571,6 @@
             "display": "MOH257BLUECARD"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
           },
@@ -1731,10 +1715,6 @@
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
             "display": "MOH257BLUECARD"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
