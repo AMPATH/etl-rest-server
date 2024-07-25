@@ -3076,5 +3076,14 @@
     "county": "Trans Nzoia",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "6b9bebc0-bea7-4c90-8dc8-4c14f33c96de": {
+    "mrsId": 492,
+    "mrsDisplay": "Kapteldon Health Centre MCH",
+    "description": "Kapteldon Health Centre MCH",
+    "mflCode": "14779",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
