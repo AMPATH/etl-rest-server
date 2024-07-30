@@ -5498,16 +5498,25 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && isFirstANCVisit && gender==='F' && isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
-            "uuid": "f5702679-6a16-43bd-8629-4b44c7a78ff1",
-            "display": "ANC INITIAL"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
           },
           {
+            "uuid": "f5702679-6a16-43bd-8629-4b44c7a78ff1",
+            "display": "ANC INITIAL"
+          },
+          {
             "uuid": "04bdcb6e-63df-42dc-a78c-b6afb155aa89",
             "display": "MATERNAL DEATH NOTIFICATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
           }
         ]
       },
@@ -5517,16 +5526,25 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && (!isFirstAMPATHHIVVisit || !isFirstANCVisit)  && gender==='F'",
         "encounterTypes": [
           {
-            "uuid": "26bfc6b7-28d0-41ab-90c5-e101af46d06d",
-            "display": "ANC RETURN"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
           },
           {
+            "uuid": "26bfc6b7-28d0-41ab-90c5-e101af46d06d",
+            "display": "ANC RETURN"
+          },
+          {
             "uuid": "04bdcb6e-63df-42dc-a78c-b6afb155aa89",
             "display": "MATERNAL DEATH NOTIFICATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
           }
         ]
       }
@@ -5568,12 +5586,12 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && isFirstPNCVisit && gender==='F' && isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
-            "uuid": "ded4ecf7-8129-4a9e-8aa3-a21a7adb7759",
-            "display": "PNC ADULT INITIAL"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
+          },
+          {
+            "uuid": "ded4ecf7-8129-4a9e-8aa3-a21a7adb7759",
+            "display": "PNC ADULT INITIAL"
           },
           {
             "uuid": "85533bd0-163b-45bd-b703-d5d4816e6282",
@@ -5582,6 +5600,15 @@
           {
             "uuid": "7bdd1e6b-1157-41fb-8daa-994277780b2b",
             "display": "MNCH IMMUNIZATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
           }
         ]
       },
@@ -5591,12 +5618,12 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && (!isFirstAMPATHHIVVisit || !isFirstPNCVisit) && gender==='F'",
         "encounterTypes": [
           {
-            "uuid": "db215741-de99-424a-a109-1f23eb3b680b",
-            "display": "PNC ADULTRETURN"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
+          },
+          {
+            "uuid": "db215741-de99-424a-a109-1f23eb3b680b",
+            "display": "PNC ADULTRETURN"
           },
           {
             "uuid": "85533bd0-163b-45bd-b703-d5d4816e6282",
@@ -5605,6 +5632,15 @@
           {
             "uuid": "7bdd1e6b-1157-41fb-8daa-994277780b2b",
             "display": "MNCH IMMUNIZATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
           }
         ]
       }
