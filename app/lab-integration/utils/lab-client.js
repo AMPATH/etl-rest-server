@@ -69,6 +69,8 @@ export class LabClient {
         return this.postViralLoad(payload);
       case 3:
         return this.postCD4(payload);
+      case 5:
+        return this.postHPV(payload);
       default:
         break;
     }
@@ -84,20 +86,26 @@ export class LabClient {
   postCD4(payload) {
     return this.getPostRequest(payload, `${this.config.serverUrl}/api/cd4`);
   }
-
+  postHPV(payload) {
+    return this.getPostRequest(payload, `${this.config.serverUrl}/api/hpv`);
+  }
   getPostRequest(payload, endpoint) {
-    const options = {
-      uri: endpoint,
-      headers: {
-        apikey: this.config.apiKey,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      method: 'POST',
-      // json: true,
-      form: payload,
-      timeout: 40000
-    };
-    return rp(options);
+    try {
+      const options = {
+        uri: endpoint,
+        headers: {
+          apikey: this.config.apiKey,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        method: 'POST',
+        // json: true,
+        form: payload,
+        timeout: 40000
+      };
+      return rp(options);
+    } catch (error) {
+      console.log('getPostRequestError', error.message);
+    }
   }
 
   getFetchRequest(filterOptions, offset) {
