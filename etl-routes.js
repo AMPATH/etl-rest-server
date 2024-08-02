@@ -81,6 +81,7 @@ import { getPatientCovidVaccinationStatus } from './service/covid-19/covid-19-va
 import { Covid19MonthlyReport } from './service/covid-19/covid-19-monthly-report';
 import { MlWeeklyPredictionsService } from './service/ml-weekly-predictions.service';
 import { getPatientPredictedScore } from './service/predictions/ml-prediction-service';
+import { CohortModuleService } from './app/otz/cohort-module.service';
 
 module.exports = (function () {
   var routes = [
@@ -6289,6 +6290,74 @@ module.exports = (function () {
         },
         description: 'Patient predicted score of missing appointment.',
         notes: 'Returns the patients predictions data.',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/hiv-latest-summaries',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: function (request, reply) {
+          dao.getPatientsLatestHivSummmary(request).then((summary) => {
+            reply(summary);
+          });
+        },
+        description: 'Get cohort hiv summaries',
+        notes: 'Api endpoint that returns cohort hiv summaries',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/viral-load-suppression-rate',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: function (request, reply) {
+          const { uuid } = request.query;
+          const cohortService = new CohortModuleService();
+          cohortService
+            .getCohortSummary(uuid)
+            .then(function (cohortUsers) {
+              reply(cohortUsers);
+            })
+            .catch(function (error) {
+              reply(new Boom(500, 'Internal server error.', '', '', error));
+            });
+        },
+        description: 'Get cohort viral load suppression rate',
+        notes: 'Api endpoint that returns cohort viral load suppression rate',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/amrs_id',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: async function (request, reply) {
+          const axios = require('axios');
+          try {
+            const querystring = require('querystring');
+            const formData = {
+              user: '1'
+            };
+            const formBody = querystring.stringify(formData);
+            request = await axios.post(
+              'https://ngx.ampath.or.ke/amrs-id-generator/generateidentifier',
+              formBody
+            );
+            const identifier = request.data.identifier;
+            reply.response(identifier);
+          } catch (error) {
+            reply.response('Internal Server Error').code(500);
+          }
+        },
+        description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
+        notes: 'Api endpoint that returns AMRS ID in string format',
         tags: ['api']
       }
     }

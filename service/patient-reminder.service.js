@@ -542,7 +542,6 @@ function newViralLoadPresent(data) {
 }
 
 function pendingViralLoadLabResult(eidResults) {
-  // console.log('EID Results', eidResults);
   let incompleteResult = eidResults.find((result) => {
     if (result) {
       if (result.sample_status) {
@@ -985,8 +984,28 @@ function generateAppointmentNoShowUpRiskReminder(data) {
   return reminders;
 }
 
+function generateAppointmentRescheduledReminder(data) {
+  let reminders = [];
+
+  if (data.reschedule_appointment && data.reschedule_appointment === 'YES') {
+    if (data.last_encounter_date < data.prediction_generated_date) {
+      reminders.push({
+        message:
+          'Promised to come date is ' +
+          Moment(data.rescheduled_date).format('DD-MM-YYYY'),
+        title: 'Appointment reschedule request',
+        type: 'ml',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+    }
+  }
+  return reminders;
+}
+
 async function generateReminders(etlResults, eidResults) {
-  // console.log('REMINDERS generateReminders');
   let reminders = [];
   let patientReminder;
   if (etlResults && etlResults.length > 0) {
@@ -1028,6 +1047,9 @@ async function generateReminders(etlResults, eidResults) {
   let appointmentNoShowUpRiskReminder = generateAppointmentNoShowUpRiskReminder(
     data
   );
+  let appointmentRescheduledRiskReminder = generateAppointmentRescheduledReminder(
+    data
+  );
 
   let currentReminder = [];
   if (pending_vl_lab_result.length > 0) {
@@ -1056,8 +1078,11 @@ async function generateReminders(etlResults, eidResults) {
 
   reminders = reminders.concat(currentReminder);
 
-  // Add appointment no show up risk reminder
-  reminders = reminders.concat(appointmentNoShowUpRiskReminder);
+  // Add appointment no show up risk reminder and
+  reminders = reminders.concat(
+    appointmentNoShowUpRiskReminder,
+    appointmentRescheduledRiskReminder
+  );
 
   patientReminder.reminders = reminders;
   return patientReminder;
@@ -1074,12 +1099,45 @@ function transformZeroVl(vl) {
 }
 
 function getEncountersByEncounterType(patient_uuid) {
-  const family_testing_encounter = '975ae894-7660-4224-b777-468c2e710a2a';
-  return new Promise(function (resolve, reject) {
+  const primaryFamilyTestingEncounter = '975ae894-7660-4224-b777-468c2e710a2a';
+  const secondaryFamilyTestingEncounter =
+    '5a58f6f5-f5a6-47eb-a644-626abd83f83b';
+  const specificConceptUuid = '0df3af2d-4eeb-4552-8395-51ef32270842';
+
+  function findSpecificObservation(encounters) {
+    for (const encounter of encounters) {
+      if (Array.isArray(encounter.obs)) {
+        for (const observation of encounter.obs) {
+          if (observation.concept.uuid === specificConceptUuid) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  return new Promise((resolve, reject) => {
     encounter_service
-      .getEncountersByEncounterType(patient_uuid, family_testing_encounter)
+      .getEncountersByEncounterType(patient_uuid, primaryFamilyTestingEncounter)
       .then((encounters) => {
-        resolve(encounters);
+        if (encounters == null || encounters.results.length === 0) {
+          return encounter_service.getEncountersByEncounterType(
+            patient_uuid,
+            secondaryFamilyTestingEncounter
+          );
+        }
+        return encounters;
+      })
+      .then((encounters) => {
+        if (encounters == null || encounters.results.length === 0) {
+          resolve(null);
+        } else {
+          if (findSpecificObservation(encounters.results)) {
+            console.log('Encounters from Family testing: ', encounters);
+          }
+          resolve(encounters);
+        }
       })
       .catch((err) => {
         reject(err);
@@ -1121,7 +1179,10 @@ function getCerivalScreeningReminder(personId) {
 
 function generateCervicalScreeningReminder(data) {
   let reminders = [];
-  if (data.qualifies_for_via_or_via_vili_retest === 1) {
+  if (
+    data.has_hysterectomy_done !== 1 &&
+    data.qualifies_for_via_or_via_vili_retest === 1
+  ) {
     reminders.push({
       message:
         'Patient is due for a repeat cervical cancer screening test. Last test result was Normal on ' +

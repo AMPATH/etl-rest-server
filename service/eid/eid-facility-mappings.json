@@ -3013,5 +3013,77 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "43239190-96d6-45f8-91fe-02e041c680af": {
+    "mrsId": 490,
+    "mrsDisplay": "Turkwel Health Centre",
+    "description": "Turkwel Health Centre",
+    "mflCode": "15755",
+    "county": "West Pokot",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "3149c821-77f3-4ca1-854f-f90bf332ad38": {
+    "mrsId": 493,
+    "mrsDisplay": "Kapenguria TB",
+    "description": "Kapenguria TB",
+    "mflCode": "14701",
+    "county": "West Pokot",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "7eaaa5e9-64c5-4f5e-bf9e-02ecd13f64a0": {
+    "mrsId": 485,
+    "mrsDisplay": "Cherangany Nursing Home",
+    "description": "Cherangany Nursing Home",
+    "mflCode": "14380",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "94742c3a-17a8-4bf3-b2ba-67d63331d683": {
+    "mrsId": 481,
+    "mrsDisplay": "Kitum Dispensary",
+    "description": "Kitum Dispensary",
+    "mflCode": "18216",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "cd1ff933-bf82-46d5-865f-0d4e8959069b": {
+    "mrsId": 480,
+    "mrsDisplay": "Kimondo Dispensary",
+    "description": "Kimondo Dispensary",
+    "mflCode": "14877",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "bb2e14a2-cc55-4ac5-a752-34a807f9fa70": {
+    "mrsId": 479,
+    "mrsDisplay": "Galilee Medical center",
+    "description": "Galilee Medical center",
+    "mflCode": "22605",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "171b914c-9309-4100-b91b-d4c075bf6d4b": {
+    "mrsId": 483,
+    "mrsDisplay": "St. Ursula Dispensary",
+    "description": "St. Ursula Dispensary",
+    "mflCode": "15669",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "6b9bebc0-bea7-4c90-8dc8-4c14f33c96de": {
+    "mrsId": 492,
+    "mrsDisplay": "Kapteldon Health Centre MCH",
+    "description": "Kapteldon Health Centre MCH",
+    "mflCode": "14779",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }

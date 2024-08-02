@@ -18,6 +18,14 @@
       }
     },
     {
+      "table": "<<hivSummaryDataSource>>",
+      "alias": "fhsvb",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fhsvb.person_id = hmsd.person_id"
+      }
+    },
+    {
       "table": "amrs.location",
       "alias": "l",
       "join": {
@@ -27,6 +35,21 @@
     }
   ],
   "columns": [
+    {
+      "type": "simple_column",
+      "alias": "height",
+      "column": "fhsvb.height"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "fhsvb.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "stage",
+      "column": "fhsvb.stage"
+    },
     {
       "type": "simple_column",
       "alias": "gender",

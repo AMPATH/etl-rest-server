@@ -1,0 +1,941 @@
+{
+  "name": "kdPlhivBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.ncd_monthly_report_dataset",
+      "alias": "nmrd"
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_v1_2",
+      "alias": "hmrd",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nmrd.person_id = hmrd.person_id AND nmrd.endDate = hmrd.endDate AND hmrd.status = 'active'"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "fi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nmrd.person_id = fi.patient_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nmrd.location_id = l.location_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "per",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nmrd.person_id = per.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "nmrd.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "nmrd.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "fi.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ovcid_id",
+      "column": "fi.ovcid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "fi.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "nmrd.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "nmrd.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "nmrd.clinic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender ='M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender ='F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_1_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender ='M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender ='F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_1_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8079 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_1_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_1_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_1_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender ='M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender ='F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_2_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_2_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8080 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_2_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_2_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_2_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8081 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1)AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12294 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3a_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3a_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 12295 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_3b_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_3b_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_4_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_4_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8082 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_4_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_4_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_4_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_5_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_5_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1)AND nmrd.ckd_stage = 8083 AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_5_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stg_5_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_stg_5_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_chr_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'M' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_chr_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.gender = 'F' AND (nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((nmrd.is_ckd = 1 || nmrd.has_kd = 1) AND hmrd.on_art_this_month = 1 AND hmrd.started_art_this_month = 0), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_acu_m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_acu_f",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_tot_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_ckd = 1 AND hmrd.started_art_this_month = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_ckd = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_nw_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_ct_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_chr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.is_ckd = 1 || has_kd = 1), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_acu",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tot_kd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((nmrd.has_kd = 1), 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.location_id in ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.endDate >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.endDate <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "nmrd.visit_this_month in ?",
+        "parameterName": "visitState"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["nmrd.person_id, nmrd.has_kd, nmrd.is_ckd"],
+    "excludeParam": "excludeParam"
+  }
+}
