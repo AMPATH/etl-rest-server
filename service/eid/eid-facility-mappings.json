@@ -3085,5 +3085,23 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "e9f515c2-7c48-4099-ac76-41db9977f96f": {
+    "mrsId": 341,
+    "mrsDisplay": "Webuye MCH",
+    "description": "Webuye MCH",
+    "mflCode": "16161",
+    "county": "Bungoma",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "c7f1edfd-4b89-47b3-abf9-f45c2573f982": {
+    "mrsId": 501,
+    "mrsDisplay": "Kisor Dispensary",
+    "description": "Kisor Dispensary",
+    "mflCode": "14945",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
