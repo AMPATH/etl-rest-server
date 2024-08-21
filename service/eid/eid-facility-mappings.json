@@ -3103,5 +3103,14 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "bf70401b-6eb1-4d5b-bfdf-6956087ad44a": {
+    "mrsId": 502,
+    "mrsDisplay": "Kipkenyo Dispensary",
+    "description": "Kipkenyo Dispensary",
+    "mflCode": "14898",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
