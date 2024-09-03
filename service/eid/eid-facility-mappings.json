@@ -3112,5 +3112,14 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "37649b75-d92f-4a73-8ffe-42cb62280efc": {
+    "mrsId": 503,
+    "mrsDisplay": "Moi University MCH",
+    "description": "Moi University MCH",
+    "mflCode": "15205",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
