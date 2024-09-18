@@ -3121,5 +3121,23 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "88323008-4a93-432e-b0a0-cfba5ab7f61c": {
+    "mrsId": 520,
+    "mrsDisplay": "Muiyengwet Dispensary",
+    "description": "Muiyengwet Dispensary",
+    "mflCode": "15264",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "b586b09d-3430-4305-814a-455edfe9fe60": {
+    "mrsId": 523,
+    "mrsDisplay": "Muiyengwet Dispensary MCH",
+    "description": "Muiyengwet Dispensary MCH",
+    "mflCode": "15264",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
