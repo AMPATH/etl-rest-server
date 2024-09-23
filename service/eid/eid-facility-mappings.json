@@ -3148,5 +3148,14 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "e790a898-b7de-4c8d-9daa-a10875c742d2": {
+    "mrsId": 518,
+    "mrsDisplay": "Nabkoi Health Centre",
+    "description": "Nabkoi Health Center",
+    "mflCode": "15268",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
