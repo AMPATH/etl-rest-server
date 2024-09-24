@@ -3139,5 +3139,23 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "a6640952-a4a2-43f6-b6e4-41d108319f19": {
+    "mrsId": 495,
+    "mrsDisplay": "Oak tree Hospital",
+    "description": "Oak tree Hospital",
+    "mflCode": "25427",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "e790a898-b7de-4c8d-9daa-a10875c742d2": {
+    "mrsId": 518,
+    "mrsDisplay": "Nabkoi Health Centre",
+    "description": "Nabkoi Health Center",
+    "mflCode": "15268",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
