@@ -5699,5 +5699,62 @@
         ]
       }
     ]
+  },
+  "a0f8382f-df8a-4f1d-8959-9fb6eef90353": {
+    "name": "HTS PROGRAM",
+    "dataDependencies": ["patient", "enrollment", "patientEncounters"],
+    "incompatibleWith": [],
+    "visitTypes": [
+      {
+        "uuid": "f92e8456-4de6-4776-82c3-c15b81eb8f5d",
+        "name": "HTS New/Retest Visit",
+        "message": "Patient must not have a prior clinical encounter.",
+        "allowedIf": "isFirstOncologyVisit",
+        "encounterTypes": [
+          {
+            "uuid": "9ad5292c-14c3-489b-9c14-5f816e839691",
+            "display": "BreastCancerInitial"
+          },
+          {
+            "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
+            "display": "HematOncologyTriage"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          }
+        ]
+      },
+      {
+        "uuid": "7d2b0fb1-f1d7-4173-81aa-c8b832407656",
+        "name": "HTS Retest To Confirm Positive Visit",
+        "message": "Patient must have a prior clinical encounter.",
+        "allowedIf": "isFirstOncologyVisit",
+        "encounterTypes": [
+          {
+            "uuid": "e58469f1-f6be-4e53-a843-fb06f93c60ba",
+            "display": "BreastCancerReturn"
+          },
+          {
+            "uuid": "5fa823ce-7592-482f-a0aa-361abf326ade",
+            "display": "HematOncologyTriage"
+          },
+          {
+            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
+            "display": "DEATHREPORT"
+          }
+        ]
+      },
+      {
+        "uuid": "81978aea-61c1-426e-82e6-ade88f4e25ef",
+        "name": "HTS Linkage Visit",
+        "encounterTypes": [
+          {
+            "uuid": "2cd62224-5507-48ee-a7b3-55f66162b148",
+            "display": "ONCOLOGYLABENTRY"
+          }
+        ]
+      }
+    ]
   }
 }
