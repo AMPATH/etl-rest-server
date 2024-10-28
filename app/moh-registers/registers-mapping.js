@@ -406,6 +406,90 @@ var defs = {
         resolve(result.result);
       });
     });
+  },
+  getPNCRegisterData: (params) => {
+    return new Promise((resolve, reject) => {
+      let queryParts = {};
+      let sql = `
+        select 
+        a.encounter_datetime as date_of_visit,
+        b.identifier as pnc_number,
+        c.identifier as NUPI,
+        c.identifier as pncNumber_or_NUPI,
+        concat(d.given_name, ' ', d.middle_name, ' ', d.family_name) as full_names,
+        e.birthdate as date_of_birth,
+        timestampdiff(year, e.birthdate, a.encounter_datetime) as age,
+        f.county_district as county_subcounty,
+        f.city_village as village_estate_landmark,
+        g.value as telephone_number,
+        a.day_of_delivery as date_of_delivery,
+        a.place_of_delivery as place_of_delivery,
+        a.mode_of_delivery as mode_of_delivery,
+        null as timing_mother,
+        null as timing_baby,
+        a.temperature as temp,
+        a.pulse as pulse,
+        a.blood_pressure as blood_pressure,
+        a.pallor as pallor,
+        null as pallor_type,
+        a.breast as breast,
+        a.uterus as uterus,
+        a.pph as PPH,
+        a.c_section_site as c_section_site,
+        a.lochia as lochia,
+        a.episiotomy as episiotomy,
+        a.fistula as fistula,
+        a.tb_screening as tb_screening,
+        a.tested_pnc as tested_pnc,
+        a.hiv_test_1_kit_name as hiv_test_1_kit_name,
+        a.hiv_test_1_lot_no as hiv_test_1_lot_no,
+        a.hiv_test_1_expiry_date as hiv_test_1_expiry_no,
+        a.hiv_test_2_kit_name as hiv_test_2_kit_name,
+        a.hiv_test_2_lot_no as hiv_test_2_lot_no,
+        a.hiv_test_2_expiry_date as hiv_test_2_expiry_no,
+        a.hiv_test_3_kit_name as hiv_test_3_kit_name,
+        a.hiv_test_3_lot_no as hiv_test_3_lot_no,
+        a.hiv_test_3_expiry_date as hiv_test_3_expiry_no,
+        a.hiv_test_3_test_result as results_in_pnc,
+        a.infant_prophylaxis_at_6_weeks_or_less as infant_prophylaxis_less_6_weeks,
+        a.infant_prophylaxis_at_more_than_6_weeks as infant_prophylaxis_greater_6_weeks,
+        a.maternal_haart_at_6_weeks_or_less as maternal_haart_less_6_weeks,
+        a.maternal_haart_at_more_than_6_weeks as maternal_haart_greater_6_weeks,
+        a.cervical_cancer_method as cacx_method,
+        a.cervical_cancer_result as cacx_results,
+        a.ppfp_done as PPFP,
+        a.ppfp_method as PPFP_couselled_method_received,
+        a.other_complications as other_maternal_complications,
+        a.haematinics as haematinics,
+        a.referrals_from as referrals_from,
+        a.referrals_to as referrals_to,
+        a.reason_for_referral as reason_for_referral,
+        a.remarks as remarks
+            from
+                etl.flat_mnch_summary a
+                left JOIN
+            amrs.patient_identifier b on a.person_id = b.patient_id
+                AND b.identifier_type = 48
+                INNER JOIN
+            amrs.patient_identifier c ON a.person_id = c.patient_id
+                AND c.identifier_type = 45
+                left join amrs.person_name d on d.person_id = a.person_id
+                left join amrs.person e on e.person_id = a.person_id
+                left join amrs.location f on f.location_id = a.location_id
+                left join amrs.person_attribute g on g.person_id = a.person_id
+            AND g.person_attribute_type_id = 10
+            where
+            DATE(a.encounter_datetime)= '${params.endDate}'
+            AND f.uuid in (${params.locationUuids});
+      `;
+      queryParts = {
+        sql: sql
+      };
+      return db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result.result);
+      });
+    });
   }
 };
 

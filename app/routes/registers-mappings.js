@@ -1,6 +1,10 @@
+const { method, config } = require('bluebird');
 var authorizer = require('../../authorization/etl-authorizer');
 var privileges = authorizer.getAllPrivileges();
 var registersmappings = require('../moh-registers/registers-mapping');
+const { error } = require('jquery');
+const { validate } = require('node-cron');
+const { options } = require('joi');
 
 const routes = [
   {
@@ -115,6 +119,32 @@ const routes = [
       handler: function (request, reply) {
         registersmappings
           .getANCRegisterData(request.query)
+          .then((result) => {
+            reply(result);
+          })
+          .catch((error) => {
+            reply(error);
+          });
+      },
+      description: 'List of facilities with MFL code',
+      notes: 'Returns facilities list',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/registers/pncregister',
+    config: {
+      plugins: {},
+      handler: function (request, reply) {
+        registersmappings
+          .getPNCRegisterData(request.query)
           .then((result) => {
             reply(result);
           })
