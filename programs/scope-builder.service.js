@@ -635,7 +635,7 @@ function buildHTSScopeMembers(scope, patientEncounters) {
   const hasInitialToday = latestInitial && !isFromPreviousDate(latestInitial);
   const hasRetestToday = latestRetest && !isFromPreviousDate(latestRetest);
 
-  if (hasOldScreening && hasOldInitial) {
+  if (!hasScreeningToday) {
     scope.showOnlyHTSScreening = true;
     scope.isFirstHTSNewRetestVisit = true;
   } else if (hasScreeningToday && !hasInitialToday) {
