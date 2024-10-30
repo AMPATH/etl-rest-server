@@ -5714,27 +5714,27 @@
           {
             "uuid": "82749926-63b1-467b-9d41-453c7542678a",
             "display": "HTSSCREENING",
-            "allowedIf": "showOnlyHTSScreening === true"
+            "allowedIf": "showOnlyHTSScreening"
           },
           {
             "uuid": "ae9693ff-d341-4997-8166-fa46ac4d38f4",
             "display": "HTSINITIAL",
-            "allowedIf": "showOnlyHTSINITIAL === true"
+            "allowedIf": "showOnlyHTSINITIAL"
           },
           {
             "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
             "display": "HTSRETEST",
-            "allowedIf": "showOnlyHTSRetest === true"
+            "allowedIf": "showOnlyHTSRetest"
           },
           {
             "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
             "display": "HTSLINKAGE",
-            "allowedIf": "showOthersHTSEncounters === true"
+            "allowedIf": "showOthersHTSEncounters"
           },
           {
             "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
             "display": "HTSREFERRAL",
-            "allowedIf": "showOthersHTSEncounters === true"
+            "allowedIf": "showOthersHTSEncounters"
           }
         ]
       },

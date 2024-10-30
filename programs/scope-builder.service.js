@@ -578,60 +578,77 @@ function isInitialOncologyVisit(encounters, programUuid) {
 }
 
 function buildHTSScopeMembers(scope, patientEncounters) {
-  const HTS_ENCOUNTER_TYPES = [
-    '82749926-63b1-467b-9d41-453c7542678a', // HTSSCREENING
-    'ae9693ff-d341-4997-8166-fa46ac4d38f4', // HTSINITIAL
-    '16bac581-5a17-43f2-9315-3e12a1f3189a', // HTSRETEST
-    'fbb106cf-d24f-4917-b905-42db7549a788', // HTSLINKAGE
-    '55c10a7a-2732-4063-be25-68d5e1bce1fc' // HTSREFERRAL
-  ];
+  const HTS_ENCOUNTER_TYPES = {
+    SCREENING: '82749926-63b1-467b-9d41-453c7542678a',
+    INITIAL: 'ae9693ff-d341-4997-8166-fa46ac4d38f4',
+    RETEST: '16bac581-5a17-43f2-9315-3e12a1f3189a',
+    LINKAGE: 'fbb106cf-d24f-4917-b905-42db7549a788',
+    REFERRAL: '55c10a7a-2732-4063-be25-68d5e1bce1fc'
+  };
 
-  // Check if any HTS encounters exist
+  const today = Moment().startOf('day');
+
+  const isFromPreviousDate = (encounter) => {
+    const encounterDate =
+      encounter?.encounterDatetime &&
+      Moment(encounter.encounterDatetime).startOf('day');
+    return encounterDate ? encounterDate.isBefore(today) : false;
+  };
+
+  const getLatestEncounterOfType = (encounters, encounterTypeUuid) =>
+    encounters
+      ?.filter(({ encounterType }) => encounterType?.uuid === encounterTypeUuid)
+      .sort(
+        (a, b) =>
+          Moment(b.encounterDatetime).valueOf() -
+          Moment(a.encounterDatetime).valueOf()
+      )[0];
+
   scope.hasHTSEncounters =
-    patientEncounters?.some((encounter) =>
-      HTS_ENCOUNTER_TYPES.includes(encounter.encounterType?.uuid)
+    patientEncounters?.some(({ encounterType }) =>
+      Object.values(HTS_ENCOUNTER_TYPES).includes(encounterType?.uuid)
     ) || false;
 
-  // If there are no HTS encounters, show only HTSSCREENING
   if (!scope.hasHTSEncounters) {
     scope.showOnlyHTSScreening = true;
     return scope;
   }
-  // Check for specific encounter types
-  const hasScreening = patientEncounters?.some(
-    (encounter) => encounter.encounterType?.uuid === HTS_ENCOUNTER_TYPES[0] // HTSCREENING
+
+  const latestScreening = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.SCREENING
+  );
+  const latestInitial = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.INITIAL
+  );
+  const latestRetest = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.RETEST
   );
 
-  const hasInitial = patientEncounters?.some(
-    (encounter) => encounter.encounterType?.uuid === HTS_ENCOUNTER_TYPES[1] // HTSINITIAL
-  );
+  const hasOldScreening =
+    latestScreening && isFromPreviousDate(latestScreening);
+  const hasOldInitial = latestInitial && isFromPreviousDate(latestInitial);
+  const hasScreeningToday =
+    latestScreening && !isFromPreviousDate(latestScreening);
+  const hasInitialToday = latestInitial && !isFromPreviousDate(latestInitial);
+  const hasRetestToday = latestRetest && !isFromPreviousDate(latestRetest);
 
-  const hasRetest = patientEncounters?.some(
-    (encounter) => encounter.encounterType?.uuid === HTS_ENCOUNTER_TYPES[2] // HTSRETEST
-  );
-
-  // If only HTSSCREENING exists, show only HTSINITIAL
-  if (hasScreening && !hasInitial) {
-    scope.showOnlyHTSScreening = false;
+  if (hasOldScreening && hasOldInitial) {
+    scope.showOnlyHTSScreening = true;
+    scope.isFirstHTSNewRetestVisit = true;
+  } else if (hasScreeningToday && !hasInitialToday) {
     scope.showOnlyHTSINITIAL = true;
-    scope.showOnlyHTSRetest = false;
-    return scope;
-  }
-
-  // If HTSINITIAL exists, show only showOnlyHTSRetest
-  if (hasInitial && !hasRetest) {
+    scope.isFirstHTSNewRetestVisit = false;
+  } else if (hasInitialToday && !hasRetestToday) {
     scope.showOnlyHTSRetest = true;
-    return scope;
-  }
-
-  // If both HTSSCREENING and HTSINITIAL exist, show HTSLINKAGE and HTSREFERRAL
-  if (hasRetest) {
+  } else if (hasRetestToday) {
     scope.showOthersHTSEncounters = true;
-    return scope;
+  } else {
+    scope.showOnlyHTSScreening = true;
   }
 
-  // Default case
-  scope.showOnlyHTSScreening = true;
   return scope;
 }
 
