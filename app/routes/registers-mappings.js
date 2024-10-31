@@ -132,6 +132,58 @@ const routes = [
         params: {}
       }
     }
+  },
+  {
+    method: 'GET',
+    path: '/etl/registers/pncregister',
+    config: {
+      plugins: {},
+      handler: function (request, reply) {
+        registersmappings
+          .getPNCRegisterData(request.query)
+          .then((result) => {
+            reply(result);
+          })
+          .catch((error) => {
+            reply(error);
+          });
+      },
+      description: 'List of facilities with MFL code',
+      notes: 'Returns facilities list',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/registers/maternityregister',
+    config: {
+      plugins: {},
+      handler: function (request, reply) {
+        registersmappings
+          .getMatRegisterData(request.query)
+          .then((result) => {
+            reply(result);
+          })
+          .catch((error) => {
+            reply(error);
+          });
+      },
+      description: 'List of facilities with MFL code',
+      notes: 'Returns facilities list',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
   }
 ];
 
