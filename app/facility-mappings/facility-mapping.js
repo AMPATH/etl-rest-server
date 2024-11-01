@@ -19,7 +19,7 @@ var defs = {
     return new Promise((resolve, reject) => {
       let queryParts = {};
       let sql =
-        'select location_id,name,description,uuid from amrs.location where parent_location = ' +
+        'select location_id,name,description,uuid from amrs.location where retired = 0 && parent_location = ' +
         params.parentId +
         '';
       queryParts = {
