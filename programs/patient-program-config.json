@@ -5699,5 +5699,81 @@
         ]
       }
     ]
+  },
+  "a0f8382f-df8a-4f1d-8959-9fb6eef90353": {
+    "name": "HTS PROGRAM",
+    "dataDependencies": ["patient", "enrollment", "patientEncounters"],
+    "incompatibleWith": [],
+    "visitTypes": [
+      {
+        "uuid": "f92e8456-4de6-4776-82c3-c15b81eb8f5d",
+        "name": "HTS New/Retest Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "82749926-63b1-467b-9d41-453c7542678a",
+            "display": "HTSSCREENING",
+            "allowedIf": "showOnlyHTSScreening"
+          },
+          {
+            "uuid": "ae9693ff-d341-4997-8166-fa46ac4d38f4",
+            "display": "HTSINITIAL",
+            "allowedIf": "showOnlyHTSINITIAL"
+          },
+          {
+            "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
+            "display": "HTSRETEST",
+            "allowedIf": "showOnlyHTSRetest"
+          },
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE",
+            "allowedIf": "showOthersHTSEncounters"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL",
+            "allowedIf": "showOthersHTSEncounters"
+          }
+        ]
+      },
+      {
+        "uuid": "7d2b0fb1-f1d7-4173-81aa-c8b832407656",
+        "name": "HTS Retest To Confirm Positive Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
+            "display": "HTSRETEST"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL"
+          },
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE"
+          }
+        ]
+      },
+      {
+        "uuid": "81978aea-61c1-426e-82e6-ade88f4e25ef",
+        "name": "HTS Linkage Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL"
+          }
+        ]
+      }
+    ]
   }
 }
