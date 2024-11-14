@@ -3166,5 +3166,23 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "dbd99c38-89f0-4104-baae-df6519b9eaee": {
+    "mrsId": 530,
+    "mrsDisplay": "Ngelel Tarit Dispensary",
+    "description": "Ngelel Tarit Dispensary",
+    "mflCode": "17829",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "ec030341-30cd-47a6-8b31-2a2627c3e32e": {
+    "mrsId": 529,
+    "mrsDisplay": "Uhuru Dispensary",
+    "description": "Uhuru Dispensary",
+    "mflCode": "15759",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
