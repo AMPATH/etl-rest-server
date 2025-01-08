@@ -3184,5 +3184,14 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "ba07e5bf-a8db-49cb-9e0c-c49d8e4cc47e": {
+    "mrsId": 531,
+    "mrsDisplay": "Wamalwa Kijana Teaching and Referral Hospital",
+    "description": "Wamalwa Kijana Teaching and Referral Hospital",
+    "mflCode": "15759",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
