@@ -1776,6 +1776,10 @@
           {
             "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
             "display": "COVIDASSESSMENT"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -5545,6 +5549,10 @@
             "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
             "display": "ONCOLOGYVIA",
             "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       }
@@ -5609,6 +5617,10 @@
             "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
             "display": "ONCOLOGYVIA",
             "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -5641,6 +5653,10 @@
             "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
             "display": "ONCOLOGYVIA",
             "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       }
