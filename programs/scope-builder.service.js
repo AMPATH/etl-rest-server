@@ -316,7 +316,11 @@ function buildScope(dataDictionary) {
 
     // Add HTS scope building alongside other program builders
     if (dataDictionary.programUuid === 'a0f8382f-df8a-4f1d-8959-9fb6eef90353') {
-      buildHTSScopeMembers(scope, dataDictionary.patientEncounters);
+      buildHTSScopeMembers(
+        scope,
+        dataDictionary.patientEncounters,
+        dataDictionary.isHtsPatientNegative
+      );
     }
 
     buildHivScopeMembers(
@@ -577,7 +581,7 @@ function isInitialOncologyVisit(encounters, programUuid) {
   return initialOncologyEncounters.length === 0;
 }
 
-function buildHTSScopeMembers(scope, patientEncounters) {
+function buildHTSScopeMembers(scope, patientEncounters, isHtsPatientNegative) {
   const HTS_ENCOUNTER_TYPES = {
     SCREENING: '82749926-63b1-467b-9d41-453c7542678a',
     INITIAL: 'ae9693ff-d341-4997-8166-fa46ac4d38f4',
@@ -634,6 +638,11 @@ function buildHTSScopeMembers(scope, patientEncounters) {
     latestScreening && !isFromPreviousDate(latestScreening);
   const hasInitialToday = latestInitial && !isFromPreviousDate(latestInitial);
   const hasRetestToday = latestRetest && !isFromPreviousDate(latestRetest);
+
+  if (isHtsPatientNegative && hasInitialToday) {
+    scope.showOnlyHTSINITIAL = true;
+    return scope;
+  }
 
   if (!hasScreeningToday) {
     scope.showOnlyHTSScreening = true;

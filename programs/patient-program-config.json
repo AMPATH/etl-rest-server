@@ -5702,8 +5702,22 @@
   },
   "a0f8382f-df8a-4f1d-8959-9fb6eef90353": {
     "name": "HTS PROGRAM",
-    "dataDependencies": ["patient", "enrollment", "patientEncounters"],
-    "incompatibleWith": [],
+    "dataDependencies": [
+      "patient",
+      "enrollment",
+      "patientEncounters",
+      "isHtsPatientNegative"
+    ],
+    "incompatibleWith": [
+      "781d85b0-1359-11df-a1f1-0026b9348838",
+      "781d897a-1359-11df-a1f1-0026b9348838",
+      "334c9e98-173f-4454-a8ce-f80b20b7fdf0",
+      "c4246ff0-b081-460c-bcc5-b0678012659e",
+      "c6bf3625-de80-4a88-a913-38273e300a55",
+      "8c1a3a68-d91d-488d-8663-ad572673232b",
+      "f7793d42-11ac-4cfd-9b35-e0a21a7a7c31",
+      "203571d6-a4f2-4953-9e8b-e1105e2340f5"
+    ],
     "visitTypes": [
       {
         "uuid": "f92e8456-4de6-4776-82c3-c15b81eb8f5d",
