@@ -5760,15 +5760,18 @@
         "encounterTypes": [
           {
             "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
-            "display": "HTSRETEST"
+            "display": "HTSRETEST",
+            "allowedIf": "showHTSRetestToConfirmP"
           },
           {
             "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
-            "display": "HTSREFERRAL"
+            "display": "HTSREFERRAL",
+            "allowedIf": "!showHTSRetestToConfirmP"
           },
           {
             "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
-            "display": "HTSLINKAGE"
+            "display": "HTSLINKAGE",
+            "allowedIf": "!showHTSRetestToConfirmP"
           }
         ]
       },

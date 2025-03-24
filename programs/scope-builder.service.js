@@ -21,6 +21,7 @@ function buildScope(dataDictionary) {
     showOnlyHTSScreening: false,
     showOnlyHTSINITIAL: false,
     showOnlyHTSRetest: false,
+    showHTSRetestToConfirmP: false,
     showOthersHTSEncounters: false
   };
   let isStandardDcVisit = false;
@@ -319,7 +320,8 @@ function buildScope(dataDictionary) {
       buildHTSScopeMembers(
         scope,
         dataDictionary.patientEncounters,
-        dataDictionary.isHtsPatientNegative
+        dataDictionary.isHtsPatientNegative,
+        dataDictionary
       );
     }
 
@@ -581,7 +583,12 @@ function isInitialOncologyVisit(encounters, programUuid) {
   return initialOncologyEncounters.length === 0;
 }
 
-function buildHTSScopeMembers(scope, patientEncounters, isHtsPatientNegative) {
+function buildHTSScopeMembers(
+  scope,
+  patientEncounters,
+  isHtsPatientNegative,
+  dataDictionary
+) {
   const HTS_ENCOUNTER_TYPES = {
     SCREENING: '82749926-63b1-467b-9d41-453c7542678a',
     INITIAL: 'ae9693ff-d341-4997-8166-fa46ac4d38f4',
@@ -589,8 +596,11 @@ function buildHTSScopeMembers(scope, patientEncounters, isHtsPatientNegative) {
     LINKAGE: 'fbb106cf-d24f-4917-b905-42db7549a788',
     REFERRAL: '55c10a7a-2732-4063-be25-68d5e1bce1fc'
   };
+  const visitDate = Moment(dataDictionary.visitDate).format('YYYY-MM-DD');
 
-  const today = Moment().startOf('day');
+  const today = dataDictionary.retroSpective
+    ? visitDate
+    : Moment().startOf('day');
 
   const isFromPreviousDate = (encounter) => {
     const encounterDate =
@@ -615,6 +625,7 @@ function buildHTSScopeMembers(scope, patientEncounters, isHtsPatientNegative) {
 
   if (!scope.hasHTSEncounters) {
     scope.showOnlyHTSScreening = true;
+    scope.showHTSRetestToConfirmP = true;
     return scope;
   }
 
