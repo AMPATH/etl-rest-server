@@ -28,7 +28,7 @@ module.exports = (function () {
         ? {
             columns:
               request.query.fields ||
-              't4.hpv,fli.vl_1_date as latest_vl_date,fli.vl_1 as latest_vl,t1.*, t3.cm_result,t3.cm_result_date, t3.cm_test, t3.cm_treatment_end_date, t3.cm_treatment_phase, t3.cm_treatment_start_date',
+              'max(t4.test_datetime) as hpv_test_date, t4.hpv,fli.vl_1_date as latest_vl_date,fli.vl_1 as latest_vl,t1.*, t3.cm_result,t3.cm_result_date, t3.cm_test, t3.cm_treatment_end_date, t3.cm_treatment_phase, t3.cm_treatment_start_date',
             table: 'etl.flat_hiv_summary_v15b',
             where: whereClause,
             leftOuterJoins: [
@@ -43,7 +43,7 @@ module.exports = (function () {
                 'fli.person_id = t1.person_id'
               ],
               [
-                '(select t4.person_id, t4.hpv from etl.flat_labs_and_imaging t4 where t4.hpv is not null)',
+                '(select t4.person_id, t4.hpv, t4.test_datetime from etl.flat_labs_and_imaging t4 where t4.hpv is not null)',
                 't4',
                 't4.person_id = t1.person_id'
               ]
