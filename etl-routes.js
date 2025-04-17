@@ -82,6 +82,7 @@ import { Covid19MonthlyReport } from './service/covid-19/covid-19-monthly-report
 import { MlWeeklyPredictionsService } from './service/ml-weekly-predictions.service';
 import { getPatientPredictedScore } from './service/predictions/ml-prediction-service';
 import { CohortModuleService } from './app/otz/cohort-module.service';
+import { getDefaulterTracingData } from './service/moh-registers/defaulter-tracing.js';
 
 module.exports = (function () {
   var routes = [
@@ -6358,6 +6359,31 @@ module.exports = (function () {
         },
         description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
         notes: 'Api endpoint that returns AMRS ID in string format',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/registers/defaulter-tracing',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: function (request, reply) {
+          if (request.query.locationUuid) {
+            const locationUuids = request.query.locationUuid;
+            getDefaulterTracingData(locationUuids)
+              .then((results) => {
+                reply(results);
+              })
+              .catch((error) => {
+                reply(Boom.internal('An error occured', error));
+              });
+          } else {
+            reply(Boom.internal('Request misssing location uuid'));
+          }
+        },
+        description: 'Get defaulter tracing data',
+        notes: 'Returns the defaulter tracing data',
         tags: ['api']
       }
     }
