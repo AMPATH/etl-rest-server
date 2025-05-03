@@ -82,6 +82,7 @@ import { Covid19MonthlyReport } from './service/covid-19/covid-19-monthly-report
 import { MlWeeklyPredictionsService } from './service/ml-weekly-predictions.service';
 import { getPatientPredictedScore } from './service/predictions/ml-prediction-service';
 import { CohortModuleService } from './app/otz/cohort-module.service';
+import { HtsModuleService } from './app/hts/hts-module.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6358,6 +6359,29 @@ module.exports = (function () {
         },
         description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
         notes: 'Api endpoint that returns AMRS ID in string format',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/get-hts-data',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: function (request, reply) {
+          const { uuid } = request.query;
+          const htsService = new HtsModuleService();
+          htsService
+            .getHTSData(uuid)
+            .then(function (htsData) {
+              reply(htsData);
+            })
+            .catch(function (error) {
+              reply(new Boom(500, 'Internal server error.', '', '', error));
+            });
+        },
+        description: 'HTS Module in Amrs POC',
+        notes: 'Api endpoint that handles HTS',
         tags: ['api']
       }
     }
