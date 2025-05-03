@@ -212,5 +212,14 @@
         "name": "RETENTION PROGRAM"
       }
     ]
+  },
+  "uud7": {
+    "name": "HTS",
+    "programs": [
+      {
+        "uuid": "a0f8382f-df8a-4f1d-8959-9fb6eef90353",
+        "name": "HTS PROGRAM"
+      }
+    ]
   }
 }
