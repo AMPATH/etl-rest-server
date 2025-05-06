@@ -83,10 +83,26 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_initial_visit_hiv_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_initial_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_via_or_via_vili_initial_visit_hiv_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_initial_visit_hiv_negative)"
       }
     },
     {
@@ -115,10 +131,26 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_routine_visit_hiv_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_routine_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_via_or_via_vili_routine_visit_hiv_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_routine_visit_hiv_negative)"
       }
     },
     {
@@ -147,10 +179,26 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_post_treatment_visit_hiv_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_post_treatment_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_via_or_via_vili_post_treatment_visit_hiv_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_post_treatment_visit_hiv_negative)"
       }
     },
     {
@@ -543,6 +591,22 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_via_or_via_vili_all_visit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_all_visit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_all_visit)"
       }
     },
     {
