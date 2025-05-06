@@ -194,7 +194,7 @@
             "value": "pap_smear"
           },
           {
-            "condition": "c.screening_method = 2322",
+            "condition": "c.screening_method in (1213, 2322)",
             "value": "hpv"
           }
         ]
@@ -205,7 +205,7 @@
       "alias": "screened_initial_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322) AND c.reasons_for_current_visit = 1,1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885, 1213, 2322) AND c.reasons_for_current_visit = 1,1,NULL)"
       }
     },
     {
@@ -686,6 +686,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(c.screening_method in (9434,10420),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (1213,2322),1,NULL)"
       }
     },
     {

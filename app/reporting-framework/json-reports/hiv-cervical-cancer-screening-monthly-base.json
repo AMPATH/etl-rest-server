@@ -139,6 +139,27 @@
     },
     {
       "type": "derived_column",
+      "alias": "hpv_test_result",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.hpv_test_result = 1",
+            "value": "Negative"
+          },
+          {
+            "condition": "c.hpv_test_result = 2",
+            "value": "Positive"
+          },
+          {
+            "condition": "c.hpv_test_result = 3",
+            "value": "Indeterminate"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screening_visit_type",
       "expressionType": "case_statement",
       "expressionOptions": {
@@ -198,7 +219,7 @@
             "value": "pap_smear"
           },
           {
-            "condition": "c.screening_method = 2322",
+            "condition": "c.screening_method in (1213, 2322)",
             "value": "hpv"
           }
         ]
@@ -225,7 +246,7 @@
       "alias": "screened_hpv",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322),1,NULL)"
+        "expression": "IF(c.screening_method in (1213, 2322),1,NULL)"
       }
     },
     {

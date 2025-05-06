@@ -547,6 +547,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_hpv_all_visit)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_positive_via_or_via_vili_all_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
