@@ -82,6 +82,7 @@ import { Covid19MonthlyReport } from './service/covid-19/covid-19-monthly-report
 import { MlWeeklyPredictionsService } from './service/ml-weekly-predictions.service';
 import { getPatientPredictedScore } from './service/predictions/ml-prediction-service';
 import { CohortModuleService } from './app/otz/cohort-module.service';
+import { MedicationDispenseModuleService } from './app/medication-dispense/medication-dispense-portal.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6317,7 +6318,7 @@ module.exports = (function () {
         plugins: {},
         handler: function (request, reply) {
           const { uuid } = request.query;
-          const cohortService = new CohortModuleService();
+          const cohortService = new CohortModuleService(); // MedicationDispenseModuleService
           cohortService
             .getCohortSummary(uuid)
             .then(function (cohortUsers) {
@@ -6358,6 +6359,29 @@ module.exports = (function () {
         },
         description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
         notes: 'Api endpoint that returns AMRS ID in string format',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/patient-prescription-dispense',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: function (request, reply) {
+          const { uuid } = request.query;
+          const medicationDispenseService = new MedicationDispenseModuleService();
+          medicationDispenseService
+            .getPatientPrescriptionDispenseDetails(uuid)
+            .then(function (cohortUsers) {
+              reply(cohortUsers);
+            })
+            .catch(function (error) {
+              reply(new Boom(500, 'Internal server error.', '', '', error));
+            });
+        },
+        description: 'Get Medication dispense details',
+        notes: 'Api endpoint that returns medication dispense details',
         tags: ['api']
       }
     }
