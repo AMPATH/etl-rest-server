@@ -91,6 +91,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_colposcopy_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy_initial_visit_hiv_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_initial_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -103,6 +111,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_hpv_initial_visit_hiv_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy_initial_visit_hiv_negative)"
       }
     },
     {
@@ -139,6 +155,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_colposcopy_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy_routine_visit_hiv_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_routine_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -151,6 +175,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_hpv_routine_visit_hiv_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy_routine_visit_hiv_negative)"
       }
     },
     {
@@ -187,6 +219,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_colposcopy_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy_post_treatment_visit_hiv_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_post_treatment_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -199,6 +239,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_hpv_post_treatment_visit_hiv_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy_post_treatment_visit_hiv_negative)"
       }
     },
     {
@@ -599,6 +647,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(hc.screened_hpv_all_visit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy_all_visit)"
       }
     },
     {
