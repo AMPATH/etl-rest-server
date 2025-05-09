@@ -116,7 +116,62 @@
             ]
           },
           {
-            "name": "VIA OR VIA/VILI + HPV",
+            "name": "Colposcopy",
+            "body": [
+              {
+                "title": "HIV Positive",
+                "indicators": [
+                  {
+                    "label": " < 25 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__initial__age_range__less_than_25__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": " 25-49 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__initial__age_range__25_to_49__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": "50 yrs and above",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__initial__age_range__50_and_above__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": "Total",
+                    "ref": "",
+                    "indicator": "screened_colposcopy_initial_visit_hiv_positive"
+                  }
+                ]
+              },
+              {
+                "title": "HIV Negative",
+                "indicators": [
+                  {
+                    "label": " < 25 yrs",
+                    "ref": "HV02-44",
+                    "indicator": "dc__screening_visit_type__initial__age_range__less_than_25__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": " 25-49 yrs",
+                    "ref": "HV02-44",
+                    "indicator": "dc__screening_visit_type__initial__age_range__25_to_49__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": " 50 yrs and above",
+                    "ref": "HV02-44",
+                    "indicator": "dc__screening_visit_type__initial__age_range__50_and_above__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": "Total",
+                    "ref": "",
+                    "indicator": "screened_colposcopy_initial_visit_hiv_negative"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "VIA OR VIA/VILI + HPV + Colposcopy",
             "body": [
               {
                 "title": "Total",
@@ -246,7 +301,62 @@
             ]
           },
           {
-            "name": "VIA OR VIA/VILI + HPV",
+            "name": "Colposcopy",
+            "body": [
+              {
+                "title": "HIV Positive",
+                "indicators": [
+                  {
+                    "label": " < 25 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__routine__age_range__less_than_25__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": " 25-49 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__routine__age_range__25_to_49__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": "50 yrs and above",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__routine__age_range__50_and_above__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": "Total",
+                    "ref": "",
+                    "indicator": "screened_colposcopy_routine_visit_hiv_positive"
+                  }
+                ]
+              },
+              {
+                "title": "HIV Negative",
+                "indicators": [
+                  {
+                    "label": " < 25 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__routine__age_range__less_than_25__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": " 25-49 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__routine__age_range__25_to_49__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": "50 yrs and above",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__routine__age_range__50_and_above__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": "Total",
+                    "ref": "",
+                    "indicator": "screened_colposcopy_routine_visit_hiv_negative"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "VIA OR VIA/VILI + HPV + Colposcopy",
             "body": [
               {
                 "title": "Total",
@@ -376,7 +486,62 @@
             ]
           },
           {
-            "name": "VIA OR VIA/VILI + HPV",
+            "name": "Colposcopy",
+            "body": [
+              {
+                "title": "HIV Positive",
+                "indicators": [
+                  {
+                    "label": " < 25 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__post_treatment__age_range__less_than_25__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": " 25-49 yrs",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__post_treatment__age_range__25_to_49__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": "50 yrs and above",
+                    "ref": "",
+                    "indicator": "dc__screening_visit_type__post_treatment__age_range__50_and_above__hiv_status__positive__screened_colposcopy"
+                  },
+                  {
+                    "label": "Total",
+                    "ref": "",
+                    "indicator": "screened_colposcopy_post_treatment_visit_hiv_positive"
+                  }
+                ]
+              },
+              {
+                "title": "HIV Negative",
+                "indicators": [
+                  {
+                    "label": " < 25 yrs",
+                    "ref": "HV02-44",
+                    "indicator": "dc__screening_visit_type__post_treatment__age_range__less_than_25__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": " 25-49 yrs",
+                    "ref": "HV02-44",
+                    "indicator": "dc__screening_visit_type__post_treatment__age_range__25_to_49__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": "50 yrs and above",
+                    "ref": "HV02-44",
+                    "indicator": "dc__screening_visit_type__post_treatment__age_range__50_and_above__hiv_status__negative__screened_colposcopy"
+                  },
+                  {
+                    "label": "Total",
+                    "ref": "",
+                    "indicator": "screened_colposcopy_post_treatment_visit_hiv_negative"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "VIA OR VIA/VILI + HPV + Colposcopy",
             "body": [
               {
                 "title": "Total",
@@ -426,7 +591,22 @@
             ]
           },
           {
-            "name": "VIA OR VIA/VILI + HPV",
+            "name": "Colposcopy",
+            "body": [
+              {
+                "title": "Total",
+                "indicators": [
+                  {
+                    "label": "Total",
+                    "ref": "",
+                    "indicator": "screened_colposcopy_all_visit"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "VIA OR VIA/VILI + HPV + Colposcopy",
             "body": [
               {
                 "title": "Total",
