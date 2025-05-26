@@ -6062,13 +6062,13 @@
             "allowedIf": "showOnlyHTSRetest"
           },
           {
-            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
-            "display": "HTSLINKAGE",
-            "allowedIf": "showOthersHTSEncounters"
-          },
-          {
             "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
             "display": "HTSREFERRAL",
+            "allowedIf": "showHTSReferral"
+          },
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE",
             "allowedIf": "showOthersHTSEncounters"
           }
         ]
@@ -6087,12 +6087,12 @@
           {
             "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
             "display": "HTSREFERRAL",
-            "allowedIf": "!showHTSRetestToConfirmP"
+            "allowedIf": "showHTSReferral && !showHTSLinkage"
           },
           {
             "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
             "display": "HTSLINKAGE",
-            "allowedIf": "!showHTSRetestToConfirmP"
+            "allowedIf": "!showHTSRetestToConfirmP && showHTSLinkage"
           }
         ]
       },

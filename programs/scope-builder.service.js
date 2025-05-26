@@ -873,6 +873,10 @@ function buildHTSScopeMembers(
     patientEncounters,
     HTS_ENCOUNTER_TYPES.RETEST
   );
+  const latestReferral = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.REFERRAL
+  );
 
   const hasOldScreening =
     latestScreening && isFromPreviousDate(latestScreening);
@@ -881,14 +885,26 @@ function buildHTSScopeMembers(
     latestScreening && !isFromPreviousDate(latestScreening);
   const hasInitialToday = latestInitial && !isFromPreviousDate(latestInitial);
   const hasRetestToday = latestRetest && !isFromPreviousDate(latestRetest);
+  const hasReferralToday =
+    latestReferral && !isFromPreviousDate(latestReferral);
 
   if (isHtsPatientNegative && hasInitialToday) {
     scope.showOnlyHTSINITIAL = true;
     return scope;
   }
 
+  if (!hasScreeningToday && hasRetestToday) {
+    if (!hasReferralToday) {
+      scope.showHTSReferral = true;
+    } else {
+      scope.showHTSLinkage = true;
+    }
+    return scope;
+  }
+
   if (!hasScreeningToday) {
     scope.showOnlyHTSScreening = true;
+    scope.showHTSRetestToConfirmP = true;
     scope.isFirstHTSNewRetestVisit = true;
   } else if (hasScreeningToday && !hasInitialToday) {
     scope.showOnlyHTSINITIAL = true;
@@ -896,7 +912,11 @@ function buildHTSScopeMembers(
   } else if (hasInitialToday && !hasRetestToday) {
     scope.showOnlyHTSRetest = true;
   } else if (hasRetestToday) {
-    scope.showOthersHTSEncounters = true;
+    if (!hasReferralToday) {
+      scope.showHTSReferral = true;
+    } else {
+      scope.showOthersHTSEncounters = true;
+    }
   } else {
     scope.showOnlyHTSScreening = true;
   }
