@@ -3202,5 +3202,14 @@
     "county": "Trans Nzoia",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "6178923f-81f0-408b-98d7-8deb0f4b1b85": {
+    "mrsId": 527,
+    "mrsDisplay": "Chukura Dispensary",
+    "description": "Chukura Dispensary",
+    "mflCode": "14390",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
