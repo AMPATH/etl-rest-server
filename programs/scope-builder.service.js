@@ -178,6 +178,7 @@ function buildScope(dataDictionary) {
 
   if (dataDictionary.dcQualifedVisits) {
     const result = conditionalDCVisits(dataDictionary);
+    validateMedicationRefillEligibility(dataDictionary);
     if (result) {
       isStandardDcVisit = true;
     }
@@ -404,6 +405,24 @@ function conditionalDCVisits(patient) {
       latestEncounter.encounterType.uuid === expectedEncounterToBeDrugPickup
     );
   }
+}
+
+function validateMedicationRefillEligibility(patient) {
+  console.log('----patient----', patient);
+  const patientEncounters = patient.patientEncounters;
+  const latestEncounter = getLatestEncounter(patientEncounters);
+  const expectedDrugPickupEncounterType =
+    '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f';
+
+  if (
+    latestEncounter &&
+    latestEncounter.encounterType.uuid === expectedDrugPickupEncounterType
+  ) {
+    console.log('---latestEncounter--', latestEncounter);
+    return latestEncounter;
+  }
+
+  return null;
 }
 
 function buildPatientScopeMembers(scope, patient) {
