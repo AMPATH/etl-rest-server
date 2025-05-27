@@ -2903,6 +2903,7 @@
       "patientEncounters",
       "isPatientTransferredOut",
       "dcQualifedVisits",
+      "validateMedicationRefill",
       "latestCovidAssessment"
     ],
     "enrollmentOptions": {
@@ -2977,7 +2978,7 @@
       {
         "uuid": "0becf5b9-0522-47c8-960c-c9d660c56501",
         "name": "Facilty Medication Refill Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit && isEligibleForMedicationRefill",
         "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
         "encounterTypes": [
           {
@@ -3309,7 +3310,7 @@
       {
         "uuid": "3c1906a1-6d85-4184-9a43-0912cbac3d74",
         "name": "Community Medication Refill Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit && isEligibleForCommunityVisit",
         "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
         "encounterTypes": [
           {
