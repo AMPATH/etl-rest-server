@@ -1,8 +1,17 @@
 import { Promise } from 'bluebird';
+const path = require('path');
+const fs = require('fs');
 import { MultiDatasetPatientlistReport } from '../../app/reporting-framework/multi-dataset-patientlist.report';
 import ReportProcessorHelpersService from '../../app/reporting-framework/report-processor-helpers.service';
 
-const surgeDefs = require('./surge-report.json');
+const filePath = path.join(__dirname, 'surge-report.json');
+const raw = fs.readFileSync(filePath, 'utf-8');
+const previousYear = new Date().getFullYear() - 1;
+
+// Replace all occurrences of {{YEAR}} with previous year
+const replaced = raw.replace(/{{YEAR}}/g, previousYear);
+
+const surgeDefs = JSON.parse(replaced);
 const dao = require('../../etl-dao');
 
 export class SurgeReportService extends MultiDatasetPatientlistReport {
