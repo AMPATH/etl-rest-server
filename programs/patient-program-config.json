@@ -266,10 +266,6 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -735,6 +731,17 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
+          }
+        ]
+      },
+      {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW-Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -2759,10 +2766,6 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ADHERENCE"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -3119,10 +3122,6 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -3320,8 +3319,9 @@
         ]
       },
       {
-        "uuid": "3c1906a1-6d85-4184-9a43-0912cbac3d74",
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
         "name": "HCW-Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit",
         "encounterTypes": [
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
@@ -4621,10 +4621,6 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },
