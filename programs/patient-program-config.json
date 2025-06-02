@@ -266,10 +266,6 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -735,6 +731,17 @@
           {
             "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
             "display": "HIVCLINICALREFERRAL"
+          }
+        ]
+      },
+      {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW-Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -2759,10 +2766,6 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ADHERENCE"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -2894,7 +2897,7 @@
     ]
   },
   "334c9e98-173f-4454-a8ce-f80b20b7fdf0": {
-    "name": "HIV DIFFERENTIATED CARE PROGRAM",
+    "name": "DIFFERENTIATED SERVICE DELIVERY PROGRAM",
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -2903,6 +2906,7 @@
       "patientEncounters",
       "isPatientTransferredOut",
       "dcQualifedVisits",
+      "validateMedicationRefill",
       "latestCovidAssessment"
     ],
     "enrollmentOptions": {
@@ -2976,8 +2980,8 @@
     "visitTypes": [
       {
         "uuid": "0becf5b9-0522-47c8-960c-c9d660c56501",
-        "name": "Medication Refill Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit",
+        "name": "Facilty Medication Delivery Visit",
+        "allowedIf": "qualifiesMedicationRefillVisit && isEligibleForMedicationRefill",
         "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
         "encounterTypes": [
           {
@@ -3041,7 +3045,7 @@
       },
       {
         "uuid": "380d79a7-6fb0-41bf-be3d-aa3d25da187c",
-        "name": "Standard HIV Visit for Differentiated Care ",
+        "name": "Standard for Differentiated Service Delivery",
         "allowedIf": "age >= 10 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && qualifiesForStandardVisit",
         "encounterTypes": [
           {
@@ -3118,10 +3122,6 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },
@@ -3303,6 +3303,29 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "3c1906a1-6d85-4184-9a43-0912cbac3d74",
+        "name": "Community Medication Delivery Visit",
+        "allowedIf": "qualifiesMedicationRefillVisit && isEligibleForCommunityVisit",
+        "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
+          }
+        ]
+      },
+      {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW-Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
           }
         ]
       }
@@ -4598,10 +4621,6 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
-          {
-            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
-            "display": "DRUGPICKUP"
           }
         ]
       },

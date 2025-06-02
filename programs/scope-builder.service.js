@@ -16,7 +16,9 @@ function buildScope(dataDictionary) {
     lastCovidScreeningDate: '',
     retroSpective: false,
     screenedForCovidToday: false,
-    isViremicHighVL: false
+    isViremicHighVL: false,
+    isEligibleForMedicationRefill: false,
+    isEligibleForCommunityVisit: false
   };
   let isStandardDcVisit = false;
 
@@ -178,6 +180,16 @@ function buildScope(dataDictionary) {
 
   if (dataDictionary.dcQualifedVisits) {
     const result = conditionalDCVisits(dataDictionary);
+    const medicationRefillResults = validateMedicationRefillEligibility(
+      dataDictionary.validateMedicationRefill
+    );
+    if (medicationRefillResults.communityVisit) {
+      scope.isEligibleForCommunityVisit = true;
+    }
+
+    if (medicationRefillResults.medicationRefill) {
+      scope.isEligibleForMedicationRefill = true;
+    }
     if (result) {
       isStandardDcVisit = true;
     }
@@ -404,6 +416,45 @@ function conditionalDCVisits(patient) {
       latestEncounter.encounterType.uuid === expectedEncounterToBeDrugPickup
     );
   }
+}
+
+function validateMedicationRefillEligibility(validateMedicationRefill) {
+  if (!validateMedicationRefill || !validateMedicationRefill.obs) {
+    console.warn('No encounter or observations found.');
+    return;
+  }
+
+  const conceptMap = {
+    medicationRefillEligibility: 'd5e8c52f-7a38-44ed-a76a-bc771cc9b2ee',
+    communityVisitEligibility: 'f930b22e-8b8e-4b8c-8d19-4c34a5d34a5e'
+  };
+
+  const icadAnswerUuid = '7e5e7759-e9f7-4b16-b904-041fcdddb390';
+
+  let isEligibleForMedicationRefill = false;
+  let isEligibleForCommunityVisit = false;
+
+  for (const obs of validateMedicationRefill.obs) {
+    const conceptUuid = obs.concept?.uuid;
+
+    if (!conceptUuid) continue;
+
+    if (conceptUuid === conceptMap.medicationRefillEligibility) {
+      isEligibleForMedicationRefill = true;
+    }
+
+    if (
+      conceptUuid === conceptMap.communityVisitEligibility &&
+      obs.value?.uuid === icadAnswerUuid
+    ) {
+      isEligibleForCommunityVisit = true;
+    }
+  }
+
+  return {
+    medicationRefill: isEligibleForMedicationRefill,
+    communityVisit: isEligibleForCommunityVisit
+  };
 }
 
 function buildPatientScopeMembers(scope, patient) {
