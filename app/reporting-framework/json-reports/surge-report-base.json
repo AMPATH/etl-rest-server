@@ -32,6 +32,14 @@
         "type": "INNER",
         "joinCondition": "l.location_id = srb.location_id"
       }
+    },
+    {
+      "table": "etl.flat_defaulters",
+      "alias": "d",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "d.encounter_id = srb.encounter_id"
+      }
     }
   ],
   "columns": [
@@ -565,19 +573,28 @@
       "column": "srb.ltfu_death_this_week"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "ltfu_active_this_week",
-      "column": "srb.ltfu_active_this_week"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN d.encounter_datetime >= '2024-10-01' and d.days_since_rtc >= 28 THEN old_ltfus_to_active_this_week ELSE 0 END"
+      }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "is_ltfu_after_may",
-      "column": "srb.is_ltfu_after_may"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN d.encounter_datetime >= '2024-10-01' and d.days_since_rtc >= 28 THEN is_ltfu_after_may ELSE 0 END"
+      }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "old_ltfus_to_active",
-      "column": "srb.old_ltfus_to_active"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN d.encounter_datetime >= '2024-10-01' and d.days_since_rtc >= 28 THEN old_ltfus_to_active ELSE 0 END"
+      }
     },
     {
       "type": "simple_column",
@@ -640,9 +657,12 @@
       "column": "srb.not_elligible_and_on_dc"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "is_ltfu_after_may_total",
-      "column": "srb.is_ltfu_after_may_total"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN d.encounter_datetime >= '2024-10-01' and d.days_since_rtc >= 28 THEN is_ltfu_after_may_total ELSE 0 END"
+      }
     },
     {
       "type": "simple_column",

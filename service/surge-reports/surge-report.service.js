@@ -3,11 +3,21 @@ import { SurgeMultiDatasetPatientlistReport } from './surge-multi-dataset-patien
 import { PatientlistMysqlReport } from '../../app/reporting-framework/patientlist-mysql.report';
 const patientListCols = require('./surge-report-patientlist.json');
 import moment from 'moment';
+const path = require('path');
+const fs = require('fs');
 
 const helpers = require('../../etl-helpers');
 const Promise = require('bluebird');
 const _ = require('lodash');
-const surgeSectionDefinitions = require('./surge-report.json');
+
+const filePath = path.join(__dirname, 'surge-report.json');
+const raw = fs.readFileSync(filePath, 'utf-8');
+const previousYear = new Date().getFullYear() - 1;
+
+// Replace all occurrences of {{YEAR}} with previous year
+const replaced = raw.replace(/{{YEAR}}/g, previousYear);
+
+const surgeSectionDefinitions = JSON.parse(replaced);
 const surgeSchemaReportMap = require('./surge-indicators-config.json');
 
 export class SurgeService extends SurgeMultiDatasetPatientlistReport {
