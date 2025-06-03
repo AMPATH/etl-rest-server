@@ -75,6 +75,14 @@
       "expressionOptions": {
         "expression": "COUNT(hc.screened_hpv)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_colposcopy)"
+      }
     }
   ],
   "groupBy": {

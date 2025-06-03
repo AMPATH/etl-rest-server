@@ -247,7 +247,7 @@ export class FamilyTestingService {
             patient_uuid = '${params.patientUuid}'
               and fm_age < 20) t2
             ON (t1.patient_id = t2.patient_id) 
-            where tx.patient_uuid = '${params.patientUuid}' ${appendWhereClause}`;
+            where t1.date_elicited is not null and tx.patient_uuid = '${params.patientUuid}' ${appendWhereClause}`;
       /*
       1.eligible_for_tracing = 0, not eligible for testing 
       2.eligible_for_tracing = 1, traced and tested

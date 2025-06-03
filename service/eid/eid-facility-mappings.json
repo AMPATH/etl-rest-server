@@ -3076,5 +3076,140 @@
     "county": "Trans Nzoia",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "6b9bebc0-bea7-4c90-8dc8-4c14f33c96de": {
+    "mrsId": 492,
+    "mrsDisplay": "Kapteldon Health Centre MCH",
+    "description": "Kapteldon Health Centre MCH",
+    "mflCode": "14779",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "e9f515c2-7c48-4099-ac76-41db9977f96f": {
+    "mrsId": 341,
+    "mrsDisplay": "Webuye MCH",
+    "description": "Webuye MCH",
+    "mflCode": "16161",
+    "county": "Bungoma",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "c7f1edfd-4b89-47b3-abf9-f45c2573f982": {
+    "mrsId": 501,
+    "mrsDisplay": "Kisor Dispensary",
+    "description": "Kisor Dispensary",
+    "mflCode": "14945",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "bf70401b-6eb1-4d5b-bfdf-6956087ad44a": {
+    "mrsId": 502,
+    "mrsDisplay": "Kipkenyo Dispensary",
+    "description": "Kipkenyo Dispensary",
+    "mflCode": "14898",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "37649b75-d92f-4a73-8ffe-42cb62280efc": {
+    "mrsId": 503,
+    "mrsDisplay": "Moi University MCH",
+    "description": "Moi University MCH",
+    "mflCode": "15205",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "88323008-4a93-432e-b0a0-cfba5ab7f61c": {
+    "mrsId": 520,
+    "mrsDisplay": "Muiyengwet Dispensary",
+    "description": "Muiyengwet Dispensary",
+    "mflCode": "15264",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "b586b09d-3430-4305-814a-455edfe9fe60": {
+    "mrsId": 523,
+    "mrsDisplay": "Muiyengwet Dispensary MCH",
+    "description": "Muiyengwet Dispensary MCH",
+    "mflCode": "15264",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "a6640952-a4a2-43f6-b6e4-41d108319f19": {
+    "mrsId": 495,
+    "mrsDisplay": "Oak tree Hospital",
+    "description": "Oak tree Hospital",
+    "mflCode": "25427",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "e790a898-b7de-4c8d-9daa-a10875c742d2": {
+    "mrsId": 518,
+    "mrsDisplay": "Nabkoi Health Centre",
+    "description": "Nabkoi Health Center",
+    "mflCode": "15268",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "5f1c414e-9bc6-4cdf-9307-133625636ddf": {
+    "mrsId": 419,
+    "mrsDisplay": "Real Hospital MCH ",
+    "description": "Real Hospital MCH ",
+    "mflCode": "17243",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "dbd99c38-89f0-4104-baae-df6519b9eaee": {
+    "mrsId": 530,
+    "mrsDisplay": "Ngelel Tarit Dispensary",
+    "description": "Ngelel Tarit Dispensary",
+    "mflCode": "17829",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "ec030341-30cd-47a6-8b31-2a2627c3e32e": {
+    "mrsId": 529,
+    "mrsDisplay": "Uhuru Dispensary",
+    "description": "Uhuru Dispensary",
+    "mflCode": "15759",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "ba07e5bf-a8db-49cb-9e0c-c49d8e4cc47e": {
+    "mrsId": 531,
+    "mrsDisplay": "Wamalwa Kijana-CCC",
+    "description": "Wamalwa Kijana-CCC",
+    "mflCode": "27376",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "31e7ff7f-f84a-4b11-b9dd-e22d5a7c8678": {
+    "mrsId": 547,
+    "mrsDisplay": "Wamalwa Kijana-MCH",
+    "description": "Wamalwa Kijana-MCH",
+    "mflCode": "27376",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "6178923f-81f0-408b-98d7-8deb0f4b1b85": {
+    "mrsId": 527,
+    "mrsDisplay": "Chukura Dispensary",
+    "description": "Chukura Dispensary",
+    "mflCode": "14390",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }

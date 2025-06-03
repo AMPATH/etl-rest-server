@@ -16,7 +16,9 @@ function buildScope(dataDictionary) {
     lastCovidScreeningDate: '',
     retroSpective: false,
     screenedForCovidToday: false,
-    isViremicHighVL: false
+    isViremicHighVL: false,
+    isEligibleForMedicationRefill: false,
+    isEligibleForCommunityVisit: false
   };
   let isStandardDcVisit = false;
 
@@ -100,7 +102,49 @@ function buildScope(dataDictionary) {
     '8b6f450b-8a61-4051-b4bd-b1a79cb541ee',
     '0900b212-1352-11df-a1f1-0026b9348838',
     '48305e5b-2ca5-44e1-8f6b-008c4d2789ba',
-    '38eec9dd-8b52-4f8c-ad25-f045486299c1'
+    '38eec9dd-8b52-4f8c-ad25-f045486299c1',
+    '08fec704-1352-11df-a1f1-0026b9348838',
+    'e3cb359e-0b69-4371-aa62-8ca22dca151f',
+    'cb31d052-b668-4321-80ad-c0aaa571f87b',
+    'e211bf00-819a-43a5-baa4-354feaa02db8',
+    '1d3bc503-925b-4a31-91da-337b611cc27a',
+    '88506d5f-8b48-42ca-88ab-c2855bca9ee2',
+    '538c14c2-c98a-49a2-9e11-0af6f7b912dc',
+    'e26cbaf5-fd02-4c4f-a529-7a4dcb5ed5e6',
+    '81e709e6-769d-4ac0-95b9-65fffa1b87c3',
+    '09c9dbeb-9a24-4511-9ad2-9cf6601a9023',
+    '7fb68709-6e7b-4eaf-a984-ea111fa45853',
+    '68cb63f3-992d-4fd0-a80d-47a27fcf8021',
+    '10446739-2ef2-4fb3-b134-29840d97acbe',
+    '08fec24a-1352-11df-a1f1-0026b9348838',
+    '08fec056-1352-11df-a1f1-0026b9348838',
+    '08fec150-1352-11df-a1f1-0026b9348838',
+    '1dc987ac-5396-4498-9e87-a344aeb4b290',
+    '65bdb112-a254-4cf9-a5a7-29dce997312d',
+    '08feb14c-1352-11df-a1f1-0026b9348838',
+    '8cad59c8-7f88-4964-aa9e-908f417f70b2',
+    '02e85257-94d6-43bf-8603-322248c1a210',
+    '00b47ef5-a29b-40a2-a7f4-6851df8d6532',
+    'f8dd8eb8-b9fe-46d1-bb42-58a5f18cfc25',
+    '08febf52-1352-11df-a1f1-0026b9348838',
+    '60cd8ba2-c4a5-44e5-b7cf-7cc3192756f6',
+    '0900aefc-1352-11df-a1f1-0026b9348838',
+    '1254d7b3-4fb1-407e-b192-57e149225bb3',
+    '0900adee-1352-11df-a1f1-0026b9348838',
+    'abef0621-e2cd-4a65-8893-2ee6e963ab81',
+    '0900abdc-1352-11df-a1f1-0026b9348838',
+    '37649b75-d92f-4a73-8ffe-42cb62280efc',
+    '840d4e9c-8f62-4ece-bfd7-64bf04007033',
+    'a473d19b-51ce-429e-927e-a197d36e00f1',
+    '294efcca-cf90-40da-8abb-1e082866388d',
+    '0900a9ac-1352-11df-a1f1-0026b9348838',
+    '78d91367-c020-4c65-b4f3-31ec07fb90d9',
+    '09008206-1352-11df-a1f1-0026b9348838',
+    '2efc716d-fddf-468e-8365-09cca3fc4d5c',
+    '0900acea-1352-11df-a1f1-0026b9348838',
+    '469bb74e-18a4-4d74-872e-55fcebe12dc7',
+    '6666bb3c-1500-4320-9c46-78efc5bbaee0',
+    '4949293e-7b5c-4359-8a55-1196a578143b'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -136,6 +180,16 @@ function buildScope(dataDictionary) {
 
   if (dataDictionary.dcQualifedVisits) {
     const result = conditionalDCVisits(dataDictionary);
+    const medicationRefillResults = validateMedicationRefillEligibility(
+      dataDictionary.validateMedicationRefill
+    );
+    if (medicationRefillResults.communityVisit) {
+      scope.isEligibleForCommunityVisit = true;
+    }
+
+    if (medicationRefillResults.medicationRefill) {
+      scope.isEligibleForMedicationRefill = true;
+    }
     if (result) {
       isStandardDcVisit = true;
     }
@@ -235,7 +289,49 @@ function buildScope(dataDictionary) {
       '8b6f450b-8a61-4051-b4bd-b1a79cb541ee',
       '0900b212-1352-11df-a1f1-0026b9348838',
       '48305e5b-2ca5-44e1-8f6b-008c4d2789ba',
-      '38eec9dd-8b52-4f8c-ad25-f045486299c1'
+      '38eec9dd-8b52-4f8c-ad25-f045486299c1',
+      '08fec704-1352-11df-a1f1-0026b9348838',
+      'e3cb359e-0b69-4371-aa62-8ca22dca151f',
+      'cb31d052-b668-4321-80ad-c0aaa571f87b',
+      'e211bf00-819a-43a5-baa4-354feaa02db8',
+      '1d3bc503-925b-4a31-91da-337b611cc27a',
+      '88506d5f-8b48-42ca-88ab-c2855bca9ee2',
+      '538c14c2-c98a-49a2-9e11-0af6f7b912dc',
+      'e26cbaf5-fd02-4c4f-a529-7a4dcb5ed5e6',
+      '81e709e6-769d-4ac0-95b9-65fffa1b87c3',
+      '09c9dbeb-9a24-4511-9ad2-9cf6601a9023',
+      '7fb68709-6e7b-4eaf-a984-ea111fa45853',
+      '68cb63f3-992d-4fd0-a80d-47a27fcf8021',
+      '10446739-2ef2-4fb3-b134-29840d97acbe',
+      '08fec24a-1352-11df-a1f1-0026b9348838',
+      '08fec056-1352-11df-a1f1-0026b9348838',
+      '08fec150-1352-11df-a1f1-0026b9348838',
+      '1dc987ac-5396-4498-9e87-a344aeb4b290',
+      '65bdb112-a254-4cf9-a5a7-29dce997312d',
+      '08feb14c-1352-11df-a1f1-0026b9348838',
+      '8cad59c8-7f88-4964-aa9e-908f417f70b2',
+      '02e85257-94d6-43bf-8603-322248c1a210',
+      '00b47ef5-a29b-40a2-a7f4-6851df8d6532',
+      'f8dd8eb8-b9fe-46d1-bb42-58a5f18cfc25',
+      '08febf52-1352-11df-a1f1-0026b9348838',
+      '60cd8ba2-c4a5-44e5-b7cf-7cc3192756f6',
+      '0900aefc-1352-11df-a1f1-0026b9348838',
+      '1254d7b3-4fb1-407e-b192-57e149225bb3',
+      '0900adee-1352-11df-a1f1-0026b9348838',
+      'abef0621-e2cd-4a65-8893-2ee6e963ab81',
+      '0900abdc-1352-11df-a1f1-0026b9348838',
+      '37649b75-d92f-4a73-8ffe-42cb62280efc',
+      '840d4e9c-8f62-4ece-bfd7-64bf04007033',
+      'a473d19b-51ce-429e-927e-a197d36e00f1',
+      '294efcca-cf90-40da-8abb-1e082866388d',
+      '0900a9ac-1352-11df-a1f1-0026b9348838',
+      '78d91367-c020-4c65-b4f3-31ec07fb90d9',
+      '09008206-1352-11df-a1f1-0026b9348838',
+      '2efc716d-fddf-468e-8365-09cca3fc4d5c',
+      '0900acea-1352-11df-a1f1-0026b9348838',
+      '469bb74e-18a4-4d74-872e-55fcebe12dc7',
+      '6666bb3c-1500-4320-9c46-78efc5bbaee0',
+      '4949293e-7b5c-4359-8a55-1196a578143b'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
@@ -320,6 +416,45 @@ function conditionalDCVisits(patient) {
       latestEncounter.encounterType.uuid === expectedEncounterToBeDrugPickup
     );
   }
+}
+
+function validateMedicationRefillEligibility(validateMedicationRefill) {
+  if (!validateMedicationRefill || !validateMedicationRefill.obs) {
+    console.warn('No encounter or observations found.');
+    return;
+  }
+
+  const conceptMap = {
+    medicationRefillEligibility: 'd5e8c52f-7a38-44ed-a76a-bc771cc9b2ee',
+    communityVisitEligibility: 'f930b22e-8b8e-4b8c-8d19-4c34a5d34a5e'
+  };
+
+  const icadAnswerUuid = '7e5e7759-e9f7-4b16-b904-041fcdddb390';
+
+  let isEligibleForMedicationRefill = false;
+  let isEligibleForCommunityVisit = false;
+
+  for (const obs of validateMedicationRefill.obs) {
+    const conceptUuid = obs.concept?.uuid;
+
+    if (!conceptUuid) continue;
+
+    if (conceptUuid === conceptMap.medicationRefillEligibility) {
+      isEligibleForMedicationRefill = true;
+    }
+
+    if (
+      conceptUuid === conceptMap.communityVisitEligibility &&
+      obs.value?.uuid === icadAnswerUuid
+    ) {
+      isEligibleForCommunityVisit = true;
+    }
+  }
+
+  return {
+    medicationRefill: isEligibleForMedicationRefill,
+    communityVisit: isEligibleForCommunityVisit
+  };
 }
 
 function buildPatientScopeMembers(scope, patient) {

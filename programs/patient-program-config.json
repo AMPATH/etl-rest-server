@@ -711,6 +711,17 @@
         ]
       },
       {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW-Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
+          }
+        ]
+      },
+      {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [
@@ -1736,6 +1747,10 @@
           {
             "uuid": "8010fabc-2e58-4160-a201-fce9c609d2fa",
             "display": "COVIDASSESSMENT"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -2838,7 +2853,7 @@
     ]
   },
   "334c9e98-173f-4454-a8ce-f80b20b7fdf0": {
-    "name": "HIV DIFFERENTIATED CARE PROGRAM",
+    "name": "DIFFERENTIATED SERVICE DELIVERY PROGRAM",
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -2847,6 +2862,7 @@
       "patientEncounters",
       "isPatientTransferredOut",
       "dcQualifedVisits",
+      "validateMedicationRefill",
       "latestCovidAssessment"
     ],
     "enrollmentOptions": {
@@ -2920,8 +2936,8 @@
     "visitTypes": [
       {
         "uuid": "0becf5b9-0522-47c8-960c-c9d660c56501",
-        "name": "Medication Refill Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit",
+        "name": "Facilty Medication Delivery Visit",
+        "allowedIf": "qualifiesMedicationRefillVisit && isEligibleForMedicationRefill",
         "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
         "encounterTypes": [
           {
@@ -2985,7 +3001,7 @@
       },
       {
         "uuid": "380d79a7-6fb0-41bf-be3d-aa3d25da187c",
-        "name": "Standard HIV Visit for Differentiated Care ",
+        "name": "Standard for Differentiated Service Delivery",
         "allowedIf": "age >= 10 && programLocation === intendedVisitLocationUuid && !isFirstAMPATHHIVVisit && qualifiesForStandardVisit",
         "encounterTypes": [
           {
@@ -3239,6 +3255,29 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "3c1906a1-6d85-4184-9a43-0912cbac3d74",
+        "name": "Community Medication Delivery Visit",
+        "allowedIf": "qualifiesMedicationRefillVisit && isEligibleForCommunityVisit",
+        "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
+          }
+        ]
+      },
+      {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW-Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
           }
         ]
       }
@@ -5450,16 +5489,25 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && isFirstANCVisit && gender==='F' && isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
-            "uuid": "f5702679-6a16-43bd-8629-4b44c7a78ff1",
-            "display": "ANC INITIAL"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
           },
           {
+            "uuid": "f5702679-6a16-43bd-8629-4b44c7a78ff1",
+            "display": "ANC INITIAL"
+          },
+          {
             "uuid": "04bdcb6e-63df-42dc-a78c-b6afb155aa89",
             "display": "MATERNAL DEATH NOTIFICATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
           }
         ]
       },
@@ -5469,16 +5517,29 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && (!isFirstAMPATHHIVVisit || !isFirstANCVisit)  && gender==='F'",
         "encounterTypes": [
           {
-            "uuid": "26bfc6b7-28d0-41ab-90c5-e101af46d06d",
-            "display": "ANC RETURN"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
           },
           {
+            "uuid": "26bfc6b7-28d0-41ab-90c5-e101af46d06d",
+            "display": "ANC RETURN"
+          },
+          {
             "uuid": "04bdcb6e-63df-42dc-a78c-b6afb155aa89",
             "display": "MATERNAL DEATH NOTIFICATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       }
@@ -5520,12 +5581,12 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && isFirstPNCVisit && gender==='F' && isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
-            "uuid": "ded4ecf7-8129-4a9e-8aa3-a21a7adb7759",
-            "display": "PNC ADULT INITIAL"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
+          },
+          {
+            "uuid": "ded4ecf7-8129-4a9e-8aa3-a21a7adb7759",
+            "display": "PNC ADULT INITIAL"
           },
           {
             "uuid": "85533bd0-163b-45bd-b703-d5d4816e6282",
@@ -5534,6 +5595,19 @@
           {
             "uuid": "7bdd1e6b-1157-41fb-8daa-994277780b2b",
             "display": "MNCH IMMUNIZATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       },
@@ -5543,12 +5617,12 @@
         "allowedIf": "programLocation === intendedVisitLocationUuid && (!isFirstAMPATHHIVVisit || !isFirstPNCVisit) && gender==='F'",
         "encounterTypes": [
           {
-            "uuid": "db215741-de99-424a-a109-1f23eb3b680b",
-            "display": "PNC ADULTRETURN"
-          },
-          {
             "uuid": "af5c40e8-8c74-4194-a068-0d5e30664777",
             "display": "MNCH TRIAGE"
+          },
+          {
+            "uuid": "db215741-de99-424a-a109-1f23eb3b680b",
+            "display": "PNC ADULTRETURN"
           },
           {
             "uuid": "85533bd0-163b-45bd-b703-d5d4816e6282",
@@ -5557,6 +5631,19 @@
           {
             "uuid": "7bdd1e6b-1157-41fb-8daa-994277780b2b",
             "display": "MNCH IMMUNIZATION"
+          },
+          {
+            "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
+            "display": "ADHERENCE"
+          },
+          {
+            "uuid": "238625fc-8a25-44b2-aa5a-8bf48fa0e18d",
+            "display": "ONCOLOGYVIA",
+            "allowedIf": "age >= 15 && age <= 65 && gender === 'F'"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
           }
         ]
       }

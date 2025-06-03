@@ -58,7 +58,7 @@
       }
     },
     {
-      "table": "( select max(is_successful_phone_follow_up) as latest_phone_follow_up, person_id, follow_up_type from  etl.pre_appointment_summary group by person_id )",
+      "table": "(SELECT MAX(is_successful_phone_follow_up) AS latest_phone_follow_up, person_id, follow_up_type FROM etl.pre_appointment_summary WHERE elastic_id IN (SELECT MAX(elastic_id) AS id FROM etl.pre_appointment_summary GROUP BY person_id) GROUP BY person_id)",
       "alias": "s",
       "join": {
         "type": "LEFT",

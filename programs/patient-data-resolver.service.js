@@ -18,6 +18,7 @@ const availableKeys = {
   patientEncounters: getPatientEncounters,
   isPatientTransferredOut: checkTransferOut,
   dcQualifedVisits: getQualifiedDcVisits,
+  validateMedicationRefill: getMedicationRefillVisits,
   latestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL
 };
@@ -32,6 +33,7 @@ const def = {
   getPatientEncounters: getPatientEncounters,
   checkTransferOut: checkTransferOut,
   dcQualifedVisits: getQualifiedDcVisits,
+  validateMedicationRefill: getMedicationRefillVisits,
   getLatestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL
 };
@@ -112,6 +114,39 @@ function checkTransferOut(patientUuid, params) {
       })
       .catch((error) => {
         reject(error);
+      });
+  });
+}
+
+function getMedicationRefillVisits(patientUuid) {
+  const expectedAdultReturnEncounter = '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f';
+
+  const patientEncounters = encounterService.getPatientEncounters({
+    patientUuid,
+    v:
+      'custom:(encounterDatetime,encounterType:(uuid,display),obs:(uuid,obsDatetime,concept:(uuid,name:(uuid,name)),value:(uuid,display)))'
+  });
+
+  return new Promise((resolve, reject) => {
+    patientEncounters
+      .then((encounters) => {
+        const medicationRefillEncounters = encounters
+          .filter(
+            (encounter) =>
+              encounter.encounterType &&
+              encounter.encounterType.uuid === expectedAdultReturnEncounter
+          )
+          .sort(
+            (a, b) =>
+              new Date(b.encounterDatetime).getTime() -
+              new Date(a.encounterDatetime).getTime()
+          );
+
+        resolve(medicationRefillEncounters[0] || null);
+      })
+      .catch((e) => {
+        console.error('An error occurred fetching encounters: ', e);
+        reject(e);
       });
   });
 }

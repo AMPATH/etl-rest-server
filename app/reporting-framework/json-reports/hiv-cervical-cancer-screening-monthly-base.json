@@ -199,7 +199,11 @@
           },
           {
             "condition": "c.screening_method = 2322",
-            "value": "hpv"
+            "value": "HPV"
+          },
+          {
+            "condition": "c.screening_method = 7383",
+            "value": "Colposcopy"
           }
         ]
       }
@@ -226,6 +230,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(c.screening_method in (2322),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383),1,NULL)"
       }
     },
     {

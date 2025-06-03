@@ -52,27 +52,27 @@
     "sectionTitle": "Client Disengagements",
     "indicators": [
       {
-        "label": "Cumulative LTFUs (All LTFUs)",
+        "label": "Cumulative IITs (All IITs)",
         "description": "All patients who have missed their rtc more than 28 days",
         "indicator": "all_ltfus"
       },
       {
-        "label": "Cumulative Surge LTFUs (LTFUs as from October 2020)",
-        "description": "All patients who became LTFUs as from October 2020 including those who have been resolved",
+        "label": "Cumulative Surge IITs (IITs as from October {{YEAR}})",
+        "description": "All patients who became IITs as from October {{YEAR}} including those who have been resolved",
         "indicator": "is_ltfu_after_may_total"
       },
       {
-        "label": "Target to bring back this week (LTFUs as from October 2020 not yet resolved)",
-        "description": "All patients who became LTFUs as from October 2020 and have not been resolved",
+        "label": "Target to bring back this week (IITs as from October {{YEAR}} not yet resolved)",
+        "description": "All patients who became IITs as from October {{YEAR}} and have not been resolved",
         "indicator": "is_ltfu_after_may"
       },
       {
-        "label": "Cumulative Medication refill LTFUs(Missed medication pickup rtc for more that 28 days)",
+        "label": "Cumulative Medication refill IITs(Missed medication pickup rtc for more that 28 days)",
         "description": "All patients who have missed their medication pickup rtc for more that 28 days as from October 2020 to now, including those with outcomes already",
         "indicator": "med_surge_ltfus_cumulative"
       },
       {
-        "label": "Medication refill LTFUs not yet resolved",
+        "label": "Medication refill IITs not yet resolved",
         "description": "All patients who have missed their medication pickup rtc for more that 28 days as from October 2020 to now and have not been resolved yet",
         "indicator": "med_surge_ltfu_and_med_ltfu_after_may"
       },
@@ -102,12 +102,12 @@
         "indicator": "med_defaulters"
       },
       {
-        "label": "LTFUs this week (patients who became LTFU this week)",
-        "description": "Patients who became LTFU this week",
+        "label": "IITs this week (patients who became IIT this week)",
+        "description": "Patients who became IIT this week",
         "indicator": "newly_ltfu_this_week"
       },
       {
-        "label": "Medication refill LTFUs this week(Missed medication pickup rtc date more than 28 days this week)",
+        "label": "Medication refill IITs this week(Missed medication pickup rtc date more than 28 days this week)",
         "description": "Patients who have missed their medication pickup rtc date for more than 28 days this week",
         "indicator": "newly_med_ltfu_this_week"
       },
@@ -124,7 +124,7 @@
     ]
   },
   {
-    "sectionTitle": "LTFU Outcomes this week(Surge LTFUs)",
+    "sectionTitle": "IIT Outcomes this week(Surge IITs)",
     "indicators": [
       {
         "label": "Brought back to care",
@@ -143,52 +143,52 @@
       },
       {
         "label": "Medication refill brought back this week",
-        "description": "Medication refill LTFUs that have been brought back this week",
+        "description": "Medication refill IITs that have been brought back this week",
         "indicator": "med_surge_ltfus_outcomes_this_week"
       }
     ]
   },
   {
-    "sectionTitle": "LTFU cumulative outcome(Surge LTFUs)",
+    "sectionTitle": "IIT cumulative outcome(Surge IITs)",
     "indicators": [
       {
         "label": "Cumulative Outcomes (brought back, self transfers and dead)",
-        "description": "surge LTFUs brought back, transfered out or those who are confirmed dead",
+        "description": "surge IITs brought back, transfered out or those who are confirmed dead",
         "indicator": "ltfu_cumulative_outcomes_total"
       },
       {
         "label": "Brought back to care cumulative",
-        "description": "Total Surge LTFUs who were brought back to care",
+        "description": "Total Surge IITs who were brought back to care",
         "indicator": "ltfu_cumulative_outcomes_active"
       },
       {
         "label": "Reported self transfered cumulative",
-        "description": "Total Surge LTFUs that have been reported self transfered",
+        "description": "Total Surge IITs that have been reported self transfered",
         "indicator": "ltfu_cumulative_outcomes_transfer_out"
       },
       {
         "label": "Reported dead cumulative",
-        "description": "Total Surge LTFUs that have been confirmed dead",
+        "description": "Total Surge IITs that have been confirmed dead",
         "indicator": "ltfu_cumulative_outcomes_death"
       },
       {
         "label": "Cumulative medication refill brought back",
-        "description": "All medication refill LTFUs that have been brought back",
+        "description": "All medication refill IITs that have been brought back",
         "indicator": "med_surge_ltfus_outcomes"
       }
     ]
   },
   {
-    "sectionTitle": "LTFU Outcomes (clients lost before october 2019)",
+    "sectionTitle": "IIT Outcomes (clients lost before october {{YEAR}})",
     "indicators": [
       {
         "label": "Returnees cumulative",
-        "description": "Patients who were LTFU before october 2019 and have returned",
+        "description": "Patients who were IIT before october {{YEAR}} and have returned",
         "indicator": "old_ltfus_to_active"
       },
       {
         "label": "Returnees this week",
-        "description": "Patients who were LTFU before october 2019 and have returned this week",
+        "description": "Patients who were IIT before october {{YEAR}} and have returned this week",
         "indicator": "old_ltfus_to_active_this_week"
       }
     ]

@@ -139,6 +139,68 @@
     },
     {
       "type": "derived_column",
+      "alias": "hpv_test_result",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.hpv_test_result = 1",
+            "value": "Negative"
+          },
+          {
+            "condition": "c.hpv_test_result = 2",
+            "value": "Positive"
+          },
+          {
+            "condition": "c.hpv_test_result = 3",
+            "value": "Indeterminate"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colposcopy_test_result",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.colposcopy_test_result = 1",
+            "value": "Normal"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 2",
+            "value": "Abnormal"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 3",
+            "value": "Acetowhite Lesion"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 4",
+            "value": "Punctuated Capillaries"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 5",
+            "value": "Mosaicism"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 6",
+            "value": "Atypical blood vessels"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 7",
+            "value": "Internal Border within Cervical Lesion"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 8",
+            "value": "Do not know"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screening_visit_type",
       "expressionType": "case_statement",
       "expressionOptions": {
@@ -195,7 +257,11 @@
           },
           {
             "condition": "c.screening_method = 2322",
-            "value": "hpv"
+            "value": "HPV"
+          },
+          {
+            "condition": "c.screening_method = 7383",
+            "value": "Colposcopy"
           }
         ]
       }
@@ -205,7 +271,7 @@
       "alias": "screened_initial_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322) AND c.reasons_for_current_visit = 1,1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383) AND c.reasons_for_current_visit = 1,1,NULL)"
       }
     },
     {
@@ -226,6 +292,22 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_initial_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -234,10 +316,26 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_routine_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322) AND c.reasons_for_current_visit = 2,1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383) AND c.reasons_for_current_visit = 2,1,NULL)"
       }
     },
     {
@@ -258,6 +356,22 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_routine_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -266,10 +380,26 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_post_treatment_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322) AND c.reasons_for_current_visit = 3 ,1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383) AND c.reasons_for_current_visit = 3 ,1,NULL)"
       }
     },
     {
@@ -290,10 +420,42 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened_hpv_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili_post_treatment_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
       }
     },
     {
@@ -686,6 +848,30 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(c.screening_method in (9434,10420),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (2322),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383),1,NULL)"
       }
     },
     {
