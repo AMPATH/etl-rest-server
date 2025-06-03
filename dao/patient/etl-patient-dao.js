@@ -52,6 +52,10 @@ module.exports = (function () {
             ],
             order: order || [
               {
+                column: 't1.rtc_date',
+                asc: false
+              },
+              {
                 column: 't1.encounter_datetime',
                 asc: false
               }
