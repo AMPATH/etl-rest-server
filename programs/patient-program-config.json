@@ -736,8 +736,8 @@
       },
       {
         "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
-        "name": "HCW-Peer Delivery Visit",
-        "allowedIf": "!isEligibleForCommunityVisit",
+        "name": "HCW/Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit && !isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
@@ -3321,7 +3321,7 @@
       {
         "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
         "name": "HCW/Peer Delivery Visit",
-        "allowedIf": "!isEligibleForCommunityVisit",
+        "allowedIf": "!isEligibleForCommunityVisit && !isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",

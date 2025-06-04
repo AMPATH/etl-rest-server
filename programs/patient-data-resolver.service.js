@@ -119,7 +119,10 @@ function checkTransferOut(patientUuid, params) {
 }
 
 function getMedicationRefillVisits(patientUuid) {
-  const expectedAdultReturnEncounter = '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f';
+  const expectedEncounters = [
+    '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f',
+    '4e7553b4-373d-452f-bc89-3f4ad9a01ce7'
+  ];
 
   const patientEncounters = encounterService.getPatientEncounters({
     patientUuid,
@@ -134,7 +137,7 @@ function getMedicationRefillVisits(patientUuid) {
           .filter(
             (encounter) =>
               encounter.encounterType &&
-              encounter.encounterType.uuid === expectedAdultReturnEncounter
+              expectedEncounters.includes(encounter.encounterType.uuid)
           )
           .sort(
             (a, b) =>
