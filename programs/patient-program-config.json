@@ -736,8 +736,8 @@
       },
       {
         "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
-        "name": "HCW-Peer Delivery Visit",
-        "allowedIf": "!isEligibleForCommunityVisit",
+        "name": "HCW/Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit && !isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
@@ -2980,8 +2980,8 @@
     "visitTypes": [
       {
         "uuid": "0becf5b9-0522-47c8-960c-c9d660c56501",
-        "name": "Facilty Medication Delivery Visit",
-        "allowedIf": "qualifiesMedicationRefillVisit && isEligibleForMedicationRefill",
+        "name": "Facility Medication Refill Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit && isEligibleForMedicationRefill",
         "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
         "encounterTypes": [
           {
@@ -3309,7 +3309,7 @@
       {
         "uuid": "3c1906a1-6d85-4184-9a43-0912cbac3d74",
         "name": "Community Medication Delivery Visit",
-        "allowedIf": "qualifiesMedicationRefillVisit && isEligibleForCommunityVisit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && qualifiesMedicationRefillVisit && isEligibleForCommunityVisit",
         "message": "Patient has to be in the location he enrolled into the HIV Care and Treatment program ",
         "encounterTypes": [
           {
@@ -3320,8 +3320,8 @@
       },
       {
         "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
-        "name": "HCW-Peer Delivery Visit",
-        "allowedIf": "!isEligibleForCommunityVisit",
+        "name": "HCW/Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit && !isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
