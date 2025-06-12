@@ -3234,6 +3234,7 @@
       {
         "uuid": "0d608b80-1cb5-4c85-835a-29072683ca27",
         "name": "Community Visit for Differentiated Care",
+        "allowedIf": "!qualifiesForStandardVisit",
         "groupVisit": true,
         "encounterTypes": [
           {
@@ -3263,6 +3264,24 @@
           {
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          }
+        ]
+      },
+      {
+        "uuid": "380d79a7-6fb0-41bf-be3d-aa3d25da187c",
+        "name": "Standard for Differentiated Service Delivery",
+        "groupVisit": true,
+        "allowedIf": "age >= 10 && qualifiesForStandardVisit",
+        "encounterTypes": [
+          {
+            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+            "display": "ADULTRETURN",
+            "allowedIf": " age > 24"
+          },
+          {
+            "uuid": "4e7553b4-373d-452f-bc89-3f4ad9a01ce7",
+            "allowedIf": "age >= 10 && age <= 24",
+            "display": "YOUTHRETURN"
           }
         ]
       },
