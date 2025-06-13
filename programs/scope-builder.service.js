@@ -18,10 +18,18 @@ function buildScope(dataDictionary) {
     screenedForCovidToday: false,
     isViremicHighVL: false,
     isEligibleForMedicationRefill: false,
-    isEligibleForCommunityVisit: false
+    isEligibleForCommunityVisit: false,
+    inPrediction: false
   };
+
   let isStandardDcVisit = false;
 
+  if (
+    dataDictionary.weeklyPredictedPatients &&
+    dataDictionary.weeklyPredictedPatients.length > 0
+  ) {
+    scope.inPrediction = true;
+  }
   // Restrict to Pilot locations
   scope.MlLocations = [
     '08feb8ae-1352-11df-a1f1-0026b9348838',
