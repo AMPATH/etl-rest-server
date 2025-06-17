@@ -6,7 +6,8 @@
       "enrollment",
       "patientEncounters",
       "isPatientTransferredOut",
-      "latestCovidAssessment"
+      "latestCovidAssessment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -806,7 +807,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -1258,7 +1259,8 @@
       "patientEnrollment",
       "patientEncounters",
       "isPatientTransferredOut",
-      "latestCovidAssessment"
+      "latestCovidAssessment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "enrollIf": "gender === 'F'",
@@ -1968,7 +1970,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -2225,7 +2227,8 @@
       "enrollment",
       "hivLastTenClinicalEncounters",
       "patientEncounters",
-      "latestCovidAssessment"
+      "latestCovidAssessment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -2394,7 +2397,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -2430,6 +2433,7 @@
       }
     ]
   },
+
   "c19aec66-1a40-4588-9b03-b6be55a8dd1d": {
     "name": "PrEP PROGRAM",
     "dataDependencies": [
@@ -2437,7 +2441,9 @@
       "enrollment",
       "hivLastTenClinicalEncounters",
       "patientEncounters",
-      "latestCovidAssessment"
+      "latestCovidAssessment",
+      "weeklyPredictedPatients",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -2622,7 +2628,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "MlLocations",
+        "allowedIf": "inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -2660,7 +2666,8 @@
       "patient",
       "enrollment",
       "hivLastTenClinicalEncounters",
-      "latestCovidAssessment"
+      "latestCovidAssessment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -2823,7 +2830,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "MlLocations",
+        "allowedIf": "inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -2918,7 +2925,8 @@
       "isPatientTransferredOut",
       "dcQualifedVisits",
       "validateMedicationRefill",
-      "latestCovidAssessment"
+      "latestCovidAssessment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -3200,7 +3208,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -4119,7 +4127,8 @@
     "dataDependencies": [
       "patient",
       "enrollment",
-      "hivLastTenClinicalEncounters"
+      "hivLastTenClinicalEncounters",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -4223,7 +4232,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -4256,7 +4265,8 @@
     "dataDependencies": [
       "patient",
       "enrollment",
-      "hivLastTenClinicalEncounters"
+      "hivLastTenClinicalEncounters",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -4362,7 +4372,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "MlLocations",
+        "allowedIf": "inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -4498,7 +4508,8 @@
       "isPatientTransferredOut",
       "patientEncounters",
       "latestCovidAssessment",
-      "isViremicHighVL"
+      "isViremicHighVL",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -4736,7 +4747,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "MlLocations",
+        "allowedIf": "inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -4777,7 +4788,8 @@
     "dataDependencies": [
       "patient",
       "enrollment",
-      "hivLastTenClinicalEncounters"
+      "hivLastTenClinicalEncounters",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "stateChangeEncounterTypes": {
@@ -4843,7 +4855,8 @@
     "dataDependencies": [
       "patient",
       "enrollment",
-      "hivLastTenClinicalEncounters"
+      "hivLastTenClinicalEncounters",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -4989,7 +5002,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "MlLocations",
+        "allowedIf": "inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -5058,7 +5071,8 @@
     "dataDependencies": [
       "patient",
       "enrollment",
-      "hivLastTenClinicalEncounters"
+      "hivLastTenClinicalEncounters",
+      "weeklyPredictedPatients"
     ],
     "incompatibleWith": [],
     "visitTypes": [
@@ -5093,7 +5107,7 @@
       {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
-        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && inPrediction",
         "encounterTypes": [
           {
             "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
@@ -5452,7 +5466,8 @@
       "patient",
       "enrollment",
       "patientEncounters",
-      "isPatientTransferredOut"
+      "isPatientTransferredOut",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -5518,7 +5533,8 @@
       "patient",
       "enrollment",
       "patientEncounters",
-      "patientEnrollment"
+      "patientEnrollment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "enrollIf": "gender === 'F'"
@@ -5610,7 +5626,8 @@
       "patient",
       "enrollment",
       "patientEncounters",
-      "patientEnrollment"
+      "patientEnrollment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "enrollIf": "gender === 'F'"
@@ -5714,7 +5731,8 @@
       "patient",
       "enrollment",
       "patientEncounters",
-      "patientEnrollment"
+      "patientEnrollment",
+      "weeklyPredictedPatients"
     ],
     "enrollmentOptions": {
       "enrollIf": "gender === 'F'"

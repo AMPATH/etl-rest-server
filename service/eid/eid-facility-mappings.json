@@ -3211,5 +3211,14 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "acd01eec-bfe6-4050-8e1a-c5dd27a3f741": {
+    "mrsId": 499,
+    "mrsDisplay": "Tiinei Dispensary",
+    "description": "A dispensary in West Pokot",
+    "mflCode": "16368",
+    "county": "West Pokot",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
