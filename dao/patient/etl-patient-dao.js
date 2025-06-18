@@ -523,6 +523,7 @@ module.exports = (function () {
         ]
       ],
       where: ['t1.uuid = ?', uuid],
+      group: ['t1.test_datetime'],
       order: order || [
         {
           column: 'test_datetime',
