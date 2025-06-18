@@ -191,11 +191,11 @@ function buildScope(dataDictionary) {
     const medicationRefillResults = validateMedicationRefillEligibility(
       dataDictionary.validateMedicationRefill
     );
-    if (medicationRefillResults.communityVisit) {
+    if (medicationRefillResults?.communityVisit) {
       scope.isEligibleForCommunityVisit = true;
     }
 
-    if (medicationRefillResults.medicationRefill) {
+    if (medicationRefillResults?.medicationRefill) {
       scope.isEligibleForMedicationRefill = true;
     }
     if (result) {
