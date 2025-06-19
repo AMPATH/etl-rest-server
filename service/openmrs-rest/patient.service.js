@@ -19,7 +19,8 @@
   var serviceDefinition = {
     getPatientByUuid: getPatientByUuid,
     getPatientByIdentifier: getPatientByIdentifier,
-    getPatientUuidsByIdentifiers: getPatientUuidsByIdentifiers
+    getPatientUuidsByIdentifiers: getPatientUuidsByIdentifiers,
+    getLatestEncounterFromMostRecentCohortVisit: getLatestEncounterFromMostRecentCohortVisit
   };
 
   function getPatientByUuid(patientUuid, params) {
@@ -114,6 +115,58 @@
             identifier: identifier,
             hasError: true
           });
+        });
+    });
+  }
+
+  function getLatestEncounterFromMostRecentCohortVisit(patientUuid, params) {
+    const endPoint = '/ws/rest/v1/cohortm/cohortmember/';
+    const requestParam = {
+      patient: patientUuid,
+      v: 'custom:(cohort:(cohortVisits))'
+    };
+
+    const url = (params?.openmrsBaseUrl || openmrsBase) + endPoint;
+
+    return new Promise(function (resolve, reject) {
+      requestConfig
+        .getRequestPromise(requestParam, url)
+        .then(function (data) {
+          try {
+            const cohortVisits = data.results.flatMap(
+              (result) => result.cohort?.cohortVisits || []
+            );
+
+            if (cohortVisits.length === 0) {
+              resolve(null);
+              return;
+            }
+
+            const today = new Date();
+            const todayDateString = today.toISOString().split('T')[0];
+
+            const previousVisits = cohortVisits.filter((visit) => {
+              const visitDate = new Date(visit.startDate);
+              const visitDateString = visitDate.toISOString().split('T')[0];
+              return visitDateString !== todayDateString;
+            });
+
+            if (previousVisits.length === 0) {
+              resolve(null);
+              return;
+            }
+
+            const mostRecentPreviousVisit = previousVisits.sort(
+              (a, b) => new Date(b.startDate) - new Date(a.startDate)
+            )[0];
+
+            resolve(mostRecentPreviousVisit);
+          } catch (error) {
+            reject(`Error processing cohort data: ${error}`);
+          }
+        })
+        .catch(function (err) {
+          reject(`API request failed: ${err}`);
         });
     });
   }
