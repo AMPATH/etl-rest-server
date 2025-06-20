@@ -105,11 +105,11 @@ function getLatestEncounterFromCohortVisit(patientUuid, params) {
 
           if (!hasCohortMemberVisits) {
             if (currentVisitTypeUuid === VISIT_TYPES.DC_COMMUNITY) {
-              showDCVisit = true;
+              showStandardCommunityVisit = true;
             } else if (
               currentVisitTypeUuid === VISIT_TYPES.STANDARD_COMMUNITY
             ) {
-              showStandardCommunityVisit = true;
+              showDCVisit = true;
             } else {
               showDCVisit = true;
             }
@@ -130,7 +130,6 @@ function getLatestEncounterFromCohortVisit(patientUuid, params) {
             showDCVisit,
             showStandardCommunityVisit
           };
-          console.log('---result-', result);
 
           resolve(result);
         } else {
