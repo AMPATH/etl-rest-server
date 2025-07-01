@@ -19,7 +19,13 @@ function buildScope(dataDictionary) {
     isViremicHighVL: false,
     isEligibleForMedicationRefill: false,
     isEligibleForCommunityVisit: false,
-    inPrediction: false
+    inPrediction: false,
+    hasHTSEncounters: false,
+    showOnlyHTSScreening: false,
+    showOnlyHTSINITIAL: false,
+    showOnlyHTSRetest: false,
+    showHTSRetestToConfirmP: false,
+    showOthersHTSEncounters: false
   };
 
   let isStandardDcVisit = false;
@@ -376,7 +382,6 @@ function buildScope(dataDictionary) {
   } else {
     const today = Moment().format('YYYY-MM-DD');
     const visitDate = Moment(dataDictionary.visitDate).format('YYYY-MM-DD');
-
     if (dataDictionary.latestCovidAssessment) {
       scope['lastCovidScreeningDate'] = dataDictionary.latestCovidAssessment;
       const screeningDate = Moment(dataDictionary.latestCovidAssessment).format(
@@ -409,6 +414,38 @@ function buildScope(dataDictionary) {
   ) {
     scope.isViremicHighVL = true;
   }
+
+  if (dataDictionary.patientEncounters) {
+    scope.patientEncounters = dataDictionary.patientEncounters;
+    scope.programUuid = dataDictionary.programUuid;
+
+    // Add HTS scope building alongside other program builders
+    if (dataDictionary.programUuid === 'a0f8382f-df8a-4f1d-8959-9fb6eef90353') {
+      buildHTSScopeMembers(
+        scope,
+        dataDictionary.patientEncounters,
+        dataDictionary.isHtsPatientNegative,
+        dataDictionary
+      );
+    }
+
+    buildHivScopeMembers(
+      scope,
+      dataDictionary.patientEncounters,
+      dataDictionary?.intendedVisitLocationUuid
+    );
+    buildOncologyScopeMembers(
+      scope,
+      dataDictionary.patientEncounters,
+      dataDictionary.programUuid
+    );
+    buildMNCHScopeMembers(
+      scope,
+      dataDictionary.patientEncounters,
+      dataDictionary.patientEnrollment
+    );
+  }
+
   // add other methods to build the scope objects
   return scope;
 }
@@ -718,6 +755,95 @@ function isInitialOncologyVisit(encounters, programUuid) {
     });
   }
   return initialOncologyEncounters.length === 0;
+}
+
+function buildHTSScopeMembers(
+  scope,
+  patientEncounters,
+  isHtsPatientNegative,
+  dataDictionary
+) {
+  const HTS_ENCOUNTER_TYPES = {
+    SCREENING: '82749926-63b1-467b-9d41-453c7542678a',
+    INITIAL: 'ae9693ff-d341-4997-8166-fa46ac4d38f4',
+    RETEST: '16bac581-5a17-43f2-9315-3e12a1f3189a',
+    LINKAGE: 'fbb106cf-d24f-4917-b905-42db7549a788',
+    REFERRAL: '55c10a7a-2732-4063-be25-68d5e1bce1fc'
+  };
+  const visitDate = Moment(dataDictionary.visitDate).format('YYYY-MM-DD');
+
+  const today = dataDictionary.retroSpective
+    ? visitDate
+    : Moment().startOf('day');
+
+  const isFromPreviousDate = (encounter) => {
+    const encounterDate =
+      encounter?.encounterDatetime &&
+      Moment(encounter.encounterDatetime).startOf('day');
+    return encounterDate ? encounterDate.isBefore(today) : false;
+  };
+
+  const getLatestEncounterOfType = (encounters, encounterTypeUuid) =>
+    encounters
+      ?.filter(({ encounterType }) => encounterType?.uuid === encounterTypeUuid)
+      .sort(
+        (a, b) =>
+          Moment(b.encounterDatetime).valueOf() -
+          Moment(a.encounterDatetime).valueOf()
+      )[0];
+
+  scope.hasHTSEncounters =
+    patientEncounters?.some(({ encounterType }) =>
+      Object.values(HTS_ENCOUNTER_TYPES).includes(encounterType?.uuid)
+    ) || false;
+
+  if (!scope.hasHTSEncounters) {
+    scope.showOnlyHTSScreening = true;
+    scope.showHTSRetestToConfirmP = true;
+    return scope;
+  }
+
+  const latestScreening = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.SCREENING
+  );
+  const latestInitial = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.INITIAL
+  );
+  const latestRetest = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.RETEST
+  );
+
+  const hasOldScreening =
+    latestScreening && isFromPreviousDate(latestScreening);
+  const hasOldInitial = latestInitial && isFromPreviousDate(latestInitial);
+  const hasScreeningToday =
+    latestScreening && !isFromPreviousDate(latestScreening);
+  const hasInitialToday = latestInitial && !isFromPreviousDate(latestInitial);
+  const hasRetestToday = latestRetest && !isFromPreviousDate(latestRetest);
+
+  if (isHtsPatientNegative && hasInitialToday) {
+    scope.showOnlyHTSINITIAL = true;
+    return scope;
+  }
+
+  if (!hasScreeningToday) {
+    scope.showOnlyHTSScreening = true;
+    scope.isFirstHTSNewRetestVisit = true;
+  } else if (hasScreeningToday && !hasInitialToday) {
+    scope.showOnlyHTSINITIAL = true;
+    scope.isFirstHTSNewRetestVisit = false;
+  } else if (hasInitialToday && !hasRetestToday) {
+    scope.showOnlyHTSRetest = true;
+  } else if (hasRetestToday) {
+    scope.showOthersHTSEncounters = true;
+  } else {
+    scope.showOnlyHTSScreening = true;
+  }
+
+  return scope;
 }
 
 function buildProgramScopeMembers(scope, programEnrollment) {
