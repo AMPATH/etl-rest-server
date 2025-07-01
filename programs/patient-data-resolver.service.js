@@ -111,11 +111,11 @@ function getLatestEncounterFromCohortVisit(patientUuid, params) {
 
           if (!hasCohortMemberVisits) {
             if (currentVisitTypeUuid === VISIT_TYPES.DC_COMMUNITY) {
-              showStandardCommunityVisit = true;
+              showDCVisit = true;
             } else if (
               currentVisitTypeUuid === VISIT_TYPES.STANDARD_COMMUNITY
             ) {
-              showDCVisit = true;
+              showStandardCommunityVisit = true;
             } else {
               showDCVisit = true;
             }
