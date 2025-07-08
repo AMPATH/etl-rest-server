@@ -13,7 +13,7 @@
       "table": "<<hivSummaryDataSource>>",
       "alias": "fhsvb",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "fhsvb.person_id = hmsd.person_id"
       }
     },
