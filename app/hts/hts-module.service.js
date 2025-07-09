@@ -10,6 +10,7 @@ export class HTSModuleService {
       WITH combined_data AS (
     SELECT 
         p.uuid AS patient_uuid,
+        p.person_id,
         e.encounter_datetime,
         cn_last_test.name AS last_test_result,
         cn_strategy.name AS testing_strategy,
@@ -116,6 +117,20 @@ export class HTSModuleService {
     
     WHERE p.uuid = '${patientUuid}'
         AND p.voided = 0
+),
+
+prioritized AS (
+    SELECT 
+        patient_uuid,
+        person_id,
+        encounter_datetime,
+        CASE WHEN rn_test_result = 1 THEN last_test_result END AS last_test_result,
+        CASE WHEN rn_strategy = 1 THEN testing_strategy END AS testing_strategy,
+        CASE WHEN rn_client = 1 THEN client_type END AS client_type,
+        CASE WHEN rn_entry = 1 THEN entry_point END AS entry_point,
+        CASE WHEN rn_consent = 1 THEN consent_given END AS consent_given,
+        provider
+    FROM combined_data
 )
 
 SELECT 
@@ -126,19 +141,23 @@ SELECT
     MAX(client_type) AS client_type,
     MAX(entry_point) AS entry_point, 
     MAX(consent_given) AS consent_given,
-    MAX(provider) AS provider
-FROM (
-    SELECT 
-        patient_uuid,
-        encounter_datetime,
-        CASE WHEN rn_test_result = 1 THEN last_test_result END AS last_test_result,
-        CASE WHEN rn_strategy = 1 THEN testing_strategy END AS testing_strategy,
-        CASE WHEN rn_client = 1 THEN client_type END AS client_type,
-        CASE WHEN rn_entry = 1 THEN entry_point END AS entry_point,
-        CASE WHEN rn_consent = 1 THEN consent_given END AS consent_given,
-        provider
-    FROM combined_data
-) prioritized
+    MAX(provider) AS provider,
+    -- Fixed linkage status logic - calculate after aggregation
+    CASE 
+        WHEN UPPER(COALESCE(MAX(last_test_result), '')) = 'POSITIVE' THEN
+            CASE 
+                WHEN EXISTS (
+                    SELECT 1
+                    FROM encounter e2
+                    WHERE e2.patient_id = MAX(person_id)
+                      AND e2.voided = 0
+                      AND e2.encounter_type = 290
+                ) THEN 'Client Linked'
+                ELSE 'Client Not Linked'
+            END
+        ELSE 'Not Applicable'
+    END AS linkage_status
+FROM prioritized
 GROUP BY patient_uuid;
     
     `;
