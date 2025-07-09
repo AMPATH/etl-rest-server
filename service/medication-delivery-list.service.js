@@ -1,14 +1,7 @@
 var db = require('../etl-db');
 
 export class MedicationDeliveryService {
-  getMedicationDeliveryList = (cohortUuids, startDate, endDate) => {
-    const uuids = cohortUuids
-      .split(',')
-      .map((s) => {
-        return `"${s}"`;
-      })
-      .join(',');
-
+  getMedicationDeliveryList = (location_uuid, startDate, endDate) => {
     return new Promise((resolve, reject) => {
       let queryParts = {};
       const sql = `
@@ -35,10 +28,24 @@ export class MedicationDeliveryService {
               AND e186.voided = 0
           ) THEN 'Picked'
           ELSE 'Not Picked'
-        END AS pickup_status
+        END AS pickup_status,
+        (
+        SELECT obs.value_text
+        FROM amrs.encounter e186
+        JOIN amrs.obs ON amrs.obs.encounter_id = e186.encounter_id
+        WHERE e186.patient_id = p.patient_id
+          AND e186.encounter_type = 186
+          AND e186.encounter_datetime >= MAX(CASE WHEN o.concept_id = 9605 THEN o.value_datetime END)
+          AND e186.voided = 0
+          AND obs.concept_id = 10869
+          AND obs.voided = 0
+        ORDER BY e186.encounter_datetime DESC
+        LIMIT 1
+    ) AS health_worker
       FROM
         amrs.patient p
         JOIN amrs.encounter e ON p.patient_id = e.patient_id AND e.encounter_type = 2
+        JOIN amrs.location l ON e.location_id = l.location_id
         JOIN amrs.obs o ON e.encounter_id = o.encounter_id AND o.voided = 0
         JOIN amrs.person per ON p.patient_id = per.person_id AND per.voided = 0
         JOIN amrs.person_name pn ON per.person_id = pn.person_id AND pn.voided = 0
@@ -47,6 +54,7 @@ export class MedicationDeliveryService {
         LEFT JOIN amrs.patient_identifier pi_nupi ON pi_nupi.patient_id = p.patient_id AND pi_nupi.identifier_type = 50 AND pi_nupi.voided = 0
       WHERE
         e.voided = 0
+        AND l.uuid = '${location_uuid}'
         AND EXISTS (
           SELECT 1
           FROM amrs.obs o2

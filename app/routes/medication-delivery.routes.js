@@ -10,7 +10,7 @@ const routes = [
     config: {
       plugins: {},
       handler: function (request, reply) {
-        const { uuid, startDate, endDate } = request.query;
+        const { locationUuids, startDate, endDate } = request.query;
 
         // Validate required parameters
         if (!startDate || !endDate) {
@@ -32,7 +32,7 @@ const routes = [
 
         const medicationDeliveryService = new MedicationDeliveryService();
         medicationDeliveryService
-          .getMedicationDeliveryList(uuid || '', startDate, endDate)
+          .getMedicationDeliveryList(locationUuids, startDate, endDate)
           .then(function (medicationDeliveryList) {
             reply(medicationDeliveryList);
           })
