@@ -18,6 +18,7 @@ export class HTSModuleService {
         cn_entry.name AS entry_point,
         CASE WHEN cn_consent.name = 'YES' THEN 'Yes' ELSE 'No' END AS consent_given,
         CONCAT(pn_provider.given_name, ' ', pn_provider.family_name) AS provider,
+        cn_rapid.name AS rapid_antibody,
         
         ROW_NUMBER() OVER (
             PARTITION BY p.person_id
@@ -52,7 +53,13 @@ export class HTSModuleService {
             ORDER BY 
                 CASE WHEN o_entry.obs_id IS NOT NULL THEN 0 ELSE 1 END,
                 e.encounter_datetime DESC
-        ) AS rn_entry
+        ) AS rn_entry,
+        ROW_NUMBER() OVER (
+            PARTITION BY p.person_id
+            ORDER BY 
+                CASE WHEN o_rapid.obs_id IS NOT NULL THEN 0 ELSE 1 END,
+                e.encounter_datetime DESC
+        ) AS rn_rapid
 
     FROM person p
     INNER JOIN encounter e 
@@ -68,6 +75,14 @@ export class HTSModuleService {
         ON o_last_test.value_coded = cn_last_test.concept_id 
         AND cn_last_test.concept_name_type = 'FULLY_SPECIFIED'
         AND cn_last_test.voided = 0
+    LEFT JOIN obs o_rapid
+        ON e.encounter_id = o_rapid.encounter_id 
+        AND o_rapid.voided = 0
+        AND o_rapid.concept_id = 2343
+    LEFT JOIN concept_name cn_rapid 
+        ON o_rapid.value_coded = cn_rapid.concept_id 
+        AND cn_rapid.concept_name_type = 'FULLY_SPECIFIED'
+        AND cn_rapid.voided = 0
     
     LEFT JOIN obs o_strategy 
         ON e.encounter_id = o_strategy.encounter_id 
@@ -129,6 +144,7 @@ prioritized AS (
         CASE WHEN rn_client = 1 THEN client_type END AS client_type,
         CASE WHEN rn_entry = 1 THEN entry_point END AS entry_point,
         CASE WHEN rn_consent = 1 THEN consent_given END AS consent_given,
+         CASE WHEN rn_rapid = 1 THEN rapid_antibody END AS rapid_antibody,
         provider
     FROM combined_data
 )
@@ -141,6 +157,7 @@ SELECT
     MAX(client_type) AS client_type,
     MAX(entry_point) AS entry_point, 
     MAX(consent_given) AS consent_given,
+    MAX(rapid_antibody) AS rapid_antibody,
     MAX(provider) AS provider,
     -- Fixed linkage status logic - calculate after aggregation
     CASE 
@@ -178,46 +195,59 @@ GROUP BY patient_uuid;
       let queryParts = {};
       const sql = `
       USE amrs;
-
       SELECT 
-    p.uuid as patient_uuid,
-    e.encounter_datetime as encounter_date,
-    l.name as location_name,
-    MAX(e.encounter_datetime) as date_of_last_hiv_test,
+    p.uuid AS patient_uuid,
 
-    MAX(CASE 
-        WHEN o.concept_id = 1040
-        THEN cn.name 
-    END) as hiv_test_1_results,
+    (
+        SELECT DATE(MIN(e1.encounter_datetime))
+        FROM encounter e1
+        WHERE e1.patient_id = p.person_id
+          AND e1.encounter_type = 296
+          AND e1.voided = 0
+    ) AS date_of_initial_hiv_test,
 
-    MAX(CASE 
-        WHEN o.concept_id = 1326
-        THEN cn.name 
-    END) as hiv_test_2_results,
-    
-    MAX(CASE 
-        WHEN o.concept_id = 1357
-        THEN cn.name 
-    END) as final_results
+    (
+        SELECT DATE(MAX(e2.encounter_datetime))
+        FROM encounter e2
+        WHERE e2.patient_id = p.person_id
+          AND e2.encounter_type = 296
+          AND e2.voided = 0
+    ) AS date_of_last_hiv_test,
+
+    l.name AS location_name,
+    DATE(e.encounter_datetime) AS encounter_date,
+
+    MAX(CASE WHEN o.concept_id = 1040 THEN cn.name END) AS hiv_test_1_results,
+    MAX(CASE WHEN o.concept_id = 1326 THEN cn.name END) AS hiv_test_2_results,
+    MAX(CASE WHEN o.concept_id = 1357 THEN cn.name END) AS final_results,
+    MAX(CASE WHEN o.concept_id = 2343 THEN cn.name END) AS rapid_antibody_result
 
 FROM person p
-    INNER JOIN encounter e ON p.person_id = e.patient_id AND e.voided = 0
-    INNER JOIN location l ON e.location_id = l.location_id
-    LEFT JOIN obs o ON e.encounter_id = o.encounter_id AND o.voided = 0
-    LEFT JOIN concept_name cn ON o.value_coded = cn.concept_id AND cn.concept_name_type = 'FULLY_SPECIFIED'
-
-WHERE p.uuid = '${patientUuid}'
-    AND p.voided = 0
+INNER JOIN encounter e 
+    ON p.person_id = e.patient_id 
+    AND e.voided = 0
     AND e.encounter_type = 296
     AND e.encounter_datetime = (
-        SELECT MAX(e2.encounter_datetime) 
-        FROM encounter e2 
-        WHERE e2.patient_id = p.person_id 
-            AND e2.encounter_type = 296 
-            AND e2.voided = 0
+        SELECT MAX(e3.encounter_datetime) 
+        FROM encounter e3 
+        WHERE e3.patient_id = p.person_id 
+          AND e3.encounter_type = 296 
+          AND e3.voided = 0
     )
+INNER JOIN location l 
+    ON e.location_id = l.location_id
+LEFT JOIN obs o 
+    ON e.encounter_id = o.encounter_id 
+    AND o.voided = 0
+LEFT JOIN concept_name cn 
+    ON o.value_coded = cn.concept_id 
+    AND cn.concept_name_type = 'FULLY_SPECIFIED'
+
+WHERE p.uuid = '${patientUuid}'
+  AND p.voided = 0
 
 GROUP BY p.person_id, p.uuid, e.encounter_id, e.encounter_datetime, l.name;
+
         `;
 
       queryParts = {
