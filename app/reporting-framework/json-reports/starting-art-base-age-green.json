@@ -101,7 +101,7 @@
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "hmsd.arv_first_regimen_location_id"
+      "column": "hmsd.location_id"
     },
     {
       "type": "simple_column",
@@ -204,7 +204,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmsd.arv_first_regimen_location_id in ?",
+        "conditionExpression": "hmsd.location_id in ?",
         "parameterName": "locations"
       }
     ]
