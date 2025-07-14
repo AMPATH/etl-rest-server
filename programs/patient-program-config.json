@@ -85,10 +85,6 @@
             "display": "ADULTINITIAL"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
           },
@@ -208,10 +204,6 @@
             "display": "ADHERENCE"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
             "display": "LABORDERENCOUNTER"
           },
@@ -283,10 +275,6 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ADHERENCE"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "8d5b2dde-c2cc-11de-8d13-0010c6dffd0f",
@@ -400,10 +388,6 @@
             "display": "ADHERENCE"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "8d5b3108-c2cc-11de-8d13-0010c6dffd0f",
             "display": "PEDSRETURN"
           },
@@ -462,10 +446,6 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ADHERENCE"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "fc8c1694-90fc-46a8-962b-73ce9a99a78f",
@@ -582,10 +562,6 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ADHERENCE"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "4e7553b4-373d-452f-bc89-3f4ad9a01ce7",
@@ -1369,10 +1345,6 @@
             "display": "MOH257BLUECARD"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
           },
@@ -1444,10 +1416,6 @@
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
             "display": "MOH257BLUECARD"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -1596,10 +1564,6 @@
             "display": "MOH257BLUECARD"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
           },
@@ -1744,10 +1708,6 @@
           {
             "uuid": "8e942fd1-135d-42bd-9701-04560f180ec5",
             "display": "MOH257BLUECARD"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -2710,10 +2670,6 @@
             "display": "HIVTRIAGE"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
             "display": "ADULTRETURN"
           },
@@ -3072,10 +3028,6 @@
           {
             "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
             "display": "LABORDERENCOUNTER"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
