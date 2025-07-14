@@ -18,10 +18,18 @@ function buildScope(dataDictionary) {
     screenedForCovidToday: false,
     isViremicHighVL: false,
     isEligibleForMedicationRefill: false,
-    isEligibleForCommunityVisit: false
+    isEligibleForCommunityVisit: false,
+    inPrediction: false
   };
+
   let isStandardDcVisit = false;
 
+  if (
+    dataDictionary.weeklyPredictedPatients &&
+    dataDictionary.weeklyPredictedPatients.length > 0
+  ) {
+    scope.inPrediction = true;
+  }
   // Restrict to Pilot locations
   scope.MlLocations = [
     '08feb8ae-1352-11df-a1f1-0026b9348838',
@@ -431,15 +439,21 @@ function validateMedicationRefillEligibility(validateMedicationRefill) {
 
   const icadAnswerUuid = '7e5e7759-e9f7-4b16-b904-041fcdddb390';
 
+  // Version 2.0 cutoff date
+  const VERSION_2_CUTOFF_DATE = new Date('2025-05-02');
+
   let isEligibleForMedicationRefill = false;
   let isEligibleForCommunityVisit = false;
+  let hasMedicationRefillConcept = false;
 
+  // Check if the new concepts exist in observations
   for (const obs of validateMedicationRefill.obs) {
     const conceptUuid = obs.concept?.uuid;
 
     if (!conceptUuid) continue;
 
     if (conceptUuid === conceptMap.medicationRefillEligibility) {
+      hasMedicationRefillConcept = true;
       isEligibleForMedicationRefill = true;
     }
 
@@ -451,9 +465,34 @@ function validateMedicationRefillEligibility(validateMedicationRefill) {
     }
   }
 
+  // Backwards compatibility logic for medicationRefillEligibility
+  if (!hasMedicationRefillConcept) {
+    const encounterDate = new Date(validateMedicationRefill.encounterDatetime);
+
+    // For encounters before version 2.0, default to eligible for medication refill
+    // This maintains the previous workflow where this validation didn't exist
+    if (encounterDate < VERSION_2_CUTOFF_DATE) {
+      isEligibleForMedicationRefill = true;
+      console.log(
+        'Legacy encounter detected - defaulting medicationRefill eligibility to true'
+      );
+    }
+    // For newer encounters without the concept
+    else {
+      console.warn(
+        'Recent encounter missing medicationRefillEligibility concept'
+      );
+      isEligibleForMedicationRefill = false;
+    }
+  }
+
   return {
     medicationRefill: isEligibleForMedicationRefill,
-    communityVisit: isEligibleForCommunityVisit
+    communityVisit: isEligibleForCommunityVisit,
+    isLegacyEncounter:
+      !hasMedicationRefillConcept &&
+      new Date(validateMedicationRefill.encounterDatetime) <
+        VERSION_2_CUTOFF_DATE
   };
 }
 

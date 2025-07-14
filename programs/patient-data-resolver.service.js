@@ -6,7 +6,11 @@ const etlHivSummary = require('../dao/patient/etl-patient-hiv-summary-dao');
 const encounterService = require('../service/openmrs-rest/encounter');
 const dcPatientvisitEvaluator = require('../service/dc-patient-visit-evaluator');
 const covidAssessmentService = require('../service/covid-assessment-service');
+const weeklyPredictionsService = require('../service/ml-weekly-predictions.service');
 var _ = require('underscore');
+const {
+  default: MlWeeklyPredictionsService
+} = require('../service/ml-weekly-predictions.service');
 
 const availableKeys = {
   patient: getPatient,
@@ -20,7 +24,8 @@ const availableKeys = {
   dcQualifedVisits: getQualifiedDcVisits,
   validateMedicationRefill: getMedicationRefillVisits,
   latestCovidAssessment: getLatestCovidAssessment,
-  isViremicHighVL: getLatestVL
+  isViremicHighVL: getLatestVL,
+  weeklyPredictedPatients: getWeeklyPredictedPatients
 };
 
 const def = {
@@ -35,7 +40,8 @@ const def = {
   dcQualifedVisits: getQualifiedDcVisits,
   validateMedicationRefill: getMedicationRefillVisits,
   getLatestCovidAssessment: getLatestCovidAssessment,
-  isViremicHighVL: getLatestVL
+  isViremicHighVL: getLatestVL,
+  getWeeklyPredictedPatients: getWeeklyPredictedPatients
 };
 
 module.exports = def;
@@ -119,7 +125,10 @@ function checkTransferOut(patientUuid, params) {
 }
 
 function getMedicationRefillVisits(patientUuid) {
-  const expectedAdultReturnEncounter = '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f';
+  const expectedEncounters = [
+    '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f',
+    '4e7553b4-373d-452f-bc89-3f4ad9a01ce7'
+  ];
 
   const patientEncounters = encounterService.getPatientEncounters({
     patientUuid,
@@ -134,7 +143,7 @@ function getMedicationRefillVisits(patientUuid) {
           .filter(
             (encounter) =>
               encounter.encounterType &&
-              encounter.encounterType.uuid === expectedAdultReturnEncounter
+              expectedEncounters.includes(encounter.encounterType.uuid)
           )
           .sort(
             (a, b) =>
@@ -247,6 +256,23 @@ function getLatestVL(patientUuid) {
           resolve(isViremic);
         } else {
           resolve(false);
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+function getWeeklyPredictedPatients(patientUuid) {
+  return new Promise((resolve, reject) => {
+    let ml = new MlWeeklyPredictionsService();
+    ml.getPatientsWithPredictions(patientUuid)
+      .then((result) => {
+        if (result.length > 0) {
+          resolve(result);
+        } else {
+          resolve([]);
         }
       })
       .catch((error) => {

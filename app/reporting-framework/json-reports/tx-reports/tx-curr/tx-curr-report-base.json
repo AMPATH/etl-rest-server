@@ -495,10 +495,6 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "hm.status = 'active'"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "p.voided = 0"
       }
     ]
   },
