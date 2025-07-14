@@ -25,7 +25,8 @@ const availableKeys = {
   validateMedicationRefill: getMedicationRefillVisits,
   latestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL,
-  weeklyPredictedPatients: getWeeklyPredictedPatients
+  weeklyPredictedPatients: getWeeklyPredictedPatients,
+  latestCohortEncounter: getLatestEncounterFromCohortVisit
 };
 
 const def = {
@@ -41,7 +42,8 @@ const def = {
   validateMedicationRefill: getMedicationRefillVisits,
   getLatestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL,
-  getWeeklyPredictedPatients: getWeeklyPredictedPatients
+  getWeeklyPredictedPatients: getWeeklyPredictedPatients,
+  getLatestEncounterFromCohortVisit: getLatestEncounterFromCohortVisit
 };
 
 module.exports = def;
@@ -82,6 +84,66 @@ function getPatient(patientUuid, params) {
         resolve(patient);
       })
       .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+function getLatestEncounterFromCohortVisit(patientUuid, params) {
+  // Visit type UUIDs
+  const VISIT_TYPES = {
+    DC_COMMUNITY: '0d608b80-1cb5-4c85-835a-29072683ca27',
+    STANDARD_COMMUNITY: '41c54687-8596-4071-a235-96d80f3fd039'
+  };
+
+  return new Promise((resolve, reject) => {
+    patientService
+      .getLatestEncounterFromMostRecentCohortVisit(patientUuid, params)
+      .then((lastVisit) => {
+        if (lastVisit) {
+          const currentVisitTypeUuid = lastVisit.visitType?.uuid;
+          const hasCohortMemberVisits =
+            lastVisit.cohortMemberVisits &&
+            lastVisit.cohortMemberVisits.length > 0;
+
+          let showDCVisit = false;
+          let showStandardCommunityVisit = false;
+
+          if (!hasCohortMemberVisits) {
+            if (currentVisitTypeUuid === VISIT_TYPES.DC_COMMUNITY) {
+              showDCVisit = true;
+            } else if (
+              currentVisitTypeUuid === VISIT_TYPES.STANDARD_COMMUNITY
+            ) {
+              showStandardCommunityVisit = true;
+            } else {
+              showDCVisit = true;
+            }
+          } else {
+            // Alternate between visit types
+            if (currentVisitTypeUuid === VISIT_TYPES.DC_COMMUNITY) {
+              showStandardCommunityVisit = true;
+            } else if (
+              currentVisitTypeUuid === VISIT_TYPES.STANDARD_COMMUNITY
+            ) {
+              showDCVisit = true;
+            } else {
+              showDCVisit = true;
+            }
+          }
+
+          const result = {
+            showDCVisit,
+            showStandardCommunityVisit
+          };
+
+          resolve(result);
+        } else {
+          resolve(null);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching cohort encounter:', error);
         reject(error);
       });
   });

@@ -2871,7 +2871,8 @@
       "dcQualifedVisits",
       "validateMedicationRefill",
       "latestCovidAssessment",
-      "weeklyPredictedPatients"
+      "weeklyPredictedPatients",
+      "latestCohortEncounter"
     ],
     "enrollmentOptions": {
       "requiredProgramQuestions": [
@@ -3187,6 +3188,7 @@
         "uuid": "0d608b80-1cb5-4c85-835a-29072683ca27",
         "name": "Community Visit for Differentiated Care",
         "groupVisit": true,
+        "allowedIf": "showCommunityDSDVisit",
         "encounterTypes": [
           {
             "uuid": "0e9e0b44-5650-4d07-8ccc-77c3dca9cbbf",
@@ -3215,6 +3217,24 @@
           {
             "uuid": "cac3b8e5-d8f8-4d4f-b791-8c43b4cc674b",
             "display": "TELECARE"
+          }
+        ]
+      },
+      {
+        "uuid": "41c54687-8596-4071-a235-96d80f3fd039",
+        "name": "Standard HIV Community Visit for Differentiated Care",
+        "groupVisit": true,
+        "allowedIf": "showStandardCommunityVisit",
+        "encounterTypes": [
+          {
+            "uuid": "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+            "display": "ADULTRETURN",
+            "allowedIf": " age > 24"
+          },
+          {
+            "uuid": "4e7553b4-373d-452f-bc89-3f4ad9a01ce7",
+            "allowedIf": "age >= 10 && age <= 24",
+            "display": "YOUTHRETURN"
           }
         ]
       },
