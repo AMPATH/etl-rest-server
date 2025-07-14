@@ -19,7 +19,9 @@ function buildScope(dataDictionary) {
     isViremicHighVL: false,
     isEligibleForMedicationRefill: false,
     isEligibleForCommunityVisit: false,
-    inPrediction: false
+    inPrediction: false,
+    showCommunityDSDVisit: false,
+    showStandardCommunityVisit: false
   };
 
   let isStandardDcVisit = false;
@@ -194,7 +196,6 @@ function buildScope(dataDictionary) {
     if (medicationRefillResults?.communityVisit) {
       scope.isEligibleForCommunityVisit = true;
     }
-
     if (medicationRefillResults?.medicationRefill) {
       scope.isEligibleForMedicationRefill = true;
     }
@@ -212,6 +213,16 @@ function buildScope(dataDictionary) {
       !isStandardDcVisit
     ) {
       scope.qualifiesMedicationRefillVisit = true;
+    }
+  }
+
+  if (dataDictionary.latestCohortEncounter) {
+    if (dataDictionary.latestCohortEncounter.showDCVisit) {
+      scope.showCommunityDSDVisit = true;
+    }
+
+    if (dataDictionary.latestCohortEncounter.showStandardCommunityVisit) {
+      scope.showStandardCommunityVisit = true;
     }
   }
 
