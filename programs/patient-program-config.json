@@ -1491,10 +1491,6 @@
             "display": "ADHERENCE"
           },
           {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
-          },
-          {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
             "display": "DEATHREPORT"
           },
@@ -1635,10 +1631,6 @@
           {
             "uuid": "8d5b2dde-c2cc-11de-8d13-0010c6dffd0f",
             "display": "PEDSINITIAL"
-          },
-          {
-            "uuid": "cbe2d31d-2201-44ce-b52e-fbd5dc7cff33",
-            "display": "TRANSFERENCOUNTER"
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
