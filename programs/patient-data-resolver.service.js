@@ -7,6 +7,7 @@ const encounterService = require('../service/openmrs-rest/encounter');
 const dcPatientvisitEvaluator = require('../service/dc-patient-visit-evaluator');
 const covidAssessmentService = require('../service/covid-assessment-service');
 const weeklyPredictionsService = require('../service/ml-weekly-predictions.service');
+const obsService = require('../service/openmrs-rest/obs.service.js');
 var _ = require('underscore');
 const {
   default: MlWeeklyPredictionsService
@@ -26,7 +27,8 @@ const availableKeys = {
   latestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL,
   weeklyPredictedPatients: getWeeklyPredictedPatients,
-  latestCohortEncounter: getLatestEncounterFromCohortVisit
+  latestCohortEncounter: getLatestEncounterFromCohortVisit,
+  patientTypeConcepts: getPatientTypeConcept
 };
 
 const def = {
@@ -43,7 +45,8 @@ const def = {
   getLatestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL,
   getWeeklyPredictedPatients: getWeeklyPredictedPatients,
-  getLatestEncounterFromCohortVisit: getLatestEncounterFromCohortVisit
+  getLatestEncounterFromCohortVisit: getLatestEncounterFromCohortVisit,
+  patientTypeConcepts: getPatientTypeConcept
 };
 
 module.exports = def;
@@ -341,4 +344,9 @@ function getWeeklyPredictedPatients(patientUuid) {
         reject(error);
       });
   });
+}
+
+function getPatientTypeConcept(patientUuid) {
+  const conceptUuid = '5671130b-fb49-4e31-86b3-9e0df8919908';
+  return obsService.getPatientTypeConcept(conceptUuid, patientUuid);
 }
