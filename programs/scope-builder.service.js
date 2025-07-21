@@ -156,7 +156,8 @@ function buildScope(dataDictionary) {
     '0900acea-1352-11df-a1f1-0026b9348838',
     '469bb74e-18a4-4d74-872e-55fcebe12dc7',
     '6666bb3c-1500-4320-9c46-78efc5bbaee0',
-    '4949293e-7b5c-4359-8a55-1196a578143b'
+    '4949293e-7b5c-4359-8a55-1196a578143b',
+    'd0fac112-5690-47c5-8ffc-0abcbb5b3124'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -352,7 +353,8 @@ function buildScope(dataDictionary) {
       '0900acea-1352-11df-a1f1-0026b9348838',
       '469bb74e-18a4-4d74-872e-55fcebe12dc7',
       '6666bb3c-1500-4320-9c46-78efc5bbaee0',
-      '4949293e-7b5c-4359-8a55-1196a578143b'
+      '4949293e-7b5c-4359-8a55-1196a578143b',
+      'd0fac112-5690-47c5-8ffc-0abcbb5b3124'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
