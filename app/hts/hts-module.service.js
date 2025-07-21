@@ -220,7 +220,7 @@ GROUP BY patient_uuid;
     MAX(CASE WHEN o.concept_id = 1040 THEN cn.name END) AS hiv_test_1_results,
     MAX(CASE WHEN o.concept_id = 1326 THEN cn.name END) AS hiv_test_2_results,
     MAX(CASE WHEN o.concept_id = 1357 THEN cn.name END) AS final_results,
-    MAX(CASE WHEN o.concept_id = 2343 THEN cn.name END) AS rapid_antibody_result
+    GROUP_CONCAT(DISTINCT CASE WHEN o.concept_id = 2343 THEN cn.name END SEPARATOR ', ') AS rapid_antibody_results
 
 FROM person p
 INNER JOIN encounter e 
