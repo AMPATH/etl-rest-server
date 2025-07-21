@@ -21,7 +21,9 @@ function buildScope(dataDictionary) {
     isEligibleForCommunityVisit: false,
     inPrediction: false,
     showCommunityDSDVisit: false,
-    showStandardCommunityVisit: false
+    showStandardCommunityVisit: false,
+    isPrepStudyType: false,
+    isPrepConsentFilled: false
   };
 
   let isStandardDcVisit = false;
@@ -420,6 +422,9 @@ function buildScope(dataDictionary) {
   ) {
     scope.isViremicHighVL = true;
   }
+  if (dataDictionary.programUuid === 'c19aec66-1a40-4588-9b03-b6be55a8dd1d') {
+    scope.isPrepStudyType = prepStudyVisit(dataDictionary.patientTypeConcepts);
+  }
   // add other methods to build the scope objects
   return scope;
 }
@@ -435,6 +440,23 @@ function conditionalDCVisits(patient) {
       latestEncounter.encounterType.uuid === expectedEncounterToBeDrugPickup
     );
   }
+}
+
+function checkPrepStudyConsent(patientEncounters) {
+  let prepConsentFilled = false;
+  const prepStudyConsentEncounter = '874ddf0e-6a7c-48ab-8d7f-470d2c5cefcd';
+
+  let prepConsentEncounter = getSpecificEncounterTypesFromEncounters(
+    patientEncounters,
+    prepStudyConsentEncounter
+  );
+
+  if (prepConsentEncounter.length === 1) {
+    prepConsentFilled = true;
+  } else {
+    prepConsentEncounter = false;
+  }
+  return prepConsentFilled;
 }
 
 function validateMedicationRefillEligibility(validateMedicationRefill) {
@@ -556,6 +578,15 @@ function getPreviousHIVClinicallocation(patientEncounters) {
     return r?.encounterType?.uuid;
   });
   return latestHivClinicalLocation[0] ? latestHivClinicalLocation[0] : null;
+}
+
+function prepStudyVisit(patient) {
+  let isPrepStudyType = false;
+  const studyTypeAnswer = patient.value.uuid;
+  if (studyTypeAnswer === 'a89a898a-1350-11df-a1f1-0026b9348838') {
+    isPrepStudyType = true;
+  }
+  return isPrepStudyType;
 }
 
 function isInitialPrepVisit(patientEncounters) {
@@ -763,6 +794,7 @@ function buildHivScopeMembers(
   scope.previousHIVClinicallocation = getPreviousHIVClinicallocation(
     patientEncounters
   );
+  scope.isPrepConsentFilled = checkPrepStudyConsent(patientEncounters);
 }
 
 function buildOncologyScopeMembers(scope, patientEncounters, programUuid) {
