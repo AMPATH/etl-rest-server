@@ -9,6 +9,7 @@ export class MedicationDeliveryService {
     p.patient_id,
     per.uuid AS person_uuid,
     pi_ccc.identifier AS ccc_number,
+    e.encounter_datetime AS enrollment_date,
     pn.given_name,
     pn.middle_name,
     pn.family_name,
@@ -61,7 +62,11 @@ JOIN amrs.encounter e ON p.patient_id = e.patient_id AND e.encounter_type = 2 AN
 JOIN amrs.location l ON e.location_id = l.location_id
 JOIN amrs.obs o ON e.encounter_id = o.encounter_id AND o.voided = 0
 JOIN amrs.person per ON p.patient_id = per.person_id AND per.voided = 0
-JOIN amrs.person_name pn ON per.person_id = pn.person_id AND pn.voided = 0
+JOIN (
+  SELECT person_id, given_name, middle_name, family_name
+  FROM amrs.person_name
+  WHERE voided = 0 AND preferred = 1
+) pn ON pn.person_id = per.person_id
 LEFT JOIN amrs.person_attribute pa ON per.person_id = pa.person_id AND pa.voided = 0 AND pa.person_attribute_type_id = 10
 LEFT JOIN amrs.patient_identifier pi_ccc ON pi_ccc.patient_id = p.patient_id AND pi_ccc.identifier_type IN (28, 29) AND pi_ccc.voided = 0
 LEFT JOIN amrs.patient_identifier ident ON ident.patient_id = p.patient_id AND ident.identifier_type IN (8, 3, 1) AND ident.voided = 0
