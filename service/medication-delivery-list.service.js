@@ -8,8 +8,8 @@ export class MedicationDeliveryService {
     SELECT
     p.patient_id,
     per.uuid AS person_uuid,
-    pi_ccc.identifier AS ccc_number,
     e.encounter_datetime AS enrollment_date,
+    pi_ccc.identifier AS ccc_number,
     pn.given_name,
     pn.middle_name,
     pn.family_name,
@@ -67,10 +67,29 @@ JOIN (
   FROM amrs.person_name
   WHERE voided = 0 AND preferred = 1
 ) pn ON pn.person_id = per.person_id
+
 LEFT JOIN amrs.person_attribute pa ON per.person_id = pa.person_id AND pa.voided = 0 AND pa.person_attribute_type_id = 10
-LEFT JOIN amrs.patient_identifier pi_ccc ON pi_ccc.patient_id = p.patient_id AND pi_ccc.identifier_type IN (28, 29) AND pi_ccc.voided = 0
-LEFT JOIN amrs.patient_identifier ident ON ident.patient_id = p.patient_id AND ident.identifier_type IN (8, 3, 1) AND ident.voided = 0
-LEFT JOIN amrs.patient_identifier pi_nupi ON pi_nupi.patient_id = p.patient_id AND pi_nupi.identifier_type = 45 AND pi_nupi.voided = 0
+
+LEFT JOIN (
+    SELECT patient_id, MIN(identifier) as identifier
+    FROM amrs.patient_identifier
+    WHERE identifier_type IN (28, 29) AND voided = 0
+    GROUP BY patient_id
+) pi_ccc ON pi_ccc.patient_id = p.patient_id
+
+LEFT JOIN (
+    SELECT patient_id, MIN(identifier) as identifier
+    FROM amrs.patient_identifier
+    WHERE identifier_type IN (8, 3, 1) AND voided = 0
+    GROUP BY patient_id
+) ident ON ident.patient_id = p.patient_id
+
+LEFT JOIN (
+    SELECT patient_id, MIN(identifier) as identifier
+    FROM amrs.patient_identifier
+    WHERE identifier_type = 45 AND voided = 0
+    GROUP BY patient_id
+) pi_nupi ON pi_nupi.patient_id = p.patient_id
 
 LEFT JOIN (
     SELECT 
@@ -87,6 +106,7 @@ LEFT JOIN (
     ) latest_summary
       ON f.person_id = latest_summary.person_id AND f.encounter_datetime = latest_summary.latest_visit
 ) fhs ON fhs.person_id = p.patient_id
+
 LEFT JOIN amrs.drug d ON d.drug_id = o.value_drug
 LEFT JOIN amrs.concept_name q_concept 
   ON q_concept.concept_id = d.concept_id
