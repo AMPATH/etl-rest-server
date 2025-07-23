@@ -2567,54 +2567,6 @@
         ]
       },
       {
-        "uuid": "a503d434-be01-47e2-922b-2c6daa456404",
-        "name": "Study PrEP Return Visit",
-        "allowedIf": "!isFirstPrEPVisit && isPrepStudyType",
-        "message": "Patient must have a prior clinical encounter.",
-        "encounterTypes": [
-          {
-            "uuid": "a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7",
-            "display": "HIVTRIAGE"
-          },
-          {
-            "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
-            "display": "STUDYPREPRETURN"
-          },
-          {
-            "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
-            "display": "DEATHREPORT"
-          },
-          {
-            "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
-            "display": "DERMATOLOGYREFERRAL"
-          },
-          {
-            "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
-            "display": "FAMILYSTATUS"
-          },
-          {
-            "uuid": "df5547bc-1350-11df-a1f1-0026b9348838",
-            "display": "OUTREACHFIELDFU"
-          },
-          {
-            "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
-            "display": "COVIDSCREENING"
-          },
-          {
-            "uuid": "afabceae-61d4-42b6-8f6a-fff48a7797ea",
-            "display": "COVIDCASEREPORTING"
-          },
-          {
-            "uuid": "a393699f-8e99-4727-81c3-873873022dd8",
-            "display": "MOBILITYSCREENING"
-          },
-          {
-            "uuid": "5b1ef308-ed8f-4a86-88a0-c29a30246740",
-            "display": "HIVCLINICALREFERRAL"
-          }
-        ]
-      },
-      {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [
@@ -2682,7 +2634,7 @@
       },
       {
         "uuid": "c2c3cde9-5a3f-4fc3-8976-1c4d29ad0dbe",
-        "name": "Study Phone Follow Up Visit",
+        "name": "Study PrEP Phone Follow Up Visit",
         "allowedIf": "isPrepStudyType",
         "message": "Patient must have a prior clinical encounter.",
         "encounterTypes": [
@@ -2697,6 +2649,18 @@
           {
             "uuid": "5fd84dae-48db-4f49-98e4-c0ffa90d787d",
             "display": "PREPPOSTINITIATIONFOLLOWUP"
+          }
+        ]
+      },
+      {
+        "uuid": "ce45a5ba-cf74-44d2-8ec7-62e252476b8f",
+        "name": "PrEP Study Delivery Visit",
+        "allowedIf": "isPrepStudyType",
+        "message": "Patient must have a prior clinical encounter.",
+        "encounterTypes": [
+          {
+            "uuid": "be32761a-120b-4f6d-be8c-91d91f25f79c",
+            "display": "PREPSTUDYDELIVERY"
           }
         ]
       }
