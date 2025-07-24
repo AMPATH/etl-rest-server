@@ -2519,6 +2519,30 @@
         ]
       },
       {
+        "uuid": "8abd61ff-bf2c-477d-a5cf-a99d2f96de42",
+        "name": "Study PrEP Phone Follow Up Visit",
+        "allowedIf": "!isFirstPrEPVisit && isPrepStudyType",
+        "message": "Patient must have a prior clinical encounter.",
+        "encounterTypes": [
+          {
+            "uuid": "cd278dd7-c9da-49aa-95f6-8e7613ceca44",
+            "display": "TELECARE"
+          }
+        ]
+      },
+      {
+        "uuid": "ce45a5ba-cf74-44d2-8ec7-62e252476b8f",
+        "name": "PrEP Study Delivery Visit",
+        "allowedIf": "!isFirstPrEPVisit && isPrepStudyType",
+        "message": "Patient must have a prior clinical encounter.",
+        "encounterTypes": [
+          {
+            "uuid": "be32761a-120b-4f6d-be8c-91d91f25f79c",
+            "display": "PREPSTUDYDELIVERY"
+          }
+        ]
+      },
+      {
         "uuid": "a3ecf6ef-05ec-4742-a4c1-8db750e18364",
         "name": "PrEP Return Visit",
         "allowedIf": "!isFirstPrEPVisit && !isPrepStudyType",
@@ -2589,16 +2613,6 @@
         ]
       },
       {
-        "uuid": "7f5b3593-bb28-4efb-9cdd-afebf8853f0b",
-        "name": "Event Driven Visit",
-        "encounterTypes": [
-          {
-            "uuid": "0a80be13-6ff7-4758-9651-eb66d3712be0",
-            "display": "EVENTDRIVEN"
-          }
-        ]
-      },
-      {
         "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
         "name": "Pre Appointment Follow Up Visit",
         "allowedIf": "inPrediction",
@@ -2629,38 +2643,6 @@
           {
             "uuid": "5fd84dae-48db-4f49-98e4-c0ffa90d787d",
             "display": "PREPPOSTINITIATIONFOLLOWUP"
-          }
-        ]
-      },
-      {
-        "uuid": "c2c3cde9-5a3f-4fc3-8976-1c4d29ad0dbe",
-        "name": "Study PrEP Phone Follow Up Visit",
-        "allowedIf": "isPrepStudyType",
-        "message": "Patient must have a prior clinical encounter.",
-        "encounterTypes": [
-          {
-            "uuid": "cd278dd7-c9da-49aa-95f6-8e7613ceca44",
-            "display": "TELECARE"
-          },
-          {
-            "uuid": "a0b0475f-9aa1-43ab-a8f4-3d3be1261295",
-            "display": "PREPTRACING"
-          },
-          {
-            "uuid": "5fd84dae-48db-4f49-98e4-c0ffa90d787d",
-            "display": "PREPPOSTINITIATIONFOLLOWUP"
-          }
-        ]
-      },
-      {
-        "uuid": "ce45a5ba-cf74-44d2-8ec7-62e252476b8f",
-        "name": "PrEP Study Delivery Visit",
-        "allowedIf": "isPrepStudyType",
-        "message": "Patient must have a prior clinical encounter.",
-        "encounterTypes": [
-          {
-            "uuid": "be32761a-120b-4f6d-be8c-91d91f25f79c",
-            "display": "PREPSTUDYDELIVERY"
           }
         ]
       }
