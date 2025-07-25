@@ -584,9 +584,13 @@ function getPreviousHIVClinicallocation(patientEncounters) {
 
 function prepStudyVisit(patient) {
   let isPrepStudyType = false;
-  const studyTypeAnswer = patient.value.uuid;
-  if (studyTypeAnswer === 'a89a898a-1350-11df-a1f1-0026b9348838') {
-    isPrepStudyType = true;
+  if (patient !== undefined) {
+    const studyTypeAnswer = patient.value.uuid;
+    if (studyTypeAnswer === 'a89a898a-1350-11df-a1f1-0026b9348838') {
+      isPrepStudyType = true;
+    }
+  } else {
+    isPrepStudyType = false;
   }
   return isPrepStudyType;
 }
