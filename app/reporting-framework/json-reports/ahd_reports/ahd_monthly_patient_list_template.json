@@ -827,7 +827,7 @@
             "value": "PAP SMEAR"
           },
           {
-            "condition": "cs.screening_method = 2322",
+            "condition": "cs.screening_method in (1213, 2322)",
             "value": "HPV"
           },
           {
