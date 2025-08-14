@@ -171,7 +171,7 @@
             "value": "pap_smear"
           },
           {
-            "condition": "c.screening_method = 2322",
+            "condition": "c.screening_method in (1213, 2322)",
             "value": "hpv"
           }
         ]
@@ -198,7 +198,7 @@
       "alias": "screened_positive_hpv",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322) AND c.hpv_test_result in (2),1,NULL)"
+        "expression": "IF(c.screening_method in (1213, 2322) AND c.hpv_test_result in (2),1,NULL)"
       }
     },
     {
