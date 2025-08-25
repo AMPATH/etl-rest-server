@@ -38,16 +38,12 @@ module.exports = (function () {
                 't1.encounter_id = t3.encounter_id'
               ],
               [
-                '(select t4.person_id, t4.hpv, t4.test_datetime from etl.flat_labs_and_imaging t4 where t4.hpv is not null and uuid="' +
-                  uuid +
-                  '" order by t4.encounter_id desc limit 1)',
+                '(SELECT flai.person_id, flai.hpv, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hpv IS NOT NULL AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hpv IS NOT NULL ))',
                 't4',
                 't4.person_id = t1.person_id'
               ],
               [
-                '(select t5.person_id, t5.hiv_viral_load, t5.test_datetime from etl.flat_labs_and_imaging t5 where t5.hiv_viral_load is not null and uuid="' +
-                  uuid +
-                  '" order by t5.encounter_id desc limit 1)',
+                '(SELECT flai.person_id, flai.hiv_viral_load, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hiv_viral_load IS NOT NULL AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hiv_viral_load IS NOT NULL ))',
                 't5',
                 't5.person_id = t1.person_id'
               ]
