@@ -5260,6 +5260,23 @@
       }
     ]
   },
+  "ff446cb9-0cf4-4b39-8288-16a43ffcca25": {
+    "name": "CDM DEFAULTER TRACING",
+    "dataDependencies": [
+    ],
+    "incompatibleWith": [],
+    "visitTypes": [{
+        "uuid": "35fc940e-ca50-4d28-bc47-81a383c04a44",
+        "name": "CDM DEFAULTER TRACING VISIT",
+        "encounterTypes": [
+        {
+          "uuid": "79318e72-3a31-4f98-aa5f-36421bc5398b",
+          "display": "CDMDEFAULTERTRACING"
+        }
+        ]
+      }
+    ]
+  },
   "37ff4124-91fd-49e6-8261-057ccfb4fcd0": {
     "name": "ONCOLOGY SCREENING AND DIAGNOSIS PROGRAM",
     "dataDependencies": ["patient"],
