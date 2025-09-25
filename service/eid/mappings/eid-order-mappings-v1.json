@@ -332,43 +332,63 @@
     }
   ],
   "testOrderJustification": {
-    "5931c4d4-4406-4d71-b75d-2205d905cc24": {
+    "d7a8dd98-d5de-4774-823a-a8ab06134d63": {
       "eidId": 1,
-      "eidDisplay": "Routine VL",
+      "eidCode": "",
+      "eidDisplay": "First VL",
       "mrsDisplay": ""
     },
-    "e43ddeb6-3984-499c-a280-3bade1039608": {
+    "5931c4d4-4406-4d71-b75d-2205d905cc24": {
       "eidId": 2,
-      "eidDisplay": "Confirmation of Treatment Failure (Repeat VL at 3M)",
+      "eidCode": "",
+      "eidDisplay": "Follow Up VL",
       "mrsDisplay": ""
     },
-    "a8981934-1350-11df-a1f1-0026b9348838": {
-      "eidId": 3,
-      "eidDisplay": "Clinical Failure",
-      "mrsDisplay": ""
-    },
-    "c6537e06-9fc2-47da-b679-e2a32824407f": {
+    "92a2818f-662c-4dbc-aa20-d9f4edec2654": {
       "eidId": 4,
-      "eidDisplay": "Immunological Failure",
+      "eidCode": "",
+      "eidDisplay": "Recency",
       "mrsDisplay": ""
     },
     "a8a00158-1350-11df-a1f1-0026b9348838": {
-      "eidId": 5,
+      "eidId": 3,
+      "eidCode": "",
       "eidDisplay": "Single Drug Substitution",
       "mrsDisplay": ""
     },
-    "a89d109c-1350-11df-a1f1-0026b9348838": {
+    "635f446c-bab9-428a-9930-ae4f46363c0c": {
+      "eidId": 5,
+      "eidCode": "",
+      "eidDisplay": "PMTCT NP",
+      "mrsDisplay": ""
+    },
+    "e883376e-80cb-4ec7-a958-f0fbc0a0bad3": {
       "eidId": 6,
-      "eidDisplay": "Pregnant Mother",
+      "eidCode": "",
+      "eidDisplay": "PMTCT KP",
+      "mrsDisplay": ""
+    },
+    "0998e404-d0ea-4271-abe0-a8a69c08c2cf": {
+      "eidId": 5,
+      "eidCode": "",
+      "eidDisplay": "PMTCT NP <=6 weeks in PNC",
+      "mrsDisplay": ""
+    },
+    "4d74eab9-4cad-4efb-8d58-82b53d23fcb9": {
+      "eidId": 5,
+      "eidCode": "",
+      "eidDisplay": "PMTCT NP >6 weeks in PNC",
       "mrsDisplay": ""
     },
     "a8aaf3e2-1350-11df-a1f1-0026b9348838": {
       "eidId": 7,
+      "eidCode": "",
       "eidDisplay": "Other",
       "mrsDisplay": ""
     },
     "undefined": {
       "eidId": 8,
+      "eidCode": "",
       "eidDisplay": "No Data",
       "mrsDisplay": ""
     }

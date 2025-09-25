@@ -866,40 +866,52 @@
     }
   ],
   "testOrderJustification": {
-    "5931c4d4-4406-4d71-b75d-2205d905cc24": {
+    "d7a8dd98-d5de-4774-823a-a8ab06134d63": {
       "eidId": 1,
       "eidCode": "",
-      "eidDisplay": "Routine VL",
+      "eidDisplay": "First VL",
       "mrsDisplay": ""
     },
-    "e43ddeb6-3984-499c-a280-3bade1039608": {
+    "5931c4d4-4406-4d71-b75d-2205d905cc24": {
       "eidId": 2,
       "eidCode": "",
-      "eidDisplay": "Confirmation of Treatment Failure (Repeat VL at 3M)",
+      "eidDisplay": "Follow Up VL",
       "mrsDisplay": ""
     },
-    "a8981934-1350-11df-a1f1-0026b9348838": {
-      "eidId": 3,
+    "92a2818f-662c-4dbc-aa20-d9f4edec2654": {
+      "eidId": 4,
       "eidCode": "",
-      "eidDisplay": "Clinical Failure",
+      "eidDisplay": "Recency",
       "mrsDisplay": ""
     },
     "a8a00158-1350-11df-a1f1-0026b9348838": {
-      "eidId": 4,
+      "eidId": 3,
       "eidCode": "",
       "eidDisplay": "Single Drug Substitution",
       "mrsDisplay": ""
     },
-    "3966e139-ca69-47c6-aad3-ebd41bb45e28": {
+    "635f446c-bab9-428a-9930-ae4f46363c0c": {
       "eidId": 5,
       "eidCode": "",
-      "eidDisplay": "Baseline VL (for infants diagnosed through EID)",
+      "eidDisplay": "PMTCT NP",
       "mrsDisplay": ""
     },
-    "42cdefa2-c306-4d10-a819-c04131c4934e": {
+    "e883376e-80cb-4ec7-a958-f0fbc0a0bad3": {
       "eidId": 6,
       "eidCode": "",
-      "eidDisplay": "Confirmation of persistent low level viremia (PLLV)",
+      "eidDisplay": "PMTCT KP",
+      "mrsDisplay": ""
+    },
+    "0998e404-d0ea-4271-abe0-a8a69c08c2cf": {
+      "eidId": 5,
+      "eidCode": "",
+      "eidDisplay": "PMTCT NP <=6 weeks in PNC",
+      "mrsDisplay": ""
+    },
+    "4d74eab9-4cad-4efb-8d58-82b53d23fcb9": {
+      "eidId": 5,
+      "eidCode": "",
+      "eidDisplay": "PMTCT NP >6 weeks in PNC",
       "mrsDisplay": ""
     },
     "a8aaf3e2-1350-11df-a1f1-0026b9348838": {
