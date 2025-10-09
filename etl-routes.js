@@ -84,7 +84,6 @@ import { CohortModuleService } from './app/otz/cohort-module.service';
 const {
   default: MlWeeklyPredictionsService
 } = require('./service/ml-weekly-predictions.service');
-import { MlMonthlySummaryService } from './service/ml-monthly-summary.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6362,112 +6361,6 @@ module.exports = (function () {
         description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
         notes: 'Api endpoint that returns AMRS ID in string format',
         tags: ['api']
-      }
-    },
-    {
-      method: 'GET',
-      path: '/etl/ml-summary',
-      config: {
-        auth: 'simple',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'mlMonthlySummaryAggregate',
-                ['endDate', 'startDate', 'locationUuids'],
-                requestParams
-              );
-
-              reportParams.requestParams.isAggregated = true;
-
-              let mlMonthlySummaryService = new MlMonthlySummaryService(
-                'mlMonthlySummaryAggregate',
-                reportParams.requestParams
-              );
-
-              mlMonthlySummaryService
-                .generateReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
-        },
-        plugins: {
-          hapiAuthorization: {
-            role: privileges.canViewClinicDashBoard
-          }
-        },
-        description: "Get a location's ml weekly summary.",
-        notes: "Returns a location's ml weekly summary.",
-        tags: ['api'],
-        validate: {
-          options: {
-            allowUnknown: true
-          },
-          params: {}
-        }
-      }
-    },
-    {
-      method: 'GET',
-      path: '/etl/ml-summary-patient-list',
-      config: {
-        auth: 'simple',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'mlMonthlySummaryAggregate',
-                ['startDate', 'endDate', 'locationUuids'],
-                requestParams
-              );
-
-              delete reportParams.requestParams['gender'];
-
-              let mlMonthlySummaryService = new MlMonthlySummaryService(
-                'mlMonthlySummaryAggregate',
-                reportParams.requestParams
-              );
-
-              mlMonthlySummaryService
-                .generatePatientListReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
-        },
-        plugins: {
-          hapiAuthorization: {
-            role: privileges.canViewClinicDashBoard
-          }
-        },
-        description: "Get a location's ml weekly summary.",
-        notes: "Returns a location's ml weekly summary.",
-        tags: ['api'],
-        validate: {
-          options: {
-            allowUnknown: true
-          },
-          params: {}
-        }
       }
     }
   ];
