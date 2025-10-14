@@ -2,6 +2,7 @@ const authorizer = require('../../authorization/etl-authorizer');
 const etlHelpers = require('../../etl-helpers');
 const privileges = authorizer.getAllPrivileges();
 const preRequest = require('../../pre-request-processing');
+const _ = require('lodash');
 const {
   TXRTTSummaryReportService
 } = require('../../service/datim-reports/txrtt-summary.service');
@@ -80,6 +81,11 @@ const routes = [
             txmlReportService
               .generatePatientListReport(reportParams.requestParams)
               .then((result) => {
+                _.each(result.results.results, (item) => {
+                  item.arv_first_regimen = etlHelpers.getARVNames(
+                    item.arv_first_regimen
+                  );
+                });
                 reply(result);
               })
               .catch((error) => {
