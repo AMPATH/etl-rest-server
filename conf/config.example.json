@@ -113,5 +113,13 @@
     "port": "85",
     "generalPath": "",
     "cd4PanelPath": ""
+  },
+  "openhim": {
+    "host": "http://10.50.80.115",
+    "port": 5001,
+    "token": "your-openhim-token-here",
+    "basePath": "/",
+    "rejectUnauthorized": false,
+    "authType": "Custom"
   }
 }
