@@ -10,6 +10,7 @@ var winston = require('winston');
 var path = require('path');
 var _ = require('lodash');
 var Joi = require('joi');
+var request = require('request');
 var eidLabData = require('./eid-data-synchronization/eid-lab-results');
 var eidService = require('./service/eid.service');
 var patientListCompare = require('./service/patient-list-compare.service.js');
@@ -6467,6 +6468,122 @@ module.exports = (function () {
             allowUnknown: true
           },
           params: {}
+        }
+      }
+    },
+    // OpenHIM Proxy Route
+    {
+      method: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+      path: '/openhim/{path*}',
+      config: {
+        auth: 'simple',
+        handler: function (req, reply) {
+          var openhimConfig = config.openhim;
+
+          if (!openhimConfig || !openhimConfig.host || !openhimConfig.token) {
+            return reply(
+              Boom.badImplementation(
+                'OpenHIM configuration is missing or incomplete'
+              )
+            );
+          }
+
+          var targetPath = req.params.path || '';
+          var queryString = req.url.search || '';
+
+          // Construct the target URL
+          var targetUrl = openhimConfig.host;
+          if (
+            openhimConfig.port &&
+            openhimConfig.port !== 80 &&
+            openhimConfig.port !== 443
+          ) {
+            targetUrl += ':' + openhimConfig.port;
+          }
+
+          // Handle base path and target path properly to avoid double slashes
+          var fullPath = '';
+          if (openhimConfig.basePath) {
+            fullPath = openhimConfig.basePath;
+            // Ensure basePath starts with /
+            if (!fullPath.startsWith('/')) {
+              fullPath = '/' + fullPath;
+            }
+          } else {
+            fullPath = '/';
+          }
+
+          // Add target path if it exists
+          if (targetPath) {
+            // Ensure no double slashes
+            if (fullPath.endsWith('/') && targetPath.startsWith('/')) {
+              fullPath += targetPath.substring(1);
+            } else if (!fullPath.endsWith('/') && !targetPath.startsWith('/')) {
+              fullPath += '/' + targetPath;
+            } else {
+              fullPath += targetPath;
+            }
+          }
+
+          targetUrl += fullPath + queryString;
+
+          // Prepare headers for the proxy request
+          var headers = {};
+
+          // Copy relevant headers from the original request
+          if (req.headers['content-type']) {
+            headers['content-type'] = req.headers['content-type'];
+          }
+          if (req.headers['accept']) {
+            headers['accept'] = req.headers['accept'];
+          }
+
+          // Add OpenHIM token authentication
+          var authType = openhimConfig.authType || 'Bearer';
+          headers['Authorization'] = authType + ' ' + openhimConfig.token;
+
+          var options = {
+            method: req.method.toUpperCase(),
+            url: targetUrl,
+            headers: headers,
+            json: req.method !== 'GET' ? req.payload : undefined,
+            timeout: 30000, // 30 second timeout
+            rejectUnauthorized: openhimConfig.rejectUnauthorized !== false // Default to true unless explicitly set to false
+          };
+
+          request(options, function (error, response, body) {
+            if (error) {
+              console.error('OpenHIM proxy error:', error);
+              return reply(
+                Boom.badGateway('Failed to connect to OpenHIM server')
+              );
+            }
+
+            // Forward the response
+            var replyObject = reply(body);
+
+            // Copy important response headers
+            if (response.headers['content-type']) {
+              replyObject.type(response.headers['content-type']);
+            }
+
+            // Set the status code
+            replyObject.code(response.statusCode);
+          });
+        },
+        description: 'Proxy requests to OpenHIM server',
+        notes:
+          'Forwards requests transparently to the configured OpenHIM server with token authentication',
+        tags: ['api', 'proxy'],
+        validate: {
+          options: {
+            allowUnknown: true
+          },
+          params: {
+            path: Joi.string()
+              .optional()
+              .description('Path to forward to OpenHIM')
+          }
         }
       }
     }
