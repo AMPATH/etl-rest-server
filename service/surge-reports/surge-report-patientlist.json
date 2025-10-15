@@ -7,6 +7,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
+      },
+      {
         "headerName": "Enrolment Date",
         "width": 150,
         "field": "enrollment_date"
@@ -109,6 +119,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
       },
       {
         "headerName": "Enrolment Date",
@@ -218,6 +238,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
       },
       {
         "headerName": "Enrolment Date",
@@ -349,6 +379,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
+      },
+      {
         "headerName": "Enrolment Date",
         "width": 150,
         "field": "enrollment_date"
@@ -476,6 +516,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
       },
       {
         "headerName": "Enrolment Date",
@@ -607,6 +657,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
+      },
+      {
         "headerName": "Enrolment Date",
         "width": 150,
         "field": "enrollment_date"
@@ -736,6 +796,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
+      },
+      {
         "headerName": "Enrolment Date",
         "width": 150,
         "field": "enrollment_date"
@@ -863,6 +933,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_1"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_1_date"
       },
       {
         "headerName": "Enrolment Date",
