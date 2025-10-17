@@ -134,6 +134,22 @@
         "type": "left",
         "joinCondition": "t11.encounter_id = t1.encounter_id "
       }
+    },
+    {
+      "table": "(SELECT person_id, encounter_id, MAX(encounter_datetime) AS encounter_datetime, via_or_via_vili_test_result, screening_method, treatment_method FROM etl.flat_cervical_cancer_screening WHERE via_or_via_vili_test_result IS NOT NULL GROUP BY person_id)",
+      "alias": "t12",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t12.person_id = t1.person_id"
+      }
+    },
+    {
+      "table": "(SELECT person_id, encounter_id, MAX(encounter_datetime) AS encounter_datetime, hpv_test_result FROM etl.flat_cervical_cancer_screening WHERE hpv_test_result IS NOT NULL GROUP BY person_id)",
+      "alias": "t13",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t13.person_id = t1.person_id"
+      }
     }
   ],
   "columns": [
@@ -534,6 +550,54 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "case when ((t1.contraceptive_method = 9510 AND TIMESTAMPDIFF(MONTH, t1.modern_contraceptive_method_start_date, t1.encounter_datetime) > 36) OR (t1.contraceptive_method = 9511 AND TIMESTAMPDIFF(MONTH, t1.modern_contraceptive_method_start_date, t1.encounter_datetime) > 60) OR (t1.contraceptive_method in (9734,9735) AND TIMESTAMPDIFF(MONTH, t1.modern_contraceptive_method_start_date, t1.encounter_datetime) > 120)) then 1 else 0 end"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "hpv_last_encounter_date",
+      "column": "t13.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "via_or_vili_last_encounter_date",
+      "column": "t12.encounter_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "needs_hpv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "t13.hpv_test_result = 1 AND TIMESTAMPDIFF(YEAR,t13.encounter_datetime, '{referenceDate}') >= 3",
+            "value": "1"
+          },
+          {
+            "condition": "t13.hpv_test_result = 2",
+            "value": "2"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "needs_via_or_vili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "t12.via_or_via_vili_test_result = 1 AND TIMESTAMPDIFF(YEAR,t12.encounter_datetime, '{referenceDate}') >= 1",
+            "value": "1"
+          },
+          {
+            "condition": "t12.via_or_via_vili_test_result = 2 AND (t12.screening_method LIKE '%9434%' OR t12.screening_method LIKE '%10420%' OR t12.screening_method LIKE '%7383%') AND t12.treatment_method IN (2,3,4)",
+            "value": "2"
+          },
+          {
+            "condition": "t12.via_or_via_vili_test_result = 3 AND (t12.screening_method LIKE '%9434%' OR t12.screening_method LIKE '%10420%' OR t12.screening_method LIKE '%7383%') AND t12.treatment_method IN (2,3,4)",
+            "value": "3"
+          }
+        ]
       }
     }
   ],
