@@ -1005,6 +1005,87 @@ function generateAppointmentRescheduledReminder(data) {
   return reminders;
 }
 
+function generateHPVReminder(data) {
+  let reminders = [];
+  switch (data.needs_hpv) {
+    case '1':
+      reminders.push({
+        message: `Patient is due for a repeat HPV test. Last test result was Negative on ${Moment(
+          data.hpv_last_encounter_date
+        ).format('DD-MM-YYYY')}.`,
+        title: 'HPV Test Reminder',
+        type: 'warning',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+
+    case '2':
+      reminders.push({
+        message: `HPV result is Positive (${Moment(
+          data.hpv_last_encounter_date
+        ).format(
+          'DD-MM-YYYY'
+        )}). Refer the client for a confirmatory test (VIA/ Villi , Colposcopy or Pap smear).`,
+        title: 'HPV Test Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+
+    default:
+      break;
+  }
+  return reminders;
+}
+
+function generateViaOrViliReminder(data) {
+  let reminders = [];
+  switch (data.needs_via_or_vili) {
+    case '1':
+      reminders.push({
+        message: `Patient is due for a repeat VIA/VILI test. Last test result was Negative on ${Moment(
+          data.via_or_vili_last_encounter_date
+        ).format('DD-MM-YYYY')}.`,
+        title: 'VIA/VILI Test Reminder',
+        type: 'warning',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+
+    case '2':
+      reminders.push({
+        message: `Refer Client For Treatment. Confirmatory test result is Positive (Cryotherapy, LEEP or Thermocoagulation).`,
+        title: 'VIA/VILI Test Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+
+    case '3':
+      reminders.push({
+        message: `Refer client for Approriate Diagnosis and Treatment. Confirmatory test result Suspected For Cancer (Cryotherapy, LEEP or Thermocoagulation).`,
+        title: 'VIA/VILI Test Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+
+    default:
+      break;
+  }
+  return reminders;
+}
+
 async function generateReminders(etlResults, eidResults) {
   let reminders = [];
   let patientReminder;
@@ -1050,6 +1131,8 @@ async function generateReminders(etlResults, eidResults) {
   let appointmentRescheduledRiskReminder = generateAppointmentRescheduledReminder(
     data
   );
+  let hpvReminder = generateHPVReminder(data);
+  let viaOrViliReminder = generateViaOrViliReminder(data);
 
   let currentReminder = [];
   if (pending_vl_lab_result.length > 0) {
@@ -1072,7 +1155,9 @@ async function generateReminders(etlResults, eidResults) {
       cervical_screening_reminder,
       due_for_contraception_refill,
       not_on_modern_contraception,
-      fp_discontinuation_reminder
+      fp_discontinuation_reminder,
+      hpvReminder,
+      viaOrViliReminder
     );
   }
 
@@ -1179,14 +1264,11 @@ function getCerivalScreeningReminder(personId) {
 
 function generateCervicalScreeningReminder(data) {
   let reminders = [];
-  if (
-    data.has_hysterectomy_done !== 1 &&
-    data.qualifies_for_via_or_via_vili_retest === 1
-  ) {
+  if (data.has_hysterectomy_done !== 1 && data.qualifies_for_retest === 1) {
     reminders.push({
       message:
         'Patient is due for a repeat cervical cancer screening test. Last test result was Normal on ' +
-        Moment(data.test_datetime).format('DD-MM-YYYY') +
+        Moment(data.last_test_datetime).format('DD-MM-YYYY') +
         '.',
       title: 'Cervical Cancer Screening Reminder',
       type: 'danger',
