@@ -115,6 +115,9 @@ export class TXNEWSummaryReportService extends MultiDatasetPatientlistReport {
           delete results['result'];
           _.each(results.results.results, (row) => {
             row.cur_meds = etlHelpers.getARVNames(row.cur_meds);
+            row.arv_first_regimen = etlHelpers.getARVNames(
+              row.arv_first_regimen
+            );
           });
           resolve(results);
         })
