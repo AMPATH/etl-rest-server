@@ -121,6 +121,16 @@
     },
     {
       "type": "simple_column",
+      "alias": "cr_id",
+      "column": "flat_identifiers.cr_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sha_id",
+      "column": "flat_identifiers.sha_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "person_id",
       "column": "t2.person_id"
     },

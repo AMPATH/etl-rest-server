@@ -84,6 +84,16 @@
     },
     {
       "type": "simple_column",
+      "alias": "cr_id",
+      "column": "IFNULL(flat_identifiers.cr_id, 'No CR')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sha_id",
+      "column": "IFNULL(flat_identifiers.sha_id, 'No SHA')"
+    },
+    {
+      "type": "simple_column",
       "alias": "location",
       "column": "l.name"
     },

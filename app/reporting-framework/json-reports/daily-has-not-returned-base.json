@@ -118,6 +118,16 @@
     },
     {
       "type": "simple_column",
+      "alias": "cr_id",
+      "column": "flat_identifiers.cr_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sha_id",
+      "column": "flat_identifiers.sha_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "med_pick_up_date",
       "column": "date_format(t2.med_pickup_rtc_date,'%Y-%m-%d')"
     },
