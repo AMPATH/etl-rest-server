@@ -22,7 +22,6 @@ const routes = [
             requestParams
           );
 
-          reportParams.requestParams.isAggregated = true;
           let service = new AHDMonthlySummaryService(
             'ahd-monthly-summary',
             reportParams.requestParams

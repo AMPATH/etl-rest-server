@@ -50,6 +50,16 @@ export class PLHIVNCDv2SummaryReportService extends MultiDatasetPatientlistRepor
                 }
               }
 
+              if (this.params && this.params.isAggregated === true) {
+                finalResult = reportProcessorHelpersService.aggregateDataSets(
+                  finalResult,
+                  ['location_id']
+                );
+                if (finalResult.length > 0) {
+                  finalResult[0].location = 'Multiple Locations...';
+                }
+              }
+
               resolve({
                 queriesAndSchemas: results,
                 result: finalResult,

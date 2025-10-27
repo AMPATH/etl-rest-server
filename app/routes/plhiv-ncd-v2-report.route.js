@@ -25,7 +25,6 @@ const routes = [
             ['startDate', 'endDate', 'locationUuids'],
             requestParams
           );
-          reportParams.requestParams.isAggregated = true;
 
           let service = new PLHIVNCDv2SummaryReportService(
             'plhiv-ncd-v2-monthly-report',

@@ -21,7 +21,6 @@ const routes = [
             ['endDate', 'locationUuids'],
             requestParams
           );
-          reportParams.requestParams.isAggregated = true;
 
           let service = new PrepMonthlySummaryService(
             'prepMonthlySummaryReport',

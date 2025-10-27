@@ -58,6 +58,17 @@ export class HIVGainsAndLossesService extends MultiDatasetPatientlistReport {
                   }
                 }
 
+                if (this.params && this.params.isAggregated === true) {
+                  finalResult = reportProcessorHelpersService.aggregateDataSets(
+                    finalResult,
+                    ['location_id'],
+                    ['end_date', 'start_month', 'end_month']
+                  );
+                  if (finalResult.length > 0) {
+                    finalResult[0].location = 'Multiple Locations...';
+                  }
+                }
+
                 const resultWithCalculatedData = this.addCalculatedCols(
                   finalResult
                 );

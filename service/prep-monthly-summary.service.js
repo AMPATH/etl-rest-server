@@ -6,11 +6,6 @@ const indicatorDefinitions = require('./prep-indicator-definitions.json');
 var etlHelpers = require('../etl-helpers');
 export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
   constructor(reportName, params) {
-    if (params.isAggregated) {
-      params.excludeParam = ['location_id'];
-      params.joinColumnParam = 'join_location';
-    }
-
     super(reportName, params);
   }
   getAggregateReport(reportParams) {
@@ -43,6 +38,16 @@ export class PrepMonthlySummaryService extends MultiDatasetPatientlistReport {
                 );
               }
             }
+
+            if (this.params && this.params.isAggregated === true) {
+              finalResult = reportProcessorHelpersService.aggregateDataSets(
+                finalResult
+              );
+              if (finalResult.length > 0) {
+                finalResult[0].location = 'Multiple Locations...';
+              }
+            }
+
             resolve({
               queriesAndSchemas: results,
               result: finalResult,

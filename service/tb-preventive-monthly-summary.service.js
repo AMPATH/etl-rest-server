@@ -7,9 +7,6 @@ const dao = require('../etl-dao');
 const helpers = require('../etl-helpers');
 export class HivTBReport extends MultiDatasetPatientlistReport {
   constructor(reportName, params) {
-    if (params.isAggregated) {
-      params.joinColumnParam = 'join_location';
-    }
     params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen';
     super(reportName, params);
   }
@@ -52,6 +49,16 @@ export class HivTBReport extends MultiDatasetPatientlistReport {
                     );
                   }
                 }
+
+                if (this.params && this.params.isAggregated === true) {
+                  finalResult = reportProcessorHelpersService.aggregateDataSets(
+                    finalResult
+                  );
+                  if (finalResult.length > 0) {
+                    finalResult[0].location = 'Multiple Locations...';
+                  }
+                }
+
                 resolve({
                   queriesAndSchemas: results,
                   result: finalResult,

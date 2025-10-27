@@ -110,6 +110,11 @@ module.exports = (function () {
           value: queryParams[filter]
         });
       }
+
+      // format isAggregated
+      queryParams.isAggregated =
+        queryParams.isAggregated === 'true' ? true : false;
+
       var reportParams = {
         reportName: reportName,
         whereParams: whereParams,

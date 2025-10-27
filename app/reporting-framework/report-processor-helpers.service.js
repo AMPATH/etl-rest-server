@@ -84,4 +84,26 @@ export default class ReportProcessorHelpersService {
       .value();
     return result;
   }
+
+  aggregateDataSets(dataset = [], concatIntFields = [], distinctFields = []) {
+    let obj = {};
+    for (let i = 0; i < dataset.length; i++) {
+      for (let [key, value] of Object.entries(dataset[i])) {
+        if (Object.hasOwn(obj, key)) {
+          if (!distinctFields.includes(key)) {
+            obj[key] +=
+              (typeof obj[key] === 'string' &&
+                obj[key] !== '' &&
+                isNaN(obj[key])) ||
+              concatIntFields.includes(key)
+                ? ',' + value
+                : Number(value);
+          }
+        } else {
+          obj[key] = value;
+        }
+      }
+    }
+    return [obj];
+  }
 }

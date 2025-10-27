@@ -28,6 +28,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "ahd_base.location_uuid"
+    },
+    {
+      "type": "simple_column",
       "alias": "location",
       "column": "ahd_base.location"
     },
