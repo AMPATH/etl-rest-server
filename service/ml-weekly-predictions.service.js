@@ -92,4 +92,39 @@ GROUP BY t1.person_id
     const weekNumber = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
     return weekNumber;
   }
+
+  getSummaryAggregateReport(reportParams) {
+    return new Promise(function (resolve, reject) {
+      const report = new BaseMysqlReport('mlMonthlySummary', reportParams);
+
+      Promise.join(report.generateReport(), (results) => {
+        let result = results.results.results;
+        results.size = result ? result.length : 0;
+        results.result = result;
+        delete results['results'];
+        resolve(results);
+      }).catch((errors) => {
+        reject(errors);
+      });
+    });
+  }
+
+  getSummaryListReport(reportParams) {
+    const indicators = reportParams.indicators
+      ? reportParams.indicators.split(',')
+      : [];
+
+    const report = new PatientlistMysqlReport('mlMonthlySummary', reportParams);
+
+    return new Promise(function (resolve, reject) {
+      Promise.join(report.generatePatientListReport(indicators), (results) => {
+        results['result'] = results.results.results;
+        delete results['results'];
+        resolve(results);
+      }).catch((errors) => {
+        console.log('Error: ', errors);
+        reject(errors);
+      });
+    });
+  }
 }

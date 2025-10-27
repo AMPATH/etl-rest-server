@@ -1,0 +1,16 @@
+{
+  "reports": [
+    "highRiskClientAggregate",
+    "highRiskContactedAggregate",
+    "phoneFollowUpAggregate",
+    "homeFollowUpAggregate",
+    "successfulContactAggregate",
+    "successfulContactKeptAppointmentAggregate",
+    "successfulContactMissedAppointmentAggregate",
+    "unsuccessfulContactAttemptsAggregate",
+    "noContactAttemptAggregate",
+    "noContactAttemptKepAppointmentAggregate",
+    "rescheduledAppointmentAggregate",
+    "unsuccessfulKeptAppointmentAggregate"
+  ]
+}
