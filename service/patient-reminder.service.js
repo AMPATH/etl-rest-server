@@ -762,7 +762,7 @@ function getIptCompletionReminder(data) {
 function getFamilyTestingReminder(data) {
   let reminders = [];
   return getEncountersByEncounterType(data[0].person_uuid).then((res) => {
-    if (res.results.length === 0) {
+    if (res && res.results && res.results.length === 0) {
       reminders.push({
         message:
           'No elicitation has been done for this index, please elicit for contacts',
@@ -1006,6 +1006,7 @@ function generateAppointmentRescheduledReminder(data) {
 }
 
 function generateHPVReminder(data) {
+  console.log('HPV');
   let reminders = [];
   switch (data.needs_hpv) {
     case '1':
@@ -1043,6 +1044,9 @@ function generateHPVReminder(data) {
 }
 
 function generateViaOrViliReminder(data) {
+  console.log('VIA/VILI DATA');
+  console.log(data);
+  console.log('VIA/VILI DATA');
   let reminders = [];
   switch (data.needs_via_or_vili) {
     case '1':

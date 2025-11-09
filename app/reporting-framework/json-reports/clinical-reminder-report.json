@@ -569,7 +569,7 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "t13.hpv_test_result = 1 AND TIMESTAMPDIFF(YEAR,t13.encounter_datetime, '{referenceDate}') >= 3",
+            "condition": "t13.hpv_test_result = 1 AND TIMESTAMPDIFF(YEAR,t13.encounter_datetime, NOW()) >= 3",
             "value": "1"
           },
           {
@@ -586,7 +586,7 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "t12.via_or_via_vili_test_result = 1 AND TIMESTAMPDIFF(YEAR,t12.encounter_datetime, '{referenceDate}') >= 1",
+            "condition": "t12.via_or_via_vili_test_result = 1 AND TIMESTAMPDIFF(YEAR,t12.encounter_datetime, NOW()) >= 1",
             "value": "1"
           },
           {
