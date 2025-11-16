@@ -1006,10 +1006,9 @@ function generateAppointmentRescheduledReminder(data) {
 }
 
 function generateHPVReminder(data) {
-  console.log('HPV');
   let reminders = [];
   switch (data.needs_hpv) {
-    case '1':
+    case 1:
       reminders.push({
         message: `Patient is due for a repeat HPV test. Last test result was Negative on ${Moment(
           data.hpv_last_encounter_date
@@ -1021,8 +1020,9 @@ function generateHPVReminder(data) {
           toast: true
         }
       });
+      break;
 
-    case '2':
+    case 2:
       reminders.push({
         message: `HPV result is Positive (${Moment(
           data.hpv_last_encounter_date
@@ -1036,6 +1036,7 @@ function generateHPVReminder(data) {
           toast: true
         }
       });
+      break;
 
     default:
       break;
@@ -1044,12 +1045,9 @@ function generateHPVReminder(data) {
 }
 
 function generateViaOrViliReminder(data) {
-  console.log('VIA/VILI DATA');
-  console.log(data);
-  console.log('VIA/VILI DATA');
   let reminders = [];
   switch (data.needs_via_or_vili) {
-    case '1':
+    case 1:
       reminders.push({
         message: `Patient is due for a repeat VIA/VILI test. Last test result was Negative on ${Moment(
           data.via_or_vili_last_encounter_date
@@ -1061,8 +1059,9 @@ function generateViaOrViliReminder(data) {
           toast: true
         }
       });
+      break;
 
-    case '2':
+    case 2:
       reminders.push({
         message: `Refer Client For Treatment. Confirmatory test result is Positive (Cryotherapy, LEEP or Thermocoagulation).`,
         title: 'VIA/VILI Test Reminder',
@@ -1072,8 +1071,9 @@ function generateViaOrViliReminder(data) {
           toast: true
         }
       });
+      break;
 
-    case '3':
+    case 3:
       reminders.push({
         message: `Refer client for Approriate Diagnosis and Treatment. Confirmatory test result Suspected For Cancer (Cryotherapy, LEEP or Thermocoagulation).`,
         title: 'VIA/VILI Test Reminder',
@@ -1083,6 +1083,7 @@ function generateViaOrViliReminder(data) {
           toast: true
         }
       });
+      break;
 
     default:
       break;
@@ -1268,7 +1269,11 @@ function getCerivalScreeningReminder(personId) {
 
 function generateCervicalScreeningReminder(data) {
   let reminders = [];
-  if (data.has_hysterectomy_done !== 1 && data.qualifies_for_retest === 1) {
+  if (
+    data.has_hysterectomy_done !== 1 &&
+    data.does_not_qualify_for_hpv_retest !== 1 &&
+    data.does_not_qualify_for_via_or_via_vili_retest !== 1
+  ) {
     reminders.push({
       message:
         'Patient is due for a repeat cervical cancer screening test. Last test result was Normal on ' +

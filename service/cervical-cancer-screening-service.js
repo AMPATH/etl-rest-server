@@ -9,16 +9,17 @@ function getPatientLatestCericalScreeningResult(personId) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT fli.person_id,
     via_or_via_vili,
-    latest_res.encounter_datetime as last_test_datetime,
-    TIMESTAMPDIFF(YEAR, latest_res.encounter_datetime, NOW()) AS 'years_since_last_test',
-    CASE WHEN (latest_res.last_test = 1 AND TIMESTAMPDIFF(YEAR, latest_res.encounter_datetime, NOW()) >= 3) OR (latest_res.last_test = 2 AND TIMESTAMPDIFF(YEAR, latest_res.encounter_datetime, NOW()) >= 1)
-      THEN 1 ELSE NULL 
-      END AS 'qualifies_for_retest',
-    TIMESTAMPDIFF(YEAR, test_datetime, NOW()) AS 'years_since_last_via_or_via_vili_test',
+    hpv,
+    test_datetime,
+    TIMESTAMPDIFF(YEAR, test_datetime, NOW()) AS 'years_since_last_test',
     CASE
-        WHEN TIMESTAMPDIFF(YEAR, test_datetime, NOW()) >= 1 THEN 1
+        WHEN via_or_via_vili IS NOT NULL AND TIMESTAMPDIFF(YEAR, test_datetime, NOW()) < 1 THEN 1
         ELSE NULL
-    END AS 'qualifies_for_via_or_via_vili_retest',
+    END AS 'does_not_qualify_for_via_or_via_vili_retest',
+    CASE
+        WHEN hpv IS NOT NULL AND TIMESTAMPDIFF(YEAR, test_datetime, NOW()) < 3 THEN 1
+        ELSE NULL
+    END AS 'does_not_qualify_for_hpv_retest',
     CASE
         WHEN value_coded = 5276 THEN 1
         ELSE NULL
@@ -33,11 +34,7 @@ WHERE value_coded = 5276
   AND person_id = ${personId}
   AND voided = 0
 LIMIT 1) fs ON (fli.person_id = fs.person_id)
-LEFT JOIN (SELECT person_id, encounter_id, MAX(encounter_datetime) as encounter_datetime, 
-  CASE WHEN hpv_test_result IS NOT NULL THEN 1 ELSE CASE WHEN via_or_via_vili_test_result IS NOT NULL THEN 2 ELSE NULL END END AS last_test
-  FROM etl.flat_cervical_cancer_screening WHERE (hpv_test_result IS NOT NULL OR via_or_via_vili_test_result IS NOT NULL) AND person_id = ${personId}) latest_res
-  ON latest_res.person_id = fli.person_id
-WHERE via_or_via_vili IS NOT NULL
+WHERE via_or_via_vili IS NOT NULL OR hpv IS NOT NULL
 AND fli.person_id = ${personId}
 ORDER BY test_datetime DESC
 LIMIT 1;`;
