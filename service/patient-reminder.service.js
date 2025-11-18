@@ -1011,7 +1011,7 @@ function generateHPVReminder(data) {
     case 1:
       reminders.push({
         message: `Patient is due for a repeat HPV test. Last test result was Negative on ${Moment(
-          data.hpv_last_encounter_date
+          data.last_encounter_datetime
         ).format('DD-MM-YYYY')}.`,
         title: 'HPV Test Reminder',
         type: 'warning',
@@ -1025,7 +1025,7 @@ function generateHPVReminder(data) {
     case 2:
       reminders.push({
         message: `HPV result is Positive (${Moment(
-          data.hpv_last_encounter_date
+          data.last_encounter_datetime
         ).format(
           'DD-MM-YYYY'
         )}). Refer the client for a confirmatory test (VIA/ Villi , Colposcopy or Pap smear).`,
@@ -1050,7 +1050,7 @@ function generateViaOrViliReminder(data) {
     case 1:
       reminders.push({
         message: `Patient is due for a repeat VIA/VILI test. Last test result was Negative on ${Moment(
-          data.via_or_vili_last_encounter_date
+          data.last_encounter_datetime
         ).format('DD-MM-YYYY')}.`,
         title: 'VIA/VILI Test Reminder',
         type: 'warning',
@@ -1063,7 +1063,9 @@ function generateViaOrViliReminder(data) {
 
     case 2:
       reminders.push({
-        message: `Refer Client For Treatment. Confirmatory test result is Positive (Cryotherapy, LEEP or Thermocoagulation).`,
+        message: `Refer Client For Treatment. The Confirmatory test result was Positive (Cryotherapy, LEEP or Thermocoagulation) on ${Moment(
+          data.last_encounter_datetime
+        ).format('DD-MM-YYYY')}.`,
         title: 'VIA/VILI Test Reminder',
         type: 'danger',
         display: {
@@ -1075,7 +1077,9 @@ function generateViaOrViliReminder(data) {
 
     case 3:
       reminders.push({
-        message: `Refer client for Approriate Diagnosis and Treatment. Confirmatory test result Suspected For Cancer (Cryotherapy, LEEP or Thermocoagulation).`,
+        message: `Refer client for Approriate Diagnosis and Treatment. The Confirmatory test result was Suspected For Cancer (Cryotherapy, LEEP or Thermocoagulation) on ${Moment(
+          data.last_encounter_datetime
+        ).format('DD-MM-YYYY')}.`,
         title: 'VIA/VILI Test Reminder',
         type: 'danger',
         display: {
