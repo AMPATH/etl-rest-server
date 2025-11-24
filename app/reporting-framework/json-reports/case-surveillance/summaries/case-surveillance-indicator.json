@@ -1,0 +1,20 @@
+[
+  {
+    "sectionTitle": "",
+    "indicators": [
+      {
+        "label": "Location",
+        "indicator": "location"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "Case Surveillance",
+    "indicators": [
+      {
+        "label": "Total",
+        "indicator": ["total"]
+      }
+    ]
+  }
+]

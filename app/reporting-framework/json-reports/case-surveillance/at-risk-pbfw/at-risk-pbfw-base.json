@@ -1,0 +1,229 @@
+{
+  "name": "atRiskPbfwBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "Case-base for Female high-risk clients with HTS positive + linked to PrEP encounters",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = e.patient_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pi.patient_id = e.patient_id AND pi.identifier_type = 44"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = e.location_id"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pa.person_id = e.patient_id AND pa.preferred = 1"
+      }
+    },
+    {
+      "table": "ndwr.mfl_codes",
+      "alias": "mfl",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mfl.location_id = e.location_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o1",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o1.encounter_id = e.encounter_id AND o1.concept_id = 12389 AND o1.value_coded IN (12390, 9078) AND o1.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o2",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o2.encounter_id = e.encounter_id AND o2.concept_id = 8351 AND o2.value_coded = 1065 AND o2.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e2",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e2.patient_id = e.patient_id AND e2.encounter_type = 133 AND e2.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o3",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o3.encounter_id = e2.encounter_id AND o3.concept_id = 9790 AND o3.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi2",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pi2.patient_id = e.patient_id AND pi2.identifier_type = 44"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "County",
+      "column": "pa.address1"
+    },
+    {
+      "type": "simple_column",
+      "alias": "facility",
+      "column": "mfl.Facility"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "SubCounty",
+      "column": "pa.address2"
+    },
+    {
+      "type": "simple_column",
+      "alias": "Ward",
+      "column": "pa.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "PatientPk",
+      "column": "p.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "Sex",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN p.gender = 'M' THEN 'male' ELSE 'female' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "Dob",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mfl_code",
+      "column": "mfl.mfl_code"
+    },
+    {
+      "type": "derived_column",
+      "alias": "PrepRegimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN o3.value_coded = 6180 THEN 'TDF/FTC' WHEN o3.value_coded = 802 THEN 'TDF' WHEN o3.value_coded = 1400 THEN '3TC/TDF' ELSE 'Unknown' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "PrepNumber",
+      "column": "pi2.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "PrepStartDate",
+      "column": "e2.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "CreatedAt",
+      "column": "e.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "UpdatedAt",
+      "column": "e.date_changed"
+    },
+    {
+      "type": "derived_column",
+      "alias": "total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type = 295"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mfl.mfl_code <> 15999"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "p.gender = 'F'"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["e.patient_id", "p.gender", "mfl.mfl_code"]
+  }
+}
