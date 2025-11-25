@@ -88,6 +88,12 @@ try {
             try {
               const result = JSON.parse(body);
               console.log('User: ', result);
+              
+              // Validate sessionId exists before making async calls
+              if (!result.sessionId) {
+                return reject(new Error('Session ID missing from authentication response'));
+              }
+              
               //Set current user
               authorizer.setUser(result.user);
               authorizer.getUserAuthorizedLocations(
@@ -100,6 +106,7 @@ try {
                       : authorizer.getCurrentUserPreviliges(),
                     authorizedLocations: authorizedLocations
                   };
+                  
                   const validSessionCookie = 'JSESSIONID=' + result.sessionId;
                   const sessionCookie =
                     res.headers['set-cookie'] &&
@@ -185,7 +192,7 @@ try {
       }
 
       const getCookieValue = (name) =>
-        name.match('(^|;)\\s*JSESSIONID\\s*=\\s*([^;]+)')?.pop() || '';
+        name.match(/(^|;)\s*JSESSIONID\s*=\s*([^;]+)/)?.pop() || '';
 
       const scheme = function (server, options) {
         return {
@@ -225,11 +232,12 @@ try {
                       credentials: result.currentUser
                     });
                   } else {
-                    //Authentication unsuccessful
-                    return reply.continue({
-                      isAuthenticated: false,
-                      credentials: {}
-                    });
+                    //Authentication unsuccessful - reject the request
+                    return reply(
+                      Boom.unauthorized('User not authenticated!'),
+                      null,
+                      {}
+                    );
                   }
                 } catch (error) {
                   console.log('Oop error!', error);

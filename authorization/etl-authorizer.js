@@ -169,12 +169,14 @@ function resolveLocationName(userProperties, type, callback) {
     if (type === 'operational') {
       if (/^grantAccessToLocationOperationalData/.test(key)) {
         if (userProperties[key] === '*') {
-          const grantedAccessLocationOperationalData = {
-            uuid: userProperties[key],
-            name: 'All',
-            type: 'operational'
-          };
-          authorized.push(grantedAccessLocationOperationalData);
+          // If 'All' access, return immediately with only the "All" object
+          return callback([
+            {
+              uuid: userProperties[key],
+              name: 'All',
+              type: 'operational'
+            }
+          ]);
         } else {
           authorized.push(userProperties[key]);
         }
@@ -182,12 +184,14 @@ function resolveLocationName(userProperties, type, callback) {
     } else if (type === 'aggregate') {
       if (/^grantAccessToLocationAggregateData/.test(key)) {
         if (userProperties[key] === '*') {
-          const grantedAccessLocationAggregateData = {
-            uuid: userProperties[key],
-            name: 'All',
-            type: 'aggregate'
-          };
-          authorized.push(grantedAccessLocationAggregateData);
+          // If 'All' access, return immediately with only the "All" object
+          return callback([
+            {
+              uuid: userProperties[key],
+              name: 'All',
+              type: 'aggregate'
+            }
+          ]);
         } else {
           authorized.push(userProperties[key]);
         }
@@ -196,16 +200,6 @@ function resolveLocationName(userProperties, type, callback) {
   }
 
   if (authorized.length > 0) {
-    // Check if authorized contains objects with 'All' or just UUIDs
-    const hasAllAccess = authorized.some(item => 
-      typeof item === 'object' && item.name === 'All'
-    );
-    
-    if (hasAllAccess) {
-      // If 'All' access, return immediately
-      return callback(authorized);
-    }
-    
     // Extract UUIDs for lookup
     const uuids = authorized.map(item => 
       typeof item === 'object' ? item.uuid : item
