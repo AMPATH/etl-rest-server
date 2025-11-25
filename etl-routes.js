@@ -6115,7 +6115,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/covid-vaccination-status',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.patientUuid) {
@@ -6140,7 +6140,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/covid-19-monthly-vaccination-report',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.locationUuids) {
@@ -6180,7 +6180,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/covid-19-monthly-vaccination-report/patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.locationUuids) {
@@ -6221,7 +6221,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/ml-weekly-predictions',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           if (request.query.locationUuids) {
             request.query.reportName = 'defaulter-list';
@@ -6275,7 +6275,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/predicted-score',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.patientUuid) {
@@ -6300,7 +6300,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hiv-latest-summaries',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           dao.getPatientsLatestHivSummmary(request).then((summary) => {
@@ -6316,7 +6316,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/viral-load-suppression-rate',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: function (request, reply) {
           const { uuid } = request.query;
@@ -6339,7 +6339,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/amrs_id',
       config: {
-        auth: 'simple',
+        auth: 'default',
         plugins: {},
         handler: async function (request, reply) {
           const axios = require('axios');
@@ -6368,7 +6368,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/ml-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           if (request.query.locationUuids) {
             preRequest.resolveLocationIdsToLocationUuids(request, function () {
@@ -6421,7 +6421,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/ml-summary-patient-list',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: function (request, reply) {
           if (request.query.locationUuids) {
             preRequest.resolveLocationIdsToLocationUuids(request, function () {

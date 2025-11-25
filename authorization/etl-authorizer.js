@@ -154,13 +154,32 @@ authorizer.isSuperUser = function () {
 
 authorizer.getUserAuthorizedLocations = function (userProperties, callback) {
   const authorized = [];
-  resolveLocationName(userProperties, 'aggregate', (aggregateResults) => {
-    authorized.push.apply(authorized, aggregateResults);
-    resolveLocationName(userProperties, 'operational', (operationalResults) => {
-      authorized.push.apply(authorized, operationalResults);
-      callback(authorized);
+  try {
+    resolveLocationName(userProperties, 'aggregate', (aggregateResults) => {
+      try {
+        authorized.push.apply(authorized, aggregateResults);
+        resolveLocationName(
+          userProperties,
+          'operational',
+          (operationalResults) => {
+            try {
+              authorized.push.apply(authorized, operationalResults);
+              callback(authorized);
+            } catch (err) {
+              console.error('Error processing operational results:', err);
+              callback(authorized);
+            }
+          }
+        );
+      } catch (err) {
+        console.error('Error processing aggregate results:', err);
+        callback(authorized);
+      }
     });
-  });
+  } catch (err) {
+    console.error('Error in getUserAuthorizedLocations:', err);
+    callback([]);
+  }
 };
 
 function resolveLocationName(userProperties, type, callback) {
@@ -201,29 +220,39 @@ function resolveLocationName(userProperties, type, callback) {
 
   if (authorized.length > 0) {
     // Extract UUIDs for lookup
-    const uuids = authorized.map(item => 
+    const uuids = authorized.map((item) =>
       typeof item === 'object' ? item.uuid : item
     );
-    
-    analytics.resolveLocationUuidsToName(uuids, (results) => {
-      const resolveLocationUuids = [];
-      _.each(results, (result) => {
-        if (type === 'operational') {
-          resolveLocationUuids.push({
-            uuid: result.uuid,
-            name: result.name,
-            type: 'operational'
+
+    try {
+      analytics.resolveLocationUuidsToName(uuids, (results) => {
+        try {
+          const resolveLocationUuids = [];
+          _.each(results, (result) => {
+            if (type === 'operational') {
+              resolveLocationUuids.push({
+                uuid: result.uuid,
+                name: result.name,
+                type: 'operational'
+              });
+            } else if (type === 'aggregate') {
+              resolveLocationUuids.push({
+                uuid: result.uuid,
+                name: result.name,
+                type: 'aggregate'
+              });
+            }
           });
-        } else if (type === 'aggregate') {
-          resolveLocationUuids.push({
-            uuid: result.uuid,
-            name: result.name,
-            type: 'aggregate'
-          });
+          callback(resolveLocationUuids);
+        } catch (err) {
+          console.error('Error processing location resolution results:', err);
+          callback([]);
         }
       });
-      callback(resolveLocationUuids);
-    });
+    } catch (err) {
+      console.error('Error calling resolveLocationUuidsToName:', err);
+      callback([]);
+    }
   } else {
     //for users whose privileges are not set
     callback(authorized);

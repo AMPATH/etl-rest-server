@@ -82,51 +82,111 @@ try {
 
           // The whole response has been received.
           res.on('end', () => {
-            if (res.statusCode === 403) {
+            // Handle non-200 status codes
+            if (res.statusCode === 403 || res.statusCode === 401) {
+              console.log(
+                `Authentication failed with status ${res.statusCode}`
+              );
               return resolve(null);
             }
+
+            if (res.statusCode !== 200) {
+              console.error(`Unexpected status code: ${res.statusCode}`);
+              return reject(
+                new Error(`OpenMRS returned status ${res.statusCode}`)
+              );
+            }
+
+            // Check if response is JSON
+            const contentType = res.headers['content-type'] || '';
+            if (!contentType.includes('application/json')) {
+              console.error('Non-JSON response received:', contentType);
+              console.error('Response body:', body.substring(0, 200));
+              return reject(
+                new Error(
+                  'Invalid response format from OpenMRS (expected JSON)'
+                )
+              );
+            }
+
             try {
               const result = JSON.parse(body);
               console.log('User: ', result);
-              
-              // Validate sessionId exists before making async calls
-              if (!result.sessionId) {
-                return reject(new Error('Session ID missing from authentication response'));
+
+              // Validate user object exists
+              if (!result.user) {
+                return reject(
+                  new Error('User object missing from authentication response')
+                );
               }
-              
+
+              // Extract sessionId from cookie if not in response
+              let sessionId = result.sessionId;
+              if (!sessionId) {
+                // Extract JSESSIONID from the cookie parameter (format: "JSESSIONID=xxxxx")
+                const cookieMatch = cookie.match(/JSESSIONID=([^;]+)/);
+                if (cookieMatch && cookieMatch[1]) {
+                  sessionId = cookieMatch[1];
+                } else {
+                  return reject(
+                    new Error(
+                      'Session ID missing from authentication response and cookie'
+                    )
+                  );
+                }
+              }
+
               //Set current user
               authorizer.setUser(result.user);
-              authorizer.getUserAuthorizedLocations(
-                result.user.userProperties,
-                (authorizedLocations) => {
-                  const currentUser = {
-                    username: result.user.username,
-                    role: authorizer.isSuperUser()
-                      ? authorizer.getAllPrivilegesArray()
-                      : authorizer.getCurrentUserPreviliges(),
-                    authorizedLocations: authorizedLocations
-                  };
-                  
-                  const validSessionCookie = 'JSESSIONID=' + result.sessionId;
-                  const sessionCookie =
-                    res.headers['set-cookie'] &&
-                    res.headers['set-cookie'].length > 0
-                      ? res.headers['set-cookie'][0]
-                      : validSessionCookie;
-                  cache.saveToCache(result.user.username, {
-                    result: result,
-                    currentUser: currentUser,
-                    session: sessionCookie
-                  });
-                  currentUser.session = sessionCookie;
-                  requestConfig.setAuthorization(sessionCookie);
-                  resolve({
-                    authenticated: result.authenticated,
-                    currentUser: currentUser
-                  });
-                }
-              );
+              console.log('Set user, getting authorized locations...');
+
+              // Wrap the callback in try-catch to handle errors
+              try {
+                authorizer.getUserAuthorizedLocations(
+                  result.user.userProperties,
+                  (authorizedLocations) => {
+                    console.log(
+                      'Authorized locations retrieved:',
+                      authorizedLocations
+                    );
+                    try {
+                      const currentUser = {
+                        username: result.user.username,
+                        role: authorizer.isSuperUser()
+                          ? authorizer.getAllPrivilegesArray()
+                          : authorizer.getCurrentUserPreviliges(),
+                        authorizedLocations: authorizedLocations
+                      };
+
+                      const validSessionCookie = 'JSESSIONID=' + sessionId;
+                      const sessionCookie =
+                        res.headers['set-cookie'] &&
+                        res.headers['set-cookie'].length > 0
+                          ? res.headers['set-cookie'][0]
+                          : validSessionCookie;
+                      cache.saveToCache(result.user.username, {
+                        result: result,
+                        currentUser: currentUser,
+                        session: sessionCookie
+                      });
+                      currentUser.session = sessionCookie;
+                      requestConfig.setAuthorization(sessionCookie);
+                      resolve({
+                        authenticated: result.authenticated,
+                        currentUser: currentUser
+                      });
+                    } catch (innerError) {
+                      console.error('Error building current user:', innerError);
+                      reject(innerError);
+                    }
+                  }
+                );
+              } catch (authError) {
+                console.error('Error getting authorized locations:', authError);
+                reject(authError);
+              }
             } catch (error) {
+              console.error('Error parsing authentication response:', error);
               reject(error);
             }
           });
