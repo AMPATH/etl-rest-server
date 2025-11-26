@@ -160,6 +160,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -325,6 +340,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -489,6 +519,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -653,6 +698,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -807,6 +867,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -961,6 +1036,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -1115,6 +1205,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -1274,6 +1379,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -1433,6 +1553,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -1597,6 +1732,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -1756,6 +1906,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -1915,6 +2080,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -2074,6 +2254,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -2263,6 +2458,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -2447,6 +2657,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -2636,6 +2861,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -2795,6 +3035,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -2954,6 +3209,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -3113,6 +3383,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   },
@@ -3267,6 +3552,21 @@
         "headerName": "Nearest Center",
         "width": 150,
         "field": "nearest_center"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       }
     ]
   }
