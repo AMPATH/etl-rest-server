@@ -12,6 +12,42 @@
     "sectionTitle": "Case Surveillance",
     "indicators": [
       {
+        "label": "New Cases",
+        "indicator": ["newCaseTotal"]
+      },
+      {
+        "label": "Linked Cases",
+        "indicator": ["linkedCaseTotal"]
+      },
+      {
+        "label": "PREP Linked Cases",
+        "indicator": ["prepLinkedTotal"]
+      },
+      {
+        "label": "At Risk PBFW",
+        "indicator": ["atRiskPbfwTotal"]
+      },
+      {
+        "label": "Eligible for VL",
+        "indicator": ["eligibleForVlTotal"]
+      },
+      {
+        "label": "HEI without PCR",
+        "indicator": ["heiWithoutPcrTotal"]
+      },
+      {
+        "label": "HEI 6 to 8 Weeks",
+        "indicator": ["hei6to8WeeksTotal"]
+      },
+      {
+        "label": "HEI 24 Months",
+        "indicator": ["hei24MonthsTotal"]
+      },
+      {
+        "label": "HEI without Final Outcome",
+        "indicator": ["heiWithoutFinalOutcomeTotal"]
+      },
+      {
         "label": "Total",
         "indicator": ["total"]
       }

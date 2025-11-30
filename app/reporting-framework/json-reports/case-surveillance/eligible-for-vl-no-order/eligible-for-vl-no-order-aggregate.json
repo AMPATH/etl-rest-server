@@ -1,18 +1,18 @@
 {
-  "name": "hei6to8WeeksAggregate",
+  "name": "eligibleForVlNoOrderAggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "hei6to8WeeksBase",
+      "name": "eligibleForVlNoOrderBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "hei6to8WeeksBase",
+      "dataSet": "eligibleForVlNoOrderBase",
       "alias": "b"
     }
   ],
@@ -57,7 +57,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "hei6to8WeeksTotal",
+      "alias": "eligibleForVlNoOrderTotal",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(b.total)"

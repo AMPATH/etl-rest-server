@@ -404,6 +404,10 @@ import * as prepLinked_base_report from './json-reports/case-surveillance/prep-l
 import * as eligibleForVl_aggregate_report from './json-reports/case-surveillance/eligible-for-vl/eligible-for-vl-aggregate.json';
 import * as eligibleForVl_base_report from './json-reports/case-surveillance/eligible-for-vl/eligible-for-vl-base.json';
 
+//case surveillance - eligible for vl no order
+import * as eligibleForVlNoOrder_aggregate_report from './json-reports/case-surveillance/eligible-for-vl-no-order/eligible-for-vl-no-order-aggregate.json';
+import * as eligibleForVlNoOrder_base_report from './json-reports/case-surveillance/eligible-for-vl-no-order/eligible-for-vl-no-order-base.json';
+
 //case surveillance - hei without pcr
 import * as heiWithoutPcr_aggregate_report from './json-reports/case-surveillance/hei-without-pcr/hei-without-pcr-aggregate.json';
 import * as heiWithoutPcr_base_report from './json-reports/case-surveillance/hei-without-pcr/hei-without-pcr-base.json';
@@ -422,6 +426,7 @@ import * as hei6to8weeks_base_report from './json-reports/case-surveillance/hei-
 
 //case surveillance - summary
 import * as caseSuveillance_summary from './json-reports/case-surveillance/summaries/case-surveillance.json';
+import * as cs_patient_list_template from './json-reports/case-surveillance/summaries/case-surveillance-patient-list.json';
 
 //plhiv-ncd report
 import * as plhiv_ncd_v2_monthly_report from './json-reports/plhiv-ncd-v2-reports/plhiv-ncd-v2-report.json';
@@ -2005,6 +2010,25 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(eligibleForVl_summary)
           });
           break;
+        case 'eligibleforVlAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVl_aggregate_report),
+            eligibleForVlBase: this.cloneJsonSchema(eligibleForVl_base_report)
+          });
+          break;
+        case 'eligibleforVlNoOrder-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVlNoOrder_summary)
+          });
+          break;
+        case 'eligibleForVlNoOrderAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVlNoOrder_aggregate_report),
+            eligibleForVlNoOrderBase: this.cloneJsonSchema(
+              eligibleForVlNoOrder_base_report
+            )
+          });
+          break;
         case 'heiWithoutPcrAggregate':
           resolve({
             main: this.cloneJsonSchema(heiWithoutPcr_aggregate_report),
@@ -2049,6 +2073,11 @@ export class BaseMysqlReport {
         case 'hei6to8Weeks-summary-report':
           resolve({
             main: this.cloneJsonSchema(hei6to8weeks_summary)
+          });
+          break;
+        case 'patient_list_cs_template':
+          resolve({
+            main: this.cloneJsonSchema(cs_patient_list_template)
           });
           break;
         case 'case-surveillance-summary-report':

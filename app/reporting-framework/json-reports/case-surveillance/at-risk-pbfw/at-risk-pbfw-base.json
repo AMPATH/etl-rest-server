@@ -35,10 +35,10 @@
     },
     {
       "table": "amrs.person_address",
-      "alias": "pa",
+      "alias": "pa2",
       "join": {
         "type": "LEFT",
-        "joinCondition": "pa.person_id = e.patient_id AND pa.preferred = 1"
+        "joinCondition": "pa2.person_id = e.patient_id AND pa2.preferred = 1"
       }
     },
     {
@@ -94,7 +94,7 @@
     {
       "type": "simple_column",
       "alias": "County",
-      "column": "pa.address1"
+      "column": "pa2.address1"
     },
     {
       "type": "simple_column",
@@ -114,12 +114,12 @@
     {
       "type": "simple_column",
       "alias": "SubCounty",
-      "column": "pa.address2"
+      "column": "pa2.address2"
     },
     {
       "type": "simple_column",
       "alias": "Ward",
-      "column": "pa.city_village"
+      "column": "pa2.city_village"
     },
     {
       "type": "simple_column",

@@ -8,6 +8,7 @@
     "heiWithoutPcrAggregate",
     "linkedCaseAggregate",
     "newCaseAggregate",
-    "prepLinkedAggregate"
+    "prepLinkedAggregate",
+    "eligibleForVlNoOrderAggregate"
   ]
 }

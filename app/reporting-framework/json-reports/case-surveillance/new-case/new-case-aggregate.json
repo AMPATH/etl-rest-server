@@ -57,7 +57,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "total",
+      "alias": "newCaseTotal",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(b.total)"
@@ -77,13 +77,13 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient-list-txml-template",
+      "useTemplate": "patient_list_cs_template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {
           "joinType": "INNER",
           "joinCondition": "<<base_column>> = <<template_column>>",
-          "baseColumn": "person_id",
+          "baseColumn": "patient_id",
           "templateColumn": "person_id"
         }
       }
