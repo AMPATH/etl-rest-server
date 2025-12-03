@@ -1965,6 +1965,16 @@
             "display": "HIVMENTALHEALTHSCREENING"
           }
         ]
+      },
+      {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW-Peer Delivery Visit",
+        "encounterTypes": [
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "DRUGPICKUP"
+          }
+        ]
       }
     ]
   },
