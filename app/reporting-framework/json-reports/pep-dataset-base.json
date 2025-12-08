@@ -38,7 +38,7 @@
       "alias": "fcm",
       "join": {
         "type": "LEFT",
-        "joinCondition": "hmsd.person_id = fcm.person_id AND fcm.next_encounter_datetime IS NULL"
+        "joinCondition": "pep.person_id = fcm.person_id AND fcm.next_encounter_datetime IS NULL"
       }
     }
   ],
@@ -154,6 +154,14 @@
           {
             "condition": "fcm.patient_categorization like '%12107%'",
             "value": "Not Established"
+          },
+          {
+            "condition": "fcm.patient_categorization like '%9070%'",
+            "value": "Well"
+          },
+          {
+            "condition": "fcm.patient_categorization like '%12266%'",
+            "value": "AHD"
           }
         ]
       }

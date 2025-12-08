@@ -167,6 +167,14 @@
           {
             "condition": "fcm.patient_categorization like '%12107%'",
             "value": "Not Established"
+          },
+          {
+            "condition": "fcm.patient_categorization like '%9070%'",
+            "value": "Well"
+          },
+          {
+            "condition": "fcm.patient_categorization like '%12266%'",
+            "value": "AHD"
           }
         ]
       }
