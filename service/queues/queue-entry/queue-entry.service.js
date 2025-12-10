@@ -16,7 +16,6 @@ export class ServiceEntry {
     qe.queue_entry_id,
     qe.priority_comment,
     TIMESTAMPDIFF(MINUTE,qe.started_at,NOW()) AS wait_time_in_min,
-    qe.started_at,
     qe.uuid AS 'queue_entry_uuid',
     q.uuid AS 'service_uuid',
     q.name as 'service',
@@ -50,7 +49,7 @@ FROM
         JOIN
     amrs.concept c ON (q.service = c.concept_id)
         LEFT JOIN
-    amrs.queue_room qr ON (qr.queue_id = q.queue_id)
+    amrs.queue_room qr ON (qr.queue_id = q.queue_id AND qr.retired = 0)
         JOIN
     amrs.location l ON (q.location_id = l.location_id)
         JOIN
