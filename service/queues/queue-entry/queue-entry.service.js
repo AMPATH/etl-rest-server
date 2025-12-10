@@ -15,6 +15,7 @@ export class ServiceEntry {
     q.name,
     qe.queue_entry_id,
     qe.priority_comment,
+    TIMESTAMPDIFF(MINUTE,qe.started_at,NOW()) AS wait_time_in_min,
     qe.started_at,
     qe.uuid AS 'queue_entry_uuid',
     q.uuid AS 'service_uuid',
