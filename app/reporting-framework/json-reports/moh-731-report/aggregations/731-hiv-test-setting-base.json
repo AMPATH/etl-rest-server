@@ -1,0 +1,133 @@
+{
+  "name": "hivSetting731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "ob"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = ob.encounter_id AND ob.voided = 0 AND e.encounter_type in (296, 297)"
+      }
+    },
+
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.patient_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ob.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "ob.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_setting_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.value_coded = 9613, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_setting_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.value_coded = 6708, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tested_kvp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.value_coded = 12251, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'M' AND (ob.value_coded = 6708 OR ob.value_coded = 9613), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'F' AND (ob.value_coded = 6708 OR ob.value_coded = 9613), 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (296, 297)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.concept_id = 11873"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ob.obs_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ob.obs_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["ob.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}

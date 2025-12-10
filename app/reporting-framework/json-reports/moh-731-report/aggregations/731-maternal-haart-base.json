@@ -1,0 +1,108 @@
+{
+  "name": "maternalHaart731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "ob"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ob.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "ob.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_more_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 10471 AND ob.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 10469 AND ob.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 1255 AND ob.value_coded = 1257, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_maternal_haart_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 1255 AND ob.value_coded = 1256, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_maternal_haart_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 10427 AND ob.value_coded = 1065, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.concept_id in (1151)",
+        "parameterName": ""
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["ob.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}
