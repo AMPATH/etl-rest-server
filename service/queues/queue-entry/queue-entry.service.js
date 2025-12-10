@@ -7,18 +7,23 @@ export class ServiceEntry {
     if (!locationUuid) {
       throw new Error('Location not defined');
     }
+    if (!serviceUuid) {
+      throw new Error('Service not defined');
+    }
     return new Promise((resolve, reject) => {
       const sql = `SELECT 
     q.name,
     qe.queue_entry_id,
+    qe.priority_comment,
+    qe.started_at,
     qe.uuid AS 'queue_entry_uuid',
     q.uuid AS 'service_uuid',
+    q.name as 'service',
     q.location_id,
     l.name AS 'location',
     q.service,
     q.queue_id,
     qr.name AS 'queue_room',
-    qe.queue_id,
     qe.priority,
     qe.patient_id,
     qe.visit_id,
@@ -35,7 +40,8 @@ export class ServiceEntry {
         WHEN qe.priority = 11666 THEN 'NORMAL'
         WHEN qe.priority = 12360 THEN 'EMERGENCY'
     END AS 'priority',
-    v.uuid AS 'visit_uuid'
+    v.uuid AS 'visit_uuid',
+    qf.name AS 'queue_coming_from'
 FROM
     amrs.queue_entry qe
         JOIN
@@ -52,10 +58,13 @@ FROM
     amrs.person_name pn ON (pn.person_id = p.person_id)
         JOIN
     amrs.visit v ON (v.visit_id = qe.visit_id)
+        LEFT JOIN
+    amrs.queue qf ON (qe.queue_coming_from = qf.queue_id)
 WHERE
     qe.ended_at IS NULL
         AND c.uuid = '${serviceUuid}'
-        AND l.uuid = '${locationUuid}';`;
+        AND l.uuid = '${locationUuid}'
+        AND qe.voided = 0;`;
       const queryParts = {
         sql: sql
       };
