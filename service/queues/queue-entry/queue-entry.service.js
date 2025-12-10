@@ -64,7 +64,8 @@ WHERE
     qe.ended_at IS NULL
         AND c.uuid = '${serviceUuid}'
         AND l.uuid = '${locationUuid}'
-        AND qe.voided = 0;`;
+        AND qe.voided = 0
+        group by qe.patient_id, qe.visit_id;`;
       const queryParts = {
         sql: sql
       };
