@@ -605,6 +605,16 @@ function isInitialPrepVisit(patientEncounters) {
   return initialPrEPEncounters.length === 0;
 }
 
+function isInitialKVPVisit(patientEncounters) {
+  const initialKVPEncounterUuid = '73715d49-533f-4f41-8ac0-8965d4acc9fc';
+
+  let initialKVPEncounters = _.filter(patientEncounters, (encounter) => {
+    return encounter.encounterType.uuid === initialKVPEncounterUuid;
+  });
+
+  return initialKVPEncounters.length === 0;
+}
+
 function isInitialPepVisit(patientEncounters) {
   /*
   1. Hide the PEP Return Visit 2 months from the initial Visit  Use initial encounter date 
@@ -801,6 +811,7 @@ function buildHivScopeMembers(
     patientEncounters
   );
   scope.isPrepConsentFilled = checkPrepStudyConsent(patientEncounters);
+  scope.isFirstKVPVisit = isInitialKVPVisit(patientEncounters);
 }
 
 function buildOncologyScopeMembers(scope, patientEncounters, programUuid) {
