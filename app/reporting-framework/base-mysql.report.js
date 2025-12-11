@@ -488,7 +488,6 @@ import * as ahd_monthly_patient_list_template from './json-reports/ahd_reports/a
 import * as ml_summary_aggregate from './json-reports/ml-predictions/ml-summary.json';
 import * as high_risk_client_aggregate from './json-reports/ml-predictions/aggregations/high-risk/high-risk-aggregate.json';
 import * as high_risk_client_base from './json-reports/ml-predictions/aggregations/high-risk/high-risk-dataset-base.json';
-import * as high_risk_client_contacted_aggregate from './json-reports/ml-predictions/aggregations/high-risk-contacted/high-risk-contacted-aggregate.json';
 import * as high_risk_client_contacted_base from './json-reports/ml-predictions/aggregations/high-risk-contacted/high-risk-contacted-base.json';
 import * as home_follow_up_aggregate from './json-reports/ml-predictions/aggregations/home-follow-up/home-follow-up-aggregate.json';
 import * as home_follow_up_base from './json-reports/ml-predictions/aggregations/home-follow-up/home-follow-up-base.json';
@@ -502,7 +501,6 @@ import * as successful_contact_missed_appointment_aggregate from './json-reports
 import * as successful_contact_missed_appointment_base from './json-reports/ml-predictions/aggregations/successful-contact-attempt-missed-appointment/successful-contact-attempt-missed-appointment-base.json';
 import * as unsuccessful_contact_attempts_aggregate from './json-reports/ml-predictions/aggregations/unsuccessful_contact_attempts/unsuccessful_contact_attempts_aggregate.json';
 import * as unsuccessful_contact_attempts_base from './json-reports/ml-predictions/aggregations/unsuccessful_contact_attempts/unsuccessful_contact_attempts_base.json';
-import * as no_contact_attempt_aggregate from './json-reports/ml-predictions/aggregations/no_contact_attempts/no_contact_attempts_aggregate.json';
 import * as no_contact_attempt_base from './json-reports/ml-predictions/aggregations/no_contact_attempts/no_contact_attempts_base.json';
 import * as no_contact_attempt_kept_appointment_aggregate from './json-reports/ml-predictions/aggregations/no_contact_kept_appointment/no_contact_kept_appointment_aggregate.json';
 import * as no_contact_attempt_kept_appointment_base from './json-reports/ml-predictions/aggregations/no_contact_kept_appointment/no_contact_kept_appointment_base.json';
@@ -2197,14 +2195,6 @@ export class BaseMysqlReport {
             highRiskBase: this.cloneJsonSchema(high_risk_client_base)
           });
           break;
-        case 'highRiskContactedAggregate':
-          resolve({
-            main: this.cloneJsonSchema(high_risk_client_contacted_aggregate),
-            highRiskContactedBase: this.cloneJsonSchema(
-              high_risk_client_contacted_base
-            )
-          });
-          break;
         case 'homeFollowUpAggregate':
           resolve({
             main: this.cloneJsonSchema(home_follow_up_aggregate),
@@ -2251,12 +2241,6 @@ export class BaseMysqlReport {
             unsuccessfulContactAttemptsBase: this.cloneJsonSchema(
               unsuccessful_contact_attempts_base
             )
-          });
-          break;
-        case 'noContactAttemptAggregate':
-          resolve({
-            main: this.cloneJsonSchema(no_contact_attempt_aggregate),
-            noContactAttemptBase: this.cloneJsonSchema(no_contact_attempt_base)
           });
           break;
         case 'noContactAttemptKepAppointmentAggregate':
