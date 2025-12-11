@@ -42,6 +42,17 @@ export class MOH412Service extends MultiDatasetPatientlistReport {
               }
             }
 
+            if (this.params && this.params.isAggregated === true) {
+              finalResult = reportProcessorHelpersService.aggregateDataSets(
+                finalResult,
+                ['location_id'],
+                ['reporting_month']
+              );
+              if (finalResult.length > 0) {
+                finalResult[0].location = 'Multiple Locations...';
+              }
+            }
+
             const totalResultRow = this.generateTotalsColumn(finalResult);
 
             resolve({
