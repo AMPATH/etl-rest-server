@@ -15,10 +15,12 @@ export class ServiceEntry {
     q.name,
     qe.queue_entry_id,
     qe.priority_comment,
-    TIMESTAMPDIFF(MINUTE,qe.started_at,NOW()) AS wait_time_in_min,
+    TIMESTAMPDIFF(MINUTE,
+        qe.started_at,
+        NOW()) AS wait_time_in_min,
     qe.uuid AS 'queue_entry_uuid',
     q.uuid AS 'service_uuid',
-    q.name as 'service',
+    q.name AS 'service',
     q.location_id,
     l.name AS 'location',
     q.service,
@@ -49,13 +51,15 @@ FROM
         JOIN
     amrs.concept c ON (q.service = c.concept_id)
         LEFT JOIN
-    amrs.queue_room qr ON (qr.queue_id = q.queue_id AND qr.retired = 0)
+    amrs.queue_room qr ON (qr.queue_id = q.queue_id
+        AND qr.retired = 0)
         JOIN
     amrs.location l ON (q.location_id = l.location_id)
         JOIN
     amrs.person p ON (p.person_id = qe.patient_id)
         JOIN
-    amrs.person_name pn ON (pn.person_id = p.person_id)
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
         JOIN
     amrs.visit v ON (v.visit_id = qe.visit_id)
         LEFT JOIN
@@ -65,7 +69,7 @@ WHERE
         AND c.uuid = '${serviceUuid}'
         AND l.uuid = '${locationUuid}'
         AND qe.voided = 0
-        group by qe.patient_id, qe.visit_id;`;
+GROUP BY qe.patient_id,qe.visit_id`;
       const queryParts = {
         sql: sql
       };
