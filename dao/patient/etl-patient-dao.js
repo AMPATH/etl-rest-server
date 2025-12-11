@@ -28,7 +28,7 @@ module.exports = (function () {
         ? {
             columns:
               request.query.fields ||
-              'fli.vl_1_date as latest_vl_date,fli.vl_1 as latest_vl,t1.*, t3.cm_result,t3.cm_result_date, t3.cm_test, t3.cm_treatment_end_date, t3.cm_treatment_phase, t3.cm_treatment_start_date',
+              't4.test_datetime as hpv_test_date, t4.hpv,t5.test_datetime as latest_vl_date,t5.hiv_viral_load as latest_vl,t1.*, t3.cm_result,t3.cm_result_date, t3.cm_test, t3.cm_treatment_end_date, t3.cm_treatment_phase, t3.cm_treatment_start_date',
             table: 'etl.flat_hiv_summary_v15b',
             where: whereClause,
             leftOuterJoins: [
@@ -38,9 +38,14 @@ module.exports = (function () {
                 't1.encounter_id = t3.encounter_id'
               ],
               [
-                '(SELECT fli.person_id, fli.hiv_viral_load as vl_1, fli.test_datetime as vl_1_date FROM etl.flat_labs_and_imaging fli INNER JOIN ( SELECT person_id, MAX(test_datetime) AS max_vl_1_date, max(encounter_id) as encounter_id FROM etl.flat_labs_and_imaging fli where fli.hiv_viral_load is not null GROUP BY person_id ) max_dates ON fli.person_id = max_dates.person_id AND fli.test_datetime = max_dates.max_vl_1_date AND fli.encounter_id = max_dates.encounter_id)',
-                'fli',
-                'fli.person_id = t1.person_id'
+                '(SELECT flai.person_id, flai.hpv, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hpv IS NOT NULL AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hpv IS NOT NULL ))',
+                't4',
+                't4.person_id = t1.person_id'
+              ],
+              [
+                '(SELECT flai.person_id, flai.hiv_viral_load, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hiv_viral_load IS NOT NULL AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hiv_viral_load IS NOT NULL ))',
+                't5',
+                't5.person_id = t1.person_id'
               ]
             ],
             order: order || [
@@ -509,7 +514,9 @@ module.exports = (function () {
     var order = helpers.getSortOrder(request.query.order);
 
     var queryParts = {
-      columns: request.query.fields || 't1.*, t2.cur_arv_meds',
+      columns:
+        request.query.fields ||
+        'MAX(t1.date_created) AS date_created, MAX(t1.person_id) AS person_id, MAX(t1.uuid) AS uuid, MAX(t1.encounter_id) AS encounter_id, MAX(t1.test_datetime) AS test_datetime, MAX(t1.encounter_type) AS encounter_type, MAX(t1.hiv_dna_pcr) AS hiv_dna_pcr, MAX(t1.antibody_screen) AS antibody_screen, MAX(t1.hiv_rapid_test) AS hiv_rapid_test, MAX(t1.hiv_viral_load) AS hiv_viral_load, MAX(t1.cd4_count) AS cd4_count, MAX(t1.cd4_percent) AS cd4_percent, MAX(t1.chest_xray) AS chest_xray, MAX(t1.ecg) AS ecg, MAX(t1.hba1c) AS hba1c, MAX(t1.rbs) AS rbs, MAX(t1.fbs) AS fbs, MAX(t1.urea) AS urea, MAX(t1.creatinine) AS creatinine, MAX(t1.na) AS na, MAX(t1.k) AS k, MAX(t1.cl) AS cl, MAX(t1.total_bili) AS total_bili, MAX(t1.direct_bili) AS direct_bili, MAX(t1.ggt) AS ggt, MAX(t1.ast) AS ast, MAX(t1.alt) AS alt, MAX(t1.total_protein) AS total_protein, MAX(t1.albumin) AS albumin, MAX(t1.alk_phos) AS alk_phos, MAX(t1.ldh) AS ldh, MAX(t1.egfr) AS egfr, MAX(t1.rbc) AS rbc, MAX(t1.hemoglobin) AS hemoglobin, MAX(t1.mcv) AS mcv, MAX(t1.mch) AS mch, MAX(t1.mchc) AS mchc, MAX(t1.rdw) AS rdw, MAX(t1.plt) AS plt, MAX(t1.wbc) AS wbc, MAX(t1.anc) AS anc, MAX(t1.retic) AS retic, MAX(t1.total_psa) AS total_psa, MAX(t1.cea) AS cea, MAX(t1.ca_19_9) AS ca_19_9, MAX(t1.hbf) AS hbf, MAX(t1.hba) AS hba, MAX(t1.hbs) AS hbs, MAX(t1.hba2) AS hba2, MAX(t1.protein_urine) AS protein_urine, MAX(t1.pus_c_urine) AS pus_c_urine, MAX(t1.leuc) AS leuc, MAX(t1.ketone) AS ketone, MAX(t1.sugar_urine) AS sugar_urine, MAX(t1.nitrites) AS nitrites, MAX(t1.a_1_glob) AS a_1_glob, MAX(t1.a_2_glob) AS a_2_glob, MAX(t1.beta_glob) AS beta_glob, MAX(t1.gamma_glob) AS gamma_glob, MAX(t1.kappa_l_c) AS kappa_l_c, MAX(t1.lambda_l_c) AS lambda_l_c, MAX(t1.ratio_l_c) AS ratio_l_c, MAX(t1.serum_crag) AS serum_crag, MAX(t1.gene_expert_image) AS gene_expert_image, MAX(t1.dst_image) AS dst_image, MAX(t1.serum_m_protein) AS serum_m_protein, MAX(t1.spep) AS spep, MAX(t1.via_or_via_vili) AS via_or_via_vili, MAX(t1.pap_smear) AS pap_smear, MAX(t1.hpv) AS hpv, MAX(t1.has_errors) AS has_errors, MAX(t1.vl_error) AS vl_error, MAX(t1.cd4_error) AS cd4_error, MAX(t1.hiv_dna_pcr_error) AS hiv_dna_pcr_error, MAX(t1.tests_ordered) AS tests_ordered, MAX(t2.cur_arv_meds) AS cur_arv_meds',
       table: 'etl.flat_labs_and_imaging',
       leftOuterJoins: [
         [
@@ -521,6 +528,7 @@ module.exports = (function () {
         ]
       ],
       where: ['t1.uuid = ?', uuid],
+      group: ['DATE(t1.test_datetime)'],
       order: order || [
         {
           column: 'test_datetime',

@@ -1,0 +1,108 @@
+{
+  "name": "postExposure731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_pep_summary",
+      "alias": "fps"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fps.person_id = o.person_id"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fps.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "exposed_occupational",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fps.hiv_exposed_occupational = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "exposed_non_occupational",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.value_coded != 7094 AND o.value_coded != 165, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pep_occupational",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fps.hiv_exposed_occupational = 1 AND fps.pep_start_date is not null, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1705 AND o.value_coded = 1149, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id in (1061, 1705)",
+        "parameterName": ""
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id"],
+    "excludeParam": "excludeParam"
+  }
+}

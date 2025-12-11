@@ -3166,5 +3166,59 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "dbd99c38-89f0-4104-baae-df6519b9eaee": {
+    "mrsId": 530,
+    "mrsDisplay": "Ngelel Tarit Dispensary",
+    "description": "Ngelel Tarit Dispensary",
+    "mflCode": "17829",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "ec030341-30cd-47a6-8b31-2a2627c3e32e": {
+    "mrsId": 529,
+    "mrsDisplay": "Uhuru Dispensary",
+    "description": "Uhuru Dispensary",
+    "mflCode": "15759",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "ba07e5bf-a8db-49cb-9e0c-c49d8e4cc47e": {
+    "mrsId": 531,
+    "mrsDisplay": "Wamalwa Kijana-CCC",
+    "description": "Wamalwa Kijana-CCC",
+    "mflCode": "27376",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "31e7ff7f-f84a-4b11-b9dd-e22d5a7c8678": {
+    "mrsId": 547,
+    "mrsDisplay": "Wamalwa Kijana-MCH",
+    "description": "Wamalwa Kijana-MCH",
+    "mflCode": "27376",
+    "county": "Trans Nzoia",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "6178923f-81f0-408b-98d7-8deb0f4b1b85": {
+    "mrsId": 527,
+    "mrsDisplay": "Chukura Dispensary",
+    "description": "Chukura Dispensary",
+    "mflCode": "14390",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "acd01eec-bfe6-4050-8e1a-c5dd27a3f741": {
+    "mrsId": 499,
+    "mrsDisplay": "Tiinei Dispensary",
+    "description": "A dispensary in West Pokot",
+    "mflCode": "16368",
+    "county": "West Pokot",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }

@@ -1,0 +1,126 @@
+{
+  "name": "tbBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "ob"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "ob.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "ob.encounter_id = e.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ob.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "ob.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 6201 AND ob.value_coded = 6197, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((ob.concept_id = 6201 AND ob.value_coded = 6197) AND e.encounter_type = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_known_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((ob.concept_id = 6201 AND ob.value_coded = 6197) AND e.encounter_type = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 1255 AND ob.value_coded = 1256, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 1255 AND ob.value_coded = 1257, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.concept_id in (6201, 1255)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.value_coded in (1256, 1257, 6197)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (1,2)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "successfulContactKeptAppointmentAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "successfulContactKeptAppintmentBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "successfulContactKeptAppintmentBase",
+      "alias": "t5"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "successful_contact_attempts_kept_appointment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t5.q_num)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

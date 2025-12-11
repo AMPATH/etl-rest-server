@@ -18,6 +18,14 @@
       }
     },
     {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "hm.person_id = p.person_id"
+      }
+    },
+    {
       "table": "ndwr.mfl_codes",
       "alias": "mc",
       "join": {

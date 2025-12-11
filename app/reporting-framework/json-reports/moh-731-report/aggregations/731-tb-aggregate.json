@@ -1,0 +1,81 @@
+{
+  "name": "tbAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "tbBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "tbBase",
+      "alias": "e"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "start_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.start_tb)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_known_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.start_tb_known_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.start_tb_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_art_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.start_tb AND e.start_art)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.start_tb AND e.on_art)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

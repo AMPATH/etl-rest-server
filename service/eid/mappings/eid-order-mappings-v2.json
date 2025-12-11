@@ -865,7 +865,7 @@
       "mrsArvRegimen": "5622"
     }
   ],
-  "testOrderJustification": {
+  "testOrderJustification_v0": {
     "5931c4d4-4406-4d71-b75d-2205d905cc24": {
       "eidId": 1,
       "eidCode": "",
@@ -912,6 +912,50 @@
       "eidId": 8,
       "eidCode": "",
       "eidDisplay": "No Data",
+      "mrsDisplay": ""
+    }
+  },
+  "testOrderJustification": {
+    "a8a00158-1350-11df-a1f1-0026b9348838": {
+      "eidId": 3,
+      "eidCode": "",
+      "eidDisplay": "Single Drug Substitution",
+      "mrsDisplay": ""
+    },
+    "92a2818f-662c-4dbc-aa20-d9f4edec2654": {
+      "eidId": 7,
+      "eidCode": "",
+      "eidDisplay": "Recency",
+      "mrsDisplay": ""
+    },
+    "635f446c-bab9-428a-9930-ae4f46363c0c": {
+      "eidId": 8,
+      "eidCode": "",
+      "eidDisplay": "PMTCT New Positives NP",
+      "mrsDisplay": ""
+    },
+    "e883376e-80cb-4ec7-a958-f0fbc0a0bad3": {
+      "eidId": 9,
+      "eidCode": "",
+      "eidDisplay": "PMTCT Known Positives KP",
+      "mrsDisplay": ""
+    },
+    "d7a8dd98-d5de-4774-823a-a8ab06134d63": {
+      "eidId": 10,
+      "eidCode": "",
+      "eidDisplay": "1st VL",
+      "mrsDisplay": ""
+    },
+    "5931c4d4-4406-4d71-b75d-2205d905cc24": {
+      "eidId": 11,
+      "eidCode": "",
+      "eidDisplay": "Follow Up",
+      "mrsDisplay": ""
+    },
+    "535f6faa-14bc-4989-a189-7f15de3f65d5": {
+      "eidId": 12,
+      "eidCode": "",
+      "eidDisplay": "Repeat VL after 3rd EAC",
       "mrsDisplay": ""
     }
   },

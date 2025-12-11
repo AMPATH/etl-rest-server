@@ -198,8 +198,12 @@
             "value": "pap_smear"
           },
           {
-            "condition": "c.screening_method = 2322",
-            "value": "hpv"
+            "condition": "c.screening_method in (1213, 2322)",
+            "value": "HPV"
+          },
+          {
+            "condition": "c.screening_method = 7383",
+            "value": "Colposcopy"
           }
         ]
       }
@@ -225,7 +229,15 @@
       "alias": "screened_hpv",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322),1,NULL)"
+        "expression": "IF(c.screening_method in (1213, 2322),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383),1,NULL)"
       }
     },
     {

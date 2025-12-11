@@ -446,7 +446,7 @@
             "value": "PAP SMEAR"
           },
           {
-            "condition": "cs.screening_method = 2322",
+            "condition": "cs.screening_method in (1213, 2322)",
             "value": "HPV"
           },
           {
@@ -552,6 +552,16 @@
           }
         ]
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_date",
+      "column": "DATE_FORMAT(fh.cd4_1_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_results",
+      "column": "fh.cd4_1"
     }
   ],
   "groupBy": {

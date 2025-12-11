@@ -110,6 +110,11 @@ module.exports = (function () {
           value: queryParams[filter]
         });
       }
+
+      // format isAggregated
+      queryParams.isAggregated =
+        queryParams.isAggregated === 'true' ? true : false;
+
       var reportParams = {
         reportName: reportName,
         whereParams: whereParams,
@@ -509,7 +514,11 @@ module.exports = (function () {
         9759: { mapped_to_ids: '9759', name: 'DOLUTEGRAVIR' },
         9026: { mapped_to_ids: '9026', name: 'LOPINAVIR' },
         10090: { mapped_to_ids: '10090', name: 'RILPIVIRINE' },
-        12053: { mapped_to_ids: '12053', name: 'CABOTEGRAVIR AND RILPIVIRINE' }
+        12053: { mapped_to_ids: '12053', name: 'CABOTEGRAVIR AND RILPIVIRINE' },
+        12469: {
+          mapped_to_ids: '12469',
+          name: '	TENOFOVIR ALAFENAMIDE AND LAMIVUDINE AND DOLUTEGRAVIR'
+        }
       };
       var arvCodes = str.split(' ## ');
       var arvNames = [];

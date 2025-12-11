@@ -338,6 +338,34 @@ module.exports = (function () {
     });
   }
 
+  function getPatientTypeConcept(conceptUuId, patientUuId) {
+    var patientObs = [];
+    var uri = getRestResource(
+      '/' + config.openmrs.applicationName + '/ws/rest/v1/obs'
+    );
+    var queryString = {
+      patient: patientUuId,
+      concept: conceptUuId,
+      v: 'full'
+    };
+    return new Promise(function (resolve, reject) {
+      rp.getRequestPromise(queryString, uri)
+        .then(function (response) {
+          const sortedArray = response.results.sort((a, b) => {
+            new Date(b.obsDatetime) - new Date(a.obsDatetime);
+          });
+          resolve(sortedArray[0]);
+        })
+        .catch(function (error) {
+          reject(error);
+          console.error(
+            'error getAmrsPatientObsByDate++++++++++++++++++++++++++++++++++++++',
+            error
+          );
+        });
+    });
+  }
+
   return {
     getPatientIdentifiers: getPatientIdentifiers,
     getPatientAllTestObsByPatientUuId: getPatientAllTestObsByPatientUuId,
@@ -347,6 +375,7 @@ module.exports = (function () {
     postObsToAMRS: postObsToAMRS,
     getAmrsPatientObsByDate: getAmrsPatientObsByDate,
     getPatientTodaysTestObsByPatientUuId: getPatientTodaysTestObsByPatientUuId,
-    voidObs: voidObs
+    voidObs: voidObs,
+    getPatientTypeConcept: getPatientTypeConcept
   };
 })();

@@ -154,7 +154,7 @@
             "value": "pap_smear"
           },
           {
-            "condition": "c.screening_method = 2322",
+            "condition": "c.screening_method in (1213, 2322)",
             "value": "hpv"
           }
         ]

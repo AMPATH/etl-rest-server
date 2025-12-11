@@ -762,7 +762,7 @@ function getIptCompletionReminder(data) {
 function getFamilyTestingReminder(data) {
   let reminders = [];
   return getEncountersByEncounterType(data[0].person_uuid).then((res) => {
-    if (res.results.length === 0) {
+    if (res && res.results && res.results.length === 0) {
       reminders.push({
         message:
           'No elicitation has been done for this index, please elicit for contacts',
@@ -1005,6 +1005,96 @@ function generateAppointmentRescheduledReminder(data) {
   return reminders;
 }
 
+function generateHPVReminder(data) {
+  let reminders = [];
+  switch (data.needs_hpv) {
+    case 1:
+      reminders.push({
+        message: `Patient is due for a repeat HPV test. Last test result was Negative on ${Moment(
+          data.last_encounter_datetime
+        ).format('DD-MM-YYYY')}.`,
+        title: 'HPV Test Reminder',
+        type: 'warning',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+
+    case 2:
+      reminders.push({
+        message: `HPV result is Positive (${Moment(
+          data.last_encounter_datetime
+        ).format(
+          'DD-MM-YYYY'
+        )}). Refer the client for a confirmatory test (VIA/ Villi , Colposcopy or Pap smear).`,
+        title: 'HPV Test Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+
+    default:
+      break;
+  }
+  return reminders;
+}
+
+function generateViaOrViliReminder(data) {
+  let reminders = [];
+  switch (data.needs_via_or_vili) {
+    case 1:
+      reminders.push({
+        message: `Patient is due for a repeat VIA/VILI test. Last test result was Negative on ${Moment(
+          data.last_encounter_datetime
+        ).format('DD-MM-YYYY')}.`,
+        title: 'VIA/VILI Test Reminder',
+        type: 'warning',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+
+    case 2:
+      reminders.push({
+        message: `Refer Client For Treatment. The Confirmatory test result was Positive (Cryotherapy, LEEP or Thermocoagulation) on ${Moment(
+          data.last_encounter_datetime
+        ).format('DD-MM-YYYY')}.`,
+        title: 'VIA/VILI Test Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+
+    case 3:
+      reminders.push({
+        message: `Refer client for Approriate Diagnosis and Treatment. The Confirmatory test result was Suspected For Cancer (Cryotherapy, LEEP or Thermocoagulation) on ${Moment(
+          data.last_encounter_datetime
+        ).format('DD-MM-YYYY')}.`,
+        title: 'VIA/VILI Test Reminder',
+        type: 'danger',
+        display: {
+          banner: true,
+          toast: true
+        }
+      });
+      break;
+
+    default:
+      break;
+  }
+  return reminders;
+}
+
 async function generateReminders(etlResults, eidResults) {
   let reminders = [];
   let patientReminder;
@@ -1050,6 +1140,8 @@ async function generateReminders(etlResults, eidResults) {
   let appointmentRescheduledRiskReminder = generateAppointmentRescheduledReminder(
     data
   );
+  let hpvReminder = generateHPVReminder(data);
+  let viaOrViliReminder = generateViaOrViliReminder(data);
 
   let currentReminder = [];
   if (pending_vl_lab_result.length > 0) {
@@ -1072,7 +1164,9 @@ async function generateReminders(etlResults, eidResults) {
       cervical_screening_reminder,
       due_for_contraception_refill,
       not_on_modern_contraception,
-      fp_discontinuation_reminder
+      fp_discontinuation_reminder,
+      hpvReminder,
+      viaOrViliReminder
     );
   }
 
@@ -1181,12 +1275,13 @@ function generateCervicalScreeningReminder(data) {
   let reminders = [];
   if (
     data.has_hysterectomy_done !== 1 &&
-    data.qualifies_for_via_or_via_vili_retest === 1
+    data.does_not_qualify_for_hpv_retest !== 1 &&
+    data.does_not_qualify_for_via_or_via_vili_retest !== 1
   ) {
     reminders.push({
       message:
         'Patient is due for a repeat cervical cancer screening test. Last test result was Normal on ' +
-        Moment(data.test_datetime).format('DD-MM-YYYY') +
+        Moment(data.last_test_datetime).format('DD-MM-YYYY') +
         '.',
       title: 'Cervical Cancer Screening Reminder',
       type: 'danger',

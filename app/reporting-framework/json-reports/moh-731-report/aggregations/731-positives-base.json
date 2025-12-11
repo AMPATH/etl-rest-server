@@ -1,0 +1,188 @@
+{
+  "name": "positives731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "p.person_id = e.patient_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = e.patient_id"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "e.patient_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "e.encounter_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_2_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 2 AND 9, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_2_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 2 AND 9, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 10 AND 14, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 10 AND 14, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 15 AND 19, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 15 AND 19, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 20 AND 24, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 20 AND 24, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_25_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_25_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >=25, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "Date(e.encounter_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "Date(e.encounter_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (296, 297)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id = 1040 and o.value_coded = 703"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["e.patient_id"],
+    "excludeParam": "excludeParam"
+  }
+}
