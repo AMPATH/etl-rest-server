@@ -1,0 +1,103 @@
+{
+  "name": "establishedBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "fr"
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "fhs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fr.encounter_id = fhs.encounter_id AND fhs.is_clinical_encounter = 1"
+      }
+    },
+    {
+      "table": "etl.flat_obs",
+      "alias": "fo",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fo.encounter_id = fhs.encounter_id"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fo.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "fo.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "fo.encounter_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (fo.obs REGEXP '!!12108=') AND etl.getValues(fo.obs,12108) = 12106 THEN 1 ELSE NULL END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (fo.obs REGEXP '!!12108=' OR fo.obs REGEXP '!!12127=') THEN (CASE WHEN etl.getValues(fo.obs,12108) = 12107 OR etl.getValues(fo.obs,12127) = 9070 OR etl.getValues(fo.obs,12127) = 12266 THEN 1 ELSE NULL END) ELSE 1 END"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fr.status = 'active'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fr.on_art_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fr.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fr.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["fr.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}
