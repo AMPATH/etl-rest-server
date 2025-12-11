@@ -6020,5 +6020,98 @@
         ]
       }
     ]
+  },
+  "a0f8382f-df8a-4f1d-8959-9fb6eef90353": {
+    "name": "HTS PROGRAM",
+    "dataDependencies": [
+      "patient",
+      "enrollment",
+      "patientEncounters",
+      "isHtsPatientNegative"
+    ],
+    "incompatibleWith": [
+      "781d85b0-1359-11df-a1f1-0026b9348838",
+      "781d897a-1359-11df-a1f1-0026b9348838",
+      "334c9e98-173f-4454-a8ce-f80b20b7fdf0",
+      "c4246ff0-b081-460c-bcc5-b0678012659e",
+      "c6bf3625-de80-4a88-a913-38273e300a55",
+      "8c1a3a68-d91d-488d-8663-ad572673232b",
+      "f7793d42-11ac-4cfd-9b35-e0a21a7a7c31",
+      "203571d6-a4f2-4953-9e8b-e1105e2340f5"
+    ],
+    "visitTypes": [
+      {
+        "uuid": "f92e8456-4de6-4776-82c3-c15b81eb8f5d",
+        "name": "HTS New/Retest Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "82749926-63b1-467b-9d41-453c7542678a",
+            "display": "HTSSCREENING",
+            "allowedIf": "showOnlyHTSScreening"
+          },
+          {
+            "uuid": "ae9693ff-d341-4997-8166-fa46ac4d38f4",
+            "display": "HTSINITIAL",
+            "allowedIf": "showOnlyHTSINITIAL"
+          },
+          {
+            "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
+            "display": "HTSRETEST",
+            "allowedIf": "showOnlyHTSRetest"
+          },
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE",
+            "allowedIf": "showOthersHTSEncounters"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL",
+            "allowedIf": "showOthersHTSEncounters"
+          }
+        ]
+      },
+      {
+        "uuid": "7d2b0fb1-f1d7-4173-81aa-c8b832407656",
+        "name": "HTS Retest To Confirm Positive Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
+            "display": "HTSRETEST",
+            "allowedIf": "showHTSRetestToConfirmP"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL",
+            "allowedIf": "!showHTSRetestToConfirmP"
+          },
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE",
+            "allowedIf": "!showHTSRetestToConfirmP"
+          }
+        ]
+      },
+      {
+        "uuid": "81978aea-61c1-426e-82e6-ade88f4e25ef",
+        "name": "HTS Linkage Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL"
+          }
+        ]
+      }
+    ]
   }
 }

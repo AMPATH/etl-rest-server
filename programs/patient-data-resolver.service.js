@@ -21,6 +21,7 @@ const availableKeys = {
   hivLastEncounter: getPatientLastEncounter,
   patientEnrollment: getPatientEnrollement,
   patientEncounters: getPatientEncounters,
+  isHtsPatientNegative: getPatientLatestHTSInitialEncounter,
   isPatientTransferredOut: checkTransferOut,
   dcQualifedVisits: getQualifiedDcVisits,
   validateMedicationRefill: getMedicationRefillVisits,
@@ -39,6 +40,7 @@ const def = {
   availableKeys: availableKeys,
   getPatientLastEncounter: getPatientLastEncounter,
   getPatientEncounters: getPatientEncounters,
+  getPatientLatestHTSInitialEncounter: getPatientLatestHTSInitialEncounter,
   checkTransferOut: checkTransferOut,
   dcQualifedVisits: getQualifiedDcVisits,
   validateMedicationRefill: getMedicationRefillVisits,
@@ -235,6 +237,55 @@ function getPatientEncounters(patientUuid) {
     patientEncounters
       .then((encounters) => {
         resolve(encounters);
+      })
+      .catch((e) => {
+        console.error('An error occurred fetching encounters: ', e);
+        reject(e);
+      });
+  });
+}
+
+function getPatientLatestHTSInitialEncounter(patientUuid) {
+  return new Promise((resolve, reject) => {
+    encounterService
+      .getPatientEncounters({
+        patientUuid,
+        v:
+          'custom:(encounterDatetime,encounterType:(uuid,display),obs:(uuid,concept:(uuid,display),value))'
+      })
+      .then((encounters) => {
+        if (!encounters || encounters.length === 0) {
+          return resolve(false);
+        }
+
+        // HTS Encounter UUID
+        const HTS_ENCOUNTER_UUID = 'ae9693ff-d341-4997-8166-fa46ac4d38f4';
+        const TARGET_OBS_UUIDS = [
+          'a896d2cc-1350-11df-a1f1-0026b9348838',
+          'a89a7ae4-1350-11df-a1f1-0026b9348838'
+        ];
+
+        // Filter for only HTS encounters
+        const htsEncounters = encounters.filter(
+          (enc) => enc.encounterType?.uuid === HTS_ENCOUNTER_UUID
+        );
+
+        if (htsEncounters.length === 0) {
+          return resolve(false);
+        }
+
+        // Get the latest encounter based on encounterDatetime
+        htsEncounters.sort(
+          (a, b) =>
+            new Date(b.encounterDatetime) - new Date(a.encounterDatetime)
+        );
+        const latestEncounter = htsEncounters[0];
+        // Check if the latest encounter contains the required obs concept
+        const hasTargetObs = latestEncounter.obs?.some((obs) =>
+          TARGET_OBS_UUIDS.includes(obs.value?.uuid)
+        );
+
+        resolve(hasTargetObs);
       })
       .catch((e) => {
         console.error('An error occurred fetching encounters: ', e);
