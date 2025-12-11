@@ -85,6 +85,7 @@ const {
   default: MlWeeklyPredictionsService
 } = require('./service/ml-weekly-predictions.service');
 import { MlMonthlySummaryService } from './service/ml-monthly-summary.service.js';
+import { ServiceEntry } from './service/queues/queue-entry/queue-entry.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6468,6 +6469,31 @@ module.exports = (function () {
           },
           params: {}
         }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/queue-entry',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const queueService = new ServiceEntry();
+          if (request.query.locationUuid && request.query.serviceUuid) {
+            const locationUuid = request.query.locationUuid;
+            const serviceUuid = request.query.serviceUuid;
+            const res = await queueService.getQueueEntriesByLocationAndService(
+              locationUuid,
+              serviceUuid
+            );
+            reply({
+              data: res
+            });
+          }
+        },
+        plugins: {},
+        description: "Get a location's ml weekly summary.",
+        notes: "Returns a location's ml weekly summary.",
+        tags: ['api']
       }
     }
   ];
