@@ -1,0 +1,100 @@
+{
+  "name": "breastFeeding731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "ob"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "ob.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ob.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "ob.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "exclusive_bf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.value_coded = 5526 AND TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) <= 6, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.value_coded = 1402 AND (TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 24), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "weaning",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.value_coded = 1152 AND (TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 24), 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.concept_id = 1151",
+        "parameterName": ""
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ob.obs_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ob.obs_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["ob.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}

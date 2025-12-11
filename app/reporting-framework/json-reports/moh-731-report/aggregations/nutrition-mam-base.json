@@ -1,0 +1,126 @@
+{
+  "name": "nutritionMamBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id and p.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "smm_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 5 AND (o.concept_id = 7369 AND o.value_coded = 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "smm_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 59 AND (o.concept_id = 7369 AND o.value_coded = 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "smm_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 5 AND 9 AND (o.concept_id = 7369 AND o.value_coded = 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "smm_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 10 AND 17 AND (o.concept_id = 7369 AND o.value_coded = 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "smm_greater_18_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 18 AND (o.concept_id = 7369 AND o.value_coded = 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_supp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5484 AND o.value_coded = 2355, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id in (7369, 5484)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.value_coded in (9472, 2355)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

@@ -259,6 +259,22 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
           }
         ]
       },
@@ -430,6 +446,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -610,6 +630,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -663,6 +687,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -800,6 +828,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -1396,6 +1428,10 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ENHANCEDADHERENCE"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -1469,6 +1505,10 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ENHANCEDADHERENCE"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -1854,6 +1894,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -1951,6 +1995,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -2369,6 +2417,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -2768,6 +2820,22 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ADHERENCE"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
           }
         ]
       },
@@ -2843,6 +2911,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -2991,6 +3063,10 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -3056,6 +3132,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -3195,6 +3275,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -3334,6 +3418,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -4643,6 +4731,22 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
           }
         ]
       },
@@ -4696,6 +4800,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -4778,6 +4886,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }

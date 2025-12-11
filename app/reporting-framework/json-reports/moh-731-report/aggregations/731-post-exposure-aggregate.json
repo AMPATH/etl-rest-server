@@ -1,0 +1,73 @@
+{
+  "name": "731PostExposureAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "postExposure731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "postExposure731Base",
+      "alias": "p"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "exposed_occupational",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.exposed_occupational)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "exposed_non_occupational",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.exposed_non_occupational)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pep_occupational",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.pep_occupational)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pep_non_occupational",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.pep AND p.exposed_non_occupational)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
