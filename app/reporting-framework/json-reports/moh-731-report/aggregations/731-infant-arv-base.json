@@ -1,0 +1,100 @@
+{
+  "name": "infantProphylaxis731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "etl.flat_mnch_summary",
+      "alias": "mnch",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = mnch.person_id"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.value_coded = 1065 AND mnch.encounter_type in (265, 264,32,33), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_ld",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.value_coded = 1065 AND mnch.encounter_type in (196,273,274), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.value_coded = 1065 AND mnch.encounter_type in (266,267), 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id in (2370)",
+        "parameterName": ""
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}

@@ -1,28 +1,36 @@
 {
-  "name": "noContactAttemptAggregate",
+  "name": "tptAggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "noContactAttemptBase",
+      "name": "tptBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "noContactAttemptBase",
-      "alias": "t7"
+      "dataSet": "tptBase",
+      "alias": "e"
     }
   ],
   "columns": [
     {
       "type": "derived_column",
-      "alias": "no_contact_attempts",
+      "alias": "start_tpt_less_15",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t7.q_num)"
+        "expression": "SUM(e.start_tpt_less_15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tpt_greater_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(start_tpt_greater_15)"
       }
     }
   ],
@@ -34,7 +42,7 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient-list-template",
+      "useTemplate": "patient_list_731",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {

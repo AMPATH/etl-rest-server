@@ -1,0 +1,121 @@
+{
+  "name": "731NutritionAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "nutrition731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "nutrition731Base",
+      "alias": "n"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "has_sam_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sam_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_greater_18_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_0_5_months AND n.has_supp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_6_59_months AND n.has_supp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_5_9_years AND n.has_supp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_10_17_years AND n.has_supp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(n.sam_greater_18_years AND n.has_supp)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
