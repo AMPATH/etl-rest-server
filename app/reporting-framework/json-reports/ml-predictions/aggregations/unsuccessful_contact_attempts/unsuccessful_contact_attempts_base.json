@@ -1,0 +1,109 @@
+{
+  "name": "unsuccessfulContactAttemptsBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "predictions.ml_weekly_predictions",
+      "alias": "ml"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "al",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ml.location_id = al.location_id"
+      }
+    },
+    {
+      "table": "etl.pre_appointment_summary",
+      "alias": "pre",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ml.person_id = pre.person_id"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ml.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "alias": "location_name",
+      "type": "simple_column",
+      "column": "al.name"
+    },
+    {
+      "alias": "person_id",
+      "type": "simple_column",
+      "column": "ml.person_id"
+    },
+    {
+      "alias": "location_id",
+      "type": "simple_column",
+      "column": "ml.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "q_num",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ml.predicted_risk IS NOT NULL"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ml.prediction_generated_date) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ml.prediction_generated_date) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(pre.encounter_datetime) BETWEEN DATE(ml.prediction_generated_date) AND ml.start_date"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ml.location_id = ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(SELECT CASE WHEN MAX(pre_inner.is_successful_phone_follow_up) IS NOT NULL THEN MAX(pre_inner.is_successful_phone_follow_up) ELSE MAX(pre_inner.was_client_found) END FROM etl.pre_appointment_summary pre_inner WHERE pre_inner.person_id = ml.person_id AND pre_inner.location_id = ml.location_id AND DATE(pre_inner.encounter_datetime) BETWEEN DATE(ml.prediction_generated_date) AND ml.start_date) = 'NO'"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["ml.location_id", "ml.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}

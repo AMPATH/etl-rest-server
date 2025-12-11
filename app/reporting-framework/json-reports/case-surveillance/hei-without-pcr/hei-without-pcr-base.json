@@ -1,0 +1,136 @@
+{
+  "name": "heiWithoutPcrBase",
+  "version": "1.0",
+  "sources": [
+    { "table": "etl.hei_monthly_report_dataset", "alias": "h" },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "e.encounter_id = h.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": { "type": "INNER", "joinCondition": "p.person_id = h.person_id" }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = h.location_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi2",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pi2.patient_id = h.person_id AND pi2.identifier_type = 38"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa2",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pa2.person_id = h.person_id AND pa2.preferred = 1"
+      }
+    },
+    {
+      "table": "ndwr.mfl_codes",
+      "alias": "mfl",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mfl.location_id = h.location_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = h.person_id AND o.voided = 0 AND ((o.concept_id = 1271 AND o.value_coded = 1030) OR o.concept_id = 1030)"
+      }
+    }
+  ],
+  "columns": [
+    { "type": "simple_column", "alias": "County", "column": "pa2.address1" },
+    { "type": "simple_column", "alias": "SubCounty", "column": "pa2.address2" },
+    { "type": "simple_column", "alias": "Ward", "column": "pa2.city_village" },
+    { "type": "simple_column", "alias": "PatientPk", "column": "p.person_id" },
+    {
+      "type": "derived_column",
+      "alias": "Sex",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN p.gender = 'M' THEN 'male' ELSE 'female' END"
+      }
+    },
+    { "type": "simple_column", "alias": "Dob", "column": "h.birthdate" },
+    { "type": "simple_column", "alias": "location", "column": "l.name" },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "mfl.location_id"
+    },
+    { "type": "simple_column", "alias": "facility", "column": "mfl.Facility" },
+    { "type": "simple_column", "alias": "mfl_code", "column": "mfl.mfl_code" },
+    { "type": "simple_column", "alias": "location_uuid", "column": "l.uuid" },
+    { "type": "simple_column", "alias": "HeiId", "column": "pi2.identifier" },
+    {
+      "type": "simple_column",
+      "alias": "CreatedAt",
+      "column": "e.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "UpdatedAt",
+      "column": "e.date_changed"
+    },
+    {
+      "type": "derived_column",
+      "alias": "total",
+      "expressionType": "simple_expression",
+      "expressionOptions": { "expression": "1" }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "h.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "h.encounter_date >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "h.encounter_date <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mfl.mfl_code <> 15999"
+      },
+      {
+        "filterType": "custom",
+        "conditionExpression": "TIMESTAMPDIFF(WEEK, h.birthdate, h.encounter_date) BETWEEN 6 AND 8"
+      },
+      {
+        "filterType": "custom",
+        "conditionExpression": "o.obs_id IS NULL"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["h.person_id", "mfl.mfl_code"]
+  }
+}

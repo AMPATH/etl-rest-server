@@ -1,0 +1,183 @@
+{
+  "name": "onArt731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "hmrd"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmrd.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "hmrd.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_date",
+      "column": "hmrd.encounter_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_less_1_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age < 1 AND hmrd.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_less_1_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age < 1 AND hmrd.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_1_4_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 1 AND 4 AND hmrd.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_1_4_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 1 AND 4 AND hmrd.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_5_9_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 5 AND 9 AND hmrd.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_5_9_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 5 AND 9 AND hmrd.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_10_14_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 10 AND 14 AND hmrd.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_10_14_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 10 AND 14 AND hmrd.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_15_19_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 15 AND 19 AND hmrd.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_15_19_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 15 AND 19 AND hmrd.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_20_24_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 20 AND 24 AND hmrd.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_20_24_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age BETWEEN 20 AND 24 AND hmrd.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_25_above_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age >= 25 AND hmrd.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_25_above_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.age >= 25 AND hmrd.gender = 'F', 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.on_art_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.status = 'active'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["hmrd.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}
