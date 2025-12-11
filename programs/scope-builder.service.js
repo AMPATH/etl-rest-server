@@ -18,6 +18,7 @@ function buildScope(dataDictionary) {
     screenedForCovidToday: false,
     isViremicHighVL: false,
     hasHTSEncounters: false,
+    isEligibleForMedicationRefill: false,
     showOnlyHTSScreening: false,
     showOnlyHTSINITIAL: false,
     showOnlyHTSRetest: false,
