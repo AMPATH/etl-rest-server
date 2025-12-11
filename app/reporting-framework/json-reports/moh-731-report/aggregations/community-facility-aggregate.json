@@ -1,28 +1,36 @@
 {
-  "name": "highRiskContactedAggregate",
+  "name": "communityFaciltiyAggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "highRiskContactedBase",
+      "name": "communityFacilityBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "highRiskContactedBase",
-      "alias": "hrc"
+      "dataSet": "communityFacilityBase",
+      "alias": "e"
     }
   ],
   "columns": [
     {
       "type": "derived_column",
-      "alias": "high_risk_client_contacted",
+      "alias": "community",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(hrc.q_num)"
+        "expression": "SUM(e.community)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.facility)"
       }
     }
   ],
@@ -34,7 +42,7 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient-list-template",
+      "useTemplate": "patient_list_731",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {

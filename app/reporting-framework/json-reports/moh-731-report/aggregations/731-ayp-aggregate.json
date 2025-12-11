@@ -1,0 +1,105 @@
+{
+  "name": "ayp731Aggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "ayp731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "ayp731Base",
+      "alias": "e"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "known_positive_ayp_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.known_positive_ayp AND e.age_10_19)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "known_positive_ayp_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.known_positive_ayp AND e.age_20_24)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_positive_ayp_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.new_positive_ayp AND e.age_10_19)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_positive_ayp_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.new_positive_ayp AND e.age_20_24)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_ayp_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.on_art AND e.age_10_19 AND e.known_positive_ayp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_ayp_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.on_art AND e.age_20_24 AND e.known_positive_ayp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_art_ayp_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.start_art AND e.age_10_19 AND e.new_positive_ayp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_art_ayp_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.start_art AND e.age_20_24 AND e.new_positive_ayp)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

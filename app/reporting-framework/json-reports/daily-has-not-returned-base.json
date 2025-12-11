@@ -156,6 +156,16 @@
       "type": "simple_column",
       "alias": "arv_first_regimen_start_date",
       "column": "date_format(t9.arv_first_regimen_start_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_date",
+      "column": "DATE_FORMAT(t9.cd4_1_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_results",
+      "column": "t9.cd4_1"
     }
   ],
   "filters": {
