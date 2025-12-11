@@ -145,6 +145,16 @@
       "type": "simple_column",
       "alias": "stage",
       "column": "fhs.cur_who_stage"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_date",
+      "column": "DATE_FORMAT(fhs.cd4_1_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_results",
+      "column": "fhs.cd4_1"
     }
   ],
   "indexDirectives": [
