@@ -1,0 +1,249 @@
+{
+  "name": "731PrepAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "prep731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "prep731Base",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "prep_new_female_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_female_general_pop)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_male_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_male_general_pop)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_msm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_msm)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_fsw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_fsw)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_pwud_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_pwud_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_pwud_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_pwud_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_discordant_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_discordant_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_vulnerable_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_vulnerable_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_vulnerable_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_vulnerable_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_ayp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_ayp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_preg_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_new_preg_breastfeeding)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_female_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_female_general_pop)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_male_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_male_general_pop)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_msm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_msm)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_fsw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_fsw)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_pwud_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_pwud_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_pwud_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_male_general_pop)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_female_general_pop)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_discordant_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_vulnerable_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_vulnerable_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_vulnerable_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_vulnerable_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_ayp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_ayp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_preg_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.prep_sti_preg_breastfeeding)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.seroconverted_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.seroconverted_male)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

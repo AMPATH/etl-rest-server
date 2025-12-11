@@ -1,0 +1,92 @@
+{
+  "name": "linkedCaseAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "linkedCaseBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "linkedCaseBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "b.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mfl_code",
+      "column": "b.mfl_code"
+    },
+    {
+      "type": "simple_column",
+      "alias": "county",
+      "column": "b.county"
+    },
+    {
+      "type": "simple_column",
+      "alias": "facility",
+      "column": "b.facility"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "b.location"
+    },
+    {
+      "type": "derived_column",
+      "alias": "linkedCaseTotal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.total)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_cs_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

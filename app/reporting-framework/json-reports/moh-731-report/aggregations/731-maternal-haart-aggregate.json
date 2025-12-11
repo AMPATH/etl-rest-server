@@ -1,0 +1,81 @@
+{
+  "name": "maternalHaart731Aggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "maternalHaart731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "maternalHaart731Base",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_more_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_haart_more_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_haart_less_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_haart_1st_anc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_maternal_haart_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.start_maternal_haart_1st_anc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_maternal_haart_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.start_maternal_haart_LD)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
