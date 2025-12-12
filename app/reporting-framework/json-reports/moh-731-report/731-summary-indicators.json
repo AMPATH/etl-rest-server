@@ -1,0 +1,302 @@
+[
+  {
+    "sectionTitle": "ANC",
+    "indicators": [
+      {
+        "label": "known_positive_1st_anc",
+        "indicator": "known_positive_1st_anc"
+      },
+      {
+        "label": "initial_test_anc",
+        "indicator": "initial_test_anc"
+      },
+      {
+        "label": "retest_anc",
+        "indicator": "retest_anc"
+      },
+      {
+        "label": "initial_test_LD",
+        "indicator": "initial_test_LD"
+      },
+      {
+        "label": "retest_LD",
+        "indicator": "retest_LD"
+      },
+      {
+        "label": "initial_test_pnc_less_6_weeks",
+        "indicator": "initial_test_pnc_less_6_weeks"
+      },
+      {
+        "label": "retest_pnc_less_6_weeks",
+        "indicator": "retest_pnc_less_6_weeks"
+      },
+      {
+        "label": "initial_test_pnc_greater_6_weeks",
+        "indicator": "initial_test_pnc_greater_6_weeks"
+      },
+      {
+        "label": "retest_pnc_greater_6_weeks",
+        "indicator": "retest_pnc_greater_6_weeks"
+      },
+      {
+        "label": "positive_anc",
+        "indicator": "positive_anc"
+      },
+      {
+        "label": "positive_LD",
+        "indicator": "positive_LD"
+      },
+      {
+        "label": "positive_pnc_less_6_weeks",
+        "indicator": "positive_pnc_less_6_weeks"
+      },
+      {
+        "label": "positive_pnc_greater_6_weeks",
+        "indicator": "positive_pnc_greater_6_weeks"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "established",
+    "indicators": [
+      {
+        "label": "established",
+        "indicator": "established"
+      },
+      {
+        "label": "not_established",
+        "indicator": "not_established"
+      },
+      {
+        "label": "community",
+        "indicator": "community"
+      },
+      {
+        "label": "facility",
+        "indicator": "facility"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "on art",
+    "indicators": [
+      {
+        "label": "on_art_less_1_male",
+        "indicator": "on_art_less_1_male"
+      },
+      {
+        "label": "on_art_less_1_female",
+        "indicator": "on_art_less_1_female"
+      },
+      {
+        "label": "on_art_1_4_male",
+        "indicator": "on_art_1_4_male"
+      },
+      {
+        "label": "on_art_1_4_female",
+        "indicator": "on_art_1_4_female"
+      },
+      {
+        "label": "on_art_5_9_male",
+        "indicator": "on_art_5_9_male"
+      },
+      {
+        "label": "on_art_5_9_female",
+        "indicator": "on_art_5_9_female"
+      },
+      {
+        "label": "on_art_10_14_male",
+        "indicator": "on_art_10_14_male"
+      },
+      {
+        "label": "on_art_10_14_female",
+        "indicator": "on_art_10_14_female"
+      },
+      {
+        "label": "on_art_15_19_male",
+        "indicator": "on_art_15_19_male"
+      },
+      {
+        "label": "on_art_15_19_female",
+        "indicator": "on_art_15_19_female"
+      },
+      {
+        "label": "on_art_20_24_male",
+        "indicator": "on_art_20_24_male"
+      },
+      {
+        "label": "on_art_20_24_female",
+        "indicator": "on_art_20_24_female"
+      },
+      {
+        "label": "on_art_25_above_male",
+        "indicator": "on_art_25_above_male"
+      },
+      {
+        "label": "on_art_25_above_female",
+        "indicator": "on_art_25_above_female"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "positives",
+    "indicators": [
+      {
+        "label": "female_2_9",
+        "indicator": "female_2_9"
+      },
+      {
+        "label": "male_2_9",
+        "indicator": "male_2_9"
+      },
+      {
+        "label": "female_10_14",
+        "indicator": "female_10_14"
+      },
+      {
+        "label": "male_10_14",
+        "indicator": "male_10_14"
+      },
+      {
+        "label": "female_15_19",
+        "indicator": "female_15_19"
+      },
+      {
+        "label": "male_15_19",
+        "indicator": "male_15_19"
+      },
+      {
+        "label": "female_20_24",
+        "indicator": "female_20_24"
+      },
+      {
+        "label": "male_20_24",
+        "indicator": "male_20_24"
+      },
+      {
+        "label": "female_25_above",
+        "indicator": "female_25_above"
+      },
+      {
+        "label": "male_25_above",
+        "indicator": "male_25_above"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "post exposure",
+    "indicators": [
+      {
+        "label": "exposed_occupational",
+        "indicator": "exposed_occupational"
+      },
+      {
+        "label": "exposed_non_occupational",
+        "indicator": "exposed_non_occupational"
+      },
+      {
+        "label": "pep_occupational",
+        "indicator": "pep_occupational"
+      },
+      {
+        "label": "pep_non_occupational",
+        "indicator": "pep_non_occupational"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "prep",
+    "indicators": [
+      {
+        "label": "art_new_less_1_male",
+        "indicator": "art_new_less_1_male"
+      },
+      {
+        "label": "art_new_less_1_female",
+        "indicator": "art_new_less_1_female"
+      },
+      {
+        "label": "art_new_1_4_male",
+        "indicator": "art_new_1_4_male"
+      },
+      {
+        "label": "art_new_1_4_female",
+        "indicator": "art_new_1_4_female"
+      },
+      {
+        "label": "art_new_5_9_male",
+        "indicator": "art_new_5_9_male"
+      },
+      {
+        "label": "art_new_5_9_female",
+        "indicator": "art_new_5_9_female"
+      },
+      {
+        "label": "art_new_10_14_male",
+        "indicator": "art_new_10_14_male"
+      },
+      {
+        "label": "art_new_10_14_female",
+        "indicator": "art_new_10_14_female"
+      },
+      {
+        "label": "art_new_15_19_male",
+        "indicator": "art_new_15_19_male"
+      },
+      {
+        "label": "art_new_15_19_female",
+        "indicator": "art_new_15_19_female"
+      },
+      {
+        "label": "art_new_20_24_male",
+        "indicator": "art_new_20_24_male"
+      },
+      {
+        "label": "art_new_20_24_female",
+        "indicator": "art_new_20_24_female"
+      },
+      {
+        "label": "art_new_25_above_male",
+        "indicator": "art_new_25_above_male"
+      },
+      {
+        "label": "art_new_25_above_female",
+        "indicator": "art_new_25_above_female"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "tb",
+    "indicators": [
+      {
+        "label": "screened_tb_less_15",
+        "indicator": "screened_tb_less_15"
+      },
+      {
+        "label": "screened_tb_greater_15",
+        "indicator": "screened_tb_greater_15"
+      }
+    ]
+  },
+  {
+    "sectionTitle": "HIV Setting",
+    "indicators": [
+      {
+        "label": "hiv_setting_facility",
+        "indicator": "hiv_setting_facility"
+      },
+      {
+        "label": "hiv_setting_community",
+        "indicator": "hiv_setting_community"
+      },
+      {
+        "label": "hiv_male",
+        "indicator": "hiv_male"
+      },
+      {
+        "label": "hiv_female",
+        "indicator": "hiv_female"
+      }
+    ]
+  }
+]

@@ -72,7 +72,7 @@
       "alias": "initial_test_LD",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 1040, 1, NULL)"
+        "expression": "if(o.concept_id = 10868 AND value_coded = 1040, 1, NULL)"
       }
     },
     {
