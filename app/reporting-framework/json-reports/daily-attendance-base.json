@@ -32,6 +32,14 @@
         "type": "LEFT",
         "joinCondition": "fhs.person_id = flat_identifiers.patient_id"
       }
+    },
+    {
+      "table": "etl.flat_hiv_categorization_models",
+      "alias": "fcm",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fhs.person_id = fcm.person_id AND fcm.next_encounter_datetime IS NULL"
+      }
     }
   ],
   "columns": [
@@ -92,6 +100,85 @@
       "type": "simple_column",
       "alias": "med_pick_up_date",
       "column": "date_format(t2.med_pickup_rtc_date,'%Y-%m-%d')"
+    },
+    {
+      "type": "derived_column",
+      "alias": "patient_categorization",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "fcm.patient_categorization like '%12106%'",
+            "value": "Established"
+          },
+          {
+            "condition": "fcm.patient_categorization like '%12107%'",
+            "value": "Not Established"
+          },
+          {
+            "condition": "fcm.patient_categorization like '%9070%'",
+            "value": "Well"
+          },
+          {
+            "condition": "fcm.patient_categorization like '%12266%'",
+            "value": "AHD"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "service_delivery_model",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "fcm.service_delivery_model like '%11931%'",
+            "value": "Facility"
+          },
+          {
+            "condition": "fcm.service_delivery_model like '%11932%'",
+            "value": "Community"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_model",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "fcm.dsd_model like '%11936%'",
+            "value": "FT-Fast track"
+          },
+          {
+            "condition": "fcm.dsd_model like '%11937%'",
+            "value": "FAG-Facility ART distribution group"
+          },
+          {
+            "condition": "fcm.dsd_model like '%11939%'",
+            "value": "ICAD-Individual Community ART distribution"
+          },
+          {
+            "condition": "fcm.dsd_model like '%11940%'",
+            "value": "CPM-Community pharmacy model"
+          },
+          {
+            "condition": "fcm.dsd_model like '%10992%'",
+            "value": "CARG-Community ART group -peer led"
+          },
+          {
+            "condition": "fcm.dsd_model like '%10991%'",
+            "value": "CARG-Community ART group -HCW led"
+          },
+          {
+            "condition": "fcm.dsd_model like '%11938%'",
+            "value": "CADP-Community ART distribution points"
+          }
+        ]
+      }
     },
     {
       "type": "simple_column",
