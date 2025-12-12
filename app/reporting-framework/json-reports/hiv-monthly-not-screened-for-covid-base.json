@@ -59,6 +59,16 @@
       "column": "flat_identifiers.nupi"
     },
     {
+      "type": "simple_column",
+      "alias": "cr_id",
+      "column": "flat_identifiers.cr_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sha_id",
+      "column": "flat_identifiers.sha_id"
+    },
+    {
       "type": "derived_column",
       "alias": "active_this_month_not_screened_for_covid",
       "expressionType": "simple_expression",

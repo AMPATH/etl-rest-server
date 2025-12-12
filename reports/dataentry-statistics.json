@@ -929,6 +929,16 @@
         "sql": "flat_identifiers.nupi"
       },
       {
+        "type": "single",
+        "label": "cr_id",
+        "sql": "flat_identifiers.cr_id"
+      },
+      {
+        "type": "single",
+        "label": "sha_id",
+        "sql": "flat_identifiers.sha_id"
+      },
+      {
         "label": "person_name",
         "type": "single",
         "sql": "concat_ws(' ',t1.given_name,t1.middle_name,t1.family_name)"
