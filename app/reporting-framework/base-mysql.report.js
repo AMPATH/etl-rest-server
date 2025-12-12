@@ -551,6 +551,7 @@ import * as tb_screen__less_15_aggregate from './json-reports/moh-731-report/agg
 import * as tb_screen__less_15_base from './json-reports/moh-731-report/aggregations/tb-screen-less-15-base.json';
 import * as nutrition_mam_aggregate from './json-reports/moh-731-report/aggregations/nutrition-mam-aggregate.json';
 import * as nutrition_mam_base from './json-reports/moh-731-report/aggregations/nutrition-mam-base.json';
+import * as patient_list_template_731 from './json-reports/731-patient-list-template.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
