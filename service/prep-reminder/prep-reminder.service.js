@@ -12,7 +12,8 @@ export class PrepReminderService {
         _.each(programs.results, (p) => {
           if (
             p != null &&
-            p.program.uuid === 'c19aec66-1a40-4588-9b03-b6be55a8dd1d'
+            p.program.uuid === 'c19aec66-1a40-4588-9b03-b6be55a8dd1d' &&
+            p.dateCompleted == null
           ) {
             enrolledToPrep = true;
           }

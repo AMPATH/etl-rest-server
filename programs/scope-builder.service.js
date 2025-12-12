@@ -17,9 +17,19 @@ function buildScope(dataDictionary) {
     retroSpective: false,
     screenedForCovidToday: false,
     isViremicHighVL: false,
+    hasHTSEncounters: false,
     isEligibleForMedicationRefill: false,
+    showOnlyHTSScreening: false,
+    showOnlyHTSINITIAL: false,
+    showOnlyHTSRetest: false,
+    showHTSRetestToConfirmP: false,
+    showOthersHTSEncounters: false,
     isEligibleForCommunityVisit: false,
-    inPrediction: false
+    inPrediction: false,
+    showCommunityDSDVisit: false,
+    showStandardCommunityVisit: false,
+    isPrepStudyType: false,
+    isPrepConsentFilled: false
   };
 
   let isStandardDcVisit = false;
@@ -152,7 +162,8 @@ function buildScope(dataDictionary) {
     '0900acea-1352-11df-a1f1-0026b9348838',
     '469bb74e-18a4-4d74-872e-55fcebe12dc7',
     '6666bb3c-1500-4320-9c46-78efc5bbaee0',
-    '4949293e-7b5c-4359-8a55-1196a578143b'
+    '4949293e-7b5c-4359-8a55-1196a578143b',
+    'd0fac112-5690-47c5-8ffc-0abcbb5b3124'
   ].includes(dataDictionary.intendedVisitLocationUuid);
   if (dataDictionary.patient) {
     buildPatientScopeMembers(scope, dataDictionary.patient);
@@ -191,11 +202,10 @@ function buildScope(dataDictionary) {
     const medicationRefillResults = validateMedicationRefillEligibility(
       dataDictionary.validateMedicationRefill
     );
-    if (medicationRefillResults.communityVisit) {
+    if (medicationRefillResults?.communityVisit) {
       scope.isEligibleForCommunityVisit = true;
     }
-
-    if (medicationRefillResults.medicationRefill) {
+    if (medicationRefillResults?.medicationRefill) {
       scope.isEligibleForMedicationRefill = true;
     }
     if (result) {
@@ -212,6 +222,16 @@ function buildScope(dataDictionary) {
       !isStandardDcVisit
     ) {
       scope.qualifiesMedicationRefillVisit = true;
+    }
+  }
+
+  if (dataDictionary.latestCohortEncounter) {
+    if (dataDictionary.latestCohortEncounter.showDCVisit) {
+      scope.showCommunityDSDVisit = true;
+    }
+
+    if (dataDictionary.latestCohortEncounter.showStandardCommunityVisit) {
+      scope.showStandardCommunityVisit = true;
     }
   }
 
@@ -339,7 +359,8 @@ function buildScope(dataDictionary) {
       '0900acea-1352-11df-a1f1-0026b9348838',
       '469bb74e-18a4-4d74-872e-55fcebe12dc7',
       '6666bb3c-1500-4320-9c46-78efc5bbaee0',
-      '4949293e-7b5c-4359-8a55-1196a578143b'
+      '4949293e-7b5c-4359-8a55-1196a578143b',
+      'd0fac112-5690-47c5-8ffc-0abcbb5b3124'
     ].includes(dataDictionary.intendedVisitLocationUuid);
   }
 
@@ -376,7 +397,6 @@ function buildScope(dataDictionary) {
   } else {
     const today = Moment().format('YYYY-MM-DD');
     const visitDate = Moment(dataDictionary.visitDate).format('YYYY-MM-DD');
-
     if (dataDictionary.latestCovidAssessment) {
       scope['lastCovidScreeningDate'] = dataDictionary.latestCovidAssessment;
       const screeningDate = Moment(dataDictionary.latestCovidAssessment).format(
@@ -409,6 +429,41 @@ function buildScope(dataDictionary) {
   ) {
     scope.isViremicHighVL = true;
   }
+
+  if (dataDictionary.patientEncounters) {
+    scope.patientEncounters = dataDictionary.patientEncounters;
+    scope.programUuid = dataDictionary.programUuid;
+
+    // Add HTS scope building alongside other program builders
+    if (dataDictionary.programUuid === 'a0f8382f-df8a-4f1d-8959-9fb6eef90353') {
+      buildHTSScopeMembers(
+        scope,
+        dataDictionary.patientEncounters,
+        dataDictionary.isHtsPatientNegative,
+        dataDictionary
+      );
+    }
+
+    buildHivScopeMembers(
+      scope,
+      dataDictionary.patientEncounters,
+      dataDictionary?.intendedVisitLocationUuid
+    );
+    buildOncologyScopeMembers(
+      scope,
+      dataDictionary.patientEncounters,
+      dataDictionary.programUuid
+    );
+    buildMNCHScopeMembers(
+      scope,
+      dataDictionary.patientEncounters,
+      dataDictionary.patientEnrollment
+    );
+  }
+
+  if (dataDictionary.programUuid === 'c19aec66-1a40-4588-9b03-b6be55a8dd1d') {
+    scope.isPrepStudyType = prepStudyVisit(dataDictionary.patientTypeConcepts);
+  }
   // add other methods to build the scope objects
   return scope;
 }
@@ -424,6 +479,23 @@ function conditionalDCVisits(patient) {
       latestEncounter.encounterType.uuid === expectedEncounterToBeDrugPickup
     );
   }
+}
+
+function checkPrepStudyConsent(patientEncounters) {
+  let prepConsentFilled = false;
+  const prepStudyConsentEncounter = '874ddf0e-6a7c-48ab-8d7f-470d2c5cefcd';
+
+  let prepConsentEncounter = getSpecificEncounterTypesFromEncounters(
+    patientEncounters,
+    prepStudyConsentEncounter
+  );
+
+  if (prepConsentEncounter.length === 1) {
+    prepConsentFilled = true;
+  } else {
+    prepConsentEncounter = false;
+  }
+  return prepConsentFilled;
 }
 
 function validateMedicationRefillEligibility(validateMedicationRefill) {
@@ -547,6 +619,19 @@ function getPreviousHIVClinicallocation(patientEncounters) {
   return latestHivClinicalLocation[0] ? latestHivClinicalLocation[0] : null;
 }
 
+function prepStudyVisit(patient) {
+  let isPrepStudyType = false;
+  if (patient !== undefined) {
+    const studyTypeAnswer = patient.value.uuid;
+    if (studyTypeAnswer === 'a89a898a-1350-11df-a1f1-0026b9348838') {
+      isPrepStudyType = true;
+    }
+  } else {
+    isPrepStudyType = false;
+  }
+  return isPrepStudyType;
+}
+
 function isInitialPrepVisit(patientEncounters) {
   const initialPrEPEncounterUuid = '00ee2fd6-9c95-4ffc-ab31-6b1ce2dede4d';
 
@@ -555,6 +640,16 @@ function isInitialPrepVisit(patientEncounters) {
   });
 
   return initialPrEPEncounters.length === 0;
+}
+
+function isInitialKVPVisit(patientEncounters) {
+  const initialKVPEncounterUuid = '73715d49-533f-4f41-8ac0-8965d4acc9fc';
+
+  let initialKVPEncounters = _.filter(patientEncounters, (encounter) => {
+    return encounter.encounterType.uuid === initialKVPEncounterUuid;
+  });
+
+  return initialKVPEncounters.length === 0;
 }
 
 function isInitialPepVisit(patientEncounters) {
@@ -720,6 +815,95 @@ function isInitialOncologyVisit(encounters, programUuid) {
   return initialOncologyEncounters.length === 0;
 }
 
+function buildHTSScopeMembers(
+  scope,
+  patientEncounters,
+  isHtsPatientNegative,
+  dataDictionary
+) {
+  const HTS_ENCOUNTER_TYPES = {
+    SCREENING: '82749926-63b1-467b-9d41-453c7542678a',
+    INITIAL: 'ae9693ff-d341-4997-8166-fa46ac4d38f4',
+    RETEST: '16bac581-5a17-43f2-9315-3e12a1f3189a',
+    LINKAGE: 'fbb106cf-d24f-4917-b905-42db7549a788',
+    REFERRAL: '55c10a7a-2732-4063-be25-68d5e1bce1fc'
+  };
+  const visitDate = Moment(dataDictionary.visitDate).format('YYYY-MM-DD');
+
+  const today = dataDictionary.retroSpective
+    ? visitDate
+    : Moment().startOf('day');
+
+  const isFromPreviousDate = (encounter) => {
+    const encounterDate =
+      encounter?.encounterDatetime &&
+      Moment(encounter.encounterDatetime).startOf('day');
+    return encounterDate ? encounterDate.isBefore(today) : false;
+  };
+
+  const getLatestEncounterOfType = (encounters, encounterTypeUuid) =>
+    encounters
+      ?.filter(({ encounterType }) => encounterType?.uuid === encounterTypeUuid)
+      .sort(
+        (a, b) =>
+          Moment(b.encounterDatetime).valueOf() -
+          Moment(a.encounterDatetime).valueOf()
+      )[0];
+
+  scope.hasHTSEncounters =
+    patientEncounters?.some(({ encounterType }) =>
+      Object.values(HTS_ENCOUNTER_TYPES).includes(encounterType?.uuid)
+    ) || false;
+
+  if (!scope.hasHTSEncounters) {
+    scope.showOnlyHTSScreening = true;
+    scope.showHTSRetestToConfirmP = true;
+    return scope;
+  }
+
+  const latestScreening = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.SCREENING
+  );
+  const latestInitial = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.INITIAL
+  );
+  const latestRetest = getLatestEncounterOfType(
+    patientEncounters,
+    HTS_ENCOUNTER_TYPES.RETEST
+  );
+
+  const hasOldScreening =
+    latestScreening && isFromPreviousDate(latestScreening);
+  const hasOldInitial = latestInitial && isFromPreviousDate(latestInitial);
+  const hasScreeningToday =
+    latestScreening && !isFromPreviousDate(latestScreening);
+  const hasInitialToday = latestInitial && !isFromPreviousDate(latestInitial);
+  const hasRetestToday = latestRetest && !isFromPreviousDate(latestRetest);
+
+  if (isHtsPatientNegative && hasInitialToday) {
+    scope.showOnlyHTSINITIAL = true;
+    return scope;
+  }
+
+  if (!hasScreeningToday) {
+    scope.showOnlyHTSScreening = true;
+    scope.isFirstHTSNewRetestVisit = true;
+  } else if (hasScreeningToday && !hasInitialToday) {
+    scope.showOnlyHTSINITIAL = true;
+    scope.isFirstHTSNewRetestVisit = false;
+  } else if (hasInitialToday && !hasRetestToday) {
+    scope.showOnlyHTSRetest = true;
+  } else if (hasRetestToday) {
+    scope.showOthersHTSEncounters = true;
+  } else {
+    scope.showOnlyHTSScreening = true;
+  }
+
+  return scope;
+}
+
 function buildProgramScopeMembers(scope, programEnrollment) {
   if (
     programEnrollment &&
@@ -752,6 +936,8 @@ function buildHivScopeMembers(
   scope.previousHIVClinicallocation = getPreviousHIVClinicallocation(
     patientEncounters
   );
+  scope.isPrepConsentFilled = checkPrepStudyConsent(patientEncounters);
+  scope.isFirstKVPVisit = isInitialKVPVisit(patientEncounters);
 }
 
 function buildOncologyScopeMembers(scope, patientEncounters, programUuid) {

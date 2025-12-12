@@ -1,0 +1,153 @@
+{
+  "name": "731StartARTAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "startART731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "startART731Base",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "art_new_less_1_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_less_1_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_less_1_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_less_1_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_1_4_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_1_4_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_1_4_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_1_4_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_5_9_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_5_9_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_5_9_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_5_9_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_10_14_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_10_14_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_10_14_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_10_14_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_15_19_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_15_19_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_15_19_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_15_19_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_20_24_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_20_24_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_20_24_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_20_24_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_25_above_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_25_above_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_25_above_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.art_new_25_above_female)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

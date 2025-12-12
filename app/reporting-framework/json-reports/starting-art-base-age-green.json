@@ -101,7 +101,7 @@
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "hmsd.arv_first_regimen_location_id"
+      "column": "hmsd.location_id"
     },
     {
       "type": "simple_column",
@@ -192,6 +192,16 @@
       "expressionOptions": {
         "expression": "date_format(fli.vl_1_date,'%d-%m-%Y')"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_1",
+      "column": "fhsvb.cd4_1"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_date",
+      "column": "DATE_FORMAT(fhsvb.cd4_1_date,'%Y-%m-%d')"
     }
   ],
   "filters": {
@@ -204,7 +214,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmsd.arv_first_regimen_location_id in ?",
+        "conditionExpression": "hmsd.location_id in ?",
         "parameterName": "locations"
       }
     ]

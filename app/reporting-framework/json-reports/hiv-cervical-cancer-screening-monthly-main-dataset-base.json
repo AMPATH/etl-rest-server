@@ -256,7 +256,7 @@
             "value": "pap_smear"
           },
           {
-            "condition": "c.screening_method = 2322",
+            "condition": "c.screening_method in (1213, 2322)",
             "value": "HPV"
           },
           {
@@ -271,7 +271,7 @@
       "alias": "screened_initial_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383) AND c.reasons_for_current_visit = 1,1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383) AND c.reasons_for_current_visit = 1,1,NULL)"
       }
     },
     {
@@ -295,7 +295,7 @@
       "alias": "screened_hpv_initial_visit_hiv_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
       }
     },
     {
@@ -319,7 +319,7 @@
       "alias": "screened_hpv_initial_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
       }
     },
     {
@@ -335,7 +335,7 @@
       "alias": "screened_routine_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383) AND c.reasons_for_current_visit = 2,1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383) AND c.reasons_for_current_visit = 2,1,NULL)"
       }
     },
     {
@@ -359,7 +359,7 @@
       "alias": "screened_hpv_routine_visit_hiv_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
       }
     },
     {
@@ -383,7 +383,7 @@
       "alias": "screened_hpv_routine_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
       }
     },
     {
@@ -399,7 +399,7 @@
       "alias": "screened_post_treatment_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383) AND c.reasons_for_current_visit = 3 ,1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383) AND c.reasons_for_current_visit = 3 ,1,NULL)"
       }
     },
     {
@@ -423,7 +423,7 @@
       "alias": "screened_hpv_post_treatment_visit_hiv_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
       }
     },
     {
@@ -447,7 +447,7 @@
       "alias": "screened_hpv_post_treatment_visit_hiv_negative",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
       }
     },
     {
@@ -855,7 +855,7 @@
       "alias": "screened_hpv_all_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (2322),1,NULL)"
+        "expression": "IF(c.screening_method in (1213,2322),1,NULL)"
       }
     },
     {
@@ -871,7 +871,7 @@
       "alias": "screened_all_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(c.screening_method in (9434,10420,885,2322,7383),1,NULL)"
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383),1,NULL)"
       }
     },
     {

@@ -7,6 +7,7 @@ const encounterService = require('../service/openmrs-rest/encounter');
 const dcPatientvisitEvaluator = require('../service/dc-patient-visit-evaluator');
 const covidAssessmentService = require('../service/covid-assessment-service');
 const weeklyPredictionsService = require('../service/ml-weekly-predictions.service');
+const obsService = require('../service/openmrs-rest/obs.service.js');
 var _ = require('underscore');
 const {
   default: MlWeeklyPredictionsService
@@ -20,12 +21,15 @@ const availableKeys = {
   hivLastEncounter: getPatientLastEncounter,
   patientEnrollment: getPatientEnrollement,
   patientEncounters: getPatientEncounters,
+  isHtsPatientNegative: getPatientLatestHTSInitialEncounter,
   isPatientTransferredOut: checkTransferOut,
   dcQualifedVisits: getQualifiedDcVisits,
   validateMedicationRefill: getMedicationRefillVisits,
   latestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL,
-  weeklyPredictedPatients: getWeeklyPredictedPatients
+  weeklyPredictedPatients: getWeeklyPredictedPatients,
+  latestCohortEncounter: getLatestEncounterFromCohortVisit,
+  patientTypeConcepts: getPatientTypeConcept
 };
 
 const def = {
@@ -36,12 +40,15 @@ const def = {
   availableKeys: availableKeys,
   getPatientLastEncounter: getPatientLastEncounter,
   getPatientEncounters: getPatientEncounters,
+  getPatientLatestHTSInitialEncounter: getPatientLatestHTSInitialEncounter,
   checkTransferOut: checkTransferOut,
   dcQualifedVisits: getQualifiedDcVisits,
   validateMedicationRefill: getMedicationRefillVisits,
   getLatestCovidAssessment: getLatestCovidAssessment,
   isViremicHighVL: getLatestVL,
-  getWeeklyPredictedPatients: getWeeklyPredictedPatients
+  getWeeklyPredictedPatients: getWeeklyPredictedPatients,
+  getLatestEncounterFromCohortVisit: getLatestEncounterFromCohortVisit,
+  patientTypeConcepts: getPatientTypeConcept
 };
 
 module.exports = def;
@@ -82,6 +89,66 @@ function getPatient(patientUuid, params) {
         resolve(patient);
       })
       .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+function getLatestEncounterFromCohortVisit(patientUuid, params) {
+  // Visit type UUIDs
+  const VISIT_TYPES = {
+    DC_COMMUNITY: '0d608b80-1cb5-4c85-835a-29072683ca27',
+    STANDARD_COMMUNITY: '41c54687-8596-4071-a235-96d80f3fd039'
+  };
+
+  return new Promise((resolve, reject) => {
+    patientService
+      .getLatestEncounterFromMostRecentCohortVisit(patientUuid, params)
+      .then((lastVisit) => {
+        if (lastVisit) {
+          const currentVisitTypeUuid = lastVisit.visitType?.uuid;
+          const hasCohortMemberVisits =
+            lastVisit.cohortMemberVisits &&
+            lastVisit.cohortMemberVisits.length > 0;
+
+          let showDCVisit = false;
+          let showStandardCommunityVisit = false;
+
+          if (!hasCohortMemberVisits) {
+            if (currentVisitTypeUuid === VISIT_TYPES.DC_COMMUNITY) {
+              showDCVisit = true;
+            } else if (
+              currentVisitTypeUuid === VISIT_TYPES.STANDARD_COMMUNITY
+            ) {
+              showStandardCommunityVisit = true;
+            } else {
+              showDCVisit = true;
+            }
+          } else {
+            // Alternate between visit types
+            if (currentVisitTypeUuid === VISIT_TYPES.DC_COMMUNITY) {
+              showStandardCommunityVisit = true;
+            } else if (
+              currentVisitTypeUuid === VISIT_TYPES.STANDARD_COMMUNITY
+            ) {
+              showDCVisit = true;
+            } else {
+              showDCVisit = true;
+            }
+          }
+
+          const result = {
+            showDCVisit,
+            showStandardCommunityVisit
+          };
+
+          resolve(result);
+        } else {
+          resolve(null);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching cohort encounter:', error);
         reject(error);
       });
   });
@@ -170,6 +237,55 @@ function getPatientEncounters(patientUuid) {
     patientEncounters
       .then((encounters) => {
         resolve(encounters);
+      })
+      .catch((e) => {
+        console.error('An error occurred fetching encounters: ', e);
+        reject(e);
+      });
+  });
+}
+
+function getPatientLatestHTSInitialEncounter(patientUuid) {
+  return new Promise((resolve, reject) => {
+    encounterService
+      .getPatientEncounters({
+        patientUuid,
+        v:
+          'custom:(encounterDatetime,encounterType:(uuid,display),obs:(uuid,concept:(uuid,display),value))'
+      })
+      .then((encounters) => {
+        if (!encounters || encounters.length === 0) {
+          return resolve(false);
+        }
+
+        // HTS Encounter UUID
+        const HTS_ENCOUNTER_UUID = 'ae9693ff-d341-4997-8166-fa46ac4d38f4';
+        const TARGET_OBS_UUIDS = [
+          'a896d2cc-1350-11df-a1f1-0026b9348838',
+          'a89a7ae4-1350-11df-a1f1-0026b9348838'
+        ];
+
+        // Filter for only HTS encounters
+        const htsEncounters = encounters.filter(
+          (enc) => enc.encounterType?.uuid === HTS_ENCOUNTER_UUID
+        );
+
+        if (htsEncounters.length === 0) {
+          return resolve(false);
+        }
+
+        // Get the latest encounter based on encounterDatetime
+        htsEncounters.sort(
+          (a, b) =>
+            new Date(b.encounterDatetime) - new Date(a.encounterDatetime)
+        );
+        const latestEncounter = htsEncounters[0];
+        // Check if the latest encounter contains the required obs concept
+        const hasTargetObs = latestEncounter.obs?.some((obs) =>
+          TARGET_OBS_UUIDS.includes(obs.value?.uuid)
+        );
+
+        resolve(hasTargetObs);
       })
       .catch((e) => {
         console.error('An error occurred fetching encounters: ', e);
@@ -279,4 +395,9 @@ function getWeeklyPredictedPatients(patientUuid) {
         reject(error);
       });
   });
+}
+
+function getPatientTypeConcept(patientUuid) {
+  const conceptUuid = '5671130b-fb49-4e31-86b3-9e0df8919908';
+  return obsService.getPatientTypeConcept(conceptUuid, patientUuid);
 }

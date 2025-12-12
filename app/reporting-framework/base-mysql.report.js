@@ -384,6 +384,50 @@ import * as txrtt_aggregate_report from './json-reports/tx-reports/tx-rtt/tx-rtt
 import * as txrtt_base_report from './json-reports/tx-reports/tx-rtt/tx-rtt-report-base.json';
 import * as txrtt_summary from './json-reports/txrtt-summary.json';
 
+//case surveillance - new case
+import * as newcase_aggregate_report from './json-reports/case-surveillance/new-case/new-case-aggregate.json';
+import * as newcase_base_report from './json-reports/case-surveillance/new-case/new-case-base.json';
+
+//case surveillance - linked case
+import * as linkedCase_aggregate_report from './json-reports/case-surveillance/linked-case/linked-case-aggregate.json';
+import * as linkedCase_base_report from './json-reports/case-surveillance/linked-case/linked-case-base.json';
+
+//case surveillance - at-risk-pbfw case
+import * as atRiskPbfw_aggregate_report from './json-reports/case-surveillance/at-risk-pbfw/at-risk-pbfw-aggregate.json';
+import * as atRiskPbfw_base_report from './json-reports/case-surveillance/at-risk-pbfw/at-risk-pbfw-base.json';
+
+//case surveillance - prep linked
+import * as prepLinked_aggregate_report from './json-reports/case-surveillance/prep-linked/prep-linked-aggregate.json';
+import * as prepLinked_base_report from './json-reports/case-surveillance/prep-linked/prep-linked-base.json';
+
+//case surveillance - eligible for vl
+import * as eligibleForVl_aggregate_report from './json-reports/case-surveillance/eligible-for-vl/eligible-for-vl-aggregate.json';
+import * as eligibleForVl_base_report from './json-reports/case-surveillance/eligible-for-vl/eligible-for-vl-base.json';
+
+//case surveillance - eligible for vl no order
+import * as eligibleForVlNoOrder_aggregate_report from './json-reports/case-surveillance/eligible-for-vl-no-order/eligible-for-vl-no-order-aggregate.json';
+import * as eligibleForVlNoOrder_base_report from './json-reports/case-surveillance/eligible-for-vl-no-order/eligible-for-vl-no-order-base.json';
+
+//case surveillance - hei without pcr
+import * as heiWithoutPcr_aggregate_report from './json-reports/case-surveillance/hei-without-pcr/hei-without-pcr-aggregate.json';
+import * as heiWithoutPcr_base_report from './json-reports/case-surveillance/hei-without-pcr/hei-without-pcr-base.json';
+
+//case surveillance - hei without final outcome
+import * as heiWithoutFinalOutcome_aggregate_report from './json-reports/case-surveillance/hei-without-final-outcome/hei-without-final-outcome-aggregate.json';
+import * as heiWithoutFinalOutcome_base_report from './json-reports/case-surveillance/hei-without-final-outcome/hei-without-final-outcome-base.json';
+
+// case surveillance - hei 24 months
+import * as hei24months_aggregate_report from './json-reports/case-surveillance/hei-24-months/hei-24-months-aggregate.json';
+import * as hei24months_base_report from './json-reports/case-surveillance/hei-24-months/hei-24-months-base.json';
+
+//case surveillance - hei 6 to 8 weeks
+import * as hei6to8weeks_aggregate_report from './json-reports/case-surveillance/hei-6-8-weeks/hei-6-8-weeks-aggregate.json';
+import * as hei6to8weeks_base_report from './json-reports/case-surveillance/hei-6-8-weeks/hei-6-8-weeks-base.json';
+
+//case surveillance - summary
+import * as caseSuveillance_summary from './json-reports/case-surveillance/summaries/case-surveillance.json';
+import * as cs_patient_list_template from './json-reports/case-surveillance/summaries/case-surveillance-patient-list.json';
+
 //plhiv-ncd report
 import * as plhiv_ncd_v2_monthly_report from './json-reports/plhiv-ncd-v2-reports/plhiv-ncd-v2-report.json';
 
@@ -441,6 +485,31 @@ import * as ahd_cohort_monthly_aggregate from './json-reports/ahd_reports/ahd-co
 import * as ahd_monthly_dataset_base from './json-reports/ahd_reports/ahd-monthly-dataset-base.json';
 import * as ahd_cohort_monthly_dataset_base from './json-reports/ahd_reports/ahd-cohort-monthly-dataset-base.json';
 import * as ahd_monthly_patient_list_template from './json-reports/ahd_reports/ahd_monthly_patient_list_template_post.json';
+import * as ml_summary_aggregate from './json-reports/ml-predictions/ml-summary.json';
+import * as high_risk_client_aggregate from './json-reports/ml-predictions/aggregations/high-risk/high-risk-aggregate.json';
+import * as high_risk_client_base from './json-reports/ml-predictions/aggregations/high-risk/high-risk-dataset-base.json';
+import * as high_risk_client_contacted_aggregate from './json-reports/ml-predictions/aggregations/high-risk-contacted/high-risk-contacted-aggregate.json';
+import * as high_risk_client_contacted_base from './json-reports/ml-predictions/aggregations/high-risk-contacted/high-risk-contacted-base.json';
+import * as home_follow_up_aggregate from './json-reports/ml-predictions/aggregations/home-follow-up/home-follow-up-aggregate.json';
+import * as home_follow_up_base from './json-reports/ml-predictions/aggregations/home-follow-up/home-follow-up-base.json';
+import * as phone_follow_up_aggregate from './json-reports/ml-predictions/aggregations/phone-follow-up/phone-follow-up-aggragate.json';
+import * as phone_follow_up_base from './json-reports/ml-predictions/aggregations/phone-follow-up/phone-follow-up-base.json';
+import * as successful_contact_attempt_aggregate from './json-reports/ml-predictions/aggregations/successful-contact/successful-contact-aggregate.json';
+import * as successful_contact_attempt_base from './json-reports/ml-predictions/aggregations/successful-contact/successfull-contact-base.json';
+import * as successful_contact_kept_appointment_aggregate from './json-reports/ml-predictions/aggregations/successful_contact_kept_appintment/successful_contact_kept_appintment-aggregate.json';
+import * as successful_contact_kept_appointment_base from './json-reports/ml-predictions/aggregations/successful_contact_kept_appintment/successful_contact_kept_appintment-base.json';
+import * as successful_contact_missed_appointment_aggregate from './json-reports/ml-predictions/aggregations/successful-contact-attempt-missed-appointment/successful-contact-attempt-missed-appointment-aggregate.json';
+import * as successful_contact_missed_appointment_base from './json-reports/ml-predictions/aggregations/successful-contact-attempt-missed-appointment/successful-contact-attempt-missed-appointment-base.json';
+import * as unsuccessful_contact_attempts_aggregate from './json-reports/ml-predictions/aggregations/unsuccessful_contact_attempts/unsuccessful_contact_attempts_aggregate.json';
+import * as unsuccessful_contact_attempts_base from './json-reports/ml-predictions/aggregations/unsuccessful_contact_attempts/unsuccessful_contact_attempts_base.json';
+import * as no_contact_attempt_aggregate from './json-reports/ml-predictions/aggregations/no_contact_attempts/no_contact_attempts_aggregate.json';
+import * as no_contact_attempt_base from './json-reports/ml-predictions/aggregations/no_contact_attempts/no_contact_attempts_base.json';
+import * as no_contact_attempt_kept_appointment_aggregate from './json-reports/ml-predictions/aggregations/no_contact_kept_appointment/no_contact_kept_appointment_aggregate.json';
+import * as no_contact_attempt_kept_appointment_base from './json-reports/ml-predictions/aggregations/no_contact_kept_appointment/no_contact_kept_appointment_base.json';
+import * as rescheduled_aggregate from './json-reports/ml-predictions/aggregations/rescheduled_appointment/rescheduled_appointment_aggregate.json';
+import * as rescheduled_base from './json-reports/ml-predictions/aggregations/rescheduled_appointment/rescheduled_appointment_base.json';
+import * as unsuccessful_contact_attempts_kept_appointment_aggregate from './json-reports/ml-predictions/aggregations/unsuccessful_kept_appointment/unsuccessful_kept_appointment_aggregate.json';
+import * as unsuccessful_contact_attempts_kept_appointment_base from './json-reports/ml-predictions/aggregations/unsuccessful_kept_appointment/unsuccessful_kept_appointment_base.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1886,6 +1955,136 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(txrtt_summary)
           });
           break;
+        case 'newCaseAggregate':
+          resolve({
+            main: this.cloneJsonSchema(newcase_aggregate_report),
+            newCaseBase: this.cloneJsonSchema(newcase_base_report)
+          });
+          break;
+        case 'newCase-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(newcase_summary)
+          });
+          break;
+        case 'linkedCaseAggregate':
+          resolve({
+            main: this.cloneJsonSchema(linkedCase_aggregate_report),
+            linkedCaseBase: this.cloneJsonSchema(linkedCase_base_report)
+          });
+          break;
+        case 'linkedCase-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(linkedCase_summary)
+          });
+          break;
+        case 'atRiskPbfwAggregate':
+          resolve({
+            main: this.cloneJsonSchema(atRiskPbfw_aggregate_report),
+            atRiskPbfwBase: this.cloneJsonSchema(atRiskPbfw_base_report)
+          });
+          break;
+        case 'atRiskPbfw-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(atRiskPbfw_summary)
+          });
+          break;
+        case 'prepLinkedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(prepLinked_aggregate_report),
+            prepLinkedBase: this.cloneJsonSchema(prepLinked_base_report)
+          });
+          break;
+        case 'prepLinked-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(prepLinked_summary)
+          });
+          break;
+        case 'eligibleforVlAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVl_aggregate_report),
+            eligibleForVlBase: this.cloneJsonSchema(eligibleForVl_base_report)
+          });
+          break;
+        case 'eligibleforVl-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVl_summary)
+          });
+          break;
+        case 'eligibleforVlAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVl_aggregate_report),
+            eligibleForVlBase: this.cloneJsonSchema(eligibleForVl_base_report)
+          });
+          break;
+        case 'eligibleforVlNoOrder-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVlNoOrder_summary)
+          });
+          break;
+        case 'eligibleForVlNoOrderAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVlNoOrder_aggregate_report),
+            eligibleForVlNoOrderBase: this.cloneJsonSchema(
+              eligibleForVlNoOrder_base_report
+            )
+          });
+          break;
+        case 'heiWithoutPcrAggregate':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutPcr_aggregate_report),
+            heiWithoutPcrBase: this.cloneJsonSchema(heiWithoutPcr_base_report)
+          });
+          break;
+        case 'heiWithoutPcr-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutPcr_summary)
+          });
+          break;
+        case 'hei24MonthsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(hei24months_aggregate_report),
+            hei24MonthsBase: this.cloneJsonSchema(hei24months_base_report)
+          });
+          break;
+        case 'hei24Months-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(hei24months_summary)
+          });
+          break;
+        case 'heiWithoutFinalOutcomeAggregate':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutFinalOutcome_aggregate_report),
+            heiWithoutFinalOutcomeBase: this.cloneJsonSchema(
+              heiWithoutFinalOutcome_base_report
+            )
+          });
+          break;
+        case 'heiWithoutFinalOutcome-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutFinalOutcome_summary)
+          });
+          break;
+        case 'hei6to8WeeksAggregate':
+          resolve({
+            main: this.cloneJsonSchema(hei6to8weeks_aggregate_report),
+            hei6to8WeeksBase: this.cloneJsonSchema(hei6to8weeks_base_report)
+          });
+          break;
+        case 'hei6to8Weeks-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(hei6to8weeks_summary)
+          });
+          break;
+        case 'patient_list_cs_template':
+          resolve({
+            main: this.cloneJsonSchema(cs_patient_list_template)
+          });
+          break;
+        case 'case-surveillance-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(caseSuveillance_summary)
+          });
+          break;
         case 'plhiv-ncd-v2-monthly-report':
           resolve({
             main: this.cloneJsonSchema(plhiv_ncd_v2_monthly_report)
@@ -1985,6 +2184,105 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(kd_plhiv_aggregate),
             kdPlhivBase: this.cloneJsonSchema(kd_plhiv_base)
+          });
+          break;
+        case 'mlMonthlySummaryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(ml_summary_aggregate)
+          });
+          break;
+        case 'highRiskClientAggregate':
+          resolve({
+            main: this.cloneJsonSchema(high_risk_client_aggregate),
+            highRiskBase: this.cloneJsonSchema(high_risk_client_base)
+          });
+          break;
+        case 'highRiskContactedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(high_risk_client_contacted_aggregate),
+            highRiskContactedBase: this.cloneJsonSchema(
+              high_risk_client_contacted_base
+            )
+          });
+          break;
+        case 'homeFollowUpAggregate':
+          resolve({
+            main: this.cloneJsonSchema(home_follow_up_aggregate),
+            homeFollowUpBase: this.cloneJsonSchema(home_follow_up_base)
+          });
+          break;
+        case 'phoneFollowUpAggregate':
+          resolve({
+            main: this.cloneJsonSchema(phone_follow_up_aggregate),
+            phoneFollowUpBase: this.cloneJsonSchema(phone_follow_up_base)
+          });
+          break;
+        case 'successfulContactAggregate':
+          resolve({
+            main: this.cloneJsonSchema(successful_contact_attempt_aggregate),
+            successfulContactBase: this.cloneJsonSchema(
+              successful_contact_attempt_base
+            )
+          });
+          break;
+        case 'successfulContactKeptAppointmentAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              successful_contact_kept_appointment_aggregate
+            ),
+            successfulContactKeptAppintmentBase: this.cloneJsonSchema(
+              successful_contact_kept_appointment_base
+            )
+          });
+          break;
+        case 'successfulContactMissedAppointmentAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              successful_contact_missed_appointment_aggregate
+            ),
+            successfulContactMissedAppintmentBase: this.cloneJsonSchema(
+              successful_contact_missed_appointment_base
+            )
+          });
+          break;
+        case 'unsuccessfulContactAttemptsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(unsuccessful_contact_attempts_aggregate),
+            unsuccessfulContactAttemptsBase: this.cloneJsonSchema(
+              unsuccessful_contact_attempts_base
+            )
+          });
+          break;
+        case 'noContactAttemptAggregate':
+          resolve({
+            main: this.cloneJsonSchema(no_contact_attempt_aggregate),
+            noContactAttemptBase: this.cloneJsonSchema(no_contact_attempt_base)
+          });
+          break;
+        case 'noContactAttemptKepAppointmentAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              no_contact_attempt_kept_appointment_aggregate
+            ),
+            noContactAttemptKepAppointmentBase: this.cloneJsonSchema(
+              no_contact_attempt_kept_appointment_base
+            )
+          });
+          break;
+        case 'rescheduledAppointmentAggregate':
+          resolve({
+            main: this.cloneJsonSchema(rescheduled_aggregate),
+            rescheduledBase: this.cloneJsonSchema(rescheduled_base)
+          });
+          break;
+        case 'unsuccessfulKeptAppointmentAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              unsuccessful_contact_attempts_kept_appointment_aggregate
+            ),
+            unsuccessfulKeptAppointmentBase: this.cloneJsonSchema(
+              unsuccessful_contact_attempts_kept_appointment_base
+            )
           });
           break;
         default:

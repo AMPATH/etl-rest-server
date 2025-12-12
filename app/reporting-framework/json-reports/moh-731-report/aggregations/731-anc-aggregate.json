@@ -1,0 +1,145 @@
+{
+  "name": "731ANCAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "anc731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "anc731Base",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "known_positive_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.known_positive_1st_anc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.initial_test_anc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.retest_anc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.initial_test_LD)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.retest_LD)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_pnc_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.initial_test_pnc AND s.less_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_pnc_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.retest_pnc AND s.less_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_pnc_greater_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.initial_test_pnc AND s.more_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_pnc_greater_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.retest_pnc AND s.more_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.positive_anc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.positive_LD)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_pnc_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.positive_pnc AND s.less_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_pnc_greater_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.positive_pnc AND s.more_6_weeks)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
