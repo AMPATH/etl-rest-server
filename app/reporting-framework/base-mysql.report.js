@@ -510,6 +510,47 @@ import * as rescheduled_aggregate from './json-reports/ml-predictions/aggregatio
 import * as rescheduled_base from './json-reports/ml-predictions/aggregations/rescheduled_appointment/rescheduled_appointment_base.json';
 import * as unsuccessful_contact_attempts_kept_appointment_aggregate from './json-reports/ml-predictions/aggregations/unsuccessful_kept_appointment/unsuccessful_kept_appointment_aggregate.json';
 import * as unsuccessful_contact_attempts_kept_appointment_base from './json-reports/ml-predictions/aggregations/unsuccessful_kept_appointment/unsuccessful_kept_appointment_base.json';
+import * as moh_report from './json-reports/moh-731-report/731-summary.json';
+import * as anc_731_aggregate_aggregate from './json-reports/moh-731-report/aggregations/731-anc-aggregate.json';
+import * as anc_731_aggregate_base from './json-reports/moh-731-report/aggregations/731-anc-base.json';
+import * as established_aggregate from './json-reports/moh-731-report/aggregations/established-aggregate.json';
+import * as established_base from './json-reports/moh-731-report/aggregations/established-base.json';
+import * as nutrition_731_aggregate from './json-reports/moh-731-report/aggregations/731-nutrition-aggregate.json';
+import * as nutrition_731_base from './json-reports/moh-731-report/aggregations/731-nutrition-base.json';
+import * as on_art_731_aggregate from './json-reports/moh-731-report/aggregations/731-on-art-aggregate.json';
+import * as on_art_731_base from './json-reports/moh-731-report/aggregations/731-on-art-base.json';
+import * as positives_731_aggregate from './json-reports/moh-731-report/aggregations/731-positives-aggregate.json';
+import * as positives_731_base from './json-reports/moh-731-report/aggregations/731-positives-base.json';
+import * as post_exposure_731_aggregate from './json-reports/moh-731-report/aggregations/731-post-exposure-aggregate.json';
+import * as post_exposure_731_base from './json-reports/moh-731-report/aggregations/731-post-exposure-base.json';
+import * as prep_731_aggregate from './json-reports/moh-731-report/aggregations/731-prep-aggregate.json';
+import * as prep_731_base from './json-reports/moh-731-report/aggregations/731-prep-base.json';
+import * as start_art_731_aggregate from './json-reports/moh-731-report/aggregations/731-start-art-aggregate.json';
+import * as start_art_731_base from './json-reports/moh-731-report/aggregations/731-start-art-base.json';
+import * as tb_731_aggregate from './json-reports/moh-731-report/aggregations/731-tb-screen-aggregate.json';
+import * as tb_731_base from './json-reports/moh-731-report/aggregations/731-tb-screen-base.json';
+import * as hiv_setting_731_aggregate from './json-reports/moh-731-report/aggregations/731-hiv-test-setting-aggregate.json';
+import * as hiv_setting_731_base from './json-reports/moh-731-report/aggregations/731-hiv-test-setting-base.json';
+import * as tpt_aggregate from './json-reports/moh-731-report/aggregations/731-tpt-aggregate.json';
+import * as tpt_base from './json-reports/moh-731-report/aggregations/731-tpt-base.json';
+import * as breast_feeding_731_aggregate from './json-reports/moh-731-report/aggregations/731-breast-feeding-aggregate.json';
+import * as breast_feeding_731_base from './json-reports/moh-731-report/aggregations/731-breast-feeding-base.json';
+import * as maternal_haart_731_aggregate from './json-reports/moh-731-report/aggregations/731-maternal-haart-aggregate.json';
+import * as maternal_haart_731_base from './json-reports/moh-731-report/aggregations/731-maternal-haart-base.json';
+import * as ayp_731_aggregate from './json-reports/moh-731-report/aggregations/731-ayp-aggregate.json';
+import * as ayp_731_base from './json-reports/moh-731-report/aggregations/731-ayp-base.json';
+import * as infant_prophylaxis_731_aggregate from './json-reports/moh-731-report/aggregations/731-infant-arv-aggregate.json';
+import * as infant_prophylaxis_731_base from './json-reports/moh-731-report/aggregations/731-infant-arv-base.json';
+import * as hbv_anc_731_aggregate from './json-reports/moh-731-report/aggregations/731-hbv-anc-aggregate.json';
+import * as hbv_anc_731_base from './json-reports/moh-731-report/aggregations/731-hbv-anc-base.json';
+import * as community_facility_aggregate from './json-reports/moh-731-report/aggregations/community-facility-aggregate.json';
+import * as community_facility_base from './json-reports/moh-731-report/aggregations/community-facility-base.json';
+import * as tb_aggregate from './json-reports/moh-731-report/aggregations/731-tb-aggregate.json';
+import * as tb_base from './json-reports/moh-731-report/aggregations/731-tb-base.json';
+import * as tb_screen__less_15_aggregate from './json-reports/moh-731-report/aggregations/tb-screen-less-15-aggregate.json';
+import * as tb_screen__less_15_base from './json-reports/moh-731-report/aggregations/tb-screen-less-15-base.json';
+import * as nutrition_mam_aggregate from './json-reports/moh-731-report/aggregations/nutrition-mam-aggregate.json';
+import * as nutrition_mam_base from './json-reports/moh-731-report/aggregations/nutrition-mam-base.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2283,6 +2324,139 @@ export class BaseMysqlReport {
             unsuccessfulKeptAppointmentBase: this.cloneJsonSchema(
               unsuccessful_contact_attempts_kept_appointment_base
             )
+          });
+          break;
+        case 'moh731Report':
+          resolve({
+            main: this.cloneJsonSchema(moh_report)
+          });
+          break;
+        case '731ANCAggregate':
+          resolve({
+            main: this.cloneJsonSchema(anc_731_aggregate_aggregate),
+            anc731Base: this.cloneJsonSchema(anc_731_aggregate_base)
+          });
+          break;
+        case 'establishedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(established_aggregate),
+            establishedBase: this.cloneJsonSchema(established_base)
+          });
+          break;
+        case '731OnARTAggregate':
+          resolve({
+            main: this.cloneJsonSchema(on_art_731_aggregate),
+            onArt731Base: this.cloneJsonSchema(on_art_731_base)
+          });
+          break;
+        case '731PositivesAggregate':
+          resolve({
+            main: this.cloneJsonSchema(positives_731_aggregate),
+            positives731Base: this.cloneJsonSchema(positives_731_base)
+          });
+          break;
+        case '731PostExposureAggregate':
+          resolve({
+            main: this.cloneJsonSchema(post_exposure_731_aggregate),
+            postExposure731Base: this.cloneJsonSchema(post_exposure_731_base)
+          });
+          break;
+        case '731PrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(prep_731_aggregate),
+            prep731Base: this.cloneJsonSchema(prep_731_base)
+          });
+          break;
+        case '731StartARTAggregate':
+          resolve({
+            main: this.cloneJsonSchema(start_art_731_aggregate),
+            startART731Base: this.cloneJsonSchema(start_art_731_base)
+          });
+          break;
+        case '731TBScreenAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_731_aggregate),
+            tbScreen731Base: this.cloneJsonSchema(tb_731_base)
+          });
+          break;
+
+        case '731NutritionAggregate':
+          resolve({
+            main: this.cloneJsonSchema(nutrition_731_aggregate),
+            nutrition731Base: this.cloneJsonSchema(nutrition_731_base)
+          });
+          break;
+        case 'hivSetting731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(hiv_setting_731_aggregate),
+            hivSetting731Base: this.cloneJsonSchema(hiv_setting_731_base)
+          });
+          break;
+        case 'tptAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tpt_aggregate),
+            tptBase: this.cloneJsonSchema(tpt_base)
+          });
+          break;
+        case 'breastFeeding731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(breast_feeding_731_aggregate),
+            breastFeeding731Base: this.cloneJsonSchema(breast_feeding_731_base)
+          });
+          break;
+        case 'maternalHaart731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(maternal_haart_731_aggregate),
+            maternalHaart731Base: this.cloneJsonSchema(maternal_haart_731_base)
+          });
+          break;
+        case 'ayp731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(ayp_731_aggregate),
+            ayp731Base: this.cloneJsonSchema(ayp_731_base)
+          });
+          break;
+        case 'infantProphylaxis731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(infant_prophylaxis_731_aggregate),
+            infantProphylaxis731Base: this.cloneJsonSchema(
+              infant_prophylaxis_731_base
+            )
+          });
+          break;
+        case 'communityFaciltiyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(community_facility_aggregate),
+            communityFacilityBase: this.cloneJsonSchema(community_facility_base)
+          });
+          break;
+        case 'patient_list_731':
+          resolve({
+            main: this.cloneJsonSchema(patient_list_template_731)
+          });
+          break;
+        case 'hbvAnc731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(hbv_anc_731_aggregate),
+            hbvAnc731Base: this.cloneJsonSchema(hbv_anc_731_base)
+          });
+          break;
+        case 'tbAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_aggregate),
+            tbBase: this.cloneJsonSchema(tb_base)
+          });
+          break;
+        case 'tbScreenLess15Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_screen__less_15_aggregate),
+            tbScreenLess15Base: this.cloneJsonSchema(tb_screen__less_15_base)
+          });
+          break;
+        case 'nutritionMamAggregate':
+          resolve({
+            main: this.cloneJsonSchema(nutrition_mam_aggregate),
+            nutritionMamBase: this.cloneJsonSchema(nutrition_mam_base)
           });
           break;
         default:
