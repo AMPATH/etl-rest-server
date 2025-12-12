@@ -1,0 +1,14 @@
+{
+  "reports": [
+    "atRiskPbfwAggregate",
+    "eligibleforVlAggregate",
+    "hei6to8WeeksAggregate",
+    "hei24MonthsAggregate",
+    "heiWithoutFinalOutcomeAggregate",
+    "heiWithoutPcrAggregate",
+    "linkedCaseAggregate",
+    "newCaseAggregate",
+    "prepLinkedAggregate",
+    "eligibleForVlNoOrderAggregate"
+  ]
+}

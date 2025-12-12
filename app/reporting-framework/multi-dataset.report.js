@@ -1,5 +1,6 @@
-import { Promise } from 'bluebird';
+// import { Promise } from 'bluebird';
 import { BaseMysqlReport } from './base-mysql.report';
+import pLimit from 'p-limit';
 export class MultiDatasetReport extends BaseMysqlReport {
   constructor(reportName, params) {
     super(reportName, params);
@@ -12,7 +13,7 @@ export class MultiDatasetReport extends BaseMysqlReport {
         ._fetchAndInitReports()
         .then((handlers) => {
           that
-            .executeReportHandlers(that.reportHandlers, additionalParams)
+            .runMultipleReports(that.reportHandlers, additionalParams)
             .then((results) => {
               resolve(results);
             })
@@ -53,6 +54,27 @@ export class MultiDatasetReport extends BaseMysqlReport {
 
   runSingleReport(reportObject, additionalParams) {
     return reportObject.generateReport();
+  }
+
+  async runMultipleReports(reportHandlers, additionalParams) {
+    const limit = pLimit(5);
+    const that = this;
+    const tasks = reportHandlers.map((currentreport) =>
+      limit(() => that.runSingleReport(currentreport, additionalParams))
+    );
+
+    try {
+      const results = await Promise.allSettled(tasks);
+      const combined = results
+        .filter((res) => res.status === 'fulfilled')
+        .map((res, index) => ({
+          report: reportHandlers[index],
+          results: res.value
+        }));
+      return combined;
+    } catch (err) {
+      throw err;
+    }
   }
 
   executeReportHandlers(reportHandlers, additionalParams) {

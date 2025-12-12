@@ -1,0 +1,90 @@
+{
+  "name": "communityFacilityBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "ob"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ob.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.patient",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "ob.person_id = p.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "ob.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 11932 OR (ob.concept_id = 10988 and ob.value_coded = 11932) OR (ob.concept_id = 10988 and ob.value_coded = 10993) OR (ob.concept_id = 10988 and ob.value_coded = 11937) OR (ob.concept_id = 10988 and ob.value_coded = 11936), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(ob.concept_id = 11931 OR (ob.concept_id = 10988 and ob.value_coded = 11931) OR (ob.concept_id = 10988 and ob.value_coded = 10991) OR (ob.concept_id = 10988 and ob.value_coded = 10992) OR (ob.concept_id = 10988 and ob.value_coded = 11940) OR (ob.concept_id = 10988 and ob.value_coded = 11938), 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.concept_id in (11931, 11932, 10988)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "p.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ob.obs_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["ob.person_id"],
+    "excludeParam": "excludeParam"
+  }
+}

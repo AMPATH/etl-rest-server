@@ -37,6 +37,16 @@
         "field": "dsd_model"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -214,6 +224,16 @@
         "headerName": "DSD Model",
         "width": 150,
         "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -396,6 +416,16 @@
         "field": "dsd_model"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -573,6 +603,16 @@
         "headerName": "DSD Model",
         "width": 150,
         "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -754,6 +794,16 @@
         "field": "dsd_model"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -923,6 +973,16 @@
         "field": "dsd_model"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -1090,6 +1150,16 @@
         "headerName": "DSD Model",
         "width": 150,
         "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -1793,6 +1863,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -1967,6 +2047,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -2139,6 +2229,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -2350,6 +2450,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -2554,6 +2664,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -2753,6 +2873,16 @@
         "field": "phone_number"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -2920,6 +3050,16 @@
         "headerName": "Facility Patient is transferring in from",
         "width": 300,
         "field": "transferred_in_location"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -3096,6 +3236,16 @@
         "field": "transferred_in_location"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -3270,6 +3420,16 @@
         "field": "transferred_in_location"
       },
       {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -3437,6 +3597,16 @@
         "headerName": "DSD Model",
         "width": 150,
         "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",

@@ -1,0 +1,253 @@
+{
+  "name": "eligibleForVlBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "Case-base for clients eligible for viral load but without recent VL based on age, pregnancy, breastfeeding, and months on ART",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "t2"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = t2.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = t2.location_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pi.patient_id = t2.person_id AND pi.identifier_type = 28"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa2",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pa2.person_id = t2.person_id AND pa2.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "e.encounter_id = t2.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "ndwr.mfl_codes",
+      "alias": "mfl",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mfl.location_id = e.location_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.concept_id = 856 AND o.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o1",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o1.person_id = t2.person_id AND o1.concept_id = 8351 AND o1.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o2",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o2.person_id = t2.person_id AND o2.concept_id = 5632 AND o2.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "County",
+      "column": "pa2.address1"
+    },
+    {
+      "type": "simple_column",
+      "alias": "SubCounty",
+      "column": "pa2.address2"
+    },
+    {
+      "type": "simple_column",
+      "alias": "Ward",
+      "column": "pa2.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "PatientPk",
+      "column": "p.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "Sex",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN p.gender = 'M' THEN 'male' ELSE 'female' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "Dob",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "mfl.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "facility",
+      "column": "mfl.Facility"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mfl_code",
+      "column": "mfl.mfl_code"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "PregnancyStatus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o1.concept_id = 8351 AND o1.value_coded = 1065 THEN 'Pregnant' END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "BreastFeedingStatus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o2.concept_id = 5632 AND o2.value_coded = 1065 THEN 'Breastfeeding' END)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "LastVlResults",
+      "column": "t2.vl_1"
+    },
+    {
+      "type": "simple_column",
+      "alias": "PositiveHivTestDate",
+      "column": "t2.hiv_start_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "VisitDate",
+      "column": "t2.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ArtStartDate",
+      "column": "t2.arv_start_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "LastVlOrderDate",
+      "column": "t2.vl_1_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "LastVlResultsDate",
+      "column": "t2.vl_1_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "CreatedAt",
+      "column": "e.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "UpdatedAt",
+      "column": "e.date_changed"
+    },
+    {
+      "type": "derived_column",
+      "alias": "total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "t2.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "t2.encounter_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "t2.next_clinical_datetime_hiv IS NOT NULL"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "t2.is_clinical_encounter = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mfl.mfl_code <> 15999"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_id IS NULL"
+      },
+      {
+        "filterType": "custom",
+        "conditionExpression": "( (TIMESTAMPDIFF(MONTH, t2.arv_start_date, t2.encounter_datetime) >= 3 AND TIMESTAMPDIFF(YEAR, p.birthdate, t2.encounter_datetime) <= 24 AND TIMESTAMPDIFF(MONTH, t2.vl_1_date, t2.encounter_datetime) > 6) OR (TIMESTAMPDIFF(MONTH, t2.arv_start_date, t2.encounter_datetime) >= 3 AND TIMESTAMPDIFF(YEAR, p.birthdate, t2.encounter_datetime) > 24 AND TIMESTAMPDIFF(MONTH, t2.vl_1_date, t2.encounter_datetime) > 12) OR ((t2.is_mother_breastfeeding = 1 OR t2.is_pregnant = 1) AND TIMESTAMPDIFF(MONTH, t2.vl_1_date, t2.encounter_datetime) > 6) )"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["t2.person_id", "mfl.mfl_code"]
+  }
+}
