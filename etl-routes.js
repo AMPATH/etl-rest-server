@@ -85,6 +85,7 @@ const {
   default: MlWeeklyPredictionsService
 } = require('./service/ml-weekly-predictions.service');
 import { MlMonthlySummaryService } from './service/ml-monthly-summary.service.js';
+import { MOH731Service } from './service/moh-731.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6465,6 +6466,124 @@ module.exports = (function () {
         validate: {
           options: {
             allowUnknown: true
+          },
+          params: {}
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/moh-731',
+      config: {
+        auth: 'simple',
+        handler: function (request, reply) {
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'moh731Report',
+                ['endDate', 'startDate', 'locationUuids'],
+                requestParams
+              );
+
+              reportParams.requestParams.isAggregated = true;
+
+              let moh731Service = new MOH731Service(
+                'moh731Report',
+                reportParams.requestParams
+              );
+
+              moh731Service
+                .generateReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        },
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewClinicDashBoard
+          }
+        },
+        description: 'Get MOH 731 REPORT',
+        notes: 'Returns MOH 731 Report',
+        tags: ['api'],
+        validate: {
+          options: {
+            allowUnknown: true
+          },
+          params: {}
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/moh-731-patient-list',
+      config: {
+        auth: 'simple',
+        handler: function (request, reply) {
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+
+              let reportParams = etlHelpers.getReportParams(
+                'moh731Report',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
+
+              let requestCopy = _.cloneDeep(requestParams);
+
+              let moh731Service = new MOH731Service(
+                'moh731Report',
+                reportParams.requestParams
+              );
+
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+              delete reportParams.requestParams['gender'];
+              console.log('REQUEST: ' + JSON.stringify(requestCopy));
+
+              moh731Service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        },
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewClinicDashBoard
+          }
+        },
+        description: 'Get MOH 731 REPORT',
+        notes: 'Returns MOH 731 Report',
+        tags: ['api'],
+        validate: {
+          options: {
+            allowUnknown: true
+          },
+          query: {
+            limit: Joi.number()
+              .required()
+              .description('The offset to control pagination')
           },
           params: {}
         }

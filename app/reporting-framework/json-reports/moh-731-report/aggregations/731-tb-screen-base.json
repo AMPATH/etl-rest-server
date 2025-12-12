@@ -39,7 +39,7 @@
       "alias": "age_greater_15",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(hmrd.tb_screened_active_this_month = 1 AND hmrd.age >= 15, 1, NULL)"
+        "expression": "if(hmrd.tb_screened_this_visit_this_month = 1 AND hmrd.age >= 15, 1, NULL)"
       }
     }
   ],
