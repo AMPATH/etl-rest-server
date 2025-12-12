@@ -280,7 +280,7 @@
         ]
       }
     },
-    { 
+    {
       "type": "simple_column",
       "alias": "cd4_1",
       "column": "fhsvb.cd4_1"
