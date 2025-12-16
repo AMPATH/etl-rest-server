@@ -5737,17 +5737,17 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations && inPrediction",
+        "encounterTypes": [
           {
-            "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
-            "name": "Pre Appointment Follow Up Visit",
-            "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
-            "encounterTypes": [
-              {
-                "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
-                "display": "PRE APPOINTMENT FOLLOW UP"
-              }
-            ]
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       }
@@ -5853,17 +5853,17 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations && inPrediction",
+        "encounterTypes": [
           {
-            "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
-            "name": "Pre Appointment Follow Up Visit",
-            "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
-            "encounterTypes": [
-              {
-                "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
-                "display": "PRE APPOINTMENT FOLLOW UP"
-              }
-            ]
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       }
@@ -5919,17 +5919,17 @@
           {
             "uuid": "23cef3ca-6d78-4134-8030-6a0791754692",
             "display": "MATERNAL DEATH NOTIFICATION"
-          },
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations && inPrediction",
+        "encounterTypes": [
           {
-            "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
-            "name": "Pre Appointment Follow Up Visit",
-            "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
-            "encounterTypes": [
-              {
-                "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
-                "display": "PRE APPOINTMENT FOLLOW UP"
-              }
-            ]
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       }
