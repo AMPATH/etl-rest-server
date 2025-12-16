@@ -1024,7 +1024,7 @@ FROM (
   WHERE e.encounter_type IN (290,291, 295, 296, 290)
     AND e.voided = 0
     AND l.uuid IN (${params.locationUuids})
-    AND e.encounter_datetime BETWEEN ('${params.startDate}') AND ('${params.endDate}')
+    AND DATE(e.encounter_datetime) BETWEEN ('${params.startDate}') AND ('${params.endDate}')
 ) AS patient_data
 WHERE patient_data.rn = 1 
 ORDER BY patient_data.encounter_datetime;
