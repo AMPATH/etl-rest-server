@@ -113,7 +113,8 @@ module.exports = (function () {
 
       // format isAggregated
       queryParams.isAggregated =
-        queryParams.isAggregated === 'true' ? true : false;
+        queryParams.isAggregated === true ||
+        queryParams.isAggregated === 'true';
 
       var reportParams = {
         reportName: reportName,
