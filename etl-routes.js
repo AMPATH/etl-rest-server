@@ -4380,6 +4380,9 @@ module.exports = (function () {
             endDate: Joi.string()
               .optional()
               .description('The end date to filter by'),
+            reportMonth: Joi.string()
+              .required()
+              .description('The report month in the format "YYYY-MM-DD"'),
             startIndex: Joi.number()
               .required()
               .description('The startIndex to control pagination'),
