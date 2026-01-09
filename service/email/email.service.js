@@ -28,14 +28,10 @@ class EmailService {
       if (error) {
         throw new Error('EMAIL SERVER NOT READY');
       }
-
-      console.log('EMAIL SERVER READY');
     });
   }
 
   async sendOtp(username, email, otp, otpExpiry) {
-    const saltRounds = 10;
-    const hashedOtp = await bcrypt.hash(otp, saltRounds);
     try {
       this.otpStore.storeOtp(username, otp, otpExpiry);
       this.transporter.sendMail({
@@ -46,7 +42,7 @@ class EmailService {
       });
       return { message: 'OTP sent to your email', user: username };
     } catch (err) {
-      console.log('ERROR OCCURED WHEN SAVING AND SENDING OTP');
+      throw new Error('ERROR OCCURED WHEN SAVING AND SENDING OTP');
     }
   }
 }

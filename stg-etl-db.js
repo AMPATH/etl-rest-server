@@ -1,4 +1,3 @@
-/*jshint -W003, -W097, -W117, -W026 */
 'use strict';
 
 var Promise = require('bluebird');
@@ -189,8 +188,6 @@ module.exports = (function () {
 
     if (queryParts.columns && queryParts.columns !== '*') {
       if (typeof queryParts.columns === 'string') {
-        // if (queryParts.columns.substring(0, 1) === "(")
-        //     queryParts.columns = queryParts.columns.substring(1, -1);
         queryParts.columns = queryParts.columns.split(',');
       }
       var i = 0;
@@ -209,8 +206,6 @@ module.exports = (function () {
     }
     if (queryParts.concatColumns && queryParts.concatColumns !== '*') {
       if (typeof queryParts.concatColumns === 'string') {
-        // if (queryParts.columns.substring(0, 1) === "(")
-        //     queryParts.columns = queryParts.columns.substring(1, -1);
         queryParts.concatColumns = queryParts.concatColumns.split(';');
       }
       var i = 0;
@@ -262,8 +257,6 @@ module.exports = (function () {
 
     if (queryParts.columns && queryParts.columns !== '*') {
       if (typeof queryParts.columns === 'string') {
-        // if (queryParts.columns.substring(0, 1) === "(")
-        //     queryParts.columns = queryParts.columns.substring(1, -1);
         queryParts.columns = queryParts.columns.split(',');
       }
       var i = 0;
@@ -282,8 +275,6 @@ module.exports = (function () {
     }
     if (queryParts.concatColumns && queryParts.concatColumns !== '*') {
       if (typeof queryParts.concatColumns === 'string') {
-        // if (queryParts.columns.substring(0, 1) === "(")
-        //     queryParts.columns = queryParts.columns.substring(1, -1);
         queryParts.concatColumns = queryParts.concatColumns.split(';');
       }
       var i = 0;
@@ -329,8 +320,6 @@ module.exports = (function () {
     var query = '';
     var sqlParams = [];
     var s;
-    //The queryPartsArray may never have more than one element and
-    // that is why we just need to get the sql
     _.each(queryPartsArray, function (queryParts) {
       if (queryParts !== undefined) {
         if (
