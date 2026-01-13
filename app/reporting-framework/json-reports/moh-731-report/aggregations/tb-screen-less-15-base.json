@@ -1,0 +1,73 @@
+{
+  "name": "tbScreenLess15Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "hmrd"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmrd.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "hmrd.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_less_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.tb_screened_this_visit_this_month = 1 AND hmrd.age < 15, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.tb_screened_this_visit_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.started_ipt_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["hmrd.person_id"]
+  }
+}

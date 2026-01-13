@@ -384,6 +384,50 @@ import * as txrtt_aggregate_report from './json-reports/tx-reports/tx-rtt/tx-rtt
 import * as txrtt_base_report from './json-reports/tx-reports/tx-rtt/tx-rtt-report-base.json';
 import * as txrtt_summary from './json-reports/txrtt-summary.json';
 
+//case surveillance - new case
+import * as newcase_aggregate_report from './json-reports/case-surveillance/new-case/new-case-aggregate.json';
+import * as newcase_base_report from './json-reports/case-surveillance/new-case/new-case-base.json';
+
+//case surveillance - linked case
+import * as linkedCase_aggregate_report from './json-reports/case-surveillance/linked-case/linked-case-aggregate.json';
+import * as linkedCase_base_report from './json-reports/case-surveillance/linked-case/linked-case-base.json';
+
+//case surveillance - at-risk-pbfw case
+import * as atRiskPbfw_aggregate_report from './json-reports/case-surveillance/at-risk-pbfw/at-risk-pbfw-aggregate.json';
+import * as atRiskPbfw_base_report from './json-reports/case-surveillance/at-risk-pbfw/at-risk-pbfw-base.json';
+
+//case surveillance - prep linked
+import * as prepLinked_aggregate_report from './json-reports/case-surveillance/prep-linked/prep-linked-aggregate.json';
+import * as prepLinked_base_report from './json-reports/case-surveillance/prep-linked/prep-linked-base.json';
+
+//case surveillance - eligible for vl
+import * as eligibleForVl_aggregate_report from './json-reports/case-surveillance/eligible-for-vl/eligible-for-vl-aggregate.json';
+import * as eligibleForVl_base_report from './json-reports/case-surveillance/eligible-for-vl/eligible-for-vl-base.json';
+
+//case surveillance - eligible for vl no order
+import * as eligibleForVlNoOrder_aggregate_report from './json-reports/case-surveillance/eligible-for-vl-no-order/eligible-for-vl-no-order-aggregate.json';
+import * as eligibleForVlNoOrder_base_report from './json-reports/case-surveillance/eligible-for-vl-no-order/eligible-for-vl-no-order-base.json';
+
+//case surveillance - hei without pcr
+import * as heiWithoutPcr_aggregate_report from './json-reports/case-surveillance/hei-without-pcr/hei-without-pcr-aggregate.json';
+import * as heiWithoutPcr_base_report from './json-reports/case-surveillance/hei-without-pcr/hei-without-pcr-base.json';
+
+//case surveillance - hei without final outcome
+import * as heiWithoutFinalOutcome_aggregate_report from './json-reports/case-surveillance/hei-without-final-outcome/hei-without-final-outcome-aggregate.json';
+import * as heiWithoutFinalOutcome_base_report from './json-reports/case-surveillance/hei-without-final-outcome/hei-without-final-outcome-base.json';
+
+// case surveillance - hei 24 months
+import * as hei24months_aggregate_report from './json-reports/case-surveillance/hei-24-months/hei-24-months-aggregate.json';
+import * as hei24months_base_report from './json-reports/case-surveillance/hei-24-months/hei-24-months-base.json';
+
+//case surveillance - hei 6 to 8 weeks
+import * as hei6to8weeks_aggregate_report from './json-reports/case-surveillance/hei-6-8-weeks/hei-6-8-weeks-aggregate.json';
+import * as hei6to8weeks_base_report from './json-reports/case-surveillance/hei-6-8-weeks/hei-6-8-weeks-base.json';
+
+//case surveillance - summary
+import * as caseSuveillance_summary from './json-reports/case-surveillance/summaries/case-surveillance.json';
+import * as cs_patient_list_template from './json-reports/case-surveillance/summaries/case-surveillance-patient-list.json';
+
 //plhiv-ncd report
 import * as plhiv_ncd_v2_monthly_report from './json-reports/plhiv-ncd-v2-reports/plhiv-ncd-v2-report.json';
 
@@ -466,6 +510,48 @@ import * as rescheduled_aggregate from './json-reports/ml-predictions/aggregatio
 import * as rescheduled_base from './json-reports/ml-predictions/aggregations/rescheduled_appointment/rescheduled_appointment_base.json';
 import * as unsuccessful_contact_attempts_kept_appointment_aggregate from './json-reports/ml-predictions/aggregations/unsuccessful_kept_appointment/unsuccessful_kept_appointment_aggregate.json';
 import * as unsuccessful_contact_attempts_kept_appointment_base from './json-reports/ml-predictions/aggregations/unsuccessful_kept_appointment/unsuccessful_kept_appointment_base.json';
+import * as moh_report from './json-reports/moh-731-report/731-summary.json';
+import * as anc_731_aggregate_aggregate from './json-reports/moh-731-report/aggregations/731-anc-aggregate.json';
+import * as anc_731_aggregate_base from './json-reports/moh-731-report/aggregations/731-anc-base.json';
+import * as established_aggregate from './json-reports/moh-731-report/aggregations/established-aggregate.json';
+import * as established_base from './json-reports/moh-731-report/aggregations/established-base.json';
+import * as nutrition_731_aggregate from './json-reports/moh-731-report/aggregations/731-nutrition-aggregate.json';
+import * as nutrition_731_base from './json-reports/moh-731-report/aggregations/731-nutrition-base.json';
+import * as on_art_731_aggregate from './json-reports/moh-731-report/aggregations/731-on-art-aggregate.json';
+import * as on_art_731_base from './json-reports/moh-731-report/aggregations/731-on-art-base.json';
+import * as positives_731_aggregate from './json-reports/moh-731-report/aggregations/731-positives-aggregate.json';
+import * as positives_731_base from './json-reports/moh-731-report/aggregations/731-positives-base.json';
+import * as post_exposure_731_aggregate from './json-reports/moh-731-report/aggregations/731-post-exposure-aggregate.json';
+import * as post_exposure_731_base from './json-reports/moh-731-report/aggregations/731-post-exposure-base.json';
+import * as prep_731_aggregate from './json-reports/moh-731-report/aggregations/731-prep-aggregate.json';
+import * as prep_731_base from './json-reports/moh-731-report/aggregations/731-prep-base.json';
+import * as start_art_731_aggregate from './json-reports/moh-731-report/aggregations/731-start-art-aggregate.json';
+import * as start_art_731_base from './json-reports/moh-731-report/aggregations/731-start-art-base.json';
+import * as tb_731_aggregate from './json-reports/moh-731-report/aggregations/731-tb-screen-aggregate.json';
+import * as tb_731_base from './json-reports/moh-731-report/aggregations/731-tb-screen-base.json';
+import * as hiv_setting_731_aggregate from './json-reports/moh-731-report/aggregations/731-hiv-test-setting-aggregate.json';
+import * as hiv_setting_731_base from './json-reports/moh-731-report/aggregations/731-hiv-test-setting-base.json';
+import * as tpt_aggregate from './json-reports/moh-731-report/aggregations/731-tpt-aggregate.json';
+import * as tpt_base from './json-reports/moh-731-report/aggregations/731-tpt-base.json';
+import * as breast_feeding_731_aggregate from './json-reports/moh-731-report/aggregations/731-breast-feeding-aggregate.json';
+import * as breast_feeding_731_base from './json-reports/moh-731-report/aggregations/731-breast-feeding-base.json';
+import * as maternal_haart_731_aggregate from './json-reports/moh-731-report/aggregations/731-maternal-haart-aggregate.json';
+import * as maternal_haart_731_base from './json-reports/moh-731-report/aggregations/731-maternal-haart-base.json';
+import * as ayp_731_aggregate from './json-reports/moh-731-report/aggregations/731-ayp-aggregate.json';
+import * as ayp_731_base from './json-reports/moh-731-report/aggregations/731-ayp-base.json';
+import * as infant_prophylaxis_731_aggregate from './json-reports/moh-731-report/aggregations/731-infant-arv-aggregate.json';
+import * as infant_prophylaxis_731_base from './json-reports/moh-731-report/aggregations/731-infant-arv-base.json';
+import * as hbv_anc_731_aggregate from './json-reports/moh-731-report/aggregations/731-hbv-anc-aggregate.json';
+import * as hbv_anc_731_base from './json-reports/moh-731-report/aggregations/731-hbv-anc-base.json';
+import * as community_facility_aggregate from './json-reports/moh-731-report/aggregations/community-facility-aggregate.json';
+import * as community_facility_base from './json-reports/moh-731-report/aggregations/community-facility-base.json';
+import * as tb_aggregate from './json-reports/moh-731-report/aggregations/731-tb-aggregate.json';
+import * as tb_base from './json-reports/moh-731-report/aggregations/731-tb-base.json';
+import * as tb_screen__less_15_aggregate from './json-reports/moh-731-report/aggregations/tb-screen-less-15-aggregate.json';
+import * as tb_screen__less_15_base from './json-reports/moh-731-report/aggregations/tb-screen-less-15-base.json';
+import * as nutrition_mam_aggregate from './json-reports/moh-731-report/aggregations/nutrition-mam-aggregate.json';
+import * as nutrition_mam_base from './json-reports/moh-731-report/aggregations/nutrition-mam-base.json';
+import * as patient_list_template_731 from './json-reports/731-patient-list-template.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -1911,6 +1997,136 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(txrtt_summary)
           });
           break;
+        case 'newCaseAggregate':
+          resolve({
+            main: this.cloneJsonSchema(newcase_aggregate_report),
+            newCaseBase: this.cloneJsonSchema(newcase_base_report)
+          });
+          break;
+        case 'newCase-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(newcase_summary)
+          });
+          break;
+        case 'linkedCaseAggregate':
+          resolve({
+            main: this.cloneJsonSchema(linkedCase_aggregate_report),
+            linkedCaseBase: this.cloneJsonSchema(linkedCase_base_report)
+          });
+          break;
+        case 'linkedCase-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(linkedCase_summary)
+          });
+          break;
+        case 'atRiskPbfwAggregate':
+          resolve({
+            main: this.cloneJsonSchema(atRiskPbfw_aggregate_report),
+            atRiskPbfwBase: this.cloneJsonSchema(atRiskPbfw_base_report)
+          });
+          break;
+        case 'atRiskPbfw-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(atRiskPbfw_summary)
+          });
+          break;
+        case 'prepLinkedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(prepLinked_aggregate_report),
+            prepLinkedBase: this.cloneJsonSchema(prepLinked_base_report)
+          });
+          break;
+        case 'prepLinked-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(prepLinked_summary)
+          });
+          break;
+        case 'eligibleforVlAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVl_aggregate_report),
+            eligibleForVlBase: this.cloneJsonSchema(eligibleForVl_base_report)
+          });
+          break;
+        case 'eligibleforVl-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVl_summary)
+          });
+          break;
+        case 'eligibleforVlAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVl_aggregate_report),
+            eligibleForVlBase: this.cloneJsonSchema(eligibleForVl_base_report)
+          });
+          break;
+        case 'eligibleforVlNoOrder-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVlNoOrder_summary)
+          });
+          break;
+        case 'eligibleForVlNoOrderAggregate':
+          resolve({
+            main: this.cloneJsonSchema(eligibleForVlNoOrder_aggregate_report),
+            eligibleForVlNoOrderBase: this.cloneJsonSchema(
+              eligibleForVlNoOrder_base_report
+            )
+          });
+          break;
+        case 'heiWithoutPcrAggregate':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutPcr_aggregate_report),
+            heiWithoutPcrBase: this.cloneJsonSchema(heiWithoutPcr_base_report)
+          });
+          break;
+        case 'heiWithoutPcr-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutPcr_summary)
+          });
+          break;
+        case 'hei24MonthsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(hei24months_aggregate_report),
+            hei24MonthsBase: this.cloneJsonSchema(hei24months_base_report)
+          });
+          break;
+        case 'hei24Months-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(hei24months_summary)
+          });
+          break;
+        case 'heiWithoutFinalOutcomeAggregate':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutFinalOutcome_aggregate_report),
+            heiWithoutFinalOutcomeBase: this.cloneJsonSchema(
+              heiWithoutFinalOutcome_base_report
+            )
+          });
+          break;
+        case 'heiWithoutFinalOutcome-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(heiWithoutFinalOutcome_summary)
+          });
+          break;
+        case 'hei6to8WeeksAggregate':
+          resolve({
+            main: this.cloneJsonSchema(hei6to8weeks_aggregate_report),
+            hei6to8WeeksBase: this.cloneJsonSchema(hei6to8weeks_base_report)
+          });
+          break;
+        case 'hei6to8Weeks-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(hei6to8weeks_summary)
+          });
+          break;
+        case 'patient_list_cs_template':
+          resolve({
+            main: this.cloneJsonSchema(cs_patient_list_template)
+          });
+          break;
+        case 'case-surveillance-summary-report':
+          resolve({
+            main: this.cloneJsonSchema(caseSuveillance_summary)
+          });
+          break;
         case 'plhiv-ncd-v2-monthly-report':
           resolve({
             main: this.cloneJsonSchema(plhiv_ncd_v2_monthly_report)
@@ -2109,6 +2325,139 @@ export class BaseMysqlReport {
             unsuccessfulKeptAppointmentBase: this.cloneJsonSchema(
               unsuccessful_contact_attempts_kept_appointment_base
             )
+          });
+          break;
+        case 'moh731Report':
+          resolve({
+            main: this.cloneJsonSchema(moh_report)
+          });
+          break;
+        case '731ANCAggregate':
+          resolve({
+            main: this.cloneJsonSchema(anc_731_aggregate_aggregate),
+            anc731Base: this.cloneJsonSchema(anc_731_aggregate_base)
+          });
+          break;
+        case 'establishedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(established_aggregate),
+            establishedBase: this.cloneJsonSchema(established_base)
+          });
+          break;
+        case '731OnARTAggregate':
+          resolve({
+            main: this.cloneJsonSchema(on_art_731_aggregate),
+            onArt731Base: this.cloneJsonSchema(on_art_731_base)
+          });
+          break;
+        case '731PositivesAggregate':
+          resolve({
+            main: this.cloneJsonSchema(positives_731_aggregate),
+            positives731Base: this.cloneJsonSchema(positives_731_base)
+          });
+          break;
+        case '731PostExposureAggregate':
+          resolve({
+            main: this.cloneJsonSchema(post_exposure_731_aggregate),
+            postExposure731Base: this.cloneJsonSchema(post_exposure_731_base)
+          });
+          break;
+        case '731PrepAggregate':
+          resolve({
+            main: this.cloneJsonSchema(prep_731_aggregate),
+            prep731Base: this.cloneJsonSchema(prep_731_base)
+          });
+          break;
+        case '731StartARTAggregate':
+          resolve({
+            main: this.cloneJsonSchema(start_art_731_aggregate),
+            startART731Base: this.cloneJsonSchema(start_art_731_base)
+          });
+          break;
+        case '731TBScreenAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_731_aggregate),
+            tbScreen731Base: this.cloneJsonSchema(tb_731_base)
+          });
+          break;
+
+        case '731NutritionAggregate':
+          resolve({
+            main: this.cloneJsonSchema(nutrition_731_aggregate),
+            nutrition731Base: this.cloneJsonSchema(nutrition_731_base)
+          });
+          break;
+        case 'hivSetting731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(hiv_setting_731_aggregate),
+            hivSetting731Base: this.cloneJsonSchema(hiv_setting_731_base)
+          });
+          break;
+        case 'tptAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tpt_aggregate),
+            tptBase: this.cloneJsonSchema(tpt_base)
+          });
+          break;
+        case 'breastFeeding731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(breast_feeding_731_aggregate),
+            breastFeeding731Base: this.cloneJsonSchema(breast_feeding_731_base)
+          });
+          break;
+        case 'maternalHaart731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(maternal_haart_731_aggregate),
+            maternalHaart731Base: this.cloneJsonSchema(maternal_haart_731_base)
+          });
+          break;
+        case 'ayp731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(ayp_731_aggregate),
+            ayp731Base: this.cloneJsonSchema(ayp_731_base)
+          });
+          break;
+        case 'infantProphylaxis731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(infant_prophylaxis_731_aggregate),
+            infantProphylaxis731Base: this.cloneJsonSchema(
+              infant_prophylaxis_731_base
+            )
+          });
+          break;
+        case 'communityFaciltiyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(community_facility_aggregate),
+            communityFacilityBase: this.cloneJsonSchema(community_facility_base)
+          });
+          break;
+        case 'patient_list_731':
+          resolve({
+            main: this.cloneJsonSchema(patient_list_template_731)
+          });
+          break;
+        case 'hbvAnc731Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(hbv_anc_731_aggregate),
+            hbvAnc731Base: this.cloneJsonSchema(hbv_anc_731_base)
+          });
+          break;
+        case 'tbAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_aggregate),
+            tbBase: this.cloneJsonSchema(tb_base)
+          });
+          break;
+        case 'tbScreenLess15Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_screen__less_15_aggregate),
+            tbScreenLess15Base: this.cloneJsonSchema(tb_screen__less_15_base)
+          });
+          break;
+        case 'nutritionMamAggregate':
+          resolve({
+            main: this.cloneJsonSchema(nutrition_mam_aggregate),
+            nutritionMamBase: this.cloneJsonSchema(nutrition_mam_base)
           });
           break;
         default:

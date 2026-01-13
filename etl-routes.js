@@ -85,6 +85,11 @@ const {
   default: MlWeeklyPredictionsService
 } = require('./service/ml-weekly-predictions.service');
 import { MlMonthlySummaryService } from './service/ml-monthly-summary.service.js';
+import { MOH731Service } from './service/moh-731.service.js';
+import { ServiceEntry } from './service/queues/queue-entry/queue-entry.service.js';
+import EmailService from './service/email/email.service.js';
+import OtpService from './service/otp/otp.service.js';
+import OtpStore from './service/otp-store/otp-store.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6468,6 +6473,216 @@ module.exports = (function () {
           },
           params: {}
         }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/moh-731',
+      config: {
+        auth: 'simple',
+        handler: function (request, reply) {
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'moh731Report',
+                ['endDate', 'startDate', 'locationUuids'],
+                requestParams
+              );
+
+              reportParams.requestParams.isAggregated = true;
+
+              let moh731Service = new MOH731Service(
+                'moh731Report',
+                reportParams.requestParams
+              );
+
+              moh731Service
+                .generateReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        },
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewClinicDashBoard
+          }
+        },
+        description: 'Get MOH 731 REPORT',
+        notes: 'Returns MOH 731 Report',
+        tags: ['api'],
+        validate: {
+          options: {
+            allowUnknown: true
+          },
+          params: {}
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/moh-731-patient-list',
+      config: {
+        auth: 'simple',
+        handler: function (request, reply) {
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+
+              let reportParams = etlHelpers.getReportParams(
+                'moh731Report',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
+
+              let requestCopy = _.cloneDeep(requestParams);
+
+              let moh731Service = new MOH731Service(
+                'moh731Report',
+                reportParams.requestParams
+              );
+
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+              delete reportParams.requestParams['gender'];
+              console.log('REQUEST: ' + JSON.stringify(requestCopy));
+
+              moh731Service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        },
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewClinicDashBoard
+          }
+        },
+        description: 'Get MOH 731 REPORT',
+        notes: 'Returns MOH 731 Report',
+        tags: ['api'],
+        validate: {
+          options: {
+            allowUnknown: true
+          },
+          query: {
+            limit: Joi.number()
+              .required()
+              .description('The offset to control pagination')
+          },
+          params: {}
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/queue-entry',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const queueService = new ServiceEntry();
+          if (request.query.locationUuid && request.query.serviceUuid) {
+            const locationUuid = request.query.locationUuid;
+            const serviceUuid = request.query.serviceUuid;
+            const res = await queueService.getQueueEntriesByLocationAndService(
+              locationUuid,
+              serviceUuid
+            );
+            reply({
+              data: res
+            });
+          } else {
+            reply(Boom.badData());
+          }
+        },
+        plugins: {},
+        description: "Get a location's service queue",
+        notes: "Returns a location's service queue",
+        tags: ['api']
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/etl/otp',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const otpService = new OtpService();
+          const emailService = new EmailService();
+          if (request.query.username) {
+            const username = request.query.username;
+            const res1 = await otpService.getUserEmail(username);
+            const email = res1[0].email;
+            const otp = otpService.generateOtp(5);
+            const otpExpiry = otpService.getOtpExpiry(60);
+            const res = await emailService.sendOtp(
+              username,
+              email,
+              otp,
+              otpExpiry
+            );
+            reply({
+              data: res
+            });
+          } else {
+            reply(Boom.badData());
+          }
+        },
+        plugins: {},
+        description: "Get a user's email",
+        notes: "Returns a user's email"
+      }
+    },
+
+    {
+      method: 'POST',
+      path: '/etl/verify-otp',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const otpStore = new OtpStore();
+          const username = request.payload.username;
+          if (!username) {
+            return reply('Username is required!');
+          }
+          try {
+            const { username, otp } = request.payload;
+            const res = otpStore.verify(username, otp);
+            reply({
+              data: res
+            });
+          } catch (err) {
+            return reply
+              .response({
+                success: false,
+                message: err.message
+              })
+              .code(400);
+          }
+        },
+        plugins: {},
+        description: "Get a user's email",
+        notes: "Returns a user's email"
       }
     }
   ];

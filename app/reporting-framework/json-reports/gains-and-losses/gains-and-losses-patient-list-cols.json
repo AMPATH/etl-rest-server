@@ -22,6 +22,31 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -184,6 +209,31 @@
         "headerName": "WHO Stage",
         "width": 200,
         "field": "stage"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -351,6 +401,31 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -513,6 +588,31 @@
         "headerName": "WHO Stage",
         "width": 200,
         "field": "stage"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -679,6 +779,31 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -831,6 +956,31 @@
         "headerName": "WHO Stage",
         "width": 200,
         "field": "stage"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -987,6 +1137,31 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
+      },
+      {
         "headerName": "Latest Appointment",
         "width": 200,
         "field": "last_appointment"
@@ -1134,6 +1309,21 @@
         "headerName": "WHO Stage",
         "width": 200,
         "field": "stage"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       },
       {
         "headerName": "Death Date",
@@ -1295,6 +1485,21 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Death Date",
         "width": 150,
         "field": "death_date"
@@ -1452,6 +1657,21 @@
         "headerName": "WHO Stage",
         "width": 200,
         "field": "stage"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
       },
       {
         "headerName": "Death Date",
@@ -1618,6 +1838,21 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Gain Type",
         "width": 150,
         "field": "gain_status"
@@ -1626,6 +1861,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -1777,6 +2022,21 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Gain Type",
         "width": 150,
         "field": "gain_status"
@@ -1785,6 +2045,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -1936,6 +2206,21 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Gain Type",
         "width": 150,
         "field": "gain_status"
@@ -1944,6 +2229,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -2095,6 +2390,21 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Loss Type",
         "width": 150,
         "field": "loss_status"
@@ -2138,6 +2448,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -2284,6 +2604,21 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Loss Type",
         "width": 150,
         "field": "loss_status"
@@ -2327,6 +2662,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -2468,6 +2813,21 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Loss Type",
         "width": 150,
         "field": "loss_status"
@@ -2511,6 +2871,16 @@
         "headerName": "Phone Number",
         "width": 150,
         "field": "phone_number"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -2662,9 +3032,34 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Facility Patient is transferring in from",
         "width": 300,
         "field": "transferred_in_location"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -2821,9 +3216,34 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Facility Patient is transferring in from",
         "width": 300,
         "field": "transferred_in_location"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -2980,9 +3400,34 @@
         "field": "stage"
       },
       {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
         "headerName": "Facility Patient is transferring in from",
         "width": 300,
         "field": "transferred_in_location"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",
@@ -3137,6 +3582,31 @@
         "headerName": "WHO Stage",
         "width": 200,
         "field": "stage"
+      },
+      {
+        "headerName": "Patient Categorization",
+        "width": 200,
+        "field": "patient_categorization"
+      },
+      {
+        "headerName": "Service Model",
+        "width": 200,
+        "field": "service_delivery_model"
+      },
+      {
+        "headerName": "DSD Model",
+        "width": 150,
+        "field": "dsd_model"
+      },
+      {
+        "headerName": "CD4",
+        "width": 150,
+        "field": "cd4_results"
+      },
+      {
+        "headerName": "CD4 Date",
+        "width": 150,
+        "field": "cd4_date"
       },
       {
         "headerName": "Latest Appointment",

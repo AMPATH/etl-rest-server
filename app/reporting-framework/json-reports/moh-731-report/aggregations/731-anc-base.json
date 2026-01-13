@@ -1,0 +1,187 @@
+{
+  "name": "anc731Base",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "e.encounter_id = o.encounter_id"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "known_positive_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12019 AND o.value_coded = 10407, 1, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12019 AND o.value_coded = 10434, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12019 AND o.value_coded = 10200, 1, NULL)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "initial_test_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10868 AND value_coded = 1040, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10868 , 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1255 AND o.value_coded = 1256, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1255 AND o.value_coded = 1257, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10439, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "more_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10437, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.value_coded = 10434, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.value_coded = 10200, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703 , 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id in (12019, 1040, 10868, 1357, 10449, 10450, 1255, 10448)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

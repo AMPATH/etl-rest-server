@@ -259,6 +259,22 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
           }
         ]
       },
@@ -430,6 +446,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -610,6 +630,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -663,6 +687,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -800,6 +828,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -1396,6 +1428,10 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ENHANCEDADHERENCE"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -1469,6 +1505,10 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ENHANCEDADHERENCE"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -1854,6 +1894,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -1951,6 +1995,20 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
+          }
+        ]
+      },
+      {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW-Peer Delivery Visit",
+        "encounterTypes": [
+          {
+            "uuid": "5ef97eed-18f5-40f6-9fbf-a11b1f06484a",
+            "display": "DRUGPICKUP"
           }
         ]
       }
@@ -2369,6 +2427,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -2768,6 +2830,22 @@
           {
             "uuid": "2226e81f-38fc-4672-a615-1d37e1c8e637",
             "display": "ADHERENCE"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
           }
         ]
       },
@@ -2843,6 +2921,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -2991,6 +3073,10 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -3056,6 +3142,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -3195,6 +3285,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -3334,6 +3428,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -4643,6 +4741,22 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
           }
         ]
       },
@@ -4696,6 +4810,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       },
@@ -4778,6 +4896,10 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "HIVMENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
+            "display": "MENTALHEALTHREVIEW"
           }
         ]
       }
@@ -5615,17 +5737,17 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations && inPrediction",
+        "encounterTypes": [
           {
-            "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
-            "name": "Pre Appointment Follow Up Visit",
-            "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
-            "encounterTypes": [
-              {
-                "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
-                "display": "PRE APPOINTMENT FOLLOW UP"
-              }
-            ]
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       }
@@ -5731,17 +5853,17 @@
           {
             "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
             "display": "MENTALHEALTHSCREENING"
-          },
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations && inPrediction",
+        "encounterTypes": [
           {
-            "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
-            "name": "Pre Appointment Follow Up Visit",
-            "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
-            "encounterTypes": [
-              {
-                "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
-                "display": "PRE APPOINTMENT FOLLOW UP"
-              }
-            ]
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
           }
         ]
       }
@@ -5797,17 +5919,192 @@
           {
             "uuid": "23cef3ca-6d78-4134-8030-6a0791754692",
             "display": "MATERNAL DEATH NOTIFICATION"
+          }
+        ]
+      },
+      {
+        "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
+        "name": "Pre Appointment Follow Up Visit",
+        "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations && inPrediction",
+        "encounterTypes": [
+          {
+            "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
+            "display": "PRE APPOINTMENT FOLLOW UP"
+          }
+        ]
+      }
+    ]
+  },
+
+  "317f07b1-23f5-43f2-82bc-57a3c3790698": {
+    "name": "KP PROGRAM",
+    "dataDependencies": [
+      "patient",
+      "enrollment",
+      "hivLastTenClinicalEncounters",
+      "patientEnrollment",
+      "patientEncounters",
+      "isPatientTransferredOut",
+      "latestCovidAssessment",
+      "weeklyPredictedPatients"
+    ],
+    "visitTypes": [
+      {
+        "uuid": "67f0683b-be07-4845-acbd-05c38d22e9f6",
+        "name": "High Risk Population Initial Visit",
+        "allowedIf": "isFirstKVPVisit",
+        "encounterTypes": [
+          {
+            "uuid": "9d6c3d51-843e-4a42-a0f2-a8e9ab554331",
+            "display": "KVPCONTACT"
           },
           {
-            "uuid": "6bdec0cd-d3fb-41da-9ef3-20076f349dc1",
-            "name": "Pre Appointment Follow Up Visit",
-            "allowedIf": "programLocation === intendedVisitLocationUuid && MlLocations",
-            "encounterTypes": [
-              {
-                "uuid": "d5e2d3b3-2061-4721-86f1-5852cde6475a",
-                "display": "PRE APPOINTMENT FOLLOW UP"
-              }
-            ]
+            "uuid": "73715d49-533f-4f41-8ac0-8965d4acc9fc",
+            "display": "KVPCLINICENROLMENT"
+          },
+          {
+            "uuid": "82749926-63b1-467b-9d41-453c7542678a",
+            "display": "HTSSCREENING"
+          },
+          {
+            "uuid": "eeae42af-51e3-465c-97b6-d893125a1751",
+            "display": "KVPCLINICALENCOUNTER"
+          },
+          {
+            "uuid": "cadf45ba-6326-4b52-b960-1a0cc5bbf782",
+            "display": "KVPPHQ9SCREENING"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "1da81e49-4ccb-4319-b423-3beb326bba4d",
+            "display": "KVPALCOHOLABUSE"
+          },
+          {
+            "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
+            "display": "PREPRETURN"
+          }
+        ]
+      },
+      {
+        "uuid": "b27bb94b-2006-473d-aa6c-6d94eda9b12a",
+        "name": "High Risk Population Return Visit",
+        "allowedIf": "!isFirstKVPVisit",
+        "encounterTypes": [
+          {
+            "uuid": "82749926-63b1-467b-9d41-453c7542678a",
+            "display": "HTSSCREENING"
+          },
+          {
+            "uuid": "eeae42af-51e3-465c-97b6-d893125a1751",
+            "display": "KVPCLINICALENCOUNTER"
+          },
+          {
+            "uuid": "cadf45ba-6326-4b52-b960-1a0cc5bbf782",
+            "display": "KVPPHQ9SCREENING"
+          },
+          {
+            "uuid": "37770eca-8a2f-48d6-b3c8-54af0fa989c2",
+            "display": "MENTALHEALTHSCREENING"
+          },
+          {
+            "uuid": "1da81e49-4ccb-4319-b423-3beb326bba4d",
+            "display": "KVPALCOHOLABUSE"
+          },
+          {
+            "uuid": "ddd96f1c-524f-4caa-81a6-1a6f9789a4bc",
+            "display": "PREPRETURN"
+          }
+        ]
+      }
+    ]
+  },
+  "a0f8382f-df8a-4f1d-8959-9fb6eef90353": {
+    "name": "HTS PROGRAM",
+    "dataDependencies": [
+      "patient",
+      "enrollment",
+      "patientEncounters",
+      "isHtsPatientNegative"
+    ],
+    "incompatibleWith": [
+      "781d85b0-1359-11df-a1f1-0026b9348838",
+      "781d897a-1359-11df-a1f1-0026b9348838",
+      "334c9e98-173f-4454-a8ce-f80b20b7fdf0",
+      "c4246ff0-b081-460c-bcc5-b0678012659e",
+      "c6bf3625-de80-4a88-a913-38273e300a55",
+      "8c1a3a68-d91d-488d-8663-ad572673232b",
+      "f7793d42-11ac-4cfd-9b35-e0a21a7a7c31",
+      "203571d6-a4f2-4953-9e8b-e1105e2340f5"
+    ],
+    "visitTypes": [
+      {
+        "uuid": "f92e8456-4de6-4776-82c3-c15b81eb8f5d",
+        "name": "HTS New/Retest Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "82749926-63b1-467b-9d41-453c7542678a",
+            "display": "HTSSCREENING",
+            "allowedIf": "showOnlyHTSScreening"
+          },
+          {
+            "uuid": "ae9693ff-d341-4997-8166-fa46ac4d38f4",
+            "display": "HTSINITIAL",
+            "allowedIf": "showOnlyHTSINITIAL"
+          },
+          {
+            "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
+            "display": "HTSRETEST",
+            "allowedIf": "showOnlyHTSRetest"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL",
+            "allowedIf": "showHTSReferral"
+          },
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE",
+            "allowedIf": "showOthersHTSEncounters"
+          }
+        ]
+      },
+      {
+        "uuid": "7d2b0fb1-f1d7-4173-81aa-c8b832407656",
+        "name": "HTS Retest To Confirm Positive Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "16bac581-5a17-43f2-9315-3e12a1f3189a",
+            "display": "HTSRETEST",
+            "allowedIf": "showHTSRetestToConfirmP"
+          },
+          {
+            "uuid": "55c10a7a-2732-4063-be25-68d5e1bce1fc",
+            "display": "HTSREFERRAL",
+            "allowedIf": "showHTSReferral && !showHTSLinkage"
+          },
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE",
+            "allowedIf": "!showHTSRetestToConfirmP && showHTSLinkage"
+          }
+        ]
+      },
+      {
+        "uuid": "81978aea-61c1-426e-82e6-ade88f4e25ef",
+        "name": "HTS Linkage Visit",
+        "message": "HTS retest should have been done.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "fbb106cf-d24f-4917-b905-42db7549a788",
+            "display": "HTSLINKAGE"
           }
         ]
       }

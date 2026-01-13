@@ -110,6 +110,12 @@ module.exports = (function () {
           value: queryParams[filter]
         });
       }
+
+      // format isAggregated
+      queryParams.isAggregated =
+        queryParams.isAggregated === true ||
+        queryParams.isAggregated === 'true';
+
       var reportParams = {
         reportName: reportName,
         whereParams: whereParams,
@@ -513,6 +519,11 @@ module.exports = (function () {
         12469: {
           mapped_to_ids: '12469',
           name: '	TENOFOVIR ALAFENAMIDE AND LAMIVUDINE AND DOLUTEGRAVIR'
+        },
+        12692: { mapped_to_ids: '12692', name: 'DARUNAVIR AND RITONAVIR' },
+        10986: {
+          mapped_to_ids: '10986',
+          name: 'ABACAVIR AND LAMIVUDINE AND DOLUTEGRAVIR'
         }
       };
       var arvCodes = str.split(' ## ');

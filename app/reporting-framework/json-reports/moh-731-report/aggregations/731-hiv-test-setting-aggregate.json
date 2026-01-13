@@ -1,0 +1,81 @@
+{
+  "name": "hivSetting731Aggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "hivSetting731Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "hivSetting731Base",
+      "alias": "hs"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "hiv_setting_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(hs.hiv_setting_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_setting_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(hs.hiv_setting_community)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(hs.hiv_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(hs.hiv_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tested_kvp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(hs.tested_kvp)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_731",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
