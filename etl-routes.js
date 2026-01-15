@@ -6628,18 +6628,24 @@ module.exports = (function () {
         handler: async function (request, reply) {
           const otpService = new OtpService();
           const emailService = new EmailService();
+          const optStore = new OtpStore();
           if (request.query.username) {
             const username = request.query.username;
             const res1 = await otpService.getUserEmail(username);
+            if (!res1 || res1.length === 0) {
+              reply({ message: 'Kindly contact Administrator for assistance' });
+            }
             const email = res1[0].email;
             const otp = otpService.generateOtp(5);
-            const otpExpiry = otpService.getOtpExpiry(60);
+            const otpExpiry = otpService.getOtpExpiry(120);
+            await optStore.storeOtp(username, otp, otpExpiry);
             const res = await emailService.sendOtp(
               username,
               email,
               otp,
               otpExpiry
             );
+
             reply({
               data: res
             });
@@ -6660,15 +6666,12 @@ module.exports = (function () {
         auth: 'default',
         handler: async function (request, reply) {
           const otpStore = new OtpStore();
-          const username = request.payload.username;
-          if (!username) {
-            return reply('Username is required!');
-          }
+          const { username, otp } = request.payload || {};
           try {
-            const { username, otp } = request.payload;
-            const res = otpStore.verify(username, otp);
+            const res = await otpStore.verify(username, otp);
             reply({
-              data: res
+              data: res,
+              code: 200
             });
           } catch (err) {
             return reply
