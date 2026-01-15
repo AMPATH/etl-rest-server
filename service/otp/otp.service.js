@@ -41,7 +41,7 @@ class OtpService {
 
   getOtpExpiry(seconds) {
     const now = new Date();
-    now.setSeconds(now.getSeconds() + seconds * 1000);
+    now.setMinutes(now.getSeconds() + seconds * 1000);
     return now;
   }
 }

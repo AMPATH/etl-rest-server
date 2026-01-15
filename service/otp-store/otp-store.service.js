@@ -1,3 +1,12 @@
+const redis = require('ioredis');
+const config = require('../../conf/config.json');
+
+const redisServer = new redis({
+  host: config.redis.REDIS_HOST,
+  port: config.redis.REDIS_PORT,
+  password: config.redis.REDIS_PASSWORD
+});
+
 class OtpStore {
   constructor() {
     if (!OtpStore.instance) {
@@ -7,23 +16,20 @@ class OtpStore {
     return OtpStore.instance;
   }
 
-  storeOtp(username, otp, otpExpiry) {
-    this.store.set(username, { otp, otpExpiry });
+  async storeOtp(username, otp, otpExpiry) {
+    await redisServer.set(username, otp, 'EX', 120);
   }
 
-  verify(username, otp) {
-    const record = this.store.get(username);
+  async verify(username, otp) {
+    const record = await redisServer.get(username);
     if (!record) {
-      throw new Error('OTP not found!');
+      return { data: username, success: false, message: 'OTP not found!' };
     }
-    if (record.otp !== otp) {
-      throw new Error('Invalid OTP!');
+    if (record !== String(otp)) {
+      return { data: username, success: false, message: 'Invalid OTP!' };
     }
-    if (Date.now() > record.otpExpiry) {
-      this.store.delete(username);
-      throw new Error('OTP has Expired');
-    }
-    this.store.delete(username);
+
+    await redisServer.del(username);
     return { data: username, success: true };
   }
 }

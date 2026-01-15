@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const bcrypt = require('bcryptjs');
 var config = require('../../conf/config.json');
 const OtpService = require('../otp/otp.service');
 const OtpStore = require('../otp-store/otp-store.service');
@@ -33,14 +32,16 @@ class EmailService {
 
   async sendOtp(username, email, otp, otpExpiry) {
     try {
-      this.otpStore.storeOtp(username, otp, otpExpiry);
       this.transporter.sendMail({
         from: config.nodemailer.EMAIL_FROM,
         to: email,
         subject: otp,
-        text: `Your OTP code is: ${otp}. It expires after one minute`
+        text: `Your OTP code is: ${otp}. It expires after two minutes`
       });
-      return { message: 'OTP sent to your email', user: username };
+      return {
+        message: 'OTP sent to your email',
+        user: username
+      };
     } catch (err) {
       throw new Error('ERROR OCCURED WHEN SAVING AND SENDING OTP');
     }
