@@ -1,5 +1,5 @@
 const { values } = require('lodash');
-const db = require('../../stg-etl-db');
+const db = require('../../etl-db');
 const bcrypt = require('bcryptjs');
 
 class OtpService {
