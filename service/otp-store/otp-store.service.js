@@ -23,7 +23,7 @@ class OtpStore {
   async verify(username, otp) {
     const record = await redisServer.get(username);
     if (!record) {
-      return { data: username, success: false, message: 'OTP not found!' };
+      return { data: username, success: false, message: 'Invalid OTP!!' };
     }
     if (record !== String(otp)) {
       return { data: username, success: false, message: 'Invalid OTP!' };

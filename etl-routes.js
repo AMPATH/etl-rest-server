@@ -6632,11 +6632,7 @@ module.exports = (function () {
           const optStore = new OtpStore();
           if (request.query.username) {
             const username = request.query.username;
-            const res1 = await otpService.getUserEmail(username);
-            if (!res1 || res1.length === 0) {
-              reply({ message: 'Kindly contact Administrator for assistance' });
-            }
-            const email = res1[0].email;
+            const email = request.query.email;
             const otp = otpService.generateOtp(5);
             const otpExpiry = otpService.getOtpExpiry(120);
             await optStore.storeOtp(username, otp, otpExpiry);
