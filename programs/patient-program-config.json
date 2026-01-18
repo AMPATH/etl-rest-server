@@ -6109,5 +6109,36 @@
         ]
       }
     ]
+  },
+  "535f6faa-14bc-4989-a189-7f15de3f65d5": {
+    "name": "NCD PROGRAM",
+    "dataDependencies": ["patient", "enrollment", "patientEncounters"],
+    "incompatibleWith": [],
+    "visitTypes": [
+      {
+        "uuid": "7db2dc5f-0dfb-4518-85a4-364dac5b5cb3",
+        "name": "NCD INITIAL Visit",
+        "message": "For NCD enrollment.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "5444d069-1317-4838-addf-f2bca42a48a2",
+            "display": "NCDINITIAL"
+          }
+        ]
+      },
+      {
+        "uuid": "1d3d2e87-d077-431d-a5ef-3d78f2be2454",
+        "name": "NCD RETURN Visit",
+        "message": "For NCD follow up.",
+        "allowedIf": "",
+        "encounterTypes": [
+          {
+            "uuid": "04f60e38-70cd-4b8d-aa7e-9c408b349271",
+            "display": "NCDFOLLOWUP"
+          }
+        ]
+      }
+    ]
   }
 }
