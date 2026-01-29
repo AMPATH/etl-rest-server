@@ -90,6 +90,7 @@ import { ServiceEntry } from './service/queues/queue-entry/queue-entry.service.j
 import EmailService from './service/email/email.service.js';
 import OtpService from './service/otp/otp.service.js';
 import OtpStore from './service/otp-store/otp-store.service.js';
+import { LogoService } from './service/logo/logo-service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6681,6 +6682,36 @@ module.exports = (function () {
         plugins: {},
         description: "Get a user's email",
         notes: "Returns a user's email"
+      }
+    },
+    {
+      method: 'GET',
+      path: '/county-logo',
+      config: {
+        auth: 'default',
+        handler: async function (request, h) {
+          let logo = null;
+          let defaultSessionLocationUuid =
+            '18c343eb-b353-462a-9139-b16606e6b6c2'; // location test
+          let sessionLocationUuid = null;
+          const sessionLocation =
+            request.auth.credentials.sessionLocation || null;
+          if (sessionLocation) {
+            if (sessionLocation.uuid) {
+              sessionLocationUuid = sessionLocation.uuid;
+            }
+          }
+          const logoService = new LogoService();
+          logo = await logoService.getLocationLogo(
+            sessionLocationUuid
+              ? sessionLocationUuid
+              : defaultSessionLocationUuid
+          );
+          return h.redirect(logo);
+        },
+        plugins: {},
+        description: 'Get a users location logo',
+        notes: 'Returns the current users location logo'
       }
     }
   ];

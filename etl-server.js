@@ -111,8 +111,6 @@ try {
 
             try {
               const result = JSON.parse(body);
-              console.log('User: ', result);
-
               // Validate user object exists
               if (!result.user) {
                 return reject(
@@ -155,7 +153,8 @@ try {
                         role: authorizer.isSuperUser()
                           ? authorizer.getAllPrivilegesArray()
                           : authorizer.getCurrentUserPreviliges(),
-                        authorizedLocations: authorizedLocations
+                        authorizedLocations: authorizedLocations,
+                        sessionLocation: result.sessionLocation || null
                       };
 
                       const validSessionCookie = 'JSESSIONID=' + sessionId;
