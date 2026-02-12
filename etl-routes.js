@@ -90,6 +90,11 @@ import { ServiceEntry } from './service/queues/queue-entry/queue-entry.service.j
 import EmailService from './service/email/email.service.js';
 import OtpService from './service/otp/otp.service.js';
 import OtpStore from './service/otp-store/otp-store.service.js';
+import SupersetService from './service/superset/superset.service.js';
+import {
+  loadAndMaplocationUuidToId,
+  getlocationIdFromUuid
+} from './location/location.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6682,6 +6687,36 @@ module.exports = (function () {
         plugins: {},
         description: "Get a user's email",
         notes: "Returns a user's email"
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/superset-token',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const locationUuid = request.query.location_uuid;
+          const supersetService = new SupersetService();
+          try {
+            await loadAndMaplocationUuidToId();
+            const locationId = await getlocationIdFromUuid(locationUuid);
+            const res = await supersetService.getSupersetGuestToken(locationId);
+            reply({
+              access_token: res,
+              code: 200
+            });
+          } catch (err) {
+            return reply
+              .response({
+                success: false,
+                message: err.message
+              })
+              .code(400);
+          }
+        },
+        plugins: {},
+        description: 'Get superset guest token',
+        notes: 'Returns a superset guest token'
       }
     }
   ];
