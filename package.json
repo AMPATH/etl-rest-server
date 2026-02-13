@@ -33,6 +33,7 @@
     "ampath-json2sql": "github:AMPATH/ampath-json2sql.git#v1.0.12",
     "array-merge-by-key": "1.0.1",
     "async": "^2.6.1",
+    "axios": "^1.13.5",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.4.0",
     "body-parser": "^1.15.1",
