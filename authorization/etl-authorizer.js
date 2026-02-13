@@ -7,7 +7,7 @@ var currentUserRoles = [];
 var analytics = require('../dao/analytics/etl-analytics-dao');
 var _ = require('underscore');
 
-var PRIVILEGES = {
+const PRIVILEGES = {
   canViewPatient: 'View Patients',
   canViewDataAnalytics: 'View Data Analytics',
   canViewDataEntryStats: 'View POC Data entry statitsisc',
@@ -61,7 +61,7 @@ var reportPrivileges = {
   'patient-referral-report': [PRIVILEGES.canViewDataAnalytics]
 };
 
-var SUPERUSER_ROLES = ['System Developer'];
+const SUPERUSER_ROLES = ['System Developer'];
 
 authorizer.setUser = function (openmrsUser) {
   currentUser = openmrsUser;
@@ -89,12 +89,12 @@ authorizer.getAllPrivileges = function () {
 };
 
 authorizer.getAllPrivilegesArray = function () {
-  var allPrivileges = [];
+  const allPrivileges = [];
 
-  for (var prop in PRIVILEGES) {
+  for (let prop in PRIVILEGES) {
     allPrivileges.push(PRIVILEGES[prop]);
   }
-  //console.log('All privileges', allPrivileges);
+
   return allPrivileges;
 };
 
@@ -118,7 +118,7 @@ authorizer.hasPrivileges = function (arrayOfPrivileges) {
     return true;
   }
 
-  var hasPrivilege = true;
+  let hasPrivilege = true;
 
   for (var i = 0; i < arrayOfPrivileges.length; i++) {
     if (!authorizer.hasPrivilege(arrayOfPrivileges[i])) {
@@ -153,22 +153,42 @@ authorizer.isSuperUser = function () {
 };
 
 authorizer.getUserAuthorizedLocations = function (userProperties, callback) {
-  var authorized = [];
-  resolveLocationName(userProperties, 'aggregate', function (r) {
-    authorized.push.apply(authorized, r);
-    resolveLocationName(userProperties, 'operational', function (s) {
-      authorized.push.apply(authorized, s);
-      callback(authorized);
+  const authorized = [];
+  try {
+    resolveLocationName(userProperties, 'aggregate', (aggregateResults) => {
+      try {
+        authorized.push.apply(authorized, aggregateResults);
+        resolveLocationName(
+          userProperties,
+          'operational',
+          (operationalResults) => {
+            try {
+              authorized.push.apply(authorized, operationalResults);
+              callback(authorized);
+            } catch (err) {
+              console.error('Error processing operational results:', err);
+              callback(authorized);
+            }
+          }
+        );
+      } catch (err) {
+        console.error('Error processing aggregate results:', err);
+        callback(authorized);
+      }
     });
-  });
+  } catch (err) {
+    console.error('Error in getUserAuthorizedLocations:', err);
+    callback([]);
+  }
 };
 
 function resolveLocationName(userProperties, type, callback) {
-  var authorized = [];
+  const authorized = [];
   for (var key in userProperties) {
     if (type === 'operational') {
       if (/^grantAccessToLocationOperationalData/.test(key)) {
         if (userProperties[key] === '*') {
+          // If 'All' access, return immediately with only the "All" object
           return callback([
             {
               uuid: userProperties[key],
@@ -183,6 +203,7 @@ function resolveLocationName(userProperties, type, callback) {
     } else if (type === 'aggregate') {
       if (/^grantAccessToLocationAggregateData/.test(key)) {
         if (userProperties[key] === '*') {
+          // If 'All' access, return immediately with only the "All" object
           return callback([
             {
               uuid: userProperties[key],
@@ -198,37 +219,50 @@ function resolveLocationName(userProperties, type, callback) {
   }
 
   if (authorized.length > 0) {
-    analytics.resolveLocationUuidsToName(authorized, function (results) {
-      var i = [];
-      _.each(results, function (result) {
-        if (type === 'operational') {
-          i.push({
-            uuid: result.uuid,
-            name: result.name,
-            type: 'operational'
+    // Extract UUIDs for lookup
+    const uuids = authorized.map((item) =>
+      typeof item === 'object' ? item.uuid : item
+    );
+
+    try {
+      analytics.resolveLocationUuidsToName(uuids, (results) => {
+        try {
+          const resolveLocationUuids = [];
+          _.each(results, (result) => {
+            if (type === 'operational') {
+              resolveLocationUuids.push({
+                uuid: result.uuid,
+                name: result.name,
+                type: 'operational'
+              });
+            } else if (type === 'aggregate') {
+              resolveLocationUuids.push({
+                uuid: result.uuid,
+                name: result.name,
+                type: 'aggregate'
+              });
+            }
           });
-        } else if (type === 'aggregate') {
-          i.push({
-            uuid: result.uuid,
-            name: result.name,
-            type: 'aggregate'
-          });
+          callback(resolveLocationUuids);
+        } catch (err) {
+          console.error('Error processing location resolution results:', err);
+          callback([]);
         }
       });
-      callback(i);
-    });
+    } catch (err) {
+      console.error('Error calling resolveLocationUuidsToName:', err);
+      callback([]);
+    }
   } else {
     //for users whose privileges are not set
     callback(authorized);
   }
 }
 
-module.exports = authorizer;
-
 function _setCurrentUserPrivileges() {
   currentUserPrivileges = [];
   for (var i = 0; i < currentUser.privileges.length; i++) {
-    //console.log('Adding privilege: ', currentUser.privileges[i].display);
+    // console.log('Adding privilege: ', currentUser.privileges[i].display);
     currentUserPrivileges.push(currentUser.privileges[i].display);
   }
 }
@@ -239,3 +273,5 @@ function _setCurrentUserRoles() {
     currentUserRoles.push(currentUser.roles[i].display);
   }
 }
+
+module.exports = authorizer;
