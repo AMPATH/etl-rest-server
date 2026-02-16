@@ -6628,7 +6628,7 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/otp',
+      path: '/otp',
       config: {
         auth: 'simple',
         handler: async (request, reply) => {
@@ -6712,7 +6712,7 @@ module.exports = (function () {
     },
     {
       method: 'POST',
-      path: '/etl/verify-otp',
+      path: '/verify-otp',
       config: {
         auth: 'simple',
         handler: async function (request, reply) {
@@ -6740,7 +6740,7 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/superset-token',
+      path: '/superset-token',
       config: {
         auth: 'simple',
         handler: async function (request, reply) {
