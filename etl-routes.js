@@ -6695,7 +6695,7 @@ module.exports = (function () {
       config: {
         auth: 'default',
         handler: async function (request, reply) {
-          const locationUuid = request.query.location_uuid;
+          const locationUuid = request.query.locationUuid;
           const supersetService = new SupersetService();
           try {
             await loadAndMaplocationUuidToId();
