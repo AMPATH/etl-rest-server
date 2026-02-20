@@ -63,7 +63,7 @@ class EmailService {
       const info = await this.transporter.sendMail({
         from: config.nodemailer.EMAIL_FROM,
         to: email,
-        subject: `Your OTP: ${otp}`,
+        subject: `OTP - Taifa Care AMRS Login`,
         text: message
       });
 
