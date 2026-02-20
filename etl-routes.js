@@ -87,7 +87,7 @@ const {
 import { MlMonthlySummaryService } from './service/ml-monthly-summary.service.js';
 import { MOH731Service } from './service/moh-731.service.js';
 import { ServiceEntry } from './service/queues/queue-entry/queue-entry.service.js';
-import EmailService from './service/email/email.service.js';
+import EmailService from './service/login-otp/email.service.js';
 import OtpService from './service/otp/otp.service.js';
 import OtpStore from './service/otp-store/otp-store.service.js';
 import SupersetService from './service/superset/superset.service.js';
@@ -95,6 +95,7 @@ import {
   loadAndMaplocationUuidToId,
   getlocationIdFromUuid
 } from './location/location.service.js';
+import SmsService from './service/login-otp/sms.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6625,42 +6626,90 @@ module.exports = (function () {
         tags: ['api']
       }
     },
-
     {
       method: 'GET',
       path: '/etl/otp',
       config: {
         auth: 'simple',
-        handler: async function (request, reply) {
+        handler: async (request, reply) => {
           const otpService = new OtpService();
+          const smsService = new SmsService();
           const emailService = new EmailService();
-          const optStore = new OtpStore();
-          if (request.query.username) {
-            const username = request.query.username;
-            const email = request.query.email;
-            const otp = otpService.generateOtp(5);
-            const otpExpiry = otpService.getOtpExpiry(120);
-            await optStore.storeOtp(username, otp, otpExpiry);
-            const res = await emailService.sendOtp(
-              username,
-              email,
-              otp,
-              otpExpiry
-            );
+          const otpStore = new OtpStore();
 
-            reply({
-              data: res
-            });
-          } else {
-            reply(Boom.badData());
+          const { username, email, phone } = request.query;
+
+          const otp = otpService.generateOtp(5);
+          const otpExpiry = otpService.getOtpExpiry(120);
+          const message = `Your OTP code is: ${otp}. It expires after 2 minutes`;
+
+          try {
+            await otpStore.storeOtp(username, otp, otpExpiry, message);
+          } catch (err) {
+            console.error('Failed to store OTP:', err);
+            return reply({
+              success: false,
+              message: 'Failed to generate OTP'
+            }).code(500);
           }
+
+          const sentTo = [];
+
+          const sendPromises = [];
+
+          if (email) {
+            sendPromises.push(
+              emailService
+                .sendOtp(username, email, otp, message)
+                .then((res) => {
+                  if (res.success) sentTo.push(`email (${email})`);
+                  else
+                    console.error(
+                      `Email failed for ${email}:`,
+                      res.error || res.message
+                    );
+                })
+            );
+          }
+
+          if (phone) {
+            sendPromises.push(
+              smsService.sendOtp(phone, otp, message).then((res) => {
+                if (res.success) sentTo.push(`phone number (${phone})`);
+                else
+                  console.error(
+                    `SMS failed for ${phone}:`,
+                    res.error || res.message
+                  );
+              })
+            );
+          }
+
+          await Promise.all(sendPromises);
+
+          if (sentTo.length === 0) {
+            return reply({
+              success: false,
+              message: 'OTP could not be sent to email or phone number'
+            }).code(500);
+          }
+
+          const ackMessage =
+            sentTo.length === 1
+              ? `OTP successfully sent to your ${sentTo[0]}`
+              : `OTP successfully sent to your ${sentTo.join(' and ')}`;
+
+          return reply({
+            success: true,
+            data: ackMessage
+          });
         },
         plugins: {},
-        description: "Get a user's email",
-        notes: "Returns a user's email"
+        description: "Send OTP to user's email and/or phone",
+        notes:
+          'Sends an OTP and returns acknowledgment of successful deliveries'
       }
     },
-
     {
       method: 'POST',
       path: '/etl/verify-otp',
