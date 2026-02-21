@@ -742,7 +742,7 @@
       {
         "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
         "name": "HCW/Peer Delivery Visit",
-        "allowedIf": "!isEligibleForCommunityVisit && !isFirstAMPATHHIVVisit",
+        "allowedIf": "!isFirstAMPATHHIVVisit",
         "encounterTypes": [
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
@@ -1985,6 +1985,17 @@
           {
             "uuid": "466d6707-8429-4e61-b5a0-d63444f5ad35",
             "display": "COVIDSCREENING"
+          }
+        ]
+      },
+      {
+        "uuid": "a2a265dc-508d-4f31-94ee-0bf8a58049d7",
+        "name": "HCW/Peer Delivery Visit",
+        "allowedIf": "!isEligibleForCommunityVisit && !isFirstAMPATHHIVVisit",
+        "encounterTypes": [
+          {
+            "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
+            "display": "DRUGPICKUP"
           }
         ]
       },
