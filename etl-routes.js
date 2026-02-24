@@ -6745,11 +6745,11 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/superset-token',
+      path: '/superset-token',
       config: {
         auth: 'simple',
         handler: async function (request, reply) {
-          const locationUuid = request.query.location_uuid;
+          const locationUuid = request.query.locationUuid;
           const supersetService = new SupersetService();
           try {
             await loadAndMaplocationUuidToId();
