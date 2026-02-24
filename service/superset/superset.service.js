@@ -9,6 +9,10 @@ class SupersetService {
     this.supersetUrl = config.superset.SUPERSET_URL;
     this.username = config.superset.SUPERSET_USERNAME;
     this.password = config.superset.SUPERSET_PASSWORD;
+    this.supersetDatasetSupportsLocationId =
+      config.superset.DATASET_SUPPORTS_LOCATION_ID.split(',').map((id) =>
+        parseInt(id)
+      ) || [];
   }
 
   async getAccessToken() {
@@ -33,6 +37,13 @@ class SupersetService {
   async getSupersetGuestToken(locationId) {
     const token = await this.getAccessToken();
 
+    const rlsClause = `location_id = ${locationId}`;
+
+    const rls = this.supersetDatasetSupportsLocationId.map((id) => ({
+      dataset: id,
+      clause: rlsClause
+    }));
+
     const response = await axios.post(
       `${this.supersetUrl}/api/v1/security/guest_token`,
       {
@@ -42,11 +53,7 @@ class SupersetService {
           username: 'admin'
         },
         resources: [{ type: 'dashboard', id: this.dashboardId }],
-        rls: [
-          {
-            clause: `location_id = ${locationId}`
-          }
-        ],
+        rls: rls,
         aud: 'superset',
         type: 'guest'
       },
