@@ -6637,7 +6637,14 @@ module.exports = (function () {
           const emailService = new EmailService();
           const otpStore = new OtpStore();
 
-          const { username, email, phone } = request.query;
+          const { username, email, phone, key } = request.query;
+
+          if (!otpService.isSecretValid(key)) {
+            return reply({
+              success: false,
+              message: 'Unauthorized: Invalid security key'
+            }).code(401);
+          }
 
           const otp = otpService.generateOtp(5);
           const otpExpiry = otpService.getOtpExpiry(120);
@@ -6659,22 +6666,20 @@ module.exports = (function () {
 
           if (email) {
             sendPromises.push(
-              emailService
-                .sendOtp(username, email, otp, message)
-                .then((res) => {
-                  if (res.success) sentTo.push(`email (${email})`);
-                  else
-                    console.error(
-                      `Email failed for ${email}:`,
-                      res.error || res.message
-                    );
-                })
+              emailService.sendOtp(email, message).then((res) => {
+                if (res.success) sentTo.push(`email (${email})`);
+                else
+                  console.error(
+                    `Email failed for ${email}:`,
+                    res.error || res.message
+                  );
+              })
             );
           }
 
           if (phone) {
             sendPromises.push(
-              smsService.sendOtp(phone, otp, message).then((res) => {
+              smsService.sendOtp(phone, message).then((res) => {
                 if (res.success) sentTo.push(`phone number (${phone})`);
                 else
                   console.error(
