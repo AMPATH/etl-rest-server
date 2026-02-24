@@ -36,7 +36,7 @@ class SmsService {
     return '254' + lastNine;
   }
 
-  async sendOtp(phone, otp, message) {
+  async sendOtp(phone, message) {
     if (this.invalidConfig) {
       return {
         success: false,

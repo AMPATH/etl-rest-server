@@ -42,7 +42,7 @@ class EmailService {
     });
   }
 
-  async sendOtp(username, email, otp, message) {
+  async sendOtp(email, message) {
     if (this.invalidConfig) {
       return {
         success: false,
