@@ -6745,7 +6745,7 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/superset-token',
+      path: '/etl/superset-token',
       config: {
         auth: 'simple',
         handler: async function (request, reply) {
