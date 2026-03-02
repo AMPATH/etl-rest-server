@@ -13,6 +13,21 @@ class SupersetService {
       config.superset.DATASET_SUPPORTS_LOCATION_ID.split(',').map((id) =>
         parseInt(id)
       ) || [];
+
+    if (
+      !config.superset.GUEST_TOKEN_JWT_SECRET ||
+      !config.superset.DASHBOARD_ID ||
+      !config.superset.SUPERSET_URL ||
+      !config.superset.SUPERSET_USERNAME ||
+      !config.superset.SUPERSET_PASSWORD ||
+      !config.superset.DATASET_SUPPORTS_LOCATION_ID
+    ) {
+      this.invalidConfig = true;
+      this.configError =
+        'Incomplete or missing Superset configuration in config.json';
+      console.error(this.configError);
+      return;
+    }
   }
 
   async getAccessToken() {

@@ -96,6 +96,7 @@ import {
   getlocationIdFromUuid
 } from './location/location.service.js';
 import SmsService from './service/login-otp/sms.service.js';
+import { DashboardSummaryService } from './service/dashboard-summary/dashboard-summary.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6771,6 +6772,42 @@ module.exports = (function () {
         plugins: {},
         description: 'Get superset guest token',
         notes: 'Returns a superset guest token'
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/dashboard-summary',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const locationUuid = request.query.locationUuid;
+          const dashboardSummaryService = new DashboardSummaryService();
+
+          try {
+            await loadAndMaplocationUuidToId();
+            const locationId = await getlocationIdFromUuid(locationUuid);
+            const res = await dashboardSummaryService.getDashboardSummary(
+              locationId
+            );
+            reply({
+              success: true,
+              data: res,
+              code: 200
+            });
+          } catch (err) {
+            return reply
+              .response({
+                success: false,
+                data:
+                  err.message ||
+                  'An unexpected error occurred while fetching dashboard summary.'
+              })
+              .code(500);
+          }
+        },
+        plugins: {},
+        description: 'Get Dashboard summary for a location',
+        notes: 'Returns a dashboard summary for a location'
       }
     }
   ];
