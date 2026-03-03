@@ -10,37 +10,37 @@ export class DashboardSummaryService {
     return new Promise((resolve, reject) => {
       const sql = `SELECT
     COUNT(*) AS total_opd_visits,
-
     SUM(CASE 
-        WHEN qe.ended_at IS NOT NULL THEN 1 
+        WHEN v.date_stopped IS NOT NULL THEN 1 
         ELSE 0 
     END) AS completed_visits,
-
     SUM(CASE 
-        WHEN qe.ended_at IS NULL THEN 1 
+        WHEN v.date_stopped IS NULL THEN 1 
         ELSE 0 
     END) AS uncompleted_visits,
 
-    SUM(CASE 
-        WHEN qe.priority = 12360 THEN 1 
-        ELSE 0 
-    END) AS emergencies,
+   qe_stats.emergencies AS emergencies,
+    qe_stats.avg_wait AS average_waiting_minutes
 
-    ROUND(
-    AVG(
+FROM amrs.visit v
+inner join amrs.encounter e ON e.visit_id = v.visit_id
+ LEFT JOIN (
+    SELECT
+        visit_id,
+        SUM(CASE WHEN priority = 12360 THEN 1 ELSE 0 END) AS emergencies,
         CASE 
-            WHEN qe.ended_at IS NOT NULL 
-            THEN TIMESTAMPDIFF(MINUTE, qe.started_at, qe.ended_at)
-        END
-    )
-) AS average_waiting_minutes
-
-FROM amrs.queue_entry qe 
-JOIN amrs.queue q ON qe.queue_id = q.queue_id
-WHERE 
-    qe.voided = 0
-    AND q.location_id = ${locationId}              
-    AND DATE(qe.started_at) = CURDATE();`;
+            WHEN ended_at IS NOT NULL 
+            THEN TIMESTAMPDIFF(MINUTE, started_at, ended_at)
+        END AS avg_wait
+    FROM amrs.queue_entry
+    WHERE voided = 0
+    GROUP BY visit_id
+) qe_stats
+    ON qe_stats.visit_id = v.visit_id
+WHERE v.voided = 0
+  AND v.location_id = ${locationId}
+  and e.encounter_type NOT IN (195,264,168,273,274,265,266,267,115)
+  AND DATE(v.date_started) = CURDATE();`;
       const queryParts = {
         sql: sql
       };
