@@ -9,14 +9,16 @@ export class DashboardSummaryService {
     }
     return new Promise((resolve, reject) => {
       const sql = `SELECT
-    COUNT(*) AS total_opd_visits,
-    SUM(CASE 
-        WHEN v.date_stopped IS NOT NULL THEN 1 
-        ELSE 0 
+    COUNT(DISTINCT v.visit_id) AS total_opd_visits,
+
+    COUNT(DISTINCT CASE 
+    WHEN v.date_stopped IS NOT NULL 
+    THEN v.visit_id 
     END) AS completed_visits,
-    SUM(CASE 
-        WHEN v.date_stopped IS NULL THEN 1 
-        ELSE 0 
+
+    COUNT(DISTINCT CASE 
+    WHEN v.date_stopped IS NULL 
+    THEN v.visit_id 
     END) AS uncompleted_visits,
 
    qe_stats.emergencies AS emergencies,
