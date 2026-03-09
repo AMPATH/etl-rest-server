@@ -11,13 +11,13 @@ export class ServiceEntry {
       throw new Error('Service not defined');
     }
     return new Promise((resolve, reject) => {
-      const sql = `SELECT 
-    q.name,
+      const sql = `SELECT q.name,
+    qe.patient_id,
     qe.queue_entry_id,
     qe.priority_comment,
     TIMESTAMPDIFF(MINUTE,
-        qe.started_at,
-        NOW()) AS wait_time_in_min,
+            qe.started_at,
+            NOW()) AS wait_time_in_min,
     qe.uuid AS 'queue_entry_uuid',
     q.uuid AS 'service_uuid',
     q.name AS 'service',
@@ -43,7 +43,14 @@ export class ServiceEntry {
         WHEN qe.priority = 12360 THEN 'EMERGENCY'
     END AS 'priority',
     v.uuid AS 'visit_uuid',
-    qf.name AS 'queue_coming_from'
+    qf.name AS 'queue_coming_from',
+    cb.bill_status AS 'bill_status',
+    cb.bill_item_payment_status,
+    cb.price_name AS 'price_name',
+    IF(cb.patient_id IS NOT NULL, 1, NULL) AS 'cash_unpaid_client',
+    IF(cb.patient_id IS NOT NULL,
+        1,
+        0) AS 'hide_in_queue'
 FROM
     amrs.queue_entry qe
         JOIN
@@ -64,12 +71,30 @@ FROM
     amrs.visit v ON (v.visit_id = qe.visit_id)
         LEFT JOIN
     amrs.queue qf ON (qe.queue_coming_from = qf.queue_id)
+        LEFT JOIN
+    (SELECT 
+        cb.patient_id,
+            cb.status AS 'bill_status',
+            bi.payment_status AS 'bill_item_payment_status',
+            bi.price_name,
+            bi.date_changed AS 'bill_item_updated_at'
+    FROM
+        amrs.cashier_bill cb
+    JOIN amrs.cashier_bill_line_item bi ON (bi.bill_id = cb.bill_id)
+    WHERE
+        DATE(cb.date_created) = DATE(NOW())
+            AND cb.voided = 0
+            AND bi.voided = 0
+            AND bi.price_name LIKE '%cash%'
+            AND bi.payment_status != 'PAID'
+    GROUP BY cb.patient_id
+) cb ON (cb.patient_id = qe.patient_id)
 WHERE
     qe.ended_at IS NULL
         AND c.uuid = '${serviceUuid}'
         AND l.uuid = '${locationUuid}'
         AND qe.voided = 0
-GROUP BY qe.patient_id,qe.visit_id`;
+        GROUP BY qe.patient_id , qe.visit_id`;
       const queryParts = {
         sql: sql
       };

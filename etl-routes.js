@@ -6610,13 +6610,18 @@ module.exports = (function () {
           if (request.query.locationUuid && request.query.serviceUuid) {
             const locationUuid = request.query.locationUuid;
             const serviceUuid = request.query.serviceUuid;
-            const res = await queueService.getQueueEntriesByLocationAndService(
-              locationUuid,
-              serviceUuid
-            );
-            reply({
-              data: res
-            });
+            try {
+              const res = await queueService.getQueueEntriesByLocationAndService(
+                locationUuid,
+                serviceUuid
+              );
+              reply({
+                data: res
+              });
+            } catch (error) {
+              console.error({ error });
+              reply(Boom.badData());
+            }
           } else {
             reply(Boom.badData());
           }
@@ -6776,9 +6781,9 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/superset-token',
+      path: '/superset-token',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: async function (request, reply) {
           const locationUuid = request.query.locationUuid;
           const supersetService = new SupersetService();
@@ -6806,9 +6811,9 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/dashboard-summary',
+      path: '/dashboard-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: async function (request, reply) {
           const locationUuid = request.query.locationUuid;
           const dashboardSummaryService = new DashboardSummaryService();
