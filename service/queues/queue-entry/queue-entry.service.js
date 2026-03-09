@@ -11,13 +11,14 @@ export class ServiceEntry {
       throw new Error('Service not defined');
     }
     return new Promise((resolve, reject) => {
-      const sql = `SELECT q.name,
+      const sql = `SELECT 
+    q.name,
     qe.patient_id,
     qe.queue_entry_id,
     qe.priority_comment,
     TIMESTAMPDIFF(MINUTE,
-            qe.started_at,
-            NOW()) AS wait_time_in_min,
+        qe.started_at,
+        NOW()) AS wait_time_in_min,
     qe.uuid AS 'queue_entry_uuid',
     q.uuid AS 'service_uuid',
     q.name AS 'service',
@@ -48,9 +49,12 @@ export class ServiceEntry {
     cb.bill_item_payment_status,
     cb.price_name AS 'price_name',
     IF(cb.patient_id IS NOT NULL, 1, NULL) AS 'cash_unpaid_client',
-    IF(cb.patient_id IS NOT NULL,
-        1,
-        0) AS 'hide_in_queue'
+    IF(cb.patient_id IS NOT NULL, 1, 0) AS 'hide_in_queue',
+    GROUP_CONCAT(DISTINCT contacts.value
+        SEPARATOR ', ') AS 'phone_number',
+    EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), p.birthdate)))) AS 'age',
+    GROUP_CONCAT(DISTINCT id.identifier
+        SEPARATOR ', ') AS 'identifiers'
 FROM
     amrs.queue_entry qe
         JOIN
@@ -67,6 +71,14 @@ FROM
         JOIN
     amrs.person_name pn ON (pn.person_id = p.person_id
         AND pn.voided = 0)
+        LEFT JOIN
+    amrs.person_attribute contacts ON (p.person_id = contacts.person_id
+        AND (contacts.voided IS NULL
+        || contacts.voided = 0)
+        AND contacts.person_attribute_type_id IN (10 , 48))
+        LEFT JOIN
+    amrs.patient_identifier id ON (p.person_id = id.patient_id
+        AND (id.voided IS NULL || id.voided = 0))
         JOIN
     amrs.visit v ON (v.visit_id = qe.visit_id)
         LEFT JOIN
@@ -87,14 +99,13 @@ FROM
             AND bi.voided = 0
             AND bi.price_name LIKE '%cash%'
             AND bi.payment_status != 'PAID'
-    GROUP BY cb.patient_id
-) cb ON (cb.patient_id = qe.patient_id)
+    GROUP BY cb.patient_id) cb ON (cb.patient_id = qe.patient_id)
 WHERE
     qe.ended_at IS NULL
         AND c.uuid = '${serviceUuid}'
         AND l.uuid = '${locationUuid}'
         AND qe.voided = 0
-        GROUP BY qe.patient_id , qe.visit_id`;
+GROUP BY qe.patient_id , qe.visit_id;`;
       const queryParts = {
         sql: sql
       };
