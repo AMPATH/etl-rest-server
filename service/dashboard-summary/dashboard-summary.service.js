@@ -22,7 +22,9 @@ export class DashboardSummaryService {
     END) AS uncompleted_visits,
 
    qe_stats.emergencies AS emergencies,
-    qe_stats.avg_wait AS average_waiting_minutes
+   qe_stats.avg_wait AS average_waiting_minutes,
+   lab_stats.total_labs AS labs,
+   pharm_stats.total_pharmacy AS pharmacy
 
 FROM amrs.visit v
 inner join amrs.encounter e ON e.visit_id = v.visit_id
@@ -39,6 +41,39 @@ inner join amrs.encounter e ON e.visit_id = v.visit_id
     GROUP BY visit_id
 ) qe_stats
     ON qe_stats.visit_id = v.visit_id
+
+/* LABS */
+LEFT JOIN (
+    SELECT 
+        v.location_id,
+        DATE(o.date_activated) AS date_created,
+        COUNT(DISTINCT o.order_id) AS total_labs
+    FROM amrs.orders o
+    JOIN amrs.test_order t ON o.order_id = t.order_id
+    JOIN amrs.encounter e ON o.encounter_id = e.encounter_id
+    JOIN amrs.visit v ON e.visit_id = v.visit_id
+    WHERE o.voided = 0
+    GROUP BY v.location_id, DATE(o.date_activated)
+) lab_stats
+ON lab_stats.location_id = v.location_id
+AND lab_stats.date_created = CURDATE()
+
+/* PHARMACY */
+LEFT JOIN (
+    SELECT 
+        v.location_id,
+        DATE(o.date_activated) AS date_created,
+        COUNT(DISTINCT o.order_id) AS total_pharmacy
+    FROM amrs.orders o
+    JOIN amrs.drug_order d ON o.order_id = d.order_id
+    JOIN amrs.encounter e ON o.encounter_id = e.encounter_id
+    JOIN amrs.visit v ON e.visit_id = v.visit_id
+    WHERE o.voided = 0
+    GROUP BY v.location_id, DATE(o.date_activated)
+) pharm_stats
+ON pharm_stats.location_id = v.location_id
+AND pharm_stats.date_created = CURDATE()
+
 WHERE v.voided = 0
   AND v.location_id = ${locationId}
   and e.encounter_type NOT IN (195,264,168,273,274,265,266,267,115)
