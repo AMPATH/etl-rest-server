@@ -98,6 +98,7 @@ import {
 } from './location/location.service.js';
 import SmsService from './service/login-otp/sms.service.js';
 import { DashboardSummaryService } from './service/dashboard-summary/dashboard-summary.service.js';
+import { ServiceQueueDailyReportService } from './service/queues/queue-entry/service-queue-report.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6610,13 +6611,18 @@ module.exports = (function () {
           if (request.query.locationUuid && request.query.serviceUuid) {
             const locationUuid = request.query.locationUuid;
             const serviceUuid = request.query.serviceUuid;
-            const res = await queueService.getQueueEntriesByLocationAndService(
-              locationUuid,
-              serviceUuid
-            );
-            reply({
-              data: res
-            });
+            try {
+              const res = await queueService.getQueueEntriesByLocationAndService(
+                locationUuid,
+                serviceUuid
+              );
+              reply({
+                data: res
+              });
+            } catch (error) {
+              console.error({ error });
+              reply(Boom.badData());
+            }
           } else {
             reply(Boom.badData());
           }
@@ -6776,9 +6782,9 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/superset-token',
+      path: '/superset-token',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: async function (request, reply) {
           const locationUuid = request.query.locationUuid;
           const supersetService = new SupersetService();
@@ -6806,9 +6812,9 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/dashboard-summary',
+      path: '/dashboard-summary',
       config: {
-        auth: 'simple',
+        auth: 'default',
         handler: async function (request, reply) {
           const locationUuid = request.query.locationUuid;
           const dashboardSummaryService = new DashboardSummaryService();
@@ -6838,6 +6844,90 @@ module.exports = (function () {
         plugins: {},
         description: 'Get Dashboard summary for a location',
         notes: 'Returns a dashboard summary for a location'
+      }
+    },
+    {
+      method: 'GET',
+      path: '/service-queue-daily-report',
+      config: {
+        auth: 'default',
+        plugins: {},
+        handler: function (request, reply) {
+          if (request.query['locationUuid'] && request.query['serviceUuid']) {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'service-queue-daily-report',
+              [],
+              requestParams
+            );
+            let serviceQueueDailyService = new ServiceQueueDailyReportService(
+              'service-queue-daily-report',
+              reportParams.requestParams
+            );
+            serviceQueueDailyService
+              .getAggregateReport(reportParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                console.error('Error: ', error);
+                reply(error);
+              });
+          } else {
+            reply(Boom.badData('Misssing location or service params'));
+          }
+        },
+        description: 'Service Queue Daily report',
+        notes: 'Service Queue Daily report',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/service-queue-daily-report/patient-list',
+      config: {
+        auth: 'default',
+        plugins: {},
+        handler: function (request, reply) {
+          if (request.query['locationUuid'] && request.query['serviceUuid']) {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'service-queue-daily-report',
+              [],
+              requestParams
+            );
+
+            let serviceQueueDailyService = new ServiceQueueDailyReportService(
+              'service-queue-daily-report',
+              reportParams.requestParams
+            );
+
+            delete reportParams.requestParams['gender'];
+            delete reportParams.requestParams['genders'];
+            serviceQueueDailyService
+              .getPatientListReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                console.error('Error: ', error);
+                reply(error);
+              });
+          } else {
+            reply(Boom.badData('Misssing location or service params'));
+          }
+        },
+        description: 'Service Queue Daily report Patient List',
+        notes: 'Service Queue Daily report Patient List',
+        tags: ['api']
       }
     }
   ];
