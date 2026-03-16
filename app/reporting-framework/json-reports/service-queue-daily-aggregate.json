@@ -1,0 +1,53 @@
+{
+  "name": "serviceQueueDailyAggregate",
+  "version": "1.0",
+  "tag": "service_queue_daily_aggregate",
+  "description": "",
+  "uses": [
+    {
+      "name": "serviceQueueDailyBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "serviceQueueDailyBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "queue_room_name",
+      "column": "b.queue_room_name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.patient_id)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["queue_room_id"],
+    "excludeParam": "excludeParam"
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "service-queue-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

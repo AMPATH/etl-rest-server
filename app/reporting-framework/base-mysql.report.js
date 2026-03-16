@@ -552,6 +552,13 @@ import * as tb_screen__less_15_base from './json-reports/moh-731-report/aggregat
 import * as nutrition_mam_aggregate from './json-reports/moh-731-report/aggregations/nutrition-mam-aggregate.json';
 import * as nutrition_mam_base from './json-reports/moh-731-report/aggregations/nutrition-mam-base.json';
 import * as patient_list_template_731 from './json-reports/731-patient-list-template.json';
+
+//service queue report
+
+import * as service_queue_daily_aggregate from './json-reports/service-queue-daily-aggregate.json';
+import * as service_queue_daily_base from './json-reports/service-queue-daily-base.json';
+import * as service_queue_patient_list_template from './json-reports/service-queue-patient-list-template.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2458,6 +2465,19 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(nutrition_mam_aggregate),
             nutritionMamBase: this.cloneJsonSchema(nutrition_mam_base)
+          });
+          break;
+        case 'serviceQueueDailyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(service_queue_daily_aggregate),
+            serviceQueueDailyBase: this.cloneJsonSchema(
+              service_queue_daily_base
+            )
+          });
+          break;
+        case 'service-queue-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(service_queue_patient_list_template)
           });
           break;
         default:

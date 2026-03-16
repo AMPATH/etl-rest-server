@@ -1,0 +1,145 @@
+{
+  "name": "serviceQueueDailyBase",
+  "version": "1.0",
+  "tag": "service_queue_base",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.queue_entry",
+      "alias": "qe"
+    },
+    {
+      "table": "amrs.queue_entry",
+      "alias": "served_qe",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "served_qe.patient_id = qe.patient_id AND DATE(qe.started_at) = DATE(served_qe.started_at) AND served_qe.queue_id = qe.queue_id AND served_qe.voided = 0 AND served_qe.status = 12363"
+      }
+    },
+    {
+      "table": "amrs.queue_room",
+      "alias": "qr",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "qe.queue_id = qr.queue_id"
+      }
+    },
+    {
+      "table": "amrs.queue",
+      "alias": "q",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "qe.queue_id = q.queue_id"
+      }
+    },
+    {
+      "table": "amrs.concept",
+      "alias": "c",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "c.concept_id = q.service"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "cn",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "cn.concept_id = c.concept_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "q.location_id = l.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "queue_entry_id",
+      "column": " qe.queue_entry_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "qe.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "queue_id",
+      "column": "qe.queue_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "queue_room_name",
+      "column": "qr.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "served_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "served_qe.status is not null",
+            "value": "SERVED"
+          },
+          {
+            "condition": "else",
+            "value": "NOT SERVED"
+          }
+        ]
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "queue_room_id",
+      "column": "qr.queue_room_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "service_name",
+      "column": "cn.name"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(qe.started_at) = DATE(NOW())"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "qe.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "qr.retired = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "cn.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "c.uuid = ? ",
+        "parameterName": "serviceUuid"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid = ? ",
+        "parameterName": "locationUuid"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["qe.patient_id", "qr.queue_room_id"]
+  }
+}
