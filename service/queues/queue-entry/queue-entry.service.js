@@ -40,8 +40,9 @@ export class ServiceEntry {
         WHEN qe.status = 1267 THEN 'COMPLETED'
     END AS 'status',
     CASE
-        WHEN qe.priority = 11666 THEN 'NORMAL'
-        WHEN qe.priority = 12360 THEN 'EMERGENCY'
+       WHEN qe.priority = 11666 THEN 'PRIORITY'
+       WHEN qe.priority = 12360 THEN 'EMERGENCY'
+       WHEN qe.priority = 7316 THEN 'NON-URGENT'
     END AS 'priority',
     v.uuid AS 'visit_uuid',
     qf.name AS 'queue_coming_from',
