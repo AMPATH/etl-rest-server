@@ -275,6 +275,18 @@
         ]
       },
       {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
+          }
+        ]
+      },
+      {
         "uuid": "18faa058-4eea-4339-a959-84b3e5cb30be",
         "name": "Pediatric HIV Initial Visit ",
         "allowedIf": "age <= 14 && programLocation === intendedVisitLocationUuid && isFirstAMPATHHIVVisit",
@@ -2834,6 +2846,18 @@
         ]
       },
       {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
+          }
+        ]
+      },
+      {
         "uuid": "06eca2a8-1da9-4ac4-95c6-15afedd4de21",
         "name": "HIV Lab Visit",
         "encounterTypes": [
@@ -3431,6 +3455,18 @@
           {
             "uuid": "987009c6-6f24-43f7-9640-c285d6553c63",
             "display": "DRUGPICKUP"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
           }
         ]
       }
@@ -4734,6 +4770,18 @@
             "uuid": "f70286a5-1eb4-4724-bd8f-34c392c5067d",
             "display": "MENTALHEALTHREVIEW"
           },
+          {
+            "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
+            "display": "AGEFRIENDLYPRIORITIZATION"
+          }
+        ]
+      },
+      {
+        "uuid": "92e0e4da-5013-4a39-89ca-f7ee7e1e979a",
+        "name": "HIV Age Friendly Visit",
+        "allowedIf": "age >= 50",
+        "message": "Patient has to be 50 years and above",
+        "encounterTypes": [
           {
             "uuid": "6c1ff48e-acb6-45a3-946c-c89c99cfc395",
             "display": "AGEFRIENDLYPRIORITIZATION"
