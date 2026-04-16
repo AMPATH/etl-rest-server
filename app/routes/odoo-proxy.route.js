@@ -42,6 +42,65 @@ var routes = [
   },
   {
     method: 'GET',
+    path: '/etl/odoo/billing/orders',
+    config: {
+      auth: 'default',
+      handler: function (request, reply) {
+        var q = request.query;
+        odooProxyService
+          .listOrders({
+            company_external_id: q.company_external_id,
+            date_from: q.date_from,
+            date_to: q.date_to,
+            state: q.state,
+            limit: q.limit,
+            offset: q.offset
+          })
+          .then(function (result) {
+            reply(result);
+          })
+          .catch(function (err) {
+            handleError(err, reply);
+          });
+      },
+      description: 'List sale orders with optional filters',
+      notes:
+        'Returns a paginated list of sale orders including order lines. ' +
+        'Filter by facility location UUID, date range, or order state.',
+      tags: ['api', 'odoo', 'billing'],
+      validate: {
+        options: { allowUnknown: true },
+        query: {
+          company_external_id: Joi.string()
+            .optional()
+            .description('OpenMRS location UUID of the facility'),
+          date_from: Joi.string()
+            .optional()
+            .description('ISO date YYYY-MM-DD (inclusive lower bound)'),
+          date_to: Joi.string()
+            .optional()
+            .description('ISO date YYYY-MM-DD (inclusive upper bound)'),
+          state: Joi.string()
+            .valid('draft', 'sent', 'sale', 'done', 'cancel')
+            .optional()
+            .description('Order state'),
+          limit: Joi.number()
+            .integer()
+            .min(1)
+            .max(500)
+            .optional()
+            .description('Max records to return (default 100)'),
+          offset: Joi.number()
+            .integer()
+            .min(0)
+            .optional()
+            .description('Pagination offset (default 0)')
+        }
+      }
+    }
+  },
+  {
+    method: 'GET',
     path: '/etl/odoo/billing/order/{id}',
     config: {
       auth: 'default',
