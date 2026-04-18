@@ -1,0 +1,311 @@
+{
+  "name": "lab706Aggregate",
+  "version": "1.0",
+  "tag": "lab-706-blood-chemistry-aggregate",
+  "description": "Aggregate dataset for Lab 706 blood chemistry report",
+  "uses": [
+    {
+      "name": "lab706Base",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "lab706Base",
+      "alias": "t1"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "test_datetime",
+      "column": "t1.test_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_exam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(t1.encounter_id)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_blood_sugar",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.blood_sugar)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_blood_sugar",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.blood_sugar)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ogtt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.ogtt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ogtt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.ogtt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.creatinine)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.creatinine)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.urea)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.urea)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_direct_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.direct_bili)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_direct_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.direct_bili)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_total_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.total_bili)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_total_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.total_bili)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ast",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.ast)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ast",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.ast)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.alt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.alt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_total_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.total_protein)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_total_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.total_protein)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_alk_phos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.alk_phos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_alk_phos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.alk_phos)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_lipid_profile",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.lipid_profile)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_lipid_profile",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.lipid_profile)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_total_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.total_cholesterol)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_total_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.total_cholesterol)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.triglycerides)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.triglycerides)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ldl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.ldl)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ldl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.ldl)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_t3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.t3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_t3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.t3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_t4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.t4)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_t4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.t4)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_tsh",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.tsh)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_tsh",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.tsh)"
+      }
+    }
+  ],
+  "groupClause": [
+    {
+      "parameter": "groupByTestDatetime"
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "name": "lab706Base",
+  "version": "1.0",
+  "tag": "lab-706-blood-chemistry",
+  "description": "Base dataset for Lab 706 blood chemistry report",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_blood_chemistry",
+      "alias": "fbc"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fbc.location_id = l.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "fbc.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "fbc.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "uuid",
+      "column": "fbc.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "fbc.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "test_datetime",
+      "column": "fbc.test_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "fbc.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "fbc.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "blood_sugar",
+      "column": "fbc.blood_sugar"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ogtt",
+      "column": "fbc.ogtt"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creatinine",
+      "column": "fbc.creatinine"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urea",
+      "column": "fbc.urea"
+    },
+    {
+      "type": "simple_column",
+      "alias": "direct_bili",
+      "column": "fbc.direct_bili"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_bili",
+      "column": "fbc.total_bili"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ast",
+      "column": "fbc.ast"
+    },
+    {
+      "type": "simple_column",
+      "alias": "alt",
+      "column": "fbc.alt"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_protein",
+      "column": "fbc.total_protein"
+    },
+    {
+      "type": "simple_column",
+      "alias": "alk_phos",
+      "column": "fbc.alk_phos"
+    },
+    {
+      "type": "simple_column",
+      "alias": "lipid_profile",
+      "column": "fbc.lipid_profile"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_cholesterol",
+      "column": "fbc.total_cholesterol"
+    },
+    {
+      "type": "simple_column",
+      "alias": "triglycerides",
+      "column": "fbc.triglycerides"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ldl",
+      "column": "fbc.ldl"
+    },
+    {
+      "type": "simple_column",
+      "alias": "t3",
+      "column": "fbc.t3"
+    },
+    {
+      "type": "simple_column",
+      "alias": "t4",
+      "column": "fbc.t4"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tsh",
+      "column": "fbc.tsh"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fbc.test_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fbc.test_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid in ?",
+        "parameterName": "locationUuids"
+      }
+    ]
+  }
+}
