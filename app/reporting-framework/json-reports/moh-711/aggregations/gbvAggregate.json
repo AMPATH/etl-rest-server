@@ -1,0 +1,361 @@
+{
+  "name": "gbvAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "gbvBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "gbvBase",
+      "alias": "g"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "sgbv_total_survivors_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_total_survivors AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_total_survivors_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_total_survivors AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_total_survivors_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_total_survivors AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_total_survivors_50_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_total_survivors AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_within_72_hours_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_within_72_hours AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_within_72_hours_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_within_72_hours AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_within_72_hours_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_within_72_hours AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_within_72_hours_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_within_72_hours AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_initiated_on_pep_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_initiated_on_pep AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_initiated_on_pep_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_initiated_on_pep AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_initiated_on_pep_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_initiated_on_pep AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_initiated_on_pep_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_initiated_on_pep AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_completed_pep_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_completed_pep AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_completed_pep_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_completed_pep AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_completed_pep_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_completed_pep AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_completed_pep_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_completed_pep AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_seroconverting_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_seroconverting AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_seroconverting_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_seroconverting AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_seroconverting_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_seroconverting AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_seroconverting_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_seroconverting AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_eligible_for_ecp_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_eligible_for_ecp AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_eligible_for_ecp_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_eligible_for_ecp AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_eligible_for_ecp_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_eligible_for_ecp AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_eligible_for_ecp_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_eligible_for_ecp AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_receiving_ecp_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_receiving_ecp AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_receiving_ecp_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_receiving_ecp AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_receiving_ecp_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_receiving_ecp AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_receiving_ecp_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_receiving_ecp AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_pregnant_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_pregnant AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_pregnant_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_pregnant AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_pregnant_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_pregnant AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_pregnant_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_pregnant AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_rc_seen_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_rc_seen AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_rc_seen_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_rc_seen AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_rc_seen_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_rc_seen AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_rc_seen_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_rc_seen AND g.age_50_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_with_disability_0_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_with_disability AND g.age_0_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_with_disability_10_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_with_disability AND g.age_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_with_disability_18_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_with_disability AND g.age_18_49_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_with_disability_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(g.sgbv_with_disability AND g.age_50_and_above)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

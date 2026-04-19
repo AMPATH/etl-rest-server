@@ -1,0 +1,154 @@
+{
+  "name": "socialWorkBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "psycho_social_counselling",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6174 and o.value_coded != 1107, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alcohol_and_drug_abuse",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10835 and o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mental_illness",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1629 and o.value_coded in (1628,1627), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolescent_issues",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psycho_social_economic_assessment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id in (11866,12054, 11865) and o.value_coded in (1065), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "social_investigations",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10085 and o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psycho_social_rehabilitation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "outreach_services",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mental_health_referral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1272 and o.value_coded = 5489, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (1,2)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id"]
+  }
+}

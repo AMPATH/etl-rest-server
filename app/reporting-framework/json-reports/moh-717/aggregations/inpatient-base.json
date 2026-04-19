@@ -1,0 +1,913 @@
+{
+  "name": "inpatientBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "obs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = obs.person_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "obs_datetime",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_discharges",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_deaths",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_deaths_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_abscondees",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_referrals_out_of_facility",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_admissions_0_28_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_admissions_under_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_admissions_over_five",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_admissions_under_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_admissions_over_five_severe_malaria",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_paroles",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_occupied_bed_days_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_occupied_bed_days_non_sha_members",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_well_persons_days",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_authorised_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_actual_physical_beds",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_authorised_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_actual_physical_cots",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_authorised_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_actual_Physical_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "surgical_actual_Physical_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obst_gyn_actual_Physical_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paediatrics_actual_Physical_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_actual_Physical_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_actual_Physical_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nursery_newborn_actual_Physical_incubator",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_actual_Physical_incubator",
+      "column": "null"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

@@ -552,6 +552,73 @@ import * as tb_screen__less_15_base from './json-reports/moh-731-report/aggregat
 import * as nutrition_mam_aggregate from './json-reports/moh-731-report/aggregations/nutrition-mam-aggregate.json';
 import * as nutrition_mam_base from './json-reports/moh-731-report/aggregations/nutrition-mam-base.json';
 import * as patient_list_template_731 from './json-reports/731-patient-list-template.json';
+import * as moh_710_report from './json-reports/moh-710/710-summary.json';
+import * as immunization_aggregate from './json-reports/moh-710/aggregations/immunization-aggregate.json';
+import * as immunization_base from './json-reports/moh-710/aggregations/immunization-base.json';
+import * as moh_711_report from './json-reports/moh-711/711-summary.json';
+import * as anc_711_aggregate from './json-reports/moh-711/aggregations/anc-aggregate.json';
+import * as anc_711_base from './json-reports/moh-711/aggregations/anc-base.json';
+import * as family_planning_711_aggregate from './json-reports/moh-711/aggregations/family-planning-aggregate.json';
+import * as family_planning_711_base from './json-reports/moh-711/aggregations/family-planning-base.json';
+import * as gbv_711_aggregate from './json-reports/moh-711/aggregations/gbvAggregate.json';
+import * as gbv_711_base from './json-reports/moh-711/aggregations/gbvBase.json';
+import * as maternity_711_aggregate from './json-reports/moh-711/aggregations/maternity-aggregate.json';
+import * as maternity_711_base from './json-reports/moh-711/aggregations/maternity-base.json';
+import * as cervical_cancer_711_aggregate from './json-reports/moh-711/aggregations/cervical-cancer-aggregate.json';
+import * as cervical_cancer_711_base from './json-reports/moh-711/aggregations/cervical-cancer-base.json';
+import * as pnc_711_aggregate from './json-reports/moh-711/aggregations/pnc-aggregate.json';
+import * as pnc_711_base from './json-reports/moh-711/aggregations/pnc-base.json';
+import * as social_work_711_aggregate from './json-reports/moh-711/aggregations/social-work-aggregate.json';
+import * as social_work_711_base from './json-reports/moh-711/aggregations/social-work-base.json';
+import * as tb_screening_711_aggregate from './json-reports/moh-711/aggregations/tb-screening-aggreagate.json';
+import * as tb_screening_711_base from './json-reports/moh-711/aggregations/tb-screening-base.json';
+import * as chanis_711_aggregate from './json-reports/moh-711/aggregations/chanis-aggregate.json';
+import * as chanis_711_base from './json-reports/moh-711/aggregations/chanis-base.json';
+import * as moh_717_report from './json-reports/moh-717/moh-717-summary.json';
+import * as general_outpatient_717_aggregate from './json-reports/moh-717/aggregations/general-outpatient-aggregate.json';
+import * as general_outpatient_717_base from './json-reports/moh-717/aggregations/general-outpatient-base.json';
+import * as special_clinics_717_aggregate from './json-reports/moh-717/aggregations/special-clinics-aggregate.json';
+import * as special_clinics_717_base from './json-reports/moh-717/aggregations/special-clinics-base.json';
+import * as mch_fp_717_aggregate from './json-reports/moh-717/aggregations/mch-fp-aggregate.json';
+import * as mch_fp_717_base from './json-reports/moh-717/aggregations/mch-fp-base.json';
+import * as dental_717_aggregate from './json-reports/moh-717/aggregations/dental-aggregate.json';
+import * as dental_717_base from './json-reports/moh-717/aggregations/dental-base.json';
+import * as other_services_717_aggregate from './json-reports/moh-717/aggregations/other-services-aggregate.json';
+import * as other_services_717_base from './json-reports/moh-717/aggregations/other-services-base.json';
+import * as inpatient_services_717_aggregate from './json-reports/moh-717/aggregations/inpatient-aggregate.json';
+import * as inpatient_services_717_base from './json-reports/moh-717/aggregations/inpatient-base.json';
+import * as maternity_717_aggregate from './json-reports/moh-717/aggregations/maternity-aggregate.json';
+import * as maternity_717_base from './json-reports/moh-717/aggregations/maternity-base.json';
+import * as operations_717_aggregate from './json-reports/moh-717/aggregations/operations-aggregate.json';
+import * as operations_717_base from './json-reports/moh-717/aggregations/operations-base.json';
+import * as orthopaedic_trauma_717_aggregate from './json-reports/moh-717/aggregations/orthopaedic-trauma-aggregate.json';
+import * as orthopaedic_trauma_717_base from './json-reports/moh-717/aggregations/orthopaedic-trauma-base.json';
+import * as orthopaedic_removal_717_aggregate from './json-reports/moh-717/aggregations/orthopaedic-removal-aggregate.json';
+import * as orthopaedic_removal_717_base from './json-reports/moh-717/aggregations/orthopaedic-removal-base.json';
+import * as special_services_717_aggregate from './json-reports/moh-717/aggregations/special-services-aggregate.json';
+import * as special_services_717_base from './json-reports/moh-717/aggregations/special-services-base.json';
+import * as pharmacy_717_aggregate from './json-reports/moh-717/aggregations/pharmacy-aggreagate.json';
+import * as pharmacy_717_base from './json-reports/moh-717/aggregations/pharmacy-base.json';
+import * as mortuary_717_aggregate from './json-reports/moh-717/aggregations/mortuary-aggregate.json';
+import * as mortuary_717_base from './json-reports/moh-717/aggregations/mortuary-base.json';
+import * as medical_records_717_aggregate from './json-reports/moh-717/aggregations/medical-records-aggregate.json';
+import * as medical_records_717_base from './json-reports/moh-717/aggregations/medical-records-base.json';
+import * as tetanus_710_aggregate from './json-reports/moh-710/aggregations/tetanus-aggregate.json';
+import * as tetanus_710_base from './json-reports/moh-710/aggregations/tetanus-base.json';
+import * as moh_745_report from './json-reports/moh-745/moh-745-summary.json';
+import * as breast_cancer_745_aggregate from './json-reports/moh-745/breast-cancer-aggregate.json';
+import * as breast_cancer_745_base from './json-reports/moh-745/breast-cancer-base.json';
+import * as cervical_cancer_745_aggregate from './json-reports/moh-745/cervical-cancer-aggregate.json';
+import * as cervical_cancer_745_base from './json-reports/moh-745/cervical-cancer-base.json';
+import * as colorectal_cancer_745_aggregate from './json-reports/moh-745/colorectal-cancer-aggregate.json';
+import * as colorectal_cancer_745_base from './json-reports/moh-745/colorectal-cancer-base.json';
+import * as moh_705a_report from './json-reports/moh-705/moh-705a-summary.json';
+import * as moh_705a_aggregate from './json-reports/moh-705/moh-705a-aggregate.json';
+import * as moh_705a_base from './json-reports/moh-705/moh-705a-base.json';
+import * as moh_705b_report from './json-reports/moh-705/moh-705b-summary.json';
+import * as moh_705b_aggregate from './json-reports/moh-705/moh-705b-aggregate.json';
+import * as moh_705b_base from './json-reports/moh-705/moh-705b-base.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2458,6 +2525,226 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(nutrition_mam_aggregate),
             nutritionMamBase: this.cloneJsonSchema(nutrition_mam_base)
+          });
+          break;
+        case 'moh710Report':
+          resolve({
+            main: this.cloneJsonSchema(moh_710_report)
+          });
+          break;
+        case 'immunizationAggregate':
+          resolve({
+            main: this.cloneJsonSchema(immunization_aggregate),
+            immunizationBase: this.cloneJsonSchema(immunization_base)
+          });
+          break;
+        case 'immunizationAggregate':
+          resolve({
+            main: this.cloneJsonSchema(immunization_aggregate),
+            immunizationBase: this.cloneJsonSchema(immunization_base)
+          });
+          break;
+        case 'tetanusAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tetanus_710_aggregate),
+            tetanusBase: this.cloneJsonSchema(tetanus_710_base)
+          });
+          break;
+        case 'moh711Report':
+          resolve({
+            main: this.cloneJsonSchema(moh_711_report)
+          });
+          break;
+        case 'ancAggregate':
+          resolve({
+            main: this.cloneJsonSchema(anc_711_aggregate),
+            ancBase: this.cloneJsonSchema(anc_711_base)
+          });
+          break;
+        case 'gbvAggregate':
+          resolve({
+            main: this.cloneJsonSchema(gbv_711_aggregate),
+            gbvBase: this.cloneJsonSchema(gbv_711_base)
+          });
+          break;
+        case 'maternityAggregate':
+          resolve({
+            main: this.cloneJsonSchema(maternity_711_aggregate),
+            maternityBase: this.cloneJsonSchema(maternity_711_base)
+          });
+          break;
+        case 'cervicalCancerAggregate':
+          resolve({
+            main: this.cloneJsonSchema(cervical_cancer_711_aggregate),
+            cervicalCancerBase: this.cloneJsonSchema(cervical_cancer_711_base)
+          });
+          break;
+        case 'familyPlanningAggregate':
+          resolve({
+            main: this.cloneJsonSchema(family_planning_711_aggregate),
+            familyPlanningBase: this.cloneJsonSchema(family_planning_711_base)
+          });
+          break;
+        case 'pncAggregate':
+          resolve({
+            main: this.cloneJsonSchema(pnc_711_aggregate),
+            pncBase: this.cloneJsonSchema(pnc_711_base)
+          });
+          break;
+        case 'socialWorkAggregate':
+          resolve({
+            main: this.cloneJsonSchema(social_work_711_aggregate),
+            socialWorkBase: this.cloneJsonSchema(social_work_711_base)
+          });
+          break;
+        case 'tbScreeningAggregate':
+          resolve({
+            main: this.cloneJsonSchema(tb_screening_711_aggregate),
+            tbScreeningBase: this.cloneJsonSchema(tb_screening_711_base)
+          });
+          break;
+        case 'chanisAggregate':
+          resolve({
+            main: this.cloneJsonSchema(chanis_711_aggregate),
+            chanisBase: this.cloneJsonSchema(chanis_711_base)
+          });
+          break;
+        case 'moh717Report':
+          resolve({
+            main: this.cloneJsonSchema(moh_717_report)
+          });
+        case 'generalOutpatientAggregate':
+          resolve({
+            main: this.cloneJsonSchema(general_outpatient_717_aggregate),
+            generalOutpatientBase: this.cloneJsonSchema(
+              general_outpatient_717_base
+            )
+          });
+          break;
+        case 'specialClinicsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(special_clinics_717_aggregate),
+            specialClinicsBase: this.cloneJsonSchema(special_clinics_717_base)
+          });
+          break;
+        case 'mchFPAggregate':
+          resolve({
+            main: this.cloneJsonSchema(mch_fp_717_aggregate),
+            mchFPBase: this.cloneJsonSchema(mch_fp_717_base)
+          });
+          break;
+        case 'dentalAggregate':
+          resolve({
+            main: this.cloneJsonSchema(dental_717_aggregate),
+            dentalBase: this.cloneJsonSchema(dental_717_base)
+          });
+          break;
+        case 'otherServicesAggregate':
+          resolve({
+            main: this.cloneJsonSchema(other_services_717_aggregate),
+            otherServicesBase: this.cloneJsonSchema(other_services_717_base)
+          });
+          break;
+        case 'inpatientAggregate':
+          resolve({
+            main: this.cloneJsonSchema(inpatient_services_717_aggregate),
+            inpatientBase: this.cloneJsonSchema(inpatient_services_717_base)
+          });
+          break;
+        case 'maternityAggregate':
+          resolve({
+            main: this.cloneJsonSchema(maternity_717_aggregate),
+            maternityBase: this.cloneJsonSchema(maternity_717_base)
+          });
+          break;
+        case 'operationsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(operations_717_aggregate),
+            operationsBase: this.cloneJsonSchema(operations_717_base)
+          });
+          break;
+        case 'orthopaedicTraumaAggregate':
+          resolve({
+            main: this.cloneJsonSchema(orthopaedic_trauma_717_aggregate),
+            orthopaedicTraumaBase: this.cloneJsonSchema(
+              orthopaedic_trauma_717_base
+            )
+          });
+          break;
+        case 'orthopaedicRemovalAggregate':
+          resolve({
+            main: this.cloneJsonSchema(orthopaedic_removal_717_aggregate),
+            orthopaedicRemovalBase: this.cloneJsonSchema(
+              orthopaedic_removal_717_base
+            )
+          });
+          break;
+        case 'specialServicesAggregate':
+          resolve({
+            main: this.cloneJsonSchema(special_services_717_aggregate),
+            specialServicesBase: this.cloneJsonSchema(special_services_717_base)
+          });
+          break;
+        case 'pharmacyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(pharmacy_717_aggregate),
+            pharmacyBase: this.cloneJsonSchema(pharmacy_717_base)
+          });
+          break;
+        case 'mortuaryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(mortuary_717_aggregate),
+            mortuaryBase: this.cloneJsonSchema(mortuary_717_base)
+          });
+          break;
+        case 'medicalRecordsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(medical_records_717_aggregate),
+            medicalRecordsBase: this.cloneJsonSchema(medical_records_717_base)
+          });
+          break;
+        case 'moh745Report':
+          resolve({
+            main: this.cloneJsonSchema(moh_745_report)
+          });
+        case 'breastCancerAggregate':
+          resolve({
+            main: this.cloneJsonSchema(breast_cancer_745_aggregate),
+            breastCancerBase: this.cloneJsonSchema(breast_cancer_745_base)
+          });
+          break;
+        case 'cervicalCancerAggregate':
+          resolve({
+            main: this.cloneJsonSchema(cervical_cancer_745_aggregate),
+            cervicalCancerBase: this.cloneJsonSchema(cervical_cancer_745_base)
+          });
+          break;
+        case 'colorectalCancerAggregate':
+          resolve({
+            main: this.cloneJsonSchema(colorectal_cancer_745_aggregate),
+            colorectalCancerBase: this.cloneJsonSchema(
+              colorectal_cancer_745_base
+            )
+          });
+          break;
+        case 'moh705AReport':
+          resolve({
+            main: this.cloneJsonSchema(moh_705a_report)
+          });
+        case 'moh705AAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_705a_aggregate),
+            moh705ABase: this.cloneJsonSchema(moh_705a_base)
+          });
+          break;
+        case 'moh705BReport':
+          resolve({
+            main: this.cloneJsonSchema(moh_705b_report)
+          });
+        case 'moh705BAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_705b_aggregate),
+            moh705BBase: this.cloneJsonSchema(moh_705b_base)
           });
           break;
         default:

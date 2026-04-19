@@ -1,0 +1,418 @@
+{
+  "name": "maternityBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_deliveries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1170, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "caesarian_sections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1171, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breach_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1172, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "assisted_vaginal_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND o.value_coded in (2167, 2166), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "oxytocin_uterotonic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12086 AND o.value_coded = 7593, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "carbatocin_uterotonic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12086 AND o.value_coded = 12085, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "live_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6224 AND o.value_coded = 1843, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "low_birth_weight",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6433 AND o.value_numeric < 2500, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "low_apgar_score",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6431 AND o.value_numeric <= 6, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "birth_with_deformity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10429 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorhexidine_applied",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12090 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_k",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12091 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tetracycline_given",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10426 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre_term_babies",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6224 AND o.value_coded = 6648, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discharge_alive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10938 AND o.value_coded = 8701, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bf_within_1_hour",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10425 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "deliveries_from_positive_women",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fresh_still_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6224 AND o.value_coded = 10877, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "macerated_still_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6224 AND o.value_coded = 10424, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "perinatal_deaths_0_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_10_14_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_15_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_20_24_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_25_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_audited_within_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_audited_within_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ante_partum_haemorrage",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6653 AND o.value_coded = 228, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_haemorrage",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6653 AND o.value_coded = 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eclampsia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6653 AND o.value_coded = 6457, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ruptured_uterus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6653 AND o.value_coded = 6458, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obstructed_labour",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6653 AND o.value_coded = 6651, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sepsis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6653 AND o.value_coded = 1473, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fgm_delivery_complications",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6653 AND o.value_coded = 10424, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_sepsis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1573 AND o.value_coded = 2375, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_prematurity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1573 AND o.value_coded = 6648, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_asphyxia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1573 AND o.value_coded = 12156, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kangaroo_mother_care",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12089 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_other_health_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6749 AND o.value_coded = 1275, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_to_other_health_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10927 AND o.value_coded = 7308, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6749 AND o.value_coded = 1862, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_to_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10927 AND o.value_coded = 9613, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (196, 274, 273, 269)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id"]
+  }
+}

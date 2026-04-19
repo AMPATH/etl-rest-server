@@ -1,0 +1,281 @@
+{
+  "name": "cervicalCancerAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "cervicalCancerBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "cervicalCancerBase",
+      "alias": "c"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "via_villi_hpv_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.via_villi_hpv_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_hpv_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.via_villi_hpv_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_hpv_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.via_villi_hpv_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.pap_smear_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.pap_smear_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.pap_smear_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.hpv_test_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.hpv_test_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.hpv_test_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_via_villi_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_via_villi_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_via_villi_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_cytology_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_cytology_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_cytology_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_hpv_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_hpv_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.positive_hpv_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.suspicious_cancer_lessions_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.suspicious_cancer_lessions_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.suspicious_cancer_lessions_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.cryotherapy_treatment_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.cryotherapy_treatment_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.cryotherapy_treatment_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.leep_treatment_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.leep_treatment_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.leep_treatment_50_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_less_25",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_less_25)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_25_49",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_25_49)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_50_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_50_above)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

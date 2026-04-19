@@ -1,0 +1,1321 @@
+{
+  "name": "inpatientAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "inpatientBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "inpatientBase",
+      "alias": "i"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "medical_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_discharges",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_discharges)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_deaths_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_deaths_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_abscondees",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_abscondees)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_referrals_out_of_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_referrals_out_of_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_admissions_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_admissions_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_admissions_under_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_admissions_under_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_admissions_over_five",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_admissions_over_five)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_admissions_under_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_admissions_under_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_admissions_over_five_severe_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_admissions_over_five_severe_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_paroles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_paroles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_occupied_bed_days_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_occupied_bed_days_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_occupied_bed_days_non_sha_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_occupied_bed_days_non_sha_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_well_persons_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_well_persons_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_authorised_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_authorised_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_actual_physical_beds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_actual_physical_beds)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_authorised_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_authorised_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_actual_physical_cots",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_actual_physical_cots)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_authorised_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_authorised_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.medical_actual_Physical_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.surgical_actual_Physical_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obst_gyn_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.obst_gyn_actual_Physical_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.paediatrics_actual_Physical_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternity_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.maternity_actual_Physical_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.eye_actual_Physical_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nursery_newborn_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.nursery_newborn_actual_Physical_incubator)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_actual_Physical_incubator",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(i.orthopaedic_actual_Physical_incubator)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1123 @@
+{
+  "name": "cervicalCancerBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_less_25_post_treatment_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_25_49_post_treatment_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_50_above_post_treatment_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 885), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded = 2322), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_via_villi_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 703), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cytology_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7423 AND o.value_coded in (7417, 7418, 7419, 7421, 7420, 10055, 7422)), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_less_25_initial_screeening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_25_49_initial_screeening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_50_above_initial_screeening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_less_25_routine_screeening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_25_49_routine_screeening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_50_above_routine_screeening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hpv_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 2322 AND o.value_coded = 703), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspicious_cancer_lessions_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9434 AND o.value_coded = 6971), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy_treatment_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7466), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation_treatment_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep_treatment_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7467), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_less_25_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_25_49_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_50_above_initial_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_less_25_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_25_49_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_50_above_routine_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7147) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_treatment_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10380 AND o.value_coded = 7467), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_less_25_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_25_49_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_50_above_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_less_25_routine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_25_49_routine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_50_above_routine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_cervical_cancer_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_less_25_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_25_49_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_50_above_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_less_25_routine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_25_49_routine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_50_above_routine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_less_25_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_25_49_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_50_above_post_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cervical_cancer_positive_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 6709 AND o.value_coded = 703), 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (69)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id"]
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "name": "operationsAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "operationsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "operationsBase",
+      "alias": "op"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "minor_surgeries_booked",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.minor_surgeries_booked)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "minor_surgeries_operated",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.minor_surgeries_operated)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "emergencies_booked",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.emergencies_booked)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "emergencies_operated",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.emergencies_operated)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cold_cases_booked",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.cold_cases_booked)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cold_surgical_cases",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.cold_surgical_cases)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "circumcisions_booked",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.circumcisions_booked)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "circumcisions_operated",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.circumcisions_operated)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "major_surgeries_booked",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.major_surgeries_booked)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "major_surgeries_operated",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.major_surgeries_operated)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

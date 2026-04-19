@@ -1,0 +1,73 @@
+{
+  "name": "tbScreeningAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "tbScreeningBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "tbScreeningBase",
+      "alias": "t"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "total_screened_for_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t.total_screened_for_tb)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_presumptive_tb_cases",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t.total_presumptive_tb_cases)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "already_on_tb_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t.already_on_tb_treatment)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_screened_for_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t.not_screened_for_tb)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

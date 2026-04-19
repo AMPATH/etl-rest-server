@@ -1,0 +1,145 @@
+{
+  "name": "maternityAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "maternityBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "maternityBase",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "normal_deliveries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.normal_deliveries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "caesarean_sections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.caesarean_sections)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breach_deliveries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.breach_deliveries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "assisted_vaginal_deliveries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.assisted_vaginal_deliveries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "born_before_arrival",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.born_before_arrival)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_deaths)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_audited_within_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_deaths_audited_within_7_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "live_births",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.live_births)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "still_births",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.still_births)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.neonatal_deaths_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_audits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.neonatal_deaths_audits)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "low_birth_weight_less_2500gms",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.low_birth_weight_less_2500gms)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "babies_discharged_alive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.babies_discharged_alive)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

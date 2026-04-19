@@ -1,0 +1,194 @@
+{
+  "name": "gbvBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_0_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 9, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 10 AND 17, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_18_49_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 18 AND 49, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_50_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_total_survivors",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id in (11866, 11865, 9303, 12054), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_within_72_hours",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 7134 AND o.value_numeric <= 72 , 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_initiated_on_pep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1705 AND o.value_coded = 1149  AND e.encounter_type = 56, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_completed_pep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 7087 AND o.value_coded = 1065 AND e.encounter_type = 57, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_seroconverting",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1040 AND o.value_coded = 703 AND e.encounter_type = 57, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_eligible_for_ecp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 9303 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_receiving_ecp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 9610 AND o.value_coded = 6725, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": ""
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_rc_seen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1061 AND o.value_coded = 5564, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sgbv_with_disability",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": ""
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (56, 57, 133, 134, 264, 265, 179)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id"]
+  }
+}

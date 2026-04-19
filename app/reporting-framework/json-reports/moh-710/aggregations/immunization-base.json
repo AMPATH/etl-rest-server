@@ -1,0 +1,343 @@
+{
+  "name": "immunizationBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "obs",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.encounter_id = obs.encounter_id AND obs.obs_group_id = o.obs_group_id AND obs.voided = 0 AND obs.value_numeric IS NOT NULL AND obs.concept_id = 10888"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND o.concept_id in (984, 10936, 9612, 2300)"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "obs_datetime",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE())"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_in_months",
+      "column": "TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE())"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 12, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) >= 12, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bcg_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 984 AND o.value_coded = 886) AND (TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 12), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bcg_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 984 AND o.value_coded = 886) AND (TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) >= 12), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 783, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv1_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 783 AND obs.concept_id = 10888 AND obs.value_numeric = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv2_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 783 AND obs.concept_id = 10888 AND obs.value_numeric = 2, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv3_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 783 AND obs.concept_id = 10888 AND obs.value_numeric = 3, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv1_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 10587 AND obs.concept_id = 10888 AND obs.value_numeric = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv2_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 10587 AND obs.concept_id = 10888 AND obs.value_numeric = 2, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 781 AND obs.concept_id = 10888 AND obs.value_numeric = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 781 AND obs.concept_id = 10888 AND obs.value_numeric = 2, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 781 AND obs.concept_id = 10888 AND obs.value_numeric = 3, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 6957, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 6957 AND obs.concept_id = 10888 AND obs.value_numeric = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 6957 AND obs.concept_id = 10888 AND obs.value_numeric = 2, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 6957 AND obs.concept_id = 10888 AND obs.value_numeric = 3, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 10976, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 10976 AND obs.concept_id = 10888 AND obs.value_numeric = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 10976 AND obs.concept_id = 10888 AND obs.value_numeric = 2, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 10976 AND obs.concept_id = 10888 AND obs.value_numeric = 3, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_12_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10936 AND o.value_coded = 1065) AND (TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 12 AND 59), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10936 AND o.value_coded = 1065) AND (TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 12), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10936 AND o.value_coded = 1065) AND (TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) >= 12), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 5864, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 10977, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_conjugate_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 984 AND o.value_coded = 12878, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fully_immunized_children",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 2300 AND o.value_coded = 1065, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_12_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9612 AND o.value_coded = 12256) AND (TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 12 AND 17), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_18_59",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9612 AND o.value_coded = 12256) AND (TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 18 AND 59), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_60_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 9612 AND o.value_coded = 12256) AND (TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 60), 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (105, 106, 115, 195, 313)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(o.obs_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(o.obs_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id"]
+  }
+}

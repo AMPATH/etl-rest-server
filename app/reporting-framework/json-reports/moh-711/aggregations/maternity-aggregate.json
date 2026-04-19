@@ -1,0 +1,377 @@
+{
+  "name": "maternityAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "maternityBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "maternityBase",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "normal_deliveries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.normal_deliveries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "caesarian_sections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.caesarian_sections)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breach_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.breach_delivery)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "assisted_vaginal_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.assisted_vaginal_delivery)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "oxytocin_uterotonic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.oxytocin_uterotonic)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "carbatocin_uterotonic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.carbatocin_uterotonic)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "live_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.live_birth)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "low_birth_weight",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.low_birth_weight)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "low_apgar_score",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.low_apgar_score)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "birth_with_deformity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.birth_with_deformity)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorhexidine_applied",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.chlorhexidine_applied)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_k",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.vitamin_k)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tetracycline_given",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.tetracycline_given)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pre_term_babies",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.pre_term_babies)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discharge_alive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.discharge_alive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bf_within_1_hour",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.bf_within_1_hour)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "deliveries_from_positive_women",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.deliveries_from_positive_women)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fresh_still_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.fresh_still_birth)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "macerated_still_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.macerated_still_birth)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "perinatal_deaths_0_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.perinatal_deaths_0_7_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.neonatal_deaths_0_28_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_10_14_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_deaths_10_14_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_15_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_deaths_15_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_20_24_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_deaths_20_24_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_25_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_deaths_25_above_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_audited_within_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.maternal_deaths_audited_within_7_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_audited_within_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.neonatal_deaths_audited_within_7_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ante_partum_haemorrage",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.ante_partum_haemorrage)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_haemorrage",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.post_partum_haemorrage)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eclampsia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.eclampsia)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ruptured_uterus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.ruptured_uterus)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obstructed_labour",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.obstructed_labour)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sepsis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.sepsis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fgm_delivery_complications",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.fgm_delivery_complications)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_sepsis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.neonatal_deaths_sepsis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_prematurity",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.neonatal_deaths_prematurity)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths_asphyxia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.neonatal_deaths_asphyxia)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kangaroo_mother_care",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.kangaroo_mother_care)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_other_health_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.referrals_from_other_health_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_to_other_health_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.referrals_to_other_health_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.referrals_from_community)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_to_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.referrals_to_community)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

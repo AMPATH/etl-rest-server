@@ -1,0 +1,178 @@
+{
+  "name": "pncBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "pnc_new_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(e.encounter_type = 266, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pnc_revisit_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(e.encounter_type = 267, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "women_couselled_on_post_partum_fp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6681 AND o.value_coded = 1065, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "women_received_post_partum_fp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 7240 AND o.value_coded != 1107), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mothers_post_partum_care_48_hours",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10448 and o.value_coded = 10438, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mothers_post_partum_care_3_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10448 and o.value_coded = 10439 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mothers_post_partum_care_after_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10448 and o.value_coded = 10437, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infants_post_partum_care_48_hours",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12093 AND o.value_coded = 10438, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infants_post_partum_care_3_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12093 AND o.value_coded = 10439, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infants_post_partum_care_after_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12093 AND o.value_coded = 10437, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fistula_cases",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10473 AND o.value_coded in (1218, 10474, 12453), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6749 AND o.value_coded = 1862, 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (266, 267)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "name": "tetanusAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "tetanusBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "tetanusBase",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "tetanus_toxoid1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(CASE WHEN s.tetanus_toxoid1 = 1 THEN 1 ELSE 0 END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tetanus_toxoid2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(CASE WHEN s.tetanus_toxoid2 = 1 THEN 1 ELSE 0 END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tetanus_toxoid3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.tetanus_toxoid3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tetanus_toxoid4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.tetanus_toxoid4)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tetanus_toxoid5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.tetanus_toxoid5)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_vaccine1_10_14_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv_vaccine1 AND s.age >= 10 AND s.age < 15)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_vaccine2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv_vaccine2)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_vaccine1_10_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv_vaccine1 AND s.age = 10)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_vaccine2_10_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv_vaccine2 AND s.age = 10)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_vaccine1_greater_10_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv_vaccine1 AND s.age > 10)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_vaccine2_greater_10_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv_vaccine2 AND s.age > 10)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
