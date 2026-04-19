@@ -1,0 +1,209 @@
+{
+  "name": "ancAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "ancBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "ancBase",
+      "alias": "a"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "new_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.new_anc_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.revisit_anc_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.first_ipt_dose)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "second_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.second_ipt_dose)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "third_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.third_ipt_dose)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "Hb_less_11g",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.Hb_less_11g)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_anc_contact_12_or_less_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.first_anc_contact_12_or_less_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "completing_4_anc_visits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.completing_4_anc_visits)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "completing_8_anc_contact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.completing_8_anc_contact)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "llins_children_less_than_one",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.llins_children_less_than_one)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "llins_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.llins_anc_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anc_clients_tested_syphilis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.anc_clients_tested_syphilis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "syphilis_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.syphilis_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breast_exam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.breast_exam)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolesc_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.adolesc_10_14)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolesc_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.adolesc_15_19)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "youth_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.youth_20_24)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "folic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.folic)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_and_folate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron_and_folate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fgm_complications",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.fgm_complications)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

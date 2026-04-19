@@ -1,0 +1,57 @@
+{
+  "name": "medicalRecordsAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "medicalRecordsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "medicalRecordsBase",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "new_patient_files_issued",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.new_patient_files_issued)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "outpatient_records_cards_issued",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.outpatient_records_cards_issued)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

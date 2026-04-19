@@ -1,0 +1,105 @@
+{
+  "name": "mchFPAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "mchFPBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "mchFPBase",
+      "alias": "fp"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "cwc_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.cwc_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cwc_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.cwc_attendance_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anc_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.anc_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anc_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.anc_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pnc_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.pnc_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pnc_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.pnc_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.fp_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(fp.fp_attendance_revisit)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

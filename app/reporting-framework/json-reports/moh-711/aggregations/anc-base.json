@@ -1,0 +1,250 @@
+{
+  "name": "ancBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(DISTINCT if(e.encounter_type = 265, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(DISTINCT if(e.encounter_type = 264, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 2366 AND o.value_coded = 2364, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "second_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 2366 AND o.value_coded = 2365, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "third_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 2366 AND o.value_coded = 8526, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "Hb_less_11g",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 21 AND o.value_numeric < 11, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_anc_contact_12_or_less_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6429 AND o.value_numeric <= 12, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "completing_4_anc_visits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 7086 AND o.value_numeric = 4, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "completing_8_anc_contact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 7086 AND o.value_numeric = 8, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "llins_children_less_than_one",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 2356 AND o.value_coded = 2354 AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "llins_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 2356 AND o.value_coded = 2354, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anc_clients_tested_syphilis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 299, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "syphilis_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 299 AND o.value_coded = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breast_exam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10919 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolesc_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 10 AND 14 AND e.encounter_type = 265, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolesc_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 15 AND 19 AND e.encounter_type = 265, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "youth_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10919 AND o.value_coded = 1065 AND e.encounter_type = 265, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 9487 AND o.value_coded = 2363, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "folic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 9487 AND o.value_coded = 257, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_and_folate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 9487 AND o.value_coded = 9497, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fgm_complications",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 12081 AND o.value_coded != 1107, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (264,265)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id", "e.encounter_type"]
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "name": "specialServicesBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "obs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = obs.person_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "obs_datetime",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "lab_routine_test",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "lab_special_test",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "plain_xray_without_enhancement",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "contrast_enhancement_examination",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "magnetic_resonance_imaging",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "computerized_tomography",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mammography",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "chest_xray_for_ptb",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "number_of_ultrasound_examinations",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "general_ultrasound",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "obstetric_ultrasound",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_routine_xray_and_imaging",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "total_special_exams_xray_and_imaging",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "physiotherapy_number_of_treatments",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "occupational_therapy_number_of_treatments",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_technology_prepared",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_technology_issued",
+      "column": "null"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

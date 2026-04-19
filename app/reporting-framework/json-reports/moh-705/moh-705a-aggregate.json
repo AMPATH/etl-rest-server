@@ -1,0 +1,642 @@
+{
+  "name": "moh705AAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "moh705ABase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh705ABase",
+      "alias": "a"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "diarrhoea_with_no_dehydration",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.diarrhoea_with_no_dehydration)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarrhoea_with_some_dehydration",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.diarrhoea_with_some_dehydration)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarrhoea_with_severe_dehydration",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.diarrhoea_with_severe_dehydration)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cholera",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cholera)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dysentry",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.dysentry)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gastroenterities",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gastroenterities)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumonia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.pneumonia)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_pneumonia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.severe_pneumonia)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "upper_respiratory_tract_infections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.upper_respiratory_tract_infections)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "lower_respiratory_tract_infections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.lower_respiratory_tract_infections)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asthma",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.asthma)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "presumed_tuberculosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.presumed_tuberculosis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspected_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.suspected_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tested_for_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tested_for_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "confirmed_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.confirmed_malaria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ear_infection",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.ear_infection)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malnutrition",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.malnutrition)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anaemia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.anaemia)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "meningococcal_meningitis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.meningococcal_meningitis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_meningitis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.other_meningitis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_sepsis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.neonatal_sepsis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_tetanus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.neonatal_tetanus)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "poliomyelitis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.poliomyelitis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chicken_pox",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.chicken_pox)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.measles)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hepatitis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hepatitis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "amoebiasis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.amoebiasis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mumps",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.mumps)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.typhoid_fever)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bilharzia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.bilharzia)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "intestinal_worms",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.intestinal_worms)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_infections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.eye_infections)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tonsilities",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tonsilities)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "urinary_tract_infections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.urinary_tract_infections)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mental_disorders",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.mental_disorders)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dental_disorders",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.dental_disorders)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "jiggers_infestation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.jiggers_infestation)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diseases_of_the_skin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.diseases_of_the_skin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "downs_syndrome",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.downs_syndrome)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "poisoning",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.poisoning)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "road_traffic_injuries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.road_traffic_injuries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "deaths_due_to_road_traffic_injuries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.deaths_due_to_road_traffic_injuries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "violence_related_injuries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.violence_related_injuries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_injuries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.other_injuries)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sexual_violence",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.sexual_violence)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "burns",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.burns)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "snake_bites",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.snake_bites)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dog_bites",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.dog_bites)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_bites",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.other_bites)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.diabetes)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "epilepsy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.epilepsy)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_convulsive_disorders",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.other_convulsive_disorders)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rheumatic_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.rheumatic_fever)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "brucellosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.brucellosis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rickets",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.rickets)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cerebral_palsy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cerebral_palsy)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "autism",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.autism)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tryponosomiasis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tryponosomiasis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.yellow_fever)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "viral_haemorrhagic_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.viral_haemorrhagic_fever)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rift_valley_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.rift_valley_fever)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chikungunya",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.chikungunya)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dengue_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.dengue_fever)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leishmaniasis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.leishmaniasis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cutaneous_leishmaniasis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cutaneous_leishmaniasis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspected_anthrax",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.suspected_anthrax)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspected_childhood_cancers",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.suspected_childhood_cancers)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hypoxaemia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hypoxaemia)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "all_other_diseases",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.all_other_diseases)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "new_attendances",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.new_attendances)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "re_attendances",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.re_attendances)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_other_health_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.referrals_from_other_health_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_to_other_health_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.referrals_to_other_health_facility)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_community_unit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.referrals_from_community_unit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_to_community_unit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.referrals_to_community_unit)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

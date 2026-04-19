@@ -1,0 +1,417 @@
+{
+  "name": "immunizationAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "immunizationBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "immunizationBase",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "bcg_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.bcg_vaccine_age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bcg_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.bcg_vaccine_age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv1_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv1_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv1_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv1_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv2_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv2_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv2_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv2_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv3_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv3_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv3_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv3_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv1_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.ipv1_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv1_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.ipv1_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv2_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.ipv2_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv2_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.ipv2_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine1_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.dpt_hep_vaccine1 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine1_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.dpt_hep_vaccine1 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine2_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.dpt_hep_vaccine2 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine2_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.dpt_hep_vaccine2 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine3_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.dpt_hep_vaccine3 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine3_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.dpt_hep_vaccine3 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine1_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.pneumococal_vaccine1 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine1_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.pneumococal_vaccine1 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine2_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.pneumococal_vaccine2 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine2_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.pneumococal_vaccine2 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine3_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.pneumococal_vaccine3 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine3_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.pneumococal_vaccine3 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine1_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.rotavirus_vaccine1 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine1_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.rotavirus_vaccine1 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine2_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.rotavirus_vaccine2 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine2_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.rotavirus_vaccine2 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine3_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.rotavirus_vaccine3 AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine3_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.rotavirus_vaccine3 AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.vitaminA_vaccine_age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.vitaminA_vaccine_age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.yellow_fever_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.yellow_fever_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.measles_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.measles_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_conjugate_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.typhoid_conjugate_vaccine AND s.age_greater_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_conjugate_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.typhoid_conjugate_vaccine AND s.age_less_than_1yr)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fully_immunized_children",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.fully_immunized_children)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_12_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.vitaminA_12_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_rubella_1_2_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.measles_vaccine AND s.age >= 1 AND s.age < 2)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_rubella_greater_2_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.measles_vaccine AND s.age >= 2)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_12_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.covid_19_vaccine_12_17)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_18_59",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.covid_19_vaccine_18_59)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_60_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.covid_19_vaccine_60_above)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

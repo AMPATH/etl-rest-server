@@ -1,0 +1,113 @@
+{
+  "name": "socialWorkAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "socialWorkBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "socialWorkBase",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "psycho_social_counselling",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.psycho_social_counselling)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alcohol_and_drug_abuse",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.alcohol_and_drug_abuse)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mental_illness",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.mental_illness)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolescent_issues",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.adolescent_issues)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psycho_social_economic_assessment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.psycho_social_economic_assessment)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "social_investigations",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.social_investigations)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psycho_social_rehabilitation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.psycho_social_rehabilitation)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "outreach_services",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.outreach_services)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mental_health_referral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.mental_health_referral)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

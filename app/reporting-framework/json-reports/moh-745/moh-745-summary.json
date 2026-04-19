@@ -1,0 +1,7 @@
+{
+  "reports": [
+    "cervicalCancerAggregate",
+    "breastCancerAggregate",
+    "colorectalCancerAggregate"
+  ]
+}

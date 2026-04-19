@@ -1,0 +1,143 @@
+{
+  "name": "generalOutpatientBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "obs_datetime",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_greater_5yrs_male_new",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_greater_5yrs_male_revisit",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_greater_5yrs_female_new",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5)  AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_greater_5yrs_female_revisit",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5)   AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_less_5yrs_male_new",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5)   AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_less_5yrs_male_revisit",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5) AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_less_5yrs_female_new",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5)  AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_attendance_less_5yrs_female_revisit",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5)  AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "over_60_years_new",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 60) AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "over_60_years_revisit",
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 60) AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+    },
+    {
+      "type": "derived_column",
+      "alias": "casualty_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "casualty_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (167)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

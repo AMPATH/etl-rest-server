@@ -1,0 +1,89 @@
+{
+  "name": "otherServicesAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "otherServicesBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "otherServicesBase",
+      "alias": "os"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "medical_examinations_except_p3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(os.medical_examinations_except_p3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_medical_reports",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(os.opd_medical_reports)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_dressing_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(os.opd_dressing_done)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_removal_of_stitches",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(os.opd_removal_of_stitches)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_injections_given",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(os.opd_injections_given)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_stitching",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(os.opd_stitching)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
