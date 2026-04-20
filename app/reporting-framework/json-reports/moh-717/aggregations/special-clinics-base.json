@@ -1,0 +1,309 @@
+{
+  "name": "specialClinicsBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "obs_datetime",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ent_clinic_attendance_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ent_clinic_attendance_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_clinic_attendance_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "eye_clinic_attendance_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_and_leprosy_attendance_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_and_leprosy_attendance_revisit",
+      "column": "null"
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(e.encounter_type = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(e.encounter_type = 2, 1, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "psychiatry_attendance_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "psychiatry_attendance_revisit",
+      "column": "null"
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "occupational_therapy_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "occupational_therapy_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "physiotherapy_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "physiotherapy_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_clinics_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_clinics_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(e.encounter_type = 3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(e.encounter_type = 4, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obstetrics_gynaecology_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obstetrics_gynaecology_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nutrition_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1839 and o.value_coded = 7850 AND e.encounter_type = 168, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nutrition_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 1839 and o.value_coded = 11233 AND e.encounter_type = 168, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "oncology_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(e.encounter_type = 38, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "oncology_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(e.encounter_type = 39, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "renal_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "renal_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_special_clinics_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_special_clinics_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (1,2,38,39,168)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

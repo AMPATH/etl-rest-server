@@ -1,0 +1,658 @@
+{
+  "name": "breastCancerBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_normal_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_normal_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_normal_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_normal_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_normal_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_normal_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_abnormal_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_abnormal_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_abnormal_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_abnormal_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_abnormal_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cbe_abnormal_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birad_0_to_3_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birad_0_to_3_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birad_0_to_3_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birad_0_to_3_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birad_0_to_3_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birad_0_to_3_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_4_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_4_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_4_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_4_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_4_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_4_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_5_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_5_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_5_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_5_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_5_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_5_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_6_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_6_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_6_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_6_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_6_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ultrasound_birads_6_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_0_3_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_0_3_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_0_3_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_0_3_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_0_3_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_0_3_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birdads_4_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birdads_4_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birdads_4_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birdads_4_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birdads_4_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birdads_4_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_5_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_5_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_5_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_5_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_5_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_5_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_6_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_6_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_6_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_6_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_6_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammogram_birads_6_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_followed_up_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_followed_up_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_followed_up_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_followed_up_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_followed_up_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_followed_up_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_referred_out_25_34_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_referred_out_35_39_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_referred_out_40_45_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_referred_out_56_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_referred_out_above_75_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_referred_out_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (69)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

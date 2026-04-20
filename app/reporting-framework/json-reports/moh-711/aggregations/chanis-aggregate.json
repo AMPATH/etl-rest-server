@@ -1,0 +1,713 @@
+{
+  "name": "chanisAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "chanisBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "chanisBase",
+      "alias": "ch"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_weight_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_weight_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.underweight_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.underweight_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_underweight_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_underweight_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.overweight_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.overweight_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.obese_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.obese_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_weight_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_weight_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.underweight_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.underweight_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_underweight_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_underweight_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.overweight_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.overweight_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.obese_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.obese_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_weight_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_weight_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.underweight_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.underweight_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_underweight_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_underweight_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.overweight_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.overweight_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.obese_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.obese_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_normal_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.muac_6_59_months_normal_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_normal_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.muac_6_59_months_normal_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_moderate_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.muac_6_59_months_moderate_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_moderate_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.muac_6_59_months_moderate_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_severe_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.muac_6_59_months_severe_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_severe_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.muac_6_59_months_severe_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "height_for_age_0_6_months_normal_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.height_for_age_0_6_months_normal_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "height_for_age_0_6_months_normal_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.height_for_age_0_6_months_normal_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.stunted_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.stunted_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_stunted_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_stunted_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_height_for_age_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_height_for_age_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.stunted_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.stunted_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_stunted_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_stunted_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_height_for_age_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.normal_height_for_age_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.stunted_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.stunted_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_stunted_24_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.severely_stunted_24_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_visits_0_59_months_attending_cwc_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.new_visits_0_59_months_attending_cwc_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_visits_0_59_months_attending_cwc_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.new_visits_0_59_months_attending_cwc_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kwashiokor_0_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.kwashiokor_0_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kwashiokor_0_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.kwashiokor_0_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "marasmus_0_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.marasmus_0_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "marasmus_0_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.marasmus_0_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "faltering_growth_0_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.faltering_growth_0_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "faltering_growth_0_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.faltering_growth_0_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "exclusive_breastfeeding_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.exclusive_breastfeeding_0_6_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "exclusive_breastfeeding_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.exclusive_breastfeeding_0_6_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dewormed_12_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.dewormed_12_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dewormed_12_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.dewormed_12_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mnps_supplimentation_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.mnps_supplimentation_6_23_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mnps_supplimentation_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.mnps_supplimentation_6_23_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_severe_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_severe_dehydration_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_severe_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_severe_dehydration_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_some_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_some_dehydration_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_some_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_some_dehydration_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_no_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_no_dehydration_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_no_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_no_dehydration_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_treated_with_ors_zinc_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_treated_with_ors_zinc_dehydration_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_treated_with_ors_zinc_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.diarhoea_treated_with_ors_zinc_dehydration_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_pneumomia_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_pneumomia_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_pneumomia_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_pneumomia_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_deaths_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_deaths_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_deaths_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_deaths_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_disability_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_disability_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_disability_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_disability_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_delayed_development_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_delayed_development_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_delayed_development_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ch.under_five_delayed_development_female)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

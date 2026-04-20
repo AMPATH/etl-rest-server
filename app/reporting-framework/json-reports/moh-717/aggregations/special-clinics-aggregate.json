@@ -1,0 +1,297 @@
+{
+  "name": "specialClinicsAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "specialClinicsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "specialClinicsBase",
+      "alias": "sp"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "ent_clinic_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.ent_clinic_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ent_clinic_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.ent_clinic_attendance_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_clinic_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.eye_clinic_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eye_clinic_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.eye_clinic_attendance_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_and_leprosy_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.tb_and_leprosy_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_and_leprosy_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.tb_and_leprosy_attendance_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.ccc_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.ccc_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psychiatry_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.psychiatry_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psychiatry_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.psychiatry_attendance_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.orthopaedic_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.orthopaedic_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "occupational_therapy_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.occupational_therapy_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "occupational_therapy_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.occupational_therapy_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "physiotherapy_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.physiotherapy_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "physiotherapy_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.physiotherapy_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.medical_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "medical_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.medical_attendance_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_clinics_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.surgical_clinics_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_clinics_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.surgical_clinics_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_attendance_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.paediatrics_attendance_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paediatrics_attendance_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.paediatrics_attendance_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obstetrics_gynaecology_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.obstetrics_gynaecology_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obstetrics_gynaecology_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.obstetrics_gynaecology_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nutrition_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.nutrition_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nutrition_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.nutrition_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "oncology_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.oncology_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "oncology_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.oncology_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "renal_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.renal_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "renal_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.renal_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_special_clinics_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.other_special_clinics_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_special_clinics_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.other_special_clinics_revisit)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

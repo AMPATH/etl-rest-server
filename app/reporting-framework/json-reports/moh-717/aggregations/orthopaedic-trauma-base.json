@@ -1,0 +1,193 @@
+{
+  "name": "orthopaedicTraumaBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "obs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = obs.person_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "obs_datetime",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "casts_fixed_less_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "casts_fixed_less_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "casts_fixed_over_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "casts_fixed_over_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tractions_fixed_less_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tractions_fixed_less_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tractions_fixed_over_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tractions_fixed_over_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "closed_reductions_less_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "closed_reductions_less_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "closed_reductions_over_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "closed_reductions_over_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_assisted_in_theatre_less_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_assisted_in_theatre_less_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_assisted_in_theatre_over_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "orthopaedic_assisted_in_theatre_over_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "club_foot_seen_less_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "club_foot_seen_less_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "club_foot_seen_over_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "club_foot_seen_over_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "crepe_bandages_applied_less_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "crepe_bandages_applied_less_5_years_revisit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "crepe_bandages_applied_over_5_years_new",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "crepe_bandages_applied_over_5_years_revisit",
+      "column": "null"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

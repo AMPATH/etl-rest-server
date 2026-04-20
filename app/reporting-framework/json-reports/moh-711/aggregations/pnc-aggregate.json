@@ -1,0 +1,137 @@
+{
+  "name": "pncAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "pncBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "pncBase",
+      "alias": "p"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "pnc_new_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.pnc_new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pnc_revisit_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.pnc_revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "women_couselled_on_post_partum_fp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.women_couselled_on_post_partum_fp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "women_received_post_partum_fp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.women_received_post_partum_fp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mothers_post_partum_care_48_hours",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.mothers_post_partum_care_48_hours)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mothers_post_partum_care_3_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.mothers_post_partum_care_3_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mothers_post_partum_care_after_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.mothers_post_partum_care_after_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infants_post_partum_care_48_hours",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.infants_post_partum_care_48_hours)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infants_post_partum_care_3_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.infants_post_partum_care_3_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infants_post_partum_care_after_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.infants_post_partum_care_after_6_weeks)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fistula_cases",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.fistula_cases)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals_from_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.referrals_from_community)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

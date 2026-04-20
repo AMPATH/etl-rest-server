@@ -1,0 +1,182 @@
+{
+  "name": "maternityBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "obs_datetime",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_deliveries",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1170, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "caesarian_sections",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1171, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breach_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1172, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "assisted_vaginal_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 5630 AND (o.value_coded = 2167 OR o.value_coded = 2166), 1, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "born_before_arrival",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10423 AND o.value_coded = 159, 1, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_deaths_audited_within_7_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "live_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6224 AND o.value_coded = 1843, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fresh_still_birth",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6224 AND o.value_coded = 10877, 1, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "neonatal_deaths_0_28_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "neonatal_deaths_audits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "low_birth_weight_less_2500gms",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 6433 AND o.value_numeric < 2500, 1, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "babies_discharged_alive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(o.concept_id = 10938 AND o.value_coded = 8701, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (196, 274, 273, 269)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

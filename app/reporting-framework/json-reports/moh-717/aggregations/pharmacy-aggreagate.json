@@ -1,0 +1,73 @@
+{
+  "name": "pharmacyAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "pharmacyBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "pharmacyBase",
+      "alias": "p"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "prescriptions_issued_common_drugs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.prescriptions_issued_common_drugs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prescriptions_issued_antibiotics",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.prescriptions_issued_antibiotics)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prescriptions_issued_special_drugs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.prescriptions_issued_special_drugs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prescriptions_issued_drugs_children",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(p.prescriptions_issued_drugs_children)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

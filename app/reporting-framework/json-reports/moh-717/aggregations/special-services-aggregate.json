@@ -1,0 +1,177 @@
+{
+  "name": "specialServicesAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "specialServicesBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "specialServicesBase",
+      "alias": "sp"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "lab_routine_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.lab_routine_test)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "lab_special_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.lab_special_test)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "plain_xray_without_enhancement",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.plain_xray_without_enhancement)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "contrast_enhancement_examination",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.contrast_enhancement_examination)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "magnetic_resonance_imaging",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.magnetic_resonance_imaging)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "computerized_tomography",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.computerized_tomography)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mammography",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.mammography)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chest_xray_for_ptb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.chest_xray_for_ptb)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "number_of_ultrasound_examinations",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.number_of_ultrasound_examinations)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "general_ultrasound",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.general_ultrasound)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obstetric_ultrasound",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.obstetric_ultrasound)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_routine_xray_and_imaging",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.total_routine_xray_and_imaging)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_special_exams_xray_and_imaging",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.total_special_exams_xray_and_imaging)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "physiotherapy_number_of_treatments",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.physiotherapy_number_of_treatments)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "occupational_therapy_number_of_treatments",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.occupational_therapy_number_of_treatments)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_technology_prepared",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.orthopaedic_technology_prepared)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_technology_issued",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(sp.orthopaedic_technology_issued)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
