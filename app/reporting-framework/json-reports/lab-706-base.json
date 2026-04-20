@@ -300,7 +300,7 @@
     {
       "type": "simple_column",
       "alias": "psa",
-      "column": "fbc.psa"
+      "column": "fbc.total_psa"
     },
     {
       "type": "derived_column",
