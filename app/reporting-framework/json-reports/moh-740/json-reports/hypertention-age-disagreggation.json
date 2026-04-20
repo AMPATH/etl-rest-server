@@ -1,0 +1,73 @@
+{
+  "name": "hypertentionAgeGenderDisaggregation",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "hypertentionAgeBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "hypertentionAgeBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "b.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_range",
+      "column": "b.age_range"
+    },
+    {
+      "type": "simple_column",
+      "alias": "has_htn",
+      "column": "b.has_htn"
+    },
+    {
+      "type": "derived_column",
+      "alias": "total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(b.person_id)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["gender", "age_range", "location_id", "has_htn"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": ["location_uuid", "join_location", "person_id"],
+    "disaggregationColumns": ["gender", "age_range"]
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
