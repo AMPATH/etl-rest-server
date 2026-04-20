@@ -16,6 +16,14 @@
         "type": "INNER",
         "joinCondition": "fbc.location_id = l.location_id"
       }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fbc.person_id = p.person_id"
+      }
     }
   ],
   "columns": [
@@ -148,6 +156,219 @@
       "type": "simple_column",
       "alias": "tsh",
       "column": "fbc.tsh"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urine_glucose",
+      "column": "fbc.urine_glucose"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urinalysis",
+      "column": "fbc.urinalysis"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urine_ketones",
+      "column": "fbc.urine_ketones"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urine_proteins",
+      "column": "fbc.urine_proteins"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urine_pus_cells",
+      "column": "fbc.urine_pus_cells"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urine_s_haematobium",
+      "column": "fbc.urine_s_haematobium"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urine_t_vaginalis",
+      "column": "fbc.urine_t_vaginalis"
+    },
+    {
+      "type": "simple_column",
+      "alias": "urine_yeast_cells",
+      "column": "fbc.urine_yeast_cells"
+    },
+    {
+      "type": "simple_column",
+      "alias": "malaria_bs",
+      "column": "fbc.malaria_bs"
+    },
+    {
+      "type": "simple_column",
+      "alias": "malaria_rdt",
+      "column": "fbc.malaria_rdt"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hookworm",
+      "column": "fbc.hookworm"
+    },
+    {
+      "type": "simple_column",
+      "alias": "roundworms",
+      "column": "fbc.roundworms"
+    },
+    {
+      "type": "simple_column",
+      "alias": "fbc",
+      "column": "fbc.fbc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "blood_group",
+      "column": "fbc.blood_group"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv",
+      "column": "fbc.hiv"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hep_b",
+      "column": "fbc.hep_b"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hep_c",
+      "column": "fbc.hep_c"
+    },
+    {
+      "type": "simple_column",
+      "alias": "syphilis",
+      "column": "fbc.syphilis"
+    },
+    {
+      "type": "simple_column",
+      "alias": "salmonella",
+      "column": "fbc.salmonella"
+    },
+    {
+      "type": "simple_column",
+      "alias": "vdrl",
+      "column": "fbc.vdrl"
+    },
+    {
+      "type": "simple_column",
+      "alias": "brucella",
+      "column": "fbc.brucella"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rheumatoid_factor",
+      "column": "fbc.rheumatoid_factor"
+    },
+    {
+      "type": "simple_column",
+      "alias": "h_pylori",
+      "column": "fbc.h_pylori"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hcg",
+      "column": "fbc.hcg"
+    },
+    {
+      "type": "simple_column",
+      "alias": "crag",
+      "column": "fbc.crag"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4",
+      "column": "fbc.cd4"
+    },
+    {
+      "type": "simple_column",
+      "alias": "viral_load",
+      "column": "fbc.viral_load"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_culture",
+      "column": "fbc.tb_culture"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_at_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "taenia",
+      "column": "fbc.taenia"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hymenolepis_nana",
+      "column": "fbc.hymenolepis_nana"
+    },
+    {
+      "type": "simple_column",
+      "alias": "s_mansoni",
+      "column": "fbc.s_mansoni"
+    },
+    {
+      "type": "simple_column",
+      "alias": "trichuris_trichura",
+      "column": "fbc.trichuris_trichura"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amoeba",
+      "column": "fbc.amoeba"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hb_estimation",
+      "column": "fbc.hb_estimation"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hba1c",
+      "column": "fbc.hba1c"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sickling_test",
+      "column": "fbc.sickling_test"
+    },
+    {
+      "type": "simple_column",
+      "alias": "peripheral_blood_films",
+      "column": "fbc.peripheral_blood_films"
+    },
+    {
+      "type": "simple_column",
+      "alias": "bma",
+      "column": "fbc.bma"
+    },
+    {
+      "type": "simple_column",
+      "alias": "coagulation_profile",
+      "column": "fbc.coagulation_profile"
+    },
+    {
+      "type": "simple_column",
+      "alias": "reticulocyte_count",
+      "column": "fbc.reticulocyte_count"
+    },
+    {
+      "type": "simple_column",
+      "alias": "esr",
+      "column": "fbc.esr"
     }
   ],
   "filters": {
