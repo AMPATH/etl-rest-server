@@ -9,12 +9,11 @@ const routes = [
     method: 'GET',
     path: '/etl/lab-706',
     config: {
-      // plugins: {
-      //   hapiAuthorization: {
-      //     role: privileges.canViewClinicDashBoard
-      //   }
-      // },
-      // auth: false,
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);

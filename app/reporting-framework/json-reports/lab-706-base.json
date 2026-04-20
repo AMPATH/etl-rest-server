@@ -6,7 +6,7 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.flat_blood_chemistry",
+      "table": "etl.flat_moh_706_report",
       "alias": "fbc"
     },
     {
