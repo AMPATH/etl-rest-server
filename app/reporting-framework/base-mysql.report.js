@@ -619,6 +619,14 @@ import * as moh_705b_report from './json-reports/moh-705/moh-705b-summary.json';
 import * as moh_705b_aggregate from './json-reports/moh-705/moh-705b-aggregate.json';
 import * as moh_705b_base from './json-reports/moh-705/moh-705b-base.json';
 
+// moh740 report
+import * as moh_740_report from './json-reports/moh-740/moh-740-report.json';
+import * as diabetes_and_hypertention_comprehensive_care_report_disaggregation from './json-reports/moh-740/json-reports/diabetes-and-hypertention-comprehensive-care-disaggregate.json';
+import * as diabetes_and_hypertention_comprehensive_care_report_base from './json-reports/moh-740/json-reports/diabetes-and-hypertention-comprehensive-care-base.json';
+import * as diabetes_type_age_gender_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-age-gender-disaggregate.json';
+import * as diabetes_type_age_base from './json-reports/moh-740/json-reports/diabetes-type-age-base.json';
+import * as hypertention_age_base from './json-reports/moh-740/json-reports/hypertention-age-base.json';
+import * as hypertention_type_age_gender_disaggregation from './json-reports/moh-740/json-reports/hypertention-age-disagreggation.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2747,8 +2755,37 @@ export class BaseMysqlReport {
             moh705BBase: this.cloneJsonSchema(moh_705b_base)
           });
           break;
+        case 'MOH-740-report':
+          resolve({
+            main: this.cloneJsonSchema(moh_740_report)
+          });
+          break;
         default:
           reject('Unknown report ', reportName);
+          break;
+        case 'diabetesAndHypertentionComprehensiveCareReportDisAggregation':
+          resolve({
+            main: this.cloneJsonSchema(
+              diabetes_and_hypertention_comprehensive_care_report_disaggregation
+            ),
+            diabetesAndHypertentionComprehensiveCareReportBase: this.cloneJsonSchema(
+              diabetes_and_hypertention_comprehensive_care_report_base
+            )
+          });
+          break;
+        case 'diabetesTypeAgeGenderDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(diabetes_type_age_gender_disaggregation),
+            diabetesTypeAgeBase: this.cloneJsonSchema(diabetes_type_age_base)
+          });
+          break;
+        case 'hypertentionAgeGenderDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(
+              hypertention_type_age_gender_disaggregation
+            ),
+            hypertentionAgeBase: this.cloneJsonSchema(hypertention_age_base)
+          });
           break;
       }
     });
