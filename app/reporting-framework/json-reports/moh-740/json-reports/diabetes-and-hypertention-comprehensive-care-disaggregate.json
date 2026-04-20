@@ -1,0 +1,96 @@
+{
+  "name": "diabetesAndHypertentionComprehensiveCareReportDisAggregation",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "diabetesAndHypertentionComprehensiveCareReportBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "diabetesAndHypertentionComprehensiveCareReportBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "b.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cumulative_diabetes_patients_in_care",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.cumulative_in_care)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_diagnosed_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.newly_diagnosed_diabetes_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_type_1_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.type_1_diabetes)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_type_2_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.type_2_diabetes)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cumulative_htn_patient",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.cumulative_htn_patient)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id", "gender"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": ["location_uuid", "join_location"],
+    "joinColumnParam": "joinColumnParam",
+    "disaggregationColumns": ["gender"]
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

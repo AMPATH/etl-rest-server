@@ -1,0 +1,92 @@
+{
+  "name": "diabetesAndHypertentionComprehensiveCareReportBase",
+  "version": "1.0",
+  "tag": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.monthly_diabetes_and_hypertention_report",
+      "alias": "mdh"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "mdh.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cumulative_in_care",
+      "column": "mdh.cumulative_in_care"
+    },
+    {
+      "type": "simple_column",
+      "alias": "newly_diagnosed_diabetes_this_month",
+      "column": "mdh.newly_diagnosed_diabetes_this_month"
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_to_clinic_known_dm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.ncd_visit_type = 2345 AND mdh.diabetes_status = 7282, 1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_1_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_2_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cumulative_htn_patient",
+      "column": "mdh.cumulative_htn_patient"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "mdh.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "mdh.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "mdh.endDate"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.location_id in ?",
+        "parameterName": "locationIds"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["mdh.endDate", "mdh.location_id"]
+  }
+}
