@@ -14,7 +14,6 @@ var routes = [
     method: 'GET',
     path: '/etl/odoo/billing/patient/{patientId}',
     config: {
-      auth: 'default',
       handler: function (request, reply) {
         odooProxyService
           .getBillingByPatient(request.params.patientId)
@@ -44,7 +43,6 @@ var routes = [
     method: 'GET',
     path: '/etl/odoo/billing/orders',
     config: {
-      auth: 'default',
       handler: function (request, reply) {
         var q = request.query;
         odooProxyService
@@ -103,7 +101,6 @@ var routes = [
     method: 'GET',
     path: '/etl/odoo/billing/order/{id}',
     config: {
-      auth: 'default',
       handler: function (request, reply) {
         var orderId = parseInt(request.params.id, 10);
 
