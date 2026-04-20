@@ -559,6 +559,10 @@ import * as service_queue_daily_aggregate from './json-reports/service-queue-dai
 import * as service_queue_daily_base from './json-reports/service-queue-daily-base.json';
 import * as service_queue_patient_list_template from './json-reports/service-queue-patient-list-template.json';
 
+//lab 706 blood chemistry report
+import * as lab_706_base from './json-reports/lab-706-base.json';
+import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2478,6 +2482,12 @@ export class BaseMysqlReport {
         case 'service-queue-patient-list-template':
           resolve({
             main: this.cloneJsonSchema(service_queue_patient_list_template)
+          });
+          break;
+        case 'lab706Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(lab_706_aggregate),
+            lab706Base: this.cloneJsonSchema(lab_706_base)
           });
           break;
         default:
