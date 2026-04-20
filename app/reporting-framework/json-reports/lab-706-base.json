@@ -298,77 +298,17 @@
       "column": "fbc.tb_culture"
     },
     {
+      "type": "simple_column",
+      "alias": "psa",
+      "column": "fbc.psa"
+    },
+    {
       "type": "derived_column",
       "alias": "age_at_test",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime)"
       }
-    },
-    {
-      "type": "simple_column",
-      "alias": "taenia",
-      "column": "fbc.taenia"
-    },
-    {
-      "type": "simple_column",
-      "alias": "hymenolepis_nana",
-      "column": "fbc.hymenolepis_nana"
-    },
-    {
-      "type": "simple_column",
-      "alias": "s_mansoni",
-      "column": "fbc.s_mansoni"
-    },
-    {
-      "type": "simple_column",
-      "alias": "trichuris_trichura",
-      "column": "fbc.trichuris_trichura"
-    },
-    {
-      "type": "simple_column",
-      "alias": "amoeba",
-      "column": "fbc.amoeba"
-    },
-    {
-      "type": "simple_column",
-      "alias": "hb_estimation",
-      "column": "fbc.hb_estimation"
-    },
-    {
-      "type": "simple_column",
-      "alias": "hba1c",
-      "column": "fbc.hba1c"
-    },
-    {
-      "type": "simple_column",
-      "alias": "sickling_test",
-      "column": "fbc.sickling_test"
-    },
-    {
-      "type": "simple_column",
-      "alias": "peripheral_blood_films",
-      "column": "fbc.peripheral_blood_films"
-    },
-    {
-      "type": "simple_column",
-      "alias": "bma",
-      "column": "fbc.bma"
-    },
-    {
-      "type": "simple_column",
-      "alias": "coagulation_profile",
-      "column": "fbc.coagulation_profile"
-    },
-    {
-      "type": "simple_column",
-      "alias": "reticulocyte_count",
-      "column": "fbc.reticulocyte_count"
-    },
-    {
-      "type": "simple_column",
-      "alias": "esr",
-      "column": "fbc.esr"
     }
   ],
   "filters": {

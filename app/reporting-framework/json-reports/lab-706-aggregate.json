@@ -112,6 +112,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_direct_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.direct_bili IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_total_bili",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -300,6 +308,54 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.tsh)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_psa",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.psa)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_psa",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.psa)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_psa",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.psa = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_psa",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.psa IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urinalysis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.urinalysis = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urinalysis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.urinalysis IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -512,86 +568,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "positive_taenia",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.taenia = 703, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_taenia",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.taenia IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "positive_hymenolepis_nana",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hymenolepis_nana = 703, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_hymenolepis_nana",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hymenolepis_nana IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "positive_s_mansoni",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.s_mansoni = 703, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_s_mansoni",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.s_mansoni IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "positive_trichuris_trichura",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.trichuris_trichura = 703, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_trichuris_trichura",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.trichuris_trichura IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "positive_amoeba",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.amoeba = 703, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_amoeba",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.amoeba IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "total_fbc",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -616,54 +592,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "total_hb_estimation",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hb_estimation IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hb_estimation_less_than_5",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hb_estimation < 5, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hb_estimation_5_to_10",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hb_estimation >= 5 AND t1.hb_estimation <= 10, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_hba1c",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hba1c IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "pre_diabetes_hba1c",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hba1c >= 5.7 AND t1.hba1c <= 6.4, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "diabetic_hba1c",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.hba1c >= 6.5, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "total_cd4",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -676,70 +604,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(IF(t1.cd4 < 500, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_sickling_test",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.sickling_test IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "positive_sickling_test",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.sickling_test = 703, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_peripheral_blood_films",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.peripheral_blood_films IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_bma",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.bma IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_coagulation_profile",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.coagulation_profile IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_reticulocyte_count",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.reticulocyte_count IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_esr",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(IF(t1.esr IS NOT NULL, 1, 0))"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "max_esr",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "MAX(t1.esr)"
       }
     },
     {
