@@ -6,26 +6,6 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.flat_moh_706_report",
-      "alias": "fbc"
-    },
-    {
-      "table": "amrs.location",
-      "alias": "l",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "fbc.location_id = l.location_id"
-      }
-    },
-    {
-      "table": "amrs.person",
-      "alias": "p",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "fbc.person_id = p.person_id"
-      }
-    },
-    {
       "table": "amrs.person_name",
       "alias": "pn",
       "join": {
@@ -106,19 +86,16 @@
       "alias": "encounter_id",
       "column": "fbc.encounter_id"
     },
-
     {
       "type": "simple_column",
       "alias": "date",
       "column": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
     },
-
     {
       "type": "simple_column",
       "alias": "opd_ip_ref_no",
       "column": "pi.identifier"
     },
-
     {
       "type": "derived_column",
       "alias": "lab_no",
@@ -127,7 +104,6 @@
         "expression": "fbc.encounter_id"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "revisit_no",
@@ -136,7 +112,6 @@
         "expression": "NULL"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "full_name",
@@ -145,7 +120,6 @@
         "expression": "CONCAT(COALESCE(pn.given_name, ''), ' ', COALESCE(pn.middle_name, ''), ' ', COALESCE(pn.family_name, ''))"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "age",
@@ -154,13 +128,11 @@
         "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime)"
       }
     },
-
     {
       "type": "simple_column",
       "alias": "sex",
       "column": "p.gender"
     },
-
     {
       "type": "derived_column",
       "alias": "county_sub_county",
@@ -169,7 +141,6 @@
         "expression": "CONCAT(COALESCE(pa.county_district, ''), ' / ', COALESCE(pa.address6, ''))"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "village_estate_landmark",
@@ -178,55 +149,11 @@
         "expression": "COALESCE(pa.address2, pa.city_village, '')"
       }
     },
-
     {
       "type": "simple_column",
       "alias": "telephone_number",
       "column": "pat.value"
     },
-
-    {
-      "type": "simple_column",
-      "alias": "clinical_diagnosis",
-      "column": "fbc.clinical_diagnosis"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "prior_treatment",
-      "column": "fbc.prior_treatment"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "type_of_specimen",
-      "column": "fbc.type_of_specimen"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "condition_of_specimen",
-      "column": "fbc.condition_of_specimen"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "investigation_required",
-      "column": "fbc.investigation_required"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "date_sample_collected",
-      "column": "DATE_FORMAT(fbc.date_sample_collected, '%d/%m/%Y')"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "date_sample_received",
-      "column": "DATE_FORMAT(fbc.date_sample_received, '%d/%m/%Y')"
-    },
-
     {
       "type": "derived_column",
       "alias": "clinician_name",
@@ -235,49 +162,11 @@
         "expression": "CONCAT(COALESCE(prov_name.given_name, ''), ' ', COALESCE(prov_name.family_name, ''))"
       }
     },
-
     {
       "type": "simple_column",
       "alias": "date_sample_analysed",
       "column": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
     },
-
-    {
-      "type": "simple_column",
-      "alias": "results",
-      "column": "fbc.results"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "date_results_dispatched",
-      "column": "DATE_FORMAT(fbc.date_results_dispatched, '%d/%m/%Y')"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "amount_charged",
-      "column": "fbc.amount_charged"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "receipt_number",
-      "column": "fbc.receipt_number"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "referral_type",
-      "column": "fbc.referral_type"
-    },
-
-    {
-      "type": "simple_column",
-      "alias": "comments",
-      "column": "fbc.comments"
-    },
-
     {
       "type": "derived_column",
       "alias": "testing_officer",
@@ -286,7 +175,6 @@
         "expression": "CONCAT(COALESCE(prov_name.given_name, ''), ' ', COALESCE(prov_name.family_name, ''))"
       }
     },
-
     {
       "type": "simple_column",
       "alias": "location",

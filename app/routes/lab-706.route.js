@@ -53,11 +53,14 @@ const routes = [
     method: 'GET',
     path: '/lab-706/patient-list',
     config: {
-      auth: 'default',
       plugins: {},
       handler: function (request, reply) {
         if (request.query['startDate']) {
           let requestParams = Object.assign({}, request.query, request.params);
+          if (!requestParams.indicators) {
+            requestParams.indicators = 'total_exam';
+          }
+
           let reportParams = etlHelpers.getReportParams(
             'lab706Aggregate',
             [],
@@ -79,7 +82,7 @@ const routes = [
               reply(error);
             });
         } else {
-          reply(Boom.badData('Misssing location or service params'));
+          reply('Misssing location or service params');
         }
       },
       description: 'Service Queue Daily report Patient List',
