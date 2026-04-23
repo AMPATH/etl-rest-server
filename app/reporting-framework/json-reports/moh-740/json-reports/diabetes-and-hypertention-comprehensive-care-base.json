@@ -213,7 +213,7 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "mdh.location_id in ?",
-        "parameterName": "locationIds"
+        "parameterName": "locations"
       }
     ]
   },
