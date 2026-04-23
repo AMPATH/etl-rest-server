@@ -7,7 +7,7 @@ import { Lab706Service } from '../../service/lab-706.service';
 const routes = [
   {
     method: 'GET',
-    path: '/etl/lab-706',
+    path: '/lab-706',
     config: {
       plugins: {
         hapiAuthorization: {
@@ -47,6 +47,47 @@ const routes = [
         },
         params: {}
       }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/lab-706/patient-list',
+    config: {
+      plugins: {},
+      handler: function (request, reply) {
+        if (request.query['startDate']) {
+          let requestParams = Object.assign({}, request.query, request.params);
+          if (!requestParams.indicators) {
+            requestParams.indicators = 'total_exam';
+          }
+
+          let reportParams = etlHelpers.getReportParams(
+            'lab706Aggregate',
+            [],
+            requestParams
+          );
+
+          let service = new Lab706Service(
+            'lab706Aggregate',
+            reportParams.requestParams
+          );
+
+          service
+            .getPatientListReport(reportParams.requestParams)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              console.error('Error: ', error);
+              reply(error);
+            });
+        } else {
+          reply('Misssing location or service params');
+        }
+      },
+      description: 'Service Queue Daily report Patient List',
+      notes: 'Service Queue Daily report Patient List',
+      tags: ['api']
     }
   }
 ];

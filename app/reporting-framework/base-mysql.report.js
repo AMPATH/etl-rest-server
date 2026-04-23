@@ -562,6 +562,7 @@ import * as service_queue_patient_list_template from './json-reports/service-que
 //lab 706 blood chemistry report
 import * as lab_706_base from './json-reports/lab-706-base.json';
 import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
+import * as lab_706_patient_list_template from './json-reports/lab-706-patient-list-template.json';
 
 export class BaseMysqlReport {
   constructor(reportName, params) {
@@ -2488,6 +2489,11 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(lab_706_aggregate),
             lab706Base: this.cloneJsonSchema(lab_706_base)
+          });
+          break;
+        case 'lab-706-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(lab_706_patient_list_template)
           });
           break;
         default:
