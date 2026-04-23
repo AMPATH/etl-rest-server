@@ -76,16 +76,19 @@ export class Lab706Service extends MultiDatasetPatientlistReport {
     let indicators = reportParams.indicators
       ? reportParams.indicators.split(',')
       : [];
-
     let report = new PatientlistMysqlReport('lab706Aggregate', reportParams);
-
-    return new Promise(function (resolve, reject) {
-      Promise.join(report.generatePatientListReport(indicators), (results) => {
-        resolve(results);
-      }).catch((errors) => {
+    return report
+      .generatePatientListReport(indicators)
+      .then((result) => {
+        return {
+          schemas: result.schemas,
+          sqlQuery: result.sqlQuery,
+          result: result.results.results
+        };
+      })
+      .catch((errors) => {
         console.error('Error', errors);
-        reject(errors);
+        throw errors;
       });
-    });
   }
 }
