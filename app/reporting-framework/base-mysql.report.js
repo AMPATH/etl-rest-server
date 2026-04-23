@@ -623,10 +623,13 @@ import * as moh_705b_base from './json-reports/moh-705/moh-705b-base.json';
 import * as moh_740_report from './json-reports/moh-740/moh-740-report.json';
 import * as diabetes_and_hypertention_comprehensive_care_report_disaggregation from './json-reports/moh-740/json-reports/diabetes-and-hypertention-comprehensive-care-disaggregate.json';
 import * as diabetes_and_hypertention_comprehensive_care_report_base from './json-reports/moh-740/json-reports/diabetes-and-hypertention-comprehensive-care-base.json';
-import * as diabetes_type_age_gender_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-age-gender-disaggregate.json';
-import * as diabetes_type_age_base from './json-reports/moh-740/json-reports/diabetes-type-age-base.json';
+import * as diabetes_type_1_age_gender_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-1-age-gender-disaggregate.json';
+import * as diabetes_type_1_age_base from './json-reports/moh-740/json-reports/diabetes-type-1-age-base.json';
+import * as diabetes_type_2_age_gender_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-2-age-gender-disaggregate.json';
+import * as diabetes_type_2_age_base from './json-reports/moh-740/json-reports/diabetes-type-2-age-base.json';
 import * as hypertention_age_base from './json-reports/moh-740/json-reports/hypertention-age-base.json';
 import * as hypertention_type_age_gender_disaggregation from './json-reports/moh-740/json-reports/hypertention-age-disagreggation.json';
+import * as moh_740_patient_list_template from './json-reports/moh-740/moh-740-patient-list-template.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2773,10 +2776,20 @@ export class BaseMysqlReport {
             )
           });
           break;
-        case 'diabetesTypeAgeGenderDisaggregation':
+        case 'diabetesType1AgeGenderDisaggregation':
           resolve({
-            main: this.cloneJsonSchema(diabetes_type_age_gender_disaggregation),
-            diabetesTypeAgeBase: this.cloneJsonSchema(diabetes_type_age_base)
+            main: this.cloneJsonSchema(
+              diabetes_type_1_age_gender_disaggregation
+            ),
+            diabetesType1AgeBase: this.cloneJsonSchema(diabetes_type_1_age_base)
+          });
+          break;
+        case 'diabetesType2AgeGenderDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(
+              diabetes_type_2_age_gender_disaggregation
+            ),
+            diabetesType2AgeBase: this.cloneJsonSchema(diabetes_type_2_age_base)
           });
           break;
         case 'hypertentionAgeGenderDisaggregation':
@@ -2785,6 +2798,11 @@ export class BaseMysqlReport {
               hypertention_type_age_gender_disaggregation
             ),
             hypertentionAgeBase: this.cloneJsonSchema(hypertention_age_base)
+          });
+          break;
+        case 'moh-740-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(moh_740_patient_list_template)
           });
           break;
       }

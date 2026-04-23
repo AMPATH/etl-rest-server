@@ -1,18 +1,18 @@
 {
-  "name": "hypertentionAgeGenderDisaggregation",
+  "name": "diabetesType1AgeGenderDisaggregation",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "hypertentionAgeBase",
+      "name": "diabetesType1AgeBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "hypertentionAgeBase",
+      "dataSet": "diabetesType1AgeBase",
       "alias": "b"
     }
   ],
@@ -33,22 +33,17 @@
       "column": "b.age_range"
     },
     {
-      "type": "simple_column",
-      "alias": "has_htn",
-      "column": "b.has_htn"
-    },
-    {
       "type": "derived_column",
-      "alias": "total",
+      "alias": "type_1_diabetes_mellitus",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "count(b.person_id)"
+        "expression": "COUNT(b.type_1_diabetes_mellitus)"
       }
     }
   ],
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["gender", "age_range", "location_id", "has_htn"],
+    "columns": ["gender", "age_range", "location_id"],
     "excludeParam": "excludeParam"
   },
   "transFormDirectives": {
