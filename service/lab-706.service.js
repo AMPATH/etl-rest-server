@@ -14,4 +14,21 @@ export class Lab706Service extends BaseMysqlReport {
       };
     });
   }
+
+  getPatientListReport(reportParams) {
+    let indicators = reportParams.indicators
+      ? reportParams.indicators.split(',')
+      : [];
+
+    let report = new PatientlistMysqlReport('lab706Aggregate', reportParams);
+
+    return new Promise(function (resolve, reject) {
+      Promise.join(report.generatePatientListReport(indicators), (results) => {
+        resolve(results);
+      }).catch((errors) => {
+        console.error('Error', errors);
+        reject(errors);
+      });
+    });
+  }
 }

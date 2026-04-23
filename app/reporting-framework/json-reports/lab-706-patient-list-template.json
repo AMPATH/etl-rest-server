@@ -1,0 +1,331 @@
+{
+  "name": "lab-706-patient-list-template",
+  "version": "1.0",
+  "tag": "lab-706-patient-list-template",
+  "description": "Patient list dataset for Lab MOH 706 report drill-down",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_706_report",
+      "alias": "fbc"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fbc.location_id = l.location_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fbc.person_id = p.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fbc.person_id = pn.person_id AND pn.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT OUTER",
+        "joinCondition": "fbc.person_id = pa.person_id AND pa.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "pat",
+      "join": {
+        "type": "LEFT OUTER",
+        "joinCondition": "fbc.person_id = pat.person_id AND pat.person_attribute_type_id = 10 AND pat.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi",
+      "join": {
+        "type": "LEFT OUTER",
+        "joinCondition": "fbc.person_id = pi.patient_id AND pi.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "LEFT OUTER",
+        "joinCondition": "fbc.encounter_id = e.encounter_id"
+      }
+    },
+    {
+      "table": "amrs.users",
+      "alias": "u",
+      "join": {
+        "type": "LEFT OUTER",
+        "joinCondition": "e.creator = u.user_id"
+      }
+    },
+    {
+      "table": "amrs.provider",
+      "alias": "prov",
+      "join": {
+        "type": "LEFT OUTER",
+        "joinCondition": "u.person_id = prov.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "prov_name",
+      "join": {
+        "type": "LEFT OUTER",
+        "joinCondition": "prov.person_id = prov_name.person_id AND prov_name.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "fbc.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "uuid",
+      "column": "fbc.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "fbc.encounter_id"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "date",
+      "column": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "opd_ip_ref_no",
+      "column": "pi.identifier"
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "lab_no",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "fbc.encounter_id"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "revisit_no",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(COALESCE(pn.given_name, ''), ' ', COALESCE(pn.middle_name, ''), ' ', COALESCE(pn.family_name, ''))"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime)"
+      }
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "p.gender"
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "county_sub_county",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(COALESCE(pa.county_district, ''), ' / ', COALESCE(pa.address6, ''))"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "village_estate_landmark",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(pa.address2, pa.city_village, '')"
+      }
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "telephone_number",
+      "column": "pat.value"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "clinical_diagnosis",
+      "column": "fbc.clinical_diagnosis"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "prior_treatment",
+      "column": "fbc.prior_treatment"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "type_of_specimen",
+      "column": "fbc.type_of_specimen"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "condition_of_specimen",
+      "column": "fbc.condition_of_specimen"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "investigation_required",
+      "column": "fbc.investigation_required"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "date_sample_collected",
+      "column": "DATE_FORMAT(fbc.date_sample_collected, '%d/%m/%Y')"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "date_sample_received",
+      "column": "DATE_FORMAT(fbc.date_sample_received, '%d/%m/%Y')"
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "clinician_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(COALESCE(prov_name.given_name, ''), ' ', COALESCE(prov_name.family_name, ''))"
+      }
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "date_sample_analysed",
+      "column": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "results",
+      "column": "fbc.results"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "date_results_dispatched",
+      "column": "DATE_FORMAT(fbc.date_results_dispatched, '%d/%m/%Y')"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "amount_charged",
+      "column": "fbc.amount_charged"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "receipt_number",
+      "column": "fbc.receipt_number"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "referral_type",
+      "column": "fbc.referral_type"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "comments",
+      "column": "fbc.comments"
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "testing_officer",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(COALESCE(prov_name.given_name, ''), ' ', COALESCE(prov_name.family_name, ''))"
+      }
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "fbc.location_id"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fbc.test_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fbc.test_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid in ?",
+        "parameterName": "locationUuids"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fbc.? is not null",
+        "parameterName": "indicator"
+      }
+    ]
+  }
+}
