@@ -1,18 +1,18 @@
 {
-  "name": "diabetesTypeAgeGenderDisaggregation",
+  "name": "diabetesType2AgeGenderDisaggregation",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "diabetesTypeAgeBase",
+      "name": "diabetesType2AgeBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "diabetesTypeAgeBase",
+      "dataSet": "diabetesType2AgeBase",
       "alias": "b"
     }
   ],
@@ -33,24 +33,27 @@
       "column": "b.age_range"
     },
     {
-      "type": "simple_column",
-      "alias": "diabetes_mellitus_type",
-      "column": "b.diabetes_mellitus_type"
+      "type": "derived_column",
+      "alias": "type_2_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.type_2_diabetes_mellitus)"
+      }
     }
   ],
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["gender", "age_range", "location_id", "diabetes_mellitus_type"],
+    "columns": ["gender", "age_range", "location_id"],
     "excludeParam": "excludeParam"
   },
   "transFormDirectives": {
     "joinColumn": "location_id",
     "skipColumns": ["location_uuid", "join_location", "person_id"],
-    "disaggregationColumns": ["gender", "age_range", "diabetes_mellitus_type"]
+    "disaggregationColumns": ["gender", "age_range"]
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient-list-template",
+      "useTemplate": "moh-740-patient-list-template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {

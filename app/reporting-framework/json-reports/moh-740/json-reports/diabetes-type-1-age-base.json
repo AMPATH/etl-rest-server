@@ -1,0 +1,104 @@
+{
+  "name": "diabetesType1AgeBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.monthly_diabetes_and_hypertention_report",
+      "alias": "mdh"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "inner",
+        "joinCondition": "mdh.location_id = l.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "mdh.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "mdh.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "mdh.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "mdh.endDate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_range",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) <= 5",
+            "value": "0_to_5"
+          },
+          {
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 6 AND 9",
+            "value": "6_to_9"
+          },
+          {
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 10 AND 19",
+            "value": "10_to_19"
+          },
+          {
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 20 AND 35",
+            "value": "20_to_35"
+          },
+          {
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) > 35",
+            "value": "36_and_above"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_1_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.location_id in ?",
+        "parameterName": "locationIds"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["person_id"]
+  }
+}

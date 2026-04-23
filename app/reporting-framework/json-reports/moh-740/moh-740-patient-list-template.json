@@ -1,0 +1,150 @@
+{
+  "name": "moh_740_list_template",
+  "version": "1.0",
+  "tag": "moh_740_list_template",
+  "description": "Patient list template",
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "t1"
+    },
+    {
+      "table": "(SELECT fli.person_id, fli.hiv_viral_load as vl_1, fli.test_datetime as vl_1_date FROM etl.flat_labs_and_imaging fli INNER JOIN (SELECT person_id, MAX(test_datetime) AS max_vl_1_date,max(encounter_id) as encounter_id FROM etl.flat_labs_and_imaging fli where fli.hiv_viral_load is not null GROUP BY person_id) max_dates ON fli.person_id = max_dates.person_id AND fli.test_datetime = max_dates.max_vl_1_date AND fli.encounter_id = max_dates.encounter_id)",
+      "alias": "fli",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fli.person_id = t1.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = id.patient_id AND (id.voided IS NULL || id.voided = 0)"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "amrs_universal_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = amrs_universal_id.patient_id AND (amrs_universal_id.voided IS NULL || amrs_universal_id.voided = 0) AND amrs_universal_id.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "contacts",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id in (10, 48)"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = pa.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "landmark",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = landmark.person_id AND (landmark.voided IS NULL || landmark.voided = 0) AND landmark.person_attribute_type_id = 31"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "t1.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "uuid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "t1.uuid"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "t1.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_universal_id",
+      "column": "amrs_universal_id.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "t1.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "DATE_FORMAT(t1.birthdate,'%Y-%m-%d')"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "extract(year from (from_days(datediff(now(),t1.birthdate))))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "person_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " CONCAT(COALESCE(person_name.given_name, ''), ' ', COALESCE(person_name.middle_name, ''), ' ', COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "phone_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " GROUP_CONCAT(DISTINCT contacts.value SEPARATOR ', ')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "county",
+      "column": "pa.county_district"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_county",
+      "column": "pa.state_province"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ward",
+      "column": "pa.address4"
+    },
+    {
+      "type": "simple_column",
+      "alias": "landmark",
+      "column": "landmark.value"
+    }
+  ],
+  "groupBy": {
+    "columns": ["t1.person_id"]
+  }
+}

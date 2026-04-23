@@ -66,8 +66,140 @@
     },
     {
       "type": "simple_column",
+      "alias": "encounter_date",
+      "column": "DATE_FORMAT(mdh.encounter_date, '%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
       "alias": "endDate",
       "column": "mdh.endDate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "covered_by_shif",
+      "column": "mdh.covered_by_shif"
+    },
+    {
+      "type": "simple_column",
+      "alias": "screened_for_tb_this_month",
+      "column": "mdh.screened_for_tb_this_month"
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_postive_for_tb_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_tb_this_month = 1 AND mdh.tb_screening_status IN (6176,6971),1,NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "screened_for_diabetic_foot_this_month",
+      "column": "mdh.screened_for_diabetic_foot_this_month"
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_diabetic_foot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1 AND mdh.has_diabetic_foot = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_1_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_2_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "amputation_due_to_diabetic_foot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.amputation_due_to_diabetic_foot = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stroke_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.stroke_diagnosis = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ischemic_heart_disease_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.ischemic_heart_disease_diagnosis = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "heart_failure_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.heart_failure_diagnosis = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_neuropathies",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.has_neuropathies = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_diagnosed_htn_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.newly_diagnosed_htn_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_known_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.htn_type = 7286,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_co_morbid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.is_co_morbid = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_known_co_morbid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.is_co_morbid = 1 AND mdh.co_morbid_type = 12778,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_diagnosed_co_morbid_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.newly_diagnosed_co_morbid_this_month = 1,1,NULL)"
+      }
     }
   ],
   "filters": {

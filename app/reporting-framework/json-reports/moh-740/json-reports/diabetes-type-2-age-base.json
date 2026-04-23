@@ -1,5 +1,5 @@
 {
-  "name": "diabetesTypeAgeBase",
+  "name": "diabetesType2AgeBase",
   "version": "1.0",
   "tag": "",
   "description": "",
@@ -51,43 +51,30 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) <= 5",
-            "value": "0_to_5"
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 0 AND 18",
+            "value": "0_to_18"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 6 AND 9",
-            "value": "6_to_9"
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 19 AND 35",
+            "value": "19_to_35"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 10 AND 19",
-            "value": "10_to_19"
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 36 AND 60",
+            "value": "36_to_60"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 20 AND 35",
-            "value": "20_to_35"
-          },
-          {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) >= 36",
-            "value": "36_and_above"
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) > 60",
+            "value": "61_and_above"
           }
         ]
       }
     },
     {
       "type": "derived_column",
-      "alias": "diabetes_mellitus_type",
-      "expressionType": "case_statement",
+      "alias": "type_2_diabetes_mellitus",
+      "expressionType": "simple_expression",
       "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "mdh.diabetes_mellitus_type = 9325",
-            "value": "diabetes_mellitus_type_1"
-          },
-          {
-            "condition": "mdh.diabetes_mellitus_type = 9326",
-            "value": "diabetes_mellitus_type_2"
-          }
-        ]
+        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
       }
     }
   ],
