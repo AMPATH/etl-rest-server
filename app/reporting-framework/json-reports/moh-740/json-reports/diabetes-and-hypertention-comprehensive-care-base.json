@@ -21,9 +21,12 @@
       "column": "mdh.cumulative_in_care"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "newly_diagnosed_diabetes_this_month",
-      "column": "mdh.newly_diagnosed_diabetes_this_month"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.newly_diagnosed_diabetes_this_month = 1, 1,NULL)"
+      }
     },
     {
       "type": "derived_column",
@@ -93,9 +96,12 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "screened_for_diabetic_foot_this_month",
-      "column": "mdh.screened_for_diabetic_foot_this_month"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1,1,NULL)"
+      }
     },
     {
       "type": "derived_column",
@@ -219,6 +225,6 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["mdh.endDate", "mdh.location_id"]
+    "columns": ["person_id"]
   }
 }
