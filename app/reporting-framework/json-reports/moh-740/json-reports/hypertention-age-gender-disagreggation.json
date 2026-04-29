@@ -1,5 +1,5 @@
 {
-  "name": "hypertentionAgeDisaggregation",
+  "name": "hypertentionAgeGenderDisaggregation",
   "version": "1.0",
   "tag": "",
   "description": "",
@@ -24,6 +24,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "gender",
+      "column": "b.gender"
+    },
+    {
+      "type": "simple_column",
       "alias": "age_range",
       "column": "b.age_range"
     },
@@ -34,17 +39,25 @@
       "expressionOptions": {
         "expression": "COUNT(b.has_htn)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "count(b.person_id)"
+      }
     }
   ],
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["age_range", "location_id", "has_htn"],
+    "columns": ["gender", "age_range", "location_id", "has_htn"],
     "excludeParam": "excludeParam"
   },
   "transFormDirectives": {
     "joinColumn": "location_id",
     "skipColumns": ["location_uuid", "join_location", "person_id"],
-    "disaggregationColumns": ["age_range"]
+    "disaggregationColumns": ["gender", "age_range"]
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
