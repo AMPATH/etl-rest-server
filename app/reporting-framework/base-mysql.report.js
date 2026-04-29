@@ -628,8 +628,14 @@ import * as diabetes_type_1_age_base from './json-reports/moh-740/json-reports/d
 import * as diabetes_type_2_age_gender_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-2-age-gender-disaggregate.json';
 import * as diabetes_type_2_age_base from './json-reports/moh-740/json-reports/diabetes-type-2-age-base.json';
 import * as hypertention_age_base from './json-reports/moh-740/json-reports/hypertention-age-base.json';
-import * as hypertention_type_age_gender_disaggregation from './json-reports/moh-740/json-reports/hypertention-age-disagreggation.json';
+import * as hypertention_type_age_gender_disaggregation from './json-reports/moh-740/json-reports/hypertention-age-gender-disagreggation.json';
+import * as hypertention_type_age_disaggregation from './json-reports/moh-740/json-reports/hypertention-age-disagreggation.json';
 import * as moh_740_patient_list_template from './json-reports/moh-740/moh-740-patient-list-template.json';
+import * as moh_740_report_aggregation from './json-reports/moh-740/json-reports/moh-740-report-aggregate.json';
+import * as moh_740_report_base from './json-reports/moh-740/json-reports/moh-740-report-base.json';
+import * as diabetes_type_1_age_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-1-age-disaggregate.json';
+import * as diabetes_type_2_age_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-2-age-disaggregate.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2797,6 +2803,29 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(
               hypertention_type_age_gender_disaggregation
             ),
+            hypertentionAgeBase: this.cloneJsonSchema(hypertention_age_base)
+          });
+          break;
+        case 'moh740ReportAggregation':
+          resolve({
+            main: this.cloneJsonSchema(moh_740_report_aggregation),
+            moh740ReportBase: this.cloneJsonSchema(moh_740_report_base)
+          });
+          break;
+        case 'diabetesType1AgeDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(diabetes_type_1_age_disaggregation),
+            diabetesType1AgeBase: this.cloneJsonSchema(diabetes_type_1_age_base)
+          });
+        case 'diabetesType2AgeDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(diabetes_type_2_age_disaggregation),
+            diabetesType2AgeBase: this.cloneJsonSchema(diabetes_type_2_age_base)
+          });
+          break;
+        case 'hypertentionAgeDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(hypertention_type_age_disaggregation),
             hypertentionAgeBase: this.cloneJsonSchema(hypertention_age_base)
           });
           break;

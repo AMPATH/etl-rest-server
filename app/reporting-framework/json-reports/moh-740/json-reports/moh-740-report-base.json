@@ -1,131 +1,56 @@
 {
-  "name": "diabetesAndHypertentionComprehensiveCareReportDisAggregation",
+  "name": "moh740ReportBase",
   "version": "1.0",
   "tag": "",
-  "description": "",
-  "uses": [
-    {
-      "name": "diabetesAndHypertentionComprehensiveCareReportBase",
-      "version": "1.0",
-      "type": "dataset_def"
-    }
-  ],
+  "uses": [],
   "sources": [
     {
-      "dataSet": "diabetesAndHypertentionComprehensiveCareReportBase",
-      "alias": "b"
+      "table": "etl.monthly_diabetes_and_hypertention_report",
+      "alias": "mdh"
     }
   ],
   "columns": [
     {
       "type": "simple_column",
-      "alias": "location_id",
-      "column": "b.location_id"
+      "alias": "person_id",
+      "column": "mdh.person_id"
     },
     {
       "type": "simple_column",
-      "alias": "gender",
-      "column": "b.gender"
+      "alias": "endDate",
+      "column": "mdh.endDate"
     },
     {
       "type": "simple_column",
-      "alias": "encounter_date",
-      "column": "b.encounter_date"
+      "alias": "facility",
+      "column": "mdh.facility"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mfl_code",
+      "column": "mdh.mfl_code"
+    },
+    {
+      "type": "simple_column",
+      "alias": "county",
+      "column": "mdh.county"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_county",
+      "column": "mdh.sub_county"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cumulative_in_care",
+      "column": "mdh.cumulative_in_care"
     },
     {
       "type": "derived_column",
-      "alias": "cumulative_diabetes_patients_in_care",
+      "alias": "newly_diagnosed_diabetes_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.cumulative_in_care)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "newly_diagnosed_diabetes",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.newly_diagnosed_diabetes_this_month)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_type_1_diabetes",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.type_1_diabetes)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "total_type_2_diabetes",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.type_2_diabetes)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "cumulative_htn_patient",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.cumulative_htn_patient)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "covered_by_shif",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.covered_by_shif)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "screened_for_tb_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.screened_for_tb_this_month)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "screened_postive_for_tb_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.screened_postive_for_tb_this_month)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "screened_for_diabetic_foot_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.screened_for_diabetic_foot_this_month)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "has_diabetic_foot",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.has_diabetic_foot)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "type_1_diabetes_mellitus",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.type_1_diabetes_mellitus)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "type_2_diabetes_mellitus",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "COUNT(b.type_2_diabetes_mellitus)"
+        "expression": "IF(mdh.newly_diagnosed_diabetes_this_month = 1, 1,NULL)"
       }
     },
     {
@@ -133,7 +58,98 @@
       "alias": "revisit_to_clinic_known_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.revisit_to_clinic_known_dm)"
+        "expression": "IF(mdh.ncd_visit_type = 2345 AND mdh.diabetes_status = 7282, 1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_1_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_2_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cumulative_htn_patient",
+      "column": "mdh.cumulative_htn_patient"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "mdh.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "mdh.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_date",
+      "column": "DATE_FORMAT(mdh.encounter_date, '%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "mdh.endDate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "covered_by_shif",
+      "column": "mdh.covered_by_shif"
+    },
+    {
+      "type": "simple_column",
+      "alias": "screened_for_tb_this_month",
+      "column": "mdh.screened_for_tb_this_month"
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_postive_for_tb_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_tb_this_month = 1 AND mdh.tb_screening_status IN (6176,6971),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_for_diabetic_foot_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_diabetic_foot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1 AND mdh.has_diabetic_foot = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_1_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_2_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
       }
     },
     {
@@ -141,7 +157,7 @@
       "alias": "amputation_due_to_diabetic_foot",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.amputation_due_to_diabetic_foot)"
+        "expression": "IF(mdh.amputation_due_to_diabetic_foot = 1,1,NULL)"
       }
     },
     {
@@ -149,7 +165,7 @@
       "alias": "stroke_diagnosis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.stroke_diagnosis)"
+        "expression": "IF(mdh.stroke_diagnosis = 1,1,NULL)"
       }
     },
     {
@@ -157,7 +173,7 @@
       "alias": "ischemic_heart_disease_diagnosis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.ischemic_heart_disease_diagnosis)"
+        "expression": "IF(mdh.ischemic_heart_disease_diagnosis = 1,1,NULL)"
       }
     },
     {
@@ -165,7 +181,7 @@
       "alias": "heart_failure_diagnosis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.heart_failure_diagnosis)"
+        "expression": "IF(mdh.heart_failure_diagnosis = 1,1,NULL)"
       }
     },
     {
@@ -173,7 +189,7 @@
       "alias": "has_neuropathies",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.has_neuropathies)"
+        "expression": "IF(mdh.has_neuropathies = 1,1,NULL)"
       }
     },
     {
@@ -181,7 +197,7 @@
       "alias": "newly_diagnosed_htn_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.newly_diagnosed_htn_this_month)"
+        "expression": "IF(mdh.newly_diagnosed_htn_this_month = 1,1,NULL)"
       }
     },
     {
@@ -189,7 +205,7 @@
       "alias": "revisit_known_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.revisit_known_htn)"
+        "expression": "IF(mdh.htn_type = 7286,1,NULL)"
       }
     },
     {
@@ -197,7 +213,7 @@
       "alias": "is_co_morbid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.is_co_morbid)"
+        "expression": "IF(mdh.is_co_morbid = 1,1,NULL)"
       }
     },
     {
@@ -205,7 +221,7 @@
       "alias": "revisit_known_co_morbid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.revisit_known_co_morbid)"
+        "expression": "IF(mdh.is_co_morbid = 1 AND mdh.co_morbid_type = 12778,1,NULL)"
       }
     },
     {
@@ -213,7 +229,7 @@
       "alias": "newly_diagnosed_co_morbid_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.newly_diagnosed_co_morbid_this_month)"
+        "expression": "IF(mdh.newly_diagnosed_co_morbid_this_month = 1,1,NULL)"
       }
     },
     {
@@ -221,7 +237,7 @@
       "alias": "on_insulin_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.on_insulin_this_month)"
+        "expression": "IF(mdh.on_insulin_this_month = 1,1,NULL)"
       }
     },
     {
@@ -229,7 +245,7 @@
       "alias": "on_ogla_meds_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.on_ogla_meds_this_month)"
+        "expression": "IF(mdh.on_ogla_meds_this_month = 1,1,NULL)"
       }
     },
     {
@@ -237,33 +253,27 @@
       "alias": "on_both_insulin_and_ogla_meds_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.on_both_insulin_and_ogla_meds_this_month)"
+        "expression": "IF(mdh.on_insulin_this_month = 1 AND mdh.on_ogla_meds_this_month = 1,1,NULL)"
       }
     }
   ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["b.location_id", "gender"],
-    "excludeParam": "excludeParam"
-  },
-  "transFormDirectives": {
-    "joinColumn": "location_id",
-    "skipColumns": ["location_uuid", "join_location"],
-    "joinColumnParam": "joinColumnParam",
-    "disaggregationColumns": ["gender"]
-  },
-  "dynamicJsonQueryGenerationDirectives": {
-    "patientListGenerator": {
-      "useTemplate": "moh-740-patient-list-template",
-      "useTemplateVersion": "1.0",
-      "generatingDirectives": {
-        "joinDirectives": {
-          "joinType": "INNER",
-          "joinCondition": "<<base_column>> = <<template_column>>",
-          "baseColumn": "person_id",
-          "templateColumn": "person_id"
-        }
-      }
-    }
+    "columns": ["person_id"]
   }
 }

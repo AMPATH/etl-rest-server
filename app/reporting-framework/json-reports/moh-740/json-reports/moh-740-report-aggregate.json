@@ -1,18 +1,18 @@
 {
-  "name": "diabetesAndHypertentionComprehensiveCareReportDisAggregation",
+  "name": "moh740ReportAggregation",
   "version": "1.0",
   "tag": "",
   "description": "",
   "uses": [
     {
-      "name": "diabetesAndHypertentionComprehensiveCareReportBase",
+      "name": "moh740ReportBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "diabetesAndHypertentionComprehensiveCareReportBase",
+      "dataSet": "moh740ReportBase",
       "alias": "b"
     }
   ],
@@ -24,13 +24,28 @@
     },
     {
       "type": "simple_column",
-      "alias": "gender",
-      "column": "b.gender"
+      "alias": "facility",
+      "column": "b.facility"
     },
     {
       "type": "simple_column",
-      "alias": "encounter_date",
-      "column": "b.encounter_date"
+      "alias": "mfl_code",
+      "column": "b.mfl_code"
+    },
+    {
+      "type": "simple_column",
+      "alias": "county",
+      "column": "b.county"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_county",
+      "column": "b.sub_county"
+    },
+    {
+      "type": "simple_column",
+      "alias": "reportingMonth",
+      "column": "date_format(b.endDate, '%Y/%m')"
     },
     {
       "type": "derived_column",
@@ -243,14 +258,14 @@
   ],
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["b.location_id", "gender"],
+    "columns": ["b.location_id"],
     "excludeParam": "excludeParam"
   },
   "transFormDirectives": {
     "joinColumn": "location_id",
     "skipColumns": ["location_uuid", "join_location"],
     "joinColumnParam": "joinColumnParam",
-    "disaggregationColumns": ["gender"]
+    "disaggregationColumns": []
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
