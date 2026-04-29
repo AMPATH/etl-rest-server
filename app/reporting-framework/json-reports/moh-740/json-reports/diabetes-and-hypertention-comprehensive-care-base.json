@@ -206,6 +206,30 @@
       "expressionOptions": {
         "expression": "IF(mdh.newly_diagnosed_co_morbid_this_month = 1,1,NULL)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_insulin_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_insulin_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ogla_meds_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_ogla_meds_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_both_insulin_and_ogla_meds_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_insulin_this_month = 1 AND mdh.on_ogla_meds_this_month = 1,1,NULL)"
+      }
     }
   ],
   "filters": {

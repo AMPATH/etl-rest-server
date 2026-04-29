@@ -215,6 +215,30 @@
       "expressionOptions": {
         "expression": "COUNT(b.newly_diagnosed_co_morbid_this_month)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_insulin_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.on_insulin_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ogla_meds_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.on_ogla_meds_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_both_insulin_and_ogla_meds_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.on_both_insulin_and_ogla_meds_this_month)"
+      }
     }
   ],
   "groupBy": {

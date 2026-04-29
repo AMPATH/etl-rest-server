@@ -1,8 +1,12 @@
 {
   "reports": [
+    "moh740ReportAggregation",
     "diabetesAndHypertentionComprehensiveCareReportDisAggregation",
     "diabetesType1AgeGenderDisaggregation",
+    "diabetesType1AgeDisaggregation",
     "diabetesType2AgeGenderDisaggregation",
-    "hypertentionAgeGenderDisaggregation"
+    "diabetesType2AgeDisaggregation",
+    "hypertentionAgeGenderDisaggregation",
+    "hypertentionAgeDisaggregation"
   ]
 }
