@@ -3220,5 +3220,41 @@
     "county": "West Pokot",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "869e8752-8be8-46aa-ac8d-67d1592a4a57": {
+    "mrsId": 524,
+    "mrsDisplay": "Kuinet Dispensary",
+    "description": "A dispensary in Uasin Gishu",
+    "mflCode": "14999",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "24a2a909-36bc-4b87-b308-848966efd849": {
+    "mrsId": 525,
+    "mrsDisplay": "Mogoon Dispensary",
+    "description": "A dispensary in Uasin Gishu",
+    "mflCode": "15196",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "ba61d412-95c6-4c2c-9924-d1f460bb3dfa": {
+    "mrsId": 533,
+    "mrsDisplay": "Barsombe Dispensary",
+    "description": "A dispensary in Uasin Gishu",
+    "mflCode": "14239",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "65c9e132-7b42-4d8b-a15e-5a5e8dc41913": {
+    "mrsId": 526,
+    "mrsDisplay": "Mobet Dispensary",
+    "description": "A dispensary in Uasin Gishu",
+    "mflCode": "15191",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
