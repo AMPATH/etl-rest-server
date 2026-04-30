@@ -3256,5 +3256,14 @@
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "e66a5ad9-3487-4999-a3ca-4a501c19690a": {
+    "mrsId": 572,
+    "mrsDisplay": "Sirisia SCH",
+    "description": "A facility in Bungoma",
+    "mflCode": "16130",
+    "county": "Bungoma",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
