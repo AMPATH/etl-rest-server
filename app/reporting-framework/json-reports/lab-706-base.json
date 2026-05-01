@@ -232,6 +232,198 @@
     },
     {
       "type": "derived_column",
+      "alias": "positive_psa",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.total_psa = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urinalysis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urinalysis = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_glucose = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_ketones",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_ketones = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_proteins = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_pus_cells",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_pus_cells = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_s_haematobium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_s_haematobium = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_t_vaginalis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_t_vaginalis = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_yeast_cells",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_yeast_cells = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_malaria_bs_under_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_bs = 703 AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) < 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_malaria_rdt_under_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_rdt = 703 AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) < 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_malaria_rdt_5_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_rdt = 703 AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) >= 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hookworm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hookworm = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_roundworms",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.roundworms = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hep_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hep_b = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hep_c",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hep_c = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_syphilis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.syphilis = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_salmonella",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.salmonella = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_vdrl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.vdrl = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_brucella",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.brucella = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_rheumatoid_factor",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.rheumatoid_factor = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_h_pylori",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.h_pylori = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hcg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hcg = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_crag",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.crag = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "positive_malaria_bs_5_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -327,6 +519,310 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.hiv = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_exam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.blood_sugar IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_direct_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.direct_bili IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_psa",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.total_psa IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urinalysis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urinalysis IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_glucose IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_ketones",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_ketones IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_proteins IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_pus_cells",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_pus_cells IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_s_haematobium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_s_haematobium IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_t_vaginalis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_t_vaginalis IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_yeast_cells",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.urine_yeast_cells IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_malaria_bs_under_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_bs IS NOT NULL AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) < 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_malaria_bs_5_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_bs IS NOT NULL AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) >= 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_malaria_rdt_under_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_rdt IS NOT NULL AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) < 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_malaria_rdt_5_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_rdt IS NOT NULL AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) >= 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hookworm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hookworm IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_roundworms",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.roundworms IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_fbc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.fbc IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fbc_hb_less_than_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.fbc < 5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fbc_hb_5_to_10",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.fbc >= 5 AND fbc.fbc <= 10, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.cd4 IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_less_than_500",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.cd4 < 500, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_blood_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.blood_group IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hiv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hiv IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hep_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hep_b IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hep_c",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hep_c IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_syphilis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.syphilis IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_salmonella",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.salmonella IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_vdrl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.vdrl IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_brucella",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.brucella IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_rheumatoid_factor",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.rheumatoid_factor IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_h_pylori",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.h_pylori IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hcg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hcg IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_crag",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.crag IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_tb_culture_specimens",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.tb_culture IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_culture_results_received",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.tb_culture IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_viral_load_specimens",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.viral_load IS NOT NULL, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "viral_load_results_received",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.viral_load IS NOT NULL, 1, NULL)"
       }
     }
   ],

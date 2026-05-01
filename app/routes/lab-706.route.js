@@ -52,38 +52,38 @@ const routes = [
       auth: false,
       handler: function (request, reply) {
         if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            if (request.query['startDate']) {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
+          // preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          if (request.query['startDate']) {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
 
-              let requestCopy = _.cloneDeep(requestParams);
-              let reportParams = etlHelpers.getReportParams(
-                request.query.reportName,
-                ['startDate', 'endDate', 'locationUuids', 'locations'],
-                requestParams
-              );
+            let requestCopy = _.cloneDeep(requestParams);
+            let reportParams = etlHelpers.getReportParams(
+              request.query.reportName,
+              ['startDate', 'endDate', 'locationUuids', 'locations'],
+              requestParams
+            );
 
-              let report = 'MOH-706-report';
-              requestCopy.locations = reportParams.requestParams.locations;
-              let service = new Lab706Service(report, requestCopy);
+            let report = 'MOH-706-report';
+            requestCopy.locations = reportParams.requestParams.locations;
+            let service = new Lab706Service(report, requestCopy);
 
-              service
-                .getPatientListReport(requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  console.error('Error: ', error);
-                  reply(error);
-                });
-            } else {
-              reply('Misssing location or service params');
-            }
-          });
+            service
+              .getPatientListReport(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                console.error('Error: ', error);
+                reply(error);
+              });
+          } else {
+            reply('Misssing location or service params');
+          }
+          // });
         }
       },
       description: 'Service Queue Daily report Patient List',
