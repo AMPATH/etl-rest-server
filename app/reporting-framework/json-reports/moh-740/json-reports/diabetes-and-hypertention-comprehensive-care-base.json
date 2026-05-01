@@ -230,6 +230,30 @@
       "expressionOptions": {
         "expression": "IF(mdh.on_insulin_this_month = 1 AND mdh.on_ogla_meds_this_month = 1,1,NULL)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "done_hba1c_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.done_hba1c_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hba1c_less_than_7_percent_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.done_hba1c_this_month = 1 AND mdh.hba1c < 7,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_exercise_and_diet",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_exercise = 1 AND mdh.on_diet = 1 ,1,NULL)"
+      }
     }
   ],
   "filters": {

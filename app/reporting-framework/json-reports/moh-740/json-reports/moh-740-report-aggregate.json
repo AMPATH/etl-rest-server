@@ -254,6 +254,30 @@
       "expressionOptions": {
         "expression": "COUNT(b.on_both_insulin_and_ogla_meds_this_month)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "done_hba1c_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.done_hba1c_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hba1c_less_than_7_percent_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.hba1c_less_than_7_percent_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_exercise_and_diet",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.on_exercise_and_diet)"
+      }
     }
   ],
   "groupBy": {
