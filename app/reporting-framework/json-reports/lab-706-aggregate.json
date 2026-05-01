@@ -491,7 +491,7 @@
       "alias": "positive_malaria_bs_5_and_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.malaria_bs = 703 AND t1.age_at_test >= 5, 1, 0))"
+        "expression": "COUNT(t1.positive_malaria_bs_5_and_above)"
       }
     },
     {
@@ -611,7 +611,7 @@
       "alias": "total_blood_group",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.blood_group IS NOT NULL, 1, 0))"
+        "expression": "COUNT(t1.blood_group)"
       }
     },
     {
@@ -619,7 +619,7 @@
       "alias": "positive_hiv",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.hiv = 703, 1, 0))"
+        "expression": "COUNT(t1.positive_hiv)"
       }
     },
     {
@@ -823,11 +823,17 @@
       }
     }
   ],
-  "groupClause": [
-    {
-      "parameter": "groupByTestDatetime"
-    }
-  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": ["location_uuid", "join_location"],
+    "joinColumnParam": "joinColumnParam",
+    "disaggregationColumns": []
+  },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
       "useTemplate": "lab-706-patient-list-template",

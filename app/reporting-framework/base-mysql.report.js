@@ -563,6 +563,7 @@ import * as service_queue_patient_list_template from './json-reports/service-que
 import * as lab_706_base from './json-reports/lab-706-base.json';
 import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
 import * as lab_706_patient_list_template from './json-reports/lab-706-patient-list-template.json';
+import * as moh_706_report from './json-reports/moh-706/moh-706-report.json';
 
 export class BaseMysqlReport {
   constructor(reportName, params) {
@@ -580,6 +581,7 @@ export class BaseMysqlReport {
       that
         .fetchReportSchema(that.reportName)
         .then((reportSchemas) => {
+          console.log({ reportSchemas });
           that.reportSchemas = reportSchemas;
           // generate query
           that
@@ -2483,6 +2485,11 @@ export class BaseMysqlReport {
         case 'service-queue-patient-list-template':
           resolve({
             main: this.cloneJsonSchema(service_queue_patient_list_template)
+          });
+          break;
+        case 'MOH-706-report':
+          resolve({
+            main: this.cloneJsonSchema(moh_706_report)
           });
           break;
         case 'lab706Aggregate':

@@ -9,22 +9,18 @@ const routes = [
     method: 'GET',
     path: '/lab-706',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: false,
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
           let reportParams = etlHelpers.getReportParams(
-            'lab706Aggregate',
+            'MOH-706-report',
             ['startDate', 'endDate', 'locationUuids'],
             requestParams
           );
 
           let service = new Lab706Service(
-            'lab706Aggregate',
+            'MOH-706-report',
             reportParams.requestParams
           );
           service
@@ -53,36 +49,41 @@ const routes = [
     method: 'GET',
     path: '/lab-706/patient-list',
     config: {
-      plugins: {},
+      auth: false,
       handler: function (request, reply) {
-        if (request.query['startDate']) {
-          let requestParams = Object.assign({}, request.query, request.params);
-          if (!requestParams.indicators) {
-            requestParams.indicators = 'total_exam';
-          }
+        if (request.query.locationUuids) {
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            if (request.query['startDate']) {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-          let reportParams = etlHelpers.getReportParams(
-            'lab706Aggregate',
-            [],
-            requestParams
-          );
+              let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                request.query.reportName,
+                ['startDate', 'endDate', 'locationUuids', 'locations'],
+                requestParams
+              );
 
-          let service = new Lab706Service(
-            'lab706Aggregate',
-            reportParams.requestParams
-          );
+              let report = 'MOH-706-report';
+              requestCopy.locations = reportParams.requestParams.locations;
+              let service = new Lab706Service(report, requestCopy);
 
-          service
-            .getPatientListReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              console.error('Error: ', error);
-              reply(error);
-            });
-        } else {
-          reply('Misssing location or service params');
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            } else {
+              reply('Misssing location or service params');
+            }
+          });
         }
       },
       description: 'Service Queue Daily report Patient List',

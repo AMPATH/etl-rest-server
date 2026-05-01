@@ -223,9 +223,20 @@
       "column": "fbc.fbc"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "blood_group",
-      "column": "fbc.blood_group"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.blood_group IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_malaria_bs_5_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.malaria_bs = 703 AND TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime) >= 5, 1, NULL)"
+      }
     },
     {
       "type": "simple_column",
@@ -309,6 +320,14 @@
       "expressionOptions": {
         "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hiv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.hiv = 703, 1, NULL)"
+      }
     }
   ],
   "filters": {
@@ -326,8 +345,8 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "l.uuid in ?",
-        "parameterName": "locationUuids"
+        "conditionExpression": "l.location_id in ?",
+        "parameterName": "locations"
       }
     ]
   }
