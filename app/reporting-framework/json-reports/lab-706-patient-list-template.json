@@ -6,50 +6,46 @@
   "uses": [],
   "sources": [
     {
+      "table": "amrs.person",
+      "alias": "t1"
+    },
+    {
       "table": "amrs.person_name",
       "alias": "pn",
       "join": {
-        "type": "INNER",
-        "joinCondition": "fbc.person_id = pn.person_id AND pn.voided = 0"
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = pn.person_id AND pn.voided = 0"
       }
     },
     {
       "table": "amrs.person_address",
       "alias": "pa",
       "join": {
-        "type": "LEFT OUTER",
-        "joinCondition": "fbc.person_id = pa.person_id AND pa.voided = 0"
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = pa.person_id AND pa.voided = 0"
       }
     },
     {
       "table": "amrs.person_attribute",
       "alias": "pat",
       "join": {
-        "type": "LEFT OUTER",
-        "joinCondition": "fbc.person_id = pat.person_id AND pat.person_attribute_type_id = 10 AND pat.voided = 0"
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = pat.person_id AND pat.person_attribute_type_id = 10 AND pat.voided = 0"
       }
     },
     {
       "table": "amrs.patient_identifier",
       "alias": "pi",
       "join": {
-        "type": "LEFT OUTER",
-        "joinCondition": "fbc.person_id = pi.patient_id AND pi.voided = 0"
-      }
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "LEFT OUTER",
-        "joinCondition": "fbc.encounter_id = e.encounter_id"
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = pi.patient_id AND pi.voided = 0"
       }
     },
     {
       "table": "amrs.users",
       "alias": "u",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "e.creator = u.user_id"
       }
     },
@@ -57,7 +53,7 @@
       "table": "amrs.provider",
       "alias": "prov",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "u.person_id = prov.person_id"
       }
     },
@@ -65,7 +61,7 @@
       "table": "amrs.person_name",
       "alias": "prov_name",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "prov.person_id = prov_name.person_id AND prov_name.voided = 0"
       }
     }
@@ -74,22 +70,22 @@
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "fbc.person_id"
+      "column": "t1.person_id"
     },
     {
       "type": "simple_column",
       "alias": "uuid",
-      "column": "fbc.uuid"
+      "column": "t1.uuid"
     },
     {
       "type": "simple_column",
       "alias": "encounter_id",
-      "column": "fbc.encounter_id"
+      "column": "e.encounter_id"
     },
     {
       "type": "simple_column",
       "alias": "date",
-      "column": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
+      "column": "DATE_FORMAT(e.encounter_datetime, '%d/%m/%Y')"
     },
     {
       "type": "simple_column",
@@ -101,7 +97,7 @@
       "alias": "lab_no",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "fbc.encounter_id"
+        "expression": "e.encounter_id"
       }
     },
     {
@@ -125,7 +121,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime)"
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, e.encounter_datetime)"
       }
     },
     {
@@ -165,7 +161,7 @@
     {
       "type": "simple_column",
       "alias": "date_sample_analysed",
-      "column": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
+      "column": "DATE_FORMAT(e.encounter_datetime, '%d/%m/%Y')"
     },
     {
       "type": "derived_column",
@@ -188,32 +184,10 @@
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "fbc.location_id"
+      "column": "t1.location_id"
     }
   ],
-  "filters": {
-    "conditionJoinOperator": "and",
-    "conditions": [
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "fbc.test_datetime >= ?",
-        "parameterName": "startDate"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "fbc.test_datetime <= ?",
-        "parameterName": "endDate"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "l.uuid in ?",
-        "parameterName": "locationUuids"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "fbc.? is not null",
-        "parameterName": "indicator"
-      }
-    ]
+  "groupBy": {
+    "columns": ["e.encounter_id"]
   }
 }
