@@ -581,7 +581,6 @@ export class BaseMysqlReport {
       that
         .fetchReportSchema(that.reportName)
         .then((reportSchemas) => {
-          console.log({ reportSchemas });
           that.reportSchemas = reportSchemas;
           // generate query
           that

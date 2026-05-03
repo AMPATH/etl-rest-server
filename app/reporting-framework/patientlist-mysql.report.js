@@ -115,7 +115,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                 error(err);
               });
           } else {
-            error('Not a patientlist reports');
+            error('Not a patientlist report');
           }
         })
         .catch((err) => {
