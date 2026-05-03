@@ -49,7 +49,6 @@ const routes = [
     method: 'GET',
     path: '/lab-706/patient-list',
     config: {
-      auth: false,
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           // preRequest.resolveLocationIdsToLocationUuids(request, function () {
