@@ -6,14 +6,14 @@
   "uses": [],
   "sources": [
     {
-      "table": "etl.flat_moh_706_report",
+      "table": "amrs.person",
       "alias": "t1"
     },
     {
       "table": "amrs.person_name",
       "alias": "pn",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "t1.person_id = pn.person_id AND pn.voided = 0"
       }
     },
@@ -21,7 +21,7 @@
       "table": "amrs.person_address",
       "alias": "pa",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "t1.person_id = pa.person_id AND pa.voided = 0"
       }
     },
@@ -37,23 +37,15 @@
       "table": "amrs.patient_identifier",
       "alias": "pi",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "t1.person_id = pi.patient_id AND pi.voided = 0"
-      }
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "LEFT OUTER",
-        "joinCondition": "t1.encounter_id = e.encounter_id"
       }
     },
     {
       "table": "amrs.users",
       "alias": "u",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "e.creator = u.user_id"
       }
     },
@@ -61,7 +53,7 @@
       "table": "amrs.provider",
       "alias": "prov",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "u.person_id = prov.person_id"
       }
     },
@@ -69,7 +61,7 @@
       "table": "amrs.person_name",
       "alias": "prov_name",
       "join": {
-        "type": "LEFT OUTER",
+        "type": "LEFT",
         "joinCondition": "prov.person_id = prov_name.person_id AND prov_name.voided = 0"
       }
     }
@@ -88,12 +80,12 @@
     {
       "type": "simple_column",
       "alias": "encounter_id",
-      "column": "t1.encounter_id"
+      "column": "e.encounter_id"
     },
     {
       "type": "simple_column",
       "alias": "date",
-      "column": "DATE_FORMAT(t1.test_datetime, '%d/%m/%Y')"
+      "column": "DATE_FORMAT(e.encounter_datetime, '%d/%m/%Y')"
     },
     {
       "type": "simple_column",
@@ -105,7 +97,7 @@
       "alias": "lab_no",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "t1.encounter_id"
+        "expression": "e.encounter_id"
       }
     },
     {
@@ -129,7 +121,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, t1.test_datetime)"
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, e.encounter_datetime)"
       }
     },
     {
@@ -169,7 +161,7 @@
     {
       "type": "simple_column",
       "alias": "date_sample_analysed",
-      "column": "DATE_FORMAT(t1.test_datetime, '%d/%m/%Y')"
+      "column": "DATE_FORMAT(e.encounter_datetime, '%d/%m/%Y')"
     },
     {
       "type": "derived_column",
@@ -196,6 +188,6 @@
     }
   ],
   "groupBy": {
-    "columns": ["t1.person_id"]
+    "columns": ["e.encounter_id"]
   }
 }

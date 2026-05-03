@@ -24,10 +24,10 @@
     },
     {
       "type": "derived_column",
-      "alias": "total_exam",
+      "alias": "total_blood_sugar",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(t1.total_exam)"
+        "expression": "COUNT(t1.total_blood_sugar)"
       }
     },
     {

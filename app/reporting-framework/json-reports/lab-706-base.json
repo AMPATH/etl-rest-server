@@ -24,6 +24,14 @@
         "type": "INNER",
         "joinCondition": "fbc.person_id = p.person_id"
       }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fbc.encounter_id = e.encounter_id"
+      }
     }
   ],
   "columns": [
@@ -523,7 +531,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "total_exam",
+      "alias": "total_blood_sugar",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.blood_sugar IS NOT NULL, 1, NULL)"
