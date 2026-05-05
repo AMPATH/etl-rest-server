@@ -254,6 +254,22 @@
       "expressionOptions": {
         "expression": "IF(mdh.on_exercise = 1 AND mdh.on_diet = 1 ,1,NULL)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_antihypertensives_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_antihypertensives_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "high_bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.systolic >= 140 OR mdh.diastolic >= 90 ,1,NULL)"
+      }
     }
   ],
   "filters": {

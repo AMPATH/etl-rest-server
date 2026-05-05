@@ -278,6 +278,22 @@
       "expressionOptions": {
         "expression": "COUNT(b.on_exercise_and_diet)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_antihypertensives_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.on_antihypertensives_this_month)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "high_bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(b.high_bp)"
+      }
     }
   ],
   "groupBy": {
