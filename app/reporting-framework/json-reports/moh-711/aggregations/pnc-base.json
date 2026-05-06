@@ -63,7 +63,7 @@
       "alias": "pnc_revisit_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(e.encounter_type = 267, 1, 0))"
+        "expression": "IF(e.encounter_type = 267, 1, 0)"
       }
     },
     {
