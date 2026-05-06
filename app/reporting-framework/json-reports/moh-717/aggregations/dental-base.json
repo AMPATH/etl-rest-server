@@ -10,6 +10,14 @@
       "alias": "o"
     },
     {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (329)"
+      }
+    },
+    {
       "table": "amrs.obs",
       "alias": "obs",
       "join": {
@@ -48,37 +56,41 @@
     {
       "type": "simple_column",
       "alias": "dental_attendance_ex_fillings_extractions_new",
-      "column": "null"
+      "column": "if(o.concept_id = 1839 AND o.value_coded = 7850, 1, NULL)"
     },
     {
       "type": "simple_column",
       "alias": "dental_attendance_ex_fillings_extractions_revisit",
-      "column": "null"
+      "column": "if(o.concept_id = 1839 AND o.value_coded = 11233, 1, NULL)"
     },
     {
       "type": "simple_column",
       "alias": "dental_fillings_new",
-      "column": "null"
+      "column": "if(o.concept_id = 1840 AND o.value_coded = 7850, 1, NULL)"
     },
     {
       "type": "simple_column",
       "alias": "dental_fillings_revisit",
-      "column": "null"
+      "column": "if(o.concept_id = 1840 AND o.value_coded = 11233, 1, NULL)"
     },
     {
       "type": "simple_column",
       "alias": "dental_extractions_new",
-      "column": "null"
+      "column": "if(o.concept_id = 1841 AND o.value_coded = 7850, 1, NULL)"
     },
     {
       "type": "simple_column",
       "alias": "dental_extractions_revisit",
-      "column": "null"
+      "column": "if(o.concept_id = 1841 AND o.value_coded = 11233, 1, NULL)"
     }
   ],
   "filters": {
     "conditionJoinOperator": "and",
     "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (329)"
+      },
       {
         "filterType": "tableColumns",
         "conditionExpression": "o.obs_datetime >= ?",

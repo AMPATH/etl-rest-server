@@ -14,7 +14,7 @@
       "alias": "e",
       "join": {
         "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (56, 57, 133, 134, 264, 265, 179)"
       }
     },
     {
@@ -189,6 +189,6 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id", "o.concept_id"]
+    "columns": ["o.person_id", "e.encounter_type"]
   }
 }

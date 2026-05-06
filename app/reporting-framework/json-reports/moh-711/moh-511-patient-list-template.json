@@ -1,0 +1,459 @@
+{
+  "name": "moh_511_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_511_patient_list_template",
+  "description": "MOH 511 Patient list template",
+  "sources": [
+    {
+      "table": "etl.flat_mnch_summary",
+      "alias": "a"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "p.person_id = a.person_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pnc_number",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pnc_number.person_id = a.person_id AND pnc_number.identifier_type = 48"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "nupi",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nupi.person_id = a.person_id AND nupi.identifier_type = 45"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "attribute",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "amrs",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = o.person_id AND o.concept_id in (10926, 10927, 2327, 12019)"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "ob",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = ob.person_id AND ob.concept_id = 12019"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "oc",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = oc.person_id AND oc.concept_id = 1357"
+      }
+    },
+    {
+      "table": "(SELECT person_id, CASE WHEN value_coded = 5555 THEN 'MM' WHEN value_coded = 6290 THEN 'MP' WHEN value_coded = 1059 THEN 'W' WHEN value_coded = 1057 THEN 'NM' WHEN value_coded = 1056 THEN 'S' WHEN value_coded = 1058 THEN 'D' END AS marital_status FROM (SELECT person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054) ranked_obs WHERE rn = 1)",
+      "alias": "g",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "a.person_id = g.person_id"
+      }
+    },
+    {
+      "table": "(SELECT o.person_id, o.value_text FROM amrs.obs o INNER JOIN (SELECT person_id, MAX(CONCAT(obs_datetime, LPAD(obs_id, 10, '0'))) AS max_key FROM amrs.obs WHERE concept_id = 7222 GROUP BY person_id) latest ON latest.person_id = o.person_id AND latest.max_key = CONCAT(o.obs_datetime, LPAD(o.obs_id, 10, '0')) WHERE o.concept_id = 7222)",
+      "alias": "oa_latest",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "oa_latest.person_id = a.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = pa.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "a.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "identifiers",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "GROUP_CONCAT(DISTINCT id.identifier SEPARATOR ', ')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_visit",
+      "column": "a.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pnc_number",
+      "column": "pnc_number.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nupi",
+      "column": "nupi.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_id",
+      "column": "amrs.identifier"
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_names",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_birth",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "timestampdiff(year,p.birthdate,a.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "county_sub_county",
+      "column": "pa.county_district"
+    },
+    {
+      "type": "simple_column",
+      "alias": "village_estate_landmark",
+      "column": "pa.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "phone_number",
+      "column": "attribute.value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "marital_status",
+      "column": "g.*"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_delivery",
+      "column": "a.day_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "place_of_delivery",
+      "column": "a.place_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mode_of_delivery",
+      "column": "a.mode_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "timing_mother",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "timing_baby",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "temperature",
+      "column": "a.temperature"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pulse",
+      "column": "a.pulse"
+    },
+    {
+      "type": "simple_column",
+      "alias": "blood_pressure",
+      "column": "a.blood_pressure"
+    },
+    {
+      "type": "derived_column",
+      "alias": "pallor_present",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "case when a.pallor is not null then 'Y' else 'N'"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "breast",
+      "column": "a.breast"
+    },
+    {
+      "type": "simple_column",
+      "alias": "uterus",
+      "column": "a.uterus"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pph",
+      "column": "a.pph"
+    },
+    {
+      "type": "simple_column",
+      "alias": "c_section_site",
+      "column": "a.c_section_site"
+    },
+    {
+      "type": "simple_column",
+      "alias": "lochia",
+      "column": "a.lochia"
+    },
+    {
+      "type": "simple_column",
+      "alias": "episiotomy",
+      "column": "a.episiotomy"
+    },
+    {
+      "type": "simple_column",
+      "alias": "fistula",
+      "column": "a.fistula"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_screening",
+      "column": "a.tb_screening"
+    },
+    {
+      "type": "derived_column",
+      "alias": "tested_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(case WHEN ob.value_coded = 10434 THEN 'INITIAL TEST' WHEN ob.value_coded = 10200 THEN 'REVISIT' WHEN ob.value_coded IN (10407, 12074) THEN 'KNOWN POSITIVE' WHEN ob.value_coded = 10973 THEN 'RETEST' else '' end)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_kit_name",
+      "column": "a.hiv_test_1_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_lot_no",
+      "column": "a.hiv_test_1_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_expiry_date",
+      "column": "a.hiv_test_1_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_test_result",
+      "column": "a.hiv_test_1_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_kit_name",
+      "column": "a.hiv_test_2_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_lot_no",
+      "column": "a.hiv_test_2_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_expiry_date",
+      "column": "a.hiv_test_2_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_test_result",
+      "column": "a.hiv_test_2_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_kit_name",
+      "column": "a.hiv_test_3_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_lot_no",
+      "column": "a.hiv_test_3_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_expiry_date",
+      "column": "a.hiv_test_3_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_test_result",
+      "column": "a.hiv_test_3_test_result"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_test_results_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN oc.value_coded = 703 THEN 'P' WHEN oc.value_coded = 664 then 'N' WHEN oc.value_coded = 1175 then 'NA' WHEN oc.value_coded = 1138 then 'In' WHEN oc.value_coded = 1067 then 'U' ELSE '' end)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_result_pnc_less_6_weeks",
+      "column": "a.pnc_at_6_weeks_or_less"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_result_pnc_greater_6_weeks",
+      "column": "a.pnc_at_more_than_6_weeks"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_haart_less_6_weeks",
+      "column": "a.maternal_haart_at_6_weeks_or_less"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_haart_greater_6_weeks",
+      "column": "a.maternal_haart_at_more_than_6_weeks"
+    },
+    {
+      "type": "simple_column",
+      "alias": "infant_prophylaxis_less_6_weeks",
+      "column": "a.infant_prophylaxis_at_6_weeks_or_less"
+    },
+    {
+      "type": "simple_column",
+      "alias": "infant_prophylaxis_greater_6_weeks",
+      "column": "a.infant_prophylaxis_at_more_than_6_weeks"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cervical_cancer_method",
+      "column": "a.cervical_cancer_method"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cervical_cancer_result",
+      "column": "a.cervical_cancer_method"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counselled",
+      "column": "a.ppfp_done"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ppfp_method",
+      "column": "a.ppfp_method"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_haart",
+      "column": "a.maternal_haart"
+    },
+    {
+      "type": "simple_column",
+      "alias": "modern_post_partum_fp",
+      "column": "fh.hiv_disclosure_status_value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "other_maternal_complications",
+      "column": "a.other_complications"
+    },
+    {
+      "type": "simple_column",
+      "alias": "haemanitics",
+      "column": "a.haematinics"
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "referral_from",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE  WHEN o.value_coded = 6881 THEN 'PRIVATE HEALTH FACILITY' WHEN o.value_coded = 6880 then 'PUBLIC HEALTH FACILITY' WHEN o.value_coded = 9613 then 'COMMUNITY' WHEN o.value_coded = 6708 then 'HEALTH FACILITY' WHEN o.value_coded = 7308 then 'ANOTHER FACILITY, NOS' WHEN o.value_coded = 11870 then 'THIS HEALTH FACILITY' ELSE '' end)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referral_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE  WHEN o.value_coded = 6881 THEN 'PRIVATE HEALTH FACILITY' WHEN o.value_coded = 6880 then 'PUBLIC HEALTH FACILITY' WHEN o.value_coded = 9613 then 'COMMUNITY' WHEN o.value_coded = 6708 then 'HEALTH FACILITY' WHEN o.value_coded = 7308 then 'ANOTHER FACILITY, NOS' WHEN o.value_coded = 11870 then 'THIS HEALTH FACILITY' ELSE '' end)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reason_for_referral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE when o.value_coded = 1578 then 'TRANSPORT COSTS' when o.value_coded = 1548 then 'HEALTH ISSUES' when o.value_coded = 2329 then 'ACUTE' when o.value_coded = 2330 then 'CHRONIC' when o.value_coded = 7465 then  'SURGERY'  ELSE '' end)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "remarks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TRIM(SUBSTRING_INDEX(REPLACE(REPLACE(REPLACE(oa_latest.value_text, '\\r\\n', '\\n'), ',', '\\n'), '.', '\\n'), '\\n', 1))"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["a.person_id"]
+  }
+}

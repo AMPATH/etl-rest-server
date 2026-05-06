@@ -1,0 +1,489 @@
+{
+  "name": "moh_333_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_333_patient_list_template",
+  "description": "MOH 333 Patient list template",
+  "sources": [
+    {
+      "table": "etl.flat_mnch_summary",
+      "alias": "a"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "p.person_id = a.person_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "mat_number",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "mat_number.person_id = a.person_id AND mat_number.identifier_type = 49"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "nupi",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "nupi.person_id = a.person_id AND nupi.identifier_type = 45"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "attribute",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "amrs",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "obs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = obs.person_id AND obs.concept_id in (10926, 10927, 2327, 12019)"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "ob",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = ob.person_id AND ob.concept_id = 12019"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "oc",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = oc.person_id AND oc.concept_id = 1357"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = pa.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "a.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "identifiers",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " GROUP_CONCAT(DISTINCT id.identifier SEPARATOR ', ')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "admission_date",
+      "column": "a.maternity_admission_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_id",
+      "column": "amrs.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mat_number",
+      "column": "mat_number.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nupi",
+      "column": "nupi.identifier"
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_names",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_birth",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "timestampdiff(year, p.birthdate, a.encounter_datetime) "
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "county_sub_county",
+      "column": "pa.county_district"
+    },
+    {
+      "type": "simple_column",
+      "alias": "village_estate_landmark",
+      "column": "pa.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "phone_number",
+      "column": "attribute.value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "marital_status",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "parity",
+      "column": "a.parity"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gravidae",
+      "column": "a.gravidae"
+    },
+    {
+      "type": "simple_column",
+      "alias": "no_of_anc_visits",
+      "column": "a.anc_visit_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "lmp",
+      "column": "a.last_lmp_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "edd",
+      "column": "a.edd"
+    },
+    {
+      "type": "simple_column",
+      "alias": "diagnosis",
+      "column": "a.diagnosis"
+    },
+    {
+      "type": "simple_column",
+      "alias": "duration_of_labour",
+      "column": "a.duration_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_delivery",
+      "column": "a.day_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "time_of_delivery",
+      "column": "a.time_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gestation_at_birth",
+      "column": "a.gestation_at_birth"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mode_of_delivery",
+      "column": "a.mode_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "no_of_babies_delivered",
+      "column": "a.no_of_babies"
+    },
+    {
+      "type": "simple_column",
+      "alias": "placenta_complete",
+      "column": "a.placenta_complete"
+    },
+    {
+      "type": "simple_column",
+      "alias": "uterotonic_given",
+      "column": "a.uterotonic_given"
+    },
+    {
+      "type": "simple_column",
+      "alias": "vaginal_examination",
+      "column": "a.vaginal_examination"
+    },
+    {
+      "type": "simple_column",
+      "alias": "blood_loss",
+      "column": "a.blood_loss"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mothers_status_after_delivery",
+      "column": "a.mothers_status_after_delivery"
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths_notified",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "case when a.maternal_death_notified is not null THEN 'Y' else 'N"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_maternal_death_notified",
+      "column": "a.maternal_death_notified"
+    },
+    {
+      "type": "simple_column",
+      "alias": "delivery_complication",
+      "column": "a.delivery_complications"
+    },
+    {
+      "type": "simple_column",
+      "alias": "apgar_score",
+      "column": "a.apgar_score"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birth_outcome",
+      "column": "a.birth_outcome"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birth_weight",
+      "column": "a.birth_weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "a.baby_sex"
+    },
+    {
+      "type": "simple_column",
+      "alias": "initiated_on_bf_in_1_hour",
+      "column": "a.BF_in_one_hour"
+    },
+    {
+      "type": "simple_column",
+      "alias": "kangaroo_mother_care",
+      "column": "a.kangaroo_mother_care"
+    },
+    {
+      "type": "simple_column",
+      "alias": "teo_given_at_birth",
+      "column": "a.teo_at_birth"
+    },
+    {
+      "type": "simple_column",
+      "alias": "chlorhexidine_applied_on_cord_stamp",
+      "column": "a.chlorhexidine_for_cord"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birth_with_deformity",
+      "column": "a.birth_with_deformity"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_deformity",
+      "column": "a.type_of_deformity"
+    },
+    {
+      "type": "simple_column",
+      "alias": "vitamin_k_given",
+      "column": "a.vitamin_k"
+    },
+    {
+      "type": "simple_column",
+      "alias": "vdrl_rpr_results",
+      "column": "a.rpr_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "duo_test_result",
+      "column": "a.duo_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_kit_name",
+      "column": "a.hiv_test_1_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_lot_no",
+      "column": "a.hiv_test_1_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_expiry_date",
+      "column": "a.hiv_test_1_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_test_result",
+      "column": "a.hiv_test_1_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_kit_name",
+      "column": "a.hiv_test_2_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_lot_no",
+      "column": "a.hiv_test_2_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_expiry_date",
+      "column": "a.hiv_test_2_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_test_result",
+      "column": "a.hiv_test_2_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_kit_name",
+      "column": "a.hiv_test_3_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_lot_no",
+      "column": "a.hiv_test_3_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_expiry_date",
+      "column": "a.hiv_test_3_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_test_result",
+      "column": "a.hiv_test_3_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_result_maternity",
+      "column": "a.patient_hiv_result"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_test_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_haart",
+      "column": "a.maternal_haart"
+    },
+    {
+      "type": "simple_column",
+      "alias": "infant_prophylaxis",
+      "column": "a.infant_prophylaxis"
+    },
+    {
+      "type": "simple_column",
+      "alias": "partner_tested_for_hiv",
+      "column": "a.partner_hiv_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counselled_on_infant_feeding",
+      "column": "a.infant_feeding_counselling"
+    },
+    {
+      "type": "simple_column",
+      "alias": "delivery_conducted_by",
+      "column": "a.delivery_conducted_by"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birth_notification_number",
+      "column": "a.birth_notification_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "discharge_date",
+      "column": "a.discharge_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "discharge_status",
+      "column": "a.baby_status_on_discharge"
+    },
+    {
+      "type": "derived_column",
+      "alias": "referral_from",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referral_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reason_for_referral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "comments",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["obs.person_id"]
+  }
+}
