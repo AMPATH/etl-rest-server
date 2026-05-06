@@ -15,6 +15,22 @@
         "type": "LEFT",
         "joinCondition": "fm.person_id = p.person_id"
       }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fm.encounter_id = e.encounter_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "fm.location_id = l.location_id"
+      }
     }
   ],
   "columns": [

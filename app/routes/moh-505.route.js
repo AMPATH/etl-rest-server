@@ -48,6 +48,7 @@ const routes = [
     method: 'GET',
     path: '/moh-505/patient-list',
     config: {
+      auth: false,
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           if (request.query['startDate']) {
