@@ -9,6 +9,14 @@
       "alias": "a"
     },
     {
+      "table": "amrs.encounter",
+      "alias": "en",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "en.encounter_id = a.encounter_id AND en.encounter_type in (266, 267)"
+      }
+    },
+    {
       "table": "amrs.person",
       "alias": "pn",
       "join": {
@@ -20,7 +28,7 @@
       "table": "amrs.patient_identifier",
       "alias": "pnc_number",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "pnc_number.patient_id = a.person_id AND pnc_number.identifier_type = 48"
       }
     },
@@ -28,7 +36,7 @@
       "table": "amrs.patient_identifier",
       "alias": "nupi",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
       }
     },
@@ -423,5 +431,26 @@
         "expression": "null"
       }
     }
-  ]
+  ],
+  "groupBy": {
+    "columns": ["a.person_id"]
+  },
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "en.encounter_type in (266, 267)"
+      }
+    ]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "a.encounter_datetime",
+        "order": "desc"
+      }
+    ]
+  }
 }
