@@ -1,7 +1,7 @@
 import { MultiDatasetPatientlistReport } from '../app/reporting-framework/multi-dataset-patientlist.report';
 import ReportProcessorHelpersService from '../app/reporting-framework/report-processor-helpers.service';
 
-export class Lab706Service extends MultiDatasetPatientlistReport {
+export class Moh505Service extends MultiDatasetPatientlistReport {
   constructor(reportName, params) {
     super(reportName, params);
   }
@@ -59,7 +59,6 @@ export class Lab706Service extends MultiDatasetPatientlistReport {
       indicators = requestParams.indicators.split(',');
     }
 
-    console.log('indicators', indicators);
     return new Promise((resolve, reject) => {
       this.generatePatientListReport(indicators)
         .then((results) => {
