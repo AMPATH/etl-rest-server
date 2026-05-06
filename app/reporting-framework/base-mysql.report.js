@@ -636,6 +636,13 @@ import * as moh_740_report_base from './json-reports/moh-740/json-reports/moh-74
 import * as diabetes_type_1_age_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-1-age-disaggregate.json';
 import * as diabetes_type_2_age_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-2-age-disaggregate.json';
 
+import * as moh_705a_patient_list_template from './json-reports/moh-705/moh-705A-patient-list-template.json';
+import * as moh_705b_patient_list_template from './json-reports/moh-705/moh-705B-patient-list-template.json';
+import * as moh_333_patient_list_template from './json-reports/moh-711/moh-333-patient-list-template.json';
+import * as moh_405_patient_list_template from './json-reports/moh-711/moh-405-patient-list-template.json';
+import * as moh_406_patient_list_template from './json-reports/moh-711/moh-406-patient-list-template.json';
+import * as moh_511_patient_list_template from './json-reports/moh-711/moh-511-patient-list-template.json';
+import * as moh_412_patient_list_template from './json-reports/moh-745/moh-412-patient-list-template.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2730,7 +2737,7 @@ export class BaseMysqlReport {
             breastCancerBase: this.cloneJsonSchema(breast_cancer_745_base)
           });
           break;
-        case 'cervicalCancerAggregate':
+        case 'cervicalCancer745Aggregate':
           resolve({
             main: this.cloneJsonSchema(cervical_cancer_745_aggregate),
             cervicalCancerBase: this.cloneJsonSchema(cervical_cancer_745_base)
@@ -2768,9 +2775,6 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(moh_740_report)
           });
-          break;
-        default:
-          reject('Unknown report ', reportName);
           break;
         case 'diabetesAndHypertentionComprehensiveCareReportDisAggregation':
           resolve({
@@ -2833,6 +2837,44 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(moh_740_patient_list_template)
           });
+          break;
+        case 'moh_705A_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_705a_patient_list_template)
+          });
+          break;
+        case 'moh_705B_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_705b_patient_list_template)
+          });
+          break;
+        case 'moh_333_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_333_patient_list_template)
+          });
+          break;
+        case 'moh_405_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_405_patient_list_template)
+          });
+          break;
+        case 'moh_406_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_406_patient_list_template)
+          });
+          break;
+        case 'moh_511_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_511_patient_list_template)
+          });
+          break;
+        case 'moh_412_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_412_patient_list_template)
+          });
+          break;
+        default:
+          reject('Unknown report ', reportName);
           break;
       }
     });

@@ -10,11 +10,11 @@
       "alias": "o"
     },
     {
-      "table": "amrs.obs",
-      "alias": "obs",
+      "table": "amrs.encounter",
+      "alias": "e",
       "join": {
-        "type": "LEFT",
-        "joinCondition": "o.person_id = obs.person_id"
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (329)"
       }
     },
     {
@@ -169,6 +169,10 @@
   "filters": {
     "conditionJoinOperator": "and",
     "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (329)"
+      },
       {
         "filterType": "tableColumns",
         "conditionExpression": "o.obs_datetime >= ?",
