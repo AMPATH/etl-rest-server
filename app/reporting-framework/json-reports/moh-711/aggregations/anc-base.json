@@ -55,7 +55,7 @@
       "alias": "new_anc_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(DISTINCT if(e.encounter_type = 265, 1, 0))"
+        "expression": "if(e.encounter_type = 265, 1, 0)"
       }
     },
     {
@@ -63,7 +63,7 @@
       "alias": "revisit_anc_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(DISTINCT if(e.encounter_type = 264, 1, 0))"
+        "expression": "if(e.encounter_type = 264, 1, 0)"
       }
     },
     {
