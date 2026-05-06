@@ -6751,11 +6751,15 @@ module.exports = (function () {
         auth: 'simple',
         handler: async function (request, reply) {
           const locationUuid = request.query.locationUuid;
+          const dashboardId = request.query.dashboardId;
           const supersetService = new SupersetService();
           try {
             await loadAndMaplocationUuidToId();
             const locationId = await getlocationIdFromUuid(locationUuid);
-            const res = await supersetService.getSupersetGuestToken(locationId);
+            const res = await supersetService.getSupersetGuestToken(
+              locationId,
+              dashboardId
+            );
             reply({
               access_token: res,
               code: 200

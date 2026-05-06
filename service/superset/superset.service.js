@@ -5,18 +5,24 @@ var config = require('../../conf/config.json');
 class SupersetService {
   constructor() {
     this.secretKey = config.superset.GUEST_TOKEN_JWT_SECRET;
-    this.dashboardId = config.superset.DASHBOARD_ID;
+    this.dashboardIds = Array.isArray(config.superset.DASHBOARD_ID)
+      ? config.superset.DASHBOARD_ID
+      : [config.superset.DASHBOARD_ID];
     this.supersetUrl = config.superset.SUPERSET_URL;
     this.username = config.superset.SUPERSET_USERNAME;
     this.password = config.superset.SUPERSET_PASSWORD;
-    this.supersetDatasetSupportsLocationId =
-      config.superset.DATASET_SUPPORTS_LOCATION_ID.split(',').map((id) =>
-        parseInt(id)
-      ) || [];
+    this.supersetDatasetSupportsLocationId = Array.isArray(
+      config.superset.DATASET_SUPPORTS_LOCATION_ID
+    )
+      ? config.superset.DATASET_SUPPORTS_LOCATION_ID
+      : config.superset.DATASET_SUPPORTS_LOCATION_ID.split(',').map((id) =>
+          parseInt(id)
+        );
 
     if (
       !config.superset.GUEST_TOKEN_JWT_SECRET ||
       !config.superset.DASHBOARD_ID ||
+      config.superset.DASHBOARD_ID.length === 0 ||
       !config.superset.SUPERSET_URL ||
       !config.superset.SUPERSET_USERNAME ||
       !config.superset.SUPERSET_PASSWORD ||
@@ -49,7 +55,10 @@ class SupersetService {
     return response.data.access_token;
   }
 
-  async getSupersetGuestToken(locationId) {
+  async getSupersetGuestToken(locationId, dashboardId) {
+    if (!this.dashboardIds.includes(dashboardId)) {
+      throw new Error('Unauthorized dashboard access');
+    }
     const token = await this.getAccessToken();
 
     const rlsClause = `location_id = ${locationId}`;
@@ -67,7 +76,12 @@ class SupersetService {
           last_name: 'ampath',
           username: 'admin'
         },
-        resources: [{ type: 'dashboard', id: this.dashboardId }],
+        resources: [
+          {
+            type: 'dashboard',
+            id: dashboardId
+          }
+        ],
         rls: rls,
         aud: 'superset',
         type: 'guest'

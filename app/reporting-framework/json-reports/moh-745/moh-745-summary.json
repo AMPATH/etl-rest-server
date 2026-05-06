@@ -1,6 +1,6 @@
 {
   "reports": [
-    "cervicalCancerAggregate",
+    "cervicalCancer745Aggregate",
     "breastCancerAggregate",
     "colorectalCancerAggregate"
   ]

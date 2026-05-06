@@ -1,5 +1,5 @@
 {
-  "name": "cervicalCancerAggregate",
+  "name": "cervicalCancer745Aggregate",
   "version": "1.0",
   "tag": "",
   "description": "",
@@ -148,26 +148,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "pap_smear_less_25_post_treatment_screening",
+      "alias": "pap_smear_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.pap_smear_less_25_post_treatment_screening)"
+        "expression": "SUM(c.pap_smear_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pap_smear_25_49_post_treatment_screening",
+      "alias": "pap_smear_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.pap_smear_25_49_post_treatment_screening)"
+        "expression": "SUM(c.pap_smear_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pap_smear_50_above_post_treatment_screening",
+      "alias": "pap_smear_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.pap_smear_50_above_post_treatment_screening)"
+        "expression": "SUM(c.pap_smear_50_above_post_treatment)"
       }
     },
     {
@@ -229,34 +229,34 @@
     },
     {
       "type": "derived_column",
-      "alias": "hpv_test_less_25_post_treatment_screening",
+      "alias": "hpv_test_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hpv_test_less_25_post_treatment_screening)"
+        "expression": "SUM(c.hpv_test_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hpv_test_25_49_post_treatment_screening",
+      "alias": "hpv_test_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hpv_test_25_49_post_treatment_screening)"
+        "expression": "SUM(c.hpv_test_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hpv_test_50_above_post_treatment_screening",
+      "alias": "hpv_test_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hpv_test_50_above_post_treatment_screening)"
+        "expression": "SUM(c.hpv_test_50_above_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hpv_test_total",
+      "alias": "hpv_total",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hpv_test_total)"
+        "expression": "SUM(c.hpv_total)"
       }
     },
 
@@ -310,26 +310,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "positive_via_villi_less_25_post_treatment_screening",
+      "alias": "positive_via_villi_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_via_villi_less_25_post_treatment_screening)"
+        "expression": "SUM(c.positive_via_villi_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "positive_via_villi_25_49_post_treatment_screening",
+      "alias": "positive_via_villi_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_via_villi_25_49_post_treatment_screening)"
+        "expression": "SUM(c.positive_via_villi_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "positive_via_villi_50_above_post_treatment_screening",
+      "alias": "positive_via_villi_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_via_villi_50_above_post_treatment_screening)"
+        "expression": "SUM(c.positive_via_villi_50_above_post_treatment)"
       }
     },
     {
@@ -391,26 +391,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "positive_cytology_less_25_post_treatment_screening",
+      "alias": "positive_cytology_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_cytology_less_25_post_treatment_screening)"
+        "expression": "SUM(c.positive_cytology_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "positive_cytology_25_49_post_treatment_screening",
+      "alias": "positive_cytology_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_cytology_25_49_post_treatment_screening)"
+        "expression": "SUM(c.positive_cytology_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "positive_cytology_50_above_post_treatment_screening",
+      "alias": "positive_cytology_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_cytology_50_above_post_treatment_screening)"
+        "expression": "SUM(c.positive_cytology_50_above_post_treatment)"
       }
     },
     {
@@ -472,26 +472,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "positive_hpv_less_25_post_treatment_screening",
+      "alias": "positive_hpv_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_hpv_less_25_post_treatment_screening)"
+        "expression": "SUM(c.positive_hpv_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "positive_hpv_25_49_post_treatment_screening",
+      "alias": "positive_hpv_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_hpv_25_49_post_treatment_screening)"
+        "expression": "SUM(c.positive_hpv_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "positive_hpv_50_above_post_treatment_screening",
+      "alias": "positive_hpv_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.positive_hpv_50_above_post_treatment_screening)"
+        "expression": "SUM(c.positive_hpv_50_above_post_treatment)"
       }
     },
     {
@@ -553,26 +553,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "suspicious_cancer_lessions_less_25_post_treatment_screening",
+      "alias": "suspicious_cancer_lessions_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.suspicious_cancer_lessions_less_25_post_treatment_screening)"
+        "expression": "SUM(c.suspicious_cancer_lessions_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "suspicious_cancer_lessions_25_49_post_treatment_screening",
+      "alias": "suspicious_cancer_lessions_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.suspicious_cancer_lessions_25_49_post_treatment_screening)"
+        "expression": "SUM(c.suspicious_cancer_lessions_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "suspicious_cancer_lessions_50_above_post_treatment_screening",
+      "alias": "suspicious_cancer_lessions_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.suspicious_cancer_lessions_50_above_post_treatment_screening)"
+        "expression": "SUM(c.suspicious_cancer_lessions_50_above_post_treatment)"
       }
     },
     {
@@ -634,26 +634,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "cryotherapy_treatment_less_25_post_treatment_screening",
+      "alias": "cryotherapy_treatment_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.cryotherapy_treatment_less_25_post_treatment_screening)"
+        "expression": "SUM(c.cryotherapy_treatment_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "cryotherapy_treatment_25_49_post_treatment_screening",
+      "alias": "cryotherapy_treatment_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.cryotherapy_treatment_25_49_post_treatment_screening)"
+        "expression": "SUM(c.cryotherapy_treatment_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "cryotherapy_treatment_50_above_post_treatment_screening",
+      "alias": "cryotherapy_treatment_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.cryotherapy_treatment_50_above_post_treatment_screening)"
+        "expression": "SUM(c.cryotherapy_treatment_50_above_post_treatment)"
       }
     },
     {
@@ -715,26 +715,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "thermocoagulation_treatment_less_25_post_treatment_screening",
+      "alias": "thermocoagulation_treatment_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.thermocoagulation_treatment_less_25_post_treatment_screening)"
+        "expression": "SUM(c.thermocoagulation_treatment_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "thermocoagulation_treatment_25_49_post_treatment_screening",
+      "alias": "thermocoagulation_treatment_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.thermocoagulation_treatment_25_49_post_treatment_screening)"
+        "expression": "SUM(c.thermocoagulation_treatment_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "thermocoagulation_treatment_50_above_post_treatment_screening",
+      "alias": "thermocoagulation_treatment_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.thermocoagulation_treatment_50_above_post_treatment_screening)"
+        "expression": "SUM(c.thermocoagulation_treatment_50_above_post_treatment)"
       }
     },
     {
@@ -796,26 +796,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "leep_treatment_less_25_post_treatment_screening",
+      "alias": "leep_treatment_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.leep_treatment_less_25_post_treatment_screening)"
+        "expression": "SUM(c.leep_treatment_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "leep_treatment_25_49_post_treatment_screening",
+      "alias": "leep_treatment_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.leep_treatment_25_49_post_treatment_screening)"
+        "expression": "SUM(c.leep_treatment_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "leep_treatment_50_above_post_treatment_screening",
+      "alias": "leep_treatment_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.leep_treatment_50_above_post_treatment_screening)"
+        "expression": "SUM(c.leep_treatment_50_above_post_treatment)"
       }
     },
     {
@@ -877,26 +877,26 @@
     },
     {
       "type": "derived_column",
-      "alias": "other_treatment_less_25_post_treatment_screening",
+      "alias": "other_treatment_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.other_treatment_less_25_post_treatment_screening)"
+        "expression": "SUM(c.other_treatment_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "other_treatment_25_49_post_treatment_screening",
+      "alias": "other_treatment_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.other_treatment_25_49_post_treatment_screening)"
+        "expression": "SUM(c.other_treatment_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "other_treatment_50_above_post_treatment_screening",
+      "alias": "other_treatment_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.other_treatment_50_above_post_treatment_screening)"
+        "expression": "SUM(c.other_treatment_50_above_post_treatment)"
       }
     },
     {
@@ -910,74 +910,74 @@
 
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_less_25_initial_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_less_25_initial",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_less_25_initial_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_less_25_initial)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_25_49_initial_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_25_49_initial",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_25_49_initial_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_25_49_initial)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_50_above_initial_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_50_above_initial",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_50_above_initial_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_50_above_initial)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_less_25_routine_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_less_25_routine",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_less_25_routine_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_less_25_routine)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_25_49_routine_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_25_49_routine",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_25_49_routine_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_25_49_routine)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_50_above_routine_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_50_above_routine",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_50_above_routine_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_50_above_routine)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_less_25_post_treatment_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_less_25_post_treatment_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_25_49_post_treatment_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_25_49_post_treatment_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_screened_cervical_cancer_50_above_post_treatment_screening",
+      "alias": "hiv_positive_screened_cervical_cancer_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_50_above_post_treatment_screening)"
+        "expression": "SUM(c.hiv_positive_screened_cervical_cancer_50_above_post_treatment)"
       }
     },
     {
@@ -990,74 +990,74 @@
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_less_25_initial_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_less_25_initial",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_less_25_initial_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_less_25_initial)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_25_49_initial_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_25_49_initial",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_25_49_initial_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_25_49_initial)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_50_above_initial_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_50_above_initial",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_50_above_initial_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_50_above_initial)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_less_25_routine_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_less_25_routine",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_less_25_routine_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_less_25_routine)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_25_49_routine_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_25_49_routine",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_25_49_routine_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_25_49_routine)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_50_above_routine_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_50_above_routine",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_50_above_routine_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_50_above_routine)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_less_25_post_treatment_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_less_25_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_less_25_post_treatment_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_less_25_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_25_49_post_treatment_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_25_49_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_25_49_post_treatment_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_25_49_post_treatment)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hiv_positive_cervical_cancer_positive_50_above_post_treatment_screening",
+      "alias": "hiv_positive_cervical_cancer_positive_50_above_post_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_50_above_post_treatment_screening)"
+        "expression": "SUM(c.hiv_positive_cervical_cancer_positive_50_above_post_treatment)"
       }
     },
     {
@@ -1077,7 +1077,7 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient-list-template",
+      "useTemplate": "moh_412_patient_list_template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {

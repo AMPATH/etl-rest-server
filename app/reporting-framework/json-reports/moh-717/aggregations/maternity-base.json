@@ -14,7 +14,7 @@
       "alias": "e",
       "join": {
         "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (196, 274, 273, 269)"
       }
     },
     {

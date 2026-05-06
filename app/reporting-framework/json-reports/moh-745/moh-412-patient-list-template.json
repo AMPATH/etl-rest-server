@@ -1,0 +1,220 @@
+{
+  "name": "moh_412_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_412_patient_list_template",
+  "description": "moh_412_patient_list_template",
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "obs"
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "obs.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "obs.person_id = id.patient_id AND (id.voided IS NULL || id.voided = 0) AND id.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "contacts",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "obs.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id in (10, 48)"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "en",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "obs.person_id = en.patient_id AND en.encounter_type = 69"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "obs.person_id = pa.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "obs.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "obs.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_date",
+      "column": "obs.obs_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "visit_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN obs.concept_id = 1834 THEN CASE WHEN obs.value_coded = 7850 THEN 1 WHEN obs.value_coded = 432 THEN 2 WHEN obs.value_coded = 11755 THEN 3 WHEN obs.value_coded = 1185 THEN 4 WHEN obs.value_coded = 11758 THEN 6 END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "client_no",
+      "column": "id.identifier"
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_names",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "phone_number",
+      "column": "contacts.value"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "timestampdiff(year, p.birthdate, obs.obs_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_residence",
+      "column": "pa.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "treatment_supporter_phone_number",
+      "column": "contacts.value"
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_villi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN obs.concept_id = 10402 AND obs.value_coded IN (9434, 2322, 10420) THEN obs.value_coded END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pap_smear",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 10402 AND obs.value_coded = 885, obs.value_coded, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 10402 AND obs.value_coded = 2322, obs.value_coded, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cryotherapy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 10380 AND obs.value_coded = 7466, obs.value_coded, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "thermocoagulation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 10380 AND obs.value_coded = 7147, obs.value_coded, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "leep",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 10380 AND obs.value_coded = 7147, obs.value_coded, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cbe",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ultrasound",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mammogram",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "colonoscopy",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "fobt",
+      "column": "null"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN obs.concept_id = 6709 THEN CASE WHEN obs.value_coded = 664 THEN 1 WHEN obs.value_coded = 703 THEN 2 WHEN obs.value_coded = 1067 THEN 3 END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_from",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_to",
+      "column": "null"
+    },
+    {
+      "type": "derived_column",
+      "alias": "follow_up_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 5096, obs.value_datetime, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "remarks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 7222, obs.value_text, NULL)"
+      }
+    }
+  ]
+}
