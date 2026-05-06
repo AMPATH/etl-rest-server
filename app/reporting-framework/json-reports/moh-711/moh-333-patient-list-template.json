@@ -10,26 +10,26 @@
     },
     {
       "table": "amrs.person",
-      "alias": "p",
+      "alias": "pn",
       "join": {
         "type": "LEFT",
-        "joinCondition": "p.person_id = a.person_id"
+        "joinCondition": "pn.person_id = a.person_id"
       }
     },
     {
       "table": "amrs.patient_identifier",
       "alias": "mat_number",
       "join": {
-        "type": "INNER",
-        "joinCondition": "mat_number.person_id = a.person_id AND mat_number.identifier_type = 49"
+        "type": "LEFT",
+        "joinCondition": "mat_number.patient_id = a.person_id AND mat_number.identifier_type = 49"
       }
     },
     {
       "table": "amrs.patient_identifier",
       "alias": "nupi",
       "join": {
-        "type": "INNER",
-        "joinCondition": "nupi.person_id = a.person_id AND nupi.identifier_type = 45"
+        "type": "LEFT",
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
       }
     },
     {
@@ -92,21 +92,8 @@
   "columns": [
     {
       "type": "simple_column",
-      "alias": "patient_uuid",
-      "column": "p.uuid"
-    },
-    {
-      "type": "simple_column",
       "alias": "person_id",
       "column": "a.person_id"
-    },
-    {
-      "type": "derived_column",
-      "alias": "identifiers",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": " GROUP_CONCAT(DISTINCT id.identifier SEPARATOR ', ')"
-      }
     },
     {
       "type": "simple_column",
@@ -139,14 +126,14 @@
     {
       "type": "simple_column",
       "alias": "date_of_birth",
-      "column": "p.birthdate"
+      "column": "pn.birthdate"
     },
     {
       "type": "derived_column",
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "timestampdiff(year, p.birthdate, a.encounter_datetime) "
+        "expression": "timestampdiff(year, pn.birthdate, a.encounter_datetime) "
       }
     },
     {
@@ -259,7 +246,7 @@
       "alias": "maternal_deaths_notified",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "case when a.maternal_death_notified is not null THEN 'Y' else 'N"
+        "expression": "case when a.maternal_death_notified is not null THEN 'Y' else 'N' END "
       }
     },
     {
@@ -484,6 +471,15 @@
     }
   ],
   "groupBy": {
-    "columns": ["obs.person_id"]
+    "columns": ["a.person_id"]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "a.encounter_datetime",
+        "order": "desc"
+      }
+    ]
   }
 }

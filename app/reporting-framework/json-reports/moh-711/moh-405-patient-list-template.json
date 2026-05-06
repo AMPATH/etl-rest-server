@@ -17,10 +17,18 @@
       }
     },
     {
+      "table": "amrs.encounter",
+      "alias": "en",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "en.encounter_id = a.encounter_id AND en.encounter_type in (264, 265)"
+      }
+    },
+    {
       "table": "amrs.patient_identifier",
       "alias": "anc_number",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "anc_number.patient_id = a.person_id AND anc_number.identifier_type = 48"
       }
     },
@@ -28,7 +36,7 @@
       "table": "amrs.patient_identifier",
       "alias": "nupi",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
       }
     },
@@ -50,7 +58,7 @@
     },
     {
       "table": "amrs.patient_identifier",
-      "alias": "amrsId",
+      "alias": "amrs",
       "join": {
         "type": "INNER",
         "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
@@ -118,7 +126,7 @@
     {
       "type": "simple_column",
       "alias": "amrs_id",
-      "column": "amrsId.identifier"
+      "column": "amrs.identifier"
     },
     {
       "type": "simple_column",
@@ -344,7 +352,7 @@
       "alias": "hiv_results",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "MAX(CASE WHEN oc.value_coded = 703 THEN 'P' WHEN oc.value_coded = 664 then 'N' WHEN oc.value_coded = 1175 then 'NA' WHEN oc.value_coded = 1138 then 'In' WHEN oc.value_coded = 1067 then 'U' ELSE '' end)"
+        "expression": "CASE WHEN oc.value_coded = 703 THEN 'P' WHEN oc.value_coded = 664 then 'N' WHEN oc.value_coded = 1175 then 'NA' WHEN oc.value_coded = 1138 then 'In' WHEN oc.value_coded = 1067 then 'U' ELSE '' end"
       }
     },
     {
@@ -429,5 +437,26 @@
         "expression": "null"
       }
     }
-  ]
+  ],
+  "groupBy": {
+    "columns": ["a.person_id"]
+  },
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "en.encounter_type in (264, 265)"
+      }
+    ]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "o.obs_datetime",
+        "order": "desc"
+      }
+    ]
+  }
 }

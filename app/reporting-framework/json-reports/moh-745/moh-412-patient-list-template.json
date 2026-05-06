@@ -28,7 +28,7 @@
       "table": "amrs.person_attribute",
       "alias": "contacts",
       "join": {
-        "type": "LEFT",
+        "type": "INNER",
         "joinCondition": "obs.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id in (10, 48)"
       }
     },
@@ -37,7 +37,15 @@
       "alias": "en",
       "join": {
         "type": "LEFT",
-        "joinCondition": "obs.person_id = en.patient_id AND en.encounter_type = 69"
+        "joinCondition": "obs.encounter_id = en.encounter_id AND en.encounter_type = 69"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "obs.person_id = pn.person_id"
       }
     },
     {
@@ -96,7 +104,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "timestampdiff(year, p.birthdate, obs.obs_datetime)"
+        "expression": "timestampdiff(year, pn.birthdate, obs.obs_datetime)"
       }
     },
     {
@@ -216,5 +224,28 @@
         "expression": "IF(obs.concept_id = 7222, obs.value_text, NULL)"
       }
     }
-  ]
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["obs.person_id"]
+  },
+
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "en.encounter_type = 69"
+      }
+    ]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "en.encounter_datetime",
+        "order": "desc"
+      }
+    ]
+  }
 }
