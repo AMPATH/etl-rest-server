@@ -1,0 +1,219 @@
+{
+  "name": "moh505ReportBase",
+  "version": "1.0",
+  "tag": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_505_weekly_v2",
+      "alias": "fm"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fm.person_id = p.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "fm.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "fm.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "fm.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "fm.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "fm.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "fm.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "fm.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "aefi",
+      "column": "fm.aefi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "acute_jaundice",
+      "column": "fm.acute_jaundice"
+    },
+    {
+      "type": "simple_column",
+      "alias": "acute_malnutrition",
+      "column": "fm.acute_malnutrition"
+    },
+    {
+      "type": "simple_column",
+      "alias": "anthrax",
+      "column": "fm.anthrax"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cholera",
+      "column": "fm.cholera"
+    },
+    {
+      "type": "simple_column",
+      "alias": "dengue",
+      "column": "fm.dengue"
+    },
+    {
+      "type": "simple_column",
+      "alias": "dysentery_bacillary",
+      "column": "fm.dysentery_bacillary"
+    },
+    {
+      "type": "simple_column",
+      "alias": "measles",
+      "column": "fm.measles"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_deaths",
+      "column": "fm.maternal_deaths"
+    },
+    {
+      "type": "simple_column",
+      "alias": "neonatal_deaths",
+      "column": "fm.neonatal_deaths"
+    },
+    {
+      "type": "simple_column",
+      "alias": "neonatal_tetanus",
+      "column": "fm.neonatal_tetanus"
+    },
+    {
+      "type": "simple_column",
+      "alias": "plague",
+      "column": "fm.plague"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rabies",
+      "column": "fm.rabies"
+    },
+    {
+      "type": "simple_column",
+      "alias": "typhoid",
+      "column": "fm.typhoid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "yellow_fever",
+      "column": "fm.yellow_fever"
+    },
+    {
+      "type": "simple_column",
+      "alias": "malaria_microscopy_tested",
+      "column": "fm.malaria_microscopy_tested"
+    },
+    {
+      "type": "simple_column",
+      "alias": "malaria_microscopy_positive",
+      "column": "fm.malaria_microscopy_positive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "malaria_mrdt_tested",
+      "column": "fm.malaria_mrdt_tested"
+    },
+    {
+      "type": "simple_column",
+      "alias": "malaria_mrdt_positive",
+      "column": "fm.malaria_mrdt_positive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "bacterial_meningitis",
+      "column": "fm.bacterial_meningitis"
+    },
+    {
+      "type": "simple_column",
+      "alias": "meningitis_no_csf",
+      "column": "fm.meningitis_no_csf"
+    },
+    {
+      "type": "simple_column",
+      "alias": "typhoid_lab_tested",
+      "column": "fm.typhoid_lab_tested"
+    },
+    {
+      "type": "simple_column",
+      "alias": "typhoid_lab_positive",
+      "column": "fm.typhoid_lab_positive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "dead",
+      "column": "p.dead"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cause_of_death",
+      "column": "p.cause_of_death"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_range",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "fm.age < 5",
+            "value": "0_to_4"
+          },
+          {
+            "condition": "fm.age >= 5",
+            "value": "5_and_above"
+          }
+        ]
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fm.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fm.encounter_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fm.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  }
+}

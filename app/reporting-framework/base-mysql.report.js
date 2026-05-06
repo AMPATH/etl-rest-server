@@ -565,6 +565,11 @@ import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
 import * as lab_706_patient_list_template from './json-reports/lab-706-patient-list-template.json';
 import * as moh_706_report from './json-reports/moh-706/moh-706-report.json';
 
+//moh 505 report
+import * as moh_505_base from './json-reports/moh-505/moh-505-report-base.json';
+import * as moh_505_disaggregation from './json-reports/moh-505/aggregations/moh-505-report-disaggregation.json';
+import * as moh_505_report from './json-reports/moh-505/moh-505-report.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -2500,6 +2505,17 @@ export class BaseMysqlReport {
         case 'lab-706-patient-list-template':
           resolve({
             main: this.cloneJsonSchema(lab_706_patient_list_template)
+          });
+          break;
+        case 'MOH-505-report':
+          resolve({
+            main: this.cloneJsonSchema(moh_505_report)
+          });
+          break;
+        case 'moh505AgeDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(moh_505_disaggregation),
+            moh505ReportBase: this.cloneJsonSchema(moh_505_base)
           });
           break;
         default:

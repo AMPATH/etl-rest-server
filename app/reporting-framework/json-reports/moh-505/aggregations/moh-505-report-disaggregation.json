@@ -1,0 +1,243 @@
+{
+  "name": "moh505AgeDisaggregation",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "moh505ReportBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh505ReportBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_range",
+      "column": "b.age_range"
+    },
+    {
+      "type": "derived_column",
+      "alias": "aefi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.aefi > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "acute_jaundice",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.acute_jaundice > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "acute_malnutrition",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.acute_malnutrition > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anthrax",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.anthrax > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cholera",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.cholera > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dengue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.dengue > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dysentery_bacillary",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.dysentery_bacillary > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.measles > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.maternal_deaths > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.neonatal_deaths > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_tetanus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.neonatal_tetanus > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "plague",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.plague > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rabies",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.rabies > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.typhoid > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.yellow_fever > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_microscopy_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.malaria_microscopy_tested > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_microscopy_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.malaria_microscopy_positive > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_mrdt_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.malaria_mrdt_tested > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_mrdt_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.malaria_mrdt_positive > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bacterial_meningitis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.bacterial_meningitis > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "meningitis_no_csf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.meningitis_no_csf > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_lab_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.typhoid_lab_tested > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_lab_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.typhoid_lab_positive > 0)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["age_range", "location_id"]
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": [
+      "person_id",
+      "person_uuid",
+      "encounter_id",
+      "encounter_datetime"
+    ],
+    "disaggregationColumns": ["age_range"]
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "lab-706-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
