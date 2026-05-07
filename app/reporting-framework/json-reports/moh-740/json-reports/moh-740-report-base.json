@@ -47,7 +47,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "newly_diagnosed_diabetes_this_month",
+      "alias": "newly_diagnosed_diabetes",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(mdh.newly_diagnosed_diabetes_this_month = 1, 1,NULL)"
