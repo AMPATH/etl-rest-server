@@ -295,6 +295,14 @@
       "expressionOptions": {
         "expression": "IF(mdh.systolic >= 140 OR mdh.diastolic >= 90 ,1,NULL)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnosis_year",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN mdh.diabetes_mellitus_type is not null then DATE_FORMAT(mdh.diabetes_diagnosis_date,'%Y') WHEN mdh.has_htn = 1 THEN DATE_FORMAT(mdh.htn_diagnosis_date,'%Y') WHEN mdh.is_co_morbid = 1 THEN DATE_FORMAT(mdh.co_morbid_diagnosis_date,'%Y') else null END"
+      }
     }
   ],
   "filters": {
