@@ -3265,5 +3265,14 @@
     "county": "Bungoma",
     "cityVillage": "",
     "eidDisplay": ""
+  },
+  "5f25049c-cdaa-4efa-96f6-566cba824614": {
+    "mrsId": 528,
+    "mrsDisplay": "Chembulet Health Centre",
+    "description": "A health facility in Uasin Gishu County",
+    "mflCode": "14317",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
   }
 }
