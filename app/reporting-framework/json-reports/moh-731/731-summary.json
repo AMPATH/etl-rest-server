@@ -1,0 +1,24 @@
+{
+  "reports": [
+    "establishedAggregate3X",
+    "731ANCAggregate3X",
+    "731NutritionAggregate3X",
+    "731OnARTAggregate3X",
+    "731PositivesAggregate3X",
+    "731PostExposureAggregate3X",
+    "731PrepAggregate3X",
+    "731StartARTAggregate3X",
+    "731TBScreenAggregate3X",
+    "hivSetting731Aggregate3X",
+    "tptAggregate3X",
+    "breastFeeding731Aggregate3X",
+    "maternalHaart731Aggregate3X",
+    "ayp731Aggregate3X",
+    "hbvAnc731Aggregate3X",
+    "infantProphylaxis731Aggregate3X",
+    "communityFaciltiyAggregate3X",
+    "tbAggregate3X",
+    "tbScreenLess15Aggregate3X",
+    "nutritionMamAggregate3X"
+  ]
+}

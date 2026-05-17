@@ -250,7 +250,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12 < 5"
+        "conditionExpression": "TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12 > 5"
       }
     ]
   },
