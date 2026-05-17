@@ -1,12 +1,28 @@
 {
-  "name": "moh_705B_patient_list_template",
+  "name": "moh_710_patient_list_template",
   "version": "1.0",
-  "tag": "moh_705_patient_list_template",
-  "description": "MOH 705 Patient list template",
+  "tag": "moh_710_patient_list_template",
+  "description": "MOH 710 Patient list template",
   "sources": [
     {
       "table": "amrs.person",
       "alias": "t1"
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "cwc_number",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pnc_number.person_id = t1.person_id AND cwc_number.identifier_type = 22"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "nupi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nupi.person_id = t1.person_id AND nupi.identifier_type = 45"
+      }
     },
     {
       "table": "amrs.person_name",
@@ -18,18 +34,26 @@
     },
     {
       "table": "amrs.person_attribute",
-      "alias": "contacts",
+      "alias": "attribute",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id in (10)"
+        "joinCondition": "attribute.person_id = t1.person_id AND attribute.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "obs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = obs.person_id "
       }
     },
     {
       "table": "amrs.encounter",
-      "alias": "et",
+      "alias": "en",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = et.patient_id"
+        "joinCondition": "en.encounter_id = obs.encounter_id AND en.encounter_type in (4,110,167,313))"
       }
     },
     {
@@ -38,14 +62,6 @@
       "join": {
         "type": "LEFT",
         "joinCondition": "t1.person_id = pa.person_id"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "o",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "t1.person_id = o.person_id"
       }
     }
   ],
@@ -62,22 +78,30 @@
     },
     {
       "type": "simple_column",
-      "alias": "date",
-      "column": "DATE_FORMAT(e.encounter_datetime, '%d/%m/%Y')"
+      "alias": "visit_date",
+      "column": "obs.obs_datetiem"
     },
     {
       "type": "simple_column",
-      "alias": "opd_number_new_visit",
-      "column": "null"
+      "alias": "cwc_number_new",
+      "column": "cwc_number.identifier"
     },
     {
       "type": "simple_column",
-      "alias": "opd_number_return_visit",
-      "column": "null"
+      "alias": "cwc_number_revisit",
+      "column": "cwc_number.identifier"
     },
     {
       "type": "derived_column",
-      "alias": "full_names",
+      "alias": "birth_notification_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 8558, obs.value_text, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
@@ -88,7 +112,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "TIMESTAMPDIFF(YEAR, t1.birthdate, CURDATE())"
+        "expression": "CONCAT(FLOOR(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12), ' ', MOD(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()), 12), '/12')"
       }
     },
     {
@@ -109,7 +133,7 @@
     {
       "type": "simple_column",
       "alias": "phone_number",
-      "column": "contacts.value"
+      "column": "attribute.value"
     },
     {
       "type": "derived_column",
@@ -117,6 +141,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(o.concept_id = 5089, o.value_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "weight_category",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(obs.concept_id = 10213, obs.value_coded, NULL)"
       }
     },
     {
@@ -129,39 +161,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "bmi",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 1342, o.value_numeric, NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "temp",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5088, o.value_numeric, NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "systolic",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5085, o.value_numeric, NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "diastolic",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5086, o.value_numeric, NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "visual_aquity",
+      "alias": "height_category",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "null"
@@ -169,77 +169,88 @@
     },
     {
       "type": "derived_column",
-      "alias": "visual_aquity_re",
+      "alias": "muac",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 2288, o.value_numeric, NULL)"
+        "expression": "IF(obs.concept_id = 1343, obs.value_numeric, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "visual_aquity_le",
+      "alias": "exclusive_breastfeeding_less_6_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 2289, o.value_numeric, NULL)"
+        "expression": "IF(obs.concept_id = 5526 AND obs.value_coded = 1065, 'Y', 'N')"
       }
     },
     {
       "type": "derived_column",
-      "alias": "tb_screening",
+      "alias": "vitamin_A_supplementation",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(obs.concept_id = 10936 AND obs.value_coded = 1065, 'Y', 'N')"
       }
     },
     {
       "type": "derived_column",
-      "alias": "malaria",
+      "alias": "dewormed",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(obs.concept_id = 7404 AND obs.value_coded = 1065, 'Y', 'N')"
       }
     },
     {
       "type": "derived_column",
-      "alias": "diagnosis",
+      "alias": "mnps_supplimentation",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 10893, o.value_numeric, NULL)"
+        "expression": "IF(obs.concept_id = 9487 AND obs.value_coded = 9488, 'Y', 'N')"
       }
     },
     {
       "type": "simple_column",
-      "alias": "treatment_prescription",
-      "column": "null"
+      "alias": "developmental_milestones",
+      "column": "fh.hiv_disclosure_status_value"
     },
     {
       "type": "simple_column",
-      "alias": "nitrition_intervention",
-      "column": "null"
+      "alias": "danger_signs",
+      "column": "fh.hiv_disclosure_status_value"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
+      "alias": "disability",
+      "column": "fh.hiv_disclosure_status_value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "immunization_status_up_to_date",
+      "column": "fh.hiv_disclosure_status_value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "llin_supplimentation_given",
+      "column": "fh.hiv_disclosure_status_value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "follow_up",
+      "column": "fh.hiv_disclosure_status_value"
+    },
+    {
+      "type": "simple_column",
       "alias": "referred_from",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 10926, o.value_coded, NULL)"
-      }
+      "column": "fh.hiv_disclosure_status_value"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "referred_to",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "fh.hiv_disclosure_status_value"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "remarks",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 9467, o.value_text, NULL)"
-      }
+      "column": "fh.hiv_disclosure_status_value"
     }
   ],
   "groupBy": {
@@ -250,7 +261,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12 > 5"
+        "conditionExpression": "en.encounter_type in (4,110,167,313)"
       }
     ]
   },
@@ -258,7 +269,7 @@
     "orderByParam": "orderByParam",
     "columns": [
       {
-        "column": "o.obs_datetime",
+        "column": "obs.obs_datetime",
         "order": "desc"
       }
     ]

@@ -18,17 +18,17 @@
     },
     {
       "table": "amrs.patient_identifier",
-      "alias": "pnc_number",
+      "alias": "cwc_number",
       "join": {
-        "type": "INNER",
-        "joinCondition": "pnc_number.person_id = a.person_id AND pnc_number.identifier_type = 48"
+        "type": "LEFT",
+        "joinCondition": "pnc_number.person_id = a.person_id AND pnc_number.identifier_type = 22"
       }
     },
     {
       "table": "amrs.patient_identifier",
       "alias": "nupi",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "nupi.person_id = a.person_id AND nupi.identifier_type = 45"
       }
     },
@@ -49,51 +49,11 @@
       }
     },
     {
-      "table": "amrs.patient_identifier",
-      "alias": "amrs",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
-      }
-    },
-    {
       "table": "amrs.obs",
       "alias": "o",
       "join": {
         "type": "LEFT",
         "joinCondition": "a.person_id = o.person_id AND o.concept_id in (10926, 10927, 2327, 12019)"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "ob",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = ob.person_id AND ob.concept_id = 12019"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "oc",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = oc.person_id AND oc.concept_id = 1357"
-      }
-    },
-    {
-      "table": "(SELECT person_id, CASE WHEN value_coded = 5555 THEN 'MM' WHEN value_coded = 6290 THEN 'MP' WHEN value_coded = 1059 THEN 'W' WHEN value_coded = 1057 THEN 'NM' WHEN value_coded = 1056 THEN 'S' WHEN value_coded = 1058 THEN 'D' END AS marital_status FROM (SELECT person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054) ranked_obs WHERE rn = 1)",
-      "alias": "g",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "a.person_id = g.person_id"
-      }
-    },
-    {
-      "table": "(SELECT o.person_id, o.value_text FROM amrs.obs o INNER JOIN (SELECT person_id, MAX(CONCAT(obs_datetime, LPAD(obs_id, 10, '0'))) AS max_key FROM amrs.obs WHERE concept_id = 7222 GROUP BY person_id) latest ON latest.person_id = o.person_id AND latest.max_key = CONCAT(o.obs_datetime, LPAD(o.obs_id, 10, '0')) WHERE o.concept_id = 7222)",
-      "alias": "oa_latest",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "oa_latest.person_id = a.person_id"
       }
     },
     {

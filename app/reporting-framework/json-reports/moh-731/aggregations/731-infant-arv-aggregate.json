@@ -1,0 +1,65 @@
+{
+  "name": "infantProphylaxis731Aggregate3X",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "infantProphylaxis731Base3X",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "infantProphylaxis731Base3X",
+      "alias": "e"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.infant_arv_anc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_ld",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.infant_arv_ld)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(e.infant_arv_pnc)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh_366_patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

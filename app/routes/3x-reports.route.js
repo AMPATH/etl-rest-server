@@ -9,6 +9,7 @@ const { MOH717Service } = require('../../service/moh-717.service');
 const { MOH745Service } = require('../../service/moh-745.service');
 const { MOH705AService } = require('../../service/moh-705a.service');
 const { MOH705BService } = require('../../service/moh-705b.service');
+const { MOH731Service } = require('../../service/moh-731.service');
 
 const routes = [
   {
@@ -680,7 +681,6 @@ const routes = [
             requestCopy.locations = reportParams.requestParams.locations;
             requestCopy.limitParam = requestParams.limit;
             requestCopy.offSetParam = requestParams.startIndex;
-            console.log('412 REQUEST: ' + JSON.stringify(requestCopy));
 
             service
               .generatePatientListReport(reportParams.requestParams)
@@ -700,6 +700,186 @@ const routes = [
       },
       description: 'Get MOH 412 PATIENT LIST',
       notes: 'Returns MOH 412 Patient List',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        query: {
+          limit: Joi.number()
+            .required()
+            .description('The offset to control pagination')
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/moh-731-monthly-summary',
+    config: {
+      handler: function (request, reply) {
+        if (request.query.locationUuids) {
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'moh731MonthlyReport',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+
+            reportParams.requestParams.isAggregated = true;
+
+            let moh731Service = new MOH731Service(
+              'moh731MonthlyReport',
+              reportParams.requestParams
+            );
+
+            moh731Service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
+        }
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get MOH 731 REPORT',
+      notes: 'Returns MOH 731 Report',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/moh-731-monthly-summary-patient-list',
+    config: {
+      handler: function (request, reply) {
+        if (request.query.locationUuids) {
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+
+            let reportParams = etlHelpers.getReportParams(
+              'moh731MonthlyReport',
+              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+              requestParams
+            );
+
+            let requestCopy = _.cloneDeep(requestParams);
+
+            let moh731Service = new MOH731Service(
+              'moh731MonthlyReport',
+              reportParams.requestParams
+            );
+
+            requestCopy.locations = reportParams.requestParams.locations;
+            requestCopy.limitParam = requestParams.limit;
+            requestCopy.offSetParam = requestParams.startIndex;
+            // delete reportParams.requestParams['gender'];
+
+            moh731Service
+              .generatePatientListReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
+        }
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get MOH 731 REPORT',
+      notes: 'Returns MOH 731 Report',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        query: {
+          limit: Joi.number()
+            .required()
+            .description('The offset to control pagination')
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/prep-patient-list',
+    config: {
+      handler: function (request, reply) {
+        if (request.query.locationUuids) {
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+
+            let reportParams = etlHelpers.getReportParams(
+              'moh731MonthlyReport',
+              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+              requestParams
+            );
+
+            let requestCopy = _.cloneDeep(requestParams);
+
+            console.log('REQUEST PARAMS: ', reportParams.requestParams);
+
+            let moh731Service = new MOH731Service(
+              'moh731MonthlyReport',
+              reportParams.requestParams
+            );
+
+            requestCopy.locations = reportParams.requestParams.locations;
+            requestCopy.limitParam = requestParams.limit;
+            requestCopy.offSetParam = requestParams.startIndex;
+            // delete reportParams.requestParams['gender'];
+
+            moh731Service
+              .generatePatientListReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
+        }
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get MOH 731 REPORT',
+      notes: 'Returns MOH 731 Report',
       tags: ['api'],
       validate: {
         options: {
