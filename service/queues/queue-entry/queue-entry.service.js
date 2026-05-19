@@ -98,7 +98,7 @@ FROM
         DATE(cb.date_created) = DATE(NOW())
             AND cb.voided = 0
             AND bi.voided = 0
-            AND bi.price_name LIKE '%cash%'
+            AND bi.price_name IN ('MPESA','Cash')
             AND bi.payment_status != 'PAID'
     GROUP BY cb.patient_id) cb ON (cb.patient_id = qe.patient_id)
 WHERE
