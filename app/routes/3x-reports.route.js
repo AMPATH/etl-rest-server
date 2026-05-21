@@ -32,8 +32,6 @@ const routes = [
           );
           reportParams.requestParams.isAggregated = true;
 
-          console.log('PARAMS: ', reportParams.requestParams);
-
           let service = new MOH710Service(
             'moh710Report',
             reportParams.requestParams
@@ -410,6 +408,7 @@ const routes = [
     config: {
       handler: function (request, reply) {
         if (request.query.locationUuids) {
+          const reportName = request.query.reportName;
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
             let requestParams = Object.assign(
               {},
@@ -418,7 +417,7 @@ const routes = [
             );
 
             let reportParams = etlHelpers.getReportParams(
-              'moh711Report',
+              reportName,
               ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
               requestParams
             );
@@ -426,7 +425,7 @@ const routes = [
             let requestCopy = _.cloneDeep(requestParams);
 
             let service = new MOH711Service(
-              'moh711Report',
+              reportName,
               reportParams.requestParams
             );
 
@@ -472,6 +471,7 @@ const routes = [
     config: {
       handler: function (request, reply) {
         if (request.query.locationUuids) {
+          const reportName = request.query.reportName;
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
             let requestParams = Object.assign(
               {},
@@ -480,7 +480,7 @@ const routes = [
             );
 
             let reportParams = etlHelpers.getReportParams(
-              'moh711Report',
+              reportName,
               ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
               requestParams
             );
@@ -488,7 +488,7 @@ const routes = [
             let requestCopy = _.cloneDeep(requestParams);
 
             let service = new MOH711Service(
-              'moh711Report',
+              reportName,
               reportParams.requestParams
             );
 
@@ -534,6 +534,7 @@ const routes = [
     config: {
       handler: function (request, reply) {
         if (request.query.locationUuids) {
+          const reportName = request.query.reportName;
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
             let requestParams = Object.assign(
               {},
@@ -542,7 +543,7 @@ const routes = [
             );
 
             let reportParams = etlHelpers.getReportParams(
-              'moh711Report',
+              reportName,
               ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
               requestParams
             );
@@ -550,7 +551,7 @@ const routes = [
             let requestCopy = _.cloneDeep(requestParams);
 
             let service = new MOH711Service(
-              'moh711Report',
+              reportName,
               reportParams.requestParams
             );
 
@@ -597,6 +598,7 @@ const routes = [
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            const reportName = request.query.reportName;
             let requestParams = Object.assign(
               {},
               request.query,
@@ -604,7 +606,7 @@ const routes = [
             );
 
             let reportParams = etlHelpers.getReportParams(
-              'moh711Report',
+              reportName,
               ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
               requestParams
             );
@@ -612,7 +614,7 @@ const routes = [
             let requestCopy = _.cloneDeep(requestParams);
 
             let service = new MOH711Service(
-              'moh711Report',
+              reportName,
               reportParams.requestParams
             );
 
@@ -636,8 +638,8 @@ const routes = [
           role: privileges.canViewClinicDashBoard
         }
       },
-      description: 'Get MOH 511 PATIENT LIST',
-      notes: 'Returns MOH 511 Patient List',
+      description: 'Get MOH 510 PATIENT LIST',
+      notes: 'Returns MOH 510 Patient List',
       tags: ['api'],
       validate: {
         options: {
@@ -795,7 +797,7 @@ const routes = [
             requestCopy.locations = reportParams.requestParams.locations;
             requestCopy.limitParam = requestParams.limit;
             requestCopy.offSetParam = requestParams.startIndex;
-            // delete reportParams.requestParams['gender'];
+            delete reportParams.requestParams['gender'];
 
             moh731Service
               .generatePatientListReport(reportParams.requestParams)
@@ -849,8 +851,6 @@ const routes = [
             );
 
             let requestCopy = _.cloneDeep(requestParams);
-
-            console.log('REQUEST PARAMS: ', reportParams.requestParams);
 
             let moh731Service = new MOH731Service(
               'moh731MonthlyReport',

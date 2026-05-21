@@ -100,7 +100,7 @@
       "table": "amrs.patient_identifier",
       "alias": "amrs",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
       }
     },
@@ -236,7 +236,7 @@
     }
   ],
   "groupBy": {
-    "columns": ["a.person_id", "a.encounter_id", "o.concept_id"]
+    "columns": ["a.person_id", "obs.concept_id"]
   },
   "orderBy": {
     "orderByParam": "orderByParam",
