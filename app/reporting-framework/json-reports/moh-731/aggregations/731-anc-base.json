@@ -55,7 +55,7 @@
       "alias": "initial_test_anc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12019 AND o.value_coded = 10434, 1, NULL)"
+        "expression": "if(o.concept_id = 12019 AND o.value_coded = 10434 AND e.encounter_type = 265, 1, 0)"
       }
     },
     {
@@ -63,7 +63,7 @@
       "alias": "retest_anc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12019 AND o.value_coded = 10200, 1, NULL)"
+        "expression": "if(o.concept_id = 12019 AND o.value_coded = 10200 AND e.encounter_type = 264, 1, 0)"
       }
     },
 
@@ -72,7 +72,7 @@
       "alias": "initial_test_LD",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10868 AND value_coded = 1040, 1, NULL)"
+        "expression": "if(o.concept_id = 10868 AND o.value_coded = 1040 AND e.encounter_type = 196, 1, 0)"
       }
     },
     {
@@ -80,7 +80,7 @@
       "alias": "retest_LD",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10868 , 1, NULL)"
+        "expression": "if(o.concept_id = 10868 AND e.encounter_type = 196, 1, NULL)"
       }
     },
     {
@@ -104,7 +104,7 @@
       "alias": "less_6_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10439, 1, NULL)"
+        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10439, 1, 0)"
       }
     },
     {
@@ -112,7 +112,7 @@
       "alias": "more_6_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10437, 1, NULL)"
+        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10437, 1, 0)"
       }
     },
     {
@@ -120,7 +120,7 @@
       "alias": "initial_test_pnc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.value_coded = 10434, 1, NULL)"
+        "expression": "if(o.value_coded = 10434 AND e.encounter_type = 266, 1, 0)"
       }
     },
     {
@@ -128,7 +128,7 @@
       "alias": "retest_pnc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.value_coded = 10200, 1, NULL)"
+        "expression": "if(o.value_coded = 10200 AND e.encounter_type = 267, 1, 0)"
       }
     },
     {
@@ -136,7 +136,7 @@
       "alias": "positive_anc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703 , 1, NULL)"
+        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703 , 1, 0)"
       }
     },
     {
@@ -144,7 +144,7 @@
       "alias": "positive_LD",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703, 1, NULL)"
+        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703, 1, 0)"
       }
     },
     {
@@ -152,7 +152,7 @@
       "alias": "positive_pnc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703, 1, NULL)"
+        "expression": "if(o.concept_id = 1357 AND o.value_coded = 703, 1, 0)"
       }
     }
   ],
@@ -182,6 +182,6 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id"]
+    "columns": ["o.person_id", "o.concept_id"]
   }
 }
