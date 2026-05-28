@@ -1201,7 +1201,7 @@
     "mrsDisplay": "Kaborom",
     "cityVillage": "",
     "county": "Western",
-    "description": " Dispensary - a satellite of Mt Elgon.\r\n    ",
+    "description": " Dispensary - a satellite of Mt Elgon.",
     "mflCode": "15910",
     "eidDisplay": ""
   },
@@ -3271,6 +3271,15 @@
     "mrsDisplay": "Chembulet Health Centre",
     "description": "A health facility in Uasin Gishu County",
     "mflCode": "14317",
+    "county": "Uasin Gishu",
+    "cityVillage": "",
+    "eidDisplay": ""
+  },
+  "2b7beaf3-31d4-4810-a810-c7e1f8a7c8aa": {
+    "mrsId": 532,
+    "mrsDisplay": "Living Room International",
+    "description": "A health facility in Uasin Gishu County",
+    "mflCode": "24724",
     "county": "Uasin Gishu",
     "cityVillage": "",
     "eidDisplay": ""
