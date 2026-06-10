@@ -99,6 +99,7 @@ import {
 import SmsService from './service/login-otp/sms.service.js';
 import { DashboardSummaryService } from './service/dashboard-summary/dashboard-summary.service.js';
 import { ServiceQueueDailyReportService } from './service/queues/queue-entry/service-queue-report.service.js';
+import { FacilityProvidersService } from './service/facility-providers/facility-providers.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6932,6 +6933,26 @@ module.exports = (function () {
         description: 'Service Queue Daily report Patient List',
         notes: 'Service Queue Daily report Patient List',
         tags: ['api']
+      path: '/etl/facility-providers',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const facilityProvidersService = new FacilityProvidersService();
+          if (request.query.locationUuid) {
+            const locationUuid = request.query.locationUuid;
+            const res = await facilityProvidersService.getFacilityActiveProvidersByLocationUuid(
+              locationUuid
+            );
+            reply({
+              data: res
+            });
+          } else {
+            reply(Boom.badData('Missing facility'));
+          }
+        },
+        plugins: {},
+        description: 'Get Active providers in a facility',
+        notes: 'Returns a list of active providers for a facility'
       }
     }
   ];
