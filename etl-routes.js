@@ -97,6 +97,7 @@ import {
 } from './location/location.service.js';
 import SmsService from './service/login-otp/sms.service.js';
 import { DashboardSummaryService } from './service/dashboard-summary/dashboard-summary.service.js';
+import { FacilityProvidersService } from './service/facility-providers/facility-providers.service.js';
 
 module.exports = (function () {
   var routes = [
@@ -6812,6 +6813,30 @@ module.exports = (function () {
         plugins: {},
         description: 'Get Dashboard summary for a location',
         notes: 'Returns a dashboard summary for a location'
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/facility-providers',
+      config: {
+        auth: 'simple',
+        handler: async function (request, reply) {
+          const facilityProvidersService = new FacilityProvidersService();
+          if (request.query.locationUuid) {
+            const locationUuid = request.query.locationUuid;
+            const res = await facilityProvidersService.getFacilityActiveProvidersByLocationUuid(
+              locationUuid
+            );
+            reply({
+              data: res
+            });
+          } else {
+            reply(Boom.badData('Missing facility'));
+          }
+        },
+        plugins: {},
+        description: 'Get Active providers in a facility',
+        notes: 'Returns a list of active providers for a facility'
       }
     }
   ];
