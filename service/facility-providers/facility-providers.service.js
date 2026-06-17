@@ -11,11 +11,7 @@ export class FacilityProvidersService {
       const sql = `SELECT 
     e.location_id,
     l.name AS location_name,
-    CONCAT(pn.given_name,
-            '  ',
-            pn.middle_name,
-            ' ',
-            pn.family_name) AS provider_names,
+    CONCAT_WS(' ', pn.given_name,pn.middle_name,pn.family_name) AS provider_names,
     ep.provider_id,
     pa.value_reference AS national_id,
     ls.value_reference AS license_status,
