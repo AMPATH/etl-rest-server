@@ -56,6 +56,22 @@
         "type": "INNER",
         "joinCondition": "q.location_id = l.location_id"
       }
+    },
+    {
+      "table": "amrs.queue_entry",
+      "alias": "current_queue",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "current_queue.patient_id = qe.patient_id AND current_queue.voided = 0 AND current_queue.ended_at IS NULL"
+      }
+    },
+    {
+      "table": "amrs.queue_room",
+      "alias": "current_qr",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "current_queue.queue_id = current_qr.queue_id"
+      }
     }
   ],
   "columns": [
@@ -105,6 +121,11 @@
       "type": "simple_column",
       "alias": "service_name",
       "column": "cn.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "current_queue_room",
+      "column": "current_qr.name"
     }
   ],
   "filters": {
