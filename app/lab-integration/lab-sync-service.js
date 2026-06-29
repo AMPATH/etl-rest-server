@@ -32,13 +32,8 @@ export class LabSyncService {
         Object.keys(config.hivLabSystem).forEach((labLocation) => {
           const labConfig = config.hivLabSystem[labLocation];
 
-          // Background worker: only labs explicitly enabled for background sync
-          if (mode === 'background' && !labConfig.backgroundSyncEnabled) {
-            return;
-          }
-
-          // On-demand: skip non-ampath labs unless patient is affiliated there
-          if (mode === 'onDemand' && labLocation !== 'ampath' && !isAffliated) {
+          // Skip any lab system not explicitly enabled — covers both background and on-demand
+          if (!labConfig.backgroundSyncEnabled) {
             return;
           }
 
