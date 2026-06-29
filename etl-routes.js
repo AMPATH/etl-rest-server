@@ -16,6 +16,9 @@ var patientListCompare = require('./service/patient-list-compare.service.js');
 var Boom = require('boom');
 var authorizer = require('./authorization/etl-authorizer');
 var config = require('./conf/config');
+const {
+  isEidSyncAllowed
+} = require('./app/lab-integration/utils/eid-sync-guard');
 var privileges = authorizer.getAllPrivileges();
 var etlHelpers = require('./etl-helpers.js');
 var crypto = require('crypto');
@@ -4045,11 +4048,12 @@ module.exports = (function () {
       config: {
         auth: 'simple',
         handler: function (request, reply) {
-          if (config.eidSyncOn === true) {
+          if (isEidSyncAllowed()) {
             const labSyncService = new LabSyncService();
             labSyncService.syncAllLabsByPatientUuid(
               request.query.patientUuId,
-              reply
+              reply,
+              request.query.mode || 'onDemand'
             );
           } else {
             reply(
@@ -4067,11 +4071,12 @@ module.exports = (function () {
       config: {
         auth: 'simple',
         handler: function (request, reply) {
-          if (config.eidSyncOn === true) {
+          if (isEidSyncAllowed()) {
             const labSyncService = new LabSyncService();
             labSyncService.syncAllLabsByPatientUuid(
               request.query.patientUuid,
-              reply
+              reply,
+              'onDemand'
             );
           } else
             reply(
