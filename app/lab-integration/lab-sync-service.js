@@ -7,6 +7,7 @@ const Boom = require('boom');
 const eidResultsSchema = require('../../eid-lab-results');
 const db = require('../../etl-db');
 const eidService = require('../../service/eid.service');
+const { isEidSyncAllowed } = require('./utils/eid-sync-guard');
 import { LabClient } from './utils/lab-client';
 import { VLAdapter } from './adapters/vl-adapter';
 import { DNAPCRAdapter } from './adapters/dnapcr-adpater';
@@ -15,15 +16,33 @@ import { EidCompareOperator } from './utils/eid-compare-operator';
 import { PatientLastOrderLocationService } from '../../service/eid/eid-patient-last-order-location.service';
 
 export class LabSyncService {
-  syncAllLabsByPatientUuid(patientUuid, reply) {
+  syncAllLabsByPatientUuid(patientUuid, reply, mode = 'onDemand') {
+    if (!isEidSyncAllowed()) {
+      console.log(
+        '[EID] Sync skipped — not in production or eidSyncOn is false'
+      );
+      return reply([]);
+    }
+
     let tasks = [];
     const service = new PatientLastOrderLocationService();
     service
       .isPatientLastOrderLocationAffliatedToAlupe(patientUuid)
       .then((isAffliated) => {
         Object.keys(config.hivLabSystem).forEach((labLocation) => {
+          const labConfig = config.hivLabSystem[labLocation];
+
+          // Background worker: only labs explicitly enabled for background sync
+          if (mode === 'background' && !labConfig.backgroundSyncEnabled) {
+            return;
+          }
+
+          // On-demand: skip non-ampath labs unless patient is affiliated there
+          if (mode === 'onDemand' && labLocation !== 'ampath' && !isAffliated) {
+            return;
+          }
+
           tasks.push((cb) => {
-            // delay alupe for a few ms
             cb(
               null,
               this.syncLabsByPatientUuid(
@@ -31,12 +50,8 @@ export class LabSyncService {
                 labLocation,
                 labLocation === 'alupe' ? 50 : 0
               )
-                .then((result) => {
-                  return result;
-                })
-                .catch((error) => {
-                  return error;
-                })
+                .then((result) => result)
+                .catch((error) => error)
             );
           });
         });
