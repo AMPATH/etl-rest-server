@@ -14,7 +14,7 @@ function getFacilityBills(locationUuid, billingDate) {
                     pn.middle_name,
                     pn.family_name)) AS patient_name,
     cp.name AS cash_point,
-    DATE_FORMAT(MAX(cb.date_created), '%Y-%m-%d %H:%m') AS bill_date,
+    DATE_FORMAT(MAX(cb.date_created), '%Y-%m-%d %H:%i') AS bill_date,
     GROUP_CONCAT(cb.status) AS paid_status,
     p.uuid AS patient_uuid
 FROM
@@ -62,7 +62,7 @@ function getPatientFacilityBillDetails(locationUuid, billingDate, patientUuid) {
                     pn.middle_name,
                     pn.family_name)) AS patient_name,
     cp.name AS cash_point,
-    DATE_FORMAT(cb.date_created, '%Y-%m-%d %H:%m') AS bill_date,
+    DATE_FORMAT(cb.date_created, '%Y-%m-%d %H:%i') AS bill_date,
     cb.status AS paid_status,
     p.uuid AS patient_uuid,
     cbl.bill_line_item_id,
@@ -73,7 +73,9 @@ function getPatientFacilityBillDetails(locationUuid, billingDate, patientUuid) {
     cbl.quantity AS item_quantity,
     (cbl.price * cbl.quantity) AS item_total_price,
     cbl.uuid as cashier_bill_line_item_uuid,
-    cbl.date_created as bill_item_time
+    cbl.date_created as bill_item_time,
+    cr.identifier as cr_no,
+    u.identifier as amrs_universal_id
 FROM
     amrs.cashier_bill cb
         INNER JOIN
@@ -90,12 +92,20 @@ FROM
     amrs.cashier_bill_line_item cbl ON (cbl.bill_id = cb.bill_id)
         LEFT JOIN
     amrs.cashier_billable_service cbs ON (cbs.service_id = cbl.service_id)
+         LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier u ON (u.patient_id = p.person_id
+        AND u.identifier_type = 8
+        AND u.voided = 0)
 WHERE
     cb.voided = 0
         AND DATE(cb.date_created) = DATE('${billingDate}')
-        AND l.uuid = '${locationUuid}'
         AND p.uuid = '${patientUuid}'
         AND cbl.voided = 0
+group by cbl.uuid
 ORDER BY cb.date_created asc;`;
     const queryParts = {
       sql: sql
