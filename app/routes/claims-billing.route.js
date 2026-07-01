@@ -1,6 +1,7 @@
 import {
   getFacilityBills,
-  getPatientFacilityBillDetails
+  getPatientFacilityBillDetails,
+  getPatientBillPayments
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -59,6 +60,34 @@ const routes = [
       },
       description: 'Get Patients Facility bills',
       notes: 'Returns all facility bills for a patient for a specific date',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/bill/patient/payment',
+    config: {
+      handler: async function (request, reply) {
+        if (!request.query.billingDate || !request.query.patientUuid) {
+          throw new Error('Missing patientId,billigDate params');
+        }
+        const billingDate = request.query.billingDate ?? null;
+        const patientUuid = request.query.patientUuid ?? null;
+        try {
+          const results = await getPatientBillPayments(
+            billingDate,
+            patientUuid
+          );
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Patients Bill Payments',
+      notes: 'Returns all patient bill payments for a bill on a given date',
       tags: ['api'],
       validate: {}
     }
