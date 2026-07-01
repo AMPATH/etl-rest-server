@@ -116,4 +116,50 @@ ORDER BY cb.date_created asc;`;
     });
   });
 }
-module.exports = { getFacilityBills, getPatientFacilityBillDetails };
+function getPatientBillPayments(billingDate, patientUuid) {
+  if (!billingDate) {
+    throw new Error('Billing Date not defined');
+  }
+  if (!patientUuid) {
+    throw new Error('PatientUuid not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    cb.bill_id,
+    cb.receipt_number,
+    cb.patient_id,
+    cb.status,
+    p.uuid AS patient_uuid,
+    cbp.uuid AS cashier_bill_payment_uuid,
+    cbp.payment_mode_id,
+    cbp.amount,
+    cbp.amount_tendered,
+    cbp.date_created AS 'payment_time',
+    pm.name AS payment_mode
+FROM
+    amrs.cashier_bill cb
+        INNER JOIN
+    amrs.person p ON (p.person_id = cb.patient_id)
+        INNER JOIN
+    amrs.cashier_bill_payment cbp ON (cbp.bill_id = cb.bill_id)
+        INNER JOIN
+    amrs.cashier_payment_mode pm ON (pm.payment_mode_id = cbp.payment_mode_id)
+WHERE
+    DATE(cb.date_created) = DATE('${billingDate}')
+        AND p.uuid = '${patientUuid}'
+        AND cb.voided = 0
+        AND cbp.voided = 0;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+module.exports = {
+  getFacilityBills,
+  getPatientFacilityBillDetails,
+  getPatientBillPayments
+};
