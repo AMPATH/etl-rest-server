@@ -9,6 +9,7 @@ function getFacilityBills(locationUuid, billingDate) {
   }
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
+    cb.uuid as bill_uuid,
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
@@ -16,7 +17,8 @@ function getFacilityBills(locationUuid, billingDate) {
     cp.name AS cash_point,
     DATE_FORMAT(MAX(cb.date_created), '%Y-%m-%d %H:%i') AS bill_date,
     GROUP_CONCAT(cb.status) AS paid_status,
-    p.uuid AS patient_uuid
+    p.uuid AS patient_uuid,
+    bo.consent_token
 FROM
     amrs.cashier_bill cb
         INNER JOIN
@@ -29,6 +31,8 @@ FROM
         INNER JOIN
     amrs.person_name pn ON (pn.person_id = p.person_id
         AND pn.voided = 0)
+       LEFT JOIN
+    hie.bill_orders bo ON (bo.bill_uuid = cb.uuid)
 WHERE
     cb.voided = 0
         AND DATE(cb.date_created) = DATE('${billingDate}')
@@ -57,6 +61,7 @@ function getPatientFacilityBillDetails(locationUuid, billingDate, patientUuid) {
   }
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
+    cb.uuid as bill_uuid,
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
@@ -75,7 +80,11 @@ function getPatientFacilityBillDetails(locationUuid, billingDate, patientUuid) {
     cbl.uuid as cashier_bill_line_item_uuid,
     cbl.date_created as bill_item_time,
     cr.identifier as cr_no,
-    u.identifier as amrs_universal_id
+    u.identifier as amrs_universal_id,
+    bo.intervention_code,
+    bo.consent_token,
+    bo.order_no,
+    bo.service_type
 FROM
     amrs.cashier_bill cb
         INNER JOIN
@@ -100,6 +109,8 @@ FROM
     amrs.patient_identifier u ON (u.patient_id = p.person_id
         AND u.identifier_type = 8
         AND u.voided = 0)
+        LEFT JOIN
+    hie.bill_orders bo ON (bo.line_item_uuid = cbl.uuid)
 WHERE
     cb.voided = 0
         AND DATE(cb.date_created) = DATE('${billingDate}')
