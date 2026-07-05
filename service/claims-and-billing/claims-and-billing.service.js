@@ -171,8 +171,71 @@ WHERE
     });
   });
 }
+function getPatientDiagnosis(visitDate, patientUuid, locationUuid) {
+  const problemAddedConceptUuid = 'a8ae835e-1350-11df-a1f1-0026b9348838';
+  const icd11SourceUuid = '43aaca5f-d623-43fd-993b-673b5d927cdd';
+  if (!visitDate) {
+    throw new Error('Billing Date not defined');
+  }
+  if (!patientUuid) {
+    throw new Error('PatientUuid not defined');
+  }
+  if (!locationUuid) {
+    throw new Error('Locationuuid not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    e.patient_id,
+    e.encounter_id,
+    e.encounter_datetime,
+    l.name AS 'facility',
+    et.name AS 'encounter_type',
+    ob.concept_id,
+    ob.value_coded,
+    crs.name AS 'concept_source_name',
+    crs.hl7_code,
+    crt.code AS icd11_code
+FROM
+    amrs.encounter e
+        JOIN
+    amrs.person p ON (e.patient_id = p.person_id)
+        JOIN
+    amrs.location l ON (e.location_id = l.location_id)
+        JOIN
+    amrs.encounter_type et ON (et.encounter_type_id = e.encounter_type)
+        JOIN
+    amrs.obs ob ON (ob.encounter_id = e.encounter_id)
+        JOIN
+    amrs.concept c ON (c.concept_id = ob.concept_id)
+        JOIN
+    amrs.concept vc ON (vc.concept_id = ob.value_coded)
+        JOIN
+    amrs.concept_reference_map crm ON (crm.concept_id = vc.concept_id)
+        JOIN
+    amrs.concept_reference_term crt ON (crm.concept_reference_term_id = crt.concept_reference_term_id)
+        JOIN
+    amrs.concept_reference_source crs ON (crs.concept_source_id = crt.concept_source_id)
+WHERE
+    p.uuid = '${patientUuid}'
+        AND DATE(e.encounter_datetime) = DATE('${visitDate}')
+        AND l.uuid = '${locationUuid}'
+        AND e.voided = 0
+        AND c.uuid = '${problemAddedConceptUuid}'
+        AND ob.voided = 0
+        AND crs.uuid = '${icd11SourceUuid}'
+        group by ob.value_coded;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
-  getPatientBillPayments
+  getPatientBillPayments,
+  getPatientDiagnosis
 };
