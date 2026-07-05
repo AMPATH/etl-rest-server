@@ -10,6 +10,7 @@ function getFacilityBills(locationUuid, billingDate) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
     cb.uuid as bill_uuid,
+    cb.receipt_number,
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
@@ -62,6 +63,7 @@ function getPatientFacilityBillDetails(locationUuid, billingDate, patientUuid) {
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
     cb.uuid as bill_uuid,
+    cb.receipt_number,
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
