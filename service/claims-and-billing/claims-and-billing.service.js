@@ -86,7 +86,11 @@ function getPatientFacilityBillDetails(locationUuid, billingDate, patientUuid) {
     bo.intervention_code,
     bo.consent_token,
     bo.order_no,
-    bo.service_type
+    bo.service_type,
+    CASE
+      WHEN cl.id IS NOT NULL AND clr.id IS NULL THEN 1
+      ELSE 0
+    END AS has_claim_line
 FROM
     amrs.cashier_bill cb
         INNER JOIN
@@ -113,10 +117,17 @@ FROM
         AND u.voided = 0)
         LEFT JOIN
     hie.bill_orders bo ON (bo.line_item_uuid = cbl.uuid)
+        LEFT JOIN
+    hie.claim_line cl ON (cl.consent_token COLLATE utf8mb4_unicode_ci = bo.consent_token
+        AND cl.intervention_code COLLATE utf8mb4_unicode_ci = bo.intervention_code)
+        LEFT JOIN
+    hie.claim_line clr ON (cl.consent_token = clr.consent_token
+        AND cl.intervention_code = clr.intervention_code AND clr.claim_line_action = 'REMOVE')
 WHERE
     cb.voided = 0
         AND DATE(cb.date_created) = DATE('${billingDate}')
         AND p.uuid = '${patientUuid}'
+        AND l.uuid = '${locationUuid}'
         AND cbl.voided = 0
 group by cbl.uuid
 ORDER BY cb.date_created asc;`;
