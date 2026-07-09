@@ -45,6 +45,11 @@
       "column": "mdh.endDate"
     },
     {
+      "type": "simple_column",
+      "alias": "diagnosis_year",
+      "column": "DATE_FORMAT(mdh.diabetes_diagnosis_date,'%Y')"
+    },
+    {
       "type": "derived_column",
       "alias": "age_range",
       "expressionType": "case_statement",
