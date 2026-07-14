@@ -2,7 +2,8 @@ import {
   getFacilityBills,
   getPatientFacilityBillDetails,
   getPatientBillPayments,
-  getPatientDiagnosis
+  getPatientDiagnosis,
+  getActiveProviders
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -125,6 +126,28 @@ const routes = [
       },
       description: 'Get Patients visit diagnosis',
       notes: 'Returns a patients visit disgnosos',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/providers/licensed',
+    config: {
+      handler: async function (request, reply) {
+        try {
+          const results = await getActiveProviders();
+          reply({
+            results: results
+          });
+        } catch (error) {
+          console.log({ error });
+          reply(Boom.badRequest());
+        }
+      },
+      description:
+        'Get licensed Providers as well as their speciality and license status details in form of display and uuid',
+      notes: 'Returns a list of active providers',
       tags: ['api'],
       validate: {}
     }

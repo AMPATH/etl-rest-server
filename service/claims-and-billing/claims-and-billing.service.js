@@ -262,9 +262,63 @@ GROUP BY b.value_coded;`;
     });
   });
 }
+function getActiveProviders() {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    b.provider_uuid AS uuid,
+    CONCAT(b.provider_names,
+            ' - ',
+            '(',
+            b.provider_speciality,
+            ') ',
+            '(',
+            b.provider_license_status,
+            ')') AS display
+FROM
+    (SELECT 
+        pr.uuid AS provider_uuid,
+            pr.provider_id,
+            pr.identifier,
+            pr.person_id,
+            pa.value_reference AS 'provider_national_id',
+            pls.value_reference AS 'provider_license_status',
+            provider_speciality.value_reference AS 'provider_speciality',
+            CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name) AS provider_names
+    FROM
+        amrs.provider pr
+    JOIN amrs.person p ON (p.person_id = pr.person_id
+        AND p.voided = 0)
+    JOIN amrs.provider_attribute pa ON (pa.provider_id = pr.provider_id
+        AND pa.voided = 0
+        AND pa.attribute_type_id = 5)
+    JOIN amrs.provider_attribute pls ON (pls.provider_id = pr.provider_id
+        AND pa.voided = 0
+        AND pls.attribute_type_id = 7)
+    JOIN amrs.provider_attribute provider_licence_status ON (provider_licence_status.provider_id = pr.provider_id
+        AND provider_licence_status.voided = 0
+        AND provider_licence_status.attribute_type_id = 7)
+    JOIN amrs.provider_attribute provider_speciality ON (provider_speciality.provider_id = pr.provider_id
+        AND provider_speciality.voided = 0
+        AND provider_speciality.attribute_type_id = 8)
+    JOIN amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+    WHERE
+        pr.retired = 0
+            AND pls.value_reference = 'Licensed'
+    GROUP BY pr.provider_id) b;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
   getPatientBillPayments,
-  getPatientDiagnosis
+  getPatientDiagnosis,
+  getActiveProviders
 };
