@@ -97,8 +97,57 @@ function listOrders(filters) {
   });
 }
 
+/**
+ * Fetch on-hand stock for a drug at an OpenMRS location's warehouse.
+ * Calls GET /ampath/inventory/stock
+ *
+ * @param {object} filters
+ * @param {string} filters.openmrs_drug_uuid
+ * @param {string} filters.company_external_id - OpenMRS order location UUID
+ * @param {string} [filters.lot_name]
+ */
+function getInventoryStock(filters) {
+  var odooConfig = getOdooConfig();
+  var qs = {};
+  if (filters) {
+    if (filters.openmrs_drug_uuid)
+      qs.openmrs_drug_uuid = filters.openmrs_drug_uuid;
+    if (filters.company_external_id)
+      qs.company_external_id = filters.company_external_id;
+    if (filters.lot_name) qs.lot_name = filters.lot_name;
+  }
+  return rp({
+    method: 'GET',
+    uri: odooConfig.host + '/ampath/inventory/stock',
+    qs: qs,
+    headers: authHeaders(odooConfig),
+    json: true,
+    rejectUnauthorized: false
+  });
+}
+
+/**
+ * Dispense (decrement) stock via outgoing stock.picking.
+ * Calls POST /ampath/inventory/dispense
+ *
+ * @param {object} body
+ */
+function dispenseInventory(body) {
+  var odooConfig = getOdooConfig();
+  return rp({
+    method: 'POST',
+    uri: odooConfig.host + '/ampath/inventory/dispense',
+    headers: authHeaders(odooConfig),
+    body: body || {},
+    json: true,
+    rejectUnauthorized: false
+  });
+}
+
 module.exports = {
   getBillingByPatient: getBillingByPatient,
   getBillingByOrder: getBillingByOrder,
-  listOrders: listOrders
+  listOrders: listOrders,
+  getInventoryStock: getInventoryStock,
+  dispenseInventory: dispenseInventory
 };
