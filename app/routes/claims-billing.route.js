@@ -3,7 +3,8 @@ import {
   getPatientFacilityBillDetails,
   getPatientBillPayments,
   getPatientDiagnosis,
-  getActiveProviders
+  getActiveProviders,
+  getFacilityEncounterBills
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -36,6 +37,7 @@ const routes = [
     method: 'GET',
     path: '/etl/facility/patient/bill',
     config: {
+      auth: false,
       handler: async function (request, reply) {
         if (
           !request.query.locationUuid ||
@@ -148,6 +150,41 @@ const routes = [
       description:
         'Get licensed Providers as well as their speciality and license status details in form of display and uuid',
       notes: 'Returns a list of active providers',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/encounter-bills',
+    config: {
+      handler: async function (request, reply) {
+        if (
+          !request.query.locationUuid ||
+          !request.query.encounterTypeUuid ||
+          !request.query.billingFrom
+        ) {
+          throw new Error('Missing location, encounter type or billing params');
+        }
+        const locationUuid = request.query.locationUuid ?? null;
+        const billingFrom = request.query.billingFrom ?? null;
+        const encounterTypeUuid = request.query.encounterTypeUuid ?? null;
+
+        try {
+          const results = await getFacilityEncounterBills(
+            locationUuid,
+            encounterTypeUuid,
+            billingFrom
+          );
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Facility encounter bills',
+      notes: 'Returns all facility encounter bills for a date',
       tags: ['api'],
       validate: {}
     }

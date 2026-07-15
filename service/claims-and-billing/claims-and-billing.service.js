@@ -323,10 +323,86 @@ FROM
     });
   });
 }
+
+function getFacilityEncounterBills(
+  locationUuid,
+  encounterTypeUuid,
+  billingFrom
+) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  if (!billingFrom) {
+    throw new Error('Billing From not defined');
+  }
+  if (!encounterTypeUuid) {
+    throw new Error('Encounter type not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT
+    e.encounter_datetime,
+    cb.date_created,
+    cb.uuid as bill_uuid,
+    cb.receipt_number,
+    UPPER(CONCAT_WS(' ',
+                      pn.given_name,
+                      pn.middle_name,
+                      pn.family_name)) AS patient_name,
+        cb.status AS bill_status,
+      p.uuid AS patient_uuid,
+      bpam.date_started,
+      bpam.date_stopped,
+      b.bed_number
+  FROM
+    amrs.encounter e
+  LEFT JOIN amrs.encounter_type et ON
+    et.encounter_type_id = e.encounter_type
+  LEFT JOIN 
+    amrs.bed_patient_assignment_map bpam ON
+    bpam.encounter_id = e.encounter_id 
+  LEFT JOIN
+    amrs.bed b ON b.bed_id = bpam.bed_id 
+  LEFT JOIN amrs.cashier_bill cb ON
+    cb.patient_id = e.patient_id
+      AND cb.date_created >= e.encounter_datetime
+  LEFT JOIN amrs.cashier_cash_point cp ON
+    (cp.cash_point_id = cb.cash_point_id)
+  INNER JOIN
+      amrs.location l ON
+    (l.location_id = cp.location_id)
+  INNER JOIN
+      amrs.person p ON
+    (p.person_id = cb.patient_id
+      AND p.voided = 0)
+  INNER JOIN
+      amrs.person_name pn ON
+    (pn.person_id = p.person_id
+      AND pn.voided = 0)
+  WHERE
+    cb.voided = 0
+    AND
+    et.uuid = ${encounterTypeUuid}
+    AND l.uuid = ${locationUuid}
+    AND DATE(e.encounter_datetime) >= DATE(${billingFrom})
+  GROUP BY
+    e.patient_id
+  ORDER BY
+	e.encounter_datetime DESC;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
   getPatientBillPayments,
   getPatientDiagnosis,
-  getActiveProviders
+  getActiveProviders,
+  getFacilityEncounterBills
 };
