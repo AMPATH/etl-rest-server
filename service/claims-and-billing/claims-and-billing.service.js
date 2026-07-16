@@ -272,8 +272,13 @@ function getActiveProviders() {
             b.provider_speciality,
             ') ',
             '(',
+            b.licensing_body,
+            ') ',
+            '(',
             b.provider_license_status,
-            ')') AS display
+            ')') AS display,
+    b.provider_national_id,
+    b.licensing_body
 FROM
     (SELECT 
         pr.uuid AS provider_uuid,
@@ -283,6 +288,7 @@ FROM
             pa.value_reference AS 'provider_national_id',
             pls.value_reference AS 'provider_license_status',
             provider_speciality.value_reference AS 'provider_speciality',
+            lb.value_reference AS 'licensing_body',
             CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name) AS provider_names
     FROM
         amrs.provider pr
@@ -293,18 +299,20 @@ FROM
         AND pa.attribute_type_id = 5)
     JOIN amrs.provider_attribute pls ON (pls.provider_id = pr.provider_id
         AND pa.voided = 0
-        AND pls.attribute_type_id = 7)
+        AND pls.attribute_type_id = 7 AND pls.value_reference = 'Licensed')
     JOIN amrs.provider_attribute provider_licence_status ON (provider_licence_status.provider_id = pr.provider_id
         AND provider_licence_status.voided = 0
         AND provider_licence_status.attribute_type_id = 7)
     JOIN amrs.provider_attribute provider_speciality ON (provider_speciality.provider_id = pr.provider_id
         AND provider_speciality.voided = 0
         AND provider_speciality.attribute_type_id = 8)
+    JOIN amrs.provider_attribute lb ON (lb.provider_id = pr.provider_id
+        AND lb.voided = 0
+        AND lb.attribute_type_id = 9)
     JOIN amrs.person_name pn ON (pn.person_id = p.person_id
         AND pn.voided = 0)
     WHERE
         pr.retired = 0
-            AND pls.value_reference = 'Licensed'
     GROUP BY pr.provider_id) b;`;
     const queryParts = {
       sql: sql
