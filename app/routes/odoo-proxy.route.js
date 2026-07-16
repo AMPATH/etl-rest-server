@@ -137,7 +137,6 @@ var routes = [
     method: 'GET',
     path: '/etl/odoo/inventory/stock',
     config: {
-      auth: 'default',
       handler: function (request, reply) {
         var q = request.query;
         odooProxyService
@@ -179,7 +178,6 @@ var routes = [
     method: 'POST',
     path: '/etl/odoo/inventory/dispense',
     config: {
-      auth: 'default',
       handler: function (request, reply) {
         odooProxyService
           .dispenseInventory(request.payload)
