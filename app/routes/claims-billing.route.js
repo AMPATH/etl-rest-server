@@ -37,7 +37,6 @@ const routes = [
     method: 'GET',
     path: '/etl/facility/patient/bill',
     config: {
-      auth: false,
       handler: async function (request, reply) {
         if (
           !request.query.locationUuid ||

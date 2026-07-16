@@ -381,9 +381,9 @@ function getFacilityEncounterBills(
   WHERE
     cb.voided = 0
     AND
-    et.uuid = ${encounterTypeUuid}
-    AND l.uuid = ${locationUuid}
-    AND DATE(e.encounter_datetime) >= DATE(${billingFrom})
+    et.uuid = '${encounterTypeUuid}'
+    AND l.uuid = '${locationUuid}'
+    AND DATE(e.encounter_datetime) >= DATE('${billingFrom}')
   GROUP BY
     e.patient_id
   ORDER BY
