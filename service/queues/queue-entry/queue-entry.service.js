@@ -116,4 +116,71 @@ GROUP BY qe.patient_id , qe.visit_id;`;
       });
     });
   }
+  getQueueEntriesByLocationAndDateRange(locationUuid, startDate, endDate) {
+    if (!locationUuid) {
+      throw new Error('Location not defined');
+    }
+    if (!startDate) {
+      throw new Error('Start Date not defined');
+    }
+    if (!endDate) {
+      throw new Error('EndDate not defined');
+    }
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT 
+    qe.patient_id,
+    DATE_FORMAT(qe.started_at,'%Y-%m-%d') AS reg_date,
+    l.name AS 'location',
+    p.uuid AS 'patient_uuid',
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    v.uuid AS 'visit_uuid',
+    GROUP_CONCAT(DISTINCT contacts.value
+        SEPARATOR ', ') AS 'phone_number',
+    EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), p.birthdate)))) AS 'age',
+    GROUP_CONCAT(DISTINCT id.identifier
+        SEPARATOR ', ') AS 'identifiers'
+FROM
+    amrs.queue_entry qe
+        JOIN
+    amrs.queue q ON (qe.queue_id = q.queue_id)
+        JOIN
+    amrs.concept c ON (q.service = c.concept_id)
+        LEFT JOIN
+    amrs.queue_room qr ON (qr.queue_id = q.queue_id
+        AND qr.retired = 0)
+        JOIN
+    amrs.location l ON (q.location_id = l.location_id)
+        JOIN
+    amrs.person p ON (p.person_id = qe.patient_id)
+        JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.person_attribute contacts ON (p.person_id = contacts.person_id
+        AND (contacts.voided IS NULL
+        || contacts.voided = 0)
+        AND contacts.person_attribute_type_id IN (10 , 48))
+        LEFT JOIN
+    amrs.patient_identifier id ON (p.person_id = id.patient_id
+        AND (id.voided IS NULL || id.voided = 0))
+        JOIN
+    amrs.visit v ON (v.visit_id = qe.visit_id)
+WHERE
+        DATE(qe.started_at) >= '${startDate}'
+        AND DATE(qe.started_at) <= '${endDate}'
+        AND l.uuid = '${locationUuid}'
+        AND qe.voided = 0
+GROUP BY qe.patient_id;`;
+      const queryParts = {
+        sql: sql
+      };
+      db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result.result);
+      });
+    });
+  }
 }

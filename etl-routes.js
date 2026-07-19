@@ -6603,33 +6603,6 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/etl/queue-entry',
-      config: {
-        auth: 'simple',
-        handler: async function (request, reply) {
-          const queueService = new ServiceEntry();
-          if (request.query.locationUuid && request.query.serviceUuid) {
-            const locationUuid = request.query.locationUuid;
-            const serviceUuid = request.query.serviceUuid;
-            const res = await queueService.getQueueEntriesByLocationAndService(
-              locationUuid,
-              serviceUuid
-            );
-            reply({
-              data: res
-            });
-          } else {
-            reply(Boom.badData());
-          }
-        },
-        plugins: {},
-        description: "Get a location's service queue",
-        notes: "Returns a location's service queue",
-        tags: ['api']
-      }
-    },
-    {
-      method: 'GET',
       path: '/etl/otp',
       config: {
         auth: 'simple',
