@@ -41,9 +41,11 @@ export class ServiceEntry {
         WHEN qe.status = 1267 THEN 'COMPLETED'
     END AS 'status',
     CASE
-        WHEN qe.priority = 11666 THEN 'PRIORITY'
-        WHEN qe.priority = 12360 THEN 'EMERGENCY'
-        WHEN qe.priority = 7316 THEN 'NON-URGENT'
+        WHEN obs.value_coded = 11666 THEN 'ROUTINE'
+        WHEN obs.value_coded = 8989 THEN 'URGENT'
+        WHEN obs.value_coded = 7315 THEN 'VERY URGENT'
+        WHEN obs.value_coded = 7314 THEN 'EMERGENCY'
+        ELSE null
     END AS 'priority',
     v.uuid AS 'visit_uuid',
     qf.name AS 'queue_coming_from',
@@ -106,6 +108,10 @@ FROM
             AND bi.price_name IN ('MPESA' , 'Cash')
             AND bi.status != 'PAID'
     GROUP BY cb.patient_id) cb ON (cb.patient_id = qe.patient_id)
+        LEFT JOIN
+    amrs.obs obs ON (obs.person_id = qe.patient_id
+        AND obs.concept_id = 7313 AND DATE_FORMAT(obs.obs_datetime,'%Y-%m-%d') = DATE_FORMAT(qe.started_at,'%Y-%m-%d')
+    )
 WHERE
     qe.ended_at IS NULL
         AND c.uuid = '${serviceUuid}'
