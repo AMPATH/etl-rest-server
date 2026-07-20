@@ -76,7 +76,7 @@ function getPatientFacilityBillDetails(locationUuid, billingDate, patientUuid) {
     cbs.name AS billable_service,
     cbl.price AS item_price,
     UPPER(cbl.price_name) AS payment_scheme,
-    cbl.payment_status,
+    cbl.status,
     cbl.quantity AS item_quantity,
     (cbl.price * cbl.quantity) AS item_total_price,
     cbl.uuid as cashier_bill_line_item_uuid,
