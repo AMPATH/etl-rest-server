@@ -398,11 +398,82 @@ function getFacilityEncounterBills(
   });
 }
 
+function getDischargeDiagnisisAndDictor(patientUuid, billingDate) {
+  if (!patientUuid) {
+    throw new Error('patient not defined');
+  }
+  if (!billingDate) {
+    throw new Error('Billing Date not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `select
+b.value_numeric,
+b.uuid,
+b.practioner_nat_id,
+group_concat(b.practitioner_body) AS practitioner_body,
+group_concat(b.practitioner_speciality) AS practitioner_speciality,
+b.concept_source_name,
+b.hl7_code,
+b.icd11_code,
+encounter_type,
+encounter_datetime
+from
+(
+SELECT 
+    obs.value_numeric,
+    p.uuid,
+    pa.value_reference as practioner_nat_id,
+    sp.value_reference as 'practitioner_speciality',
+    CASE
+        WHEN lb.value_reference = 'MEDICINE' THEN 'KMPDC'
+        WHEN lb.value_reference = 'CLINICAL OFFICER' THEN 'COC'
+        ELSE 'KMPDC'
+    END AS 'practitioner_body',
+    pr.provider_id,
+	dobs.concept_id,
+	dobs.value_coded,
+	crs.name AS 'concept_source_name',
+	crs.hl7_code,
+    crt.code AS icd11_code,
+    et.name as encounter_type,
+    e.encounter_datetime
+FROM
+   amrs.person p
+   join amrs.obs obs on (p.person_id = obs.person_id)
+   join amrs.encounter e on (e.encounter_id = obs.encounter_id)
+   join amrs.encounter_type et on (et.encounter_type_id = e.encounter_type)
+   join amrs.provider_attribute pid on (pid.attribute_type_id = 5 AND pid.voided = 0 AND pid.value_reference = obs.value_numeric)
+   join amrs.provider pr on (pr.provider_id = pid.provider_id)
+   join amrs.provider_attribute pa on (pa.attribute_type_id = 5 AND pa.voided = 0 AND pa.provider_id = pr.provider_id)
+   join amrs.provider_attribute sp on (sp.attribute_type_id = 8 AND sp.voided = 0 AND sp.provider_id = pr.provider_id AND sp.value_reference IS NOT NULL)
+   join amrs.provider_attribute lb on (lb.attribute_type_id = 9 AND lb.voided = 0 AND lb.provider_id = pr.provider_id)
+   join amrs.obs dobs on (dobs.encounter_id = obs.encounter_id AND dobs.concept_id = 5630 AND dobs.voided = 0)
+   JOIN amrs.concept vc ON (vc.concept_id = dobs.value_coded)
+   JOIN amrs.concept_reference_map crm ON (crm.concept_id = vc.concept_id)
+   JOIN amrs.concept_reference_term crt ON (crm.concept_reference_term_id = crt.concept_reference_term_id)
+   JOIN amrs.concept_reference_source crs ON (crs.concept_source_id = crt.concept_source_id AND crs.concept_source_id = 23)
+WHERE
+    obs.concept_id = 5507
+    AND obs.voided = 0
+    and p.uuid = '${patientUuid}'
+    AND DATE(obs.obs_datetime) = DATE('${billingDate}')
+    group by p.person_id) b`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
   getPatientBillPayments,
   getPatientDiagnosis,
   getActiveProviders,
-  getFacilityEncounterBills
+  getFacilityEncounterBills,
+  getDischargeDiagnisisAndDictor
 };

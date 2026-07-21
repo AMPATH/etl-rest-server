@@ -4,7 +4,8 @@ import {
   getPatientBillPayments,
   getPatientDiagnosis,
   getActiveProviders,
-  getFacilityEncounterBills
+  getFacilityEncounterBills,
+  getDischargeDiagnisisAndDictor
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -174,6 +175,35 @@ const routes = [
             locationUuid,
             encounterTypeUuid,
             billingFrom
+          );
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Facility encounter bills',
+      notes: 'Returns all facility encounter bills for a date',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/maternity-diagnosis-doctor',
+    config: {
+      handler: async function (request, reply) {
+        if (!request.query.patientUuid || !request.query.billingDate) {
+          throw new Error('Missing billing date or patientUuid');
+        }
+        const patientUuid = request.query.patientUuid ?? null;
+        const billingDate = request.query.billingDate ?? null;
+
+        try {
+          const results = await getDischargeDiagnisisAndDictor(
+            patientUuid,
+            billingDate
           );
           reply({
             results: results
