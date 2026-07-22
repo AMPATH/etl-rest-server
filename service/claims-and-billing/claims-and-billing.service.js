@@ -409,6 +409,7 @@ function getDischargeDiagnisisAndDictor(patientUuid, billingDate) {
     const sql = `select
 b.value_numeric,
 b.uuid,
+'National ID' AS 'practitioner_identifier_type',
 b.practioner_nat_id,
 group_concat(b.practitioner_body) AS practitioner_body,
 group_concat(b.practitioner_speciality) AS practitioner_speciality,
@@ -456,7 +457,8 @@ WHERE
     obs.concept_id = 5507
     AND obs.voided = 0
     and p.uuid = '${patientUuid}'
-    AND DATE(obs.obs_datetime) = DATE('${billingDate}')
+    AND DATE(obs.obs_datetime) >= DATE('${billingDate}') 
+    AND DATE(obs.obs_datetime) <= DATE_ADD('${billingDate}', INTERVAL 2 DAY)
     group by p.person_id) b`;
     const queryParts = {
       sql: sql
