@@ -19,7 +19,10 @@ function getFacilityBills(locationUuid, billingDate) {
     DATE_FORMAT(MAX(cb.date_created), '%Y-%m-%d %H:%i') AS bill_date,
     GROUP_CONCAT(cb.status) AS paid_status,
     p.uuid AS patient_uuid,
-    bo.consent_token
+    bo.consent_token,
+    id.identifier as 'national_id',
+    cr.identifier as 'cr_id',
+    vt.name AS 'visit_type'
 FROM
     amrs.cashier_bill cb
         INNER JOIN
@@ -34,6 +37,18 @@ FROM
         AND pn.voided = 0)
        LEFT JOIN
     hie.bill_orders bo ON (bo.bill_uuid = cb.uuid)
+       LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = cb.patient_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+      LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = cb.patient_id
+        AND id.identifier_type = 5
+        AND id.voided = 0)
+      LEFT JOIN
+    amrs.visit v ON (v.visit_id = cb.visit_id)
+      LEFT JOIN
+    amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
 WHERE
     cb.voided = 0
         AND DATE(cb.date_created) = DATE('${billingDate}')
