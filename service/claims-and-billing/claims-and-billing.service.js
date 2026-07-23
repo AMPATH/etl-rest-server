@@ -508,7 +508,13 @@ function getPatientFacilityPreAuthBills(locationUuid, billingDate) {
     bo.consent_token,
     bo.order_no,
     bo.service_type,
-    bo.requires_preauth
+    bo.requires_preauth,
+    bo.normal_preauth,
+    bo.elective_preauth,
+    bo.preauth_approved,
+    bo.required_documents,
+    bo.applicable_document_types,
+    bo.required_preauth_document_types
 FROM
     amrs.cashier_bill cb
         INNER JOIN
