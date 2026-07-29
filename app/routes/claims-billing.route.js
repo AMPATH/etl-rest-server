@@ -6,7 +6,8 @@ import {
   getActiveProviders,
   getFacilityEncounterBills,
   getDischargeDiagnisisAndDictor,
-  getPatientFacilityPreAuthBills
+  getPatientFacilityPreAuthBills,
+  getActiveBillVisits
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -243,6 +244,31 @@ const routes = [
       },
       description: 'Get Facility pre-auth bills',
       notes: 'Returns all pre-auth facility bills for a facility',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/active-bill-visits',
+    config: {
+      handler: async function (request, reply) {
+        if (!request.query.locationUuid || !request.query.billingDate) {
+          throw new Error('Missing location or billing params');
+        }
+        const locationUuid = request.query.locationUuid ?? null;
+        const billingDate = request.query.billingDate ?? null;
+        try {
+          const results = await getActiveBillVisits(locationUuid, billingDate);
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Facility active visits with bill status',
+      notes: 'Returns all facility active visits with their bill status',
       tags: ['api'],
       validate: {}
     }
