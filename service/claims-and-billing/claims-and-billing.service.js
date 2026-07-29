@@ -557,6 +557,76 @@ ORDER BY cb.date_created desc;`;
     });
   });
 }
+function getActiveBillVisits(locationUuid, billingDate) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  if (!billingDate) {
+    throw new Error('Billing Date not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    p.person_id,
+    v.visit_id,
+    v.uuid AS 'visit_uuid',
+    v.date_started AS 'visit_date',
+    vt.name AS 'visit_type',
+    v.uuid AS 'visit_uuid',
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    CONCAT(cr.identifier, ' , ', uid.identifier) AS 'identifiers',
+    IF(cb.status IS NULL,
+        'CLEARED',
+        'PENDING') 'payment_status',
+    cpm.name AS 'payment_method',
+    cpm.uuid AS 'payment_method_uuid'
+FROM
+    amrs.visit v
+        JOIN
+    amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
+        LEFT JOIN
+    amrs.visit_attribute va ON (va.visit_id = v.visit_id
+        AND va.voided = 0
+        AND va.attribute_type_id = 3)
+        LEFT JOIN
+    amrs.cashier_payment_mode cpm ON (cpm.uuid = va.value_reference)
+        JOIN
+    amrs.location l ON (l.location_id = v.location_id)
+        JOIN
+    amrs.person p ON (p.person_id = v.patient_id
+        AND p.voided = 0)
+        INNER JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier uid ON (uid.patient_id = p.person_id
+        AND uid.identifier_type = 8
+        AND uid.voided = 0)
+        LEFT JOIN
+    amrs.cashier_bill cb ON (cb.patient_id = p.person_id
+        AND cb.date_created >= v.date_started
+        AND cb.status = 'PENDING'
+        AND cb.voided = 0)
+WHERE
+    v.date_stopped IS NULL AND v.voided = 0
+        AND l.uuid = '${locationUuid}'
+        AND DATE(v.date_started) = DATE('${billingDate}')
+GROUP BY v.visit_id , p.person_id;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
 
 module.exports = {
   getFacilityBills,
@@ -566,5 +636,6 @@ module.exports = {
   getActiveProviders,
   getFacilityEncounterBills,
   getDischargeDiagnisisAndDictor,
-  getPatientFacilityPreAuthBills
+  getPatientFacilityPreAuthBills,
+  getActiveBillVisits
 };
