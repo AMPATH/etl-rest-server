@@ -91,7 +91,12 @@ FROM
         LEFT JOIN
     amrs.encounter ae ON (ae.encounter_type = 318
         AND ae.encounter_datetime > obs.obs_datetime
-        AND ae.voided = 0)
+        AND ae.voided = 0 AND ae.patient_id = obs.person_id)
+        LEFT JOIN
+    amrs.encounter ce ON (ce.encounter_type = 323
+        AND ce.encounter_datetime > obs.obs_datetime
+        AND ce.voided = 0
+        AND ce.patient_id = obs.person_id)
         LEFT JOIN
     amrs.patient_identifier cr ON (cr.patient_id = obs.person_id
         AND cr.identifier_type = 55
@@ -105,7 +110,9 @@ WHERE
         AND obs.value_coded = 12797
         AND obs.voided = 0
         AND l.uuid = '${locationUuid}'
-        AND ae.encounter_id IS NULL;`;
+        AND ae.encounter_id IS NULL
+        AND ce.encounter_id IS NULL
+        group by obs.person_id;`;
     const queryParts = {
       sql: sql
     };
