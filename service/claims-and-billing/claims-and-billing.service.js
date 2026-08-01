@@ -667,13 +667,14 @@ function getActiveCashVisits(locationUuid, billingDate) {
                     AND cr.identifier_type = 55
                     AND cr.voided = 0)
                   left join amrs.patient_identifier uid ON (uid.patient_id = p.person_id
-                    AND uid.identifier_type = 8
+                    AND uid.identifier_type = 5
                     AND uid.voided = 0)
                   WHERE v.voided = 0
                   AND v.date_stopped is null
                   AND va.value_reference = '63eff7a4-6f82-43c4-a333-dbcc58fe9f74'
                   AND DATE(v.date_started) = DATE('${billingDate}')
-                  AND l.uuid = '${locationUuid}';`;
+                  AND l.uuid = '${locationUuid}'
+                  GROUP BY v.patient_id, v.date_created;`;
     const queryParts = {
       sql: sql
     };
@@ -755,7 +756,7 @@ function getAllBills(locationUuid, billingDate) {
 
         ORDER BY
             b.patient_id,
-            bill_date,
+            DATE(bill_date),
             b.bill_id;`;
     const queryParts = {
       sql: sql
@@ -781,6 +782,7 @@ function getPendingBillLineItems(locationUuid, billingDate) {
         CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name) AS patient_name,
         CONCAT(cr.identifier, ' , ', uid.identifier) AS 'identifiers',
         bli.bill_id,
+        cb.uuid AS bill_uuid,
         bli.price,
         bli.price_name,
         DATE(bli.date_created) AS line_item_date,
@@ -788,10 +790,12 @@ function getPendingBillLineItems(locationUuid, billingDate) {
         v.uuid AS visit_uuid,
         vt.uuid AS visit_type_uuid,
         vt.name as visit_type,
-        cpm.name as payment_method
+        cpm.name as payment_method,
+        c.name AS cash_point
         FROM 
         amrs.cashier_bill_line_item bli
         JOIN amrs.cashier_bill cb on cb.bill_id = bli.bill_id
+        JOIN amrs.cashier_cash_point c ON c.cash_point_id = cb.cash_point_id
         JOIN amrs.person p ON p.person_id = cb.patient_id
         JOIN amrs.visit v ON v.visit_id = cb.visit_id
         JOIN amrs.visit_type vt ON vt.visit_type_id = v.visit_type_id
