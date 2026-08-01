@@ -568,10 +568,12 @@ function getActiveBillVisits(locationUuid, billingDate) {
     const sql = `SELECT 
     p.person_id,
     v.visit_id,
+    p.uuid as person_uuid,
     v.uuid AS 'visit_uuid',
     v.date_started AS 'visit_date',
     vt.name AS 'visit_type',
     v.uuid AS 'visit_uuid',
+    vt.uuid AS 'visit_type_uuid',
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
@@ -628,6 +630,201 @@ GROUP BY v.visit_id , p.person_id;`;
   });
 }
 
+function getActiveCashVisits(locationUuid, billingDate) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  if (!billingDate) {
+    throw new Error('Billing Date not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `select 
+                    p.uuid as patient_uuid,
+                    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+                    CONCAT(cr.identifier, ' , ', uid.identifier) AS 'identifiers',
+                    cpm.name as payment_method,
+                    v.visit_id,
+                    v.uuid as visit_uuid,
+                    v.date_started,
+                    v.date_stopped,
+                    v.location_id,
+                    va.value_reference,
+                    vt.name as visit_type,
+                    vt.uuid as visit_type_uuid
+                    from 
+                  amrs.visit v
+                  join amrs.visit_attribute va ON va.visit_id = v.visit_id
+                  join amrs.visit_attribute_type vat ON vat.visit_attribute_type_id = va.attribute_type_id AND vat.uuid = '8553afa0-bdb9-4d3c-8a98-05fa9350aa85'
+                  join amrs.cashier_payment_mode cpm ON cpm.uuid = va.value_reference
+                  join amrs.location l ON l.location_id = v.location_id
+                  join amrs.person p ON p.person_id = v.patient_id
+                  join amrs.person_name pn ON pn.person_id = p.person_id
+                  join amrs.visit_type vt oN vt.visit_type_id = v.visit_type_id
+                  left join amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+                    AND cr.identifier_type = 55
+                    AND cr.voided = 0)
+                  left join amrs.patient_identifier uid ON (uid.patient_id = p.person_id
+                    AND uid.identifier_type = 8
+                    AND uid.voided = 0)
+                  WHERE v.voided = 0
+                  AND v.date_stopped is null
+                  AND va.value_reference = '63eff7a4-6f82-43c4-a333-dbcc58fe9f74'
+                  AND DATE(v.date_started) = DATE('${billingDate}')
+                  AND l.uuid = '${locationUuid}';`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
+function getAllBills(locationUuid, billingDate) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  if (!billingDate) {
+    throw new Error('Billing Date not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `
+    SELECT
+    b.patient_id,
+    p.uuid AS patient_uuid,
+    b.receipt_number,
+    c.name AS cash_point,
+    CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name) AS patient_name,
+    cr.identifier AS identifier,
+
+    b.bill_id,
+    b.uuid AS bill_uuid,
+    c.name AS payment_mode,
+	  b.status AS bill_status,
+    DATE(b.date_created) AS bill_date,
+    c.location_id,
+    bo.consent_token,
+    vt.name AS 'visit_type',
+    JSON_ARRAYAGG(
+        JSON_OBJECT(
+            'line_item_id', li.bill_line_item_id,
+            'line_item_order', li.line_item_order,
+            'price_name', li.price_name,
+            'quantity', li.quantity,
+            'price', li.price,
+            'status', li.status,
+            'date_created', DATE_FORMAT(li.date_created, '%Y-%m-%d')
+        )
+    ) AS bill_items
+
+    FROM amrs.cashier_bill b
+        JOIN amrs.cashier_cash_point c ON c.cash_point_id = b.cash_point_id
+        JOIN amrs.location l ON l.location_id = c.location_id
+        JOIN amrs.person p
+            ON p.person_id = b.patient_id
+
+        JOIN amrs.person_name pn
+            ON pn.person_id = p.person_id
+
+        LEFT JOIN amrs.patient_identifier cr
+            ON cr.patient_id = p.person_id
+          AND cr.identifier_type = 55
+          AND cr.voided = 0
+
+        JOIN amrs.cashier_bill_line_item li
+            ON li.bill_id = b.bill_id
+        LEFT JOIN
+            hie.bill_orders bo ON (bo.bill_uuid = b.uuid)
+        LEFT JOIN
+          amrs.visit v ON (v.visit_id = b.visit_id)
+        LEFT JOIN
+          amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
+
+        WHERE b.voided = 0
+        AND DATE(b.date_created) = DATE('${billingDate}')
+         AND l.uuid = '${locationUuid}'
+
+        GROUP BY
+            b.patient_id,
+            b.bill_id,
+            DATE(b.date_created)
+
+        ORDER BY
+            b.patient_id,
+            bill_date,
+            b.bill_id;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
+function getPendingBillLineItems(locationUuid, billingDate) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  if (!billingDate) {
+    throw new Error('Billing Date not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `
+    SELECT 
+        p.uuid AS patient_uuid,
+        CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name) AS patient_name,
+        CONCAT(cr.identifier, ' , ', uid.identifier) AS 'identifiers',
+        bli.bill_id,
+        bli.price,
+        bli.price_name,
+        DATE(bli.date_created) AS line_item_date,
+        bli.status,
+        v.uuid AS visit_uuid,
+        vt.uuid AS visit_type_uuid,
+        vt.name as visit_type,
+        cpm.name as payment_method
+        FROM 
+        amrs.cashier_bill_line_item bli
+        JOIN amrs.cashier_bill cb on cb.bill_id = bli.bill_id
+        JOIN amrs.person p ON p.person_id = cb.patient_id
+        JOIN amrs.visit v ON v.visit_id = cb.visit_id
+        JOIN amrs.visit_type vt ON vt.visit_type_id = v.visit_type_id
+        JOIN amrs.location l ON l.location_id = v.location_id
+        JOIN amrs.person_name pn ON pn.person_id = p.person_id
+        join amrs.visit_attribute va ON va.visit_id = v.visit_id
+        join amrs.visit_attribute_type vat ON vat.visit_attribute_type_id = va.attribute_type_id AND vat.uuid = '8553afa0-bdb9-4d3c-8a98-05fa9350aa85'
+        join amrs.cashier_payment_mode cpm ON cpm.uuid = va.value_reference
+        LEFT JOIN amrs.patient_identifier cr
+                    ON cr.patient_id = p.person_id
+                  AND cr.identifier_type = 55
+                  AND cr.voided 
+        left join amrs.patient_identifier uid ON (uid.patient_id = p.person_id
+                            AND uid.identifier_type = 5
+                            AND uid.voided = 0)
+        WHERE 
+          bli.status = 'PENDING'
+        AND bli.voided = 0
+        AND DATE(bli.date_created) = DATE('${billingDate}')
+        AND l.uuid = '${locationUuid}'
+        GROUP BY
+        p.person_id, cb.date_created
+    `;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
@@ -637,5 +834,8 @@ module.exports = {
   getFacilityEncounterBills,
   getDischargeDiagnisisAndDictor,
   getPatientFacilityPreAuthBills,
-  getActiveBillVisits
+  getActiveBillVisits,
+  getActiveCashVisits,
+  getAllBills,
+  getPendingBillLineItems
 };
