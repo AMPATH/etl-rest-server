@@ -778,46 +778,101 @@ function getPendingBillLineItems(locationUuid, billingDate) {
   return new Promise((resolve, reject) => {
     const sql = `
     SELECT 
-        p.uuid AS patient_uuid,
-        CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name) AS patient_name,
-        CONCAT(cr.identifier, ' , ', uid.identifier) AS 'identifiers',
-        bli.bill_id,
-        cb.uuid AS bill_uuid,
-        bli.price,
-        bli.price_name,
-        DATE(bli.date_created) AS line_item_date,
-        bli.status,
-        v.uuid AS visit_uuid,
-        vt.uuid AS visit_type_uuid,
-        vt.name as visit_type,
-        cpm.name as payment_method,
-        c.name AS cash_point
-        FROM 
-        amrs.cashier_bill_line_item bli
-        JOIN amrs.cashier_bill cb on cb.bill_id = bli.bill_id
-        JOIN amrs.cashier_cash_point c ON c.cash_point_id = cb.cash_point_id
-        JOIN amrs.person p ON p.person_id = cb.patient_id
-        JOIN amrs.visit v ON v.visit_id = cb.visit_id
-        JOIN amrs.visit_type vt ON vt.visit_type_id = v.visit_type_id
-        JOIN amrs.location l ON l.location_id = v.location_id
-        JOIN amrs.person_name pn ON pn.person_id = p.person_id
-        join amrs.visit_attribute va ON va.visit_id = v.visit_id
-        join amrs.visit_attribute_type vat ON vat.visit_attribute_type_id = va.attribute_type_id AND vat.uuid = '8553afa0-bdb9-4d3c-8a98-05fa9350aa85'
-        join amrs.cashier_payment_mode cpm ON cpm.uuid = va.value_reference
-        LEFT JOIN amrs.patient_identifier cr
-                    ON cr.patient_id = p.person_id
-                  AND cr.identifier_type = 55
-                  AND cr.voided 
-        left join amrs.patient_identifier uid ON (uid.patient_id = p.person_id
-                            AND uid.identifier_type = 5
-                            AND uid.voided = 0)
-        WHERE 
-          bli.status = 'PENDING'
-        AND bli.voided = 0
-        AND DATE(bli.date_created) = DATE('${billingDate}')
-        AND l.uuid = '${locationUuid}'
-        GROUP BY
-        p.person_id, cb.date_created
+    p.person_id,
+    p.uuid AS patient_uuid,
+
+    CONCAT_WS(' ',
+        pn.given_name,
+        pn.middle_name,
+        pn.family_name
+    ) AS patient_name,
+    CONCAT(cr.identifier, ' , ', uid.identifier) AS identifiers,
+    v.uuid AS visit_uuid,
+    vt.uuid AS visit_type_uuid,
+    vt.name AS visit_type,
+
+    cpm.name AS payment_method,
+    c.name AS cash_point,
+
+    DATE(MIN(bli.date_created)) AS line_item_date,
+
+    JSON_ARRAYAGG(
+        JSON_OBJECT(
+            'bill_item_id', bli.bill_id,
+            'price', bli.price,
+            'payer', bli.price_name,
+            'status', bli.status,
+            'quantity', bli.quantity,
+            'billable_service',
+                CONCAT(
+                    '(',
+                    cbs.name,
+                    ':',
+                    bli.price_name,
+                    ':',
+                    bli.price,
+                    ')'
+                )
+        )
+    ) AS pending_line_items
+
+FROM amrs.cashier_bill_line_item bli
+
+JOIN amrs.cashier_bill cb
+    ON cb.bill_id = bli.bill_id
+
+JOIN amrs.cashier_billable_service cbs
+    ON cbs.service_id = bli.service_id
+
+JOIN amrs.cashier_cash_point c
+    ON c.cash_point_id = cb.cash_point_id
+
+JOIN amrs.person p
+    ON p.person_id = cb.patient_id
+
+JOIN amrs.visit v
+    ON v.visit_id = cb.visit_id
+
+JOIN amrs.visit_type vt
+    ON vt.visit_type_id = v.visit_type_id
+
+JOIN amrs.location l
+    ON l.location_id = v.location_id
+
+JOIN amrs.person_name pn
+    ON pn.person_id = p.person_id AND pn.voided = 0 and pn.preferred = 1
+
+JOIN amrs.visit_attribute va
+    ON va.visit_id = v.visit_id
+
+JOIN amrs.visit_attribute_type vat
+    ON vat.visit_attribute_type_id = va.attribute_type_id
+   AND vat.uuid = '8553afa0-bdb9-4d3c-8a98-05fa9350aa85'
+
+JOIN amrs.cashier_payment_mode cpm
+    ON cpm.uuid = va.value_reference
+
+LEFT JOIN amrs.patient_identifier cr
+    ON cr.patient_id = p.person_id
+   AND cr.identifier_type = 55
+   AND cr.voided = 0
+
+LEFT JOIN amrs.patient_identifier uid
+    ON uid.patient_id = p.person_id
+   AND uid.identifier_type = 5
+   AND uid.voided = 0
+
+WHERE bli.status = 'PENDING'
+  AND bli.voided = 0
+  AND DATE(bli.date_created) = DATE('${billingDate}')
+  AND l.uuid = '${locationUuid}'
+
+GROUP BY
+    p.person_id,
+    v.visit_id
+
+ORDER BY
+    DATE(bli.date_created) desc
     `;
     const queryParts = {
       sql: sql
