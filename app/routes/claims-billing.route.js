@@ -7,7 +7,10 @@ import {
   getFacilityEncounterBills,
   getDischargeDiagnisisAndDictor,
   getPatientFacilityPreAuthBills,
-  getActiveBillVisits
+  getActiveBillVisits,
+  getActiveCashVisits,
+  getAllBills,
+  getPendingBillLineItems
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -269,6 +272,84 @@ const routes = [
       },
       description: 'Get Facility active visits with bill status',
       notes: 'Returns all facility active visits with their bill status',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/active-cash-visits',
+    config: {
+      handler: async function (request, reply) {
+        if (!request.query.locationUuid || !request.query.billingDate) {
+          throw new Error('Missing location or billing params');
+        }
+        const locationUuid = request.query.locationUuid ?? null;
+        const billingDate = request.query.billingDate ?? null;
+        try {
+          const results = await getActiveCashVisits(locationUuid, billingDate);
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Facility active cash visits',
+      notes: 'Returns all facility active cash visits',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/facility-bills',
+    config: {
+      handler: async function (request, reply) {
+        if (!request.query.locationUuid || !request.query.billingDate) {
+          throw new Error('Missing location or billing params');
+        }
+        const locationUuid = request.query.locationUuid ?? null;
+        const billingDate = request.query.billingDate ?? null;
+        try {
+          const results = await getAllBills(locationUuid, billingDate);
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Facility bills',
+      notes: 'Returns all facility bills',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/bill-line-item',
+    config: {
+      handler: async function (request, reply) {
+        if (!request.query.locationUuid || !request.query.billingDate) {
+          throw new Error('Missing location or billing params');
+        }
+        const locationUuid = request.query.locationUuid ?? null;
+        const billingDate = request.query.billingDate ?? null;
+        try {
+          const results = await getPendingBillLineItems(
+            locationUuid,
+            billingDate
+          );
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Facility bill line items',
+      notes: 'Returns all facility bill line items',
       tags: ['api'],
       validate: {}
     }
