@@ -10,7 +10,8 @@ import {
   getActiveBillVisits,
   getActiveCashVisits,
   getAllBills,
-  getPendingBillLineItems
+  getPendingBillLineItems,
+  updateBillLineItem
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -350,6 +351,37 @@ const routes = [
       },
       description: 'Get Facility bill line items',
       notes: 'Returns all facility bill line items',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'PUT',
+    path: '/etl/billing/update-bill-line-item',
+    config: {
+      auth: false,
+      handler: async function (request, reply) {
+        const { billLineItemId } = req.query;
+        if (!billLineItemId) {
+          return res.status(400).json({
+            success: false,
+            message: 'billLineItemId is required'
+          });
+        }
+
+        try {
+          const results = await updateBillLineItem(billLineItemId);
+          reply({
+            results
+          });
+        } catch (error) {
+          console.error(error);
+
+          reply(Boom.badRequest('Failed to update bill line item'));
+        }
+      },
+      description: 'Update bill line item status',
+      notes: 'Marks a pending bill line item as PAID',
       tags: ['api'],
       validate: {}
     }
