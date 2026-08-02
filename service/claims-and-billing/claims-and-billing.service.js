@@ -588,20 +588,20 @@ FROM
     amrs.visit v
         JOIN
     amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
+            JOIN
+    amrs.location l ON (l.location_id = v.location_id)
+            JOIN
+    amrs.person p ON (p.person_id = v.patient_id
+        AND p.voided = 0)
+		JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
         LEFT JOIN
     amrs.visit_attribute va ON (va.visit_id = v.visit_id
         AND va.voided = 0
         AND va.attribute_type_id = 3)
         LEFT JOIN
     amrs.cashier_payment_mode cpm ON (cpm.uuid = va.value_reference)
-        JOIN
-    amrs.location l ON (l.location_id = v.location_id)
-        JOIN
-    amrs.person p ON (p.person_id = v.patient_id
-        AND p.voided = 0)
-        INNER JOIN
-    amrs.person_name pn ON (pn.person_id = p.person_id
-        AND pn.voided = 0)
         LEFT JOIN
     amrs.patient_identifier cr ON (cr.patient_id = p.person_id
         AND cr.identifier_type = 55
