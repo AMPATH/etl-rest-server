@@ -894,6 +894,86 @@ ORDER BY
   });
 }
 
+function getPatientEncounterDiagnosis(visitDate, patientUuid, locationUuid) {
+  const problemAddedConceptUuid = 'a8ae835e-1350-11df-a1f1-0026b9348838';
+  const icd11SourceUuid = '43aaca5f-d623-43fd-993b-673b5d927cdd';
+  const providerNationalIdUuid = '4550df92-c684-4597-8ab8-d6b10eabdcfb';
+  const providerSpecialityUuid = 'c73daf69-ddd0-4fce-98ec-6f9d875193e3';
+  if (!visitDate) {
+    throw new Error('Billing Date not defined');
+  }
+  if (!patientUuid) {
+    throw new Error('PatientUuid not defined');
+  }
+  if (!locationUuid) {
+    throw new Error('Locationuuid not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    b.*,
+    MAX(b.national_id) AS 'practioner_nat_id',
+    MAX(b.speciality) AS 'practitioner_speciality',
+    'National ID' AS 'practitioner_identifier_type',
+    CASE
+        WHEN MAX(b.speciality) = 'MEDICINE' THEN 'KMPDC'
+        WHEN MAX(b.speciality) = 'CLINICAL OFFICER' THEN 'COC'
+        ELSE 'KMPDC'
+    END AS 'practitioner_body'
+FROM
+    (SELECT 
+        e.patient_id,
+            e.encounter_id,
+            e.encounter_datetime,
+            l.name AS 'facility',
+            et.name AS 'encounter_type',
+            NULL AS concept_id,
+            ed.diagnosis_coded,
+            crs.name AS 'concept_source_name',
+            crs.hl7_code,
+            crt.code AS icd11_code,
+            ep.provider_id,
+            CASE
+                WHEN pat.uuid = '${providerNationalIdUuid}' THEN pa.value_reference
+                ELSE NULL
+            END AS national_id,
+            CASE
+                WHEN pat.uuid = '${providerSpecialityUuid}' THEN pa.value_reference
+                ELSE NULL
+            END AS speciality,
+            pat.uuid
+    FROM
+        amrs.encounter_diagnosis ed
+    JOIN amrs.encounter e ON (ed.encounter_id = e.encounter_id
+        AND e.voided = 0)
+    JOIN amrs.person p ON (e.patient_id = p.person_id)
+    JOIN amrs.location l ON (e.location_id = l.location_id)
+    JOIN amrs.encounter_type et ON (et.encounter_type_id = e.encounter_type)
+    JOIN amrs.concept vc ON (vc.concept_id = ed.diagnosis_coded)
+    JOIN amrs.concept_reference_map crm ON (crm.concept_id = vc.concept_id)
+    JOIN amrs.concept_reference_term crt ON (crm.concept_reference_term_id = crt.concept_reference_term_id)
+    JOIN amrs.concept_reference_source crs ON (crs.concept_source_id = crt.concept_source_id)
+    LEFT JOIN amrs.encounter_provider ep ON (ep.encounter_id = e.encounter_id)
+    LEFT JOIN amrs.provider_attribute pa ON (pa.provider_id = ep.provider_id
+        AND pa.voided = 0)
+    LEFT JOIN amrs.provider_attribute_type pat ON (pat.provider_attribute_type_id = pa.attribute_type_id)
+    WHERE
+        p.uuid = '${patientUuid}'
+            AND DATE(e.encounter_datetime) = DATE('${visitDate}')
+            AND l.uuid = '${locationUuid}'
+            AND ed.voided = 0
+            AND crs.uuid = '${icd11SourceUuid}'
+            AND pat.uuid IN ('${providerNationalIdUuid}' , '${providerSpecialityUuid}')) b
+GROUP BY b.diagnosis_coded;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
@@ -906,5 +986,6 @@ module.exports = {
   getActiveBillVisits,
   getActiveCashVisits,
   getAllBills,
-  getPendingBillLineItems
+  getPendingBillLineItems,
+  getPatientEncounterDiagnosis
 };
