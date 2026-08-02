@@ -674,7 +674,15 @@ function getActiveCashVisits(locationUuid, billingDate) {
                   AND va.value_reference = '63eff7a4-6f82-43c4-a333-dbcc58fe9f74'
                   AND DATE(v.date_started) = DATE('${billingDate}')
                   AND l.uuid = '${locationUuid}'
-                  GROUP BY v.patient_id, v.date_created;`;
+                  -- EXCLUDE VISITS THAT ALREADY HAVE A BILL
+                  AND NOT EXISTS (
+                  SELECT 1
+                  FROM amrs.cashier_bill cb
+                  WHERE cb.patient_id = v.patient_id
+                    AND DATE(cb.date_created) = DATE(v.date_started)
+                    AND cb.voided = 0
+                  )
+                  ORDER BY v.date_started DESC;`;
     const queryParts = {
       sql: sql
     };
@@ -884,6 +892,31 @@ ORDER BY
   });
 }
 
+function updateBillLineItem(billLineItemId) {
+  if (!billLineItemId) {
+    throw new Error('billLineItemId is required');
+  }
+
+  return new Promise((resolve, reject) => {
+    const sql = `
+    UPDATE amrs.cashier_bill_line_item
+      SET
+        status = 'PAID',
+        date_changed = NOW()
+      WHERE bill_line_item_id = '${billLineItemId}'
+        AND status = 'PENDING'
+        AND voided = 0;
+    `;
+    const queryParts = {
+      sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
@@ -896,5 +929,6 @@ module.exports = {
   getActiveBillVisits,
   getActiveCashVisits,
   getAllBills,
-  getPendingBillLineItems
+  getPendingBillLineItems,
+  updateBillLineItem
 };
