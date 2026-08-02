@@ -674,7 +674,15 @@ function getActiveCashVisits(locationUuid, billingDate) {
                   AND va.value_reference = '63eff7a4-6f82-43c4-a333-dbcc58fe9f74'
                   AND DATE(v.date_started) = DATE('${billingDate}')
                   AND l.uuid = '${locationUuid}'
-                  GROUP BY v.patient_id, v.date_created;`;
+                  -- EXCLUDE VISITS THAT ALREADY HAVE A BILL
+                  AND NOT EXISTS (
+                  SELECT 1
+                  FROM amrs.cashier_bill cb
+                  WHERE cb.patient_id = v.patient_id
+                    AND DATE(cb.date_created) = DATE(v.date_started)
+                    AND cb.voided = 0
+                  )
+                  ORDER BY v.date_started DESC;`;
     const queryParts = {
       sql: sql
     };
