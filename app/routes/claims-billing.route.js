@@ -6,7 +6,7 @@ import {
   getActiveProviders,
   getFacilityEncounterBills,
   getDischargeDiagnisisAndDictor,
-  getPatientFacilityPreAuthBills,
+  getPatientFacilityPreAuthRequests,
   getActiveBillVisits,
   getActiveCashVisits,
   getAllBills,
@@ -225,8 +225,9 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/etl/facility/pre-auth-bills',
+    path: '/etl/facility/pre-auth-requests',
     config: {
+      auth: false,
       handler: async function (request, reply) {
         if (!request.query.locationUuid || !request.query.billingDate) {
           throw new Error('Missing location or billing params');
@@ -234,7 +235,7 @@ const routes = [
         const locationUuid = request.query.locationUuid ?? null;
         const billingDate = request.query.billingDate ?? null;
         try {
-          const results = await getPatientFacilityPreAuthBills(
+          const results = await getPatientFacilityPreAuthRequests(
             locationUuid,
             billingDate
           );
@@ -245,8 +246,8 @@ const routes = [
           reply(Boom.badRequest());
         }
       },
-      description: 'Get Facility pre-auth bills',
-      notes: 'Returns all pre-auth facility bills for a facility',
+      description: 'Get Facility pre-auth requests',
+      notes: 'Returns all pre-auth facility requests for a facility',
       tags: ['api'],
       validate: {}
     }

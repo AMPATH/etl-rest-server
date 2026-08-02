@@ -485,7 +485,7 @@ WHERE
   });
 }
 
-function getPatientFacilityPreAuthBills(locationUuid, billingDate) {
+function getPatientFacilityPreAuthRequests(locationUuid, billingDate) {
   if (!locationUuid) {
     throw new Error('Location not defined');
   }
@@ -494,44 +494,33 @@ function getPatientFacilityPreAuthBills(locationUuid, billingDate) {
   }
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
-    cp.name AS cash_point,
-    DATE_FORMAT(cb.date_created, '%Y-%m-%d %H:%i') AS bill_date,
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
                     pn.family_name)) AS patient_name,
     p.uuid AS patient_uuid,
-    cbl.status,
-    cr.identifier as cr_no,
-    u.identifier as amrs_universal_id,
-    bo.intervention_code,
-    bo.consent_token,
-    bo.order_no,
-    bo.service_type,
-    bo.requires_preauth,
-    bo.normal_preauth,
-    bo.elective_preauth,
-    bo.preauth_approved,
-    bo.required_documents,
-    bo.applicable_document_types,
-    bo.required_preauth_document_types
+    cr.identifier AS cr_no,
+    u.identifier AS amrs_universal_id,
+    par.intervention_code,
+    par.consent_token,
+    par.order_no,
+    par.service_type,
+    par.requires_preauth,
+    par.normal_preauth,
+    par.elective_preauth,
+    par.status,
+    par.applicable_document_types,
+    par.required_preauth_document_types,
+    par.location_uuid
 FROM
-    amrs.cashier_bill cb
-        INNER JOIN
-    amrs.cashier_cash_point cp ON (cp.cash_point_id = cb.cash_point_id)
-        INNER JOIN
-    amrs.location l ON (l.location_id = cp.location_id)
-        LEFT JOIN
-    amrs.person p ON (p.person_id = cb.patient_id
+    hie.pre_auth_requests par
+        JOIN
+    amrs.person p ON (p.uuid = par.patient_uuid
         AND p.voided = 0)
         LEFT JOIN
     amrs.person_name pn ON (pn.person_id = p.person_id
         AND pn.voided = 0)
-        JOIN
-    amrs.cashier_bill_line_item cbl ON (cbl.bill_id = cb.bill_id)
-        JOIN
-    amrs.cashier_billable_service cbs ON (cbs.service_id = cbl.service_id)
-         LEFT JOIN
+        LEFT JOIN
     amrs.patient_identifier cr ON (cr.patient_id = p.person_id
         AND cr.identifier_type = 55
         AND cr.voided = 0)
@@ -539,15 +528,11 @@ FROM
     amrs.patient_identifier u ON (u.patient_id = p.person_id
         AND u.identifier_type = 8
         AND u.voided = 0)
-    JOIN
-    hie.bill_orders bo ON (bo.line_item_uuid = cbl.uuid AND bo.requires_preauth = 1)
 WHERE
-    cb.voided = 0
-        AND DATE(cb.date_created) = DATE('${billingDate}')
-        AND l.uuid = '${locationUuid}'
-        AND cbl.voided = 0
-group by p.person_id
-ORDER BY cb.date_created desc;`;
+    DATE(par.date_created) = DATE('${billingDate}')
+        AND par.location_uuid = '${locationUuid}'
+        AND par.voided IS NULL
+GROUP BY p.person_id , par.consent_token;`;
     const queryParts = {
       sql: sql
     };
@@ -900,7 +885,7 @@ module.exports = {
   getActiveProviders,
   getFacilityEncounterBills,
   getDischargeDiagnisisAndDictor,
-  getPatientFacilityPreAuthBills,
+  getPatientFacilityPreAuthRequests,
   getActiveBillVisits,
   getActiveCashVisits,
   getAllBills,
