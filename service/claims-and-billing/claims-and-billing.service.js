@@ -828,6 +828,8 @@ FROM amrs.cashier_bill_line_item bli
 
 JOIN amrs.cashier_bill cb
     ON cb.bill_id = bli.bill_id
+        
+JOIN amrs.cashier_cash_point cp ON cp.cash_point_id = cb.cash_point_id
 
 JOIN amrs.cashier_billable_service cbs
     ON cbs.service_id = bli.service_id
@@ -838,26 +840,26 @@ JOIN amrs.cashier_cash_point c
 JOIN amrs.person p
     ON p.person_id = cb.patient_id
 
-JOIN amrs.visit v
+LEFT JOIN amrs.visit v
     ON v.visit_id = cb.visit_id
 
-JOIN amrs.visit_type vt
+LEFT JOIN amrs.visit_type vt
     ON vt.visit_type_id = v.visit_type_id
 
 JOIN amrs.location l
-    ON l.location_id = v.location_id
+    ON l.location_id = cp.location_id
 
 JOIN amrs.person_name pn
     ON pn.person_id = p.person_id AND pn.voided = 0 and pn.preferred = 1
 
-JOIN amrs.visit_attribute va
+LEFT JOIN amrs.visit_attribute va
     ON va.visit_id = v.visit_id
 
-JOIN amrs.visit_attribute_type vat
+LEFT JOIN amrs.visit_attribute_type vat
     ON vat.visit_attribute_type_id = va.attribute_type_id
    AND vat.uuid = '8553afa0-bdb9-4d3c-8a98-05fa9350aa85'
 
-JOIN amrs.cashier_payment_mode cpm
+LEFT JOIN amrs.cashier_payment_mode cpm
     ON cpm.uuid = va.value_reference
 
 LEFT JOIN amrs.patient_identifier cr
@@ -872,7 +874,7 @@ LEFT JOIN amrs.patient_identifier uid
 
 WHERE bli.status = 'PENDING'
   AND bli.voided = 0
-  AND DATE(bli.date_created) = DATE('${billingDate}')
+ AND DATE(bli.date_created) = DATE('${billingDate}')
   AND l.uuid = '${locationUuid}'
 
 GROUP BY
