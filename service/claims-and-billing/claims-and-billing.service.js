@@ -891,6 +891,7 @@ WHERE bli.status = 'PENDING'
   AND bli.voided = 0
  AND DATE(bli.date_created) = DATE('${billingDate}')
   AND l.uuid = '${locationUuid}'
+  AND UPPER(bli.price_name) = 'CASH'
 
 GROUP BY
     p.person_id,
