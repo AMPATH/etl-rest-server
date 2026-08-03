@@ -705,15 +705,17 @@ function getAllBills(locationUuid, billingDate) {
     SELECT
     b.patient_id,
     p.uuid AS patient_uuid,
+    b.uuid AS bill_uuid,
+    b.bill_id,
     b.receipt_number,
     c.name AS cash_point,
     CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name) AS patient_name,
     cr.identifier AS identifier,
-
     b.bill_id,
     b.uuid AS bill_uuid,
     c.name AS payment_mode,
-	  b.status AS bill_status,
+	b.status AS bill_status,
+	b.receipt_number,
     DATE(b.date_created) AS bill_date,
     c.location_id,
     bo.consent_token,
@@ -726,12 +728,25 @@ function getAllBills(locationUuid, billingDate) {
             'quantity', li.quantity,
             'price', li.price,
             'status', li.status,
-            'date_created', DATE_FORMAT(li.date_created, '%Y-%m-%d')
+            'date_created', DATE_FORMAT(li.date_created, '%Y-%m-%d'),
+            'bill_id', li.bill_id
         )
-    ) AS bill_items
+    ) AS bill_items,
+    JSON_ARRAYAGG(
+        JSON_OBJECT(
+            'bill_payment_uuid', bp.uuid,
+            'payment_date', bp.date_created,
+            'payment_mode', cpm.name,
+            'amount', bp.amount,
+            'amount_tendered', bp.amount_tendered,
+            'bill_id', bp.bill_id
+        )
+    ) AS payments
 
     FROM amrs.cashier_bill b
         JOIN amrs.cashier_cash_point c ON c.cash_point_id = b.cash_point_id
+        JOIN amrs.cashier_bill_payment bp ON bp.bill_id = b.bill_id
+        JOIN amrs.cashier_payment_mode cpm ON cpm.payment_mode_id = bp.payment_mode_id
         JOIN amrs.location l ON l.location_id = c.location_id
         JOIN amrs.person p
             ON p.person_id = b.patient_id
@@ -754,7 +769,7 @@ function getAllBills(locationUuid, billingDate) {
           amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
 
         WHERE b.voided = 0
-        AND DATE(b.date_created) = DATE('${billingDate}')
+       AND DATE(b.date_created) = DATE('${billingDate}')
          AND l.uuid = '${locationUuid}'
 
         GROUP BY
@@ -765,7 +780,7 @@ function getAllBills(locationUuid, billingDate) {
         ORDER BY
             b.patient_id,
             DATE(bill_date),
-            b.bill_id;`;
+            b.bill_id`;
     const queryParts = {
       sql: sql
     };
