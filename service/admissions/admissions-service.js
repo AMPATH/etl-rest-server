@@ -122,4 +122,88 @@ WHERE
     });
   });
 }
-module.exports = { getPatientAdmissionHistory, getAdmissionRequests };
+
+function getAdmittedPatients(locationUuid) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  const admissionEncounterTypeUuid = 'e22e39fd-7db2-45e7-80f1-60fa0d5a4378';
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    id.identifier AS 'national_id',
+    cr.identifier AS 'cr_id',
+    e.encounter_datetime AS 'admision_date',
+    et.name AS 'encounter_type',
+    l.name AS 'location',
+    l.uuid AS 'location_uuid',
+    p.gender,
+    EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), p.birthdate)))) AS age,
+    b.bed_number,
+    b.status AS bed_status,
+    b.bed_id
+FROM
+    amrs.encounter e
+        JOIN
+    amrs.encounter_type et ON (e.encounter_type = et.encounter_type_id
+        AND et.uuid = '${admissionEncounterTypeUuid}')
+        JOIN
+    amrs.location l ON (l.location_id = e.location_id)
+        INNER JOIN
+    amrs.person p ON (p.person_id = e.patient_id
+        AND p.voided = 0)
+        INNER JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = p.person_id
+        AND id.identifier_type = 5
+        AND id.voided = 0)
+        LEFT JOIN
+    amrs.encounter ce ON (e.patient_id = ce.patient_id
+        AND ce.encounter_type = 3
+        AND ce.encounter_datetime > e.encounter_datetime
+        AND ce.voided = 0)
+        LEFT JOIN
+    amrs.encounter mde ON (mde.patient_id = e.patient_id
+        AND mde.encounter_type = 274
+        AND mde.encounter_datetime > e.encounter_datetime
+        AND mde.voided = 0)
+        LEFT JOIN
+    amrs.encounter de ON (de.patient_id = e.patient_id
+        AND de.encounter_type = 319
+        AND de.encounter_datetime > e.encounter_datetime
+        AND de.voided = 0)
+        LEFT JOIN
+    amrs.bed_patient_assignment_map ba ON (ba.patient_id = p.person_id
+        AND ba.date_stopped IS NULL)
+        LEFT JOIN
+    amrs.bed b ON (b.bed_id = ba.bed_id)
+WHERE
+    l.uuid = '${locationUuid}'
+        AND e.voided = 0
+        AND ce.encounter_id IS NULL
+        AND mde.encounter_id IS NULL
+        AND de.encounter_id IS NULL
+GROUP BY p.person_id`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+module.exports = {
+  getPatientAdmissionHistory,
+  getAdmissionRequests,
+  getAdmittedPatients
+};
