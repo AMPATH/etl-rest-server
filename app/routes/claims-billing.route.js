@@ -10,7 +10,8 @@ import {
   getActiveBillVisits,
   getActiveCashVisits,
   getAllBills,
-  getPendingBillLineItems
+  getPendingBillLineItems,
+  getPatientEncounterDiagnosis
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -350,6 +351,42 @@ const routes = [
       },
       description: 'Get Facility bill line items',
       notes: 'Returns all facility bill line items',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/patient/encounter-diagnosis',
+    config: {
+      handler: async function (request, reply) {
+        if (
+          !request.query.visitDate ||
+          !request.query.patientUuid ||
+          !request.query.locationUuid
+        ) {
+          throw new Error('Missing patientId,visitDate,locationUuid params');
+        }
+        const visitDate = request.query.visitDate ?? null;
+        const patientUuid = request.query.patientUuid ?? null;
+        const locationUuid = request.query.locationUuid ?? null;
+        try {
+          const results = await getPatientEncounterDiagnosis(
+            visitDate,
+            patientUuid,
+            locationUuid
+          );
+          reply({
+            results: results
+          });
+        } catch (error) {
+          console.log({ error });
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Patient encounter diagnosis',
+      notes:
+        'Returns a patients encounter disgnosis and doctor who filled the form',
       tags: ['api'],
       validate: {}
     }
