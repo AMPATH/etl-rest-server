@@ -1,6 +1,7 @@
 import {
   getPatientAdmissionHistory,
-  getAdmissionRequests
+  getAdmissionRequests,
+  getAdmittedPatients
 } from '../../service/admissions/admissions-service';
 var Boom = require('boom');
 const routes = [
@@ -46,6 +47,29 @@ const routes = [
       },
       description: 'Get ward admission requests',
       notes: 'Returns a facility admisssion requests',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/admissions/admitted',
+    config: {
+      handler: async function (request, reply) {
+        const locationUuid = request.query.locationUuid
+          ? request.query.locationUuid
+          : null;
+        try {
+          const results = await getAdmittedPatients(locationUuid);
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get ward admitted patients',
+      notes: 'Returns a list of patients admitted to a ward',
       tags: ['api'],
       validate: {}
     }
