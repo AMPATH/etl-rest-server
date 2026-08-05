@@ -741,7 +741,9 @@ function getAllBills(locationUuid, billingDate) {
             'amount_tendered', bp.amount_tendered,
             'bill_id', bp.bill_id
         )
-    ) AS payments
+    ) AS payments,
+     v.uuid AS visit_uuid,
+     vt.uuid AS visit_type_uuid
 
     FROM amrs.cashier_bill b
         JOIN amrs.cashier_cash_point c ON c.cash_point_id = b.cash_point_id
@@ -774,7 +776,6 @@ function getAllBills(locationUuid, billingDate) {
 
         GROUP BY
             b.patient_id,
-            b.bill_id,
             DATE(b.date_created)
 
         ORDER BY
@@ -803,6 +804,7 @@ function getPendingBillLineItems(locationUuid, billingDate) {
     SELECT 
     p.person_id,
     p.uuid AS patient_uuid,
+    cb.uuid AS bill_uuid,
 
     CONCAT_WS(' ',
         pn.given_name,
@@ -818,10 +820,12 @@ function getPendingBillLineItems(locationUuid, billingDate) {
     c.name AS cash_point,
 
     DATE(MIN(bli.date_created)) AS line_item_date,
+    cpm.uuid AS cash_mode_uuid,
 
     JSON_ARRAYAGG(
         JSON_OBJECT(
             'bill_item_id', bli.bill_id,
+            'bill_item_uuid', bli.uuid,
             'price', bli.price,
             'payer', bli.price_name,
             'status', bli.status,
