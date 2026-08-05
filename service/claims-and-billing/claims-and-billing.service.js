@@ -944,6 +944,7 @@ FROM
             et.name AS 'encounter_type',
             NULL AS concept_id,
             ed.diagnosis_coded,
+            ed.dx_rank,
             crs.name AS 'concept_source_name',
             crs.hl7_code,
             crt.code AS icd11_code,
