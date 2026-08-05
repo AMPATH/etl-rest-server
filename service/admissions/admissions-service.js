@@ -202,8 +202,80 @@ GROUP BY p.person_id`;
     });
   });
 }
+
+function getAwaitingDischarge(locationUuid) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  const MATERNITYDISCHARGE_UUID = 'e3c2a17f-4d58-4725-b702-a5d75a2231d0';
+  const GENERALDISCHARGE_UUID = '7649d97d-ac9f-444d-877c-7468ef286e7e';
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    l.name AS 'location',
+    bam.bed_id,
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    id.identifier AS 'national_id',
+    cr.identifier AS 'cr_id',
+    p.uuid AS 'person_uuid',
+    bam.date_started AS 'admission_date',
+    l.uuid AS 'location_uuid',
+    et.name AS 'encounter_type',
+    de.encounter_datetime AS 'discharge_date',
+    CASE
+        WHEN cb.bill_id THEN cb.status
+        WHEN cb.bill_id IS NULL THEN 'NO PENDING BILL'
+    END AS 'bill_status'
+FROM
+    amrs.bed_patient_assignment_map bam
+        JOIN
+    amrs.encounter e ON (bam.encounter_id = e.encounter_id)
+        JOIN
+    amrs.encounter de ON (de.patient_id = bam.patient_id
+        AND bam.date_started <= de.encounter_datetime)
+        JOIN
+    amrs.encounter_type et ON (de.encounter_type = et.encounter_type_id)
+        JOIN
+    amrs.person p ON (bam.patient_id = p.person_id
+        AND p.voided = 0)
+        JOIN
+    amrs.location l ON (l.location_id = e.location_id
+        AND l.retired = 0)
+        INNER JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = p.person_id
+        AND id.identifier_type = 5
+        AND id.voided = 0)
+        LEFT JOIN
+    amrs.cashier_bill cb ON (cb.patient_id = p.person_id
+        AND cb.voided = 0
+        AND cb.status = 'PENDING')
+WHERE
+    bam.date_stopped IS NULL
+        AND bam.voided = 0
+        AND et.uuid in ('${MATERNITYDISCHARGE_UUID}','${GENERALDISCHARGE_UUID}')
+        AND l.uuid = '${locationUuid}'
+        group by p.person_id, l.location_id;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
 module.exports = {
   getPatientAdmissionHistory,
   getAdmissionRequests,
-  getAdmittedPatients
+  getAdmittedPatients,
+  getAwaitingDischarge
 };

@@ -1,7 +1,8 @@
 import {
   getPatientAdmissionHistory,
   getAdmissionRequests,
-  getAdmittedPatients
+  getAdmittedPatients,
+  getAwaitingDischarge
 } from '../../service/admissions/admissions-service';
 var Boom = require('boom');
 const routes = [
@@ -70,6 +71,30 @@ const routes = [
       },
       description: 'Get ward admitted patients',
       notes: 'Returns a list of patients admitted to a ward',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/admissions/awaiting-dicharge',
+    config: {
+      handler: async function (request, reply) {
+        const locationUuid = request.query.locationUuid
+          ? request.query.locationUuid
+          : null;
+        try {
+          const results = await getAwaitingDischarge(locationUuid);
+          reply({
+            results: results
+          });
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get patients awaiating discharge',
+      notes:
+        'Returns a list of patients who have maternity discharge or general discharge',
       tags: ['api'],
       validate: {}
     }
