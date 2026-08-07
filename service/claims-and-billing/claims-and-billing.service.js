@@ -720,7 +720,9 @@ function getAllBills(locationUuid, billingDate) {
     c.location_id,
     bo.consent_token,
     vt.name AS 'visit_type',
-    JSON_ARRAYAGG(
+    CONCAT(
+    '[',
+    GROUP_CONCAT(
         JSON_OBJECT(
             'line_item_id', li.bill_line_item_id,
             'line_item_order', li.line_item_order,
@@ -731,17 +733,25 @@ function getAllBills(locationUuid, billingDate) {
             'date_created', DATE_FORMAT(li.date_created, '%Y-%m-%d'),
             'bill_id', li.bill_id
         )
-    ) AS bill_items,
-    JSON_ARRAYAGG(
+        SEPARATOR ','
+    ),
+    ']'
+) AS bill_items,
+  CONCAT(
+    '[',
+    GROUP_CONCAT(
         JSON_OBJECT(
             'bill_payment_uuid', bp.uuid,
-            'payment_date', bp.date_created,
+            'payment_date', DATE_FORMAT(bp.date_created, '%Y-%m-%d %H:%i:%s'),
             'payment_mode', cpm.name,
             'amount', bp.amount,
             'amount_tendered', bp.amount_tendered,
             'bill_id', bp.bill_id
         )
-    ) AS payments,
+        SEPARATOR ','
+    ),
+    ']'
+) AS payments,
      v.uuid AS visit_uuid,
      vt.uuid AS visit_type_uuid
 
