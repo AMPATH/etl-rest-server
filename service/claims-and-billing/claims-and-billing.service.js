@@ -979,7 +979,7 @@ FROM
     LEFT JOIN amrs.provider_attribute_type pat ON (pat.provider_attribute_type_id = pa.attribute_type_id)
     WHERE
         p.uuid = '${patientUuid}'
-            AND DATE(e.encounter_datetime) = DATE('${visitDate}')
+            AND DATE(e.encounter_datetime) >= DATE('${visitDate}')
             AND l.uuid = '${locationUuid}'
             AND ed.voided = 0
             AND crs.uuid = '${icd11SourceUuid}'
