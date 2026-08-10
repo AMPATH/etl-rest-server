@@ -313,7 +313,7 @@ const routes = [
         const locationUuid = request.query.locationUuid ?? null;
         const billingDate = request.query.billingDate ?? null;
         try {
-          const results = await getAllBills(locationUuid, billingDate);
+          const results = await getFacilityBills(locationUuid, billingDate);
           reply({
             results: results
           });

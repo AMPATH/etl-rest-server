@@ -9,52 +9,45 @@ function getFacilityBills(locationUuid, billingDate) {
   }
   return new Promise((resolve, reject) => {
     const sql = `SELECT 
-    cb.uuid as bill_uuid,
-    cb.receipt_number,
+    p.uuid AS patient_uuid,
+    l.name AS 'location_name',
+    v.date_started AS 'visit_start_date',
+    l.uuid as 'location_uuid',
+    v.patient_id,
+    cb.status AS 'paid_status',
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
                     pn.family_name)) AS patient_name,
-    cp.name AS cash_point,
-    DATE_FORMAT(MAX(cb.date_created), '%Y-%m-%d %H:%i') AS bill_date,
-    GROUP_CONCAT(cb.status) AS paid_status,
-    p.uuid AS patient_uuid,
-    bo.consent_token,
-    id.identifier as 'national_id',
-    cr.identifier as 'cr_id',
-    vt.name AS 'visit_type'
+    id.identifier AS 'national_id',
+    cr.identifier AS 'cr_id'
 FROM
-    amrs.cashier_bill cb
-        INNER JOIN
-    amrs.cashier_cash_point cp ON (cp.cash_point_id = cb.cash_point_id)
-        INNER JOIN
-    amrs.location l ON (l.location_id = cp.location_id)
-        INNER JOIN
-    amrs.person p ON (p.person_id = cb.patient_id
-        AND p.voided = 0)
-        INNER JOIN
+    amrs.visit v
+        JOIN
+    amrs.location l ON (l.location_id = v.location_id)
+        JOIN
+    amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
+        JOIN
+    amrs.cashier_bill cb ON (cb.visit_id = v.visit_id
+        AND cb.voided = 0)
+        JOIN
+    amrs.person p ON (p.person_id = v.patient_id)
+        LEFT JOIN
     amrs.person_name pn ON (pn.person_id = p.person_id
         AND pn.voided = 0)
-       LEFT JOIN
-    hie.bill_orders bo ON (bo.bill_uuid = cb.uuid)
-       LEFT JOIN
-    amrs.patient_identifier cr ON (cr.patient_id = cb.patient_id
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
         AND cr.identifier_type = 55
         AND cr.voided = 0)
-      LEFT JOIN
-    amrs.patient_identifier id ON (id.patient_id = cb.patient_id
+        LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = p.person_id
         AND id.identifier_type = 5
         AND id.voided = 0)
-      LEFT JOIN
-    amrs.visit v ON (v.visit_id = cb.visit_id)
-      LEFT JOIN
-    amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
 WHERE
-    cb.voided = 0
-        AND DATE(cb.date_created) = DATE('${billingDate}')
-        AND l.uuid = '${locationUuid}'
-GROUP BY cb.patient_id
-ORDER BY cb.date_created DESC;`;
+    l.uuid = '${locationUuid}'
+        AND DATE(v.date_started) = '${billingDate}'
+        AND v.voided = 0
+GROUP BY v.patient_id;`;
     const queryParts = {
       sql: sql
     };
