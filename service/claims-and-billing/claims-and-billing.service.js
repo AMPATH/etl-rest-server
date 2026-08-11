@@ -47,7 +47,8 @@ WHERE
     l.uuid = '${locationUuid}'
         AND DATE(v.date_started) = '${billingDate}'
         AND v.voided = 0
-GROUP BY v.patient_id;`;
+GROUP BY v.patient_id
+ORDER BY v.date_started ASC;`;
     const queryParts = {
       sql: sql
     };
@@ -824,8 +825,9 @@ function getPendingBillLineItems(locationUuid, billingDate) {
 
     DATE(MIN(bli.date_created)) AS line_item_date,
     cpm.uuid AS cash_mode_uuid,
-
-    JSON_ARRAYAGG(
+    CONCAT(
+    '[',
+    GROUP_CONCAT(
         JSON_OBJECT(
             'bill_item_id', bli.bill_id,
             'bill_item_uuid', bli.uuid,
@@ -844,7 +846,10 @@ function getPendingBillLineItems(locationUuid, billingDate) {
                     ')'
                 )
         )
-    ) AS pending_line_items
+        SEPARATOR ','
+    ),
+    ']'
+) AS pending_line_items
 
 FROM amrs.cashier_bill_line_item bli
 
