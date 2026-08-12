@@ -128,7 +128,8 @@ FROM
     hie.bill_orders bo ON (bo.line_item_uuid = cbl.uuid)
         LEFT JOIN
     hie.claim_line cl ON (cl.consent_token COLLATE utf8mb4_unicode_ci = bo.consent_token
-        AND cl.intervention_code COLLATE utf8mb4_unicode_ci = bo.intervention_code)
+        AND cl.intervention_code COLLATE utf8mb4_unicode_ci = bo.intervention_code
+        AND cl.order_no COLLATE utf8mb4_unicode_ci = bo.order_no)
         LEFT JOIN
     hie.claim_line clr ON (cl.consent_token = clr.consent_token
         AND cl.intervention_code = clr.intervention_code AND clr.claim_line_action = 'REMOVE')
