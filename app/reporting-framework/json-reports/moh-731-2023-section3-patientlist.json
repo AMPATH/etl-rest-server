@@ -1,0 +1,200 @@
+{
+  "name": "Moh7312023Section3PatientList",
+  "version": "1.0",
+  "tag": "",
+  "description": "Section 3 of the MOH 731 Ver. July 2023 form, disaggregated across the columns the form's boxes are cut on. It is not what the report reads - the report has its own flat aggregation - it exists so a box can be drilled into: the patient list generator turns a dc__ indicator naming these columns into a filter on the shared base.",
+  "uses": [
+    {
+      "name": "Moh7312023PatientListBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "Moh7312023PatientListBase",
+      "alias": "hmsd"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "hmsd.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "hmsd.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "hmsd.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "hmsd.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_range",
+      "column": "hmsd.age_range"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_group_15",
+      "column": "hmsd.age_group_15"
+    },
+    {
+      "comment": "3.1 Starting ART",
+      "type": "derived_column",
+      "alias": "started_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.started_art)"
+      }
+    },
+    {
+      "comment": "3.2 Currently on ART",
+      "type": "derived_column",
+      "alias": "on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.on_art)"
+      }
+    },
+    {
+      "comment": "3.3 TB Screening",
+      "type": "derived_column",
+      "alias": "screened_for_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.screened_for_tb)"
+      }
+    },
+    {
+      "comment": "3.4 Starting TPT",
+      "type": "derived_column",
+      "alias": "started_tpt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.started_tpt)"
+      }
+    },
+    {
+      "comment": "3.5 Differentiated Service Delivery",
+      "type": "derived_column",
+      "alias": "is_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_established)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_not_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_not_established)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_community_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_community_delivery)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_facility_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_facility_delivery)"
+      }
+    },
+    {
+      "comment": "3.7 HIV in TB Clinic",
+      "type": "derived_column",
+      "alias": "started_tb_tx",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.started_tb_tx)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_known_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.tb_known_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.tb_new_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_on_art_at_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.tb_on_art_at_diagnosis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_art_and_has_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.started_art_and_has_tb)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["location_id", "gender", "age_range", "age_group_15"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": [
+      "location_uuid",
+      "gender",
+      "age_range",
+      "age_group_15",
+      "join_location"
+    ],
+    "joinColumnParam": "joinColumnParam",
+    "disaggregationColumns": ["gender", "age_range", "age_group_15"]
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh-731-2023-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

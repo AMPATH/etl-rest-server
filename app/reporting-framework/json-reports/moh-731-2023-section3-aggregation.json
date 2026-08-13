@@ -1,0 +1,403 @@
+{
+  "name": "Moh7312023Section3Aggregation",
+  "version": "1.0",
+  "tag": "",
+  "description": "Section 3 (HIV and TB treatment) of the MOH 731 Ver. July 2023 form. Every indicator is a conditional sum over the shared row set, so the section costs one pass of the monthly dataset.",
+  "uses": [
+    {
+      "name": "Moh7312023SetBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "Moh7312023SetBase",
+      "alias": "hmsd"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "hmsd.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "hmsd.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "hmsd.location_id"
+    },
+    {
+      "comment": "3.1 Starting ART",
+      "type": "derived_column",
+      "alias": "art_new_less_1_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '0_to_1' and hmsd.gender = 'M', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_less_1_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '0_to_1' and hmsd.gender = 'F', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_1_4_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '1_to_4' and hmsd.gender = 'M', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_1_4_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '1_to_4' and hmsd.gender = 'F', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_5_9_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '5_to_9' and hmsd.gender = 'M', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_5_9_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '5_to_9' and hmsd.gender = 'F', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_10_14_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '10_to_14' and hmsd.gender = 'M', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_10_14_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '10_to_14' and hmsd.gender = 'F', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_15_19_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '15_to_19' and hmsd.gender = 'M', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_15_19_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '15_to_19' and hmsd.gender = 'F', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_20_24_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '20_to_24' and hmsd.gender = 'M', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_20_24_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '20_to_24' and hmsd.gender = 'F', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_25_above_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = 'older_than_24' and hmsd.gender = 'M', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_new_25_above_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = 'older_than_24' and hmsd.gender = 'F', hmsd.started_art, 0))"
+      }
+    },
+    {
+      "comment": "3.2 Currently on ART ([All])",
+      "type": "derived_column",
+      "alias": "on_art_less_1_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '0_to_1' and hmsd.gender = 'M', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_less_1_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '0_to_1' and hmsd.gender = 'F', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_1_4_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '1_to_4' and hmsd.gender = 'M', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_1_4_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '1_to_4' and hmsd.gender = 'F', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_5_9_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '5_to_9' and hmsd.gender = 'M', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_5_9_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '5_to_9' and hmsd.gender = 'F', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_10_14_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '10_to_14' and hmsd.gender = 'M', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_10_14_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '10_to_14' and hmsd.gender = 'F', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_15_19_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '15_to_19' and hmsd.gender = 'M', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_15_19_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '15_to_19' and hmsd.gender = 'F', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_20_24_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '20_to_24' and hmsd.gender = 'M', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_20_24_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = '20_to_24' and hmsd.gender = 'F', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_25_above_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = 'older_than_24' and hmsd.gender = 'M', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_25_above_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age_range = 'older_than_24' and hmsd.gender = 'F', hmsd.on_art, 0))"
+      }
+    },
+    {
+      "comment": "3.3 TB Screening",
+      "type": "derived_column",
+      "alias": "screened_tb_less_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age < 15, hmsd.screened_for_tb, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_tb_greater_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age >= 15, hmsd.screened_for_tb, 0))"
+      }
+    },
+    {
+      "comment": "3.4 Starting TPT",
+      "type": "derived_column",
+      "alias": "start_tpt_less_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age < 15, hmsd.started_tpt, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tpt_greater_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(hmsd.age >= 15, hmsd.started_tpt, 0))"
+      }
+    },
+    {
+      "comment": "3.5 Differentiated Service Delivery",
+      "type": "derived_column",
+      "alias": "established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_established)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_not_established)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_community_delivery)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.is_facility_delivery)"
+      }
+    },
+    {
+      "comment": "3.7 HIV in TB Clinic",
+      "type": "derived_column",
+      "alias": "start_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.started_tb_tx)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_known_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.tb_known_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.tb_new_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.tb_on_art_at_diagnosis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_tb_art_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(hmsd.started_art_and_has_tb)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": ["join_location"],
+    "joinColumnParam": "joinColumnParam",
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-frozen-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

@@ -65,12 +65,26 @@ export class MultiDatasetReport extends BaseMysqlReport {
 
     try {
       const results = await Promise.allSettled(tasks);
+      // Each result is paired with its handler before the rejected ones are
+      // dropped: filtering first would shift the surviving results onto the
+      // wrong handlers, and their rows would be read under another report's
+      // indicator names.
       const combined = results
-        .filter((res) => res.status === 'fulfilled')
         .map((res, index) => ({
           report: reportHandlers[index],
+          status: res.status,
           results: res.value
-        }));
+        }))
+        .filter((entry) => entry.status === 'fulfilled');
+      results.forEach((res, index) => {
+        if (res.status === 'rejected') {
+          console.error(
+            'Report failed:',
+            reportHandlers[index] && reportHandlers[index].reportName,
+            res.reason
+          );
+        }
+      });
       return combined;
     } catch (err) {
       throw err;

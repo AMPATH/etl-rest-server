@@ -6,6 +6,14 @@ import ReportProcessorHelpersService from './report-processor-helpers.service';
 // TODO: Move to data store
 import * as moh_731_greencard from './json-reports/moh-731-greencard.json';
 import * as moh_731_bluecard from './json-reports/moh-731-bluecard.json';
+import * as moh_731_2023 from './json-reports/moh-731-2023.json';
+import * as moh_731_2023_base from './json-reports/moh-731-2023-base.json';
+import * as moh_731_2023_section3 from './json-reports/moh-731-2023-section3-aggregation.json';
+import * as moh_731_2023_nutrition_base from './json-reports/moh-731-2023-nutrition-base.json';
+import * as moh_731_2023_nutrition from './json-reports/moh-731-2023-nutrition-aggregation.json';
+import * as moh_731_2023_section3_pl from './json-reports/moh-731-2023-section3-patientlist.json';
+import * as moh_731_2023_pl_base from './json-reports/moh-731-2023-patientlist-base.json';
+import * as moh_731_2023_pl_template from './json-reports/moh-731-2023-patient-list-template.json';
 import * as main_dataset_aggregate from './json-reports/main-dataset-aggregate.json';
 import * as main_dataset_aggregate_blue_card from './json-reports/main-dataset-aggregate-bluecard.json';
 import * as main_dataset_aggregate_age_disaggregation from './json-reports/main-dataset-aggregate-age-disaggregation';
@@ -771,6 +779,38 @@ export class BaseMysqlReport {
         case 'MOH-731-bluecard':
           resolve({
             main: this.cloneJsonSchema(moh_731_bluecard)
+          });
+          break;
+        case 'MOH-731-2023':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_2023)
+          });
+          break;
+        case 'Moh7312023Section3Aggregation':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_2023_section3),
+            Moh7312023SetBase: this.cloneJsonSchema(moh_731_2023_base)
+          });
+          break;
+        case 'moh-731-2023-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_2023_pl_template)
+          });
+          break;
+        case 'Moh7312023Section3PatientList':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_2023_section3_pl),
+            Moh7312023PatientListBase: this.cloneJsonSchema(
+              moh_731_2023_pl_base
+            )
+          });
+          break;
+        case 'Moh7312023NutritionAggregation':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_2023_nutrition),
+            Moh7312023NutritionBase: this.cloneJsonSchema(
+              moh_731_2023_nutrition_base
+            )
           });
           break;
         case 'patient-list-template':

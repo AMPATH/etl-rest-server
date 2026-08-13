@@ -1,0 +1,233 @@
+{
+  "name": "Moh7312023NutritionAggregation",
+  "version": "1.0",
+  "tag": "",
+  "description": "Section 3.6 (Nutrition and HIV) of the MOH 731 Ver. July 2023 form, counted per location.",
+  "uses": [
+    {
+      "name": "Moh7312023NutritionBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "Moh7312023NutritionBase",
+      "alias": "n"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "n.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "n.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "n.location_id"
+    },
+    {
+      "comment": "Number SAM +",
+      "type": "derived_column",
+      "alias": "has_sam_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.sam_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.sam_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.sam_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.sam_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.sam_18_and_above_years)"
+      }
+    },
+    {
+      "comment": "Number MAM +",
+      "type": "derived_column",
+      "alias": "has_smm_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.mam_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.mam_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.mam_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.mam_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(n.mam_18_and_above_years)"
+      }
+    },
+    {
+      "comment": "Number SAM + receiving therapeutic foods",
+      "type": "derived_column",
+      "alias": "severe_acute_supp_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.sam_0_5_months = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.sam_6_59_months = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.sam_5_9_years = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.sam_10_17_years = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.sam_18_and_above_years = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "comment": "Number MAM + receiving supplemental foods",
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.mam_0_5_months = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.mam_6_59_months = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.mam_5_9_years = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.mam_10_17_years = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "sum(if(n.mam_18_and_above_years = 1 and n.has_supplement = 1, 1, 0))"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": ["join_location"],
+    "joinColumnParam": "joinColumnParam",
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh-731-2023-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

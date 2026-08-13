@@ -52,6 +52,7 @@ import { patientMedicationHistService } from './service/patient-medication-histo
 import { PatientMedicalHistoryService } from './service/patient-medical-history.service';
 
 import { Moh731Report } from './app/reporting-framework/hiv/moh-731.report';
+import { Moh7312023Report } from './app/reporting-framework/hiv/moh-731-2023.report';
 import { BreastCancerMonthlySummaryService } from './service/breast-cancer-monthly-summary.service';
 import { CervicalCancerMonthlySummaryService } from './service/cervical-cancer-monthly-summary.service';
 
