@@ -713,6 +713,10 @@ import * as nutrition_mam_aggregate3x from './json-reports/moh-731/aggregations/
 import * as nutrition_mam_base3x from './json-reports/moh-731/aggregations/nutrition-mam-base.json';
 import * as moh_366_patient_list_template from './json-reports/moh-731/moh-366-patient-list.json';
 import * as prep_patient_list_template from './json-reports/moh-731/prep-patient-list.json';
+import * as claims_summary_base from './json-reports/claims-summary/claims-summary-base.json';
+import * as claims_summary_aggregate from './json-reports/claims-summary/claims-summary-aggregate.json';
+import * as claims_summary_patient_list_template from './json-reports/claims-summary/claim-summary-patient-list-template.json';
+import * as claims_summary from './json-reports/claims-summary/claims-summary.json';
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -3159,6 +3163,22 @@ export class BaseMysqlReport {
         case 'prep_patient_list_template':
           resolve({
             main: this.cloneJsonSchema(prep_patient_list_template)
+          });
+          break;
+        case 'claimsSummary':
+          resolve({
+            main: this.cloneJsonSchema(claims_summary)
+          });
+          break;
+        case 'claimsSummaryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(claims_summary_aggregate),
+            claimsSummaryBase: this.cloneJsonSchema(claims_summary_base)
+          });
+          break;
+        case 'claim_summary_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(claims_summary_patient_list_template)
           });
           break;
         default:

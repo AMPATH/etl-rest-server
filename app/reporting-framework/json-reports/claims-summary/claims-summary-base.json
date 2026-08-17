@@ -1,0 +1,135 @@
+{
+  "name": "claimsSummaryBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "hie.claim_visit",
+      "alias": "cv"
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pi.identifier = cv.patient_id AND pi.voided = 0 AND pi.identifier_type = 55"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = pi.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pn.person_id = p.person_id AND pn.voided = 0 AND pn.preferred = 1"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "pi.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cr_id",
+      "column": "cv.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE())"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patient_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "draft",
+      "column": "if(cv.provider_status = 'DRAFT', 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "submitted",
+      "column": "if(cv.provider_status = 'SUBMITTED', 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "failed_to_submmit",
+      "column": "if(cv.provider_status = 'FAILED_TO_SUBMIT' , 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "closed",
+      "column": "if(cv.provider_status = 'CLOSED', 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "approved",
+      "column": "if(cv.provider_status = 'SUBMITTED' AND cv.payer_status = 'APPROVED', 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rejected",
+      "column": "if(cv.provider_status = 'SUBMITTED' AND cv.payer_status = 'REJECTED', 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "in_review",
+      "column": "if(cv.provider_status = 'SUBMITTED' AND cv.payer_status = 'MANUAL_REVIEW', 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sent_back",
+      "column": "if(cv.provider_status = 'SUBMITTED' AND cv.payer_status = 'SENT_BACK', 1, null)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "paid",
+      "column": "if(cv.provider_status = 'SUBMITTED' AND cv.payer_status = 'PAID', 1, null)"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(cv.visit_start) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(cv.visit_start) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "cv.location_uuid in ?",
+        "parameterName": "locations"
+      }
+    ]
+  }
+}

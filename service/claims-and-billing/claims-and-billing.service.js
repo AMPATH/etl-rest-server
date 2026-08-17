@@ -15,6 +15,7 @@ function getFacilityBills(locationUuid, billingDate) {
     l.uuid as 'location_uuid',
     v.patient_id,
     cb.status AS 'paid_status',
+    cv.provider_status as claim_status,
     UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
@@ -39,6 +40,7 @@ FROM
     amrs.patient_identifier cr ON (cr.patient_id = p.person_id
         AND cr.identifier_type = 55
         AND cr.voided = 0)
+      JOIN hie.claim_visit cv ON cv.patient_id = cr.identifier AND DATE(cv.visit_start) = DATE(v.date_started)
         LEFT JOIN
     amrs.patient_identifier id ON (id.patient_id = p.person_id
         AND id.identifier_type = 5
@@ -1004,6 +1006,136 @@ GROUP BY b.diagnosis_coded;`;
   });
 }
 
+function getPatientVisits(locationUuid, billingDate, patientUuid) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  if (!billingDate) {
+    throw new Error('Billing Date not defined');
+  }
+  if (!patientUuid) {
+    throw new Error('PatientUuid not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `
+    select
+      v.visit_id,
+      v.patient_id,
+      v.date_started,
+      v.uuid as visit_uuid,
+      vt.name as visit_type,
+      va.value_reference as consent_token
+      from 
+      amrs.visit v
+      JOIN amrs.visit_type vt ON vt.visit_type_id = v.visit_type_id
+      JOIN amrs.location l ON l.location_id = v.location_id
+      JOIN amrs.person p ON p.person_id = v.patient_id AND p.voided = 0
+      LEFT JOIN amrs.visit_attribute va ON va.visit_id = v.visit_id AND va.attribute_type_id = 9
+      WHERE
+      DATE(v.date_started) = DATE('${billingDate}')
+      AND p.uuid = '${patientUuid}'
+      AND l.uuid = '${locationUuid}'
+      AND v.voided = 0
+      GROUP BY v.visit_id
+    `;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
+function getPatientVisitBills(visitUuid) {
+  if (!visitUuid) {
+    throw new Error('visitUuid not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `
+    SELECT 
+    cb.uuid as bill_uuid,
+    cb.receipt_number,
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    cp.name AS cash_point,
+    DATE_FORMAT(cb.date_created, '%Y-%m-%d %H:%i') AS bill_date,
+    cb.status AS paid_status,
+    p.uuid AS patient_uuid,
+    cbl.bill_line_item_id,
+    cbs.name AS billable_service,
+    cbl.price AS item_price,
+    UPPER(cbl.price_name) AS payment_scheme,
+    cbl.status,
+    cbl.quantity AS item_quantity,
+    (cbl.price * cbl.quantity) AS item_total_price,
+    cbl.uuid as cashier_bill_line_item_uuid,
+    cbl.date_created as bill_item_time,
+    cr.identifier as cr_no,
+    u.identifier as amrs_universal_id,
+    bo.intervention_code,
+    bo.consent_token,
+    bo.order_no,
+    bo.service_type,
+    CASE
+      WHEN cl.id IS NOT NULL AND clr.id IS NULL THEN 1
+      ELSE 0
+    END AS has_claim_line
+FROM
+amrs.visit v
+	 JOIN
+    amrs.cashier_bill cb ON cb.visit_id = v.visit_id
+        INNER JOIN
+    amrs.cashier_cash_point cp ON (cp.cash_point_id = cb.cash_point_id)
+        INNER JOIN
+    amrs.location l ON (l.location_id = cp.location_id)
+        LEFT JOIN
+    amrs.person p ON (p.person_id = cb.patient_id
+        AND p.voided = 0)
+        LEFT JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.cashier_bill_line_item cbl ON (cbl.bill_id = cb.bill_id)
+        LEFT JOIN
+    amrs.cashier_billable_service cbs ON (cbs.service_id = cbl.service_id)
+         LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier u ON (u.patient_id = p.person_id
+        AND u.identifier_type = 8
+        AND u.voided = 0)
+        LEFT JOIN
+    hie.bill_orders bo ON (bo.line_item_uuid = cbl.uuid)
+        LEFT JOIN
+    hie.claim_line cl ON (cl.consent_token COLLATE utf8mb4_unicode_ci = bo.consent_token
+        AND cl.intervention_code COLLATE utf8mb4_unicode_ci = bo.intervention_code)
+        LEFT JOIN
+    hie.claim_line clr ON (cl.consent_token = clr.consent_token
+        AND cl.intervention_code = clr.intervention_code AND clr.claim_line_action = 'REMOVE')
+WHERE
+    cb.voided = 0
+         AND v.uuid = '${visitUuid}'
+        AND cbl.voided = 0
+group by cbl.uuid
+ORDER BY cb.date_created asc;
+
+    `;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
 module.exports = {
   getFacilityBills,
   getPatientFacilityBillDetails,
@@ -1017,5 +1149,7 @@ module.exports = {
   getActiveCashVisits,
   getAllBills,
   getPendingBillLineItems,
-  getPatientEncounterDiagnosis
+  getPatientEncounterDiagnosis,
+  getPatientVisits,
+  getPatientVisitBills
 };

@@ -11,7 +11,9 @@ import {
   getActiveCashVisits,
   getAllBills,
   getPendingBillLineItems,
-  getPatientEncounterDiagnosis
+  getPatientEncounterDiagnosis,
+  getPatientVisits,
+  getPatientVisitBills
 } from '../../service/claims-and-billing/claims-and-billing.service';
 var Boom = require('boom');
 const routes = [
@@ -45,22 +47,13 @@ const routes = [
     path: '/etl/facility/patient/bill',
     config: {
       handler: async function (request, reply) {
-        if (
-          !request.query.locationUuid ||
-          !request.query.billingDate ||
-          !request.query.patientUuid
-        ) {
-          throw new Error('Missing location,billing params');
+        if (!request.query.visitUuid) {
+          throw new Error('Missing visitUuid params');
         }
-        const locationUuid = request.query.locationUuid ?? null;
-        const billingDate = request.query.billingDate ?? null;
-        const patientUuid = request.query.patientUuid ?? null;
+
+        const visitUuid = request.query.visitUuid ?? null;
         try {
-          const results = await getPatientFacilityBillDetails(
-            locationUuid,
-            billingDate,
-            patientUuid
-          );
+          const results = await getPatientVisitBills(visitUuid);
           reply({
             results: results
           });
@@ -387,6 +380,41 @@ const routes = [
       description: 'Get Patient encounter diagnosis',
       notes:
         'Returns a patients encounter disgnosis and doctor who filled the form',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/patient/patient-visits',
+    config: {
+      handler: async function (request, reply) {
+        if (
+          !request.query.billingDate ||
+          !request.query.patientUuid ||
+          !request.query.locationUuid
+        ) {
+          throw new Error('Missing patientId,billingDate,locationUuid params');
+        }
+        const billingDate = request.query.billingDate ?? null;
+        const patientUuid = request.query.patientUuid ?? null;
+        const locationUuid = request.query.locationUuid ?? null;
+        try {
+          const results = await getPatientVisits(
+            locationUuid,
+            billingDate,
+            patientUuid
+          );
+          reply({
+            results: results
+          });
+        } catch (error) {
+          console.log({ error });
+          reply(Boom.badRequest());
+        }
+      },
+      description: 'Get Patient visits',
+      notes: 'Returns patient visits for a given date',
       tags: ['api'],
       validate: {}
     }

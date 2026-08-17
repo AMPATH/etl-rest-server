@@ -1,0 +1,113 @@
+{
+  "name": "claimsSummaryAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "claimsSummaryBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "claimsSummaryBase",
+      "alias": "csb"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "draft",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.draft)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "submitted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.submitted)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "failed_to_submmit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.failed_to_submmit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "closed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.closed)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "approved",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.approved)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rejected",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.rejected)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "in_review",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.in_review)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sent_back",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.sent_back)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "paid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(csb.paid)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "patient_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "claim_summary_patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
