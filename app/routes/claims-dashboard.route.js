@@ -36,8 +36,6 @@ const routes = [
               reportParams.requestParams
             );
 
-            console.log('REPORT PARAMS', reportParams.requestParams);
-
             claimsSummaryService
               .generateReport(reportParams.requestParams)
               .then((result) => {
@@ -84,7 +82,7 @@ const routes = [
               requestParams
             );
 
-            // let requestCopy = _.cloneDeep(requestParams);
+            let requestCopy = _.cloneDeep(requestParams);
 
             let claimsSummaryService = new ClaimsDashboardSummaryService(
               'claimsSummary',

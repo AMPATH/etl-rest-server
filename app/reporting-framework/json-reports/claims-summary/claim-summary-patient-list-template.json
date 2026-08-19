@@ -5,8 +5,16 @@
   "description": "Claim Summary Patient list template",
   "sources": [
     {
+      "table": "amrs.patient_identifier",
+      "alias": "identifier"
+    },
+    {
       "table": "amrs.person",
-      "alias": "t1"
+      "alias": "t1",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "t1.person_id = identifier.patient_id AND t1.voided = 0"
+      }
     },
     {
       "table": "amrs.person_name",

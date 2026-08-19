@@ -105,7 +105,7 @@
           "joinType": "INNER",
           "joinCondition": "<<base_column>> = <<template_column>>",
           "baseColumn": "patient_id",
-          "templateColumn": "person_id"
+          "templateColumn": "identifier"
         }
       }
     }
