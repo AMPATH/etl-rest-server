@@ -32,6 +32,14 @@
         "type": "INNER",
         "joinCondition": "pn.person_id = p.person_id AND pn.voided = 0 AND pn.preferred = 1"
       }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.uuid = cv.location_uuid AND l.retired = 0"
+      }
     }
   ],
   "columns": [
@@ -127,7 +135,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "cv.location_uuid in ?",
+        "conditionExpression": "l.location_id in ?",
         "parameterName": "locations"
       }
     ]

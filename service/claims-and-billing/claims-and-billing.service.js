@@ -1083,7 +1083,8 @@ function getPatientVisitBills(visitUuid) {
     CASE
       WHEN cl.id IS NOT NULL AND clr.id IS NULL THEN 1
       ELSE 0
-    END AS has_claim_line
+    END AS has_claim_line,
+    cb.receipt_number
 FROM
 amrs.visit v
 	 JOIN
