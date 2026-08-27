@@ -40,7 +40,7 @@ FROM
     amrs.patient_identifier cr ON (cr.patient_id = p.person_id
         AND cr.identifier_type = 55
         AND cr.voided = 0)
-      JOIN hie.claim_visit cv ON cv.patient_id = cr.identifier AND DATE(cv.visit_start) = DATE(v.date_started)
+      LEFT JOIN hie.claim_visit cv ON cv.patient_id = cr.identifier AND DATE(cv.visit_start) = DATE(v.date_started)
         LEFT JOIN
     amrs.patient_identifier id ON (id.patient_id = p.person_id
         AND id.identifier_type = 5
