@@ -371,6 +371,46 @@
       "eidId": 8,
       "eidDisplay": "No Data",
       "mrsDisplay": ""
+    },
+    "": {
+      "eidId": 9,
+      "eidDisplay": "Breast Feeding Mothers",
+      "mrsDisplay": ""
+    },
+    "3966e139-ca69-47c6-aad3-ebd41bb45e28": {
+      "eidId": 10,
+      "eidDisplay": "Baseline",
+      "mrsDisplay": ""
+    },
+    "42cdefa2-c306-4d10-a819-c04131c4934e": {
+      "eidId": 11,
+      "eidDisplay": "Confirmation of Persistent Low Level Viremia (PLLV)",
+      "mrsDisplay": ""
+    },
+    "92a2818f-662c-4dbc-aa20-d9f4edec2654": {
+      "eidId": 12,
+      "eidDisplay": "Recency",
+      "mrsDisplay": ""
+    },
+    "d7a8dd98-d5de-4774-823a-a8ab06134d63": {
+      "eidId": 13,
+      "eidDisplay": "1ST VL",
+      "mrsDisplay": ""
+    },
+    "a8a4812e-1350-11df-a1f1-0026b9348838": {
+      "eidId": 14,
+      "eidDisplay": "Follow up",
+      "mrsDisplay": ""
+    },
+    "635f446c-bab9-428a-9930-ae4f46363c0c": {
+      "eidId": 15,
+      "eidDisplay": "PMTCT NP",
+      "mrsDisplay": ""
+    },
+    "e883376e-80cb-4ec7-a958-f0fbc0a0bad3": {
+      "eidId": 16,
+      "eidDisplay": "PMTCT KP",
+      "mrsDisplay": ""
     }
   },
   "dnaPcrEntryPoint": {
