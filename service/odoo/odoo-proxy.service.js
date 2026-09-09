@@ -107,18 +107,55 @@ function listOrders(filters) {
  * @param {string} [filters.lot_name]
  */
 function getInventoryStock(filters) {
+  return inventoryGet('/ampath/inventory/stock', filters);
+}
+
+/**
+ * Fetch lot/batch list for a drug at an OpenMRS location's warehouse.
+ * Calls GET /ampath/inventory/batches
+ *
+ * @param {object} filters
+ * @param {string} filters.openmrs_drug_uuid
+ * @param {string} filters.company_external_id
+ * @param {string} [filters.lot_name]
+ */
+function getInventoryBatches(filters) {
+  return inventoryGet('/ampath/inventory/batches', filters);
+}
+
+/**
+ * Fetch quantity available (on-hand + free) for a drug.
+ * Calls GET /ampath/inventory/quantity
+ *
+ * @param {object} filters
+ * @param {string} filters.openmrs_drug_uuid
+ * @param {string} filters.company_external_id
+ */
+function getInventoryQuantity(filters) {
+  return inventoryGet('/ampath/inventory/quantity', filters, {
+    includeLotName: false
+  });
+}
+
+/**
+ * @param {string} path
+ * @param {object} filters
+ * @param {{ includeLotName?: boolean }} [options]
+ */
+function inventoryGet(path, filters, options) {
   var odooConfig = getOdooConfig();
+  var includeLotName = !options || options.includeLotName !== false;
   var qs = {};
   if (filters) {
     if (filters.openmrs_drug_uuid)
       qs.openmrs_drug_uuid = filters.openmrs_drug_uuid;
     if (filters.company_external_id)
       qs.company_external_id = filters.company_external_id;
-    if (filters.lot_name) qs.lot_name = filters.lot_name;
+    if (includeLotName && filters.lot_name) qs.lot_name = filters.lot_name;
   }
   return rp({
     method: 'GET',
-    uri: odooConfig.host + '/ampath/inventory/stock',
+    uri: odooConfig.host + path,
     qs: qs,
     headers: authHeaders(odooConfig),
     json: true,
@@ -144,10 +181,32 @@ function dispenseInventory(body) {
   });
 }
 
+/**
+ * Reverse a prior dispense keyed by openmrs_order_id.
+ * Calls POST /ampath/inventory/reverse
+ *
+ * @param {object} body
+ * @param {string} body.openmrs_order_id
+ */
+function reverseInventory(body) {
+  var odooConfig = getOdooConfig();
+  return rp({
+    method: 'POST',
+    uri: odooConfig.host + '/ampath/inventory/reverse',
+    headers: authHeaders(odooConfig),
+    body: body || {},
+    json: true,
+    rejectUnauthorized: false
+  });
+}
+
 module.exports = {
   getBillingByPatient: getBillingByPatient,
   getBillingByOrder: getBillingByOrder,
   listOrders: listOrders,
   getInventoryStock: getInventoryStock,
-  dispenseInventory: dispenseInventory
+  getInventoryBatches: getInventoryBatches,
+  getInventoryQuantity: getInventoryQuantity,
+  dispenseInventory: dispenseInventory,
+  reverseInventory: reverseInventory
 };
