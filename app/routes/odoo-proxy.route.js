@@ -9,6 +9,16 @@ function handleError(err, reply) {
   reply({ error: message }).code(statusCode);
 }
 
+var inventoryStockQuery = {
+  openmrs_drug_uuid: Joi.string()
+    .required()
+    .description('OpenMRS drug UUID (init.<uuid> product external ID)'),
+  company_external_id: Joi.string()
+    .required()
+    .description('OpenMRS order location UUID'),
+  lot_name: Joi.string().optional().description('Optional lot name filter')
+};
+
 var routes = [
   {
     method: 'GET',
@@ -156,6 +166,67 @@ var routes = [
         'Get Odoo on-hand stock for a drug at an OpenMRS location warehouse',
       notes:
         'Proxies to Odoo GET /ampath/inventory/stock. ' +
+        'Returns qty_available, free_qty, and lots. ' +
+        'company_external_id should be the OpenMRS order location UUID.',
+      tags: ['api', 'odoo', 'inventory'],
+      validate: {
+        options: { allowUnknown: true },
+        query: inventoryStockQuery
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/odoo/inventory/batches',
+    config: {
+      handler: function (request, reply) {
+        var q = request.query;
+        odooProxyService
+          .getInventoryBatches({
+            openmrs_drug_uuid: q.openmrs_drug_uuid,
+            company_external_id: q.company_external_id,
+            lot_name: q.lot_name
+          })
+          .then(function (result) {
+            reply(result);
+          })
+          .catch(function (err) {
+            handleError(err, reply);
+          });
+      },
+      description: 'Get Odoo lot/batch list for a drug at a warehouse',
+      notes:
+        'Proxies to Odoo GET /ampath/inventory/batches. ' +
+        'company_external_id should be the OpenMRS order location UUID.',
+      tags: ['api', 'odoo', 'inventory'],
+      validate: {
+        options: { allowUnknown: true },
+        query: inventoryStockQuery
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/odoo/inventory/quantity',
+    config: {
+      handler: function (request, reply) {
+        var q = request.query;
+        odooProxyService
+          .getInventoryQuantity({
+            openmrs_drug_uuid: q.openmrs_drug_uuid,
+            company_external_id: q.company_external_id
+          })
+          .then(function (result) {
+            reply(result);
+          })
+          .catch(function (err) {
+            handleError(err, reply);
+          });
+      },
+      description: 'Get Odoo quantity available for a drug at a warehouse',
+      notes:
+        'Proxies to Odoo GET /ampath/inventory/quantity. ' +
+        'Returns qty_available and free_qty. ' +
         'company_external_id should be the OpenMRS order location UUID.',
       tags: ['api', 'odoo', 'inventory'],
       validate: {
@@ -163,13 +234,10 @@ var routes = [
         query: {
           openmrs_drug_uuid: Joi.string()
             .required()
-            .description('OpenMRS drug UUID (product x_openmrs_drug_uuid)'),
+            .description('OpenMRS drug UUID (init.<uuid> product external ID)'),
           company_external_id: Joi.string()
             .required()
-            .description('OpenMRS order location UUID'),
-          lot_name: Joi.string()
-            .optional()
-            .description('Optional lot name filter')
+            .description('OpenMRS order location UUID')
         }
       }
     }
@@ -205,6 +273,33 @@ var routes = [
           patient_external_id: Joi.string().optional().allow(null, ''),
           lot_id: Joi.number().integer().optional().allow(null),
           uom_name: Joi.string().optional().allow(null, '')
+        })
+      }
+    }
+  },
+  {
+    method: 'POST',
+    path: '/etl/odoo/inventory/reverse',
+    config: {
+      handler: function (request, reply) {
+        odooProxyService
+          .reverseInventory(request.payload)
+          .then(function (result) {
+            reply(result);
+          })
+          .catch(function (err) {
+            handleError(err, reply);
+          });
+      },
+      description: 'Reverse a prior Odoo inventory dispense',
+      notes:
+        'Proxies to Odoo POST /ampath/inventory/reverse. ' +
+        'Keyed by openmrs_order_id (MedicationDispense UUID).',
+      tags: ['api', 'odoo', 'inventory'],
+      validate: {
+        options: { allowUnknown: true },
+        payload: Joi.object({
+          openmrs_order_id: Joi.string().required()
         })
       }
     }
