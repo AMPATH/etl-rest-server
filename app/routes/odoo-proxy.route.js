@@ -234,9 +234,7 @@ var routes = [
         query: {
           openmrs_drug_uuid: Joi.string()
             .required()
-            .description(
-              'OpenMRS drug UUID (init.<uuid> product external ID)'
-            ),
+            .description('OpenMRS drug UUID (init.<uuid> product external ID)'),
           company_external_id: Joi.string()
             .required()
             .description('OpenMRS order location UUID')
