@@ -995,7 +995,7 @@ FROM
             AND ed.voided = 0
             AND crs.uuid = '${icd11SourceUuid}'
             AND pat.uuid IN ('${providerNationalIdUuid}' , '${providerSpecialityUuid}')) b
-GROUP BY b.diagnosis_coded;`;
+GROUP BY b.encounter_id;`;
     const queryParts = {
       sql: sql
     };
@@ -1066,7 +1066,7 @@ function getPatientVisitBills(visitUuid) {
     cb.status AS paid_status,
     p.uuid AS patient_uuid,
     cbl.bill_line_item_id,
-    cbs.name AS billable_service,
+    coalesce(cbs.name, cbd.name, '') AS billable_service,
     cbl.price AS item_price,
     UPPER(cbl.price_name) AS payment_scheme,
     cbl.status,
@@ -1103,6 +1103,8 @@ amrs.visit v
     amrs.cashier_bill_line_item cbl ON (cbl.bill_id = cb.bill_id)
         LEFT JOIN
     amrs.cashier_billable_service cbs ON (cbs.service_id = cbl.service_id)
+    LEFT JOIN 
+	amrs.cashier_billable_drug cbd ON (cbd.billable_drug_id = cbl.billable_drug_id)
          LEFT JOIN
     amrs.patient_identifier cr ON (cr.patient_id = p.person_id
         AND cr.identifier_type = 55
