@@ -54,6 +54,12 @@ function getAdmissionRequests(locationUuid) {
     throw new Error('Location not defined');
   }
   return new Promise((resolve, reject) => {
+    const ADMISSSION_LOCATION_CONCEPT_UUID =
+      'b9cd9e47-da43-4a46-8f3c-e30ec9209cc7';
+    const INPATIENT_PATIENT_DISPOSITION_CONCEPT_UUID =
+      'ce085d74-323c-4c9a-9fdf-051de81dd020';
+    const ADMIT_TO_HOSPITAL_CONCEPT_UUID =
+      '77eafb3f-58d3-4397-a6dc-d2c06e9062f3';
     const sql = `SELECT 
     obs.obs_datetime AS 'admission_request_date',
     l.name AS 'admission_location',
@@ -71,9 +77,15 @@ function getAdmissionRequests(locationUuid) {
 FROM
     amrs.obs obs
         JOIN
+    amrs.concept obs_concept ON (obs.concept_id = obs_concept.concept_id)
+        JOIN
+    amrs.concept concept_value_coded ON (obs.value_coded = concept_value_coded.concept_id)
+        JOIN
     amrs.obs al ON (obs.obs_group_id = al.obs_group_id
-        AND al.concept_id = 12659
         AND obs.voided = 0)
+        JOIN
+    amrs.concept alc ON (al.concept_id = alc.concept_id
+        AND alc.uuid = '${ADMISSSION_LOCATION_CONCEPT_UUID}')
         JOIN
     amrs.encounter re ON (re.encounter_id = obs.encounter_id)
         JOIN
@@ -91,7 +103,8 @@ FROM
         LEFT JOIN
     amrs.encounter ae ON (ae.encounter_type = 318
         AND ae.encounter_datetime > obs.obs_datetime
-        AND ae.voided = 0 AND ae.patient_id = obs.person_id)
+        AND ae.voided = 0
+        AND ae.patient_id = obs.person_id)
         LEFT JOIN
     amrs.encounter ce ON (ce.encounter_type = 323
         AND ce.encounter_datetime > obs.obs_datetime
@@ -106,13 +119,13 @@ FROM
         AND id.identifier_type = 5
         AND id.voided = 0)
 WHERE
-    obs.concept_id = 12658
-        AND obs.value_coded = 12797
+    obs_concept.uuid = '${INPATIENT_PATIENT_DISPOSITION_CONCEPT_UUID}'
+        AND concept_value_coded.uuid = '${ADMIT_TO_HOSPITAL_CONCEPT_UUID}'
         AND obs.voided = 0
         AND l.uuid = '${locationUuid}'
         AND ae.encounter_id IS NULL
         AND ce.encounter_id IS NULL
-        group by obs.person_id;`;
+GROUP BY obs.person_id;`;
     const queryParts = {
       sql: sql
     };
