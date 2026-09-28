@@ -4,6 +4,9 @@ var db = require('../etl-db'),
   config = require('../conf/config'),
   moment = require('moment'),
   curl = require('curlrequest');
+const {
+  isEidSyncAllowed
+} = require('../app/lab-integration/utils/eid-sync-guard');
 
 var Sync = {
   timeout: 3000,
@@ -15,6 +18,13 @@ var Sync = {
   processing: false,
 
   start: function () {
+    if (!isEidSyncAllowed()) {
+      console.log(
+        '[EID] Background sync disabled — NODE_ENV is not production or eidSyncOn is false'
+      );
+      return;
+    }
+
     console.log('Starting EID sync');
     if (!config.eidSyncCredentials) {
       console.log('openmrs sync user credentials should be provided');
@@ -120,7 +130,8 @@ var Sync = {
       ':' +
       config.etl.port +
       '/etl/patient-lab-orders?patientUuId=' +
-      patientUuId;
+      patientUuId +
+      '&mode=background';
 
     var usernamePass =
       config.eidSyncCredentials.username +
