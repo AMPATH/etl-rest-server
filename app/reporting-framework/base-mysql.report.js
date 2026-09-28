@@ -9,6 +9,8 @@ import * as moh_731_bluecard from './json-reports/moh-731-bluecard.json';
 import * as moh_731_2023 from './json-reports/moh-731-2023.json';
 import * as moh_731_2023_base from './json-reports/moh-731-2023-base.json';
 import * as moh_731_2023_section3 from './json-reports/moh-731-2023-section3-aggregation.json';
+import * as moh_731_2023_prep from './json-reports/moh-731-2023-prep-aggregation.json';
+import * as moh_731_2023_prep_base from './json-reports/moh-731-2023-prep-base.json';
 import * as moh_731_2023_nutrition_base from './json-reports/moh-731-2023-nutrition-base.json';
 import * as moh_731_2023_nutrition from './json-reports/moh-731-2023-nutrition-aggregation.json';
 import * as moh_731_2023_section3_pl from './json-reports/moh-731-2023-section3-patientlist.json';
@@ -777,6 +779,15 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(moh_731_2023_section3),
             Moh7312023SetBase: this.cloneJsonSchema(moh_731_2023_base)
+          });
+          break;
+        case 'Moh7312023PrepAggregation':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_2023_prep),
+            Moh7312023PrepBase: this.cloneJsonSchema(moh_731_2023_prep_base),
+            prepLatestClinicalEncounterDate: this.cloneJsonSchema(
+              prep_latest_clinical_encounter_date_base
+            )
           });
           break;
         case 'moh-731-2023-patient-list-template':

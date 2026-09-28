@@ -12,7 +12,7 @@
   ],
   "sources": [
     {
-      "table": "etl.prep_monthly_report_dataset",
+      "table": "<<prepMonthlyDatasetSource>>",
       "alias": "prep"
     },
     {
