@@ -107,6 +107,16 @@
       "column": "flat_identifiers.nupi"
     },
     {
+      "type": "simple_column",
+      "alias": "cr_id",
+      "column": "flat_identifiers.cr_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sha_id",
+      "column": "flat_identifiers.sha_id"
+    },
+    {
       "type": "derived_column",
       "alias": "not_virally_suppressed_in_enhanced_care_active",
       "expressionType": "simple_expression",

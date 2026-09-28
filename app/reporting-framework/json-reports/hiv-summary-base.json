@@ -80,6 +80,16 @@
       "column": "flat_identifiers.nupi"
     },
     {
+      "type": "simple_column",
+      "alias": "cr_id",
+      "column": "flat_identifiers.cr_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sha_id",
+      "column": "flat_identifiers.sha_id"
+    },
+    {
       "type": "derived_column",
       "alias": "on_tdf_3tc_efv_400",
       "expressionType": "simple_expression",

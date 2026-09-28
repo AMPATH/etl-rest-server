@@ -111,6 +111,16 @@
     },
     {
       "type": "simple_column",
+      "alias": "cr_id",
+      "column": "flat_identifiers.cr_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sha_id",
+      "column": "flat_identifiers.sha_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "who_stage",
       "column": "fh.cur_who_stage"
     },

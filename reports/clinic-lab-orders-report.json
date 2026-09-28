@@ -208,6 +208,16 @@
         "sql": "flat_identifiers.nupi"
       },
       {
+        "type": "single",
+        "label": "cr_id",
+        "sql": "flat_identifiers.cr_id"
+      },
+      {
+        "type": "single",
+        "label": "sha_id",
+        "sql": "flat_identifiers.sha_id"
+      },
+      {
         "label": "order_type",
         "type": "single",
         "sql": "t1.concept_id"
