@@ -963,9 +963,16 @@ FROM
             NULL AS concept_id,
             ed.diagnosis_coded,
             ed.dx_rank,
+            ed.diagnosis_id,
+            case
+                WHEN ed.dx_rank = 1 then 'IMPRESSION'
+                WHEN ed.dx_rank = 2 then 'PRIMARY DIAGNOSIS'
+                ELSE null
+            end as 'diagnosis_type',
             crs.name AS 'concept_source_name',
             crs.hl7_code,
             crt.code AS icd11_code,
+            cn.name as 'concept_name',
             ep.provider_id,
             CASE
                 WHEN pat.uuid = '${providerNationalIdUuid}' THEN pa.value_reference
@@ -975,7 +982,8 @@ FROM
                 WHEN pat.uuid = '${providerSpecialityUuid}' THEN pa.value_reference
                 ELSE NULL
             END AS speciality,
-            pat.uuid
+            pat.uuid,
+            CONCAT(provider_name.given_name,' ',provider_name.middle_name,' ', provider_name.family_name) as 'provider_name'
     FROM
         amrs.encounter_diagnosis ed
     JOIN amrs.encounter e ON (ed.encounter_id = e.encounter_id
@@ -984,6 +992,7 @@ FROM
     JOIN amrs.location l ON (e.location_id = l.location_id)
     JOIN amrs.encounter_type et ON (et.encounter_type_id = e.encounter_type)
     JOIN amrs.concept vc ON (vc.concept_id = ed.diagnosis_coded)
+    JOIN amrs.concept_name cn on (vc.concept_id = cn.concept_id AND cn.voided = 0 AND cn.locale_preferred = 1)
     JOIN amrs.concept_reference_map crm ON (crm.concept_id = vc.concept_id)
     JOIN amrs.concept_reference_term crt ON (crm.concept_reference_term_id = crt.concept_reference_term_id)
     JOIN amrs.concept_reference_source crs ON (crs.concept_source_id = crt.concept_source_id)
@@ -991,6 +1000,8 @@ FROM
     LEFT JOIN amrs.provider_attribute pa ON (pa.provider_id = ep.provider_id
         AND pa.voided = 0)
     LEFT JOIN amrs.provider_attribute_type pat ON (pat.provider_attribute_type_id = pa.attribute_type_id)
+    LEFT join amrs.provider pr on (ep.provider_id = pr.provider_id)
+    LEFT join amrs.person_name provider_name on (provider_name.person_id = pr.person_id AND provider_name.preferred = 1 and provider_name.voided = 0)
     WHERE
         p.uuid = '${patientUuid}'
             AND DATE(e.encounter_datetime) >= DATE('${visitDate}')
@@ -998,7 +1009,7 @@ FROM
             AND ed.voided = 0
             AND crs.uuid = '${icd11SourceUuid}'
             AND pat.uuid IN ('${providerNationalIdUuid}' , '${providerSpecialityUuid}')) b
-GROUP BY b.encounter_id;`;
+GROUP BY b.diagnosis_id;`;
     const queryParts = {
       sql: sql
     };
