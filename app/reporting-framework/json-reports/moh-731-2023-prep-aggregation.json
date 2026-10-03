@@ -1,0 +1,277 @@
+{
+  "name": "Moh7312023PrepAggregation",
+  "version": "1.0",
+  "tag": "",
+  "description": "PrEP boxes (1.3, 1.4, 1.5) of the MOH 731 Ver. July 2023 form, summed per location. Shaped like the section 3 aggregation so the report can fold both onto the same location row. Each sum is coalesced to 0: a box that was counted and found nothing reads 0, which is what the form asks for, and is told apart from a box this build does not compute, which stays blank.",
+  "uses": [
+    {
+      "name": "Moh7312023PrepBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "Moh7312023PrepBase",
+      "alias": "pb"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "join_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "1"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "pb.location_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "pb.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "pb.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_male_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_male_general_pop), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_female_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_female_general_pop), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_msm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_msm), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_fsw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_fsw), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_pwud_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_pwud_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_pwud_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_pwud_female), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_discordant_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_discordant_female), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_vulnerable_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_vulnerable_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_vulnerable_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_vulnerable_female), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_ayp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_ayp), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_preg_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_new_preg_breastfeeding), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_male_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_male_general_pop), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_female_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_female_general_pop), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_msm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_msm), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_fsw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_fsw), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_pwud_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_pwud_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_pwud_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_pwud_female), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_discordant_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_discordant_female), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_vulnerable_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_vulnerable_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_vulnerable_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_vulnerable_female), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_ayp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_ayp), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_preg_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.prep_sti_preg_breastfeeding), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.seroconverted_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(SUM(pb.seroconverted_female), 0)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": ["join_location"],
+    "joinColumnParam": "joinColumnParam",
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "prep-report-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

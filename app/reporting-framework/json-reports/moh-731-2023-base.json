@@ -129,12 +129,12 @@
       "column": "hmsd.started_ipt_this_month"
     },
     {
-      "comment": "3.5 Differentiated service delivery, off the categorization model",
+      "comment": "3.5 Differentiated Service Delivery. Scoped to those on ART this month, the same population the 3.2 On ART boxes count, so the block tallies to that total.",
       "type": "derived_column",
       "alias": "is_established",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fcm.patient_categorization like '%12106%', 1, 0)"
+        "expression": "if(hmsd.on_art_this_month = 1 and ifnull(fcm.patient_categorization, '') like '%12106%', 1, 0)"
       }
     },
     {
@@ -142,15 +142,16 @@
       "alias": "is_not_established",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fcm.patient_categorization like '%12107%', 1, 0)"
-      }
+        "expression": "if(hmsd.on_art_this_month = 1 and ifnull(fcm.patient_categorization, '') not like '%12106%', 1, 0)"
+      },
+      "comment": "The complement of established within the same population, so the two boxes always sum to the On ART total. ifnull() matters: a patient with no categorisation row at all compares NULL, and NULL NOT LIKE is NULL rather than true, which would drop them from both boxes."
     },
     {
       "type": "derived_column",
       "alias": "is_community_delivery",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fcm.service_delivery_model like '%11932%', 1, 0)"
+        "expression": "if(hmsd.on_art_this_month = 1 and ifnull(fcm.service_delivery_model, '') like '%11932%', 1, 0)"
       }
     },
     {
@@ -158,7 +159,7 @@
       "alias": "is_facility_delivery",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(fcm.service_delivery_model like '%11931%', 1, 0)"
+        "expression": "if(hmsd.on_art_this_month = 1 and ifnull(fcm.service_delivery_model, '') like '%11931%', 1, 0)"
       }
     },
     {

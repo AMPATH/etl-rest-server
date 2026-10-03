@@ -28,7 +28,7 @@ module.exports = (function () {
         ? {
             columns:
               request.query.fields ||
-              't4.test_datetime as hpv_test_date, t4.hpv,t5.test_datetime as latest_vl_date,t5.hiv_viral_load as latest_vl,t1.*, t3.cm_result,t3.cm_result_date, t3.cm_test, t3.cm_treatment_end_date, t3.cm_treatment_phase, t3.cm_treatment_start_date',
+              't4.test_datetime as hpv_test_date, t4.hpv,t5.test_datetime as latest_vl_date,t5.hiv_viral_load as latest_vl,t6.test_datetime as latest_cd4_date,t6.cd4_count as latest_cd4_count,t6.cd4_lateral_flow as latest_cd4_lateral_flow,t1.*, t3.cm_result,t3.cm_result_date, t3.cm_test, t3.cm_treatment_end_date, t3.cm_treatment_phase, t3.cm_treatment_start_date',
             table: 'etl.flat_hiv_summary_v15b',
             where: whereClause,
             leftOuterJoins: [
@@ -46,6 +46,13 @@ module.exports = (function () {
                 '(SELECT flai.person_id, flai.hiv_viral_load, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hiv_viral_load IS NOT NULL AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hiv_viral_load IS NOT NULL ))',
                 't5',
                 't5.person_id = t1.person_id'
+              ],
+              // Latest CD4, taken from whichever of the CD4 count or the CD4
+              // lateral flow was resulted most recently.
+              [
+                '(SELECT flai.person_id, flai.cd4_count, flai.cd4_lateral_flow, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE (flai.cd4_count IS NOT NULL OR flai.cd4_lateral_flow IS NOT NULL) AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND (f2.cd4_count IS NOT NULL OR f2.cd4_lateral_flow IS NOT NULL) ))',
+                't6',
+                't6.person_id = t1.person_id'
               ]
             ],
             order: order || [
@@ -121,6 +128,9 @@ module.exports = (function () {
           );
           summary.contraceptive_method = helpers.getContraceptiveMethod(
             summary.contraceptive_method
+          );
+          summary.latest_cd4_lateral_flow = helpers.getConceptName(
+            summary.latest_cd4_lateral_flow
           );
           summary['encounter_type_name'] =
             encounterTypeNames[summary.encounter_type];
