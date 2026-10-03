@@ -100,7 +100,7 @@ export class LabClient {
         method: 'POST',
         // json: true,
         form: payload,
-        timeout: 40000
+        timeout: this.config.timeout || 40000
       };
       return rp(options);
     } catch (error) {
@@ -130,7 +130,7 @@ export class LabClient {
       json: true,
       insecure: true,
       method: 'POST',
-      timeout: 40000,
+      timeout: this.config.timeout || 40000,
       form: filterOptions
     };
     return new Promise((resolve, reject) => {
