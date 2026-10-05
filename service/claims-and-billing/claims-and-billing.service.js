@@ -432,7 +432,10 @@ b.concept_source_name,
 b.hl7_code,
 b.icd11_code,
 encounter_type,
-encounter_datetime
+encounter_datetime,
+b.diagnosis_type,
+b.concept_name,
+b.provider_name
 from
 (
 SELECT 
@@ -450,9 +453,12 @@ SELECT
 	dobs.value_coded,
 	crs.name AS 'concept_source_name',
 	crs.hl7_code,
-    crt.code AS icd11_code,
-    et.name as encounter_type,
-    e.encounter_datetime
+  crt.code AS icd11_code,
+  et.name as encounter_type,
+  e.encounter_datetime,
+  'PRIMARY DIAGNOSIS' AS diagnosis_type,
+  cn.name as 'concept_name',
+  CONCAT(provider_name.given_name,' ',provider_name.middle_name,' ', provider_name.family_name) as 'provider_name'
 FROM
    amrs.person p
    join amrs.obs obs on (p.person_id = obs.person_id)
@@ -460,11 +466,13 @@ FROM
    join amrs.encounter_type et on (et.encounter_type_id = e.encounter_type)
    join amrs.provider_attribute pid on (pid.attribute_type_id = 5 AND pid.voided = 0 AND pid.value_reference = obs.value_numeric)
    join amrs.provider pr on (pr.provider_id = pid.provider_id)
+   LEFT join amrs.person_name provider_name on (provider_name.person_id = pr.person_id AND provider_name.preferred = 1 and provider_name.voided = 0)
    join amrs.provider_attribute pa on (pa.attribute_type_id = 5 AND pa.voided = 0 AND pa.provider_id = pr.provider_id)
    join amrs.provider_attribute sp on (sp.attribute_type_id = 8 AND sp.voided = 0 AND sp.provider_id = pr.provider_id AND sp.value_reference IS NOT NULL)
    join amrs.provider_attribute lb on (lb.attribute_type_id = 9 AND lb.voided = 0 AND lb.provider_id = pr.provider_id)
    join amrs.obs dobs on (dobs.encounter_id = obs.encounter_id AND dobs.concept_id = 5630 AND dobs.voided = 0)
    JOIN amrs.concept vc ON (vc.concept_id = dobs.value_coded)
+   JOIN amrs.concept_name cn on (vc.concept_id = cn.concept_id AND cn.voided = 0 AND cn.locale_preferred = 1)
    JOIN amrs.concept_reference_map crm ON (crm.concept_id = vc.concept_id)
    JOIN amrs.concept_reference_term crt ON (crm.concept_reference_term_id = crt.concept_reference_term_id)
    JOIN amrs.concept_reference_source crs ON (crs.concept_source_id = crt.concept_source_id AND crs.concept_source_id = 23)
