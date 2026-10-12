@@ -76,6 +76,11 @@
       "expressionOptions": {
         "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "diagnosis_year",
+      "column": "DATE_FORMAT(mdh.diabetes_diagnosis_date,'%Y')"
     }
   ],
   "filters": {

@@ -45,7 +45,7 @@
       "alias": "newly_diagnosed_diabetes",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.newly_diagnosed_diabetes_this_month)"
+        "expression": "COUNT(b.newly_diagnosed_diabetes)"
       }
     },
     {

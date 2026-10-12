@@ -80,6 +80,11 @@
           }
         ]
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "diagnosis_year",
+      "column": "DATE_FORMAT(mdh.htn_diagnosis_date,'%Y')"
     }
   ],
   "filters": {
