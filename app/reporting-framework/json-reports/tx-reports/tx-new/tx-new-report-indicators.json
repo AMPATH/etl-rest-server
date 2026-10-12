@@ -81,7 +81,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["female", "male"]
+        "indicator": ["female", "male", "total"]
       },
       {
         "label": "Total",

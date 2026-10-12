@@ -85,6 +85,15 @@
       }
     },
     {
+      "comment": "amrs.person is joined here as t1, so date of birth belongs in the template: a base referencing t1 would break wherever that base is read on its own. Formatted as a plain date because the column is a datetime and the grid would otherwise show a time of 00:00:00.",
+      "type": "derived_column",
+      "alias": "birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "date_format(t1.birthdate, '%Y-%m-%d')"
+      }
+    },
+    {
       "type": "derived_column",
       "alias": "identifiers",
       "expressionType": "simple_expression",

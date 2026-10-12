@@ -438,6 +438,14 @@
       "expressionOptions": {
         "expression": "SUM(b.total_iit_less_3)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "placeholder",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "0"
+      }
     }
   ],
   "groupBy": {

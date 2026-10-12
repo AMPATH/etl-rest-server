@@ -1,6 +1,12 @@
 import { MultiDatasetPatientlistReport } from '../multi-dataset-patientlist.report';
 import { Promise } from 'bluebird';
 const Moment = require('moment');
+const etlHelpers = require('../../../etl-helpers');
+
+// Kept identical to the PrEP monthly report's own rule, so the PrEP section
+// here and that report read the same table for the same month.
+const PREP_FROZEN_DATASET = 'etl.prep_monthly_report_dataset_frozen';
+const PREP_LIVE_DATASET = 'etl.prep_monthly_report_dataset';
 
 /**
  * MOH 731 (Ver. July 2023).
@@ -20,6 +26,7 @@ const Moment = require('moment');
  * cannot be one pass however it is written.
  */
 const SECTION_REPORTS = {
+  1: ['Moh7312023PrepAggregation'],
   3: ['Moh7312023Section3Aggregation', 'Moh7312023NutritionAggregation']
 };
 
@@ -29,6 +36,9 @@ const SECTION_REPORTS = {
  * a single cell of the form and be turned into a filter on the base.
  */
 const SECTION_PATIENT_LIST_REPORTS = {
+  // The PrEP aggregation carries person_id through its base, so drilling into a
+  // PrEP box reads the same schema the section is counted from.
+  1: ['Moh7312023PrepAggregation'],
   3: ['Moh7312023Section3PatientList', 'Moh7312023NutritionAggregation']
 };
 
@@ -41,15 +51,54 @@ export class Moh7312023Report extends MultiDatasetPatientlistReport {
     // Defaults to the frozen dataset; determineMohReportSourceTables settles it
     // against the last released month before the query is built.
     params.hivMonthlyDatasetSource = 'etl.hiv_monthly_report_dataset_frozen';
+    // The PrEP section reads its own dataset, frozen on its own released month.
+    // It has to land on the same table the PrEP monthly report picks for this
+    // month or the two reports disagree on the same indicator. Defaults to
+    // frozen so the placeholder always resolves, even if the lookup fails.
+    params.prepMonthlyDatasetSource = PREP_FROZEN_DATASET;
     // The clinical detail a patient list is read with. Only the patient list
     // base joins this, so counting never pays for it.
     // The latest CD4 of either kind. A lateral flow is a CD4 result, so a
     // patient who has had one is not a patient with no CD4 done; taking the
     // most recent row of either kind keeps the two on the same footing.
-    params.cd4DataSource =
-      '(SELECT fli.person_id, fli.cd4_count, fli.cd4_lateral_flow, fli.test_datetime AS cd4_test_datetime FROM etl.flat_labs_and_imaging fli INNER JOIN (SELECT person_id, MAX(test_datetime) AS latest_cd4_datetime FROM etl.flat_labs_and_imaging WHERE cd4_count IS NOT NULL OR cd4_lateral_flow IS NOT NULL GROUP BY person_id) latest ON latest.person_id = fli.person_id AND latest.latest_cd4_datetime = fli.test_datetime WHERE fli.cd4_count IS NOT NULL OR fli.cd4_lateral_flow IS NOT NULL)';
+    params.cd4DataSource = Moh7312023Report.cd4DataSource(params.endDate);
     super(reportName, params);
     this.requestedSections = Moh7312023Report.resolveSections(params.sections);
+  }
+
+  /**
+   * The latest CD4 of either kind, as at the month being reported.
+   *
+   * Only the patient list joins this, so counting never pays for it. The
+   * month bound is what keeps it affordable: without it the database groups
+   * the whole of flat_labs_and_imaging by person on every drill-down, however
+   * few patients the list is about. It is also the truer reading for a
+   * monthly form, since a CD4 taken after the reporting month does not belong
+   * on that sheet.
+   *
+   * endDate arrives as text, so it is only interpolated once it looks like a
+   * plain date; anything else falls back to the unbounded form rather than
+   * being pasted into SQL.
+   */
+  static cd4DataSource(endDate) {
+    const day = /^(\d{4}-\d{2}-\d{2})/.exec(String(endDate || ''));
+    const asAt = day ? " AND test_datetime <= '" + day[1] + " 23:59:59'" : '';
+    const asAtOuter = day
+      ? " AND fli.test_datetime <= '" + day[1] + " 23:59:59'"
+      : '';
+    return (
+      '(SELECT fli.person_id, fli.cd4_count, fli.cd4_lateral_flow, fli.test_datetime AS cd4_test_datetime' +
+      ' FROM etl.flat_labs_and_imaging fli' +
+      ' INNER JOIN (SELECT person_id, MAX(test_datetime) AS latest_cd4_datetime' +
+      ' FROM etl.flat_labs_and_imaging' +
+      ' WHERE (cd4_count IS NOT NULL OR cd4_lateral_flow IS NOT NULL)' +
+      asAt +
+      ' GROUP BY person_id) latest' +
+      ' ON latest.person_id = fli.person_id AND latest.latest_cd4_datetime = fli.test_datetime' +
+      ' WHERE (fli.cd4_count IS NOT NULL OR fli.cd4_lateral_flow IS NOT NULL)' +
+      asAtOuter +
+      ')'
+    );
   }
 
   /**
@@ -92,9 +141,32 @@ export class Moh7312023Report extends MultiDatasetPatientlistReport {
    * ones the report is built from, since only they name the cell being asked
    * about.
    */
-  generatePatientListReport(indicators) {
+  async generatePatientListReport(indicators) {
     this.patientListMode = true;
-    return super.generatePatientListReport(indicators);
+    // The list has to read the same tables the counted figure was read from.
+    // Without this it falls back to the constructor's frozen defaults, so an
+    // unreleased month shows a count off the live table and then a list off the
+    // frozen one, and a box reading 1 opens an empty list.
+    await this.determineMohReportSourceTables();
+    const results = await super.generatePatientListReport(indicators);
+    return this.nameThePrepRegimens(results);
+  }
+
+  /**
+   * The regimen reaches the list as concept ids. The PrEP monthly report names
+   * them before replying, so a PrEP box here has to do the same or the same
+   * client reads as a row of numbers in one place and drug names in the other.
+   */
+  nameThePrepRegimens(results) {
+    const rows = (results && results.result) || [];
+    rows.forEach((row) => {
+      if (row && row.cur_prep_meds_names !== undefined) {
+        row.cur_prep_meds_names = etlHelpers.getARVNames(
+          row.cur_prep_meds_names
+        );
+      }
+    });
+    return results;
   }
 
   async generateReport(additionalParams) {
@@ -229,6 +301,9 @@ export class Moh7312023Report extends MultiDatasetPatientlistReport {
           ).isSameOrAfter(Moment(self.params.endDate))
             ? 'etl.hiv_monthly_report_dataset_frozen'
             : 'etl.hiv_monthly_report_dataset_v1_2';
+          return self.determinePrepSourceTable();
+        })
+        .then(() => {
           resolve(self.params.hivMonthlyDatasetSource);
         })
         .catch((error) => {
@@ -236,5 +311,30 @@ export class Moh7312023Report extends MultiDatasetPatientlistReport {
           reject(error);
         });
     });
+  }
+
+  /**
+   * The PrEP dataset is released on its own schedule, tracked separately from
+   * the MOH 731 one, so the PrEP section is frozen against that month rather
+   * than this report's. This is the same rule the PrEP monthly report applies,
+   * which is what keeps the two reports showing the same figure.
+   */
+  determinePrepSourceTable() {
+    const self = this;
+    return self
+      .getSqlRunner()
+      .executeQuery('select * from etl.prep_monthly_report_release_month')
+      .then((results) => {
+        const lastReleasedMonth =
+          results && results[0] ? results[0]['last_released_month'] : null;
+
+        self.params.prepMonthlyDatasetSource = Moment(
+          lastReleasedMonth
+        ).isSameOrAfter(Moment(self.params.endDate))
+          ? PREP_FROZEN_DATASET
+          : PREP_LIVE_DATASET;
+
+        return self.params.prepMonthlyDatasetSource;
+      });
   }
 }
