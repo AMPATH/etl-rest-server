@@ -81,6 +81,7 @@ export class MultiDatasetPatientlistReport extends MultiDatasetReport {
                 indicators: indicators,
                 size: that.params.limit,
                 startIndex: that.params.startIndex,
+                totalCount: results[i].results.totalCount,
                 allResults: results
               });
               break;
@@ -143,7 +144,7 @@ export class MultiDatasetPatientlistReport extends MultiDatasetReport {
         (dataObject['completed_ipt_past_12_months'] =
           element.completed_ipt_past_12_months),
         (dataObject['condoms_provided'] = element.condoms_provided),
-        (dataObject['age_rstarted_modern_contraceptionange'] =
+        (dataObject['started_modern_contraception'] =
           element.started_modern_contraception),
         (dataObject['on_modern_contraception'] =
           element.on_modern_contraception),
@@ -173,6 +174,27 @@ export class MultiDatasetPatientlistReport extends MultiDatasetReport {
 
   getReportHandler(reportName, params) {
     return new PatientlistMysqlReport(reportName, params);
+  }
+
+  // Several datasets can carry the same indicator, but only the first one that
+  // succeeds is returned. Running them all in parallel ran the same heavy
+  // patient list query several times over, so stop at the first success.
+  async runMultipleReports(reportHandlers, additionalParams) {
+    if (!additionalParams || additionalParams.type !== 'patient-list') {
+      return super.runMultipleReports(reportHandlers, additionalParams);
+    }
+    for (const report of reportHandlers) {
+      try {
+        const results = await this.runSingleReport(report, additionalParams);
+        return [{ report: report, status: 'fulfilled', results: results }];
+      } catch (err) {
+        // datasets without the indicator reject straight away
+        if (err !== 'Not a patientlist report') {
+          console.error('Report failed:', report && report.reportName, err);
+        }
+      }
+    }
+    return [];
   }
 
   runSingleReport(reportObject, additionalParams) {
