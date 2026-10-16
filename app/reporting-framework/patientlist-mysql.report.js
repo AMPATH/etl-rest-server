@@ -82,29 +82,19 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
 
                 // console.log('Potential schemas with supplied indicators', JSON.stringify(combined));
                 that.modifiedParam = generated.params;
-                // generate query
+                // generate and run query
                 that
-                  .generateReportQuery(that.generatedPL, that.modifiedParam)
-                  .then((sqlQuery) => {
-                    //allow 'null' as parameter value
-                    sqlQuery = sqlQuery.replace(/\'null\'/g, 'null');
-                    that.reportQuery = sqlQuery;
-                    // run query
-                    that
-                      .executeReportQuery(that.reportQuery)
-                      .then((results) => {
-                        that.queryResults = results;
-                        resolve({
-                          schemas: that.reportSchemas,
-                          generatedSchemas: that.generatedPL,
-                          sqlQuery: that.reportQuery,
-                          results: that.queryResults
-                        });
-                      })
-                      .catch((err) => {
-                        console.error(that.reportQuery);
-                        error(err);
-                      });
+                  .runPatientListQuery(that.generatedPL, that.modifiedParam)
+                  .then((run) => {
+                    that.reportQuery = run.sqlQuery;
+                    that.queryResults = run.results;
+                    resolve({
+                      schemas: that.reportSchemas,
+                      generatedSchemas: that.generatedPL,
+                      sqlQuery: that.reportQuery,
+                      results: that.queryResults,
+                      totalCount: run.totalCount
+                    });
                   })
                   .catch((err) => {
                     error(err);
@@ -122,6 +112,209 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
           error(err);
         });
     });
+  }
+
+  // The patient list groups by patient before LIMIT/OFFSET applies, and the
+  // template joins (identifiers, contacts, addresses...) fan out per patient,
+  // so every page used to cost as much as the whole list. Page the patient ids
+  // over the filtering tables alone, then join the template for that page only.
+  runPatientListQuery(schemas, params) {
+    const main = schemas.main;
+    const keyColumn = this.getPagingKeyColumn(main, params);
+    const fullRun = () =>
+      this.runQuery(schemas, params).then((run) => ({
+        sqlQuery: run.sqlQuery,
+        results: run.results
+      }));
+    if (!keyColumn) {
+      return fullRun();
+    }
+
+    const keySchema = this.cloneJsonSchema(main);
+    keySchema.sources = this.getSourcesNeededForFilters(main);
+    keySchema.columns = [
+      { type: 'simple_column', alias: 'person_id', column: keyColumn }
+    ];
+    keySchema.groupBy = { columns: [keyColumn] };
+    keySchema.orderBy = { columns: [{ column: keyColumn, order: 'asc' }] };
+
+    // the total only changes with the filters, so count it with the first page
+    let countRun = Promise.resolve(null);
+    if (!(params[main.paging.offSetParam] > 0)) {
+      const countSchema = this.cloneJsonSchema(keySchema);
+      countSchema.columns = [
+        {
+          type: 'derived_column',
+          alias: 'total',
+          expressionType: 'simple_expression',
+          expressionOptions: {
+            expression: 'COUNT(DISTINCT ' + keyColumn + ')'
+          }
+        }
+      ];
+      delete countSchema.groupBy;
+      delete countSchema.orderBy;
+      delete countSchema.paging;
+      countRun = this.runQuery(
+        Object.assign({}, schemas, { main: countSchema }),
+        params
+      );
+    }
+
+    const keyRun = this.runQuery(
+      Object.assign({}, schemas, { main: keySchema }),
+      params
+    );
+
+    return Promise.all([keyRun, countRun]).then(
+      ([keys, count]) => {
+        const totalCount = count ? count.results.results[0].total : undefined;
+        const personIds = keys.results.results.map((row) => row.person_id);
+        if (personIds.length === 0) {
+          return {
+            sqlQuery: keys.sqlQuery,
+            results: { results: [] },
+            totalCount: totalCount
+          };
+        }
+
+        const pageSchema = this.cloneJsonSchema(main);
+        delete pageSchema.paging;
+        pageSchema.orderBy = { columns: [{ column: keyColumn, order: 'asc' }] };
+        pageSchema.filters = pageSchema.filters || {
+          conditionJoinOperator: 'and',
+          conditions: []
+        };
+        pageSchema.filters.conditions.push({
+          filterType: 'tableColumns',
+          conditionExpression: keyColumn + ' in ?',
+          parameterName: 'pagePersonIds'
+        });
+        return this.runQuery(
+          Object.assign({}, schemas, { main: pageSchema }),
+          Object.assign(
+            {},
+            params,
+            this.getPageDataSources(params, personIds),
+            { pagePersonIds: personIds }
+          )
+        ).then((page) => ({
+          sqlQuery: keys.sqlQuery + ';\n' + page.sqlQuery,
+          results: page.results,
+          totalCount: totalCount
+        }));
+      },
+      (err) => {
+        // a filter on a column of a dropped join, say; the full query still works
+        console.error(
+          'Patient list key paging failed, running full query',
+          err
+        );
+        return fullRun();
+      }
+    );
+  }
+
+  // A derived source the page joins (latest viral load, say) is otherwise
+  // worked out for every patient, and again for each row the identifier and
+  // address joins fan a patient out to. A report can give a version of such a
+  // source for the page's patients only, with <<pagePersonIds>> where the ids go.
+  getPageDataSources(params, personIds) {
+    const templates =
+      (this.params && this.params.pageDataSources) ||
+      params.pageDataSources ||
+      {};
+    const ids = personIds.map((id) => Number(id));
+    if (ids.some((id) => !Number.isInteger(id))) {
+      return {};
+    }
+    const sources = {};
+    Object.keys(templates).forEach((param) => {
+      sources[param] = templates[param].replace(
+        /<<pagePersonIds>>/g,
+        ids.join(',')
+      );
+    });
+    return sources;
+  }
+
+  runQuery(schemas, params) {
+    // json2sql fills <<param>> source tables in place, so give it a copy
+    const copy = Object.assign({}, schemas, {
+      main: this.cloneJsonSchema(schemas.main)
+    });
+    return this.generateReportQuery(copy, params).then((sqlQuery) => {
+      //allow 'null' as parameter value
+      sqlQuery = sqlQuery.replace(/\'null\'/g, 'null');
+      return this.executeReportQuery(sqlQuery)
+        .then((results) => ({ sqlQuery: sqlQuery, results: results }))
+        .catch((err) => {
+          console.error(sqlQuery);
+          throw err;
+        });
+    });
+  }
+
+  // Paging by key only gives the same rows when the list is one row per
+  // patient, in no other order, with a page size asked for.
+  getPagingKeyColumn(schema, params) {
+    if (!schema.paging || schema.orderBy || !schema.groupBy) {
+      return null;
+    }
+    if (!(params[schema.paging.limitParam] >= 0)) {
+      return null;
+    }
+    const groupBy = schema.groupBy;
+    if (groupBy.groupParam && (params[groupBy.groupParam] || []).length > 0) {
+      return null;
+    }
+    if (
+      !Array.isArray(groupBy.columns) ||
+      groupBy.columns.length !== 1 ||
+      !/^\w+\.person_id$/.test(groupBy.columns[0])
+    ) {
+      return null;
+    }
+    return groupBy.columns[0];
+  }
+
+  // The base table and INNER JOINs decide which patients are listed, and so
+  // does a LEFT JOIN that a filter (or a kept join) refers to. The rest only
+  // add columns.
+  getSourcesNeededForFilters(schema) {
+    const referencesAlias = (text, alias) =>
+      new RegExp('\\b' + alias + '\\.').test(text);
+    const isOptional = (source) =>
+      source.join &&
+      source.join.type &&
+      source.join.type.toUpperCase() === 'LEFT';
+
+    const kept = new Set(
+      schema.sources.filter((s) => !isOptional(s)).map((s) => s.alias)
+    );
+    let neededText = JSON.stringify([
+      schema.filters,
+      schema.sources
+        .filter((s) => kept.has(s.alias) && s.join)
+        .map((s) => s.join.joinCondition)
+    ]);
+    let grew = true;
+    while (grew) {
+      grew = false;
+      schema.sources.forEach((source) => {
+        if (
+          !kept.has(source.alias) &&
+          referencesAlias(neededText, source.alias)
+        ) {
+          kept.add(source.alias);
+          neededText += JSON.stringify(source.join.joinCondition);
+          grew = true;
+        }
+      });
+    }
+    return this.cloneJsonSchema(
+      schema.sources.filter((s) => kept.has(s.alias))
+    );
   }
 
   fetchPatientListTemplate(aggregateReport) {
