@@ -159,7 +159,7 @@
       "alias": "started_modern_contraception",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(hmsd.condoms_provided)"
+        "expression": "sum(hmsd.started_modern_contraception)"
       }
     },
     {

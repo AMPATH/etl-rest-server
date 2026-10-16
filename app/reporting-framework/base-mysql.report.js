@@ -734,6 +734,9 @@ export class BaseMysqlReport {
         .fetchReportSchema(that.reportName)
         .then((reportSchemas) => {
           that.reportSchemas = reportSchemas;
+          if (that.params && that.params.pruneUnusedJoins) {
+            that.pruneUnusedJoins(that.reportSchemas);
+          }
           // generate query
           that
             .generateReportQuery(that.reportSchemas, that.params)
@@ -3185,6 +3188,73 @@ export class BaseMysqlReport {
           reject('Unknown report ', reportName);
           break;
       }
+    });
+  }
+
+  // Base datasets carry LEFT JOINs for columns that only patient lists show
+  // (latest viral load, vitals, identifiers...). An aggregate that never reads
+  // those columns still pays for the joins, and some of them build a derived
+  // table over every patient in the database. Drop each LEFT JOIN that no
+  // column used by the other schemas, and no filter or kept join, refers to.
+  // INNER JOINs are always kept since they decide which rows are counted.
+  pruneUnusedJoins(reportSchemas) {
+    const referencesAlias = (text, alias) =>
+      new RegExp('\\b' + alias + '\\.').test(text);
+    const columnText = (column) =>
+      JSON.stringify([column.column, column.expressionOptions]);
+
+    Object.keys(reportSchemas).forEach((name) => {
+      const base = reportSchemas[name];
+      if (!base || !Array.isArray(base.sources) || !base.columns) {
+        return;
+      }
+      const prunable = base.sources
+        .filter((s) => s.join && s.join.type === 'LEFT' && s.alias)
+        .map((s) => s.alias);
+      if (prunable.length === 0) {
+        return;
+      }
+
+      const consumers = JSON.stringify(
+        Object.keys(reportSchemas)
+          .filter((other) => other !== name)
+          .map((other) => {
+            const s = reportSchemas[other];
+            return [s.columns, s.filters, s.groupBy];
+          })
+      );
+      const usedColumns = base.columns.filter((c) =>
+        new RegExp('\\b' + c.alias + '\\b').test(consumers)
+      );
+
+      let neededText = JSON.stringify([
+        usedColumns.map(columnText),
+        base.filters,
+        base.groupBy
+      ]);
+      // A kept join can refer to another joined table in its condition.
+      let needed = new Set();
+      let grew = true;
+      while (grew) {
+        grew = false;
+        prunable.forEach((alias) => {
+          if (!needed.has(alias) && referencesAlias(neededText, alias)) {
+            needed.add(alias);
+            const source = base.sources.find((s) => s.alias === alias);
+            neededText += JSON.stringify(source.join.joinCondition);
+            grew = true;
+          }
+        });
+      }
+
+      const dropped = prunable.filter((alias) => !needed.has(alias));
+      if (dropped.length === 0) {
+        return;
+      }
+      base.sources = base.sources.filter((s) => !dropped.includes(s.alias));
+      base.columns = base.columns.filter(
+        (c) => !dropped.some((alias) => referencesAlias(columnText(c), alias))
+      );
     });
   }
 
