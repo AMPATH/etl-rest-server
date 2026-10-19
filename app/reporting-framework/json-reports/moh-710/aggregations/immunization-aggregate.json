@@ -27,6 +27,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "location_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "s.location_id"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "bcg_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -35,10 +43,10 @@
     },
     {
       "type": "derived_column",
-      "alias": "opv_vaccine_age_less_than_1yr",
+      "alias": "opv_vaccine_less_1_year",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.opv_vaccine_less_1_year)"
       }
     },
     {
@@ -46,7 +54,7 @@
       "alias": "opv_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.opv_vaccine_greater_1_year)"
       }
     },
     {
@@ -54,7 +62,7 @@
       "alias": "opv1_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv1_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.opv1_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -62,7 +70,7 @@
       "alias": "opv1_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv1_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.opv1_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -70,7 +78,7 @@
       "alias": "opv2_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv2_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.opv2_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -78,7 +86,7 @@
       "alias": "opv2_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv2_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.opv2_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -86,7 +94,7 @@
       "alias": "opv3_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv3_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.opv3_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -94,7 +102,7 @@
       "alias": "opv3_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.opv3_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.opv3_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -102,7 +110,7 @@
       "alias": "ipv1_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.ipv1_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.ipv1_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -110,7 +118,7 @@
       "alias": "ipv1_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.ipv1_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.ipv1_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -118,7 +126,7 @@
       "alias": "ipv2_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.ipv2_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.ipv2_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -126,7 +134,7 @@
       "alias": "ipv2_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.ipv2_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.ipv2_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -134,7 +142,7 @@
       "alias": "dpt_hep_vaccine1_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.dpt_hep_vaccine1 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.dpt_hep_vaccine1_age_less_than_1yr)"
       }
     },
     {
@@ -142,7 +150,7 @@
       "alias": "dpt_hep_vaccine1_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.dpt_hep_vaccine1 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.dpt_hep_vaccine1_age_greater_than_1yr)"
       }
     },
     {
@@ -150,7 +158,7 @@
       "alias": "dpt_hep_vaccine2_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.dpt_hep_vaccine2 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.dpt_hep_vaccine2_age_less_than_1yr)"
       }
     },
     {
@@ -158,7 +166,7 @@
       "alias": "dpt_hep_vaccine2_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.dpt_hep_vaccine2 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.dpt_hep_vaccine2_age_greater_than_1yr)"
       }
     },
     {
@@ -166,7 +174,7 @@
       "alias": "dpt_hep_vaccine3_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.dpt_hep_vaccine3 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.dpt_hep_vaccine3_age_less_than_1yr)"
       }
     },
     {
@@ -174,7 +182,7 @@
       "alias": "dpt_hep_vaccine3_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.dpt_hep_vaccine3 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.dpt_hep_vaccine3_age_greater_than_1yr)"
       }
     },
     {
@@ -182,7 +190,7 @@
       "alias": "pneumococal_vaccine1_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.pneumococal_vaccine1 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.pneumococal_vaccine1_age_less_than_1yr)"
       }
     },
     {
@@ -190,7 +198,7 @@
       "alias": "pneumococal_vaccine1_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.pneumococal_vaccine1 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.pneumococal_vaccine1_age_greater_than_1yr)"
       }
     },
     {
@@ -198,7 +206,7 @@
       "alias": "pneumococal_vaccine2_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.pneumococal_vaccine2 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.pneumococal_vaccine2_age_less_than_1yr)"
       }
     },
     {
@@ -206,7 +214,7 @@
       "alias": "pneumococal_vaccine2_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.pneumococal_vaccine2 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.pneumococal_vaccine2_age_greater_than_1yr)"
       }
     },
     {
@@ -214,7 +222,7 @@
       "alias": "pneumococal_vaccine3_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.pneumococal_vaccine3 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.pneumococal_vaccine3_age_less_than_1yr)"
       }
     },
     {
@@ -222,7 +230,7 @@
       "alias": "pneumococal_vaccine3_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.pneumococal_vaccine3 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.pneumococal_vaccine3_age_greater_than_1yr)"
       }
     },
     {
@@ -230,7 +238,7 @@
       "alias": "rotavirus_vaccine1_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.rotavirus_vaccine1 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.rotavirus_vaccine1_age_less_than_1yr)"
       }
     },
     {
@@ -238,7 +246,7 @@
       "alias": "rotavirus_vaccine1_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.rotavirus_vaccine1 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.rotavirus_vaccine1_age_greater_than_1yr)"
       }
     },
     {
@@ -246,7 +254,7 @@
       "alias": "rotavirus_vaccine2_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.rotavirus_vaccine2 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.rotavirus_vaccine2_age_less_than_1yr)"
       }
     },
     {
@@ -254,7 +262,7 @@
       "alias": "rotavirus_vaccine2_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.rotavirus_vaccine2 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.rotavirus_vaccine2_age_greater_than_1yr)"
       }
     },
     {
@@ -262,7 +270,7 @@
       "alias": "rotavirus_vaccine3_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.rotavirus_vaccine3 AND s.age_less_than_1yr)"
+        "expression": "SUM(s.rotavirus_vaccine3_age_less_than_1yr)"
       }
     },
     {
@@ -270,7 +278,7 @@
       "alias": "rotavirus_vaccine3_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.rotavirus_vaccine3 AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.rotavirus_vaccine3_age_greater_than_1yr)"
       }
     },
     {
@@ -294,7 +302,7 @@
       "alias": "yellow_fever_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.yellow_fever_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.yellow_fever_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -302,7 +310,7 @@
       "alias": "yellow_fever_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.yellow_fever_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.yellow_fever_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -310,7 +318,7 @@
       "alias": "measles_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.measles_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.measles_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -318,7 +326,7 @@
       "alias": "measles_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.measles_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.measles_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -326,7 +334,7 @@
       "alias": "typhoid_conjugate_vaccine_age_greater_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.typhoid_conjugate_vaccine AND s.age_greater_than_1yr)"
+        "expression": "SUM(s.typhoid_conjugate_vaccine_age_greater_than_1yr)"
       }
     },
     {
@@ -334,7 +342,7 @@
       "alias": "typhoid_conjugate_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.typhoid_conjugate_vaccine AND s.age_less_than_1yr)"
+        "expression": "SUM(s.typhoid_conjugate_vaccine_age_less_than_1yr)"
       }
     },
     {
@@ -366,7 +374,7 @@
       "alias": "measles_rubella_greater_2_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.measles_vaccine AND s.age >= 2)"
+        "expression": "SUM(s.measles_rubella_greater_2_years)"
       }
     },
     {
@@ -391,6 +399,30 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(s.covid_19_vaccine_60_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "squint_white_eye_reflection",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.squint_white_eye_reflection)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adverse_event_after_vaccination",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.adverse_event_after_vaccination)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv)"
       }
     }
   ],
