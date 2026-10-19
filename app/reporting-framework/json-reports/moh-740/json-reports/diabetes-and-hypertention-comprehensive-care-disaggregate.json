@@ -42,7 +42,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "newly_diagnosed_diabetes",
+      "alias": "newly_diagnosed_diabetes_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COUNT(b.newly_diagnosed_diabetes_this_month)"
