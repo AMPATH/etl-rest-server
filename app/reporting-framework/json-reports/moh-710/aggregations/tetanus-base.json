@@ -120,7 +120,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "e.encounter_type in (265, 313)"
+        "conditionExpression": "e.encounter_type in (264,265, 313)"
       },
       {
         "filterType": "tableColumns",
