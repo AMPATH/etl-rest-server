@@ -48,7 +48,7 @@
     {
       "type": "simple_column",
       "alias": "diarrhoea_with_no_dehydration",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded in (18,26901,26903), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -58,7 +58,7 @@
     {
       "type": "simple_column",
       "alias": "diarrhoea_with_severe_dehydration",
-      "column": "if(ed.diagnosis_coded = 7457, 1, 0)"
+      "column": "null"
     },
     {
       "type": "simple_column",
@@ -68,7 +68,7 @@
     {
       "type": "simple_column",
       "alias": "dysentry",
-      "column": "if(ed.diagnosis_coded = 197, 1, 0)"
+      "column": "null"
     },
     {
       "type": "simple_column",
@@ -83,12 +83,12 @@
     {
       "type": "simple_column",
       "alias": "severe_pneumonia",
-      "column": "if(ed.diagnosis_coded = 7440, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 37246, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "upper_respiratory_tract_infections",
-      "column": "if(ed.diagnosis_coded = 106, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (106, 37388, 37486), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -98,17 +98,17 @@
     {
       "type": "simple_column",
       "alias": "asthma",
-      "column": "if(ed.diagnosis_coded = 5, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 37350, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "presumed_tuberculosis",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 19699, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "suspected_malaria",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 47626, 1, 0)"
     },
     {
       "type": "simple_column",
@@ -118,12 +118,12 @@
     {
       "type": "simple_column",
       "alias": "confirmed_malaria",
-      "column": "if(ed.diagnosis_coded = 14066, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 47628, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "ear_infection",
-      "column": "if(ed.diagnosis_coded = 114, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 38752, 1, 0)"
     },
     {
       "type": "simple_column",
@@ -138,22 +138,22 @@
     {
       "type": "simple_column",
       "alias": "meningococcal_meningitis",
-      "column": "if(ed.diagnosis_coded = 60, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 48462, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "other_meningitis",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 48464, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "neonatal_sepsis",
-      "column": "if(ed.diagnosis_coded = 226, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (226, 30931), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "neonatal_tetanus",
-      "column": "if(ed.diagnosis_coded = 12925, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 48525, 1, 0)"
     },
     {
       "type": "simple_column",
@@ -163,92 +163,92 @@
     {
       "type": "simple_column",
       "alias": "chicken_pox",
-      "column": "if(ed.diagnosis_coded = 892, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 47976, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "measles",
-      "column": "if(ed.diagnosis_coded = 63, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 47857, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "hepatitis",
-      "column": "if(ed.diagnosis_coded = 29, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 15933, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "amoebiasis",
-      "column": "if(ed.diagnosis_coded = 124, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 48961, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "mumps",
-      "column": "if(ed.diagnosis_coded = 64, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 48071, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "typhoid_fever",
-      "column": "if(ed.diagnosis_coded = 141, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 49026, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "bilharzia",
-      "column": "if(ed.diagnosis_coded = 363, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 47432, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "intestinal_worms",
-      "column": "if(ed.diagnosis_coded = 199, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 47409, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "eye_infections",
-      "column": "if(ed.diagnosis_coded = 1910, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 39323, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "tonsilities",
-      "column": "if(ed.diagnosis_coded = 536, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 37516, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "urinary_tract_infections",
-      "column": "if(ed.diagnosis_coded = 14952, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 32449, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "mental_disorders",
-      "column": "if(ed.diagnosis_coded = 77, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 43173, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "dental_disorders",
-      "column": "if(ed.diagnosis_coded = 78, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 36699, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "jiggers_infestation",
-      "column": "if(ed.diagnosis_coded = 14180, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (47371, 6847), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "diseases_of_the_skin",
-      "column": "if(ed.diagnosis_coded = 14499, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 33964, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "downs_syndrome",
-      "column": "if(ed.diagnosis_coded = 8343, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (28410, 8343), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "poisoning",
-      "column": "if(ed.diagnosis_coded = 14803, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 22593, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "road_traffic_injuries",
-      "column": "if(ed.diagnosis_coded in (86,13056), 1, 0)"
+      "column": "if(ed.diagnosis_coded in (22353), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -258,32 +258,32 @@
     {
       "type": "simple_column",
       "alias": "violence_related_injuries",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 21739, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "other_injuries",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 22836, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "sexual_violence",
-      "column": "if(ed.diagnosis_coded = 165, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 20702, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "burns",
-      "column": "if(ed.diagnosis_coded = 14639, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 22603, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "snake_bites",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 22233, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "dog_bites",
-      "column": "if(ed.diagnosis_coded = 166, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 22238, 1, 0)"
     },
     {
       "type": "simple_column",
@@ -293,97 +293,97 @@
     {
       "type": "simple_column",
       "alias": "diabetes",
-      "column": "if(ed.diagnosis_coded = 175, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 30535, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "epilepsy",
-      "column": "if(ed.diagnosis_coded = 155, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 41034, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "other_convulsive_disorders",
-      "column": "if(ed.diagnosis_coded = 14450, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 41037, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "rheumatic_fever",
-      "column": "if(ed.diagnosis_coded = 7888, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 26681, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "brucellosis",
-      "column": "if(ed.diagnosis_coded = 160, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 48568, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "rickets",
-      "column": "if(ed.diagnosis_coded = 888, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 43899, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "cerebral_palsy",
-      "column": "if(ed.diagnosis_coded = 945, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 40393, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "autism",
-      "column": "if(ed.diagnosis_coded = 14349, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 43131, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "tryponosomiasis",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 47604, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "yellow_fever",
-      "column": "if(ed.diagnosis_coded = 57, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (57, 15473), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "viral_haemorrhagic_fever",
-      "column": "if(ed.diagnosis_coded = 12939, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 48016, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "rift_valley_fever",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 48151, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "chikungunya",
-      "column": "if(ed.diagnosis_coded = 12958, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (15860, 48158), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "dengue_fever",
-      "column": "if(ed.diagnosis_coded = 12974, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 48159, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "leishmaniasis",
-      "column": "if(ed.diagnosis_coded in (12975, 7886), 1, 0)"
+      "column": "if(ed.diagnosis_coded = 47581, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "cutaneous_leishmaniasis",
-      "column": "if(ed.diagnosis_coded = 12971, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (47585, 47583), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "suspected_anthrax",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 48565, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "suspected_childhood_cancers",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 45517, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "hypoxaemia",
-      "column": "null"
+      "column": "if(ed.diagnosis_coded = 27066, 1, 0)"
     },
     {
       "type": "simple_column",
