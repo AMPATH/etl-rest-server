@@ -433,11 +433,15 @@
         "filterType": "tableColumns",
         "conditionExpression": "l.location_id in ?",
         "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "TIMESTAMPDIFF(YEAR, p.birthdate, ed.date_created) >= 5"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["ed.patient_id"]
+    "columns": ["ed.patient_id", "ed.diagnosis_coded"]
   }
 }
