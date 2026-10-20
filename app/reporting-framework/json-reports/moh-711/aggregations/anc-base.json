@@ -6,31 +6,15 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "o"
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (264, 265) AND o.concept_id IN (21, 299, 2356, 6429, 7086, 10919, 9487, 12081)"
-      }
+      "table": "etl.flat_moh_711",
+      "alias": "m"
     },
     {
       "table": "etl.flat_patient_identifiers_v1",
       "alias": "flat_identifiers",
       "join": {
         "type": "LEFT",
-        "joinCondition": "o.person_id = flat_identifiers.patient_id"
-      }
-    },
-    {
-      "table": "amrs.person",
-      "alias": "p",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+        "joinCondition": "m.person_id = flat_identifiers.patient_id"
       }
     }
   ],
@@ -38,7 +22,17 @@
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "o.person_id"
+      "column": "m.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "m.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "m.encounter_datetime"
     },
     {
       "type": "simple_column",
@@ -55,7 +49,7 @@
       "alias": "new_anc_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(e.encounter_type = 265, 1, 0)"
+        "expression": "m.new_anc_clients"
       }
     },
     {
@@ -63,7 +57,7 @@
       "alias": "revisit_anc_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(e.encounter_type = 264, 1, 0)"
+        "expression": "m.revisit_anc_clients"
       }
     },
     {
@@ -71,7 +65,7 @@
       "alias": "first_ipt_dose",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 2366 AND o.value_coded = 2364, 1, 0)"
+        "expression": "if(m.first_ipt_dose = 1, 1, 0)"
       }
     },
     {
@@ -79,7 +73,7 @@
       "alias": "second_ipt_dose",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 2366 AND o.value_coded = 2365, 1, 0)"
+        "expression": "if(m.second_ipt_dose = 1, 1, 0)"
       }
     },
     {
@@ -87,7 +81,7 @@
       "alias": "third_ipt_dose",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 2366 AND o.value_coded = 8526, 1, 0)"
+        "expression": "if(m.third_ipt_dose = 1, 1, 0)"
       }
     },
     {
@@ -95,7 +89,7 @@
       "alias": "Hb_less_11g",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 21 AND o.value_numeric < 11, 1, 0)"
+        "expression": "if(m.hb < 11, 1, 0)"
       }
     },
     {
@@ -103,7 +97,7 @@
       "alias": "first_anc_contact_12_or_less_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 6429 AND o.value_numeric <= 12, 1, 0)"
+        "expression": "if(m.maturity_in_weeks <= 12, 1, 0)"
       }
     },
     {
@@ -111,7 +105,7 @@
       "alias": "completing_4_anc_visits",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 7086 AND o.value_numeric = 4, 1, 0)"
+        "expression": "if(m.anc_visit_number = 4, 1, 0)"
       }
     },
     {
@@ -119,7 +113,7 @@
       "alias": "completing_8_anc_contact",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 7086 AND o.value_numeric = 8, 1, 0)"
+        "expression": "if(m.anc_visit_number = 8, 1, 0)"
       }
     },
     {
@@ -127,7 +121,7 @@
       "alias": "llins_children_less_than_one",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 2356 AND o.value_coded = 2354 AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 1, 1, 0)"
+        "expression": "if(m.llins_children = 1 AND m.age < 1, 1, 0)"
       }
     },
     {
@@ -135,7 +129,7 @@
       "alias": "llins_anc_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 2356 AND o.value_coded = 2354, 1, 0)"
+        "expression": "m.llins_anc_clients"
       }
     },
     {
@@ -143,7 +137,7 @@
       "alias": "anc_clients_tested_syphilis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 299, 1, NULL)"
+        "expression": "if(m.anc_clients_tested_syphilis = 1, 1, NULL)"
       }
     },
     {
@@ -151,7 +145,7 @@
       "alias": "syphilis_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 299 AND o.value_coded = 703, 1, NULL)"
+        "expression": "if(m.syphilis_positive = 1, 1, NULL)"
       }
     },
     {
@@ -159,7 +153,7 @@
       "alias": "breast_exam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10919 AND o.value_coded = 1065, 1, NULL)"
+        "expression": "m.breast_exam"
       }
     },
     {
@@ -167,7 +161,7 @@
       "alias": "adolesc_10_14",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 10 AND 14 AND e.encounter_type = 265, 1, 0)"
+        "expression": "IF(m.age BETWEEN 10 AND 14 AND m.encounter_type = 265, 1, 0)"
       }
     },
     {
@@ -175,7 +169,7 @@
       "alias": "adolesc_15_19",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 15 AND 19 AND e.encounter_type = 265, 1, 0)"
+        "expression": "IF(m.age BETWEEN 15 AND 19 AND m.encounter_type = 265, 1, 0)"
       }
     },
     {
@@ -183,7 +177,7 @@
       "alias": "youth_20_24",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10919 AND o.value_coded = 1065 AND e.encounter_type = 265, 1, NULL)"
+        "expression": "if(m.age BETWEEN 20 AND 24 AND m.encounter_type = 265, 1, NULL)"
       }
     },
     {
@@ -191,7 +185,7 @@
       "alias": "iron",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 9487 AND o.value_coded = 2363, 1, NULL)"
+        "expression": "if(m.iron = 1, 1, NULL)"
       }
     },
     {
@@ -199,7 +193,7 @@
       "alias": "folic",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 9487 AND o.value_coded = 257, 1, NULL)"
+        "expression": "if(m.folic = 1, 1, NULL)"
       }
     },
     {
@@ -207,7 +201,7 @@
       "alias": "iron_and_folate",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 9487 AND o.value_coded = 9497, 1, NULL)"
+        "expression": "if(m.iron = 1 AND m.folic = 1 || m.iron_and_folate = 1, 1, NULL)"
       }
     },
     {
@@ -215,7 +209,7 @@
       "alias": "fgm_complications",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12081 AND o.value_coded != 1107, 1, NULL)"
+        "expression": "if(m.fgm_complications = 1, 1, NULL)"
       }
     }
   ],
@@ -224,27 +218,23 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "e.encounter_type in (264,265)"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime >= ?",
+        "conditionExpression": "m.encounter_datetime >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime <= ?",
+        "conditionExpression": "m.encounter_datetime <= ?",
         "parameterName": "endDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.location_id in ?",
+        "conditionExpression": "m.location_id in ?",
         "parameterName": "locations"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id", "e.encounter_type"]
+    "columns": ["m.person_id", "m.encounter_datetime"]
   }
 }

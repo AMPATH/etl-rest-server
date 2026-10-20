@@ -5,31 +5,31 @@
   "description": "MOH 511 Patient list template",
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "obs1"
+      "table": "etl.flat_moh_710",
+      "alias": "mh"
     },
     {
       "table": "amrs.person",
       "alias": "t1",
       "join": {
-        "type": "LEFT",
-        "joinCondition": "t1.person_id = obs1.person_id "
+        "type": "INNER",
+        "joinCondition": "t1.person_id = mh.person_id"
       }
     },
     {
       "table": "amrs.patient_identifier",
-      "alias": "cwc_number",
+      "alias": "amrs_id",
       "join": {
         "type": "LEFT",
-        "joinCondition": "cwc_number.patient_id = t1.person_id AND cwc_number.identifier_type = 22"
+        "joinCondition": "amrs_id.patient_id = mh.person_id AND amrs_id.identifier_type = 8"
       }
     },
     {
       "table": "amrs.patient_identifier",
-      "alias": "nupi",
+      "alias": "cr_id",
       "join": {
         "type": "LEFT",
-        "joinCondition": "nupi.patient_id = t1.person_id AND nupi.identifier_type = 45"
+        "joinCondition": "cr_id.patient_id = mh.person_id AND cr_id.identifier_type = 55"
       }
     },
     {
@@ -37,7 +37,7 @@
       "alias": "person_name",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+        "joinCondition": "mh.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
       }
     },
     {
@@ -45,7 +45,7 @@
       "alias": "attribute",
       "join": {
         "type": "LEFT",
-        "joinCondition": "attribute.person_id = t1.person_id AND attribute.person_attribute_type_id = 10"
+        "joinCondition": "attribute.person_id = mh.person_id AND attribute.person_attribute_type_id = 10"
       }
     },
     {
@@ -61,42 +61,37 @@
       "alias": "pa",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = pa.person_id"
+        "joinCondition": "mh.person_id = pa.person_id"
       }
     }
   ],
   "columns": [
     {
       "type": "simple_column",
-      "alias": "patient_uuid",
-      "column": "t1.uuid"
-    },
-    {
-      "type": "simple_column",
       "alias": "person_id",
-      "column": "t1.person_id"
+      "column": "mh.person_id"
     },
     {
       "type": "simple_column",
       "alias": "visit_date",
-      "column": "obs1.obs_datetime"
+      "column": "mh.encounter_datetime"
     },
     {
       "type": "simple_column",
       "alias": "cwc_number_new",
-      "column": "cwc_number.identifier"
+      "column": "amrs_id.identifier"
     },
     {
       "type": "simple_column",
       "alias": "cwc_number_revisit",
-      "column": "cwc_number.identifier"
+      "column": "cr_id.identifier"
     },
     {
       "type": "derived_column",
       "alias": "birth_notification_number",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 8558, obs1.value_text, NULL)"
+        "expression": "null"
       }
     },
     {
@@ -112,7 +107,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CONCAT(FLOOR(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12), ' ', MOD(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()), 12), '/12')"
+        "expression": "mh.age"
       }
     },
     {
@@ -148,7 +143,7 @@
       "alias": "weight_category",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 10213, obs1.value_coded, NULL)"
+        "expression": "mh.weight_category"
       }
     },
     {
@@ -156,7 +151,7 @@
       "alias": "height",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 5090, obs1.value_numeric, NULL)"
+        "expression": "mh.height"
       }
     },
     {
@@ -164,7 +159,7 @@
       "alias": "height_category",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "mh.height_category"
       }
     },
     {
@@ -172,7 +167,7 @@
       "alias": "muac",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 1343, obs1.value_numeric, NULL)"
+        "expression": "mh.muac"
       }
     },
     {
@@ -180,7 +175,7 @@
       "alias": "exclusive_breastfeeding_less_6_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 5526 AND obs1.value_coded = 1065, 'Y', 'N')"
+        "expression": "mh.exclusive_breastfeeding_less_6_months"
       }
     },
     {
@@ -188,7 +183,7 @@
       "alias": "vitamin_A_supplementation",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 10936 AND obs1.value_coded = 1065, 'Y', 'N')"
+        "expression": "mh.vitamin_a"
       }
     },
     {
@@ -196,7 +191,7 @@
       "alias": "dewormed",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 7404 AND obs1.value_coded = 1065, 'Y', 'N')"
+        "expression": "mh.dewormed"
       }
     },
     {
@@ -204,73 +199,64 @@
       "alias": "mnps_supplimentation",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(obs1.concept_id = 9487 AND obs1.value_coded = 9488, 'Y', 'N')"
+        "expression": "mh.mnps_supplimentation"
       }
     },
     {
       "type": "simple_column",
       "alias": "developmental_milestones",
-      "column": "null"
+      "column": "mh.developmental_milestones"
     },
     {
       "type": "simple_column",
       "alias": "danger_signs",
-      "column": "null"
+      "column": "mh.danger_signs"
     },
     {
       "type": "simple_column",
       "alias": "disability",
-      "column": "null"
+      "column": "mh.disability"
     },
     {
       "type": "simple_column",
       "alias": "immunization_status_up_to_date",
-      "column": "if(obs1.concept_id = 2300 AND obs1.value_coded = 1065, 1, 0)"
+      "column": "mh.immunization_status_up_to_date"
     },
     {
       "type": "simple_column",
       "alias": "llin_supplimentation_given",
-      "column": "null"
+      "column": "mh.llin_supplimentation_given"
     },
     {
       "type": "simple_column",
       "alias": "follow_up",
-      "column": "null"
+      "column": "mh.follow_up"
     },
     {
       "type": "simple_column",
       "alias": "referred_from",
-      "column": "null"
+      "column": "mh.referred_from"
     },
     {
       "type": "simple_column",
       "alias": "referred_to",
-      "column": "null"
+      "column": "mh.referred_to"
     },
     {
       "type": "simple_column",
       "alias": "remarks",
-      "column": "null"
+      "column": "mh.remarks"
     }
   ],
   "groupBy": {
-    "columns": ["obs1.person_id"]
-  },
-  "filters": {
-    "conditionJoinOperator": "and",
-    "conditions": [
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "en.encounter_type in (4,110,167,313)"
-      }
-    ]
+    "columns": ["mh.person_id", "mh.encounter_datetime"]
   },
   "orderBy": {
     "orderByParam": "orderByParam",
     "columns": [
       {
-        "column": "obs1.obs_datetime",
-        "order": "desc"
+        "column": "mh.encounter_datetime",
+        "order": "asc"
       }
     ]
   }
