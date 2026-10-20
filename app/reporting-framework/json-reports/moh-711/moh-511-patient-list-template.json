@@ -53,7 +53,7 @@
       "alias": "en",
       "join": {
         "type": "LEFT",
-        "joinCondition": "en.encounter_id = obs1.encounter_id AND en.encounter_type in (4,110,167,313)"
+        "joinCondition": "en.encounter_id = mh.encounter_id AND en.encounter_type in (4,110,167,313)"
       }
     },
     {
@@ -71,10 +71,14 @@
       "alias": "person_id",
       "column": "mh.person_id"
     },
+
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "visit_date",
-      "column": "mh.encounter_datetime"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(mh.encounter_datetime)"
+      }
     },
     {
       "type": "simple_column",
@@ -99,16 +103,13 @@
       "alias": "full_name",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+        "expression": "CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
       }
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "age",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "mh.age"
-      }
+      "column": "mh.age_in_months"
     },
     {
       "type": "simple_column",
@@ -135,7 +136,7 @@
       "alias": "weight",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 5089, o.value_numeric, NULL)"
+        "expression": "mh.weight"
       }
     },
     {
@@ -249,7 +250,7 @@
     }
   ],
   "groupBy": {
-    "columns": ["mh.person_id", "mh.encounter_datetime"]
+    "columns": ["mh.person_id"]
   },
   "orderBy": {
     "orderByParam": "orderByParam",
