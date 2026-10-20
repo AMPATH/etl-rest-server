@@ -1,12 +1,12 @@
 {
   "name": "lab706Aggregate",
-  "version": "2.1",
+  "version": "2.2",
   "tag": "lab-706-blood-chemistry-aggregate",
-  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.1, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection.",
+  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.2, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection. v2.2: panel indicators come from the base's member-aware flags over etl.flat_moh_706_report_results - total_fbc/total_lipid_profile/total_urinalysis count orders with >= 1 member result, positive_urinalysis counts orders where any dipstick member coded POSITIVE (previously always 0: panel head obs are valueless), fbc_hb_* bands read the HGB (21) member via the base fbc_hgb slot (previously one arbitrary member value was banded as if it were Hb). The *_with_members sums add urinalysis-member occurrences to the standalone analyte counts - aliases are additive; the legacy aliases stay comparable with historical numbers until the counting semantics are signed off.",
   "uses": [
     {
       "name": "lab706Base",
-      "version": "2.1",
+      "version": "2.2",
       "type": "dataset_def"
     }
   ],
@@ -308,7 +308,7 @@
       "alias": "total_lipid_profile",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.lipid_profile IS NOT NULL, 1, 0))"
+        "expression": "SUM(t1.total_lipid_profile)"
       }
     },
     {
@@ -492,7 +492,7 @@
       "alias": "positive_urinalysis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.urinalysis = 703, 1, 0))"
+        "expression": "SUM(t1.positive_urinalysis)"
       }
     },
     {
@@ -500,7 +500,7 @@
       "alias": "total_urinalysis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.urinalysis IS NOT NULL, 1, 0))"
+        "expression": "SUM(t1.total_urinalysis)"
       }
     },
     {
@@ -581,6 +581,70 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(IF(t1.urine_proteins IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_glucose_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_glucose_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_glucose_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_glucose_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_ketones_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_ketones_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_ketones_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_ketones_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_proteins_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_proteins_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_proteins_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_proteins_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_pus_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_pus_cells_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_pus_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_pus_cells_with_members)"
       }
     },
     {
@@ -716,7 +780,7 @@
       "alias": "total_fbc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.fbc IS NOT NULL, 1, 0))"
+        "expression": "SUM(t1.total_fbc)"
       }
     },
     {
@@ -724,7 +788,7 @@
       "alias": "fbc_hb_less_than_5",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.fbc < 5, 1, 0))"
+        "expression": "SUM(IF(t1.fbc_hgb < 5, 1, 0))"
       }
     },
     {
@@ -732,7 +796,7 @@
       "alias": "fbc_hb_5_to_10",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(IF(t1.fbc >= 5 AND t1.fbc <= 10, 1, 0))"
+        "expression": "SUM(IF(t1.fbc_hgb >= 5 AND t1.fbc_hgb <= 10, 1, 0))"
       }
     },
     {
