@@ -324,6 +324,34 @@
       "expressionOptions": {
         "expression": "extract(year from (from_days(datediff(endDate,enrollment_date))))"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "height",
+      "column": "mdh.height"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "mdh.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "mdh.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "bmi",
+      "column": "mdh.bmi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(mdh.systolic,' / ',mdh.diastolic)"
+      }
     }
   ],
   "filters": {
