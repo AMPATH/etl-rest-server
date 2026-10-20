@@ -2,7 +2,7 @@
   "name": "lab706PatientList",
   "version": "1.0",
   "tag": "lab-706-patient-list",
-  "description": "Patient-list template for the MOH 240 laboratory register (A-AA). Joined onto lab706Base per person; every presentation field is derived here from the raw facts - names/addresses/identifiers/telephone as per-row correlated subqueries (safe on a paginated page), coded answers translated through etl.concept_value_map (cvt = the test concept, cvm = the result concept). prior_treatment, condition_of_specimen, amount_charged, receipt_number and signature have no standard-model source and stay NULL. Received/analysed/dispatched map to the fhir report created/changed/issued stamps. Alias names are the app contract - see moh-240.columns.ts.",
+  "description": "Patient-list template for the MOH 240 laboratory register (A-AA). Joined onto lab706Base per person; every presentation field is derived here from the raw facts - names/addresses/identifiers/telephone as per-row correlated subqueries (safe on a paginated page), coded answers translated through etl.concept_value_map (cvt = the test concept, cvm = the result concept). amount_charged and receipt_number come from the billing module (amrs.bill_line_item links to the order directly via order_id; the charge is SUM(price * quantity) over the order's non-voided, non-cancelled line items, the receipt number from the newest such bill). prior_treatment, condition_of_specimen and signature have no standard-model source and stay NULL. Received/analysed/dispatched map to the fhir report created/changed/issued stamps. Alias names are the app contract - see moh-240.columns.ts.",
   "uses": [],
   "sources": [
     {
@@ -189,7 +189,7 @@
       "alias": "amount_charged",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "NULL"
+        "expression": "(SELECT SUM(bli.price * bli.quantity) FROM amrs.bill_line_item bli JOIN amrs.bill b ON b.bill_id = bli.bill_id WHERE bli.order_id = fbc.order_id AND bli.voided = 0 AND b.voided = 0 AND bli.status <> 'CANCELLED')"
       }
     },
     {
@@ -197,7 +197,7 @@
       "alias": "receipt_number",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "NULL"
+        "expression": "(SELECT b.receipt_number FROM amrs.bill_line_item bli JOIN amrs.bill b ON b.bill_id = bli.bill_id WHERE bli.order_id = fbc.order_id AND bli.voided = 0 AND b.voided = 0 AND b.receipt_number IS NOT NULL AND bli.status <> 'CANCELLED' ORDER BY b.date_created DESC, bli.bill_line_item_id DESC LIMIT 1)"
       }
     },
     {
