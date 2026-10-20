@@ -1,12 +1,12 @@
 {
   "name": "lab706Aggregate",
-  "version": "2.0",
+  "version": "2.1",
   "tag": "lab-706-blood-chemistry-aggregate",
-  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.0, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection.",
+  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.1, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection.",
   "uses": [
     {
       "name": "lab706Base",
-      "version": "2.0",
+      "version": "2.1",
       "type": "dataset_def"
     }
   ],
@@ -65,6 +65,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_blood_sugar",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.blood_sugar IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_ogtt",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -77,6 +85,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.ogtt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ogtt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.ogtt IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -97,6 +113,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.creatinine IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_urea",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -109,6 +133,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.urea)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.urea IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -153,6 +185,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_total_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.total_bili IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_ast",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -165,6 +205,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.ast)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ast",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.ast IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -185,6 +233,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.alt IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_total_protein",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -197,6 +253,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.total_protein)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_total_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.total_protein IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -217,6 +281,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_alk_phos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.alk_phos IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_lipid_profile",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -229,6 +301,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.lipid_profile)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_lipid_profile",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.lipid_profile IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -249,6 +329,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_total_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.total_cholesterol IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_triglycerides",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -261,6 +349,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.triglycerides)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.triglycerides IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -281,6 +377,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_ldl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.ldl IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_t3",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -293,6 +397,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.t3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_t3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.t3 IS NOT NULL, 1, 0))"
       }
     },
     {
@@ -313,6 +425,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_t4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.t4 IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_tsh",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -325,6 +445,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MIN(t1.tsh)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_tsh",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.tsh IS NOT NULL, 1, 0))"
       }
     },
     {

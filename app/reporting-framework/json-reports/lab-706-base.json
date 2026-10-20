@@ -1,6 +1,6 @@
 {
   "name": "lab706Base",
-  "version": "2.0",
+  "version": "2.1",
   "tag": "lab-706-blood-chemistry",
   "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time.",
   "uses": [],
@@ -497,6 +497,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_blood_sugar",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (887) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_ogtt",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -506,6 +514,14 @@
     {
       "type": "derived_column",
       "alias": "min_ogtt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10627) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ogtt",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (10627) AND fbc.result_numeric IS NOT NULL, 1, 0)"
@@ -529,6 +545,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (790) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_urea",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -538,6 +562,14 @@
     {
       "type": "derived_column",
       "alias": "min_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (857) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urea",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (857) AND fbc.result_numeric IS NOT NULL, 1, 0)"
@@ -577,6 +609,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_total_bili",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (655) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_ast",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -586,6 +626,14 @@
     {
       "type": "derived_column",
       "alias": "min_ast",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (653) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ast",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (653) AND fbc.result_numeric IS NOT NULL, 1, 0)"
@@ -609,6 +657,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (654) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_total_protein",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -618,6 +674,14 @@
     {
       "type": "derived_column",
       "alias": "min_total_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (717) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_total_protein",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (717) AND fbc.result_numeric IS NOT NULL, 1, 0)"
@@ -641,6 +705,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_alk_phos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (785) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_lipid_profile",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -650,6 +722,14 @@
     {
       "type": "derived_column",
       "alias": "min_lipid_profile",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1010) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_lipid_profile",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (1010) AND fbc.result_numeric IS NOT NULL, 1, 0)"
@@ -673,6 +753,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_total_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1006) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_triglycerides",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -682,6 +770,14 @@
     {
       "type": "derived_column",
       "alias": "min_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_triglycerides",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric IS NOT NULL, 1, 0)"
@@ -705,6 +801,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_ldl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1008) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_t3",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -714,6 +818,14 @@
     {
       "type": "derived_column",
       "alias": "min_t3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7881) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_t3",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (7881) AND fbc.result_numeric IS NOT NULL, 1, 0)"
@@ -737,6 +849,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_t4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7882) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "max_tsh",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -746,6 +866,14 @@
     {
       "type": "derived_column",
       "alias": "min_tsh",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7880) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_tsh",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (7880) AND fbc.result_numeric IS NOT NULL, 1, 0)"
