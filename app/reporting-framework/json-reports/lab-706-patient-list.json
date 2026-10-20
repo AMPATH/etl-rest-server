@@ -1,0 +1,233 @@
+{
+  "name": "lab706PatientList",
+  "version": "1.0",
+  "tag": "lab-706-patient-list",
+  "description": "Patient-list template for the MOH 240 laboratory register (A-AA). Joined onto lab706Base per person; every presentation field is derived here from the raw facts - names/addresses/identifiers/telephone as per-row correlated subqueries (safe on a paginated page), coded answers translated through etl.concept_value_map (cvt = the test concept, cvm = the result concept). prior_treatment, condition_of_specimen, amount_charged, receipt_number and signature have no standard-model source and stay NULL. Received/analysed/dispatched map to the fhir report created/changed/issued stamps. Alias names are the app contract - see moh-240.columns.ts.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "pt"
+    },
+    {
+      "table": "etl.concept_value_map",
+      "alias": "cvt",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "cvt.concept_id = fbc.concept_id"
+      }
+    },
+    {
+      "table": "etl.concept_value_map",
+      "alias": "cvm",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "cvm.concept_id = fbc.result_concept_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_ip_ref_no",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = fbc.person_id AND pi.voided = 0 AND pi.preferred = 1 ORDER BY pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_no",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT COUNT(*) + 1 FROM amrs.encounter e2 WHERE e2.patient_id = fbc.person_id AND e2.voided = 0 AND e2.encounter_datetime < fbc.test_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(' ', pn.given_name, NULLIF(pn.middle_name, ''), pn.family_name) FROM amrs.person_name pn WHERE pn.person_id = fbc.person_id AND pn.voided = 0 ORDER BY pn.preferred DESC, pn.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, fbc.test_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "p.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "county_sub_county",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(' / ', NULLIF(pa.state_province, ''), NULLIF(pa.county_district, '')) FROM amrs.person_address pa WHERE pa.person_id = fbc.person_id AND pa.voided = 0 ORDER BY pa.preferred DESC, pa.person_address_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "village_estate_landmark",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(', ', NULLIF(pa.city_village, ''), NULLIF(pa.address3, '')) FROM amrs.person_address pa WHERE pa.person_id = fbc.person_id AND pa.voided = 0 ORDER BY pa.preferred DESC, pa.person_address_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "telephone_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pa.value FROM amrs.person_attribute pa WHERE pa.person_id = fbc.person_id AND pa.voided = 0 AND pa.person_attribute_type_id IN (10, 48) ORDER BY pa.person_attribute_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "clinical_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT GROUP_CONCAT(COALESCE(cvm_ed.name, CAST(ed.diagnosis_coded AS CHAR)) SEPARATOR '; ') FROM amrs.encounter_diagnosis ed LEFT JOIN etl.concept_value_map cvm_ed ON cvm_ed.concept_id = ed.diagnosis_coded WHERE ed.encounter_id = fbc.encounter_id AND ed.voided = 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prior_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_of_specimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT COALESCE(cvm_sp.name, CAST(o_sp.value_coded AS CHAR)) FROM amrs.obs o_sp LEFT JOIN etl.concept_value_map cvm_sp ON cvm_sp.concept_id = o_sp.value_coded WHERE o_sp.encounter_id = fbc.encounter_id AND o_sp.concept_id = 10338 AND o_sp.voided = 0 ORDER BY o_sp.obs_datetime DESC, o_sp.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "condition_of_specimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "investigation_required",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(cvt.name, CAST(fbc.concept_id AS CHAR))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "test_datetime",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(fbc.test_datetime, '%d/%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "date_sample_received",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(fbc.report_date_created, '%d/%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "clinician_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE((SELECT CONCAT_WS(' ', pn2.given_name, NULLIF(pn2.middle_name, ''), pn2.family_name) FROM amrs.encounter_provider ep JOIN amrs.provider pr ON pr.provider_id = ep.provider_id JOIN amrs.person_name pn2 ON pn2.person_id = pr.person_id AND pn2.voided = 0 WHERE ep.encounter_id = fbc.encounter_id ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1), (SELECT COALESCE(cvm_cl.name, CAST(o_cl.value_coded AS CHAR)) FROM amrs.obs o_cl LEFT JOIN etl.concept_value_map cvm_cl ON cvm_cl.concept_id = o_cl.value_coded WHERE o_cl.encounter_id = fbc.encounter_id AND o_cl.concept_id = 1496 AND o_cl.voided = 0 ORDER BY o_cl.obs_id DESC LIMIT 1))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "date_sample_analysed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(fbc.report_date_changed, '%d/%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "results",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(cvm.name, CAST(fbc.result_numeric AS CHAR), TRIM(fbc.result_text), DATE_FORMAT(fbc.result_datetime, '%Y-%m-%d'))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "date_results_dispatched",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(fbc.report_issued, '%d/%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "amount_charged",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "receipt_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referrals",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT GROUP_CONCAT(COALESCE(cvm_rf.name, CAST(o_rf.value_coded AS CHAR), o_rf.value_text) SEPARATOR '; ') FROM amrs.obs o_rf LEFT JOIN etl.concept_value_map cvm_rf ON cvm_rf.concept_id = o_rf.value_coded WHERE o_rf.encounter_id = fbc.encounter_id AND o_rf.concept_id IN (1272, 1932, 9552) AND o_rf.voided = 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "comments",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS('; ', NULLIF((SELECT o_cm.value_text FROM amrs.obs o_cm WHERE o_cm.encounter_id = fbc.encounter_id AND o_cm.concept_id = 9467 AND o_cm.voided = 0 ORDER BY o_cm.obs_id DESC LIMIT 1), ''), NULLIF(fbc.instructions, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "testing_officer",
+      "column": "fbc.testing_officer"
+    },
+    {
+      "type": "derived_column",
+      "alias": "signature",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    }
+  ]
+}
