@@ -58,7 +58,7 @@
       "alias": "revisit_to_clinic_known_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.ncd_visit_type = 2345 AND mdh.diabetes_status = 7282, 1,NULL)"
+        "expression": "IF(mdh.revisit_this_month = 1 AND mdh.diabetes_status = 7282, 1,NULL)"
       }
     },
     {
@@ -205,7 +205,7 @@
       "alias": "revisit_known_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.htn_type = 7286,1,NULL)"
+        "expression": "IF(mdh.htn_type = 7286 AND mdh.revisit_this_month = 1,1,NULL)"
       }
     },
     {
@@ -348,6 +348,92 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "extract(year from (from_days(datediff(endDate,enrollment_date))))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "mdh.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "mdh.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "bmi",
+      "column": "mdh.bmi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(mdh.systolic,' / ',mdh.diastolic)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtc_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(mdh.rtc_date,'%Y-%m-%d')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "htn",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.htn_type = 7285",
+            "value": "a"
+          },
+          {
+            "condition": "mdh.htn_type = 7286",
+            "value": "b"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diabetes",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.diabetes_status = 7281",
+            "value": "a"
+          },
+          {
+            "condition": "mdh.diabetes_status = 7282",
+            "value": "b"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_for_tb",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.screened_for_tb_this_month = 1",
+            "value": "Y"
+          },
+          {
+            "condition": "mdh.screened_for_tb_this_month = 0",
+            "value": "N"
+          },
+          {
+            "condition": "mdh.screened_for_tb_this_month IS NULL",
+            "value": "N"
+          }
+        ]
       }
     }
   ],
