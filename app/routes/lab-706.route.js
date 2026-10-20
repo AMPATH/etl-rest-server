@@ -3,24 +3,36 @@ var etlHelpers = require('../../etl-helpers');
 var privileges = authorizer.getAllPrivileges();
 var preRequest = require('../../pre-request-processing');
 import { Lab706Service } from '../../service/lab-706.service';
+import { PatientlistMysqlReport } from '../reporting-framework/patientlist-mysql.report';
+import QueryService from '../database-access/query.service';
+
+// The generated patient-list SQL carries LIMIT/OFFSET for the page; the count
+// query must run over the unpaginated statement.
+function stripPaging(sqlQuery) {
+  return sqlQuery.replace(/LIMIT \d+( OFFSET \d+)?\s*$/i, '');
+}
 
 const routes = [
   {
     method: 'GET',
-    path: '/lab-706',
+    path: '/etl/lab-706',
     config: {
-      auth: false,
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
           let reportParams = etlHelpers.getReportParams(
-            'MOH-706-report',
+            'lab706Aggregate',
             ['startDate', 'endDate', 'locationUuids'],
             requestParams
           );
 
           let service = new Lab706Service(
-            'MOH-706-report',
+            'lab706Aggregate',
             reportParams.requestParams
           );
           service
@@ -35,7 +47,7 @@ const routes = [
       },
       description: 'Lab 706 blood chemistry aggregated report',
       notes:
-        'Returns total exams, max and min blood sugar grouped by test datetime',
+        'Returns one summary row of indicator totals (tests done, positivity, banding) for the selected period and locations',
       tags: ['api'],
       validate: {
         options: {
@@ -47,47 +59,64 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/lab-706/patient-list',
+    path: '/etl/lab-706/patient-list',
     config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          // preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          if (request.query['startDate']) {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-
-            let requestCopy = _.cloneDeep(requestParams);
-            let reportParams = etlHelpers.getReportParams(
-              request.query.reportName,
-              ['startDate', 'endDate', 'locationUuids', 'locations'],
-              requestParams
-            );
-
-            let report = 'MOH-706-report';
-            requestCopy.locations = reportParams.requestParams.locations;
-            let service = new Lab706Service(report, requestCopy);
-
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
-          } else {
-            reply('Misssing location or service params');
-          }
-          // });
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
         }
       },
-      description: 'Service Queue Daily report Patient List',
-      notes: 'Service Queue Daily report Patient List',
-      tags: ['api']
+      handler: function (request, reply) {
+        let requestParams = Object.assign({}, request.query, request.params);
+        requestParams.locationUuids = request.query.locationUuids.split(',');
+        let indicators = [];
+        if (requestParams.indicators) {
+          indicators = requestParams.indicators.split(',');
+        }
+
+        requestParams.startDate = requestParams.startDate.split('T')[0];
+        requestParams.endDate = requestParams.endDate.split('T')[0];
+        requestParams.startIndex = Number(requestParams.startIndex || 0);
+        requestParams.limit = Number(requestParams.limit || 50);
+
+        let report = new PatientlistMysqlReport(
+          'lab706Aggregate',
+          requestParams
+        );
+        report
+          .generatePatientListReport(indicators)
+          .then((result) => {
+            let rows = result.results.results;
+            let countSql =
+              'SELECT COUNT(*) AS total FROM (' +
+              stripPaging(report.reportQuery) +
+              ') AS patient_list_count';
+            let queryService = new QueryService();
+            return queryService.executeQuery(countSql).then((countResult) => {
+              // Reply keeps the patient-list envelope and adds the real
+              // total so the register's pager stops inferring page counts.
+              result.results = {
+                results: rows,
+                size: rows.length,
+                total: countResult[0].total
+              };
+              reply(result);
+            });
+          })
+          .catch((error) => {
+            reply(error);
+          });
+      },
+      description: 'Lab 706 MOH 240 laboratory register patient list',
+      notes:
+        'Returns the paginated MOH 240 register rows (A-AA) for the supplied indicators, with an exact total',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
     }
   }
 ];

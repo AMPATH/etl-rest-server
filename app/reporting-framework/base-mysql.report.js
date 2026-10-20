@@ -717,6 +717,12 @@ import * as claims_summary_base from './json-reports/claims-summary/claims-summa
 import * as claims_summary_aggregate from './json-reports/claims-summary/claims-summary-aggregate.json';
 import * as claims_summary_patient_list_template from './json-reports/claims-summary/claim-summary-patient-list-template.json';
 import * as claims_summary from './json-reports/claims-summary/claims-summary.json';
+
+// MOH 706 report
+import * as lab_706_base from './json-reports/lab-706-base.json';
+import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
+import * as lab_706_patient_list from './json-reports/lab-706-patient-list.json';
+
 export class BaseMysqlReport {
   constructor(reportName, params) {
     this.reportName = reportName;
@@ -3182,6 +3188,18 @@ export class BaseMysqlReport {
         case 'claim_summary_patient_list_template':
           resolve({
             main: this.cloneJsonSchema(claims_summary_patient_list_template)
+          });
+          break;
+        case 'lab706Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(lab_706_aggregate),
+            lab706Base: this.cloneJsonSchema(lab_706_base)
+          });
+          break;
+        case 'lab706PatientList':
+          resolve({
+            main: this.cloneJsonSchema(lab_706_patient_list),
+            lab706Base: this.cloneJsonSchema(lab_706_base)
           });
           break;
         default:
