@@ -235,6 +235,6 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["m.person_id", "encounter_datetime"]
+    "columns": ["m.person_id", "m.encounter_datetime"]
   }
 }
