@@ -63,7 +63,7 @@
     {
       "type": "simple_column",
       "alias": "cholera",
-      "column": "if(ed.diagnosis_coded = 198, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (198,49049), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -73,12 +73,12 @@
     {
       "type": "simple_column",
       "alias": "gastroenterities",
-      "column": "if(ed.diagnosis_coded = 197, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (197,48936), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "pneumonia",
-      "column": "if(ed.diagnosis_coded = 43, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (43,37288,37246), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -88,12 +88,12 @@
     {
       "type": "simple_column",
       "alias": "upper_respiratory_tract_infections",
-      "column": "if(ed.diagnosis_coded in (106, 37388, 37486), 1, 0)"
+      "column": "if(ed.diagnosis_coded in (106,37206,37486,37388), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "lower_respiratory_tract_infections",
-      "column": "if(ed.diagnosis_coded = 998, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (998,37290), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -128,17 +128,17 @@
     {
       "type": "simple_column",
       "alias": "malnutrition",
-      "column": "if(ed.diagnosis_coded = 68, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (68,43802), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "anaemia",
-      "column": "if(ed.diagnosis_coded = 3, 1, 0)"
+      "column": "if(ed.diagnosis_coded = 44911, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "meningococcal_meningitis",
-      "column": "if(ed.diagnosis_coded = 48462, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (48462,48475), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -158,7 +158,7 @@
     {
       "type": "simple_column",
       "alias": "poliomyelitis",
-      "column": "if(ed.diagnosis_coded = 5258, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (5258,48305), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -258,17 +258,17 @@
     {
       "type": "simple_column",
       "alias": "violence_related_injuries",
-      "column": "if(ed.diagnosis_coded = 21739, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (21739,27702), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "other_injuries",
-      "column": "if(ed.diagnosis_coded = 22836, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (22836,22817), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "sexual_violence",
-      "column": "if(ed.diagnosis_coded = 20702, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (20702,35024), 1, 0)"
     },
     {
       "type": "simple_column",
