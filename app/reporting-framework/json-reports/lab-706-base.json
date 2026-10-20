@@ -1,8 +1,8 @@
 {
   "name": "lab706Base",
-  "version": "2.1",
+  "version": "2.2",
   "tag": "lab-706-blood-chemistry",
-  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time.",
+  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged.",
   "uses": [],
   "sources": [
     {
@@ -237,6 +237,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (1019), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fbc_hgb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1019), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 21), NULL)"
       }
     },
     {
@@ -732,7 +740,7 @@
       "alias": "total_lipid_profile",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1010) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (1010) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id), 1, 0)"
       }
     },
     {
@@ -924,7 +932,7 @@
       "alias": "positive_urinalysis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (302) AND fbc.result_concept_id = 703, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (302) AND (fbc.result_concept_id = 703 OR EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id <> 302 AND rr.result_concept_id = 703)), 1, 0)"
       }
     },
     {
@@ -932,7 +940,7 @@
       "alias": "total_urinalysis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (302) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (302) AND (fbc.result_concept_id IS NOT NULL OR EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id <> 302)), 1, 0)"
       }
     },
     {
@@ -997,6 +1005,70 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (1984) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_glucose_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (2340) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 2340 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_glucose_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (2340) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 2340)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_ketones_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (7276) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 7276 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_ketones_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (7276) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 7276)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_proteins_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (2339) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 2339 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_proteins_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (2339) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 2339)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_pus_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1984) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1984 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_pus_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1984) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1984)), 1, 0)"
       }
     },
     {
@@ -1324,7 +1396,7 @@
       "alias": "total_fbc",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1019) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (1019) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id), 1, 0)"
       }
     },
     {
@@ -1332,7 +1404,7 @@
       "alias": "fbc_hb_less_than_5",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1019) AND fbc.result_numeric < 5, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (1019) AND (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 21) < 5, 1, 0)"
       }
     },
     {
@@ -1340,7 +1412,7 @@
       "alias": "fbc_hb_5_to_10",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1019) AND fbc.result_numeric >= 5 AND fbc.result_numeric <= 10, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (1019) AND (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 21) BETWEEN 5 AND 10, 1, 0)"
       }
     },
     {
