@@ -47,6 +47,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "diarrhoea",
       "column": "if(ed.diagnosis_coded in (26901,48938,35290), 1, 0)"
     },
@@ -223,7 +228,7 @@
     {
       "type": "simple_column",
       "alias": "diseases_of_the_skin",
-      "column": "if(ed.diagnosis_coded in (33964,33966), 1, 0)"
+      "column": "if(ed.diagnosis_coded in (33964,26705,43708,48360,47378), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -378,42 +383,42 @@
     {
       "type": "simple_column",
       "alias": "all_other_diseases",
-      "column": "null"
+      "column": "IF(ed.diagnosis_coded IS NOT NULL AND ed.diagnosis_coded NOT IN (43,57,68,106,198,998,1909,5258,6847,15473,15657,15860,19698,20702,21739,22233,22238,22284,22353,22593,22603,22817,22836,22866,26674,26682,26705,26901,27702,31319,31329,31338,32137,32156,32175,32177,32196,32449,32462,32481,32484,32488,33161,33411,33881,33886,33964,35024,35290,35736,36699,37206,37246,37288,37290,37350,37388,37486,37537,38550,38566,38752,38754,39323,40870,41034,41185,42246,42842,42925,43708,43793,43795,43798,43802,44173,44193,44195,44318,44515,44911,45778,45780,46208,46563,46803,46919,47067,47371,47378,47409,47432,47581,47583,47585,47604,47626,47628,47803,47857,47922,47952,47976,47999,48016,48071,48151,48158,48159,48177,48253,48271,48305,48360,48462,48464,48475,48525,48565,48568,48745,48747,48757,48798,48807,48809,48870,48873,48877,48901,48938,48943,48958,48961,49026,49049), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "tested_for_malaria",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs malaria_smear WHERE malaria_smear.encounter_id = e.encounter_id AND malaria_smear.concept_id = 32 AND malaria_smear.voided = 0 AND NOT EXISTS (SELECT 1 FROM amrs.concept_name malaria_smear_status WHERE malaria_smear_status.concept_id = malaria_smear.value_coded AND malaria_smear_status.locale_preferred = 1 AND malaria_smear_status.voided = 0 AND UPPER(malaria_smear_status.name) = 'NOT DONE')), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "no_of_first_attendances",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs attendance WHERE attendance.encounter_id = e.encounter_id AND attendance.concept_id = 1839 AND attendance.value_coded = 7850 AND attendance.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "re_attendances",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs attendance WHERE attendance.encounter_id = e.encounter_id AND attendance.concept_id = 1839 AND attendance.value_coded = 11233 AND attendance.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "referrals_from_other_health_facility",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 6749 AND referral_from.value_coded = 1275 AND referral_from.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "referrals_to_other_health_facility",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_to WHERE referral_to.encounter_id = e.encounter_id AND referral_to.concept_id = 10927 AND referral_to.value_coded = 7308 AND referral_to.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "referrals_from_community_unit",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 6749 AND referral_from.value_coded = 1862 AND referral_from.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "referrals_to_community_unit",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_to WHERE referral_to.encounter_id = e.encounter_id AND referral_to.concept_id = 10927 AND referral_to.value_coded = 9613 AND referral_to.voided = 0), 1, 0)"
     }
   ],
   "filters": {
