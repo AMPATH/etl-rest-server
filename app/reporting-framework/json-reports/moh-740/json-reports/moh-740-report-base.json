@@ -357,8 +357,8 @@
     },
     {
       "type": "simple_column",
-      "alias": "weight",
-      "column": "mdh.weight"
+      "alias": "height",
+      "column": "mdh.height"
     },
     {
       "type": "simple_column",
@@ -432,6 +432,44 @@
           {
             "condition": "mdh.screened_for_tb_this_month IS NULL",
             "value": "N"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tbs_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.tb_screening_status = 1107",
+            "value": "2"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6176",
+            "value": "3"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6971",
+            "value": "1"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "both_htn_and_diabetic",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.co_morbid_type = 1154",
+            "value": "a"
+          },
+          {
+            "condition": "mdh.co_morbid_type = 12778",
+            "value": "b"
           }
         ]
       }
