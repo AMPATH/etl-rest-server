@@ -41,11 +41,11 @@
       }
     },
     {
-      "table": "amrs.obs",
-      "alias": "o",
+      "table": "etl.flat_vitals",
+      "alias": "fv",
       "join": {
         "type": "LEFT",
-        "joinCondition": "t1.person_id = o.person_id"
+        "joinCondition": "et.encounter_id = fv.encounter_id"
       }
     }
   ],
@@ -112,60 +112,39 @@
       "column": "contacts.value"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "weight",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5089, o.value_numeric, NULL)"
-      }
+      "column": "fv.weight"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "height",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5090, o.value_numeric, NULL)"
-      }
+      "column": "fv.height"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "muac",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 1343, o.value_numeric, NULL)"
-      }
+      "column": "fv.muac"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "temp",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5088, o.value_numeric, NULL)"
-      }
+      "column": "fv.temp"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "respiratory_rate",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5242, o.value_numeric, NULL)"
-      }
+      "column": "null"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "oxygen_saturation",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5092, o.value_numeric, NULL)"
-      }
+      "column": "fv.oxygen_sat"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "pulse_rate",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(o.concept_id = 5087, o.value_numeric, NULL)"
-      }
+      "column": "fv.pulse"
     },
     {
       "type": "derived_column",
@@ -180,7 +159,7 @@
       "alias": "duration_of_illness",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 10893, o.value_numeric, NULL)"
+        "expression": "null"
       }
     },
     {
@@ -208,7 +187,7 @@
       "alias": "immunization_status_up_to_date",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 2300, IF(o.value_coded = 2208, 'Y', 'N'), NULL)"
+        "expression": "null"
       }
     },
     {
@@ -226,7 +205,7 @@
       "alias": "referred_from",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 10926, o.value_coded, NULL)"
+        "expression": "null"
       }
     },
     {
@@ -242,7 +221,7 @@
       "alias": "remarks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 9467, o.value_text, NULL)"
+        "expression": "null"
       }
     }
   ],
@@ -254,7 +233,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12 < 5"
+        "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, CURDATE()) <= 5"
       }
     ]
   },
@@ -262,7 +241,7 @@
     "orderByParam": "orderByParam",
     "columns": [
       {
-        "column": "o.obs_datetime",
+        "column": "e.encounter_datetime",
         "order": "desc"
       }
     ]
