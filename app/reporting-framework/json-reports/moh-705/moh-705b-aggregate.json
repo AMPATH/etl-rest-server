@@ -558,7 +558,7 @@
       "alias": "tested_for_malaria",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.tested_for_malaria)"
+        "expression": "COUNT(DISTINCT IF(a.tested_for_malaria = 1, a.encounter_id, NULL))"
       }
     },
     {
@@ -566,7 +566,7 @@
       "alias": "no_of_first_attendances",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.no_of_first_attendances)"
+        "expression": "COUNT(DISTINCT IF(a.no_of_first_attendances = 1, a.encounter_id, NULL))"
       }
     },
     {
@@ -574,7 +574,7 @@
       "alias": "re_attendances",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.re_attendances)"
+        "expression": "COUNT(DISTINCT IF(a.re_attendances = 1, a.encounter_id, NULL))"
       }
     },
     {
@@ -582,7 +582,7 @@
       "alias": "referrals_from_other_health_facility",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.referrals_from_other_health_facility)"
+        "expression": "COUNT(DISTINCT IF(a.referrals_from_other_health_facility = 1, a.encounter_id, NULL))"
       }
     },
     {
@@ -590,7 +590,7 @@
       "alias": "referrals_to_other_health_facility",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.referrals_to_other_health_facility)"
+        "expression": "COUNT(DISTINCT IF(a.referrals_to_other_health_facility = 1, a.encounter_id, NULL))"
       }
     },
     {
@@ -598,7 +598,7 @@
       "alias": "referrals_from_community_unit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.referrals_from_community_unit)"
+        "expression": "COUNT(DISTINCT IF(a.referrals_from_community_unit = 1, a.encounter_id, NULL))"
       }
     },
     {
@@ -606,7 +606,7 @@
       "alias": "referrals_to_community_unit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.referrals_to_community_unit)"
+        "expression": "COUNT(DISTINCT IF(a.referrals_to_community_unit = 1, a.encounter_id, NULL))"
       }
     }
   ],
