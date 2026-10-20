@@ -39,14 +39,6 @@
         "type": "LEFT",
         "joinCondition": "t1.person_id = pa.person_id"
       }
-    },
-    {
-      "table": "etl.flat_vitals",
-      "alias": "fv",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "et.encounter_id = fv.encounter_id"
-      }
     }
   ],
   "columns": [
@@ -114,12 +106,12 @@
     {
       "type": "simple_column",
       "alias": "weight",
-      "column": "fv.weight"
+      "column": "(SELECT COALESCE(v.value_numeric, CAST(NULLIF(v.value_text, '') AS DECIMAL(12, 4))) FROM amrs.obs v WHERE v.person_id = t1.person_id AND v.concept_id = 5089 AND v.voided = 0 ORDER BY (v.encounter_id = et.encounter_id) DESC, v.obs_datetime DESC, v.obs_id DESC LIMIT 1)"
     },
     {
       "type": "simple_column",
       "alias": "height",
-      "column": "fv.height"
+      "column": "(SELECT COALESCE(v.value_numeric, CAST(NULLIF(v.value_text, '') AS DECIMAL(12, 4))) FROM amrs.obs v WHERE v.person_id = t1.person_id AND v.concept_id = 5090 AND v.voided = 0 ORDER BY (v.encounter_id = et.encounter_id) DESC, v.obs_datetime DESC, v.obs_id DESC LIMIT 1)"
     },
     {
       "type": "simple_column",
@@ -129,17 +121,17 @@
     {
       "type": "simple_column",
       "alias": "temp",
-      "column": "fv.temp"
+      "column": "(SELECT COALESCE(v.value_numeric, CAST(NULLIF(v.value_text, '') AS DECIMAL(12, 4))) FROM amrs.obs v WHERE v.person_id = t1.person_id AND v.concept_id = 5088 AND v.voided = 0 ORDER BY (v.encounter_id = et.encounter_id) DESC, v.obs_datetime DESC, v.obs_id DESC LIMIT 1)"
     },
     {
       "type": "simple_column",
       "alias": "systolic",
-      "column": "fv.systolic_bp"
+      "column": "(SELECT COALESCE(v.value_numeric, CAST(NULLIF(v.value_text, '') AS DECIMAL(12, 4))) FROM amrs.obs v WHERE v.person_id = t1.person_id AND v.concept_id = 5085 AND v.voided = 0 ORDER BY (v.encounter_id = et.encounter_id) DESC, v.obs_datetime DESC, v.obs_id DESC LIMIT 1)"
     },
     {
       "type": "simple_column",
       "alias": "diastolic",
-      "column": "fv.diastolic_bp"
+      "column": "(SELECT COALESCE(v.value_numeric, CAST(NULLIF(v.value_text, '') AS DECIMAL(12, 4))) FROM amrs.obs v WHERE v.person_id = t1.person_id AND v.concept_id = 5086 AND v.voided = 0 ORDER BY (v.encounter_id = et.encounter_id) DESC, v.obs_datetime DESC, v.obs_id DESC LIMIT 1)"
     },
     {
       "type": "derived_column",
