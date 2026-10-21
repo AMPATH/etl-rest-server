@@ -6,10 +6,10 @@ var Joi = require('joi');
 const { MOH710Service } = require('../../service/moh-710.service');
 const { MOH711Service } = require('../../service/moh-711.service');
 const { MOH717Service } = require('../../service/moh-717.service');
-const { MOH745Service } = require('../../service/moh-745.service');
 const { MOH705AService } = require('../../service/moh-705a.service');
 const { MOH705BService } = require('../../service/moh-705b.service');
 const { MOH731Service } = require('../../service/moh-731.service');
+const { MOH745Service } = require('../../service/moh-745/moh-745.service');
 
 const routes = [
   {
@@ -149,11 +149,7 @@ const routes = [
     method: 'GET',
     path: '/moh-745',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: false,
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -674,18 +670,16 @@ const routes = [
             );
 
             let requestCopy = _.cloneDeep(requestParams);
-
             let service = new MOH745Service(
               'moh745Report',
               reportParams.requestParams
             );
-
             requestCopy.locations = reportParams.requestParams.locations;
             requestCopy.limitParam = requestParams.limit;
             requestCopy.offSetParam = requestParams.startIndex;
 
             service
-              .generatePatientListReport(reportParams.requestParams)
+              .generatePatientListReport(requestParams)
               .then((result) => {
                 reply(result);
               })
@@ -693,11 +687,6 @@ const routes = [
                 reply(error);
               });
           });
-        }
-      },
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
         }
       },
       description: 'Get MOH 412 PATIENT LIST',

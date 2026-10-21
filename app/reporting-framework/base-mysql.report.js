@@ -613,13 +613,14 @@ import * as medical_records_717_aggregate from './json-reports/moh-717/aggregati
 import * as medical_records_717_base from './json-reports/moh-717/aggregations/medical-records-base.json';
 import * as tetanus_710_aggregate from './json-reports/moh-710/aggregations/tetanus-aggregate.json';
 import * as tetanus_710_base from './json-reports/moh-710/aggregations/tetanus-base.json';
-import * as moh_745_report from './json-reports/moh-745/moh-745-summary.json';
-import * as breast_cancer_745_aggregate from './json-reports/moh-745/breast-cancer-aggregate.json';
-import * as breast_cancer_745_base from './json-reports/moh-745/breast-cancer-base.json';
-import * as cervical_cancer_745_aggregate from './json-reports/moh-745/cervical-cancer-aggregate.json';
-import * as cervical_cancer_745_base from './json-reports/moh-745/cervical-cancer-base.json';
-import * as colorectal_cancer_745_aggregate from './json-reports/moh-745/colorectal-cancer-aggregate.json';
-import * as colorectal_cancer_745_base from './json-reports/moh-745/colorectal-cancer-base.json';
+// MOH-745 Report
+import * as moh_745_report from './json-reports/moh-745/moh-745-report.json';
+import * as moh_745_cervical_cancer_screening_age_visit_type_disaggregate from './json-reports/moh-745/moh-745-cervical-cancer-screening-age-visit-type-disaggregate.json';
+import * as moh_745_cervicalCancer_screening_main_datasetBase from './json-reports/moh-745/moh-745-cervical-cancer-screening-main-dataset-base.json';
+import * as moh_745_cervical_cancer_screening_aggregate from './json-reports/moh-745/moh-745-cervical-cancer-screening-aggregate.json';
+import * as moh_745_cervical_cancer_treatment_monthly_dis_aggregate from './json-reports/moh-745/moh-745-cervical-cancer-treatment-monthly-diasaggregate.json';
+import * as moh_745_cervical_cancer_treatment_monthly_base from './json-reports/moh-745/moh-745-cervical-cancer-treatment-monthly-base.json';
+
 import * as moh_705a_report from './json-reports/moh-705/moh-705a-summary.json';
 import * as moh_705a_aggregate from './json-reports/moh-705/moh-705a-aggregate.json';
 import * as moh_705a_base from './json-reports/moh-705/moh-705a-base.json';
@@ -650,7 +651,7 @@ import * as moh_333_patient_list_template from './json-reports/moh-711/moh-333-p
 import * as moh_405_patient_list_template from './json-reports/moh-711/moh-405-patient-list-template.json';
 import * as moh_406_patient_list_template from './json-reports/moh-711/moh-406-patient-list-template.json';
 import * as moh_511_patient_list_template from './json-reports/moh-711/moh-511-patient-list-template.json';
-import * as moh_412_patient_list_template from './json-reports/moh-745/moh-412-patient-list-template.json';
+import * as moh_412_patient_list_template from './json-reports/moh-745/old/moh-412-patient-list-template.json';
 
 //new moh 731 report
 import * as moh_731_report_summary from './json-reports/moh-731/731-summary.json';
@@ -2829,23 +2830,33 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(moh_745_report)
           });
-        case 'breastCancerAggregate':
+        case 'moh745CervicalCancerScreeningAgeVisitTypeDisaggregate':
           resolve({
-            main: this.cloneJsonSchema(breast_cancer_745_aggregate),
-            breastCancerBase: this.cloneJsonSchema(breast_cancer_745_base)
+            main: this.cloneJsonSchema(
+              moh_745_cervical_cancer_screening_age_visit_type_disaggregate
+            ),
+            moh745CervicalCancerScreeningMainDatasetBase: this.cloneJsonSchema(
+              moh_745_cervicalCancer_screening_main_datasetBase
+            )
           });
           break;
-        case 'cervicalCancer745Aggregate':
+        case 'moh745CervicalCancerScreeningAggregate':
           resolve({
-            main: this.cloneJsonSchema(cervical_cancer_745_aggregate),
-            cervicalCancerBase: this.cloneJsonSchema(cervical_cancer_745_base)
+            main: this.cloneJsonSchema(
+              moh_745_cervical_cancer_screening_aggregate
+            ),
+            moh745CervicalCancerScreeningMainDatasetBase: this.cloneJsonSchema(
+              moh_745_cervicalCancer_screening_main_datasetBase
+            )
           });
           break;
-        case 'colorectalCancerAggregate':
+        case 'moh745CervicalCancerTreatmentMonthlyDisAggregate':
           resolve({
-            main: this.cloneJsonSchema(colorectal_cancer_745_aggregate),
-            colorectalCancerBase: this.cloneJsonSchema(
-              colorectal_cancer_745_base
+            main: this.cloneJsonSchema(
+              moh_745_cervical_cancer_treatment_monthly_dis_aggregate
+            ),
+            moh745CervicalCancerTreatmentMonthlyBase: this.cloneJsonSchema(
+              moh_745_cervical_cancer_treatment_monthly_base
             )
           });
           break;

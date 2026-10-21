@@ -322,7 +322,7 @@
       "column": "m.kangaroo_mother_care"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "referrals_from_other_health_facility",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -330,7 +330,7 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "referrals_to_other_health_facility",
       "expressionType": "simple_expression",
       "expressionOptions": {

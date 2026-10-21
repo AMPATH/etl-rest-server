@@ -12,16 +12,8 @@
       "table": "amrs.person",
       "alias": "pn",
       "join": {
-        "type": "LEFT",
+        "type": "INNER",
         "joinCondition": "pn.person_id = a.person_id"
-      }
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "en",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "en.encounter_id = a.encounter_id AND en.encounter_type IN (264, 265, 313)"
       }
     },
     {
@@ -44,7 +36,7 @@
       "table": "amrs.person_name",
       "alias": "person_name",
       "join": {
-        "type": "LEFT",
+        "type": "INNER",
         "joinCondition": "a.person_id = person_name.person_id AND (person_name.voided IS NULL OR person_name.voided = 0) AND person_name.preferred = 1"
       }
     },
@@ -76,16 +68,8 @@
       "table": "(SELECT ranked_obs.person_id, CASE WHEN ranked_obs.value_coded = 5555 THEN 'MM' WHEN ranked_obs.value_coded = 6290 THEN 'MP' WHEN ranked_obs.value_coded = 1059 THEN 'W' WHEN ranked_obs.value_coded = 1057 THEN 'NM' WHEN ranked_obs.value_coded = 1056 THEN 'S' WHEN ranked_obs.value_coded = 1058 THEN 'D' ELSE '' END AS marital_status FROM (SELECT person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054 AND voided = 0) ranked_obs WHERE rn = 1)",
       "alias": "g",
       "join": {
-        "type": "INNER",
-        "joinCondition": "g.person_id = a.person_id"
-      }
-    },
-    {
-      "table": "(SELECT o.person_id, o.encounter_id, MAX(CASE WHEN o.concept_id = 1836 THEN o.value_datetime END) AS lmp_date, MAX(CASE WHEN o.concept_id = 1279 THEN o.value_numeric END) AS gestation_weeks, MAX(CASE WHEN o.concept_id = 10919 THEN o.value_coded END) AS breast_exam_coded, MAX(CASE WHEN o.concept_id = 5089 THEN o.value_numeric END) AS weight_val, MAX(CASE WHEN o.concept_id = 1343 THEN o.value_numeric END) AS muac_val, MAX(CASE WHEN o.concept_id = 5090 THEN o.value_numeric END) AS height_val, MAX(CASE WHEN o.concept_id = 12081 THEN o.value_coded END) AS fgm_comp_coded, MAX(CASE WHEN o.concept_id = 1357 THEN o.value_coded END) AS oc_coded, MAX(CASE WHEN o.concept_id = 1040 THEN o.value_coded END) AS test1_coded, MAX(CASE WHEN o.concept_id = 1326 THEN o.value_coded END) AS test2_coded, MAX(CASE WHEN o.concept_id = 12461 THEN o.value_coded END) AS test3_coded, MAX(CASE WHEN o.concept_id = 12019 THEN o.value_coded END) AS hiv_test_type_coded, MAX(CASE WHEN o.concept_id = 2312 THEN o.value_coded END) AS partner_testing_coded, MAX(CASE WHEN o.concept_id = 11679 THEN o.value_coded END) AS other_conditions_coded, MAX(CASE WHEN o.concept_id = 10398 THEN o.value_coded END) AS deworming_coded, MAX(CASE WHEN o.concept_id = 2366 THEN o.value_coded END) AS ipt_coded, MAX(CASE WHEN o.concept_id = 10404 THEN o.value_coded END) AS tetanus_coded, MAX(CASE WHEN o.concept_id = 9487 THEN o.value_coded END) AS supp_coded, MAX(CASE WHEN o.concept_id = 6749 THEN o.value_coded END) AS referral_from, MAX(CASE WHEN o.concept_id = 10927 THEN o.value_coded END) AS referral_to, MAX(CASE WHEN o.concept_id = 1272 THEN o.value_coded END) AS reason_for_referral,  MAX(CASE WHEN o.concept_id = 5085 THEN o.value_numeric END) AS systolic, MAX(CASE WHEN o.concept_id = 5086 THEN o.value_numeric END) AS diastolic FROM amrs.obs o WHERE o.concept_id IN (1836,1279,10919,5089,1343,5090,12081,1357,1040,1326,12461,12019,2312,11679,10398,2366,10404,9487,6749,10927,5085,5086) AND o.voided = 0 GROUP BY o.person_id, o.encounter_id)",
-      "alias": "obs_pivot",
-      "join": {
         "type": "LEFT",
-        "joinCondition": "obs_pivot.person_id = a.person_id AND obs_pivot.encounter_id = a.encounter_id"
+        "joinCondition": "g.person_id = a.person_id"
       }
     },
     {
@@ -280,12 +264,9 @@
       "column": "a.tb_screening"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_test_type",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "CASE WHEN obs_pivot.hiv_test_type_coded = 10434 THEN 'I' WHEN obs_pivot.hiv_test_type_coded = 10200 THEN 'R' WHEN obs_pivot.hiv_test_type_coded IN (10407, 12074) THEN 'KP' WHEN obs_pivot.hiv_test_type_coded = 10973 THEN 'R' ELSE '' END"
-      }
+      "column": "a.hiv_test_type"
     },
     {
       "type": "simple_column",
@@ -303,12 +284,9 @@
       "column": "a.hiv_test_1_expiry_date"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_test_1_test_result",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "CASE WHEN obs_pivot.test1_coded = 703 THEN 'P' WHEN obs_pivot.test1_coded = 664 THEN 'N' WHEN obs_pivot.test1_coded = 1175 THEN 'NA' WHEN obs_pivot.test1_coded = 1138 THEN 'In' WHEN obs_pivot.test1_coded = 1067 THEN 'U' ELSE '' END"
-      }
+      "column": "a.hiv_test_1_test_result"
     },
     {
       "type": "simple_column",
@@ -326,12 +304,9 @@
       "column": "a.hiv_test_2_expiry_date"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_test_2_test_result",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "CASE WHEN obs_pivot.test2_coded = 703 THEN 'P' WHEN obs_pivot.test2_coded = 664 THEN 'N' WHEN obs_pivot.test2_coded = 1175 THEN 'NA' WHEN obs_pivot.test2_coded = 1138 THEN 'In' WHEN obs_pivot.test2_coded = 1067 THEN 'U' ELSE '' END"
-      }
+      "column": "a.hiv_test_2_test_result"
     },
     {
       "type": "simple_column",
@@ -349,20 +324,15 @@
       "column": "a.hiv_test_3_expiry_date"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_test_3_test_result",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "CASE WHEN obs_pivot.test3_coded = 703 THEN 'P' WHEN obs_pivot.test3_coded = 664 THEN 'N' WHEN obs_pivot.test3_coded = 1175 THEN 'NA' WHEN obs_pivot.test3_coded = 1138 THEN 'In' WHEN obs_pivot.test3_coded = 1067 THEN 'U' ELSE '' END"
-      }
+      "column": "a.hiv_test_3_test_result"
     },
+
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_results",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "CASE WHEN obs_pivot.oc_coded = 703 THEN 'P' WHEN obs_pivot.oc_coded = 664 THEN 'N' WHEN obs_pivot.oc_coded = 1175 THEN 'NA' WHEN obs_pivot.oc_coded = 1138 THEN 'In' WHEN obs_pivot.oc_coded = 1067 THEN 'U' ELSE '' END"
-      }
+      "column": "a.hiv_results"
     },
     {
       "type": "simple_column",
@@ -425,12 +395,9 @@
       "column": "a.referred_to"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "reason_for_referral",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "CASE WHEN obs_pivot.reason_for_referral = 1862 THEN 1 WHEN obs_pivot.reason_for_referral = 1275 THEN 2 WHEN obs_pivot.reason_for_referral = 1175 THEN 3 ELSE '' END"
-      }
+      "column": "a.reason_for_referral"
     },
     {
       "type": "simple_column",
@@ -439,7 +406,7 @@
     }
   ],
   "groupBy": {
-    "columns": ["a.person_id", "a.encounter_datetime"]
+    "columns": ["a.person_id"]
   },
   "orderBy": {
     "orderByParam": "orderByParam",

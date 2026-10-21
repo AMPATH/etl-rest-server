@@ -6229,7 +6229,6 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/moh-412-report',
       config: {
-        auth: 'simple',
         plugins: {},
         handler: function (request, reply) {
           if (request.query.locationUuids) {
