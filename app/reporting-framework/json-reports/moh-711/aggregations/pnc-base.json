@@ -6,31 +6,15 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "o"
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
-      }
+      "table": "etl.flat_moh_711",
+      "alias": "p"
     },
     {
       "table": "etl.flat_patient_identifiers_v1",
       "alias": "flat_identifiers",
       "join": {
         "type": "LEFT",
-        "joinCondition": "o.person_id = flat_identifiers.patient_id"
-      }
-    },
-    {
-      "table": "amrs.person",
-      "alias": "p",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+        "joinCondition": "p.person_id = flat_identifiers.patient_id"
       }
     }
   ],
@@ -38,7 +22,17 @@
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "o.person_id"
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "p.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "p.encounter_datetime"
     },
     {
       "type": "simple_column",
@@ -55,7 +49,7 @@
       "alias": "pnc_new_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(e.encounter_type = 266, 1, 0)"
+        "expression": "IF(p.encounter_type = 266, 1, 0)"
       }
     },
     {
@@ -63,31 +57,26 @@
       "alias": "pnc_revisit_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(e.encounter_type = 267, 1, 0)"
+        "expression": "IF(p.encounter_type = 267, 1, 0)"
       }
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "women_couselled_on_post_partum_fp",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(o.concept_id = 6681 AND o.value_coded = 1065, 1, 0)"
-      }
+      "column": "p.women_couselled_on_post_partum_fp"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "women_received_post_partum_fp",
       "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if((o.concept_id = 7240 AND o.value_coded != 1107), 1, 0)"
-      }
+      "column": "p.women_received_post_partum_fp"
     },
     {
       "type": "derived_column",
       "alias": "mothers_post_partum_care_48_hours",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 and o.value_coded = 10438, 1, 0)"
+        "expression": "if(p.post_partum_timing_mother = '0-48 HOURS', 1, 0)"
       }
     },
     {
@@ -95,7 +84,7 @@
       "alias": "mothers_post_partum_care_3_6_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 and o.value_coded = 10439 , 1, 0)"
+        "expression": "if(p.post_partum_timing_mother = '3 DAYS TO 6 WEEKS', 1, 0)"
       }
     },
     {
@@ -103,7 +92,7 @@
       "alias": "mothers_post_partum_care_after_6_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 and o.value_coded = 10437, 1, 0)"
+        "expression": "if(p.post_partum_timing_mother = 'MORE THAN SIX WEEKS', 1, 0)"
       }
     },
     {
@@ -111,7 +100,7 @@
       "alias": "infants_post_partum_care_48_hours",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12093 AND o.value_coded = 10438, 1, 0)"
+        "expression": "if(p.post_partum_care_infants = '0-48 HOURS', 1, 0)"
       }
     },
     {
@@ -119,7 +108,7 @@
       "alias": "infants_post_partum_care_3_6_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12093 AND o.value_coded = 10439, 1, 0)"
+        "expression": "if(p.post_partum_care_infants = '3 DAYS TO 6 WEEKS', 1, 0)"
       }
     },
     {
@@ -127,7 +116,7 @@
       "alias": "infants_post_partum_care_after_6_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12093 AND o.value_coded = 10437, 1, 0)"
+        "expression": "if(p.post_partum_care_infants = 'MORE THAN SIX WEEKS', 1, 0)"
       }
     },
     {
@@ -135,7 +124,7 @@
       "alias": "fistula_cases",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10473 AND o.value_coded in (1218, 10474, 12453), 1, 0)"
+        "expression": "if(p.fistula_cases = 1, 1, 0)"
       }
     },
     {
@@ -143,7 +132,7 @@
       "alias": "referrals_from_community",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 6749 AND o.value_coded = 1862, 1, 0)"
+        "expression": "if(p.referred_from = 'COMMUNITY', 1, 0)"
       }
     }
   ],
@@ -152,27 +141,27 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "e.encounter_type in (266, 267)"
+        "conditionExpression": "p.encounter_type in (266, 267)"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime >= ?",
+        "conditionExpression": "p.encounter_datetime >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime <= ?",
+        "conditionExpression": "p.encounter_datetime <= ?",
         "parameterName": "endDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.location_id in ?",
+        "conditionExpression": "p.location_id in ?",
         "parameterName": "locations"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id"]
+    "columns": ["p.person_id"]
   }
 }

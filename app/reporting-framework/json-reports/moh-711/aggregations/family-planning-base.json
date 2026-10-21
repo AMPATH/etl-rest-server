@@ -6,31 +6,15 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "o"
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "ob",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "ob.encounter_id = o.encounter_id AND ob.voided = 0 AND ob.concept_id = 1724 "
-      }
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (179)"
-      }
+      "table": "etl.flat_moh_711",
+      "alias": "f"
     },
     {
       "table": "etl.flat_patient_identifiers_v1",
       "alias": "flat_identifiers",
       "join": {
         "type": "LEFT",
-        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+        "joinCondition": "f.person_id = flat_identifiers.patient_id"
       }
     },
     {
@@ -38,7 +22,7 @@
       "alias": "p",
       "join": {
         "type": "INNER",
-        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+        "joinCondition": "f.person_id = p.person_id AND p.voided = 0"
       }
     }
   ],
@@ -46,7 +30,7 @@
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "o.person_id"
+      "column": "f.person_id"
     },
     {
       "type": "simple_column",
@@ -59,11 +43,21 @@
       "column": "flat_identifiers.nupi"
     },
     {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "f.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "f.encounter_datetime"
+    },
+    {
       "type": "derived_column",
       "alias": "new_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((o.concept_id = 1724 AND o.value_coded = 10647), 1, 0)"
+        "expression": "if(f.client_type = 'New', 1, 0)"
       }
     },
     {
@@ -71,7 +65,7 @@
       "alias": "revisit_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((o.concept_id = 1724 AND o.value_coded = 2345), 1, 0)"
+        "expression": "if(f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
@@ -79,7 +73,7 @@
       "alias": "first_users_contraceptive_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((o.concept_id = 8355 AND o.value_coded = 1065) AND (ob.concept_id = 1724 AND ob.value_coded = 10647), 1, 0)"
+        "expression": "IF(f.first_ever_use_of_contraceptive = 'Y' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
@@ -87,36 +81,92 @@
       "alias": "first_users_contraceptive_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((o.concept_id = 8355 AND o.value_coded = 1065) AND (ob.concept_id = 1724 AND ob.value_coded = 2345), 1, 0)"
+        "expression": "IF(f.first_ever_use_of_contraceptive = 'Y' AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pills_progestine",
+      "alias": "pills_progestine_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 6217, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'PROGESTIN PILLS' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pills_combined_oral_contraceptive",
+      "alias": "pills_progestine_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 6218, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'PROGESTIN PILLS' AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "emergency_contraceptive_pill",
+      "alias": "pills_combined_oral_contraceptive_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 6725, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'COMBINED ORAL CONTRACEPTIVE PILLS' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "fp_injections_dmpa_im",
+      "alias": "pills_combined_oral_contraceptive_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'COMBINED ORAL CONTRACEPTIVE PILLS' AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "emergency_contraceptive_pill_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'EMERGENCY CONTRACEPTIVE PILLS' AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "emergency_contraceptive_pill_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'EMERGENCY CONTRACEPTIVE PILLS' AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_injections_dmpa_im_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_injections_dmpa_im_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_injections_dmpa_sc_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_injections_dmpa_sc_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_condoms_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "null"
@@ -124,7 +174,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "fp_injections_dmpa_sc",
+      "alias": "male_condoms_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "null"
@@ -132,47 +182,71 @@
     },
     {
       "type": "derived_column",
-      "alias": "male_condoms",
+      "alias": "female_condoms_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 7495 AND o.value_coded = 6718, 1, 0)"
+        "expression": "null"
       }
     },
     {
       "type": "derived_column",
-      "alias": "female_condoms",
+      "alias": "female_condoms_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 7495 AND o.value_coded = 6717, 1, 0)"
+        "expression": "null"
       }
     },
     {
       "type": "derived_column",
-      "alias": "male_and_female_condoms",
+      "alias": "male_and_female_condoms_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 190, 1, 0)"
+        "expression": "null"
       }
     },
     {
       "type": "derived_column",
-      "alias": "counselled_for_natural_family_planning",
+      "alias": "male_and_female_condoms_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 15171 AND o.value_coded = 1065, 1, 0)"
+        "expression": "null"
       }
     },
     {
       "type": "derived_column",
-      "alias": "cycle_beads",
+      "alias": "counselled_for_natural_family_planning_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10536 AND o.value_coded = 1065, 1, 0)"
+        "expression": "IF(f.counseled_on_natural_fp = 'Y' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "implants_insertion_1_rod",
+      "alias": "counselled_for_natural_family_planning_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.counseled_on_natural_fp = 'Y' AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cycle_beads_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.given_cycle_beads = 'Y' AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cycle_beads_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.given_cycle_beads = 'Y' AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "implants_insertion_1_rod_first_time",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": ""
@@ -180,7 +254,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "implants_insertion_2_rod",
+      "alias": "implants_insertion_1_rod_re_insertion",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": ""
@@ -188,114 +262,226 @@
     },
     {
       "type": "derived_column",
-      "alias": "iucd_hormonal",
+      "alias": "implants_insertion_2_rod_first_time",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 9735, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = '5-YEAR IMPLANT' AND f.type_of_visit_for_method = 'INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "iucd_non_hormonal",
+      "alias": "implants_insertion_2_rod_re_insertion",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 5275, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = '5-YEAR IMPLANT' AND f.type_of_visit_for_method = 'RE-INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "surgical_contraception_btl",
+      "alias": "iucd_hormonal_first_time",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 5276, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'HORMONAL IUCD' AND f.type_of_visit_for_method = 'INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "vasectomy",
+      "alias": "iucd_hormonal_re_insertion",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 374 AND o.value_coded = 6701, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'HORMONAL IUCD' AND f.type_of_visit_for_method = 'RE-INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "iucd_removals",
+      "alias": "iucd_non_hormonal_first_time",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10442 AND o.value_coded = 10535, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'IUCD NON HORMONAL' AND f.type_of_visit_for_method = 'INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "implants_removal",
+      "alias": "iucd_non_hormonal_re_insertion",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10442 AND o.value_coded = 10535, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'IUCD NON HORMONAL' AND f.type_of_visit_for_method = 'RE-INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "fp_adolescent_10_14",
+      "alias": "surgical_contraception_btl_first_time",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 10 AND 14) AND o.concept_id = 374, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'FEMALE STERILIZATION BTL' AND f.type_of_visit_for_method = 'INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "fp_adolescent_15_19",
+      "alias": "surgical_contraception_btl_re_insertion",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 15 AND 19) AND o.concept_id = 374, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'FEMALE STERILIZATION BTL' AND f.type_of_visit_for_method = 'RE-INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "fp_adolescent_20_24",
+      "alias": "vasectomy_insertion",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 20 AND 24) AND o.concept_id = 374, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'VASECTOMY' AND f.type_of_visit_for_method = 'INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "fp_adolescent_25_plus",
+      "alias": "vasectomy_re_insertion",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 25 AND o.concept_id = 374, 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'VASECTOMY' AND f.type_of_visit_for_method = 'RE-INSERTION', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "post_partum_fp_48_hours",
+      "alias": "iucd_removals_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10438, 1, 0)"
+        "expression": "IF((f.contraceptive_dispensed = 'HORMONAL IUCD' OR f.contraceptive_dispensed = 'IUCD NON HORMONAL') AND f.client_type = 'New', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "post_partum_fp_4_6_weeks",
+      "alias": "iucd_removals_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10440, 1, 0)"
+        "expression": "IF((f.contraceptive_dispensed = 'HORMONAL IUCD' OR f.contraceptive_dispensed = 'IUCD NON HORMONAL') AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "fp_more_than_6_weeks",
+      "alias": "implants_removal_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 AND o.value_coded = 10437, 1, 0)"
+        "expression": "IF((f.contraceptive_dispensed = '3-YEAR IMPLANT' OR f.contraceptive_dispensed = '5-YEAR IMPLANT') AND f.type_of_visit_for_method = 'REMOVAL' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "post_abortion_fp",
+      "alias": "implants_removal_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10448 AND o.value_coded = 5277, 1, 0)"
+        "expression": "IF((f.contraceptive_dispensed = '3-YEAR IMPLANT' OR f.contraceptive_dispensed = '5-YEAR IMPLANT') AND f.type_of_visit_for_method = 'REMOVAL' AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_10_14_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age BETWEEN 10 AND 14 AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_10_14_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age BETWEEN 10 AND 14 AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_15_19_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age BETWEEN 15 AND 19 AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_15_19_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age BETWEEN 15 AND 19 AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_20_24_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age BETWEEN 20 AND 24 AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_20_24_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age BETWEEN 20 AND 24 AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_25_plus_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age >= 25 AND f.client_type = 'New', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_25_plus_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.age >= 25 AND f.client_type = 'Revisit', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_48_hours_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_48_hours_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_3days_6_weeks_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_3days_6_weeks_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_abortion_fp_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_abortion_fp_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
       }
     }
   ],
@@ -304,27 +490,27 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "e.encounter_type in (179)"
+        "conditionExpression": "f.encounter_type in (179)"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime >= ?",
+        "conditionExpression": "f.encounter_datetime >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime <= ?",
+        "conditionExpression": "f.encounter_datetime <= ?",
         "parameterName": "endDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.location_id in ?",
+        "conditionExpression": "f.location_id in ?",
         "parameterName": "locations"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id"]
+    "columns": ["f.person_id"]
   }
 }
