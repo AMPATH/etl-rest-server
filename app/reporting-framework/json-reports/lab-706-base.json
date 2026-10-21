@@ -1,8 +1,8 @@
 {
   "name": "lab706Base",
-  "version": "2.2",
+  "version": "2.4",
   "tag": "lab-706-blood-chemistry",
-  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged.",
+  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept. v2.4: reference-range banding - every numeric slot gains _low/_high flags (tumour markers high-only) banded against etl.reference_ranges (seeded from amrs.concept_numeric; NULL bounds read 0) - see MOH-706-REFERENCE-RANGE-BANDING-PLAN.md.",
   "uses": [],
   "sources": [
     {
@@ -380,7 +380,7 @@
       "alias": "hiv",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (6709), fbc.result_concept_id, NULL)"
+        "expression": "IF(fbc.concept_id IN (6709, 12019) AND fbc.order_id IS NOT NULL, fbc.result_concept_id, NULL)"
       }
     },
     {
@@ -420,7 +420,7 @@
       "alias": "vdrl",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (11868), fbc.result_concept_id, NULL)"
+        "expression": "IF(fbc.concept_id IN (11868, 299), fbc.result_concept_id, NULL)"
       }
     },
     {
@@ -477,6 +477,118 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10251), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10250), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10570), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reticulocyte",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "taenia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1526), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sickling",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (9008), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpha",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1032), fbc.result_concept_id, NULL)"
       }
     },
     {
@@ -1140,7 +1252,7 @@
       "alias": "positive_hiv",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (6709) AND fbc.result_concept_id = 703, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (6709, 12019) AND fbc.order_id IS NOT NULL AND fbc.result_concept_id = 703, 1, 0)"
       }
     },
     {
@@ -1148,7 +1260,7 @@
       "alias": "total_hiv",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (6709) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (6709, 12019) AND fbc.order_id IS NOT NULL AND fbc.result_concept_id IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -1220,7 +1332,7 @@
       "alias": "positive_vdrl",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (11868) AND fbc.result_concept_id = 703, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (11868, 299) AND fbc.result_concept_id = 703, 1, 0)"
       }
     },
     {
@@ -1228,7 +1340,7 @@
       "alias": "total_vdrl",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (11868) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+        "expression": "IF(fbc.concept_id IN (11868, 299) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -1470,6 +1582,886 @@
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (856) AND fbc.result_numeric IS NOT NULL, 1, 0)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_chlorides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_chlorides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_chlorides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10251) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10251) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10251) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10250) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10250) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10250) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_reticulocyte",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_reticulocyte",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_reticulocyte",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_asot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_asot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_asot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_taenia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1526) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_taenia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1526) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_sickling",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (9008) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_sickling",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (9008) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_tpha",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1032) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tpha",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1032) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hb_estimation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (21) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_blood",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (49547) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_urethral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1005) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_csf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_breast",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10051) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_soft_tissue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7190) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_csf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (49245) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_bone_marrow",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6902) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_new_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6709, 12019) AND fbc.order_id IS NOT NULL AND EXISTS (SELECT 1 FROM etl.flat_hiv_summary_v15b fhs WHERE fhs.person_id = fbc.person_id AND DATE(fhs.enrollment_date) BETWEEN '{startDate}' AND '{endDate}' AND fhs.enrollment_location_id = fbc.location_id), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10251) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10250) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1985) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1985)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1985) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1985 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15086) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15086)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15086) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15086 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15084) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15084)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15084) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15084 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_microscopy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1984, 1985, 15086, 15084) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id IN (1984, 1985, 15086, 15084))), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "blood_sugar_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (887) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 887), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "blood_sugar_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (887) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 887), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ogtt_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10627) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10627), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ogtt_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10627) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10627), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "creatinine_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (790) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 790), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "creatinine_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (790) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 790), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "urea_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (857) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 857), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "urea_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (857) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 857), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bili_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (655) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 655), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bili_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (655) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 655), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "direct_bili_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1297) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1297), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "direct_bili_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1297) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1297), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ast_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (653) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 653), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ast_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (653) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 653), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alt_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (654) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 654), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alt_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (654) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 654), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_protein_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (717) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 717), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_protein_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (717) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 717), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alk_phos_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (785) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 785), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alk_phos_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (785) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 785), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "albumin_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 848), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "albumin_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 848), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cholesterol_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1006) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cholesterol_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1006) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "triglycerides_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "triglycerides_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ldl_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1008) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ldl_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1008) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t3_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7881) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7881), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t3_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7881) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7881), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t4_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7882) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7882), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t4_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7882) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7882), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tsh_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7880) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7880), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tsh_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7880) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7880), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sodium_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sodium_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "potassium_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1133), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "potassium_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1133), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorides_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1134), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorides_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1134), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proteins_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proteins_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "glucose_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6124), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "glucose_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6124), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reticulocyte_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1327), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reticulocyte_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1327), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asot_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 15092), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asot_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 15092), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psa_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10249) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10249), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cea_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10250) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10250), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_19_9_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10251) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10251), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "afp_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10570), 1, 0)"
+      }
     }
   ],
   "filters": {
@@ -1489,6 +2481,10 @@
         "filterType": "tableColumns",
         "conditionExpression": "l.uuid in ?",
         "parameterName": "locationUuids"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "((fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL) OR EXISTS (SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id))"
       }
     ]
   },

@@ -1,8 +1,8 @@
 {
   "name": "lab706PatientList",
-  "version": "1.0",
+  "version": "1.5",
   "tag": "lab-706-patient-list",
-  "description": "Patient-list template for the MOH 240 laboratory register (A-AA). Joined onto lab706Base per person; every presentation field is derived here from the raw facts - names/addresses/identifiers/telephone as per-row correlated subqueries (safe on a paginated page), coded answers translated through etl.concept_value_map (cvt = the test concept, cvm = the result concept). Panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) render every analyte in results: the member rows of etl.flat_moh_706_report_results are composed as 'ANALYTE: value; ...' (member names via cvt_m, coded member answers via cvm_a, ordered by result_obs_id), with the order row's single value as fallback; member probes are primary-key lookups, so page rendering does no obs scans. amount_charged and receipt_number come from the billing module (amrs.cashier_bill_line_item links to the order directly via order_id; the charge is SUM(price * quantity) over the order's non-voided, non-cancelled line items, the receipt number from the newest such bill). prior_treatment, condition_of_specimen and signature have no standard-model source and stay NULL. Received/analysed/dispatched map to the fhir report created/changed/issued stamps. Alias names are the app contract - see moh-240.columns.ts.",
+  "description": "Patient-list template for the MOH 240 laboratory register (A-AA). Joined onto lab706Base per person; every presentation field is derived here from the raw facts - names/addresses/identifiers/telephone as per-row correlated subqueries (safe on a paginated page), coded answers translated through etl.concept_value_map (cvt = the test concept, cvm = the result concept). Panel tests render the FULL analyte list in results, driven by etl.concept_set_map (so an analyte with no result prints 'Not done'), ordered by cs.sort_weight/concept_set, with the order row's own single value appended after ' | ' when present (never dropped); unmapped panels fall back to composing the observed member rows of etl.flat_moh_706_report_results, then the single value. amount_charged and receipt_number aggregate the whole encounter's non-voided, non-cancelled bill line items (D7; encounter-level first - this also neutralises the double-count risk of adopted orders on obs-only rows - with the order-level sum as fallback when the row has no encounter). v1.5: billing simplified for performance - amount_charged/receipt_number resolve the order's line items by driving FROM hie.bill_orders on bo.order_no (= lab_no, else the order_id-resolved order number; covers adopted obs-only rows) joined to cashier_bill_line_item.uuid and the bill, with the plain order_id sum/receipt as fallback; the encounter-level arms and all CONVERT/COLLATE clauses are gone (production collations are compatible, per the claims service joining the same tables without collation handling) - the v1.4 nested IN-lists were a per-row dependent-subquery blowup on the real database. clinician_name reads amrs.orders.orderer first (D9: the requesting clinician), then the encounter provider, then obs 1496. date_sample_received falls back fhir report_date_created -> orders.date_created (order-placement stamp, labelled as such in the release note) -> obs_datetime (D5); analysed/dispatched keep derived COALESCE chains. testing_officer is the fhir performer when present, else the creator of the result obs resolved through amrs.users (D11; flat v3.2 result_creator). prior_treatment, condition_of_specimen and signature have no standard-model source and stay NULL - DECIDED 2026-10-21 (report owner): no concepts exist for them yet, so blank is the correct output; do not substitute another field. See MOH-706-REGISTER-BLANK-COLUMNS-PLAN.md. Alias names are the app contract - see moh-240.columns.ts. v1.3: clinical_diagnosis no longer keys on the row encounter (often the lab/order encounter): it reads the patient's dx_rank=1 encounter diagnoses from the latest clinical encounter within the reporting period, preferring an encounter at/before the test datetime (fallback: latest in-period one, then the row encounter's own latest diagnosis, rank 1 first) - non-coded diagnosis text is printed when no coded answer exists. v1.2: blank-columns release (plan F4/F4.5a/F5/F6). v1.1: revisit_no counts only encounters within the selected reporting period.",
   "uses": [],
   "sources": [
     {
@@ -48,7 +48,7 @@
       "alias": "revisit_no",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT COUNT(*) + 1 FROM amrs.encounter e2 WHERE e2.patient_id = fbc.person_id AND e2.voided = 0 AND e2.encounter_datetime < fbc.test_datetime)"
+        "expression": "(SELECT COUNT(*) + 1 FROM amrs.encounter e2 WHERE e2.patient_id = fbc.person_id AND e2.voided = 0 AND e2.encounter_datetime >= '{startDate}' AND e2.encounter_datetime <= '{endDate}' AND e2.encounter_datetime < fbc.test_datetime)"
       }
     },
     {
@@ -101,7 +101,7 @@
       "alias": "clinical_diagnosis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT GROUP_CONCAT(COALESCE(cvm_ed.name, CAST(ed.diagnosis_coded AS CHAR)) SEPARATOR '; ') FROM amrs.encounter_diagnosis ed LEFT JOIN etl.concept_value_map cvm_ed ON cvm_ed.concept_id = ed.diagnosis_coded WHERE ed.encounter_id = fbc.encounter_id AND ed.voided = 0)"
+        "expression": "COALESCE((SELECT GROUP_CONCAT(COALESCE(cvm_ed.name, ed.diagnosis_non_coded, CAST(ed.diagnosis_coded AS CHAR)) ORDER BY ed.diagnosis_id SEPARATOR '; ') FROM amrs.encounter_diagnosis ed LEFT JOIN etl.concept_value_map cvm_ed ON cvm_ed.concept_id = ed.diagnosis_coded WHERE ed.voided = 0 AND ed.dx_rank = 1 AND ed.encounter_id = (SELECT ed2.encounter_id FROM amrs.encounter_diagnosis ed2 JOIN amrs.encounter e2 ON e2.encounter_id = ed2.encounter_id WHERE ed2.patient_id = fbc.person_id AND ed2.voided = 0 AND ed2.dx_rank = 1 AND e2.voided = 0 AND e2.encounter_datetime >= '{startDate}' AND e2.encounter_datetime <= '{endDate}' ORDER BY (e2.encounter_datetime <= fbc.test_datetime) DESC, e2.encounter_datetime DESC, e2.encounter_id DESC LIMIT 1)), (SELECT COALESCE(cvm_ed2.name, ed3.diagnosis_non_coded, CAST(ed3.diagnosis_coded AS CHAR)) FROM amrs.encounter_diagnosis ed3 LEFT JOIN etl.concept_value_map cvm_ed2 ON cvm_ed2.concept_id = ed3.diagnosis_coded WHERE ed3.encounter_id = fbc.encounter_id AND ed3.voided = 0 ORDER BY ed3.dx_rank = 1 DESC, ed3.diagnosis_id DESC LIMIT 1))"
       }
     },
     {
@@ -149,7 +149,7 @@
       "alias": "date_sample_received",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "DATE_FORMAT(fbc.report_date_created, '%d/%m/%Y')"
+        "expression": "DATE_FORMAT(COALESCE(fbc.report_date_created, (SELECT o_rc.date_created FROM amrs.orders o_rc WHERE o_rc.order_id = fbc.order_id), fbc.obs_datetime), '%d/%m/%Y')"
       }
     },
     {
@@ -157,7 +157,7 @@
       "alias": "clinician_name",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COALESCE((SELECT CONCAT_WS(' ', pn2.given_name, NULLIF(pn2.middle_name, ''), pn2.family_name) FROM amrs.encounter_provider ep JOIN amrs.provider pr ON pr.provider_id = ep.provider_id JOIN amrs.person_name pn2 ON pn2.person_id = pr.person_id AND pn2.voided = 0 WHERE ep.encounter_id = fbc.encounter_id ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1), (SELECT COALESCE(cvm_cl.name, CAST(o_cl.value_coded AS CHAR)) FROM amrs.obs o_cl LEFT JOIN etl.concept_value_map cvm_cl ON cvm_cl.concept_id = o_cl.value_coded WHERE o_cl.encounter_id = fbc.encounter_id AND o_cl.concept_id = 1496 AND o_cl.voided = 0 ORDER BY o_cl.obs_id DESC LIMIT 1))"
+        "expression": "COALESCE((SELECT CONCAT_WS(' ', pn_o.given_name, NULLIF(pn_o.middle_name, ''), pn_o.family_name) FROM amrs.orders o_or JOIN amrs.provider pr_or ON pr_or.provider_id = o_or.orderer JOIN amrs.person_name pn_o ON pn_o.person_id = pr_or.person_id AND pn_o.voided = 0 WHERE o_or.order_id = fbc.order_id ORDER BY pn_o.preferred DESC, pn_o.person_name_id DESC LIMIT 1), (SELECT CONCAT_WS(' ', pn2.given_name, NULLIF(pn2.middle_name, ''), pn2.family_name) FROM amrs.encounter_provider ep JOIN amrs.provider pr ON pr.provider_id = ep.provider_id JOIN amrs.person_name pn2 ON pn2.person_id = pr.person_id AND pn2.voided = 0 WHERE ep.encounter_id = fbc.encounter_id ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1), (SELECT COALESCE(cvm_cl.name, CAST(o_cl.value_coded AS CHAR)) FROM amrs.obs o_cl LEFT JOIN etl.concept_value_map cvm_cl ON cvm_cl.concept_id = o_cl.value_coded WHERE o_cl.encounter_id = fbc.encounter_id AND o_cl.concept_id = 1496 AND o_cl.voided = 0 ORDER BY o_cl.obs_id DESC LIMIT 1))"
       }
     },
     {
@@ -165,7 +165,7 @@
       "alias": "date_sample_analysed",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "DATE_FORMAT(fbc.report_date_changed, '%d/%m/%Y')"
+        "expression": "DATE_FORMAT(COALESCE(fbc.report_date_changed, fbc.report_date_created, fbc.obs_datetime), '%d/%m/%Y')"
       }
     },
     {
@@ -173,7 +173,7 @@
       "alias": "results",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COALESCE((SELECT GROUP_CONCAT(CONCAT(COALESCE(cvt_m.name, CAST(rr.member_concept_id AS CHAR)), ': ', COALESCE(cvm_a.name, CAST(rr.result_numeric AS CHAR), TRIM(rr.result_text), DATE_FORMAT(rr.result_datetime, '%Y-%m-%d'))) ORDER BY rr.result_obs_id SEPARATOR '; ') FROM etl.flat_moh_706_report_results rr LEFT JOIN etl.concept_value_map cvt_m ON cvt_m.concept_id = rr.member_concept_id LEFT JOIN etl.concept_value_map cvm_a ON cvm_a.concept_id = rr.result_concept_id WHERE rr.report_id = fbc.report_id AND rr.member_concept_id <> fbc.concept_id), COALESCE(cvm.name, CAST(fbc.result_numeric AS CHAR), TRIM(fbc.result_text), DATE_FORMAT(fbc.result_datetime, '%Y-%m-%d')))"
+        "expression": "COALESCE(CASE WHEN EXISTS (SELECT 1 FROM etl.concept_set_map cs0 WHERE cs0.concept_id = fbc.concept_id) THEN CONCAT_WS(' | ', (SELECT GROUP_CONCAT(CONCAT(COALESCE(cvt_m.name, CAST(cs.concept_set AS CHAR)), ': ', COALESCE(cvm_a.name, CAST(rr.result_numeric AS CHAR), TRIM(rr.result_text), DATE_FORMAT(rr.result_datetime, '%Y-%m-%d'), 'Not done')) ORDER BY cs.sort_weight, cs.concept_set SEPARATOR '; ') FROM etl.concept_set_map cs LEFT JOIN etl.flat_moh_706_report_results rr ON rr.report_id = fbc.report_id AND rr.member_concept_id = cs.concept_set LEFT JOIN etl.concept_value_map cvt_m ON cvt_m.concept_id = cs.concept_set LEFT JOIN etl.concept_value_map cvm_a ON cvm_a.concept_id = rr.result_concept_id WHERE cs.concept_id = fbc.concept_id), COALESCE(cvm.name, CAST(fbc.result_numeric AS CHAR), TRIM(fbc.result_text), DATE_FORMAT(fbc.result_datetime, '%Y-%m-%d'))) END, (SELECT GROUP_CONCAT(CONCAT(COALESCE(cvt_m2.name, CAST(rr2.member_concept_id AS CHAR)), ': ', COALESCE(cvm_a2.name, CAST(rr2.result_numeric AS CHAR), TRIM(rr2.result_text), DATE_FORMAT(rr2.result_datetime, '%Y-%m-%d'))) ORDER BY rr2.result_obs_id SEPARATOR '; ') FROM etl.flat_moh_706_report_results rr2 LEFT JOIN etl.concept_value_map cvt_m2 ON cvt_m2.concept_id = rr2.member_concept_id LEFT JOIN etl.concept_value_map cvm_a2 ON cvm_a2.concept_id = rr2.result_concept_id WHERE rr2.report_id = fbc.report_id AND rr2.member_concept_id <> fbc.concept_id), COALESCE(cvm.name, CAST(fbc.result_numeric AS CHAR), TRIM(fbc.result_text), DATE_FORMAT(fbc.result_datetime, '%Y-%m-%d')))"
       }
     },
     {
@@ -181,7 +181,7 @@
       "alias": "date_results_dispatched",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "DATE_FORMAT(fbc.report_issued, '%d/%m/%Y')"
+        "expression": "DATE_FORMAT(COALESCE(fbc.report_issued, fbc.report_date_changed, fbc.report_date_created), '%d/%m/%Y')"
       }
     },
     {
@@ -189,7 +189,7 @@
       "alias": "amount_charged",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT SUM(bli.price * bli.quantity) FROM amrs.cashier_bill_line_item bli JOIN amrs.cashier_bill b ON b.bill_id = bli.bill_id WHERE bli.order_id = fbc.order_id AND bli.voided = 0 AND b.voided = 0 AND bli.status <> 'CANCELLED')"
+        "expression": "COALESCE((SELECT SUM(bli.price * bli.quantity) FROM hie.bill_orders bo JOIN amrs.cashier_bill_line_item bli ON bli.uuid = bo.line_item_uuid JOIN amrs.cashier_bill b ON b.bill_id = bli.bill_id WHERE bo.order_no = COALESCE(fbc.lab_no, (SELECT o_ord.order_number FROM amrs.orders o_ord WHERE o_ord.order_id = fbc.order_id)) AND bli.voided = 0 AND b.voided = 0 AND bli.status <> 'CANCELLED'), (SELECT SUM(bli2.price * bli2.quantity) FROM amrs.cashier_bill_line_item bli2 JOIN amrs.cashier_bill b2 ON b2.bill_id = bli2.bill_id WHERE bli2.order_id = fbc.order_id AND bli2.voided = 0 AND b2.voided = 0 AND bli2.status <> 'CANCELLED'))"
       }
     },
     {
@@ -197,7 +197,7 @@
       "alias": "receipt_number",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT b.receipt_number FROM amrs.cashier_bill_line_item bli JOIN amrs.cashier_bill b ON b.bill_id = bli.bill_id WHERE bli.order_id = fbc.order_id AND bli.voided = 0 AND b.voided = 0 AND b.receipt_number IS NOT NULL AND bli.status <> 'CANCELLED' ORDER BY b.date_created DESC, bli.bill_line_item_id DESC LIMIT 1)"
+        "expression": "COALESCE((SELECT b.receipt_number FROM hie.bill_orders bo JOIN amrs.cashier_bill_line_item bli ON bli.uuid = bo.line_item_uuid JOIN amrs.cashier_bill b ON b.bill_id = bli.bill_id WHERE bo.order_no = COALESCE(fbc.lab_no, (SELECT o_ord.order_number FROM amrs.orders o_ord WHERE o_ord.order_id = fbc.order_id)) AND b.receipt_number IS NOT NULL AND bli.voided = 0 AND b.voided = 0 AND bli.status <> 'CANCELLED' ORDER BY b.date_created DESC, bo.id DESC LIMIT 1), (SELECT b2.receipt_number FROM amrs.cashier_bill_line_item bli2 JOIN amrs.cashier_bill b2 ON b2.bill_id = bli2.bill_id WHERE bli2.order_id = fbc.order_id AND b2.receipt_number IS NOT NULL AND bli2.voided = 0 AND b2.voided = 0 AND bli2.status <> 'CANCELLED' ORDER BY b2.date_created DESC, bli2.bill_line_item_id DESC LIMIT 1))"
       }
     },
     {
@@ -217,9 +217,12 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "testing_officer",
-      "column": "fbc.testing_officer"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(fbc.testing_officer, (SELECT CONCAT_WS(' ', pn_u.given_name, NULLIF(pn_u.middle_name, ''), pn_u.family_name) FROM amrs.users u JOIN amrs.person_name pn_u ON pn_u.person_id = u.person_id AND pn_u.voided = 0 WHERE u.user_id = fbc.result_creator ORDER BY pn_u.preferred DESC, pn_u.person_name_id DESC LIMIT 1))"
+      }
     },
     {
       "type": "derived_column",

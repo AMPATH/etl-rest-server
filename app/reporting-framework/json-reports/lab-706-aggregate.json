@@ -1,12 +1,12 @@
 {
   "name": "lab706Aggregate",
-  "version": "2.2",
+  "version": "2.4",
   "tag": "lab-706-blood-chemistry-aggregate",
-  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.2, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection. v2.2: panel indicators come from the base's member-aware flags over etl.flat_moh_706_report_results - total_fbc/total_lipid_profile/total_urinalysis count orders with >= 1 member result, positive_urinalysis counts orders where any dipstick member coded POSITIVE (previously always 0: panel head obs are valueless), fbc_hb_* bands read the HGB (21) member via the base fbc_hgb slot (previously one arbitrary member value was banded as if it were Hb). The *_with_members sums add urinalysis-member occurrences to the standalone analyte counts - aliases are additive; the legacy aliases stay comparable with historical numbers until the counting semantics are signed off.",
+  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.2, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection. v2.2: panel indicators come from the base's member-aware flags over etl.flat_moh_706_report_results - total_fbc/total_lipid_profile/total_urinalysis count orders with >= 1 member result, positive_urinalysis counts orders where any dipstick member coded POSITIVE (previously always 0: panel head obs are valueless), fbc_hb_* bands read the HGB (21) member via the base fbc_hgb slot (previously one arbitrary member value was banded as if it were Hb). The *_with_members sums add urinalysis-member occurrences to the standalone analyte counts - aliases are additive; the legacy aliases stay comparable with historical numbers until the counting semantics are signed off. v2.3: indicators for the reportable-concept expansion (numeric totals/min/max, coded totals/positives, specimen counts); hiv_new_diagnosis counts distinct patients first diagnosed (enrolled) within the reporting period at the reporting location; the base's has-result filter keeps every indicator to tests actually done. v2.3.1: with_members indicators for microscopy analytes and total_urine_microscopy (panel-member aware). v2.4: per-indicator low/high counts (SUMs of the base v2.4 reference-range flags over etl.reference_ranges; tumour markers high-only; NULL bounds count 0).",
   "uses": [
     {
       "name": "lab706Base",
-      "version": "2.2",
+      "version": "2.4",
       "type": "dataset_def"
     }
   ],
@@ -19,7 +19,7 @@
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
       "useTemplate": "lab706PatientList",
-      "useTemplateVersion": "1.0",
+      "useTemplateVersion": "1.5",
       "generatingDirectives": {
         "joinDirectives": {
           "joinType": "INNER",
@@ -1029,6 +1029,886 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(IF(t1.viral_load IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.sodium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.sodium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.sodium IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.potassium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.potassium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.potassium IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_chlorides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.chlorides)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_chlorides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.chlorides)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_chlorides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.chlorides IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.albumin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.albumin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.albumin IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.ca_19_9)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.ca_19_9)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.ca_19_9 IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.cea)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.cea)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.cea IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.afp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.afp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.afp IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.proteins)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.proteins)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_proteins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.proteins IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.glucose)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.glucose)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.glucose IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_reticulocyte",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.reticulocyte)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_reticulocyte",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.reticulocyte)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_reticulocyte",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.reticulocyte IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_asot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.asot)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_asot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.asot)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_asot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.asot IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_taenia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.taenia IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_taenia",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.taenia = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_sickling",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.sickling IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_sickling",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.sickling = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_tpha",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.tpha IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tpha",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.tpha = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hb_estimation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_hb_estimation)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_blood",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_blood)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_urethral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_urethral)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_csf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_csf)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_breast",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_breast)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_soft_tissue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_soft_tissue)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_csf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_csf)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_bone_marrow",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_bone_marrow)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_new_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT IF(t1.hiv_new_diagnosis = 1, t1.person_id, NULL))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_ca_19_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.ca_19_9 = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_cea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.cea = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_afp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.afp = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_rbc_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_rbc_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_t_vaginalis_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_t_vaginalis_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_yeast_cells_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_yeast_cells_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_microscopy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_microscopy)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "blood_sugar_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.blood_sugar_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "blood_sugar_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.blood_sugar_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ogtt_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ogtt_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ogtt_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ogtt_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "creatinine_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.creatinine_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "creatinine_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.creatinine_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "urea_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.urea_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "urea_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.urea_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bili_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bili_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bili_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bili_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "direct_bili_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.direct_bili_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "direct_bili_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.direct_bili_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ast_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ast_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ast_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ast_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alt_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.alt_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alt_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.alt_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_protein_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_protein_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_protein_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_protein_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alk_phos_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.alk_phos_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alk_phos_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.alk_phos_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "albumin_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.albumin_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "albumin_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.albumin_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cholesterol_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cholesterol_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cholesterol_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cholesterol_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "triglycerides_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.triglycerides_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "triglycerides_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.triglycerides_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ldl_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ldl_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ldl_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ldl_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t3_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.t3_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t3_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.t3_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t4_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.t4_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t4_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.t4_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tsh_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.tsh_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tsh_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.tsh_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sodium_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.sodium_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sodium_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.sodium_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "potassium_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.potassium_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "potassium_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.potassium_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorides_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.chlorides_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorides_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.chlorides_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proteins_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.proteins_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proteins_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.proteins_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "glucose_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.glucose_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "glucose_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.glucose_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reticulocyte_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.reticulocyte_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reticulocyte_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.reticulocyte_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asot_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.asot_low)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asot_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.asot_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psa_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.psa_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cea_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.cea_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_19_9_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ca_19_9_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "afp_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.afp_high)"
       }
     }
   ]
