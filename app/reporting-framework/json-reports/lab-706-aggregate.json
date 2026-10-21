@@ -2,7 +2,7 @@
   "name": "lab706Aggregate",
   "version": "2.3",
   "tag": "lab-706-blood-chemistry-aggregate",
-  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.2, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection. v2.2: panel indicators come from the base's member-aware flags over etl.flat_moh_706_report_results - total_fbc/total_lipid_profile/total_urinalysis count orders with >= 1 member result, positive_urinalysis counts orders where any dipstick member coded POSITIVE (previously always 0: panel head obs are valueless), fbc_hb_* bands read the HGB (21) member via the base fbc_hgb slot (previously one arbitrary member value was banded as if it were Hb). The *_with_members sums add urinalysis-member occurrences to the standalone analyte counts - aliases are additive; the legacy aliases stay comparable with historical numbers until the counting semantics are signed off. v2.3: indicators for the reportable-concept expansion (numeric totals/min/max, coded totals/positives, specimen counts); hiv_new_diagnosis counts distinct patients first diagnosed (enrolled) within the reporting period at the reporting location; the base's has-result filter keeps every indicator to tests actually done.",
+  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.2, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection. v2.2: panel indicators come from the base's member-aware flags over etl.flat_moh_706_report_results - total_fbc/total_lipid_profile/total_urinalysis count orders with >= 1 member result, positive_urinalysis counts orders where any dipstick member coded POSITIVE (previously always 0: panel head obs are valueless), fbc_hb_* bands read the HGB (21) member via the base fbc_hgb slot (previously one arbitrary member value was banded as if it were Hb). The *_with_members sums add urinalysis-member occurrences to the standalone analyte counts - aliases are additive; the legacy aliases stay comparable with historical numbers until the counting semantics are signed off. v2.3: indicators for the reportable-concept expansion (numeric totals/min/max, coded totals/positives, specimen counts); hiv_new_diagnosis counts distinct patients first diagnosed (enrolled) within the reporting period at the reporting location; the base's has-result filter keeps every indicator to tests actually done. v2.3.1: with_members indicators for microscopy analytes and total_urine_microscopy (panel-member aware).",
   "uses": [
     {
       "name": "lab706Base",
@@ -1437,6 +1437,62 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(IF(t1.afp = 703, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_rbc_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_rbc_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_t_vaginalis_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_t_vaginalis_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_yeast_cells_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_urine_yeast_cells_with_members)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_microscopy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_urine_microscopy)"
       }
     }
   ]

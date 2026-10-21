@@ -2,7 +2,7 @@
   "name": "lab706Base",
   "version": "2.3",
   "tag": "lab-706-blood-chemistry",
-  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results).",
+  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept.",
   "uses": [],
   "sources": [
     {
@@ -1989,6 +1989,62 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1985) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1985)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_rbc_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1985) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1985 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15086) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15086)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_t_vaginalis_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15086) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15086 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15084) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15084)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_urine_yeast_cells_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (15084) AND fbc.result_concept_id = 703) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 15084 AND rr.result_concept_id = 703)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_urine_microscopy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1984, 1985, 15086, 15084) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id IN (1984, 1985, 15086, 15084))), 1, 0)"
       }
     }
   ],
