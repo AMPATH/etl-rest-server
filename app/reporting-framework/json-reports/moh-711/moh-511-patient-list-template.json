@@ -75,10 +75,7 @@
     {
       "type": "derived_column",
       "alias": "visit_date",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "DATE(mh.encounter_datetime)"
-      }
+      "column": "mh.encounter_datetime"
     },
     {
       "type": "simple_column",
@@ -109,7 +106,10 @@
     {
       "type": "simple_column",
       "alias": "age",
-      "column": "mh.age_in_months"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.age"
+      }
     },
     {
       "type": "simple_column",

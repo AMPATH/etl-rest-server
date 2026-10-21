@@ -185,7 +185,7 @@
       "alias": "iron",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.iron = 1, 1, NULL)"
+        "expression": "if(m.iron = 1 AND (m.folic IS NULL OR m.folic != 1) AND (m.iron_and_folate IS NULL OR m.iron_and_folate != 1), 1, NULL)"
       }
     },
     {
@@ -193,7 +193,7 @@
       "alias": "folic",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.folic = 1, 1, NULL)"
+        "expression": "if(m.folic = 1 AND (m.iron IS NULL OR m.iron != 1) AND (m.iron_and_folate IS NULL OR m.iron_and_folate != 1), 1, NULL)"
       }
     },
     {
@@ -201,7 +201,7 @@
       "alias": "iron_and_folate",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.iron = 1 AND m.folic = 1 || m.iron_and_folate = 1, 1, NULL)"
+        "expression": "if(m.iron_and_folate = 1 OR (m.iron = 1 AND m.folic = 1), 1, NULL)"
       }
     },
     {
@@ -216,6 +216,10 @@
   "filters": {
     "conditionJoinOperator": "and",
     "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_type in (195,264, 265, 266, 267, 313)"
+      },
       {
         "filterType": "tableColumns",
         "conditionExpression": "m.encounter_datetime >= ?",
@@ -235,6 +239,6 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["m.person_id", "m.encounter_datetime"]
+    "columns": ["m.person_id", "encounter_datetime"]
   }
 }
