@@ -218,6 +218,10 @@
     "conditions": [
       {
         "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_type in (195,264, 265, 266, 267, 313)"
+      },
+      {
+        "filterType": "tableColumns",
         "conditionExpression": "m.encounter_datetime >= ?",
         "parameterName": "startDate"
       },
