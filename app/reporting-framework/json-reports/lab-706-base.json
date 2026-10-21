@@ -1,8 +1,8 @@
 {
   "name": "lab706Base",
-  "version": "2.3",
+  "version": "2.4",
   "tag": "lab-706-blood-chemistry",
-  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept.",
+  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept. v2.4: reference-range banding - every numeric slot gains _low/_high flags (tumour markers high-only) banded against etl.reference_ranges (seeded from amrs.concept_numeric; NULL bounds read 0) - see MOH-706-REFERENCE-RANGE-BANDING-PLAN.md.",
   "uses": [],
   "sources": [
     {
@@ -2045,6 +2045,422 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF((fbc.concept_id IN (1984, 1985, 15086, 15084) AND fbc.result_concept_id IS NOT NULL) OR (fbc.concept_id IN (302) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id IN (1984, 1985, 15086, 15084))), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "blood_sugar_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (887) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 887), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "blood_sugar_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (887) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 887), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ogtt_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10627) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10627), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ogtt_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10627) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10627), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "creatinine_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (790) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 790), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "creatinine_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (790) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 790), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "urea_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (857) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 857), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "urea_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (857) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 857), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bili_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (655) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 655), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bili_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (655) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 655), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "direct_bili_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1297) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1297), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "direct_bili_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1297) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1297), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ast_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (653) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 653), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ast_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (653) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 653), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alt_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (654) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 654), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alt_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (654) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 654), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_protein_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (717) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 717), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_protein_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (717) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 717), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alk_phos_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (785) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 785), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "alk_phos_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (785) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 785), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "albumin_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 848), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "albumin_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (848) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 848), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cholesterol_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1006) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cholesterol_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1006) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "triglycerides_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "triglycerides_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ldl_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1008) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ldl_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1008) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t3_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7881) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7881), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t3_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7881) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7881), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t4_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7882) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7882), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "t4_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7882) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7882), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tsh_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7880) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7880), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tsh_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (7880) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 7880), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sodium_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sodium_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1132) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "potassium_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1133), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "potassium_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1133) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1133), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorides_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1134), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "chlorides_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1134) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1134), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proteins_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proteins_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6132) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6132), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "glucose_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6124), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "glucose_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (6124) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 6124), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reticulocyte_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1327), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reticulocyte_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1327) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1327), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asot_low",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 15092), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "asot_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (15092) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 15092), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "psa_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10249) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10249), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cea_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10250) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10250), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_19_9_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10251) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10251), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "afp_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10570), 1, 0)"
       }
     }
   ],

@@ -8,7 +8,7 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
     super(reportName, params);
   }
 
-  generatePatientListReport(indicators) {
+  generatePatientListReport(indicators, options) {
     // 1. Fetch report schema
     // 2. Determine the aggregate, base
     // 3. Fetch the template report
@@ -84,7 +84,11 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
                 that.modifiedParam = generated.params;
                 // generate and run query
                 that
-                  .runPatientListQuery(that.generatedPL, that.modifiedParam)
+                  .runPatientListQuery(
+                    that.generatedPL,
+                    that.modifiedParam,
+                    options
+                  )
                   .then((run) => {
                     that.reportQuery = run.sqlQuery;
                     that.queryResults = run.results;
@@ -118,14 +122,26 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
   // template joins (identifiers, contacts, addresses...) fan out per patient,
   // so every page used to cost as much as the whole list. Page the patient ids
   // over the filtering tables alone, then join the template for that page only.
-  runPatientListQuery(schemas, params) {
+  runPatientListQuery(schemas, params, options) {
     const main = schemas.main;
     const keyColumn = this.getPagingKeyColumn(main, params);
+    const countRows = !!(options && options.countRows);
     const fullRun = () =>
-      this.runQuery(schemas, params).then((run) => ({
-        sqlQuery: run.sqlQuery,
-        results: run.results
-      }));
+      this.runQuery(schemas, params).then((run) => {
+        const counted = countRows
+          ? this.runRowCount(schemas, params).catch((err) => {
+              // the list itself is unaffected; only the pager's exact
+              // total is lost
+              console.error('Patient list count query failed', err);
+              return undefined;
+            })
+          : Promise.resolve(undefined);
+        return counted.then((total) => ({
+          sqlQuery: run.sqlQuery,
+          results: run.results,
+          totalCount: total
+        }));
+      });
     if (!keyColumn) {
       return fullRun();
     }
@@ -213,6 +229,60 @@ export class PatientlistMysqlReport extends BaseMysqlReport {
         return fullRun();
       }
     );
+  }
+
+  // The pager needs the exact number of unpaginated rows, but counting the
+  // generated statement itself re-runs every per-row column subquery for
+  // every register row in the period. The joins and filters alone decide
+  // which rows match, so COUNT(*) over them gives the same total.
+  runRowCount(schemas, params) {
+    const countSchema = this.buildRowCountSchema(schemas.main);
+    if (!countSchema) {
+      return Promise.resolve(undefined);
+    }
+    return this.runQuery(
+      Object.assign({}, schemas, { main: countSchema }),
+      params
+    ).then((count) => {
+      const row = count.results.results[0];
+      return row ? row.total : undefined;
+    });
+  }
+
+  buildRowCountSchema(main) {
+    const groupBy = main.groupBy;
+    const singleGroupColumn =
+      groupBy &&
+      Array.isArray(groupBy.columns) &&
+      groupBy.columns.length === 1 &&
+      !groupBy.groupParam
+        ? groupBy.columns[0]
+        : null;
+    // HAVING filters groups through aggregates the count select no longer
+    // carries, and multi-key or parametric grouping has no single DISTINCT
+    // key to count.
+    if (main.having || (groupBy && !singleGroupColumn)) {
+      return null;
+    }
+    // Joins stay: a 1:N LEFT JOIN legitimately multiplies list rows, so
+    // dropping the ones no filter reads would undercount the pages.
+    const countSchema = this.cloneJsonSchema(main);
+    countSchema.columns = [
+      {
+        type: 'derived_column',
+        alias: 'total',
+        expressionType: 'simple_expression',
+        expressionOptions: {
+          expression: singleGroupColumn
+            ? 'COUNT(DISTINCT ' + singleGroupColumn + ')'
+            : 'COUNT(*)'
+        }
+      }
+    ];
+    delete countSchema.groupBy;
+    delete countSchema.orderBy;
+    delete countSchema.paging;
+    return countSchema;
   }
 
   // A derived source the page joins (latest viral load, say) is otherwise

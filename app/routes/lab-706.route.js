@@ -4,13 +4,6 @@ var privileges = authorizer.getAllPrivileges();
 var preRequest = require('../../pre-request-processing');
 import { Lab706Service } from '../../service/lab-706.service';
 import { PatientlistMysqlReport } from '../reporting-framework/patientlist-mysql.report';
-import QueryService from '../database-access/query.service';
-
-// The generated patient-list SQL carries LIMIT/OFFSET for the page; the count
-// query must run over the unpaginated statement.
-function stripPaging(sqlQuery) {
-  return sqlQuery.replace(/LIMIT \d+( OFFSET \d+)?\s*$/i, '');
-}
 
 const routes = [
   {
@@ -84,24 +77,18 @@ const routes = [
           requestParams
         );
         report
-          .generatePatientListReport(indicators)
+          .generatePatientListReport(indicators, { countRows: true })
           .then((result) => {
             let rows = result.results.results;
-            let countSql =
-              'SELECT COUNT(*) AS total FROM (' +
-              stripPaging(report.reportQuery) +
-              ') AS patient_list_count';
-            let queryService = new QueryService();
-            return queryService.executeQuery(countSql).then((countResult) => {
-              // Reply keeps the patient-list envelope and adds the real
-              // total so the register's pager stops inferring page counts.
-              result.results = {
-                results: rows,
-                size: rows.length,
-                total: countResult[0].total
-              };
-              reply(result);
-            });
+            // The report counts over the same joins and filters without the
+            // register's per-row subqueries; a missing total leaves the
+            // register's pager to infer page counts.
+            result.results = {
+              results: rows,
+              size: rows.length,
+              total: result.totalCount
+            };
+            reply(result);
           })
           .catch((error) => {
             reply(error);
