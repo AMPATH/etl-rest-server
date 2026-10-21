@@ -5,14 +5,14 @@
   "description": "MOH 333 Patient list template",
   "sources": [
     {
-      "table": "etl.flat_mnch_summary",
+      "table": "etl.flat_moh_711",
       "alias": "a"
     },
     {
       "table": "amrs.person",
       "alias": "pn",
       "join": {
-        "type": "LEFT",
+        "type": "INNER",
         "joinCondition": "pn.person_id = a.person_id"
       }
     },
@@ -21,7 +21,7 @@
       "alias": "mat_number",
       "join": {
         "type": "LEFT",
-        "joinCondition": "mat_number.patient_id = a.person_id AND mat_number.identifier_type = 49"
+        "joinCondition": "mat_number.patient_id = a.person_id AND mat_number.identifier_type = 8"
       }
     },
     {
@@ -29,7 +29,7 @@
       "alias": "nupi",
       "join": {
         "type": "LEFT",
-        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 55"
       }
     },
     {
@@ -52,32 +52,8 @@
       "table": "amrs.patient_identifier",
       "alias": "amrs",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "obs",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = obs.person_id AND obs.concept_id in (10926, 10927, 2327, 12019)"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "ob",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = ob.person_id AND ob.concept_id = 12019"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "oc",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = oc.person_id AND oc.concept_id = 1357"
       }
     },
     {
@@ -86,6 +62,14 @@
       "join": {
         "type": "LEFT",
         "joinCondition": "a.person_id = pa.person_id"
+      }
+    },
+    {
+      "table": "(SELECT ranked_obs.person_id, CASE WHEN ranked_obs.value_coded = 5555 THEN 'MM' WHEN ranked_obs.value_coded = 6290 THEN 'MP' WHEN ranked_obs.value_coded = 1059 THEN 'W' WHEN ranked_obs.value_coded = 1057 THEN 'NM' WHEN ranked_obs.value_coded = 1056 THEN 'S' WHEN ranked_obs.value_coded = 1058 THEN 'D' ELSE '' END AS marital_status FROM (SELECT  person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054) ranked_obs WHERE rn = 1)",
+      "alias": "g",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "g.person_id = a.person_id"
       }
     }
   ],
@@ -98,7 +82,7 @@
     {
       "type": "simple_column",
       "alias": "admission_date",
-      "column": "a.maternity_admission_date"
+      "column": "a.encounter_datetime"
     },
     {
       "type": "simple_column",
@@ -129,12 +113,9 @@
       "column": "pn.birthdate"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "age",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "timestampdiff(year, pn.birthdate, a.encounter_datetime) "
-      }
+      "column": "a.age"
     },
     {
       "type": "simple_column",
@@ -154,7 +135,7 @@
     {
       "type": "simple_column",
       "alias": "marital_status",
-      "column": "null"
+      "column": "g.marital_status"
     },
     {
       "type": "simple_column",
@@ -169,11 +150,11 @@
     {
       "type": "simple_column",
       "alias": "no_of_anc_visits",
-      "column": "a.anc_visit_no"
+      "column": "a.anc_visit_number"
     },
     {
       "type": "simple_column",
-      "alias": "lmp",
+      "alias": "last_lmp_date",
       "column": "a.last_lmp_date"
     },
     {
@@ -189,12 +170,12 @@
     {
       "type": "simple_column",
       "alias": "duration_of_labour",
-      "column": "a.duration_of_delivery"
+      "column": "a.duration_of_labour"
     },
     {
       "type": "simple_column",
       "alias": "date_of_delivery",
-      "column": "a.day_of_delivery"
+      "column": "a.date_of_delivery"
     },
     {
       "type": "simple_column",
@@ -214,7 +195,7 @@
     {
       "type": "simple_column",
       "alias": "no_of_babies_delivered",
-      "column": "a.no_of_babies"
+      "column": "a.no_of_babies_delivered"
     },
     {
       "type": "simple_column",
@@ -246,18 +227,18 @@
       "alias": "maternal_deaths_notified",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "case when a.maternal_death_notified is not null THEN 'Y' else 'N' END "
+        "expression": "if(a.date_maternal_death_notified is not null, 'Y', 'N')"
       }
     },
     {
       "type": "simple_column",
       "alias": "date_maternal_death_notified",
-      "column": "a.maternal_death_notified"
+      "column": "a.date_maternal_death_notified"
     },
     {
       "type": "simple_column",
       "alias": "delivery_complication",
-      "column": "a.delivery_complications"
+      "column": "a.maternal_complications"
     },
     {
       "type": "simple_column",
@@ -272,32 +253,35 @@
     {
       "type": "simple_column",
       "alias": "birth_weight",
-      "column": "a.birth_weight"
+      "column": "a.child_birth_weight"
     },
     {
       "type": "simple_column",
       "alias": "sex",
-      "column": "a.baby_sex"
+      "column": "pn.gender"
     },
     {
       "type": "simple_column",
       "alias": "initiated_on_bf_in_1_hour",
-      "column": "a.BF_in_one_hour"
+      "column": "a.bf_within_1_hour"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "kangaroo_mother_care",
-      "column": "a.kangaroo_mother_care"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.kangaroo_mother_care, 'Y', 'N')"
+      }
     },
     {
       "type": "simple_column",
       "alias": "teo_given_at_birth",
-      "column": "a.teo_at_birth"
+      "column": "a.tetracycline_given"
     },
     {
       "type": "simple_column",
       "alias": "chlorhexidine_applied_on_cord_stamp",
-      "column": "a.chlorhexidine_for_cord"
+      "column": "a.chlorhexidine_applied"
     },
     {
       "type": "simple_column",
@@ -317,12 +301,12 @@
     {
       "type": "simple_column",
       "alias": "vdrl_rpr_results",
-      "column": "a.rpr_test_result"
+      "column": "a.rpr_vdrl_duo"
     },
     {
       "type": "simple_column",
       "alias": "duo_test_result",
-      "column": "a.duo_test_result"
+      "column": "a.rpr_vdrl_duo_results"
     },
     {
       "type": "simple_column",
@@ -387,15 +371,12 @@
     {
       "type": "simple_column",
       "alias": "hiv_result_maternity",
-      "column": "a.patient_hiv_result"
+      "column": "a.hiv_results"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_test_type",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.hiv_test_type"
     },
     {
       "type": "simple_column",
@@ -410,12 +391,12 @@
     {
       "type": "simple_column",
       "alias": "partner_tested_for_hiv",
-      "column": "a.partner_hiv_status"
+      "column": "a.partner_tested_for_hiv"
     },
     {
       "type": "simple_column",
       "alias": "counselled_on_infant_feeding",
-      "column": "a.infant_feeding_counselling"
+      "column": "a.counselled_on_infant_feeding"
     },
     {
       "type": "simple_column",
@@ -435,39 +416,28 @@
     {
       "type": "simple_column",
       "alias": "discharge_status",
-      "column": "a.baby_status_on_discharge"
+      "column": "a.discharge_status"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "referral_from",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.referred_from"
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "referred_to",
+      "column": "a.referred_to"
     },
     {
-      "type": "derived_column",
-      "alias": "referral_to",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
-    },
-    {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "reason_for_referral",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.reason_for_referral"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "comments",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.anc_remarks"
     }
   ],
   "groupBy": {
@@ -478,7 +448,7 @@
     "columns": [
       {
         "column": "a.encounter_datetime",
-        "order": "desc"
+        "order": "asc"
       }
     ]
   }
