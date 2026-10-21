@@ -5,8 +5,16 @@
   "description": "MOH 705 Patient list template",
   "sources": [
     {
+      "table": "amrs.encounter",
+      "alias": "et"
+    },
+    {
       "table": "amrs.person",
-      "alias": "t1"
+      "alias": "t1",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "t1.person_id = et.patient_id"
+      }
     },
     {
       "table": "amrs.person_name",
@@ -22,14 +30,6 @@
       "join": {
         "type": "LEFT",
         "joinCondition": "t1.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id = 71"
-      }
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "et",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "t1.person_id = et.patient_id"
       }
     },
     {
@@ -162,7 +162,7 @@
     {
       "type": "simple_column",
       "alias": "diagnosis",
-      "column": "null"
+      "column": "(SELECT GROUP_CONCAT(DISTINCT COALESCE(cvm_ed.name, CAST(ed.diagnosis_coded AS CHAR)) ORDER BY ed.dx_rank SEPARATOR '; ') FROM amrs.encounter_diagnosis ed LEFT JOIN etl.concept_value_map cvm_ed ON cvm_ed.concept_id = ed.diagnosis_coded WHERE ed.patient_id = t1.person_id AND ed.encounter_id = et.encounter_id AND ed.voided = 0)"
     },
     {
       "type": "simple_column",
@@ -197,7 +197,7 @@
       "alias": "referred_from",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "(SELECT COALESCE(cn.name, CAST(r.value_coded AS CHAR), r.value_text) FROM amrs.obs r LEFT JOIN amrs.concept_name cn ON cn.concept_id = r.value_coded AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE r.encounter_id = et.encounter_id AND r.concept_id = 10926 AND r.voided = 0 ORDER BY r.obs_datetime DESC, r.obs_id DESC LIMIT 1)"
       }
     },
     {
@@ -205,7 +205,7 @@
       "alias": "referred_to",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "(SELECT COALESCE(cn.name, CAST(r.value_coded AS CHAR), r.value_text) FROM amrs.obs r LEFT JOIN amrs.concept_name cn ON cn.concept_id = r.value_coded AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE r.encounter_id = et.encounter_id AND r.concept_id = 10927 AND r.voided = 0 ORDER BY r.obs_datetime DESC, r.obs_id DESC LIMIT 1)"
       }
     },
     {
@@ -218,7 +218,7 @@
     }
   ],
   "groupBy": {
-    "columns": ["t1.person_id"]
+    "columns": ["et.encounter_id"]
   },
   "filters": {
     "conditionJoinOperator": "and",
