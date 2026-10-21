@@ -1,0 +1,7 @@
+{
+  "reports": [
+    "moh745CervicalCancerScreeningAgeVisitTypeDisaggregate",
+    "moh745CervicalCancerScreeningAggregate",
+    "moh745CervicalCancerTreatmentMonthlyDisAggregate"
+  ]
+}

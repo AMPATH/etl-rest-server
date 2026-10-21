@@ -13,438 +13,963 @@
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "mdh.person_id"
-    },
-    {
-      "type": "simple_column",
-      "alias": "cumulative_in_care",
-      "column": "mdh.cumulative_in_care"
-    },
-    {
-      "type": "derived_column",
-      "alias": "newly_diagnosed_diabetes_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.newly_diagnosed_diabetes_this_month = 1, 1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "revisit_to_clinic_known_dm",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.revisit_this_month = 1 AND mdh.diabetes_status = 7282, 1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "type_1_diabetes",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "type_2_diabetes",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
-      }
-    },
-    {
-      "type": "simple_column",
-      "alias": "cumulative_htn_patient",
-      "column": "mdh.cumulative_htn_patient"
+      "column": "c.person_id"
     },
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "mdh.location_id"
+      "column": "c.location_id"
     },
     {
       "type": "simple_column",
-      "alias": "gender",
-      "column": "mdh.gender"
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
     },
     {
       "type": "simple_column",
-      "alias": "encounter_date",
-      "column": "DATE_FORMAT(mdh.encounter_date, '%Y-%m-%d')"
+      "alias": "ovcid_id",
+      "column": "flat_identifiers.ovcid"
     },
     {
       "type": "simple_column",
-      "alias": "endDate",
-      "column": "mdh.endDate"
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
     },
     {
       "type": "simple_column",
-      "alias": "covered_by_shif",
-      "column": "mdh.covered_by_shif"
+      "alias": "location",
+      "column": "l.name"
     },
     {
       "type": "simple_column",
-      "alias": "screened_for_tb_this_month",
-      "column": "mdh.screened_for_tb_this_month"
-    },
-    {
-      "type": "derived_column",
-      "alias": "screened_postive_for_tb_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.screened_for_tb_this_month = 1 AND mdh.tb_screening_status IN (6176,6971),1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "screened_for_diabetic_foot_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "has_diabetic_foot",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1 AND mdh.has_diabetic_foot = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "type_1_diabetes_mellitus",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "type_2_diabetes_mellitus",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "amputation_due_to_diabetic_foot",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.amputation_due_to_diabetic_foot = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "stroke_diagnosis",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.stroke_diagnosis = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "ischemic_heart_disease_diagnosis",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.ischemic_heart_disease_diagnosis = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "heart_failure_diagnosis",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.heart_failure_diagnosis = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "has_neuropathies",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.has_neuropathies = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "newly_diagnosed_htn_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.newly_diagnosed_htn_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "revisit_known_htn",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.htn_type = 7286 AND mdh.revisit_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "is_co_morbid",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.is_co_morbid = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "revisit_known_co_morbid",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.is_co_morbid = 1 AND mdh.co_morbid_type = 12778,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "newly_diagnosed_co_morbid_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.newly_diagnosed_co_morbid_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "on_insulin_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.on_insulin_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "on_ogla_meds_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.on_ogla_meds_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "on_both_insulin_and_ogla_meds_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.on_insulin_this_month = 1 AND mdh.on_ogla_meds_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "done_hba1c_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.done_hba1c_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hba1c_less_than_7_percent_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.done_hba1c_this_month = 1 AND mdh.hba1c < 7,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "on_exercise_and_diet",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.on_exercise = 1 AND mdh.on_diet = 1 ,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "on_antihypertensives_this_month",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.on_antihypertensives_this_month = 1,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "high_bp",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(mdh.systolic >= 140 OR mdh.diastolic >= 90 ,1,NULL)"
-      }
+      "alias": "primary_care_facility",
+      "column": "p.name"
     },
     {
       "type": "simple_column",
-      "alias": "enrollment_date",
-      "column": "DATE_FORMAT(mdh.enrollment_date, '%Y-%m-%d')"
+      "alias": "primary_care_facility_id",
+      "column": "c.primary_care_facility"
+    },
+    {
+      "type": "simple_column",
+      "alias": "primary_care_facility_location_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "reporting_month",
+      "column": "DATE_FORMAT(c.encounter_datetime,'%Y-%m')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "screening_date",
+      "column": "DATE_FORMAT(c.encounter_datetime,'%Y-%m-%d')"
     },
     {
       "type": "derived_column",
-      "alias": "diagnosis_at_enrollment",
+      "alias": "age_range",
       "expressionType": "case_statement",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "mdh.primary_diagnosis_at_enrollment = 9325",
-            "value": "a"
+            "condition": "c.age < 25",
+            "value": "less_than_25"
           },
           {
-            "condition": "mdh.primary_diagnosis_at_enrollment IN (9326,44193)",
-            "value": "b"
+            "condition": "c.age between 25 and 49",
+            "value": "25_to_49"
           },
           {
-            "condition": "mdh.primary_diagnosis_at_enrollment = 8879",
-            "value": "c"
-          },
-          {
-            "condition": "mdh.primary_diagnosis_at_enrollment IN(903,38566,38559,38557,38550,38543,38541)",
-            "value": "d"
-          },
-          {
-            "condition": "mdh.primary_diagnosis_at_enrollment = 47",
-            "value": "e"
-          },
-          {
-            "condition": "mdh.primary_diagnosis_at_enrollment = 1456",
-            "value": "f"
-          },
-          {
-            "condition": "mdh.primary_diagnosis_at_enrollment = 7996",
-            "value": "g"
-          },
-          {
-            "condition": "mdh.primary_diagnosis_at_enrollment = 8087",
-            "value": "h"
+            "condition": "c.age >= 50",
+            "value": "50_and_above"
           }
         ]
       }
     },
     {
       "type": "derived_column",
-      "alias": "year_of_diagnosis",
+      "alias": "via_or_via_vili_test_result",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.via_or_via_vili_test_result = 1",
+            "value": "Negative"
+          },
+          {
+            "condition": "c.via_or_via_vili_test_result = 2",
+            "value": "Positive"
+          },
+          {
+            "condition": "c.via_or_via_vili_test_result = 3",
+            "value": "Suspicious of cancer"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_test_result",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.hpv_test_result = 1",
+            "value": "Negative"
+          },
+          {
+            "condition": "c.hpv_test_result = 2",
+            "value": "Positive"
+          },
+          {
+            "condition": "c.hpv_test_result = 3",
+            "value": "Indeterminate"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colposcopy_test_result",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.colposcopy_test_result = 1",
+            "value": "Normal"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 2",
+            "value": "Abnormal"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 3",
+            "value": "Acetowhite Lesion"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 4",
+            "value": "Punctuated Capillaries"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 5",
+            "value": "Mosaicism"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 6",
+            "value": "Atypical blood vessels"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 7",
+            "value": "Internal Border within Cervical Lesion"
+          },
+          {
+            "condition": "c.colposcopy_test_result = 8",
+            "value": "Do not know"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screening_visit_type",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.reasons_for_current_visit = 1",
+            "value": "initial"
+          },
+          {
+            "condition": "c.reasons_for_current_visit = 2",
+            "value": "routine"
+          },
+          {
+            "condition": "c.reasons_for_current_visit = 3",
+            "value": "post_treatment"
+          },
+          {
+            "condition": "c.reasons_for_current_visit NOT IN (1,2,3)",
+            "value": "unknown"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.hiv_status = 2",
+            "value": "positive"
+          },
+          {
+            "condition": "c.hiv_status = 1",
+            "value": "negative"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screening_method",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "c.screening_method in (9434,10420)",
+            "value": "via_or_via_vili"
+          },
+          {
+            "condition": "c.screening_method = 885",
+            "value": "pap_smear"
+          },
+          {
+            "condition": "c.screening_method in (1213, 2322)",
+            "value": "HPV"
+          },
+          {
+            "condition": "c.screening_method = 7383",
+            "value": "Colposcopy"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_initial_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "extract(year from (from_days(datediff(endDate,enrollment_date))))"
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383) AND c.reasons_for_current_visit = 1,1,NULL)"
       }
     },
     {
-      "type": "simple_column",
-      "alias": "weight",
-      "column": "mdh.weight"
-    },
-    {
-      "type": "simple_column",
-      "alias": "height",
-      "column": "mdh.height"
-    },
-    {
-      "type": "simple_column",
-      "alias": "bmi",
-      "column": "mdh.bmi"
-    },
-    {
       "type": "derived_column",
-      "alias": "bp",
+      "alias": "screened_via_or_via_vili_initial_visit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CONCAT(mdh.systolic,' / ',mdh.diastolic)"
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 1,1,NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "rtc_date",
+      "alias": "screened_via_or_via_vili_initial_visit_hiv_positive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "DATE_FORMAT(mdh.rtc_date,'%Y-%m-%d')"
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "htn",
-      "expressionType": "case_statement",
+      "alias": "screened_hpv_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
       "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "mdh.htn_type = 7285",
-            "value": "a"
-          },
-          {
-            "condition": "mdh.htn_type = 7286",
-            "value": "b"
-          }
-        ]
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "diabetes",
-      "expressionType": "case_statement",
+      "alias": "screened_colposcopy_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
       "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "mdh.diabetes_status = 7281",
-            "value": "a"
-          },
-          {
-            "condition": "mdh.diabetes_status = 7282",
-            "value": "b"
-          }
-        ]
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "screened_for_tb",
-      "expressionType": "case_statement",
+      "alias": "screened_via_or_via_vili_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
       "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "mdh.screened_for_tb_this_month = 1",
-            "value": "Y"
-          },
-          {
-            "condition": "mdh.screened_for_tb_this_month = 0",
-            "value": "N"
-          },
-          {
-            "condition": "mdh.screened_for_tb_this_month IS NULL",
-            "value": "N"
-          }
-        ]
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "tbs_status",
-      "expressionType": "case_statement",
+      "alias": "screened_hpv_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
       "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "mdh.tb_screening_status = 1107",
-            "value": "2"
-          },
-          {
-            "condition": "mdh.tb_screening_status = 6176",
-            "value": "3"
-          },
-          {
-            "condition": "mdh.tb_screening_status = 6971",
-            "value": "1"
-          }
-        ]
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "both_htn_and_diabetic",
+      "alias": "screened_colposcopy_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383) AND c.reasons_for_current_visit = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_via_or_via_vili_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_via_or_via_vili_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_via_or_via_vili_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383) AND c.reasons_for_current_visit = 3 ,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_via_or_via_vili_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 3 ,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_via_or_via_vili_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_via_or_via_vili_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (1213,2322) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383) AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_postive_via_or_via_vili_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_postive_via_or_via_vili_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 1 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 2 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2 ,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1 ,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.reasons_for_current_visit = 3 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 1 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 1 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 1 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_initial_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_initial_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 1 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 1 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 2 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 2 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 2 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_routine_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_routine_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 2 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 2 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_cyrotherapy_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 3 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_thermo_coagulation_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 4 AND c.reasons_for_current_visit = 3 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_leep_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 3 AND c.reasons_for_current_visit = 3 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_post_treatment_visit_hiv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_post_treatment_visit_hiv_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 3 AND c.hiv_status = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method_other_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 5 AND c.reasons_for_current_visit = 3 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method IS NOT NULL AND c.reasons_for_current_visit = 1 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method IS NOT NULL AND c.reasons_for_current_visit = 2 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method IS NOT NULL AND c.reasons_for_current_visit = 3 AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_via_or_via_vili_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hpv_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (1213,2322),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_colposcopy_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (7383),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420,885,1213,2322,7383),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_via_or_via_vili_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method in (9434,10420) AND c.via_or_via_vili_test_result = 2 AND c.hiv_status in (1,2),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_screened_all_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.screening_method IS NOT NULL AND c.hiv_status = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_via_or_via_vili_suspicious_lesion_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.hiv_status = 2 AND c.reasons_for_current_visit = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_negative_via_or_via_vili_suspicious_lesion_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.hiv_status = 1 AND c.reasons_for_current_visit = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_suspicious_lesion_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.reasons_for_current_visit = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_via_or_via_vili_suspicious_lesion_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.hiv_status = 2 AND c.reasons_for_current_visit = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_negative_via_or_via_vili_suspicious_lesion_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.hiv_status = 1 AND c.reasons_for_current_visit = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_suspicious_lesion_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.reasons_for_current_visit = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_via_or_via_vili_suspicious_lesion_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.hiv_status = 2 AND c.reasons_for_current_visit = 3,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_negative_via_or_via_vili_suspicious_lesion_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.hiv_status = 1 AND c.reasons_for_current_visit = 3,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_suspicious_lesion_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3 AND c.reasons_for_current_visit = 3,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "via_or_via_vili_suspicious_lesion",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.via_or_via_vili_test_result = 3,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_method",
       "expressionType": "case_statement",
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "mdh.co_morbid_type = 1154",
-            "value": "a"
+            "condition": "c.treatment_method = 1",
+            "value": "None"
           },
           {
-            "condition": "mdh.co_morbid_type = 12778",
-            "value": "b"
+            "condition": "c.treatment_method = 2",
+            "value": "Cryotherapy"
+          },
+          {
+            "condition": "c.treatment_method = 3",
+            "value": "LEEP"
+          },
+          {
+            "condition": "c.treatment_method = 4",
+            "value": "Thermocoagulation"
+          },
+          {
+            "condition": "c.treatment_method = 5",
+            "value": "Other"
           }
         ]
       }
