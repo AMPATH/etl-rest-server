@@ -250,16 +250,7 @@
     }
   ],
   "groupBy": {
-    "columns": ["obs1.person_id"]
-  },
-  "filters": {
-    "conditionJoinOperator": "and",
-    "conditions": [
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "en.encounter_type in (4,110,167,313)"
-      }
-    ]
+    "columns": ["mh.person_id"]
   },
   "orderBy": {
     "orderByParam": "orderByParam",
