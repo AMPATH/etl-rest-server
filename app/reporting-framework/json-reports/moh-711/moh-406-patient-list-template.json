@@ -5,7 +5,7 @@
   "description": "MOH 406 Patient list template",
   "sources": [
     {
-      "table": "etl.flat_mnch_summary",
+      "table": "etl.flat_moh_711",
       "alias": "a"
     },
     {
@@ -60,7 +60,7 @@
       "table": "amrs.patient_identifier",
       "alias": "amrs",
       "join": {
-        "type": "INNER",
+        "type": "LEFT",
         "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
       }
     },
@@ -94,6 +94,14 @@
       "join": {
         "type": "LEFT",
         "joinCondition": "a.person_id = pa.person_id"
+      }
+    },
+    {
+      "table": "(SELECT ranked_obs.person_id, CASE WHEN ranked_obs.value_coded = 5555 THEN 'MM' WHEN ranked_obs.value_coded = 6290 THEN 'MP' WHEN ranked_obs.value_coded = 1059 THEN 'W' WHEN ranked_obs.value_coded = 1057 THEN 'NM' WHEN ranked_obs.value_coded = 1056 THEN 'S' WHEN ranked_obs.value_coded = 1058 THEN 'D' ELSE '' END AS marital_status FROM (SELECT  person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054) ranked_obs WHERE rn = 1)",
+      "alias": "g",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "g.person_id = a.person_id"
       }
     }
   ],
@@ -142,12 +150,9 @@
       "column": "pn.birthdate"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "age",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "timestampdiff(year,pn.birthdate,a.encounter_datetime)"
-      }
+      "column": "a.age"
     },
     {
       "type": "simple_column",
@@ -167,12 +172,12 @@
     {
       "type": "simple_column",
       "alias": "marital_status",
-      "column": "null"
+      "column": "g.marital_status"
     },
     {
       "type": "simple_column",
       "alias": "date_of_delivery",
-      "column": "a.day_of_delivery"
+      "column": "a.date_of_delivery"
     },
     {
       "type": "simple_column",
@@ -187,12 +192,12 @@
     {
       "type": "simple_column",
       "alias": "timing_mother",
-      "column": "null"
+      "column": "a.post_partum_timing_mother"
     },
     {
       "type": "simple_column",
       "alias": "timing_baby",
-      "column": "null"
+      "column": "a.post_partum_care_infants"
     },
     {
       "type": "simple_column",
@@ -205,22 +210,22 @@
       "column": "a.pulse"
     },
     {
-      "type": "simple_column",
-      "alias": "blood_pressure",
-      "column": "a.blood_pressure"
-    },
-    {
       "type": "derived_column",
-      "alias": "pallor_present",
+      "alias": "blood_pressure",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "case when a.pallor is not null then 'Y' else 'N' end"
+        "expression": "CONCAT_WS(a.bp_systolic, '/', a.bp_diastolic)"
       }
     },
     {
       "type": "simple_column",
+      "alias": "pallor_present",
+      "column": "a.pallor_present"
+    },
+    {
+      "type": "simple_column",
       "alias": "breast",
-      "column": "a.breast"
+      "column": "a.breast_exam"
     },
     {
       "type": "simple_column",
@@ -336,32 +341,32 @@
     {
       "type": "simple_column",
       "alias": "hiv_result_pnc_less_6_weeks",
-      "column": "a.pnc_at_6_weeks_or_less"
+      "column": "null"
     },
     {
       "type": "simple_column",
       "alias": "hiv_result_pnc_greater_6_weeks",
-      "column": "a.pnc_at_more_than_6_weeks"
+      "column": "null"
     },
     {
       "type": "simple_column",
       "alias": "maternal_haart_less_6_weeks",
-      "column": "a.maternal_haart_at_6_weeks_or_less"
+      "column": "null"
     },
     {
       "type": "simple_column",
       "alias": "maternal_haart_greater_6_weeks",
-      "column": "a.maternal_haart_at_more_than_6_weeks"
+      "column": "null"
     },
     {
       "type": "simple_column",
       "alias": "infant_prophylaxis_less_6_weeks",
-      "column": "a.infant_prophylaxis_at_6_weeks_or_less"
+      "column": "null"
     },
     {
       "type": "simple_column",
       "alias": "infant_prophylaxis_greater_6_weeks",
-      "column": "a.infant_prophylaxis_at_more_than_6_weeks"
+      "column": "null"
     },
     {
       "type": "simple_column",
@@ -371,17 +376,17 @@
     {
       "type": "simple_column",
       "alias": "cervical_cancer_result",
-      "column": "a.cervical_cancer_method"
+      "column": "a.cervical_cancer_result"
     },
     {
       "type": "simple_column",
       "alias": "counselled",
-      "column": "a.ppfp_done"
+      "column": "a.women_couselled_on_post_partum_fp"
     },
     {
       "type": "simple_column",
       "alias": "ppfp_method",
-      "column": "a.ppfp_method"
+      "column": "a.women_received_post_partum_fp"
     },
     {
       "type": "simple_column",
@@ -391,45 +396,33 @@
     {
       "type": "simple_column",
       "alias": "other_maternal_complications",
-      "column": "a.other_complications"
+      "column": "a.maternal_complications"
     },
     {
       "type": "simple_column",
       "alias": "haemanitics",
-      "column": "a.haematinics"
+      "column": "a.haemanitics"
     },
 
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "referral_from",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.referred_from"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "referral_to",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.referred_to"
     },
     {
       "type": "derived_column",
       "alias": "reason_for_referral",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.reason_for_referral"
     },
     {
       "type": "derived_column",
       "alias": "remarks",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "null"
-      }
+      "column": "a.pnc_remarks"
     }
   ],
   "groupBy": {
@@ -440,7 +433,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "en.encounter_type in (266, 267)"
+        "conditionExpression": "a.encounter_type in (266, 267)"
       }
     ]
   },
@@ -449,7 +442,7 @@
     "columns": [
       {
         "column": "a.encounter_datetime",
-        "order": "desc"
+        "order": "asc"
       }
     ]
   }
