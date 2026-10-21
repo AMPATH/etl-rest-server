@@ -1,0 +1,84 @@
+{
+  "name": "otherServicesProcedureBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "Completed procedure orders for other services",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.orders",
+      "alias": "ord"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = ord.encounter_id AND e.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_stitching",
+      "column": "IF(ord.concept_id = 7553, 1, NULL)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_injections_given",
+      "column": "IF(ord.concept_id = 12892, 1, NULL)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_removal_of_stitches",
+      "column": "IF(ord.concept_id = 15173, 1, NULL)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_dressing_done",
+      "column": "IF(ord.concept_id = 441, 1, NULL)"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.order_type_id = 5"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.concept_id in (7553, 12892, 15173, 441)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.fulfiller_status = 'COMPLETED'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.date_activated >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.date_activated <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  }
+}

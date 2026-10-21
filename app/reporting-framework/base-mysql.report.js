@@ -591,8 +591,12 @@ import * as mch_fp_717_aggregate from './json-reports/moh-717/aggregations/mch-f
 import * as mch_fp_717_base from './json-reports/moh-717/aggregations/mch-fp-base.json';
 import * as dental_717_aggregate from './json-reports/moh-717/aggregations/dental-aggregate.json';
 import * as dental_717_base from './json-reports/moh-717/aggregations/dental-base.json';
+import * as dental_extractions_717_aggregate from './json-reports/moh-717/aggregations/dental-extractions-aggregate.json';
+import * as dental_extractions_717_base from './json-reports/moh-717/aggregations/dental-extractions-base.json';
 import * as other_services_717_aggregate from './json-reports/moh-717/aggregations/other-services-aggregate.json';
 import * as other_services_717_base from './json-reports/moh-717/aggregations/other-services-base.json';
+import * as other_services_procedure_717_aggregate from './json-reports/moh-717/aggregations/other-services-procedure-aggregate.json';
+import * as other_services_procedure_717_base from './json-reports/moh-717/aggregations/other-services-procedure-base.json';
 import * as inpatient_services_717_aggregate from './json-reports/moh-717/aggregations/inpatient-aggregate.json';
 import * as inpatient_services_717_base from './json-reports/moh-717/aggregations/inpatient-base.json';
 import * as maternity_717_aggregate from './json-reports/moh-717/aggregations/maternity-aggregate.json';
@@ -2762,10 +2766,26 @@ export class BaseMysqlReport {
             dentalBase: this.cloneJsonSchema(dental_717_base)
           });
           break;
+        case 'dentalExtractionsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(dental_extractions_717_aggregate),
+            dentalExtractionsBase: this.cloneJsonSchema(
+              dental_extractions_717_base
+            )
+          });
+          break;
         case 'otherServicesAggregate':
           resolve({
             main: this.cloneJsonSchema(other_services_717_aggregate),
             otherServicesBase: this.cloneJsonSchema(other_services_717_base)
+          });
+          break;
+        case 'otherServicesProcedureAggregate':
+          resolve({
+            main: this.cloneJsonSchema(other_services_procedure_717_aggregate),
+            otherServicesProcedureBase: this.cloneJsonSchema(
+              other_services_procedure_717_base
+            )
           });
           break;
         case 'inpatientAggregate':

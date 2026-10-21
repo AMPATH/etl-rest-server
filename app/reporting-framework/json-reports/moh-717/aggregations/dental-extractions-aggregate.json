@@ -1,0 +1,60 @@
+{
+  "name": "dentalExtractionsAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "Completed dental extraction order totals",
+  "uses": [
+    {
+      "name": "dentalExtractionsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dentalExtractionsBase",
+      "alias": "x"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "dental_extractions_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(x.dental_extractions_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dental_extractions_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(x.dental_extractions_revisit)"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["x.location_id"]
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "patient_id"
+        }
+      }
+    }
+  }
+}

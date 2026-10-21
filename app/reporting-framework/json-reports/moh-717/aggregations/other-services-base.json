@@ -54,26 +54,6 @@
       "type": "simple_column",
       "alias": "opd_medical_reports",
       "column": "null"
-    },
-    {
-      "type": "simple_column",
-      "alias": "opd_dressing_done",
-      "column": "null"
-    },
-    {
-      "type": "simple_column",
-      "alias": "opd_removal_of_stitches",
-      "column": "null"
-    },
-    {
-      "type": "simple_column",
-      "alias": "opd_injections_given",
-      "column": "null"
-    },
-    {
-      "type": "simple_column",
-      "alias": "opd_stitching",
-      "column": "null"
     }
   ],
   "filters": {
