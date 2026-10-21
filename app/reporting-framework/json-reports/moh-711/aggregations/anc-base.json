@@ -49,7 +49,7 @@
       "alias": "new_anc_clients",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "m.new_anc_clients"
+        "expression": "if(m.anc_visit_number = 1, 1, 0)"
       }
     },
     {
@@ -239,6 +239,6 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["m.person_id", "encounter_datetime"]
+    "columns": ["m.person_id", "m.encounter_datetime"]
   }
 }
