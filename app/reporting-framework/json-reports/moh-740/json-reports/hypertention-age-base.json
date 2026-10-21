@@ -54,6 +54,35 @@
     },
     {
       "type": "derived_column",
+      "alias": "tbs_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.tb_screening_status = 1107",
+            "value": "No signs"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6176",
+            "value": "On TB Treatment"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6971",
+            "value": "Presumed TB"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(mdh.systolic,' / ',mdh.diastolic)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "age_range",
       "expressionType": "case_statement",
       "expressionOptions": {
