@@ -48,22 +48,6 @@
       "expressionOptions": {
         "expression": "SUM(d.dental_fillings_revisit)"
       }
-    },
-    {
-      "type": "derived_column",
-      "alias": "dental_extractions_new",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(d.dental_extractions_new)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "dental_extractions_revisit",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(d.dental_extractions_revisit)"
-      }
     }
   ],
   "transFormDirectives": {

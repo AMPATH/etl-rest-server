@@ -42,6 +42,21 @@
     },
     {
       "type": "simple_column",
+      "alias": "report_date",
+      "column": "DATE_FORMAT(ed.date_created, '%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "day",
+      "column": "DAY(ed.date_created)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "l.location_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "person_id",
       "column": "ed.patient_id"
     },
@@ -403,7 +418,7 @@
     {
       "type": "simple_column",
       "alias": "referrals_from_other_health_facility",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 6749 AND referral_from.value_coded = 1275 AND referral_from.voided = 0), 1, 0)"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 6749 AND referral_from.value_coded = 7308 AND referral_from.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -413,12 +428,12 @@
     {
       "type": "simple_column",
       "alias": "referrals_from_community_unit",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 6749 AND referral_from.value_coded = 1862 AND referral_from.voided = 0), 1, 0)"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 6749 AND referral_from.value_coded = 12646 AND referral_from.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "referrals_to_community_unit",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_to WHERE referral_to.encounter_id = e.encounter_id AND referral_to.concept_id = 10927 AND referral_to.value_coded = 9613 AND referral_to.voided = 0), 1, 0)"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_to WHERE referral_to.encounter_id = e.encounter_id AND referral_to.concept_id = 10927 AND referral_to.value_coded = 12646 AND referral_to.voided = 0), 1, 0)"
     }
   ],
   "filters": {
@@ -447,6 +462,11 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["ed.patient_id", "ed.diagnosis_coded"]
+    "columns": [
+      "ed.patient_id",
+      "ed.diagnosis_coded",
+      "DATE(ed.date_created)",
+      "l.location_id"
+    ]
   }
 }

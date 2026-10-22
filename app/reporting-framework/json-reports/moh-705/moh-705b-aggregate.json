@@ -18,6 +18,21 @@
   ],
   "columns": [
     {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "a.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "report_date",
+      "column": "a.report_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "day",
+      "column": "a.day"
+    },
+    {
       "type": "derived_column",
       "alias": "diarrhoea",
       "expressionType": "simple_expression",
@@ -610,11 +625,8 @@
       }
     }
   ],
-  "transFormDirectives": {
-    "joinColumn": "location_id",
-    "joinColumnParam": "",
-    "skipColumns": [""],
-    "disaggregationColumns": []
+  "groupBy": {
+    "columns": ["a.location_id", "a.report_date", "a.day"]
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
@@ -624,8 +636,8 @@
         "joinDirectives": {
           "joinType": "INNER",
           "joinCondition": "<<base_column>> = <<template_column>>",
-          "baseColumn": "patient_id",
-          "templateColumn": "person_id"
+          "baseColumn": "encounter_id",
+          "templateColumn": "encounter_id"
         }
       }
     }

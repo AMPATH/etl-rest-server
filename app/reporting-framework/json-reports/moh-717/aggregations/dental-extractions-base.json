@@ -1,0 +1,79 @@
+{
+  "name": "dentalExtractionsBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "Completed dental extraction orders",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.orders",
+      "alias": "ord"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = ord.encounter_id AND e.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "ord.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "dental_extractions_new",
+      "column": "IF((SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = ord.patient_id AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) = 1, 1, NULL)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "dental_extractions_revisit",
+      "column": "IF((SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = ord.patient_id AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) > 1, 1, NULL)"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.order_type_id = 5"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.concept_id = 1980"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.fulfiller_status = 'COMPLETED'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.date_activated >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ord.date_activated <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  }
+}

@@ -6,23 +6,15 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "o"
-    },
-    {
       "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (167)"
-      }
+      "alias": "e"
     },
     {
       "table": "amrs.person",
       "alias": "p",
       "join": {
         "type": "INNER",
-        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+        "joinCondition": "e.patient_id = p.person_id AND p.voided = 0"
       }
     },
     {
@@ -30,7 +22,7 @@
       "alias": "l",
       "join": {
         "type": "INNER",
-        "joinCondition": "l.location_id = o.location_id"
+        "joinCondition": "l.location_id = e.location_id"
       }
     }
   ],
@@ -38,69 +30,69 @@
     {
       "type": "simple_column",
       "alias": "obs_datetime",
-      "column": "o.obs_datetime"
+      "column": "e.encounter_datetime"
     },
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "o.person_id"
+      "column": "e.patient_id"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_greater_5yrs_male_new",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'M' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) = 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_greater_5yrs_male_revisit",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'M' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) > 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_greater_5yrs_female_new",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5)  AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'F' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) = 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_greater_5yrs_female_revisit",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5)   AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 5) AND p.gender = 'F' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) > 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_less_5yrs_male_new",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5)   AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5) AND p.gender = 'M' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) = 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_less_5yrs_male_revisit",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5) AND p.gender = 'M' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5) AND p.gender = 'M' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) > 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_less_5yrs_female_new",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5)  AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5) AND p.gender = 'F' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) = 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "opd_attendance_less_5yrs_female_revisit",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5)  AND p.gender = 'F' AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) <= 5) AND p.gender = 'F' AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) = 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "over_60_years_new",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 60) AND o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 60) AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) = 1, 1, 0)"
     },
     {
       "type": "simple_column",
       "alias": "over_60_years_revisit",
-      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 60) AND o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+      "column": "IF((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) > 60) AND (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = e.patient_id AND e_prev.encounter_type = 167 AND e_prev.voided = 0 AND (e_prev.encounter_datetime < e.encounter_datetime OR (e_prev.encounter_datetime = e.encounter_datetime AND e_prev.encounter_id <= e.encounter_id))) > 1, 1, 0)"
     },
     {
       "type": "derived_column",
       "alias": "casualty_attendance_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 1839 AND o.value_coded = 7850, 1, 0)"
+        "expression": "IF(EXISTS (SELECT 1 FROM amrs.obs o WHERE o.encounter_id = e.encounter_id AND o.concept_id = 1839 AND o.value_coded = 7850 AND o.voided = 0), 1, 0)"
       }
     },
     {
@@ -108,7 +100,7 @@
       "alias": "casualty_attendance_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(o.concept_id = 1839 AND o.value_coded = 11233, 1, 0)"
+        "expression": "IF(EXISTS (SELECT 1 FROM amrs.obs o WHERE o.encounter_id = e.encounter_id AND o.concept_id = 1839 AND o.value_coded = 11233 AND o.voided = 0), 1, 0)"
       }
     }
   ],
@@ -121,23 +113,23 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime >= ?",
+        "conditionExpression": "e.encounter_datetime >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime <= ?",
+        "conditionExpression": "e.encounter_datetime <= ?",
         "parameterName": "endDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.location_id in ?",
+        "conditionExpression": "e.location_id in ?",
         "parameterName": "locations"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id"]
+    "columns": ["e.patient_id"]
   }
 }

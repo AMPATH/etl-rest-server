@@ -1,0 +1,67 @@
+{
+  "name": "otherServicesProcedureAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "Completed other-service procedure totals",
+  "uses": [
+    {
+      "name": "otherServicesProcedureBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "otherServicesProcedureBase",
+      "alias": "orders"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "orders.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_stitching",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(orders.opd_stitching)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_injections_given",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(orders.opd_injections_given)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_removal_of_stitches",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(orders.opd_removal_of_stitches)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_dressing_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(orders.opd_dressing_done)"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["orders.location_id"]
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  }
+}

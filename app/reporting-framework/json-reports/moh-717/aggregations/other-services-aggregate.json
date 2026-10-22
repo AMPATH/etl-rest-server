@@ -32,38 +32,6 @@
       "expressionOptions": {
         "expression": "SUM(os.opd_medical_reports)"
       }
-    },
-    {
-      "type": "derived_column",
-      "alias": "opd_dressing_done",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(os.opd_dressing_done)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "opd_removal_of_stitches",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(os.opd_removal_of_stitches)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "opd_injections_given",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(os.opd_injections_given)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "opd_stitching",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(os.opd_stitching)"
-      }
     }
   ],
   "transFormDirectives": {

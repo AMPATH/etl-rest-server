@@ -48,32 +48,32 @@
     {
       "type": "simple_column",
       "alias": "ent_clinic_attendance_new",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "simple_column",
       "alias": "ent_clinic_attendance_revisit",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "simple_column",
       "alias": "eye_clinic_attendance_new",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "simple_column",
       "alias": "eye_clinic_attendance_revisit",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "simple_column",
       "alias": "tb_and_leprosy_attendance_new",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "simple_column",
       "alias": "tb_and_leprosy_attendance_revisit",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "derived_column",
@@ -94,19 +94,19 @@
     {
       "type": "simple_column",
       "alias": "psychiatry_attendance_new",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "simple_column",
       "alias": "psychiatry_attendance_revisit",
-      "column": "null"
+      "column": "0"
     },
     {
       "type": "derived_column",
       "alias": "orthopaedic_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -114,7 +114,7 @@
       "alias": "orthopaedic_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -122,7 +122,7 @@
       "alias": "occupational_therapy_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -130,7 +130,7 @@
       "alias": "occupational_therapy_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -138,7 +138,7 @@
       "alias": "physiotherapy_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -146,7 +146,7 @@
       "alias": "physiotherapy_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -154,7 +154,7 @@
       "alias": "medical_attendance_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -162,7 +162,7 @@
       "alias": "medical_attendance_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -170,7 +170,7 @@
       "alias": "surgical_clinics_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -178,7 +178,7 @@
       "alias": "surgical_clinics_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -202,7 +202,7 @@
       "alias": "obstetrics_gynaecology_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -210,7 +210,7 @@
       "alias": "obstetrics_gynaecology_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -250,7 +250,7 @@
       "alias": "renal_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {
@@ -258,7 +258,7 @@
       "alias": "renal_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "0"
       }
     },
     {

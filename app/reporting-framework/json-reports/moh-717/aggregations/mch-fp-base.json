@@ -60,12 +60,12 @@
     {
       "type": "simple_column",
       "alias": "anc_new",
-      "column": "SUM(DISTINCT if(e.encounter_type = 264, 1, 0))"
+      "column": "SUM(DISTINCT if(e.encounter_type = 265, 1, 0))"
     },
     {
       "type": "simple_column",
       "alias": "anc_revisit",
-      "column": "SUM(DISTINCT if(e.encounter_type = 265, 1, 0))"
+      "column": "SUM(DISTINCT if(e.encounter_type = 264, 1, 0))"
     },
     {
       "type": "simple_column",
