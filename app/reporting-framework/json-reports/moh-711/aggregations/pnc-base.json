@@ -309,24 +309,27 @@
       "column": "p.hiv_results"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "hiv_result_pnc_less_6_weeks",
-      "column": "null"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(p.post_partum_timing_mother IN ('0-48 HOURS', '3 DAYS TO 6 WEEKS'), p.hiv_results, NULL)"
+      }
     },
     {
       "type": "simple_column",
       "alias": "hiv_result_pnc_greater_6_weeks",
-      "column": "null"
+      "column": "IF(p.post_partum_timing_mother = 'MORE THAN SIX WEEKS', p.hiv_results, NULL)"
     },
     {
       "type": "simple_column",
       "alias": "maternal_haart_less_6_weeks",
-      "column": "null"
+      "column": "IF(p.post_partum_timing_mother IN ('0-48 HOURS', '3 DAYS TO 6 WEEKS'), p.art_prophylaxis_adult, NULL)"
     },
     {
       "type": "simple_column",
       "alias": "maternal_haart_greater_6_weeks",
-      "column": "null"
+      "column": "IF(p.post_partum_timing_mother = 'MORE THAN SIX WEEKS', p.art_prophylaxis_adult, NULL)"
     },
     {
       "type": "simple_column",

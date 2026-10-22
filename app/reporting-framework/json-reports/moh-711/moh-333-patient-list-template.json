@@ -28,7 +28,7 @@
       "alias": "mat_number",
       "join": {
         "type": "LEFT",
-        "joinCondition": "mat_number.patient_id = a.person_id AND mat_number.identifier_type = 8"
+        "joinCondition": "mat_number.patient_id = a.person_id AND mat_number.identifier_type = 49"
       }
     },
     {
@@ -36,7 +36,7 @@
       "alias": "nupi",
       "join": {
         "type": "LEFT",
-        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 55"
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
       }
     },
     {
@@ -236,7 +236,7 @@
       "alias": "maternal_deaths_notified",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(a.date_maternal_death_notified is not null, 'Y', 'N')"
+        "expression": "if(a.date_maternal_death_notified is not null, 'Y', 'N/A')"
       }
     },
     {
@@ -283,14 +283,20 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "teo_given_at_birth",
-      "column": "a.tetracycline_given"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.tetracycline_given, 'Y', 'N')"
+      }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "chlorhexidine_applied_on_cord_stamp",
-      "column": "a.chlorhexidine_applied"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.chlorhexidine_applied, 'Y', 'N')"
+      }
     },
     {
       "type": "simple_column",

@@ -32,6 +32,26 @@
       "column": "m.age_in_months"
     },
     {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "m.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "m.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "m.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "bcg_vaccine",
+      "column": "m.bcg_vaccine"
+    },
+    {
       "type": "derived_column",
       "alias": "bcg_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
@@ -47,6 +67,20 @@
         "expression": "m.bcg_vaccine && m.age_in_years > 1"
       }
     },
+    {
+      "type": "simple_column",
+      "alias": "opv_vaccine",
+      "column": "m.opv_vaccine"
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv1_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose =1"
+      }
+    },
+
     {
       "type": "derived_column",
       "alias": "opv_vaccine_greater_1_year",
@@ -130,6 +164,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "ipv_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.ipv_vaccine"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "ipv1_vaccine_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -178,6 +220,30 @@
     },
     {
       "type": "derived_column",
+      "alias": "dpt_hep_1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose = 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose = 2"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose = 3"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "dpt_hep_vaccine1_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -222,6 +288,30 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose =3 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococcal_1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose = 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococcal_2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose = 2"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococcal_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose = 3"
       }
     },
     {
@@ -298,6 +388,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "rotavirus_vaccine1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose = 1"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "rotavirus_vaccine1_age_less_than_1yr",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -362,6 +460,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "vitaminA_6_11_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.vitamin_a && m.age_in_months >= 6 && m.age_in_months <= 11"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "vitaminA_12_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -414,6 +520,22 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "m.measles_vaccine"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_rubela_1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.measles_vaccine && m.measles_dose = 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_rubela_2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.measles_vaccine && m.measles_dose = 2"
       }
     },
     {

@@ -341,11 +341,6 @@
     },
     {
       "type": "simple_column",
-      "alias": "counselled",
-      "column": "a.women_couselled_on_post_partum_fp"
-    },
-    {
-      "type": "simple_column",
       "alias": "ppfp_method",
       "column": "a.women_received_post_partum_fp"
     },
