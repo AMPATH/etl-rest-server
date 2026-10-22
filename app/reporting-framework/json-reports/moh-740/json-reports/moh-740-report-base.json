@@ -78,9 +78,12 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "cumulative_htn_patient",
-      "column": "mdh.cumulative_htn_patient"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.has_htn = 1 OR mdh.is_co_morbid = 1,1,NULL)"
+      }
     },
     {
       "type": "simple_column",
@@ -309,35 +312,35 @@
         "caseOptions": [
           {
             "condition": "mdh.primary_diagnosis_at_enrollment = 9325",
-            "value": "a"
+            "value": "Type 1 Diabetes Mellitus"
           },
           {
             "condition": "mdh.primary_diagnosis_at_enrollment IN (9326,44193)",
-            "value": "b"
+            "value": "Type 2 Diabetes Mellitus"
           },
           {
             "condition": "mdh.primary_diagnosis_at_enrollment = 8879",
-            "value": "c"
+            "value": "Gesta�onal Diabetes Mellitus"
           },
           {
             "condition": "mdh.primary_diagnosis_at_enrollment IN(903,38566,38559,38557,38550,38543,38541)",
-            "value": "d"
+            "value": "Hypertension"
           },
           {
             "condition": "mdh.primary_diagnosis_at_enrollment = 47",
-            "value": "e"
+            "value": "Preeclampsia"
           },
           {
             "condition": "mdh.primary_diagnosis_at_enrollment = 1456",
-            "value": "f"
+            "value": "Other NCD (specify)"
           },
           {
             "condition": "mdh.primary_diagnosis_at_enrollment = 7996",
-            "value": "g"
+            "value": "Peripheral Vascular Disease"
           },
           {
             "condition": "mdh.primary_diagnosis_at_enrollment = 8087",
-            "value": "h"
+            "value": "Diabetic foot Ulcer"
           }
         ]
       }
@@ -389,11 +392,11 @@
         "caseOptions": [
           {
             "condition": "mdh.htn_type = 7285",
-            "value": "a"
+            "value": "Newly Diagnosed"
           },
           {
             "condition": "mdh.htn_type = 7286",
-            "value": "b"
+            "value": "Previously Known diagnosis"
           }
         ]
       }
@@ -406,53 +409,11 @@
         "caseOptions": [
           {
             "condition": "mdh.diabetes_status = 7281",
-            "value": "a"
+            "value": "Newly Diagnosed"
           },
           {
             "condition": "mdh.diabetes_status = 7282",
-            "value": "b"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "screened_for_tb",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "mdh.screened_for_tb_this_month = 1",
-            "value": "Y"
-          },
-          {
-            "condition": "mdh.screened_for_tb_this_month = 0",
-            "value": "N"
-          },
-          {
-            "condition": "mdh.screened_for_tb_this_month IS NULL",
-            "value": "N"
-          }
-        ]
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "tbs_status",
-      "expressionType": "case_statement",
-      "expressionOptions": {
-        "caseOptions": [
-          {
-            "condition": "mdh.tb_screening_status = 1107",
-            "value": "2"
-          },
-          {
-            "condition": "mdh.tb_screening_status = 6176",
-            "value": "3"
-          },
-          {
-            "condition": "mdh.tb_screening_status = 6971",
-            "value": "1"
+            "value": "Previously Known diagnosis"
           }
         ]
       }
@@ -465,11 +426,53 @@
         "caseOptions": [
           {
             "condition": "mdh.co_morbid_type = 1154",
-            "value": "a"
+            "value": "Newly Diagnosed"
           },
           {
-            "condition": "mdh.co_morbid_type = 12778",
-            "value": "b"
+            "condition": "mdh.diabetes_status = 12778",
+            "value": "Previously Known diagnosis"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_for_tb",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.screened_for_tb_this_month = 1",
+            "value": "Yes"
+          },
+          {
+            "condition": "mdh.screened_for_tb_this_month = 0",
+            "value": "No"
+          },
+          {
+            "condition": "mdh.screened_for_tb_this_month IS NULL",
+            "value": "No"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tbs_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.tb_screening_status = 1107",
+            "value": "No signs"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6176",
+            "value": "On TB Treatment"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6971",
+            "value": "Presumed TB"
           }
         ]
       }
