@@ -53,7 +53,7 @@
       "alias": "dysentry",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(a.dysentry)"
+        "expression": "COUNT(DISTINCT IF(a.dysentry = 1, a.encounter_id, NULL))"
       }
     },
     {
