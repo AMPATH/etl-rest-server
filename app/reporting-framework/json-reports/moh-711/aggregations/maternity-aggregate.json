@@ -18,6 +18,11 @@
   ],
   "columns": [
     {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "m.encounter_id"
+    },
+    {
       "type": "derived_column",
       "alias": "normal_deliveries",
       "expressionType": "simple_expression",

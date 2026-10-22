@@ -3,25 +3,24 @@
   "version": "1.0",
   "tag": "moh_406_patient_list_template",
   "description": "MOH 406 Patient list template",
+  "uses": [
+    {
+      "name": "pncBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
   "sources": [
     {
-      "table": "etl.flat_moh_711",
+      "dataSet": "pncBase",
       "alias": "a"
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "en",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "en.encounter_id = a.encounter_id AND en.encounter_type in (266, 267)"
-      }
     },
     {
       "table": "amrs.person",
       "alias": "pn",
       "join": {
-        "type": "LEFT",
-        "joinCondition": "pn.person_id = a.person_id"
+        "type": "INNER",
+        "joinCondition": "pn.person_id = a.person_id AND pn.voided = 0"
       }
     },
     {
@@ -65,43 +64,11 @@
       }
     },
     {
-      "table": "amrs.obs",
-      "alias": "obs",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = obs.person_id AND obs.concept_id in (10926, 10927, 2327, 12019)"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "ob",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = ob.person_id AND ob.concept_id = 12019"
-      }
-    },
-    {
-      "table": "amrs.obs",
-      "alias": "oc",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = oc.person_id AND oc.concept_id = 1357"
-      }
-    },
-    {
       "table": "amrs.person_address",
       "alias": "pa",
       "join": {
         "type": "LEFT",
         "joinCondition": "a.person_id = pa.person_id"
-      }
-    },
-    {
-      "table": "(SELECT ranked_obs.person_id, CASE WHEN ranked_obs.value_coded = 5555 THEN 'MM' WHEN ranked_obs.value_coded = 6290 THEN 'MP' WHEN ranked_obs.value_coded = 1059 THEN 'W' WHEN ranked_obs.value_coded = 1057 THEN 'NM' WHEN ranked_obs.value_coded = 1056 THEN 'S' WHEN ranked_obs.value_coded = 1058 THEN 'D' ELSE '' END AS marital_status FROM (SELECT  person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054) ranked_obs WHERE rn = 1)",
-      "alias": "g",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "g.person_id = a.person_id"
       }
     }
   ],
@@ -172,7 +139,7 @@
     {
       "type": "simple_column",
       "alias": "marital_status",
-      "column": "g.marital_status"
+      "column": "a.marital_status"
     },
     {
       "type": "simple_column",
@@ -214,7 +181,7 @@
       "alias": "blood_pressure",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CONCAT_WS(a.bp_systolic, '/', a.bp_diastolic)"
+        "expression": "CONCAT_WS( '/', a.bp_systolic, a.bp_diastolic)"
       }
     },
     {
@@ -263,12 +230,9 @@
       "column": "a.tb_screening"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "tested_pnc",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "MAX(case WHEN ob.value_coded = 10434 THEN 'INITIAL TEST' WHEN ob.value_coded = 10200 THEN 'REVISIT' WHEN ob.value_coded IN (10407, 12074) THEN 'KNOWN POSITIVE' WHEN ob.value_coded = 10973 THEN 'RETEST' else '' end)"
-      }
+      "column": "a.hiv_test_type"
     },
     {
       "type": "simple_column",
@@ -331,12 +295,9 @@
       "column": "a.hiv_test_3_test_result"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "hiv_test_results_pnc",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "MAX(CASE WHEN oc.value_coded = 703 THEN 'P' WHEN oc.value_coded = 664 then 'N' WHEN oc.value_coded = 1175 then 'NA' WHEN oc.value_coded = 1138 then 'In' WHEN oc.value_coded = 1067 then 'U' ELSE '' end)"
-      }
+      "column": "a.hiv_results"
     },
     {
       "type": "simple_column",
@@ -422,7 +383,7 @@
     {
       "type": "derived_column",
       "alias": "remarks",
-      "column": "a.pnc_remarks"
+      "column": "a.remarks"
     }
   ],
   "groupBy": {
