@@ -88,7 +88,7 @@
     {
       "type": "simple_column",
       "alias": "dysentry",
-      "column": "null"
+      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs stool_exam WHERE stool_exam.encounter_id = e.encounter_id AND stool_exam.concept_id = 304 AND stool_exam.value_coded = 709 AND stool_exam.voided = 0) AND EXISTS (SELECT 1 FROM amrs.obs stool_appearance WHERE stool_appearance.encounter_id = e.encounter_id AND stool_appearance.concept_id = 15229 AND stool_appearance.value_coded IN (26801,6787) AND stool_appearance.voided = 0), 1, 0)"
     },
     {
       "type": "simple_column",
@@ -363,7 +363,7 @@
     {
       "type": "simple_column",
       "alias": "viral_haemorrhagic_fever",
-      "column": "if(ed.diagnosis_coded = 48016, 1, 0)"
+      "column": "if(ed.diagnosis_coded in (48016,48126,48118,48123,48116,48119,16129,47333,15573,48125), 1, 0)"
     },
     {
       "type": "simple_column",
