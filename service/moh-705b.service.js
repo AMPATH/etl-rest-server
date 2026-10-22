@@ -1,6 +1,5 @@
 const Promise = require('bluebird');
 import { MultiDatasetPatientlistReport } from '../app/reporting-framework/multi-dataset-patientlist.report.js';
-import ReportProcessorHelpersService from '../app/reporting-framework/report-processor-helpers.service.js';
 
 const moh731PatientListCols = require('../app/reporting-framework/json-reports/moh-731-report/731-patient-list-columns.json');
 
@@ -17,30 +16,17 @@ export class MOH705BService extends MultiDatasetPatientlistReport {
           resolve(results);
         } else {
           let finalResult = [];
-          const reportProcessorHelpersService = new ReportProcessorHelpersService();
           for (let result of results) {
             if (
-              result.report &&
-              result.report.reportSchemas &&
-              result.report.reportSchemas.main &&
-              result.report.reportSchemas.main.transFormDirectives.joinColumn
+              result.results &&
+              result.results.results &&
+              Array.isArray(result.results.results.results)
             ) {
-              finalResult = reportProcessorHelpersService.joinDataSets(
-                that.params[
-                  result.report.reportSchemas.main.transFormDirectives
-                    .joinColumnParam
-                ] ||
-                  result.report.reportSchemas.main.transFormDirectives
-                    .joinColumn,
-                finalResult,
-                result.results.results.results
-              );
+              finalResult = finalResult.concat(result.results.results.results);
             }
           }
 
-          resolve({
-            result: finalResult
-          });
+          resolve({ result: finalResult });
         }
       });
     }).catch((error) => {

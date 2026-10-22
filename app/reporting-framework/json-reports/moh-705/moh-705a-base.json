@@ -42,6 +42,21 @@
     },
     {
       "type": "simple_column",
+      "alias": "report_date",
+      "column": "DATE_FORMAT(ed.date_created, '%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "day",
+      "column": "DAY(ed.date_created)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "l.location_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "person_id",
       "column": "ed.patient_id"
     },
@@ -431,12 +446,12 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "ed.date_created >= ?",
+        "conditionExpression": "DATE(ed.date_created) >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "ed.date_created <= ?",
+        "conditionExpression": "DATE(ed.date_created) <= ?",
         "parameterName": "endDate"
       },
       {
@@ -452,6 +467,11 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["ed.patient_id", "ed.diagnosis_coded"]
+    "columns": [
+      "ed.patient_id",
+      "ed.diagnosis_coded",
+      "DATE(ed.date_created)",
+      "l.location_id"
+    ]
   }
 }

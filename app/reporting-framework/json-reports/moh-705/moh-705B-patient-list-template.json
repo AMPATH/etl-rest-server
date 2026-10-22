@@ -55,7 +55,7 @@
     {
       "type": "simple_column",
       "alias": "date",
-      "column": "DATE_FORMAT(e.encounter_datetime, '%d/%m/%Y')"
+      "column": "DATE_FORMAT(et.encounter_datetime, '%d/%m/%Y')"
     },
     {
       "type": "simple_column",
@@ -232,7 +232,7 @@
     "orderByParam": "orderByParam",
     "columns": [
       {
-        "column": "e.encounter_datetime",
+        "column": "et.encounter_datetime",
         "order": "desc"
       }
     ]
