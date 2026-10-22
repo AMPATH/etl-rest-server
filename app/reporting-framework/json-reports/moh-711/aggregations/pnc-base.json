@@ -31,6 +31,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "visit_id",
+      "column": "p.visit_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "encounter_datetime",
       "column": "p.encounter_datetime"
     },
@@ -134,6 +139,259 @@
       "expressionOptions": {
         "expression": "if(p.referred_from = 'COMMUNITY', 1, 0)"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "p.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "marital_status",
+      "column": "p.marital_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_delivery",
+      "column": "p.date_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "place_of_delivery",
+      "column": "p.place_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mode_of_delivery",
+      "column": "p.mode_of_delivery"
+    },
+    {
+      "type": "simple_column",
+      "alias": "timing_mother",
+      "column": "p.post_partum_timing_mother"
+    },
+    {
+      "type": "simple_column",
+      "alias": "timing_baby",
+      "column": "p.post_partum_care_infants"
+    },
+    {
+      "type": "simple_column",
+      "alias": "temperature",
+      "column": "p.temperature"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pulse",
+      "column": "p.pulse"
+    },
+    {
+      "type": "derived_column",
+      "alias": "blood_pressure",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS( '/', p.bp_systolic, p.bp_diastolic)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "pallor_present",
+      "column": "p.pallor_present"
+    },
+    {
+      "type": "simple_column",
+      "alias": "breast",
+      "column": "p.breast_exam"
+    },
+    {
+      "type": "simple_column",
+      "alias": "uterus",
+      "column": "p.uterus"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pph",
+      "column": "p.pph"
+    },
+    {
+      "type": "simple_column",
+      "alias": "c_section_site",
+      "column": "p.c_section_site"
+    },
+    {
+      "type": "simple_column",
+      "alias": "lochia",
+      "column": "p.lochia"
+    },
+    {
+      "type": "simple_column",
+      "alias": "episiotomy",
+      "column": "p.episiotomy"
+    },
+    {
+      "type": "simple_column",
+      "alias": "fistula",
+      "column": "p.fistula"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_screening",
+      "column": "p.tb_screening"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tested_pnc",
+      "column": "p.hiv_test_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_kit_name",
+      "column": "p.hiv_test_1_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_lot_no",
+      "column": "p.hiv_test_1_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_expiry_date",
+      "column": "p.hiv_test_1_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_1_test_result",
+      "column": "p.hiv_test_1_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_kit_name",
+      "column": "p.hiv_test_2_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_lot_no",
+      "column": "p.hiv_test_2_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_expiry_date",
+      "column": "p.hiv_test_2_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_2_test_result",
+      "column": "p.hiv_test_2_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_kit_name",
+      "column": "p.hiv_test_3_kit_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_lot_no",
+      "column": "p.hiv_test_3_lot_no"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_expiry_date",
+      "column": "p.hiv_test_3_expiry_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_3_test_result",
+      "column": "p.hiv_test_3_test_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test_results_pnc",
+      "column": "p.hiv_results"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_result_pnc_less_6_weeks",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_result_pnc_greater_6_weeks",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_haart_less_6_weeks",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_haart_greater_6_weeks",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "infant_prophylaxis_less_6_weeks",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "infant_prophylaxis_greater_6_weeks",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cervical_cancer_method",
+      "column": "p.cervical_cancer_method"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cervical_cancer_result",
+      "column": "p.cervical_cancer_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counselled",
+      "column": "p.women_couselled_on_post_partum_fp"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ppfp_method",
+      "column": "p.women_received_post_partum_fp"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternal_haart",
+      "column": "p.maternal_haart"
+    },
+    {
+      "type": "simple_column",
+      "alias": "other_maternal_complications",
+      "column": "p.maternal_complications"
+    },
+    {
+      "type": "simple_column",
+      "alias": "haemanitics",
+      "column": "p.haemanitics"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_from",
+      "column": "p.referred_from"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_to",
+      "column": "p.referred_to"
+    },
+    {
+      "type": "derived_column",
+      "alias": "reason_for_referral",
+      "column": "p.reason_for_referral"
+    },
+    {
+      "type": "derived_column",
+      "alias": "remarks",
+      "column": "p.remarks"
     }
   ],
   "filters": {

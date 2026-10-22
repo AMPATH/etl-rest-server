@@ -3,9 +3,16 @@
   "version": "1.0",
   "tag": "moh_333_patient_list_template",
   "description": "MOH 333 Patient list template",
+  "uses": [
+    {
+      "name": "maternityBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
   "sources": [
     {
-      "table": "etl.flat_moh_711",
+      "dataSet": "maternityBase",
       "alias": "a"
     },
     {
@@ -36,7 +43,7 @@
       "table": "amrs.person_name",
       "alias": "person_name",
       "join": {
-        "type": "LEFT",
+        "type": "INNER",
         "joinCondition": "a.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
       }
     },
@@ -63,14 +70,6 @@
         "type": "LEFT",
         "joinCondition": "a.person_id = pa.person_id"
       }
-    },
-    {
-      "table": "(SELECT ranked_obs.person_id, CASE WHEN ranked_obs.value_coded = 5555 THEN 'MM' WHEN ranked_obs.value_coded = 6290 THEN 'MP' WHEN ranked_obs.value_coded = 1059 THEN 'W' WHEN ranked_obs.value_coded = 1057 THEN 'NM' WHEN ranked_obs.value_coded = 1056 THEN 'S' WHEN ranked_obs.value_coded = 1058 THEN 'D' ELSE '' END AS marital_status FROM (SELECT  person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054) ranked_obs WHERE rn = 1)",
-      "alias": "g",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "g.person_id = a.person_id"
-      }
     }
   ],
   "columns": [
@@ -78,6 +77,16 @@
       "type": "simple_column",
       "alias": "person_id",
       "column": "a.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "a.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "a.encounter_id"
     },
     {
       "type": "simple_column",
@@ -135,7 +144,7 @@
     {
       "type": "simple_column",
       "alias": "marital_status",
-      "column": "g.marital_status"
+      "column": "a.marital_status"
     },
     {
       "type": "simple_column",
@@ -437,7 +446,7 @@
     {
       "type": "simple_column",
       "alias": "comments",
-      "column": "a.anc_remarks"
+      "column": "a.remarks"
     }
   ],
   "groupBy": {

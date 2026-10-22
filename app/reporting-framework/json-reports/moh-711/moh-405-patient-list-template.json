@@ -3,9 +3,16 @@
   "version": "1.0",
   "tag": "moh_405_patient_list_template",
   "description": "moh_405_patient_list_template",
+  "uses": [
+    {
+      "name": "ancBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
   "sources": [
     {
-      "table": "etl.flat_moh_711",
+      "dataSet": "ancBase",
       "alias": "a"
     },
     {
@@ -62,22 +69,6 @@
       "join": {
         "type": "LEFT",
         "joinCondition": "a.person_id = pa.person_id"
-      }
-    },
-    {
-      "table": "(SELECT ranked_obs.person_id, CASE WHEN ranked_obs.value_coded = 5555 THEN 'MM' WHEN ranked_obs.value_coded = 6290 THEN 'MP' WHEN ranked_obs.value_coded = 1059 THEN 'W' WHEN ranked_obs.value_coded = 1057 THEN 'NM' WHEN ranked_obs.value_coded = 1056 THEN 'S' WHEN ranked_obs.value_coded = 1058 THEN 'D' ELSE '' END AS marital_status FROM (SELECT person_id, concept_id, value_coded, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id = 1054 AND voided = 0) ranked_obs WHERE rn = 1)",
-      "alias": "g",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "g.person_id = a.person_id"
-      }
-    },
-    {
-      "table": "(SELECT o.person_id, o.value_text FROM amrs.obs o INNER JOIN (SELECT person_id, MAX(CONCAT(obs_datetime, LPAD(obs_id, 10, '0'))) AS max_key FROM amrs.obs WHERE concept_id = 7222 AND voided = 0 GROUP BY person_id) latest ON latest.person_id = o.person_id AND latest.max_key = CONCAT(o.obs_datetime, LPAD(o.obs_id, 10, '0')) WHERE o.concept_id = 7222 AND o.voided = 0)",
-      "alias": "oa_latest",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = oa_latest.person_id"
       }
     }
   ],
@@ -153,7 +144,7 @@
     {
       "type": "simple_column",
       "alias": "marital_status",
-      "column": "g.marital_status"
+      "column": "a.marital_status"
     },
     {
       "type": "simple_column",
@@ -200,7 +191,7 @@
       "alias": "blood_pressure",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CONCAT_WS(a.bp_systolic, '/', a.bp_diastolic)"
+        "expression": "CONCAT_WS('/', a.bp_systolic, a.bp_diastolic)"
       }
     },
     {
@@ -216,7 +207,7 @@
     {
       "type": "simple_column",
       "alias": "fgm_complications",
-      "column": "a.fgm_complications"
+      "column": "a.delivery_complications"
     },
     {
       "type": "simple_column",
@@ -402,7 +393,7 @@
     {
       "type": "simple_column",
       "alias": "remarks",
-      "column": "a.anc_remarks"
+      "column": "a.remarks"
     }
   ],
   "groupBy": {
