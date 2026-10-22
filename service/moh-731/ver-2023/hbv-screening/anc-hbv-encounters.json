@@ -1,0 +1,129 @@
+{
+  "name": "moh731V2023AncHbvEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.4 HBV Screening at ANC, step 1: ANC encounters (Initial 265, Return 264) in the period with the obs that make them an ANC test (1.1 HIV Tests: result 1357, test type 12019, no Revisit) or a known-positive visit (12019 = 10407), and the ANC visit number (7086).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (1357, 12019, 7086)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "e.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "e.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "e.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "e.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "res_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 1357 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tt_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 12019 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anc_visit_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 7086 THEN o.value_numeric END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 12019 AND o.value_coded = 10973), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kp_12019",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 12019 AND o.value_coded = 10407), 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type IN (265, 264)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}

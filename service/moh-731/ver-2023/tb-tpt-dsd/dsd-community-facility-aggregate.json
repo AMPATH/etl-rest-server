@@ -1,0 +1,57 @@
+{
+  "name": "moh731V2023DsdCommunityFacilityAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.5 Differentiated Service Delivery, HV03-035 Community and HV03-036 Facility: clients by their latest DSD observation at the locations up to the end of the period, with the earlier O3 dataset's community and facility rules. Each client counts once. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023DsdCommunityFacilityBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023DsdCommunityFacilityBase",
+      "alias": "x"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.community), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.facility), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023TbDsdPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

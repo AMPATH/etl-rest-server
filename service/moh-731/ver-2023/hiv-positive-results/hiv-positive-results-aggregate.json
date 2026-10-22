@@ -1,0 +1,161 @@
+{
+  "name": "moh731V2023HivPositiveResultsAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 1.2 HIV Positive Results, HV01-06 to HV01-18 and HV01-47/48: counted from the same tested clients as 1.1 (moh731V2023HivTestsBase), by final result, sex, age at the test, population type and typology. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023HivTestsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HivTestsBase",
+      "alias": "hts"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "male_2_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.male_2_9), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_2_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.female_2_9), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.male_10_14), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.female_10_14), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.male_15_19), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.female_15_19), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.male_20_24), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.female_20_24), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_25_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.male_25_above), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_25_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.female_25_above), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_kvp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.positive_kvp), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.discordant_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.discordant_female), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "inconclusive_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.inconclusive_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "inconclusive_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.inconclusive_female), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023HivTestsPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

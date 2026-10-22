@@ -1,0 +1,310 @@
+{
+  "name": "moh731V2023HivPositiveMothersBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.6 Infant Prophylaxis, step 2: the common list of HIV-positive pregnant and postnatal women -- women whose test at ANC, L&D or PNC came back positive (the 1.1 HIV Tests rules), and women known positive at an ANC visit -- one row per encounter, with which of the two each row is and whether infant prophylaxis was given. Carries a flag per 2.6 figure (prophylaxis given, by service), which the aggregate sums and the patient list filters on.",
+  "uses": [
+    {
+      "name": "moh731V2023HivPositiveMotherEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HivPositiveMotherEncounters",
+      "alias": "b"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = b.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "fr",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fr.obs_id = b.res_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "dd",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "dd.obs_id = b.del_id"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "fhs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fhs.person_id = b.patient_id AND fhs.is_clinical_encounter = 1 AND fhs.next_clinical_datetime_hiv IS NULL"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "drug",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "drug.obs_id = b.drug_obs_id"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "drug_cn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "drug_cn.concept_id = drug.value_coded AND drug_cn.locale_preferred = 1 AND drug_cn.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = p.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = b.location_id"
+      }
+    },
+    {
+      "table": "amrs.encounter_type",
+      "alias": "et",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "et.encounter_type_id = b.encounter_type"
+      }
+    },
+    {
+      "table": "amrs.users",
+      "alias": "u",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "u.user_id = b.creator"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "service",
+      "column": "b.service"
+    },
+    {
+      "type": "derived_column",
+      "alias": "visit_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "et.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) THEN 'Newly positive' ELSE 'Known positive' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "anc_visit_number",
+      "column": "b.anc_visit_number"
+    },
+    {
+      "type": "derived_column",
+      "alias": "delivery_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.service = 'PNC' THEN DATE(dd.value_datetime) END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 28 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initiated_in_care",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN fhs.person_id IS NOT NULL THEN 'Yes' ELSE 'No' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "arv_first_regimen_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(fhs.arv_first_regimen_start_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_prophylaxis_dispensed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (b.proph_val = 1065 AND ((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR ((b.service = 'ANC' AND b.kp_12019 = 1) AND b.anc_visit_number = 1))) THEN 'Yes' ELSE 'No' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_prophylaxis_regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN (b.proph_val = 1065 AND ((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR ((b.service = 'ANC' AND b.kp_12019 = 1) AND b.anc_visit_number = 1))) THEN drug_cn.name END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "entered_by",
+      "column": "u.username"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'ANC' AND (b.proph_val = 1065 AND ((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR ((b.service = 'ANC' AND b.kp_12019 = 1) AND b.anc_visit_number = 1))), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_ld",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'Maternity' AND (b.proph_val = 1065 AND ((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR ((b.service = 'ANC' AND b.kp_12019 = 1) AND b.anc_visit_number = 1))), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND (b.proph_val = 1065 AND ((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR ((b.service = 'ANC' AND b.kp_12019 = 1) AND b.anc_visit_number = 1))), 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "p.gender = 'F'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR (b.service = 'ANC' AND b.kp_12019 = 1))"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "b.service",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_datetime",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

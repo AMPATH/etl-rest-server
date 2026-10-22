@@ -1,0 +1,181 @@
+{
+  "name": "moh731V2023TbScreenUnder15Base",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.3 TB Screening, HV03-029 Screened for TB_<15: a copy of the earlier O3 dataset tbScreenLess15Base3X -- the same sources, filters and grouping, so the same clients -- with the figure's flag named as its indicator and the client's name, identifiers and location for the linelist.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "hmrd"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmrd.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pp",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pp.person_id = hmrd.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = hmrd.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = hmrd.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "hmrd.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_tb_less_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmrd.tb_screened_this_visit_this_month = 1 AND hmrd.age < 15, 1, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "hmrd.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = hmrd.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = hmrd.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "pp.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "hmrd.age"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "arv_first_regimen_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(hmrd.arv_first_regimen_start_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screening_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(hmrd.tb_screening_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_screening_result",
+      "column": "hmrd.tb_screening_result"
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipt_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(hmrd.ipt_start_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_visit_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(hmrd.encounter_date)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.tb_screened_this_visit_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.started_ipt_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["hmrd.person_id"]
+  }
+}

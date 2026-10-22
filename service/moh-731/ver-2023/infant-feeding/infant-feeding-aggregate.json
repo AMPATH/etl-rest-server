@@ -1,0 +1,65 @@
+{
+  "name": "moh731V2023InfantFeedingAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.7 Infant Feeding: HEI follow-ups current in the period (seen before its end, return-to-clinic date on or after its start). HV02-32 EBF below 6 months, HV02-33 BF and HV02-34 NBF at 6 to 24 months. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023HeiFeedingBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HeiFeedingBase",
+      "alias": "hei"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "exclusive_bf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hei.exclusive_bf), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hei.bf), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "weaning",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hei.weaning), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023HeiFeedingPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

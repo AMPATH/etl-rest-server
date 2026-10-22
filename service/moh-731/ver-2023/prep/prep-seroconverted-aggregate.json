@@ -1,0 +1,57 @@
+{
+  "name": "moh731V2023PrepSeroconvertedAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 1.5 No. Seroconverted while on PrEP, HV01-45 and HV01-46: PrEP return (Follow-up) visits whose HIV test (1040) is positive, by sex. One visit per client per day. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023PrepVisitsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023PrepVisitsBase",
+      "alias": "prep"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(prep.seroconverted_male), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(prep.seroconverted_female), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023PrepPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "moh731V2023PrepPatientListTemplate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "Patient list template for the MOH 731 (Ver. July 2023) PrEP figures. The PrEP visits base already carries every linelist column, so this only satisfies the generator's join; with no group by, the linelist stays one row per visit -- the same rows its figure counts.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "pl_person"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "pl_person.person_id"
+    }
+  ]
+}
