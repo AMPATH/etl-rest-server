@@ -656,6 +656,7 @@ const routes = [
     config: {
       handler: function (request, reply) {
         if (request.query.locationUuids) {
+          request.query.reportName = 'moh745Report';
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
             let requestParams = Object.assign(
               {},
@@ -663,28 +664,23 @@ const routes = [
               request.params
             );
 
+            let requestCopy = _.cloneDeep(requestParams);
             let reportParams = etlHelpers.getReportParams(
-              'moh745Report',
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+              request.query.reportName,
+              ['startDate', 'endDate', 'locationUuids', 'locations'],
               requestParams
             );
-
-            let requestCopy = _.cloneDeep(requestParams);
-            let service = new MOH745Service(
-              'moh745Report',
-              reportParams.requestParams
-            );
             requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+            let report = 'moh745Report';
+            let moh745Service = new MOH745Service(report, requestCopy);
 
-            service
-              .generatePatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
+            moh745Service
+              .getPatientListReport(requestParams)
+              .then((results) => {
+                reply(results);
               })
-              .catch((error) => {
-                reply(error);
+              .catch((err) => {
+                reply(Boom.internal('An error occured', err));
               });
           });
         }
