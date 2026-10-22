@@ -28,7 +28,7 @@
       "alias": "anc_number",
       "join": {
         "type": "LEFT",
-        "joinCondition": "anc_number.patient_id = a.person_id AND anc_number.identifier_type = 8"
+        "joinCondition": "anc_number.patient_id = a.person_id AND anc_number.identifier_type = 48"
       }
     },
     {
@@ -36,7 +36,7 @@
       "alias": "nupi",
       "join": {
         "type": "LEFT",
-        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 55"
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
       }
     },
     {
