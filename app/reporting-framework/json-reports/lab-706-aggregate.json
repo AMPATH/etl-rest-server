@@ -1,12 +1,12 @@
 {
   "name": "lab706Aggregate",
-  "version": "2.4",
+  "version": "2.5",
   "tag": "lab-706-blood-chemistry-aggregate",
-  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.2, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection. v2.2: panel indicators come from the base's member-aware flags over etl.flat_moh_706_report_results - total_fbc/total_lipid_profile/total_urinalysis count orders with >= 1 member result, positive_urinalysis counts orders where any dipstick member coded POSITIVE (previously always 0: panel head obs are valueless), fbc_hb_* bands read the HGB (21) member via the base fbc_hgb slot (previously one arbitrary member value was banded as if it were Hb). The *_with_members sums add urinalysis-member occurrences to the standalone analyte counts - aliases are additive; the legacy aliases stay comparable with historical numbers until the counting semantics are signed off. v2.3: indicators for the reportable-concept expansion (numeric totals/min/max, coded totals/positives, specimen counts); hiv_new_diagnosis counts distinct patients first diagnosed (enrolled) within the reporting period at the reporting location; the base's has-result filter keeps every indicator to tests actually done. v2.3.1: with_members indicators for microscopy analytes and total_urine_microscopy (panel-member aware). v2.4: per-indicator low/high counts (SUMs of the base v2.4 reference-range flags over etl.reference_ranges; tumour markers high-only; NULL bounds count 0).",
+  "description": "Aggregate dataset for the MOH 706 report. Runs over lab706Base v2.2, whose test slots carry raw values (result_concept_id for coded tests, result_numeric for numeric tests), so the = 703 positivity rules and the numeric banding rules compare real data. Every test carries a total_/positive_ pair plus banding where authored. Aggregates without a GROUP BY on purpose: the report screen reads one summary row for the whole period and location selection. v2.2: panel indicators come from the base's member-aware flags over etl.flat_moh_706_report_results - total_fbc/total_lipid_profile/total_urinalysis count orders with >= 1 member result, positive_urinalysis counts orders where any dipstick member coded POSITIVE (previously always 0: panel head obs are valueless), fbc_hb_* bands read the HGB (21) member via the base fbc_hgb slot (previously one arbitrary member value was banded as if it were Hb). The *_with_members sums add urinalysis-member occurrences to the standalone analyte counts - aliases are additive; the legacy aliases stay comparable with historical numbers until the counting semantics are signed off. v2.3: indicators for the reportable-concept expansion (numeric totals/min/max, coded totals/positives, specimen counts); hiv_new_diagnosis counts distinct patients first diagnosed (enrolled) within the reporting period at the reporting location; the base's has-result filter keeps every indicator to tests actually done. v2.3.1: with_members indicators for microscopy analytes and total_urine_microscopy (panel-member aware). v2.4: per-indicator low/high counts (SUMs of the base v2.4 reference-range flags over etl.reference_ranges; tumour markers high-only; NULL bounds count 0). v2.5: indicators for the additional reportable concepts - coagulation profile (member-aware base flag), CA 15-3 / CA 125 (max/min/total + high counts), 1.10 bacteria, 5.12-5.28 epidemic-prone organisms and 7.8 hepatitis A (total_/positive_ pairs), 5.2-5.8 bacteriology specimens and 6.4-6.25 histology/cytology specimen sites (total_ counts); runs over lab706Base v2.5. 5.15 V. cholerae O139 shares concept 53316 with 5.14 and has no indicator until its own concept exists - see moh-706-additional-concepts-plan.md in the etl repo.",
   "uses": [
     {
       "name": "lab706Base",
-      "version": "2.4",
+      "version": "2.5",
       "type": "dataset_def"
     }
   ],
@@ -1409,6 +1409,494 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_coagulation_profile",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_coagulation_profile)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ca_15_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.ca_15_3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ca_15_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.ca_15_3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ca_15_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.ca_15_3 IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ca_125",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(t1.ca_125)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ca_125",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(t1.ca_125)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ca_125",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(IF(t1.ca_125 IS NOT NULL, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bacteria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bacteria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bacteria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bacteria)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_shigella_dysenteriae1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_shigella_dysenteriae1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_shigella_dysenteriae1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_shigella_dysenteriae1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_ecoli_o157",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_ecoli_o157)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_ecoli_o157",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_ecoli_o157)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_v_cholerae_o1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_v_cholerae_o1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_v_cholerae_o1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_v_cholerae_o1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_men_a)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_men_a)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_men_b)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_men_b)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_c",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_men_c)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_c",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_men_c)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_w135",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_men_w135)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_w135",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_men_w135)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_y",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_men_y)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_y",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_men_y)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_indeterminate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_men_indeterminate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_indeterminate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_men_indeterminate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_strep_pneumoniae",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_strep_pneumoniae)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_strep_pneumoniae",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_strep_pneumoniae)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_h_influenzae_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_h_influenzae_b)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_h_influenzae_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_h_influenzae_b)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_b_anthracis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_b_anthracis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_b_anthracis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_b_anthracis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_y_pestis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_y_pestis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_y_pestis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_bact_y_pestis)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hep_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_hep_a)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hep_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.positive_hep_a)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_pus_swab",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_pus_swab)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_throat_swab",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_throat_swab)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_rectal_swab",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_rectal_swab)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_water",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_water)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_food",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_bact_food)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_thyroid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_thyroid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_lymph_nodes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_lymph_nodes)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_liver",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_liver)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_ascitic_fluid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_ascitic_fluid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_pleural_fluid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_pleural_fluid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_urine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_urine)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_prostate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_prostate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_breast_tissue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_breast_tissue)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_ovary",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_ovary)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_uterus_cervix",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_uterus_cervix)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_uterus_endometrium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_uterus_endometrium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_skin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_skin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_head_neck",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_head_neck)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_oral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_oral)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_esophagus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_esophagus)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_colorectal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_colorectal)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_hepatobiliary",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_hepatobiliary)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_soft_tissue_bone",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_soft_tissue_bone)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_lymph_nodes_tissue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.total_cyt_lymph_nodes_tissue)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "hiv_new_diagnosis",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1909,6 +2397,22 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(t1.afp_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_15_3_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ca_15_3_high)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_125_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(t1.ca_125_high)"
       }
     }
   ]
