@@ -72,7 +72,6 @@ export class MOH745Service extends MultiDatasetPatientlistReport {
   }
 
   getPatientListReport(requestParams) {
-    console.log({ requestParams });
     const indicators = requestParams.indicators.split(',');
     const indicatorCols = this.getIndicatorColName(indicators);
     return new Promise((resolve, reject) => {

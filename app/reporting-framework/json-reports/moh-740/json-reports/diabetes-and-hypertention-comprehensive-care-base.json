@@ -16,9 +16,12 @@
       "column": "mdh.person_id"
     },
     {
-      "type": "simple_column",
-      "alias": "cumulative_in_care",
-      "column": "mdh.cumulative_in_care"
+      "type": "derived_column",
+      "alias": "cumulative_diabetes_patients_in_care",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.cumulative_diabetes_patients_in_care = 1 OR mdh.is_co_morbid = 1 ,1,NULL)"
+      }
     },
     {
       "type": "derived_column",

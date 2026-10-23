@@ -9,14 +9,6 @@
       "alias": "t1"
     },
     {
-      "table": "(SELECT fli.person_id, fli.hiv_viral_load as vl_1, fli.test_datetime as vl_1_date FROM etl.flat_labs_and_imaging fli INNER JOIN (SELECT person_id, MAX(test_datetime) AS max_vl_1_date,max(encounter_id) as encounter_id FROM etl.flat_labs_and_imaging fli where fli.hiv_viral_load is not null GROUP BY person_id) max_dates ON fli.person_id = max_dates.person_id AND fli.test_datetime = max_dates.max_vl_1_date AND fli.encounter_id = max_dates.encounter_id)",
-      "alias": "fli",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "fli.person_id = t1.person_id"
-      }
-    },
-    {
       "table": "amrs.person_name",
       "alias": "person_name",
       "join": {
@@ -38,6 +30,14 @@
       "join": {
         "type": "LEFT",
         "joinCondition": "t1.person_id = amrs_universal_id.patient_id AND (amrs_universal_id.voided IS NULL || amrs_universal_id.voided = 0) AND amrs_universal_id.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "cr",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = cr.patient_id AND cr.voided = 0 AND amrs_universal_id.identifier_type = 55"
       }
     },
     {
@@ -85,9 +85,12 @@
       "column": "t1.person_id"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "amrs_universal_id",
-      "column": "amrs_universal_id.identifier"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(amrs_universal_id.identifier is not null,amrs_universal_id.identifier,cr.identifier)"
+      }
     },
     {
       "type": "simple_column",
