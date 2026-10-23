@@ -1,0 +1,247 @@
+{
+  "name": "moh731V2023HeiFeedingBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.7 Infant Feeding, step 2: HEI follow-ups seen before the end of the period whose return-to-clinic date is on or after its first day (the infants current in the period), excluding test patients, with feeding method, category and MOH 731 code. Carries a flag per 2.7 figure, taken from the MOH 731 code so the order of precedence is the source query's, which the aggregate sums and the patient list filters on.",
+  "uses": [
+    {
+      "name": "moh731V2023HeiFeedingEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HeiFeedingEncounters",
+      "alias": "b"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "p.person_id = b.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = p.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = b.location_id"
+      }
+    },
+    {
+      "table": "amrs.encounter_type",
+      "alias": "et",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "et.encounter_type_id = b.encounter_type"
+      }
+    },
+    {
+      "table": "amrs.users",
+      "alias": "u",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "u.user_id = b.creator"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "et.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_datetime",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtc_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(b.rtc_date)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 28 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_months",
+      "column": "b.age_months"
+    },
+    {
+      "type": "derived_column",
+      "alias": "feeding_methods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT GROUP_CONCAT(DISTINCT cn.name ORDER BY cn.name SEPARATOR ', ') FROM amrs.obs f JOIN amrs.concept_name cn ON cn.concept_id = f.value_coded AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE f.encounter_id = b.encounter_id AND f.concept_id = 1151 AND f.voided = 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "feeding_category",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.has_ebf = 1 THEN 'Exclusive Breastfeeding (EBF)' WHEN b.has_bf = 1 THEN 'Breastfeeding (BF)' WHEN b.has_nbf = 1 THEN 'Not Breastfeeding (NBF)' WHEN b.has_any = 1 THEN 'Other' ELSE 'Not recorded' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "moh731_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.age_months < 6 AND b.has_ebf = 1 THEN 'HV02-32' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_bf = 1 THEN 'HV02-33' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_nbf = 1 THEN 'HV02-34' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "entered_by",
+      "column": "u.username"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "exclusive_bf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.age_months < 6 AND b.has_ebf = 1 THEN 'HV02-32' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_bf = 1 THEN 'HV02-33' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_nbf = 1 THEN 'HV02-34' END) = 'HV02-32', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.age_months < 6 AND b.has_ebf = 1 THEN 'HV02-32' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_bf = 1 THEN 'HV02-33' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_nbf = 1 THEN 'HV02-34' END) = 'HV02-33', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "weaning",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.age_months < 6 AND b.has_ebf = 1 THEN 'HV02-32' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_bf = 1 THEN 'HV02-33' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_nbf = 1 THEN 'HV02-34' END) = 'HV02-34', 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.rtc_date >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "COALESCE(CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name), '') NOT LIKE '%test%'"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "CASE WHEN b.age_months < 6 AND b.has_ebf = 1 THEN 'HV02-32' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_bf = 1 THEN 'HV02-33' WHEN b.age_months BETWEEN 6 AND 24 AND b.has_nbf = 1 THEN 'HV02-34' END",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_datetime",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

@@ -8,7 +8,10 @@ const { MOH711Service } = require('../../service/moh-711.service');
 const { MOH717Service } = require('../../service/moh-717.service');
 const { MOH705AService } = require('../../service/moh-705a.service');
 const { MOH705BService } = require('../../service/moh-705b.service');
-const { MOH731Service } = require('../../service/moh-731.service');
+// MOH 731 (Ver. July 2023) for these O3 routes; the production POC routes keep MOH731Service
+const {
+  MOH731Ver2023Service: MOH731Service
+} = require('../../service/moh-731/ver-2023/moh-731-ver-2023.service');
 const { MOH745Service } = require('../../service/moh-745/moh-745.service');
 
 const routes = [

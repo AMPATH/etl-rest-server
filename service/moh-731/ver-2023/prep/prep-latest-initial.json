@@ -1,0 +1,59 @@
+{
+  "name": "moh731V2023PrepLatestInitial",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) PrEP: each client's latest Initial PrEP encounter (133) in the period, as its sort key. Stands in for the source query's correlated subquery, ordered the same way (encounter time, entry time, encounter id), so only that one Initial is kept per client.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "latest_initial_key",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CONCAT(DATE_FORMAT(e.encounter_datetime, '%Y%m%d%H%i%s'), DATE_FORMAT(e.date_created, '%Y%m%d%H%i%s'), LPAD(e.encounter_id, 12, '0')))"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type = 133"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.patient_id"]
+  }
+}

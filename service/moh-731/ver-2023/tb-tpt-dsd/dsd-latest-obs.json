@@ -1,0 +1,66 @@
+{
+  "name": "moh731V2023DsdLatestObs",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.5 Differentiated Service Delivery, Community / Facility, step 1: each client's latest DSD observation (11931 facility, 11932 community, or the DSD model 10988) at the locations up to the end of the period -- the observations the earlier O3 dataset read, now with voided ones excluded -- so a client is classified once, by their current model.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "ob"
+    },
+    {
+      "table": "amrs.patient",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "ob.person_id = p.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "ob.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "latest_obs_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CAST(SUBSTRING_INDEX(GROUP_CONCAT(ob.obs_id ORDER BY ob.obs_datetime DESC, ob.obs_id DESC), ',', 1) AS UNSIGNED)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.concept_id IN (11931, 11932, 10988)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "p.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(ob.obs_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ob.location_id IN ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["ob.person_id"]
+  }
+}

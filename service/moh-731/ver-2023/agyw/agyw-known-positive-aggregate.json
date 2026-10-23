@@ -1,0 +1,73 @@
+{
+  "name": "moh731V2023AgywKnownPositiveAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.5 Adolescent girls & young women (10-24 yrs), from the known positives at ANC: HV02-21/22 1st ANC KP -- of HV02-01 Known Positive at 1st ANC -- and HV02-25/26 On HAART 1st ANC KP -- of HV02-14 On HAART at 1st ANC -- aged 10-19 and 20-24 at the visit. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023AncKnownPositiveBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023AncKnownPositiveBase",
+      "alias": "kp"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "known_positive_anc_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(kp.known_positive_anc_10_19), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "known_positive_anc_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(kp.known_positive_anc_20_24), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_anc_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(kp.on_art_anc_10_19), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_art_anc_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(kp.on_art_anc_20_24), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023AncKnownPositivePatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

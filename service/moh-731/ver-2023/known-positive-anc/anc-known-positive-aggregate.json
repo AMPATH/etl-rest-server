@@ -1,0 +1,49 @@
+{
+  "name": "moh731V2023AncKnownPositiveAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.1 Known Positive at 1st ANC, HV02-01: ANC visits in the period of clients already known HIV positive (12019 = 10407) where the ANC visit number (7086) is 1. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023AncKnownPositiveBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023AncKnownPositiveBase",
+      "alias": "kp"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "known_positive_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(kp.known_positive_1st_anc), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023AncKnownPositivePatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

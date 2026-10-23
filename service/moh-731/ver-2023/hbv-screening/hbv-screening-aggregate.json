@@ -1,0 +1,57 @@
+{
+  "name": "moh731V2023HbvScreeningAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.4 HBV Screening at ANC: the ANC visits that are an ANC test or a known-positive visit, each once. HV02-19 Screened_HBV_ANC -- the client has an HBV result (1375) at any encounter at the locations in the period -- and HV02-20 HBV Screened_Positive -- that result was positive. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023AncHbvBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023AncHbvBase",
+      "alias": "anc"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "hbv_screened_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(anc.hbv_screened_anc), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hbv_screened_positive_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(anc.hbv_screened_positive_anc), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023AncHbvPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

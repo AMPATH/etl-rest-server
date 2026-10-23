@@ -1,0 +1,20 @@
+{
+  "name": "moh731V2023HeiFeedingPatientListTemplate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "Patient list template for MOH 731 (Ver. July 2023) 2.7 Infant Feeding. The base already carries every linelist column, so this only satisfies the generator's join; with no group by, the linelist stays one row per HEI follow-up -- the same rows each figure counts.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "pl_person"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "template_person_id",
+      "column": "pl_person.person_id"
+    }
+  ]
+}

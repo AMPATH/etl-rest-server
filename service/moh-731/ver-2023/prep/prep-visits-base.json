@@ -1,0 +1,580 @@
+{
+  "name": "moh731V2023PrepVisitsBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) PrEP, step 3: the PrEP visits -- one per client per day (the latest), Follow-ups unless PrEP was not prescribed, and each client's latest Initial in the period where PrEP was prescribed -- with population, transfer-in, PrEP start, status, type, regimen, HIV test and STI. Carries a flag per MOH 731 PrEP figure, which the aggregates sum and the patient list filters on.",
+  "uses": [
+    {
+      "name": "moh731V2023PrepEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    },
+    {
+      "name": "moh731V2023PrepLatestPerDay",
+      "version": "1.0",
+      "type": "dataset_def"
+    },
+    {
+      "name": "moh731V2023PrepLatestInitial",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023PrepEncounters",
+      "alias": "b"
+    },
+    {
+      "dataSet": "moh731V2023PrepLatestPerDay",
+      "alias": "k",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "k.sort_key = b.sort_key"
+      }
+    },
+    {
+      "dataSet": "moh731V2023PrepLatestInitial",
+      "alias": "li",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "li.patient_id = b.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = b.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "pop",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pop.obs_id = b.pop_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "ipop",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "b.pop_id IS NULL AND ipop.obs_id = (SELECT o2.obs_id FROM amrs.encounter e2 JOIN amrs.obs o2 ON o2.encounter_id = e2.encounter_id AND o2.concept_id = 9782 AND o2.voided = 0 WHERE e2.patient_id = b.patient_id AND e2.encounter_type = 133 AND e2.voided = 0 ORDER BY (e2.encounter_datetime <= b.encounter_datetime) DESC, e2.encounter_datetime DESC, o2.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "st",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "st.obs_id = b.st_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "hv",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hv.obs_id = b.hv_id"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "pop_cn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pop_cn.concept_id = COALESCE(pop.value_coded, ipop.value_coded) AND pop_cn.locale_preferred = 1 AND pop_cn.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "st_cn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "st_cn.concept_id = st.value_coded AND st_cn.locale_preferred = 1 AND st_cn.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "hv_cn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hv_cn.concept_id = hv.value_coded AND hv_cn.locale_preferred = 1 AND hv_cn.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = p.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = b.location_id"
+      }
+    },
+    {
+      "table": "amrs.encounter_type",
+      "alias": "et",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "et.encounter_type_id = b.encounter_type"
+      }
+    },
+    {
+      "table": "amrs.users",
+      "alias": "u",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "u.user_id = b.creator"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE b.encounter_type WHEN 133 THEN 'Initial' ELSE 'Follow-up' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "et.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "visit_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "population_category",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "population_recorded",
+      "column": "pop_cn.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_pbfw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12068, 12069) THEN 1 ELSE 0 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transfer_in",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT DATE(COALESCE(ti.value_datetime, ini.value_datetime, e4.encounter_datetime)) FROM amrs.encounter e4 LEFT JOIN amrs.obs ti ON ti.encounter_id = e4.encounter_id AND ti.concept_id = 1190 AND ti.voided = 0 LEFT JOIN amrs.obs ini ON ini.encounter_id = e4.encounter_id AND ini.concept_id = 9789 AND ini.voided = 0 WHERE e4.patient_id = b.patient_id AND e4.encounter_type = 133 AND e4.voided = 0 AND e4.encounter_datetime <= b.encounter_datetime ORDER BY e4.encounter_datetime DESC, e4.encounter_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(st_cn.name, CAST(st.value_coded AS CHAR))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "prep_type",
+      "column": "b.prep_type"
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.prep_type IN ('CAB-LA', 'Lenacapavir', 'Dapivirine ring') THEN b.prep_type WHEN b.prep_type = 'Oral' THEN (SELECT GROUP_CONCAT(DISTINCT cn.name ORDER BY cn.name SEPARATOR ' + ') FROM amrs.obs o JOIN amrs.concept_name cn ON cn.concept_id = o.value_coded AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE o.encounter_id = b.encounter_id AND o.concept_id = 9774 AND o.voided = 0 AND o.value_coded NOT IN (12433, 12876, 12432)) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(hv_cn.name, CAST(hv.value_coded AS CHAR))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sti",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sti_signs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT GROUP_CONCAT(DISTINCT cn.name ORDER BY cn.name SEPARATOR ', ') FROM amrs.obs o JOIN amrs.concept_name cn ON cn.concept_id = o.value_coded AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE o.encounter_id = b.encounter_id AND o.concept_id = 6235 AND o.voided = 0)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "entered_by",
+      "column": "u.username"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_male_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'General popn' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_female_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'General popn' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_msm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'MSM/MSW' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_fsw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'FSW' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_pwud_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'PWID/PWUD' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_pwud_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'PWID/PWUD' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Discordant Couple' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Discordant Couple' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_vulnerable_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Vulnerable Pop.' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_vulnerable_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Vulnerable Pop.' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_ayp_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'AYP (10-24yrs)' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_ayp_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'AYP (10-24yrs)' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_new_preg_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 133 AND (CASE WHEN EXISTS (SELECT 1 FROM amrs.encounter e3 JOIN amrs.obs o3 ON o3.encounter_id = e3.encounter_id AND o3.concept_id = 10194 AND o3.value_coded = 1065 AND o3.voided = 0 WHERE e3.patient_id = b.patient_id AND e3.encounter_type = 133 AND e3.voided = 0 AND e3.encounter_datetime <= b.encounter_datetime) THEN 'Yes' ELSE 'No' END) = 'No' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12068, 12069) THEN 1 ELSE 0 END) = 1 AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_male_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'General popn' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_female_general_pop",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'General popn' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_msm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'MSM/MSW' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_fsw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'FSW' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_pwud_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'PWID/PWUD' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_pwud_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'PWID/PWUD' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Discordant Couple' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Discordant Couple' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_vulnerable_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Vulnerable Pop.' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_vulnerable_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'Vulnerable Pop.' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_ayp_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'AYP (10-24yrs)' AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_ayp_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IS NULL THEN 'Not recorded' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (8291, 9785) THEN 'MSM/MSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9786) THEN 'FSW' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (105) THEN 'PWID/PWUD' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6096, 12067) THEN 'Discordant Couple' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (6966, 11232, 9784, 12251, 11288, 6578) THEN 'Vulnerable Pop.' WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12065, 12064, 12066) THEN CASE WHEN TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) < 25 THEN 'AYP (10-24yrs)' ELSE 'General popn' END WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (9783, 12068, 12069) THEN 'General popn' ELSE 'Unmapped' END) = 'AYP (10-24yrs)' AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_sti_preg_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.encounter_type = 134 AND b.sti_yes = 1 AND b.sti_sign_any = 1 THEN 'Yes' WHEN b.encounter_type = 133 AND b.sti_initial = 1 THEN 'Yes' ELSE 'No' END) = 'Yes' AND (CASE WHEN COALESCE(pop.value_coded, ipop.value_coded) IN (12068, 12069) THEN 1 ELSE 0 END) = 1 AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 134 AND hv.value_coded = 703 AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "seroconverted_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.encounter_type = 134 AND hv.value_coded = 703 AND p.gender = 'F', 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.presc_no = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(b.encounter_type <> 133 OR b.presc_yes = 1)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(b.encounter_type <> 133 OR b.sort_key = li.latest_initial_key)"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "CASE b.encounter_type WHEN 133 THEN 'Initial' ELSE 'Follow-up' END",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_datetime",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

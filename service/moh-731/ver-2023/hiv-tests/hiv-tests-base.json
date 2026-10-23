@@ -1,0 +1,707 @@
+{
+  "name": "moh731V2023HivTestsBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 1.1 HIV Tests, step 2: the tested clients -- one row per qualifying test with its result, setting, population type, HBV screening in the period and the client's identifiers. Applies the source query's encounter rules (its HAVING) to the encounter dataset, and carries a flag column per HV01 figure (1.1 HIV Tests, 1.2 HIV Positive Results 2.1 Maternal HIV Testing, 2.2 HIV Positive Results and 2.3 Start HAART at ANC, L&D and PNC, and 2.5 AGYW), which the aggregate sums and the patient list filters on, so a figure and its linelist are always the same rows.",
+  "uses": [
+    {
+      "name": "moh731V2023HivTestEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    },
+    {
+      "name": "moh731V2023HbvScreening",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HivTestEncounters",
+      "alias": "b"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = b.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "fr",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fr.obs_id = b.res_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "tt",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "tt.obs_id = b.tt_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "st",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "st.obs_id = b.set_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "pt",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pt.obs_id = b.pop_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "dd",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "dd.obs_id = b.del_id"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "cn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "cn.concept_id = tt.value_coded AND cn.locale_preferred = 1 AND cn.voided = 0"
+      }
+    },
+    {
+      "dataSet": "moh731V2023HbvScreening",
+      "alias": "hbv",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hbv.person_id = b.patient_id"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "fhs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fhs.person_id = b.patient_id AND fhs.is_clinical_encounter = 1 AND fhs.next_clinical_datetime_hiv IS NULL"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "drug",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "drug.obs_id = b.drug_obs_id"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "drug_cn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "drug_cn.concept_id = drug.value_coded AND drug_cn.locale_preferred = 1 AND drug_cn.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = p.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = b.location_id"
+      }
+    },
+    {
+      "table": "amrs.encounter_type",
+      "alias": "et",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "et.encounter_type_id = b.encounter_type"
+      }
+    },
+    {
+      "table": "amrs.users",
+      "alias": "u",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "u.user_id = b.creator"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "service",
+      "column": "b.service"
+    },
+    {
+      "type": "derived_column",
+      "alias": "test_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "et.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "test_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hts_setting",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.service = 'HTS' THEN CASE st.value_coded WHEN 6708 THEN 'Facility' WHEN 9613 THEN 'Community' ELSE st.value_coded END ELSE 'Facility' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "population_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(CASE WHEN pt.value_coded IN (12251, 6578) THEN 'KVP' WHEN pt.value_coded IN (9783, 1107) THEN 'General' WHEN pt.value_coded = 11288 THEN 'Priority' ELSE pt.value_coded END, CASE WHEN b.service = 'HTS' THEN NULL ELSE 'General' END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typology",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.has_discordant = 1 THEN 'Discordant' WHEN b.has_typology = 1 THEN 'Other' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "delivery_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.service = 'PNC' THEN DATE(dd.value_datetime) END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 28 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_at_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "final_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE fr.value_coded WHEN 703 THEN 'Positive' WHEN 664 THEN 'Negative' WHEN 1138 THEN 'Inconclusive' ELSE fr.value_coded END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_hbv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN hbv.person_id IS NOT NULL THEN 'Yes' ELSE 'No' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hbv_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE hbv.hbv_positive WHEN 1 THEN 'Positive' WHEN 0 THEN 'Negative' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hbv_test_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(hbv.hbv_test_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "hbv_encounter_types",
+      "column": "hbv.hbv_encounter_types"
+    },
+    {
+      "type": "derived_column",
+      "alias": "initiated_in_care",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN fr.value_coded = 703 THEN CASE WHEN fhs.person_id IS NOT NULL THEN 'Yes' ELSE 'No' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "arv_first_regimen_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN fr.value_coded = 703 THEN DATE(fhs.arv_first_regimen_start_date) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_prophylaxis_dispensed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN fr.value_coded = 703 THEN CASE b.proph_val WHEN 1065 THEN 'Yes' WHEN 1066 THEN 'No' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_prophylaxis_regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN fr.value_coded = 703 THEN drug_cn.name END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "entered_by",
+      "column": "u.username"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_setting_facility",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.service = 'HTS' THEN CASE st.value_coded WHEN 6708 THEN 'Facility' WHEN 9613 THEN 'Community' ELSE st.value_coded END ELSE 'Facility' END) = 'Facility', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_setting_community",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((CASE WHEN b.service = 'HTS' THEN CASE st.value_coded WHEN 6708 THEN 'Facility' WHEN 9613 THEN 'Community' ELSE st.value_coded END ELSE 'Facility' END) = 'Community', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_setting_kvp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((COALESCE(CASE WHEN pt.value_coded IN (12251, 6578) THEN 'KVP' WHEN pt.value_coded IN (9783, 1107) THEN 'General' WHEN pt.value_coded = 11288 THEN 'Priority' ELSE pt.value_coded END, CASE WHEN b.service = 'HTS' THEN NULL ELSE 'General' END)) = 'KVP', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_2_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 2 AND 9, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_2_9",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 2 AND 9, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 10 AND 14, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 10 AND 14, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 15 AND 19, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 15 AND 19, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 20 AND 24, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 20 AND 24, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_25_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'M' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_25_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'F' AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) >= 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_kvp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND (COALESCE(CASE WHEN pt.value_coded IN (12251, 6578) THEN 'KVP' WHEN pt.value_coded IN (9783, 1107) THEN 'General' WHEN pt.value_coded = 11288 THEN 'Priority' ELSE pt.value_coded END, CASE WHEN b.service = 'HTS' THEN NULL ELSE 'General' END)) = 'KVP', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discordant_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'M' AND b.has_discordant = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discordant_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 703 AND p.gender = 'F' AND b.has_discordant = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "inconclusive_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 1138 AND p.gender = 'M', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "inconclusive_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fr.value_coded = 1138 AND p.gender = 'F', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'ANC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Initial', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'ANC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Retest', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'Maternity' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Initial', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'Maternity' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Retest', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_pnc_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Initial' AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_pnc_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Retest' AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_pnc_greater_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Initial' AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_pnc_greater_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Retest' AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'ANC' AND fr.value_coded = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'Maternity' AND fr.value_coded = 703, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_pnc_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_pnc_greater_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_maternal_haart_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'ANC' AND fr.value_coded = 703 AND fhs.arv_first_regimen_start_date IS NOT NULL AND DATE(fhs.arv_first_regimen_start_date) <= '{endDate}', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_maternal_haart_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'Maternity' AND fr.value_coded = 703 AND fhs.arv_first_regimen_start_date IS NOT NULL AND DATE(fhs.arv_first_regimen_start_date) <= '{endDate}', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42 AND DATE(fhs.arv_first_regimen_start_date) BETWEEN '{startDate}' AND '{endDate}', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_more_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42 AND DATE(fhs.arv_first_regimen_start_date) BETWEEN '{startDate}' AND '{endDate}', 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_anc_ld_pnc_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((b.service = 'ANC' AND fr.value_coded = 703) OR (b.service = 'Maternity' AND fr.value_coded = 703) OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42) OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42)) AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 10 AND 19, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_anc_ld_pnc_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((b.service = 'ANC' AND fr.value_coded = 703) OR (b.service = 'Maternity' AND fr.value_coded = 703) OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42) OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42)) AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 20 AND 24, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_art_10_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((b.service = 'ANC' AND fr.value_coded = 703 AND fhs.arv_first_regimen_start_date IS NOT NULL AND DATE(fhs.arv_first_regimen_start_date) <= '{endDate}') OR (b.service = 'Maternity' AND fr.value_coded = 703 AND fhs.arv_first_regimen_start_date IS NOT NULL AND DATE(fhs.arv_first_regimen_start_date) <= '{endDate}') OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42 AND DATE(fhs.arv_first_regimen_start_date) BETWEEN '{startDate}' AND '{endDate}') OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42 AND DATE(fhs.arv_first_regimen_start_date) BETWEEN '{startDate}' AND '{endDate}')) AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 10 AND 19, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "start_art_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(((b.service = 'ANC' AND fr.value_coded = 703 AND fhs.arv_first_regimen_start_date IS NOT NULL AND DATE(fhs.arv_first_regimen_start_date) <= '{endDate}') OR (b.service = 'Maternity' AND fr.value_coded = 703 AND fhs.arv_first_regimen_start_date IS NOT NULL AND DATE(fhs.arv_first_regimen_start_date) <= '{endDate}') OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) BETWEEN 0 AND 42 AND DATE(fhs.arv_first_regimen_start_date) BETWEEN '{startDate}' AND '{endDate}') OR (b.service = 'PNC' AND fr.value_coded = 703 AND DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) > 42 AND DATE(fhs.arv_first_regimen_start_date) BETWEEN '{startDate}' AND '{endDate}')) AND TIMESTAMPDIFF(YEAR, p.birthdate, b.encounter_datetime) BETWEEN 20 AND 24, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.res_id IS NOT NULL"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "((b.service = 'HTS' AND NOT (b.encounter_type = 297 AND b.has_positive = 1)) OR (b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "b.service",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_datetime",
+        "order": "asc"
+      },
+      {
+        "column": "b.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}
