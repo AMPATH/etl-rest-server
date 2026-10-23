@@ -37,7 +37,7 @@
       "alias": "cumulative_diabetes_patients_in_care",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COUNT(b.cumulative_in_care)"
+        "expression": "COUNT(b.cumulative_diabetes_patients_in_care)"
       }
     },
     {
