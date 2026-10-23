@@ -72,6 +72,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "a.uuid"
+    },
+    {
+      "type": "simple_column",
       "alias": "encounter_type",
       "column": "a.encounter_type"
     },
