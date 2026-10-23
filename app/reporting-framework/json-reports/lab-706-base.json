@@ -1,8 +1,8 @@
 {
   "name": "lab706Base",
-  "version": "2.4",
+  "version": "2.5",
   "tag": "lab-706-blood-chemistry",
-  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept. v2.4: reference-range banding - every numeric slot gains _low/_high flags (tumour markers high-only) banded against etl.reference_ranges (seeded from amrs.concept_numeric; NULL bounds read 0) - see MOH-706-REFERENCE-RANGE-BANDING-PLAN.md.",
+  "description": "Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept. v2.4: reference-range banding - every numeric slot gains _low/_high flags (tumour markers high-only) banded against etl.reference_ranges (seeded from amrs.concept_numeric; NULL bounds read 0) - see MOH-706-REFERENCE-RANGE-BANDING-PLAN.md. v2.5: additional reportable concepts (1.10 bacteria 53247, 2.24/2.26 tumour markers CA 15-3 53248 / CA 125 53249 with max/min/total + high-only banding, 4.8 coagulation profile 53250 counted through member results like the panels, 5.2-5.8 bacteriology specimens 53311-53315, 5.12-5.28 epidemic-prone organisms 53269/53270/53316/53279-53288 with positive_ = result_concept_id 703, 6.4-6.25 histology/cytology specimen sites 53289-53307, 7.8 hepatitis A 53309); coded slots carry result_concept_id and every count flag uses the 4-way has-result check so text/numeric answers still count; 5.15 V. cholerae O139 shares concept 53316 with 5.14 and has no register line until its own concept exists - see moh-706-additional-concepts-plan.md in the etl repo.",
   "uses": [],
   "sources": [
     {
@@ -589,6 +589,142 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (1032), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_15_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53248), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_125",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53249), fbc.result_numeric, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bacteria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53247), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_shigella_dysenteriae1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53269), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_ecoli_o157",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53270), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_v_cholerae_o1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53316), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_men_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53279), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_men_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53280), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_men_c",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53281), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_men_w135",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53282), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_men_y",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53283), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_men_indeterminate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53284), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_strep_pneumoniae",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53285), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_h_influenzae_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53286), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_b_anthracis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53287), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bact_y_pestis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53288), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hep_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53309), fbc.result_concept_id, NULL)"
       }
     },
     {
@@ -1961,6 +2097,494 @@
     },
     {
       "type": "derived_column",
+      "alias": "total_coagulation_profile",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53250) AND ((fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL) OR EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id)), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ca_15_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53248) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ca_15_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53248) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ca_15_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53248) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "max_ca_125",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53249) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "min_ca_125",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53249) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ca_125",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53249) AND fbc.result_numeric IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bacteria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53247) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bacteria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53247) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_shigella_dysenteriae1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53269) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_shigella_dysenteriae1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53269) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_ecoli_o157",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53270) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_ecoli_o157",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53270) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_v_cholerae_o1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53316) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_v_cholerae_o1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53316) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53279) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53279) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53280) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53280) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_c",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53281) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_c",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53281) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_w135",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53282) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_w135",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53282) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_y",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53283) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_y",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53283) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_men_indeterminate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53284) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_men_indeterminate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53284) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_strep_pneumoniae",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53285) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_strep_pneumoniae",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53285) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_h_influenzae_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53286) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_h_influenzae_b",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53286) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_b_anthracis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53287) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_b_anthracis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53287) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_y_pestis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53288) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_bact_y_pestis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53288) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_hep_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53309) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_hep_a",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53309) AND fbc.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_pus_swab",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53311) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_throat_swab",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53312) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_rectal_swab",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53313) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_water",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53314) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_bact_food",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53315) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_thyroid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53289) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_lymph_nodes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53290) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_liver",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53291) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_ascitic_fluid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53292) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_pleural_fluid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53293) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_urine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53294) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_prostate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53295) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_breast_tissue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53296) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_ovary",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53297) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_uterus_cervix",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53298) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_uterus_endometrium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53299) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_skin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53300) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_head_neck",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53301) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_oral",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53302) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_esophagus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53303) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_colorectal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53304) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_hepatobiliary",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53305) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_soft_tissue_bone",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53306) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cyt_lymph_nodes_tissue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53307) AND (fbc.result_concept_id IS NOT NULL OR fbc.result_numeric IS NOT NULL OR fbc.result_text IS NOT NULL OR fbc.result_datetime IS NOT NULL), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "hiv_new_diagnosis",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -2461,6 +3085,22 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (10570) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 10570), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_15_3_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53248) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 53248), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ca_125_high",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (53249) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 53249), 1, 0)"
       }
     }
   ],
