@@ -1,0 +1,49 @@
+{
+  "name": "moh731V2023MaternalHaartAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.3 Maternal HAART. HV02-14 On HAART at 1st ANC: of the known positives at their 1st ANC visit (HV02-01), those whose first ART regimen started before the date of that visit. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023AncKnownPositiveBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023AncKnownPositiveBase",
+      "alias": "kp"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "maternal_haart_1st_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(kp.maternal_haart_1st_anc), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023AncKnownPositivePatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

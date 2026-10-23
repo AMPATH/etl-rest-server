@@ -1,0 +1,65 @@
+{
+  "name": "moh731V2023InfantProphylaxisAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.6 Infant Prophylaxis, HV02-29 ANC, HV02-30 L&D and HV02-31 PNC: of the HIV-positive pregnant and postnatal women (newly positive at an ANC, L&D or PNC test, or known positive at ANC), those whose infant was given ARV prophylaxis (1895 = Yes) -- at the positive test, or for a known positive at her 1st ANC visit -- by where it was given. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023HivPositiveMothersBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HivPositiveMothersBase",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(m.infant_arv_anc), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_ld",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(m.infant_arv_ld), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_arv_pnc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(m.infant_arv_pnc), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023HivPositiveMothersPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

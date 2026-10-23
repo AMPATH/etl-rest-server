@@ -1,0 +1,185 @@
+{
+  "name": "moh731V2023HivPositiveMotherEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.6 Infant Prophylaxis, step 1: ANC (264, 265), Maternity (273) and PNC (266, 267) encounters in the period with the obs both rule sets need pivoted -- the HIV test result and type as in 1.1 HIV Tests, the known-positive flag and ANC visit number as in Known Positive at 1st ANC, the delivery date, and infant prophylaxis and drug.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (1357, 12019, 5599, 1895, 1187, 7086)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "e.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "e.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "e.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "e.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "service",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN e.encounter_type = 273 THEN 'Maternity' WHEN e.encounter_type IN (264, 265) THEN 'ANC' ELSE 'PNC' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "res_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 1357 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tt_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 12019 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "del_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 5599 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "proph_val",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 1895 THEN o.value_coded END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "drug_obs_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 1187 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anc_visit_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 7086 THEN o.value_numeric END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 1357 AND o.value_coded = 703), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 12019 AND o.value_coded = 10434), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_valid_tt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 12019 AND o.value_coded IN (10434, 10200)), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 12019 AND o.value_coded = 10973), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kp_12019",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 12019 AND o.value_coded = 10407), 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type IN (264, 265, 266, 267, 273)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}

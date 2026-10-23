@@ -1,0 +1,49 @@
+{
+  "name": "moh731V2023TbScreen15PlusAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.3 TB Screening, HV03-030 Screened for TB_15+: as the earlier O3 aggregate 731TBScreenAggregate3X, summing the base flags, but 0 rather than empty when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023TbScreen15PlusBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023TbScreen15PlusBase",
+      "alias": "x"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "screened_tb_greater_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.screened_tb_greater_15), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023TbDsdPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

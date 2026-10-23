@@ -659,44 +659,65 @@ import * as moh_412_patient_list_template from './json-reports/moh-745/old/moh-4
 
 //new moh 731 report
 import * as moh_731_report_summary from './json-reports/moh-731/731-summary.json';
-import * as anc_731_aggregate_aggregate3x from './json-reports/moh-731/aggregations/731-anc-aggregate.json';
-import * as anc_731_aggregate_base3x from './json-reports/moh-731/aggregations/731-anc-base.json';
-import * as established_aggregate3x from './json-reports/moh-731/aggregations/established-aggregate.json';
-import * as established_base3x from './json-reports/moh-731/aggregations/established-base.json';
+// MOH 731 (Ver. July 2023): service/moh-731/ver-2023
+import * as moh_731_v2023_hiv_test_encounters from '../../service/moh-731/ver-2023/hiv-tests/hiv-test-encounters.json';
+import * as moh_731_v2023_hiv_tests_base from '../../service/moh-731/ver-2023/hiv-tests/hiv-tests-base.json';
+import * as moh_731_v2023_hiv_tests_aggregate from '../../service/moh-731/ver-2023/hiv-tests/hiv-tests-aggregate.json';
+import * as moh_731_v2023_hiv_tests_patient_list_template from '../../service/moh-731/ver-2023/hiv-tests/hiv-tests-patient-list-template.json';
+import * as moh_731_v2023_hbv_screening from '../../service/moh-731/ver-2023/hiv-tests/hbv-screening.json';
+import * as moh_731_v2023_hbv_screening_aggregate from '../../service/moh-731/ver-2023/hbv-screening/hbv-screening-aggregate.json';
+import * as moh_731_v2023_anc_hbv_encounters from '../../service/moh-731/ver-2023/hbv-screening/anc-hbv-encounters.json';
+import * as moh_731_v2023_anc_hbv_base from '../../service/moh-731/ver-2023/hbv-screening/anc-hbv-base.json';
+import * as moh_731_v2023_anc_hbv_patient_list_template from '../../service/moh-731/ver-2023/hbv-screening/anc-hbv-patient-list-template.json';
+import * as moh_731_v2023_art_monthly_base from '../../service/moh-731/ver-2023/art/art-monthly-base.json';
+import * as moh_731_v2023_starting_art_aggregate from '../../service/moh-731/ver-2023/art/starting-art-aggregate.json';
+import * as moh_731_v2023_currently_on_art_aggregate from '../../service/moh-731/ver-2023/art/currently-on-art-aggregate.json';
+import * as moh_731_v2023_art_patient_list_template from '../../service/moh-731/ver-2023/art/art-patient-list-template.json';
+import * as moh_731_v2023_tb_screen_under_15_aggregate from '../../service/moh-731/ver-2023/tb-tpt-dsd/tb-screen-under-15-aggregate.json';
+import * as moh_731_v2023_tb_screen_under_15_base from '../../service/moh-731/ver-2023/tb-tpt-dsd/tb-screen-under-15-base.json';
+import * as moh_731_v2023_tb_screen_15_plus_aggregate from '../../service/moh-731/ver-2023/tb-tpt-dsd/tb-screen-15-plus-aggregate.json';
+import * as moh_731_v2023_tb_screen_15_plus_base from '../../service/moh-731/ver-2023/tb-tpt-dsd/tb-screen-15-plus-base.json';
+import * as moh_731_v2023_starting_tpt_aggregate from '../../service/moh-731/ver-2023/tb-tpt-dsd/starting-tpt-aggregate.json';
+import * as moh_731_v2023_starting_tpt_base from '../../service/moh-731/ver-2023/tb-tpt-dsd/starting-tpt-base.json';
+import * as moh_731_v2023_dsd_established_aggregate from '../../service/moh-731/ver-2023/tb-tpt-dsd/dsd-established-aggregate.json';
+import * as moh_731_v2023_dsd_established_base from '../../service/moh-731/ver-2023/tb-tpt-dsd/dsd-established-base.json';
+import * as moh_731_v2023_dsd_community_facility_aggregate from '../../service/moh-731/ver-2023/tb-tpt-dsd/dsd-community-facility-aggregate.json';
+import * as moh_731_v2023_dsd_community_facility_base from '../../service/moh-731/ver-2023/tb-tpt-dsd/dsd-community-facility-base.json';
+import * as moh_731_v2023_dsd_latest_obs from '../../service/moh-731/ver-2023/tb-tpt-dsd/dsd-latest-obs.json';
+import * as moh_731_v2023_tb_dsd_patient_list_template from '../../service/moh-731/ver-2023/tb-tpt-dsd/tb-dsd-patient-list-template.json';
+import * as moh_731_v2023_hiv_positive_results_aggregate from '../../service/moh-731/ver-2023/hiv-positive-results/hiv-positive-results-aggregate.json';
+import * as moh_731_v2023_maternal_hiv_testing_aggregate from '../../service/moh-731/ver-2023/maternal-hiv-testing/maternal-hiv-testing-aggregate.json';
+import * as moh_731_v2023_maternal_hiv_positive_results_aggregate from '../../service/moh-731/ver-2023/maternal-hiv-positive-results/maternal-hiv-positive-results-aggregate.json';
+import * as moh_731_v2023_prep_encounters from '../../service/moh-731/ver-2023/prep/prep-encounters.json';
+import * as moh_731_v2023_prep_latest_per_day from '../../service/moh-731/ver-2023/prep/prep-latest-per-day.json';
+import * as moh_731_v2023_prep_latest_initial from '../../service/moh-731/ver-2023/prep/prep-latest-initial.json';
+import * as moh_731_v2023_prep_visits_base from '../../service/moh-731/ver-2023/prep/prep-visits-base.json';
+import * as moh_731_v2023_prep_initiated_aggregate from '../../service/moh-731/ver-2023/prep/prep-initiated-aggregate.json';
+import * as moh_731_v2023_prep_sti_aggregate from '../../service/moh-731/ver-2023/prep/prep-sti-aggregate.json';
+import * as moh_731_v2023_prep_seroconverted_aggregate from '../../service/moh-731/ver-2023/prep/prep-seroconverted-aggregate.json';
+import * as moh_731_v2023_anc_known_positive_encounters from '../../service/moh-731/ver-2023/known-positive-anc/anc-known-positive-encounters.json';
+import * as moh_731_v2023_anc_known_positive_base from '../../service/moh-731/ver-2023/known-positive-anc/anc-known-positive-base.json';
+import * as moh_731_v2023_anc_known_positive_aggregate from '../../service/moh-731/ver-2023/known-positive-anc/anc-known-positive-aggregate.json';
+import * as moh_731_v2023_anc_known_positive_patient_list_template from '../../service/moh-731/ver-2023/known-positive-anc/anc-known-positive-patient-list-template.json';
+import * as moh_731_v2023_maternal_haart_aggregate from '../../service/moh-731/ver-2023/maternal-haart/maternal-haart-aggregate.json';
+import * as moh_731_v2023_maternal_haart_start_aggregate from '../../service/moh-731/ver-2023/maternal-haart/maternal-haart-start-aggregate.json';
+import * as moh_731_v2023_agyw_known_positive_aggregate from '../../service/moh-731/ver-2023/agyw/agyw-known-positive-aggregate.json';
+import * as moh_731_v2023_agyw_tests_aggregate from '../../service/moh-731/ver-2023/agyw/agyw-tests-aggregate.json';
+import * as moh_731_v2023_hiv_positive_mother_encounters from '../../service/moh-731/ver-2023/infant-prophylaxis/hiv-positive-mother-encounters.json';
+import * as moh_731_v2023_hiv_positive_mothers_base from '../../service/moh-731/ver-2023/infant-prophylaxis/hiv-positive-mothers-base.json';
+import * as moh_731_v2023_infant_prophylaxis_aggregate from '../../service/moh-731/ver-2023/infant-prophylaxis/infant-prophylaxis-aggregate.json';
+import * as moh_731_v2023_hiv_positive_mothers_patient_list_template from '../../service/moh-731/ver-2023/infant-prophylaxis/hiv-positive-mothers-patient-list-template.json';
+import * as moh_731_v2023_hei_feeding_encounters from '../../service/moh-731/ver-2023/infant-feeding/hei-feeding-encounters.json';
+import * as moh_731_v2023_hei_feeding_base from '../../service/moh-731/ver-2023/infant-feeding/hei-feeding-base.json';
+import * as moh_731_v2023_infant_feeding_aggregate from '../../service/moh-731/ver-2023/infant-feeding/infant-feeding-aggregate.json';
+import * as moh_731_v2023_hei_feeding_patient_list_template from '../../service/moh-731/ver-2023/infant-feeding/hei-feeding-patient-list-template.json';
+import * as moh_731_v2023_prep_patient_list_template from '../../service/moh-731/ver-2023/prep/prep-patient-list-template.json';
 import * as nutrition_731_aggregate3x from './json-reports/moh-731/aggregations/731-nutrition-aggregate.json';
 import * as nutrition_731_base3x from './json-reports/moh-731/aggregations/731-nutrition-base.json';
-import * as on_art_731_aggregate3x from './json-reports/moh-731/aggregations/731-on-art-aggregate.json';
-import * as on_art_731_base3x from './json-reports/moh-731/aggregations/731-on-art-base.json';
-import * as positives_731_aggregate3x from './json-reports/moh-731/aggregations/731-positives-aggregate.json';
-import * as positives_731_base3x from './json-reports/moh-731/aggregations/731-positives-base.json';
 import * as post_exposure_731_aggregate3x from './json-reports/moh-731/aggregations/731-post-exposure-aggregate.json';
 import * as post_exposure_731_base3x from './json-reports/moh-731/aggregations/731-post-exposure-base.json';
-import * as prep_731_aggregate3x from './json-reports/moh-731/aggregations/731-prep-aggregate.json';
-import * as prep_731_base3x from './json-reports/moh-731/aggregations/731-prep-base.json';
-import * as start_art_731_aggregate3x from './json-reports/moh-731/aggregations/731-start-art-aggregate.json';
-import * as start_art_731_base3x from './json-reports/moh-731/aggregations/731-start-art-base.json';
-import * as tb_731_aggregate3x from './json-reports/moh-731/aggregations/731-tb-screen-aggregate.json';
-import * as tb_731_base3x from './json-reports/moh-731/aggregations/731-tb-screen-base.json';
-import * as hiv_setting_731_aggregate3x from './json-reports/moh-731/aggregations/731-hiv-test-setting-aggregate.json';
-import * as hiv_setting_731_base3x from './json-reports/moh-731/aggregations/731-hiv-test-setting-base.json';
-import * as tpt_aggregate3x from './json-reports/moh-731/aggregations/731-tpt-aggregate.json';
-import * as tpt_base3x from './json-reports/moh-731/aggregations/731-tpt-base.json';
-import * as breast_feeding_731_aggregate3x from './json-reports/moh-731/aggregations/731-breast-feeding-aggregate.json';
-import * as breast_feeding_731_base3x from './json-reports/moh-731/aggregations/731-breast-feeding-base.json';
-import * as maternal_haart_731_aggregate3x from './json-reports/moh-731/aggregations/731-maternal-haart-aggregate.json';
-import * as maternal_haart_731_base3x from './json-reports/moh-731/aggregations/731-maternal-haart-base.json';
-import * as ayp_731_aggregate3x from './json-reports/moh-731/aggregations/731-ayp-aggregate.json';
-import * as ayp_731_base3x from './json-reports/moh-731/aggregations/731-ayp-base.json';
-import * as infant_prophylaxis_731_aggregate3x from './json-reports/moh-731/aggregations/731-infant-arv-aggregate.json';
-import * as infant_prophylaxis_731_base3x from './json-reports/moh-731/aggregations/731-infant-arv-base.json';
-import * as hbv_anc_731_aggregate3x from './json-reports/moh-731/aggregations/731-hbv-anc-aggregate.json';
-import * as hbv_anc_731_base3x from './json-reports/moh-731/aggregations/731-hbv-anc-base.json';
-import * as community_facility_aggregate3x from './json-reports/moh-731/aggregations/community-facility-aggregate.json';
-import * as community_facility_base3x from './json-reports/moh-731/aggregations/community-facility-base.json';
 import * as tb_aggregate3x from './json-reports/moh-731/aggregations/731-tb-aggregate.json';
 import * as tb_base3x from './json-reports/moh-731/aggregations/731-tb-base.json';
-import * as tb_screen__less_15_aggregate3x from './json-reports/moh-731/aggregations/tb-screen-less-15-aggregate.json';
-import * as tb_screen__less_15_base3x from './json-reports/moh-731/aggregations/tb-screen-less-15-base.json';
 import * as nutrition_mam_aggregate3x from './json-reports/moh-731/aggregations/nutrition-mam-aggregate.json';
 import * as nutrition_mam_base3x from './json-reports/moh-731/aggregations/nutrition-mam-base.json';
 import * as moh_366_patient_list_template from './json-reports/moh-731/moh-366-patient-list.json';
@@ -3007,28 +3028,352 @@ export class BaseMysqlReport {
             main: this.cloneJsonSchema(moh_731_report_summary)
           });
           break;
-        case '731ANCAggregate3X':
+        case 'moh731V2023HivTestsAggregate':
           resolve({
-            main: this.cloneJsonSchema(anc_731_aggregate_aggregate3x),
-            anc731Base3X: this.cloneJsonSchema(anc_731_aggregate_base3x)
+            main: this.cloneJsonSchema(moh_731_v2023_hiv_tests_aggregate),
+            moh731V2023HivTestsBase: this.cloneJsonSchema(
+              moh_731_v2023_hiv_tests_base
+            ),
+            moh731V2023HivTestEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hiv_test_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
           });
           break;
-        case 'establishedAggregate3X':
+        case 'moh731V2023HivPositiveResultsAggregate':
           resolve({
-            main: this.cloneJsonSchema(established_aggregate3x),
-            establishedBase3X: this.cloneJsonSchema(established_base3x)
+            main: this.cloneJsonSchema(
+              moh_731_v2023_hiv_positive_results_aggregate
+            ),
+            moh731V2023HivTestsBase: this.cloneJsonSchema(
+              moh_731_v2023_hiv_tests_base
+            ),
+            moh731V2023HivTestEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hiv_test_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
           });
           break;
-        case '731OnARTAggregate3X':
+        case 'moh731V2023MaternalHivTestingAggregate':
           resolve({
-            main: this.cloneJsonSchema(on_art_731_aggregate3x),
-            onArt731Base3X: this.cloneJsonSchema(on_art_731_base3x)
+            main: this.cloneJsonSchema(
+              moh_731_v2023_maternal_hiv_testing_aggregate
+            ),
+            moh731V2023HivTestsBase: this.cloneJsonSchema(
+              moh_731_v2023_hiv_tests_base
+            ),
+            moh731V2023HivTestEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hiv_test_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
           });
           break;
-        case '731PositivesAggregate3X':
+        case 'moh731V2023MaternalHivPositiveResultsAggregate':
           resolve({
-            main: this.cloneJsonSchema(positives_731_aggregate3x),
-            positives731Base3X: this.cloneJsonSchema(positives_731_base3x)
+            main: this.cloneJsonSchema(
+              moh_731_v2023_maternal_hiv_positive_results_aggregate
+            ),
+            moh731V2023HivTestsBase: this.cloneJsonSchema(
+              moh_731_v2023_hiv_tests_base
+            ),
+            moh731V2023HivTestEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hiv_test_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023PrepInitiatedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_prep_initiated_aggregate),
+            moh731V2023PrepVisitsBase: this.cloneJsonSchema(
+              moh_731_v2023_prep_visits_base
+            ),
+            moh731V2023PrepEncounters: this.cloneJsonSchema(
+              moh_731_v2023_prep_encounters
+            ),
+            moh731V2023PrepLatestPerDay: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_per_day
+            ),
+            moh731V2023PrepLatestInitial: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_initial
+            )
+          });
+          break;
+        case 'moh731V2023PrepStiAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_prep_sti_aggregate),
+            moh731V2023PrepVisitsBase: this.cloneJsonSchema(
+              moh_731_v2023_prep_visits_base
+            ),
+            moh731V2023PrepEncounters: this.cloneJsonSchema(
+              moh_731_v2023_prep_encounters
+            ),
+            moh731V2023PrepLatestPerDay: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_per_day
+            ),
+            moh731V2023PrepLatestInitial: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_initial
+            )
+          });
+          break;
+        case 'moh731V2023PrepSeroconvertedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_prep_seroconverted_aggregate
+            ),
+            moh731V2023PrepVisitsBase: this.cloneJsonSchema(
+              moh_731_v2023_prep_visits_base
+            ),
+            moh731V2023PrepEncounters: this.cloneJsonSchema(
+              moh_731_v2023_prep_encounters
+            ),
+            moh731V2023PrepLatestPerDay: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_per_day
+            ),
+            moh731V2023PrepLatestInitial: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_initial
+            )
+          });
+          break;
+        case 'moh731V2023AncKnownPositiveAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_aggregate
+            ),
+            moh731V2023AncKnownPositiveBase: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_base
+            ),
+            moh731V2023AncKnownPositiveEncounters: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023MaternalHaartAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_maternal_haart_aggregate),
+            moh731V2023AncKnownPositiveBase: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_base
+            ),
+            moh731V2023AncKnownPositiveEncounters: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023MaternalHaartStartAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_maternal_haart_start_aggregate
+            ),
+            moh731V2023HivTestsBase: this.cloneJsonSchema(
+              moh_731_v2023_hiv_tests_base
+            ),
+            moh731V2023HivTestEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hiv_test_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023InfantProphylaxisAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_infant_prophylaxis_aggregate
+            ),
+            moh731V2023HivPositiveMothersBase: this.cloneJsonSchema(
+              moh_731_v2023_hiv_positive_mothers_base
+            ),
+            moh731V2023HivPositiveMotherEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hiv_positive_mother_encounters
+            )
+          });
+          break;
+        case 'moh731V2023InfantFeedingAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_infant_feeding_aggregate),
+            moh731V2023HeiFeedingBase: this.cloneJsonSchema(
+              moh_731_v2023_hei_feeding_base
+            ),
+            moh731V2023HeiFeedingEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hei_feeding_encounters
+            )
+          });
+          break;
+        case 'moh731V2023HeiFeedingPatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_hei_feeding_patient_list_template
+            )
+          });
+          break;
+        case 'moh731V2023HivPositiveMothersPatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_hiv_positive_mothers_patient_list_template
+            )
+          });
+          break;
+        case 'moh731V2023AgywKnownPositiveAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_agyw_known_positive_aggregate
+            ),
+            moh731V2023AncKnownPositiveBase: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_base
+            ),
+            moh731V2023AncKnownPositiveEncounters: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023AgywTestsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_agyw_tests_aggregate),
+            moh731V2023HivTestsBase: this.cloneJsonSchema(
+              moh_731_v2023_hiv_tests_base
+            ),
+            moh731V2023HivTestEncounters: this.cloneJsonSchema(
+              moh_731_v2023_hiv_test_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023AncKnownPositivePatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_anc_known_positive_patient_list_template
+            )
+          });
+          break;
+        case 'moh731V2023PrepPatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_prep_patient_list_template)
+          });
+          break;
+        case 'moh731V2023HbvScreeningAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_hbv_screening_aggregate),
+            moh731V2023AncHbvBase: this.cloneJsonSchema(
+              moh_731_v2023_anc_hbv_base
+            ),
+            moh731V2023AncHbvEncounters: this.cloneJsonSchema(
+              moh_731_v2023_anc_hbv_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023StartingArtAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_starting_art_aggregate),
+            moh731V2023ArtMonthlyBase: this.cloneJsonSchema(
+              moh_731_v2023_art_monthly_base
+            )
+          });
+          break;
+        case 'moh731V2023CurrentlyOnArtAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_currently_on_art_aggregate
+            ),
+            moh731V2023ArtMonthlyBase: this.cloneJsonSchema(
+              moh_731_v2023_art_monthly_base
+            )
+          });
+          break;
+        case 'moh731V2023TbScreenUnder15Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_tb_screen_under_15_aggregate
+            ),
+            moh731V2023TbScreenUnder15Base: this.cloneJsonSchema(
+              moh_731_v2023_tb_screen_under_15_base
+            )
+          });
+          break;
+        case 'moh731V2023TbScreen15PlusAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_tb_screen_15_plus_aggregate
+            ),
+            moh731V2023TbScreen15PlusBase: this.cloneJsonSchema(
+              moh_731_v2023_tb_screen_15_plus_base
+            )
+          });
+          break;
+        case 'moh731V2023StartingTptAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_starting_tpt_aggregate),
+            moh731V2023StartingTptBase: this.cloneJsonSchema(
+              moh_731_v2023_starting_tpt_base
+            )
+          });
+          break;
+        case 'moh731V2023DsdEstablishedAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_dsd_established_aggregate),
+            moh731V2023DsdEstablishedBase: this.cloneJsonSchema(
+              moh_731_v2023_dsd_established_base
+            )
+          });
+          break;
+        case 'moh731V2023DsdCommunityFacilityAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_dsd_community_facility_aggregate
+            ),
+            moh731V2023DsdCommunityFacilityBase: this.cloneJsonSchema(
+              moh_731_v2023_dsd_community_facility_base
+            ),
+            moh731V2023DsdLatestObs: this.cloneJsonSchema(
+              moh_731_v2023_dsd_latest_obs
+            )
+          });
+          break;
+        case 'moh731V2023TbDsdPatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_tb_dsd_patient_list_template
+            )
+          });
+          break;
+        case 'moh731V2023ArtPatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_art_patient_list_template)
+          });
+          break;
+        case 'moh731V2023AncHbvPatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_anc_hbv_patient_list_template
+            )
+          });
+          break;
+        case 'moh731V2023HivTestsPatientListTemplate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_731_v2023_hiv_tests_patient_list_template
+            )
           });
           break;
         case '731PostExposureAggregate3X':
@@ -3039,24 +3384,6 @@ export class BaseMysqlReport {
             )
           });
           break;
-        case '731PrepAggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(prep_731_aggregate3x),
-            prep731Base3X: this.cloneJsonSchema(prep_731_base3x)
-          });
-          break;
-        case '731StartARTAggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(start_art_731_aggregate3x),
-            startART731Base3X: this.cloneJsonSchema(start_art_731_base3x)
-          });
-          break;
-        case '731TBScreenAggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(tb_731_aggregate3x),
-            tbScreen731Base3X: this.cloneJsonSchema(tb_731_base3x)
-          });
-          break;
 
         case '731NutritionAggregate3X':
           resolve({
@@ -3064,74 +3391,10 @@ export class BaseMysqlReport {
             nutrition731Base3X: this.cloneJsonSchema(nutrition_731_base3x)
           });
           break;
-        case 'hivSetting731Aggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(hiv_setting_731_aggregate3x),
-            hivSetting731Base3X: this.cloneJsonSchema(hiv_setting_731_base3x)
-          });
-          break;
-        case 'tptAggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(tpt_aggregate3x),
-            tptBase3X: this.cloneJsonSchema(tpt_base3x)
-          });
-          break;
-        case 'breastFeeding731Aggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(breast_feeding_731_aggregate3x),
-            breastFeeding731Base3X: this.cloneJsonSchema(
-              breast_feeding_731_base3x
-            )
-          });
-          break;
-        case 'maternalHaart731Aggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(maternal_haart_731_aggregate3x),
-            maternalHaart731Base3X: this.cloneJsonSchema(
-              maternal_haart_731_base3x
-            )
-          });
-          break;
-        case 'ayp731Aggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(ayp_731_aggregate3x),
-            ayp731Base3X: this.cloneJsonSchema(ayp_731_base3x)
-          });
-          break;
-        case 'infantProphylaxis731Aggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(infant_prophylaxis_731_aggregate3x),
-            infantProphylaxis731Base3X: this.cloneJsonSchema(
-              infant_prophylaxis_731_base3x
-            )
-          });
-          break;
-        case 'communityFaciltiyAggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(community_facility_aggregate3x),
-            communityFacilityBase3X: this.cloneJsonSchema(
-              community_facility_base3x
-            )
-          });
-          break;
-        case 'hbvAnc731Aggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(hbv_anc_731_aggregate3x),
-            hbvAnc731Base3X: this.cloneJsonSchema(hbv_anc_731_base3x)
-          });
-          break;
         case 'tbAggregate3X':
           resolve({
             main: this.cloneJsonSchema(tb_aggregate3x),
             tbBase3X: this.cloneJsonSchema(tb_base3x)
-          });
-          break;
-        case 'tbScreenLess15Aggregate3X':
-          resolve({
-            main: this.cloneJsonSchema(tb_screen__less_15_aggregate3x),
-            tbScreenLess15Base3X: this.cloneJsonSchema(
-              tb_screen__less_15_base3x
-            )
           });
           break;
         case 'nutritionMamAggregate3X':

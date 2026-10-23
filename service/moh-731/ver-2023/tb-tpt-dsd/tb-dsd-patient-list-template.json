@@ -1,0 +1,23 @@
+{
+  "name": "moh731V2023TbDsdPatientListTemplate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "Patient list template for MOH 731 (Ver. July 2023) 3.3 to 3.5. The bases carry every linelist column and group one row per client, so this only satisfies the generator's join and adds no grouping of its own.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "pl_person"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "template_person_id",
+      "column": "pl_person.person_id"
+    }
+  ],
+  "groupBy": {
+    "columns": []
+  }
+}

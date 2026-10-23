@@ -1,0 +1,73 @@
+{
+  "name": "moh731V2023MaternalHivPositiveResultsAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.2 HIV Positive Results, HV02-10 to HV02-13: the PMTCT tests of 2.1 that came back positive, initial and retest alike, by where they were tested. PNC is split at 42 days after the delivery date; a PNC test without a delivery date is in neither PNC figure. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023HivTestsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HivTestsBase",
+      "alias": "hts"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "positive_anc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.positive_anc), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_LD",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.positive_LD), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_pnc_less_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.positive_pnc_less_6_weeks), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_pnc_greater_6_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.positive_pnc_greater_6_weeks), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023HivTestsPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "moh731V2023DsdEstablishedAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.5 Differentiated Service Delivery, HV03-033 Established and HV03-034 Not Established: as the earlier O3 aggregate establishedAggregate3X, summing the base flags, but 0 rather than empty when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023DsdEstablishedBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023DsdEstablishedBase",
+      "alias": "x"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.established), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.not_established), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023TbDsdPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

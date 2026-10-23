@@ -1,0 +1,95 @@
+{
+  "name": "moh731V2023HbvScreening",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) HBV screening in the period, one row per client: an HBV result (1375, Negative 664 or Positive 703) at any encounter at the locations in the period -- mostly recorded on ORDER (316), separate from the ANC encounter -- with whether any was positive, the latest test time and the encounter types it was recorded on.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.encounter_type",
+      "alias": "het",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "het.encounter_type_id = e.encounter_type"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hbv_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.value_coded = 703)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hbv_test_datetime",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(e.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hbv_encounter_types",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "GROUP_CONCAT(DISTINCT het.name ORDER BY het.name SEPARATOR ', ')"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id = 1375"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.value_coded IN (664, 703)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["o.person_id"]
+  }
+}

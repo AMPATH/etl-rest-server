@@ -1,0 +1,169 @@
+{
+  "name": "moh731V2023PrepEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) PrEP, step 2: the PrEP encounters in the period with their obs pivoted in one pass -- latest obs_id for population, status and HIV test, prescription and STI flags, and the PrEP type.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND (o.concept_id IN (9782, 9772, 9773, 9774, 1040, 12443, 9611, 6235) OR o.value_coded = 174)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "e.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "e.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "e.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "e.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "sort_key",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(DATE_FORMAT(e.encounter_datetime, '%Y%m%d%H%i%s'), DATE_FORMAT(e.date_created, '%Y%m%d%H%i%s'), LPAD(e.encounter_id, 12, '0'))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pop_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 9782 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "st_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 9772 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hv_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 1040 THEN o.obs_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "presc_yes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 9773 AND o.value_coded = 1065), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "presc_no",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 9773 AND o.value_coded = 1066), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sti_yes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 9611 AND o.value_coded = 1065), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sti_sign_any",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 6235), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sti_initial",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.value_coded = 174), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN MAX(o.concept_id IN (12443, 9774) AND o.value_coded = 12433) = 1 THEN 'CAB-LA' WHEN MAX(o.concept_id IN (12443, 9774) AND o.value_coded = 12876) = 1 THEN 'Lenacapavir' WHEN MAX(o.concept_id IN (12443, 9774) AND o.value_coded = 12432) = 1 THEN 'Dapivirine ring' WHEN MAX(o.concept_id = 12443 AND o.value_coded = 7447) = 1 OR MAX(o.concept_id = 9774 AND o.value_coded NOT IN (12433, 12876, 12432)) = 1 THEN 'Oral' END"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type IN (133, 134)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}
