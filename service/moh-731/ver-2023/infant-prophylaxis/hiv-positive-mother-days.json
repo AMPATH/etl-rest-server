@@ -1,0 +1,141 @@
+{
+  "name": "moh731V2023HivPositiveMotherDays",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 2.6 Infant Prophylaxis, step 2: the encounters that put a woman on the common list (a positive ANC, L&D or PNC test under the 1.1 HIV Tests rules, or known positive at ANC), ranked within each woman's day by day_rank, so a woman seen more than once on a day counts once. The one kept is one where infant prophylaxis was given (1895 = Yes) if any, else the latest encounter. The base keeps day_rank = 1.",
+  "uses": [
+    {
+      "name": "moh731V2023HivPositiveMotherEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HivPositiveMotherEncounters",
+      "alias": "b"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "fr",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fr.obs_id = b.res_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "b.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "b.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "b.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "b.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "service",
+      "column": "b.service"
+    },
+    {
+      "type": "simple_column",
+      "alias": "res_id",
+      "column": "b.res_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tt_id",
+      "column": "b.tt_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "del_id",
+      "column": "b.del_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "proph_val",
+      "column": "b.proph_val"
+    },
+    {
+      "type": "simple_column",
+      "alias": "drug_obs_id",
+      "column": "b.drug_obs_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "anc_visit_number",
+      "column": "b.anc_visit_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "has_positive",
+      "column": "b.has_positive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "has_initial",
+      "column": "b.has_initial"
+    },
+    {
+      "type": "simple_column",
+      "alias": "has_valid_tt",
+      "column": "b.has_valid_tt"
+    },
+    {
+      "type": "simple_column",
+      "alias": "has_revisit",
+      "column": "b.has_revisit"
+    },
+    {
+      "type": "simple_column",
+      "alias": "kp_12019",
+      "column": "b.kp_12019"
+    },
+    {
+      "type": "derived_column",
+      "alias": "day_rank",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ROW_NUMBER() OVER (PARTITION BY b.patient_id, DATE(b.encounter_datetime) ORDER BY b.proph_val = 1065 DESC, b.encounter_datetime DESC, b.encounter_id DESC)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR (b.service = 'ANC' AND b.kp_12019 = 1))"
+      }
+    ]
+  }
+}

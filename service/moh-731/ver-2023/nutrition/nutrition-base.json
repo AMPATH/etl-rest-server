@@ -1,0 +1,453 @@
+{
+  "name": "moh731V2023NutritionBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.6 Nutrition and HIV, step 3: clients whose latest nutrition status at the locations in the period is SAM (9471) or MAM (9472), who are active on ART in the HIV monthly report dataset for the period end -- one row per client, test patients excluded. Age bands are by age at the period end (months under 5 years); pregnant & lactating women (5272 / 5632 = Yes) are counted in the pregnant & lactating figure only, not in an age band. SAM receiving therapeutic foods is 5484 = 8301 and MAM receiving supplemental foods 5484 = 2355, at that encounter. Carries a flag per HV03-037 to HV03-060 figure, which the aggregate sums and the patient list filters on.",
+  "uses": [
+    {
+      "name": "moh731V2023NutritionLatest",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023NutritionLatest",
+      "alias": "b"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = b.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "f",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "f.elastic_id = (SELECT f2.elastic_id FROM etl.hiv_monthly_report_dataset_frozen f2 WHERE f2.person_id = b.patient_id AND f2.endDate = '{endDate}' AND f2.status = 'active' AND f2.on_art_this_month = 1 ORDER BY f2.encounter_date DESC, f2.elastic_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = p.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = b.location_id"
+      }
+    },
+    {
+      "table": "amrs.encounter_type",
+      "alias": "et",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "et.encounter_type_id = b.encounter_type"
+      }
+    },
+    {
+      "table": "amrs.users",
+      "alias": "u",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "u.user_id = b.creator"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "et.name"
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(b.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "p.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 28 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "p.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_months",
+      "column": "b.age_months"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, '{endDate}')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_mam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE b.status_id WHEN 9471 THEN 'SAM' WHEN 9472 THEN 'MAM' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "food_given",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.status_id = 9471 AND b.on_therapeutic = 1 THEN 'Yes' WHEN b.status_id = 9472 AND b.on_supplemental = 1 THEN 'Yes' ELSE 'No' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pregnant_lactating",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.preg_lact = 1 THEN 'Yes' ELSE 'No' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "current_arv_regimen",
+      "column": "f.cur_arv_meds_names"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_line",
+      "column": "f.cur_arv_line"
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(f.arv_start_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtc_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(f.rtc_date)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_clinic",
+      "column": "f.clinic"
+    },
+    {
+      "type": "simple_column",
+      "alias": "entered_by",
+      "column": "u.username"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.age_months BETWEEN 0 AND 5 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.age_months BETWEEN 6 AND 59 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.age_months BETWEEN 60 AND 119 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.age_months BETWEEN 120 AND 215 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.age_months >= 216 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.preg_lact = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.age_months BETWEEN 0 AND 5 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.age_months BETWEEN 6 AND 59 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.age_months BETWEEN 60 AND 119 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.age_months BETWEEN 120 AND 215 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.age_months >= 216 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.preg_lact = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.on_therapeutic = 1 AND b.age_months BETWEEN 0 AND 5 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.on_therapeutic = 1 AND b.age_months BETWEEN 6 AND 59 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.on_therapeutic = 1 AND b.age_months BETWEEN 60 AND 119 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.on_therapeutic = 1 AND b.age_months BETWEEN 120 AND 215 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.on_therapeutic = 1 AND b.age_months >= 216 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9471 AND b.on_therapeutic = 1 AND b.preg_lact = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.on_supplemental = 1 AND b.age_months BETWEEN 0 AND 5 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.on_supplemental = 1 AND b.age_months BETWEEN 6 AND 59 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.on_supplemental = 1 AND b.age_months BETWEEN 60 AND 119 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.on_supplemental = 1 AND b.age_months BETWEEN 120 AND 215 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.on_supplemental = 1 AND b.age_months >= 216 AND b.preg_lact = 0, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.status_id = 9472 AND b.on_supplemental = 1 AND b.preg_lact = 1, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.status_rank = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.status_id IN (9471, 9472)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "COALESCE(CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name), '') NOT LIKE '%test%'"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "b.status_id",
+        "order": "asc"
+      },
+      {
+        "column": "b.age_months",
+        "order": "asc"
+      }
+    ]
+  }
+}

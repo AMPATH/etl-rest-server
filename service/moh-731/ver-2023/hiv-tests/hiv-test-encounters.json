@@ -2,7 +2,7 @@
   "name": "moh731V2023HivTestEncounters",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 1.1 HIV Tests, step 1: one row per HTS, ANC, Maternity or PNC encounter in the period, with the obs it needs pivoted -- the latest obs_id per concept and flags for the result and test type. The encounter rules (the HAVING of the source query) are applied by the base dataset, which selects from this one.",
+  "description": "MOH 731 (Ver. July 2023) 1.1 HIV Tests, step 1: one row per HTS, ANC, Maternity or PNC encounter in the period, with the obs it needs pivoted -- the latest obs_id per concept and flags for the result and test type. The encounter rules (the HAVING of the source query) are applied by moh731V2023HivTestDays, which selects from this one.",
   "uses": [],
   "sources": [
     {

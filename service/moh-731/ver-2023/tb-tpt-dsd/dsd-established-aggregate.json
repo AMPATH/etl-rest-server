@@ -32,6 +32,46 @@
       "expressionOptions": {
         "expression": "COALESCE(SUM(x.not_established), 0)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_established_recorded",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.not_established_recorded), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_not_categorized",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.dsd_not_categorized), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_community_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.dsd_community_on_art), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_facility_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.dsd_facility_on_art), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_model_not_categorized",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(x.dsd_model_not_categorized), 0)"
+      }
     }
   ],
   "transFormDirectives": {

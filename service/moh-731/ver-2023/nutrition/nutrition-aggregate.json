@@ -1,0 +1,233 @@
+{
+  "name": "moh731V2023NutritionAggregate",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.6 Nutrition and HIV, HV03-037 to HV03-060: SAM and MAM clients on ART by age band and pregnant & lactating, and of them those receiving therapeutic (SAM) or supplemental (MAM) foods. 0 when there are none.",
+  "uses": [
+    {
+      "name": "moh731V2023NutritionBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023NutritionBase",
+      "alias": "n"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "has_sam_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_sam_0_5_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_sam_6_59_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_sam_5_9_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_sam_10_17_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_sam_18_and_above_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_sam_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_sam_preg_lact), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_smm_0_5_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_smm_6_59_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_smm_5_9_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_smm_10_17_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_smm_18_and_above_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_smm_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.has_smm_preg_lact), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_acute_supp_0_5_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_acute_supp_6_59_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_acute_supp_5_9_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_acute_supp_10_17_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_acute_supp_18_and_above_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_acute_supp_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_acute_supp_preg_lact), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_moderate_supp_0_5_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_moderate_supp_6_59_months), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_moderate_supp_5_9_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_moderate_supp_10_17_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_moderate_supp_18_and_above_years), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severe_moderate_supp_preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(n.severe_moderate_supp_preg_lact), 0)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh731V2023NutritionPatientListTemplate",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "patient_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

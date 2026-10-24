@@ -1,0 +1,100 @@
+{
+  "name": "moh731V2023PepEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 5. Post Exposure Prophylaxis, step 1: one row per PEP initial encounter (56) at the locations in the period, with the method of exposure (1061, the latest obs) and whether PEP was given (1705 = 1149, on antiretroviral therapy) pivoted.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (1061, 1705)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "e.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "e.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "e.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "exposure",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CAST(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 1061 THEN o.value_coded END ORDER BY o.obs_id DESC), ',', 1) AS UNSIGNED)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pep_given",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 1705 AND o.value_coded = 1149), 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type = 56"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}

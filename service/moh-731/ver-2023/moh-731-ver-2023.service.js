@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 import { MultiDatasetPatientlistReport } from '../../../app/reporting-framework/multi-dataset-patientlist.report.js';
 import ReportProcessorHelpersService from '../../../app/reporting-framework/report-processor-helpers.service.js';
+import { widenToFacility } from '../../facility-locations/facility-locations.service';
 import { MOH731Service } from '../../moh-731.service';
 
 /* Some MOH 731 (ver-2023) figures compare against the period's bounds inside a
@@ -25,6 +26,8 @@ function assertValidPeriod(...paramSets) {
  *
  * Kept apart from MOH731Service, which the production POC routes (etl-routes.js)
  * also use, so nothing here changes how those behave. On top of it, this:
+ * - reports the whole facility of the requested location
+ *   (service/facility-locations);
  * - accepts only YYYY-MM-DD dates (see above);
  * - pages patient lists on limit / startIndex -- the schemas page on
  *   limitParam / offSetParam, which were never set, so every request returned
@@ -37,8 +40,14 @@ export class MOH731Ver2023Service extends MOH731Service {
     const that = this;
     return new Promise((resolve, reject) => {
       assertValidPeriod(this.params, additionalParams);
-      MultiDatasetPatientlistReport.prototype.generateReport
-        .call(this, additionalParams)
+      /* linelists come through here too, so they read the same locations */
+      widenToFacility(this.params, additionalParams)
+        .then(() =>
+          MultiDatasetPatientlistReport.prototype.generateReport.call(
+            this,
+            additionalParams
+          )
+        )
         .then((results) => {
           if (additionalParams && additionalParams.type === 'patient-list') {
             resolve(results);

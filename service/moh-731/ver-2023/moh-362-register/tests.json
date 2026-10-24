@@ -1,0 +1,125 @@
+{
+  "name": "moh731V2023Moh362Tests",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 362 HTS lab register, step 2: one row per encounter with its HIV tests 1, 2 and 3 side by side -- result, kit, lot and expiry of each.",
+  "uses": [
+    {
+      "name": "moh731V2023Moh362TestGroups",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023Moh362TestGroups",
+      "alias": "tg"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "tg.encounter_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "test1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 1 THEN tg.result END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kit1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 1 THEN tg.kit END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "lot1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 1 THEN tg.lot END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "expiry1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 1 THEN tg.expiry END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "test2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 2 THEN tg.result END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kit2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 2 THEN tg.kit END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "lot2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 2 THEN tg.lot END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "expiry2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 2 THEN tg.expiry END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "test3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 3 THEN tg.result END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kit3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 3 THEN tg.kit END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "lot3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 3 THEN tg.lot END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "expiry3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN tg.test_no = 3 THEN tg.expiry END)"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["tg.encounter_id"]
+  }
+}

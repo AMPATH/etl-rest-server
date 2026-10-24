@@ -1,0 +1,127 @@
+{
+  "name": "moh731V2023Moh362EncounterObs",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 362 register, step 3: one row per encounter at the locations in the period with the details the form records beyond the test -- population (9782), discordant couple (6096), prevention services referred to (1272), identification strategy (10867), referred to (10926), handed over to (10869), CCC number (9775), remarks (9467) and ART start recorded at HTS (1499).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (9782, 6096, 1272, 10867, 10926, 10869, 9775, 9467, 1499)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "population",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CAST(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 9782 THEN o.value_coded END ORDER BY o.obs_id DESC), ',', 1) AS UNSIGNED)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discordant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 6096 THEN o.value_coded END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referral_codes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "GROUP_CONCAT(DISTINCT CASE WHEN o.concept_id = 1272 THEN CASE o.value_coded WHEN 9823 THEN 1 WHEN 9822 THEN 2 WHEN 8707 THEN 3 WHEN 9821 THEN 4 END END ORDER BY 1 SEPARATOR ', ')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tested_as",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 10867 THEN o.value_coded END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referral_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 10926 THEN o.value_text END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "handed_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 10869 THEN o.value_text END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 9775 THEN o.value_text END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "remarks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 9467 THEN o.value_text END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_start_hts",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 1499 THEN DATE(o.value_datetime) END)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}
