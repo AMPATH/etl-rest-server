@@ -6,23 +6,15 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "o"
-    },
-    {
       "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (329)"
-      }
+      "alias": "e"
     },
     {
       "table": "amrs.person",
       "alias": "p",
       "join": {
         "type": "INNER",
-        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+        "joinCondition": "e.patient_id = p.person_id AND p.voided = 0"
       }
     },
     {
@@ -30,7 +22,7 @@
       "alias": "l",
       "join": {
         "type": "INNER",
-        "joinCondition": "l.location_id = o.location_id"
+        "joinCondition": "l.location_id = e.location_id"
       }
     }
   ],
@@ -38,12 +30,12 @@
     {
       "type": "simple_column",
       "alias": "obs_datetime",
-      "column": "o.obs_datetime"
+      "column": "e.encounter_datetime"
     },
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "o.person_id"
+      "column": "e.patient_id"
     },
     {
       "type": "simple_column",
@@ -68,7 +60,7 @@
     {
       "type": "simple_column",
       "alias": "maternity_discharges",
-      "column": "null"
+      "column": "COUNT(DISTINCT IF(e.encounter_type = 274, e.encounter_id, NULL))"
     },
     {
       "type": "simple_column",
@@ -228,7 +220,7 @@
     {
       "type": "simple_column",
       "alias": "maternity_referrals_out_of_facility",
-      "column": "null"
+      "column": "COUNT(DISTINCT IF(e.encounter_type = 274 AND EXISTS (SELECT 1 FROM amrs.obs referral WHERE referral.encounter_id = e.encounter_id AND referral.concept_id = 7093 AND referral.value_coded = 1065 AND referral.voided = 0), e.encounter_id, NULL))"
     },
     {
       "type": "simple_column",
@@ -891,27 +883,27 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "e.encounter_type in (329)"
+        "conditionExpression": "e.encounter_type in (329,274)"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime >= ?",
+        "conditionExpression": "e.encounter_datetime >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime <= ?",
+        "conditionExpression": "e.encounter_datetime <= ?",
         "parameterName": "endDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.location_id in ?",
+        "conditionExpression": "e.location_id in ?",
         "parameterName": "locations"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id"]
+    "columns": ["e.patient_id"]
   }
 }
