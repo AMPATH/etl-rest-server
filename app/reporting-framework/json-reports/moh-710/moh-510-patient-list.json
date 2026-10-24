@@ -73,7 +73,7 @@
     {
       "type": "simple_column",
       "alias": "patient_uuid",
-      "column": "a.uuid"
+      "column": "pn.uuid"
     },
     {
       "type": "simple_column",
