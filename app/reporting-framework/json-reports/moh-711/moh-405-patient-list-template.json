@@ -110,7 +110,7 @@
     },
     {
       "type": "derived_column",
-      "alias": "full_name",
+      "alias": "full_names",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
@@ -207,7 +207,7 @@
     {
       "type": "simple_column",
       "alias": "fgm_complications",
-      "column": "a.delivery_complications"
+      "column": "a.fgm_complications"
     },
     {
       "type": "simple_column",
@@ -367,7 +367,7 @@
     },
     {
       "type": "simple_column",
-      "alias": "supplimentation",
+      "alias": "supplementation",
       "column": "a.supplimentation"
     },
     {

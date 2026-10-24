@@ -152,7 +152,6 @@ const routes = [
     method: 'GET',
     path: '/moh-745',
     config: {
-      auth: false,
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -886,7 +885,6 @@ const routes = [
     method: 'GET',
     path: '/moh-510-patient-list',
     config: {
-      auth: false,
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           const reportName = request.query.reportName;
