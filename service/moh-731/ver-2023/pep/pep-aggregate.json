@@ -1,19 +1,19 @@
 {
-  "name": "731PostExposureAggregate3X",
+  "name": "moh731V2023PepAggregate",
   "version": "1.0",
-  "tag": "",
-  "description": "",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 5. Post Exposure Prophylaxis, HV05-01 to HV05-04: exposures by occupational / other, and of those, PEP given. 0 when there are none.",
   "uses": [
     {
-      "name": "postExposure731Base3X",
+      "name": "moh731V2023PepBase",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "postExposure731Base3X",
-      "alias": "p"
+      "dataSet": "moh731V2023PepBase",
+      "alias": "pep"
     }
   ],
   "columns": [
@@ -22,7 +22,7 @@
       "alias": "exposed_occupational",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(p.exposed_occupational)"
+        "expression": "COALESCE(SUM(pep.exposed_occupational), 0)"
       }
     },
     {
@@ -30,7 +30,7 @@
       "alias": "exposed_non_occupational",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(p.exposed_non_occupational)"
+        "expression": "COALESCE(SUM(pep.exposed_non_occupational), 0)"
       }
     },
     {
@@ -38,7 +38,7 @@
       "alias": "pep_occupational",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(p.pep_occupational)"
+        "expression": "COALESCE(SUM(pep.pep_occupational), 0)"
       }
     },
     {
@@ -46,7 +46,7 @@
       "alias": "pep_non_occupational",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(p.pep AND p.exposed_non_occupational)"
+        "expression": "COALESCE(SUM(pep.pep_non_occupational), 0)"
       }
     }
   ],
@@ -58,13 +58,13 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "moh_366_patient_list_template",
+      "useTemplate": "moh731V2023PepPatientListTemplate",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {
           "joinType": "INNER",
           "joinCondition": "<<base_column>> = <<template_column>>",
-          "baseColumn": "person_id",
+          "baseColumn": "patient_id",
           "templateColumn": "person_id"
         }
       }

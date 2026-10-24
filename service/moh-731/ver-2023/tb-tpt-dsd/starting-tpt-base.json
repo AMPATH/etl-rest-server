@@ -2,7 +2,7 @@
   "name": "moh731V2023StartingTptBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 3.4 Starting TPT, HV03-031 Start TPT_<15 and HV03-032 Start TPT_15+: a copy of the earlier O3 dataset tptBase3X -- the same sources, filters and grouping, so the same clients -- with the figure's flag named as its indicator and the client's name, identifiers and location for the linelist.",
+  "description": "MOH 731 (Ver. July 2023) 3.4 Starting TPT, HV03-031 Start TPT_<15 and HV03-032 Start TPT_15+: a copy of the earlier O3 dataset tptBase3X -- the same sources, filters and grouping, so the same clients -- with the figure's flag named as its indicator and the client's name, identifiers and location for the linelist. Clients of 3.3 TB Screening (so of 3.1 Starting ART) who started TPT this month -- so 3.4 is a subset of 3.3, and 3.3 of 3.1.",
   "uses": [],
   "sources": [
     {
@@ -164,14 +164,6 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.started_ipt_this_month = 1"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "hmrd.started_art_this_month = 1"
-      },
-      {
-        "filterType": "tableColumns",
         "conditionExpression": "hmrd.endDate = ?",
         "parameterName": "endDate"
       },
@@ -179,6 +171,26 @@
         "filterType": "tableColumns",
         "conditionExpression": "hmrd.location_id in ?",
         "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.status = 'active'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.started_art_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.gender IN ('M', 'F')"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.tb_screened_this_visit_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.started_ipt_this_month = 1"
       }
     ]
   },

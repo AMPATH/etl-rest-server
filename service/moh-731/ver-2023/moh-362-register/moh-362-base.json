@@ -1,0 +1,323 @@
+{
+  "name": "moh731V2023Moh362Base",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 362 HTS lab, referral and linkage register: the same tests as MOH 731 1.1 HIV Tests (moh731V2023HivTestsBase -- its facility scope, test rules and one test per client per day), one row per test, with the form's details: the three HIV tests and their kits, population and KVP code, discordant couple, prevention services referred to, HTS provider, and for the referral and linkage register the identification strategy, referred to, handed over to, residence, ART start and CCC number. The referral and linkage register is the positives with an ART start date.",
+  "uses": [
+    {
+      "name": "moh731V2023HivTestsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    },
+    {
+      "name": "moh731V2023Moh362Tests",
+      "version": "1.0",
+      "type": "dataset_def"
+    },
+    {
+      "name": "moh731V2023Moh362EncounterObs",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023HivTestsBase",
+      "alias": "t"
+    },
+    {
+      "dataSet": "moh731V2023Moh362Tests",
+      "alias": "x",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "x.encounter_id = t.encounter_id"
+      }
+    },
+    {
+      "dataSet": "moh731V2023Moh362EncounterObs",
+      "alias": "y",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "y.encounter_id = t.encounter_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "serial_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ROW_NUMBER() OVER (ORDER BY t.test_date, t.encounter_id)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "t.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "service",
+      "column": "t.service"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "t.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "t.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "t.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nupi",
+      "column": "t.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrsID",
+      "column": "t.amrs_number"
+    },
+    {
+      "type": "derived_column",
+      "alias": "id_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t.patient_id AND pi.identifier_type = 5 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "t.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "t.age_at_test"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "t.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "telephone",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pa.value FROM amrs.person_attribute pa WHERE pa.person_id = t.patient_id AND pa.person_attribute_type_id = 10 AND pa.voided = 0 ORDER BY pa.person_attribute_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_visit",
+      "column": "t.test_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "marital_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE (SELECT pa.value FROM amrs.person_attribute pa WHERE pa.person_id = t.patient_id AND pa.person_attribute_type_id = 5 AND pa.voided = 0 ORDER BY pa.person_attribute_id DESC LIMIT 1) WHEN '5555' THEN 1 WHEN '1059' THEN 2 WHEN '1057' THEN 3 WHEN '1058' THEN 4 WHEN '1056' THEN 5 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "population_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN y.population IN (9783, 1107) THEN 1 WHEN y.population IS NOT NULL THEN 2 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sub_population",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE y.population WHEN 6096 THEN 'DC' WHEN 8291 THEN 'MSM/MSW' WHEN 9785 THEN 'MSM/MSW' WHEN 9786 THEN 'FSW' WHEN 105 THEN 'PWID/PWUD' WHEN 12251 THEN 'VP' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "setting",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE t.hts_setting WHEN 'Facility' THEN 1 WHEN 'Community' THEN 2 END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test1",
+      "column": "x.test1"
+    },
+    {
+      "type": "derived_column",
+      "alias": "kit1_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT cn.name FROM amrs.concept_name cn WHERE cn.concept_id = x.kit1 AND cn.locale_preferred = 1 AND cn.voided = 0 ORDER BY cn.locale = 'en' DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "lot1",
+      "column": "x.lot1"
+    },
+    {
+      "type": "simple_column",
+      "alias": "expiry1",
+      "column": "x.expiry1"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test2",
+      "column": "x.test2"
+    },
+    {
+      "type": "derived_column",
+      "alias": "kit2_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT cn.name FROM amrs.concept_name cn WHERE cn.concept_id = x.kit2 AND cn.locale_preferred = 1 AND cn.voided = 0 ORDER BY cn.locale = 'en' DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "lot2",
+      "column": "x.lot2"
+    },
+    {
+      "type": "simple_column",
+      "alias": "expiry2",
+      "column": "x.expiry2"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_test3",
+      "column": "x.test3"
+    },
+    {
+      "type": "derived_column",
+      "alias": "kit3_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT cn.name FROM amrs.concept_name cn WHERE cn.concept_id = x.kit3 AND cn.locale_preferred = 1 AND cn.voided = 0 ORDER BY cn.locale = 'en' DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "lot3",
+      "column": "x.lot3"
+    },
+    {
+      "type": "simple_column",
+      "alias": "expiry3",
+      "column": "x.expiry3"
+    },
+    {
+      "type": "derived_column",
+      "alias": "final_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE t.final_result WHEN 'Positive' THEN 'P' WHEN 'Negative' THEN 'N' WHEN 'Inconclusive' THEN 'I' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "discordant_couple",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE y.discordant WHEN 1065 THEN 'Y' WHEN 1066 THEN 'N' WHEN 1175 THEN 'NA' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "referral_services",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(y.referral_codes, 'NA')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hts_provider",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(' ', ppn.given_name, ppn.middle_name, ppn.family_name) FROM amrs.encounter_provider ep JOIN amrs.provider pv ON pv.provider_id = ep.provider_id JOIN amrs.person_name ppn ON ppn.person_id = pv.person_id AND ppn.voided = 0 WHERE ep.encounter_id = t.encounter_id AND ep.voided = 0 ORDER BY ep.encounter_provider_id, ppn.preferred DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_tested_as",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT cn.name FROM amrs.concept_name cn WHERE cn.concept_id = y.tested_as AND cn.locale_preferred = 1 AND cn.voided = 0 ORDER BY cn.locale = 'en' DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_to",
+      "column": "y.referral_to"
+    },
+    {
+      "type": "simple_column",
+      "alias": "handed_to",
+      "column": "y.handed_to"
+    },
+    {
+      "type": "derived_column",
+      "alias": "residence",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(', ', NULLIF(pad.city_village, ''), NULLIF(pad.county_district, '')) FROM amrs.person_address pad WHERE pad.person_id = t.patient_id AND pad.voided = 0 ORDER BY pad.preferred DESC, pad.person_address_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(t.arv_first_regimen_start_date, y.art_start_hts)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(y.ccc_number, t.ccc_number)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "initial_remarks",
+      "column": "y.remarks"
+    },
+    {
+      "type": "simple_column",
+      "alias": "screening_remarks",
+      "column": "y.remarks"
+    }
+  ],
+  "orderBy": {
+    "columns": [
+      {
+        "column": "t.test_date",
+        "order": "asc"
+      },
+      {
+        "column": "t.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

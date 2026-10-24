@@ -1,0 +1,78 @@
+{
+  "name": "moh731V2023PepDays",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 5. Post Exposure Prophylaxis, step 2: the PEP initial encounters with a method of exposure, ranked within each client's day by day_rank, so a client seen more than once on a day counts once. The one kept is one where PEP was given if any, else the latest. The base keeps day_rank = 1.",
+  "uses": [
+    {
+      "name": "moh731V2023PepEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023PepEncounters",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "b.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "b.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "b.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "exposure",
+      "column": "b.exposure"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pep_given",
+      "column": "b.pep_given"
+    },
+    {
+      "type": "derived_column",
+      "alias": "day_rank",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ROW_NUMBER() OVER (PARTITION BY b.patient_id, DATE(b.encounter_datetime) ORDER BY b.pep_given DESC, b.encounter_datetime DESC, b.encounter_id DESC)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.exposure IS NOT NULL"
+      }
+    ]
+  }
+}

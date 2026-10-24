@@ -1,0 +1,133 @@
+{
+  "name": "moh731V2023NutritionEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.6 Nutrition and HIV, step 1: one row per encounter at the locations in the period with a nutrition status (7369), nutrition support (5484) or pregnancy / lactation (5272, 5632) obs, those obs pivoted, and the client's age in months at the end of the period.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pp",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pp.person_id = e.patient_id AND pp.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.concept_id IN (7369, 5484, 5272, 5632) AND o.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "e.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "e.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "e.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "e.date_created"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(MONTH, pp.birthdate, '{endDate}')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "status_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN o.concept_id = 7369 THEN o.value_coded END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_therapeutic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 5484 AND o.value_coded = 8301), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_supplemental",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(o.concept_id = 5484 AND o.value_coded = 2355), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "preg_lact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(MAX(pp.gender = 'F' AND o.concept_id IN (5272, 5632) AND o.value_coded = 1065), 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}

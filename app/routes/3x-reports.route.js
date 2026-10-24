@@ -13,6 +13,9 @@ const {
   MOH731Ver2023Service: MOH731Service
 } = require('../../service/moh-731/ver-2023/moh-731-ver-2023.service');
 const { MOH745Service } = require('../../service/moh-745/moh-745.service');
+const {
+  getMoh362Register
+} = require('../../service/moh-731/ver-2023/moh-362-register.service');
 
 const routes = [
   {
@@ -939,6 +942,43 @@ const routes = [
           limit: Joi.number()
             .required()
             .description('The offset to control pagination')
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/moh-362-register',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getMoh362Register({
+            startDate: request.query.startDate,
+            endDate: request.query.endDate,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the MOH 362 HTS lab, referral and linkage register',
+      notes:
+        'Returns one row per HTS client tested in the period, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
         },
         params: {}
       }
