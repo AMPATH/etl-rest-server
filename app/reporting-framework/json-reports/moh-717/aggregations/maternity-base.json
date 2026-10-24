@@ -6,23 +6,15 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "o"
-    },
-    {
       "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0 AND e.encounter_type IN (196, 274, 273, 269)"
-      }
+      "alias": "e"
     },
     {
       "table": "amrs.person",
       "alias": "p",
       "join": {
         "type": "INNER",
-        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+        "joinCondition": "e.patient_id = p.person_id AND p.voided = 0"
       }
     },
     {
@@ -30,7 +22,7 @@
       "alias": "l",
       "join": {
         "type": "INNER",
-        "joinCondition": "l.location_id = o.location_id"
+        "joinCondition": "l.location_id = e.location_id"
       }
     }
   ],
@@ -38,19 +30,19 @@
     {
       "type": "simple_column",
       "alias": "obs_datetime",
-      "column": "o.obs_datetime"
+      "column": "e.encounter_datetime"
     },
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "o.person_id"
+      "column": "e.patient_id"
     },
     {
       "type": "derived_column",
       "alias": "normal_deliveries",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1170, 1, NULL)"
+        "expression": "IF(EXISTS (SELECT 1 FROM amrs.encounter_diagnosis ed WHERE ed.encounter_id = e.encounter_id AND ed.patient_id = e.patient_id AND ed.diagnosis_coded in (31503,31470,31497,31502,1170) AND ed.voided = 0), 1, NULL)"
       }
     },
     {
@@ -58,7 +50,7 @@
       "alias": "caesarian_sections",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1171, 1, NULL)"
+        "expression": "IF(EXISTS (SELECT 1 FROM amrs.encounter_diagnosis ed WHERE ed.encounter_id = e.encounter_id AND ed.patient_id = e.patient_id AND ed.diagnosis_coded IN (31493,31491) AND ed.voided = 0), 1, NULL)"
       }
     },
     {
@@ -66,7 +58,7 @@
       "alias": "breach_delivery",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 5630 AND o.value_coded = 1172, 1, NULL)"
+        "expression": "IF(EXISTS (SELECT 1 FROM amrs.encounter_diagnosis ed WHERE ed.encounter_id = e.encounter_id AND ed.patient_id = e.patient_id AND ed.diagnosis_coded IN (31481,31483,31500) AND ed.voided = 0), 1, NULL)"
       }
     },
     {
@@ -74,7 +66,7 @@
       "alias": "assisted_vaginal_delivery",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 5630 AND (o.value_coded = 2167 OR o.value_coded = 2166), 1, NULL)"
+        "expression": "IF(EXISTS (SELECT 1 FROM amrs.encounter_diagnosis ed WHERE ed.encounter_id = e.encounter_id AND ed.patient_id = e.patient_id AND ed.diagnosis_coded IN (31484,31474,31495,31468) AND ed.voided = 0), 1, NULL)"
       }
     },
     {
@@ -82,15 +74,15 @@
       "alias": "born_before_arrival",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(EXISTS (SELECT 1 FROM amrs.encounter_diagnosis ed WHERE ed.encounter_id = e.encounter_id AND ed.patient_id = e.patient_id AND ed.diagnosis_coded IN (20390,20402,20377) AND ed.voided = 0), 1, NULL)"
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "maternal_deaths",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10423 AND o.value_coded = 159, 1, NULL)"
+        "expression": "NULLIF((SELECT COUNT(DISTINCT ob.obs_id) FROM amrs.obs ob WHERE ob.encounter_id = e.encounter_id AND ob.concept_id = 10423 AND ob.value_coded = 159 AND ob.voided = 0), 0)"
       }
     },
     {
@@ -107,7 +99,7 @@
       "alias": "live_birth",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 6224 AND o.value_coded = 1843, 1, NULL)"
+        "expression": "NULLIF((SELECT COUNT(DISTINCT ob.obs_id) FROM amrs.obs ob WHERE ob.encounter_id = e.encounter_id AND ob.concept_id = 6224 AND ob.value_coded = 1843 AND ob.voided = 0), 0)"
       }
     },
     {
@@ -115,15 +107,15 @@
       "alias": "fresh_still_birth",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 6224 AND o.value_coded = 10877, 1, NULL)"
+        "expression": "NULLIF((SELECT COUNT(DISTINCT ob.obs_id) FROM amrs.obs ob WHERE ob.encounter_id = e.encounter_id AND ob.concept_id = 6224 AND ob.value_coded in (10424,10877) AND ob.voided = 0), 0)"
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "neonatal_deaths_0_28_days",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "NULLIF((SELECT COUNT(DISTINCT ob.obs_id) FROM amrs.obs ob WHERE ob.encounter_id = e.encounter_id AND ob.concept_id = 10938 AND ob.value_coded = 159 AND ob.voided = 0), 0)"
       }
     },
     {
@@ -135,19 +127,19 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "low_birth_weight_less_2500gms",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 6433 AND o.value_numeric < 2500, 1, NULL)"
+        "expression": "NULLIF((SELECT COUNT(DISTINCT ob.obs_id) FROM amrs.obs ob WHERE ob.encounter_id = e.encounter_id AND ob.concept_id = 6433 AND ob.value_numeric < 2500 AND ob.voided = 0), 0)"
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "babies_discharged_alive",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10938 AND o.value_coded = 8701, 1, NULL)"
+        "expression": "NULLIF((SELECT COUNT(DISTINCT ob.obs_id) FROM amrs.obs ob WHERE ob.encounter_id = e.encounter_id AND ob.concept_id = 10938 AND ob.value_coded = 8701 AND ob.voided = 0), 0)"
       }
     }
   ],
@@ -156,27 +148,27 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "e.encounter_type in (196, 274, 273, 269)"
+        "conditionExpression": "e.voided = 0 AND e.encounter_type in (196, 274, 273, 269)"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime >= ?",
+        "conditionExpression": "e.encounter_datetime >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.obs_datetime <= ?",
+        "conditionExpression": "e.encounter_datetime <= ?",
         "parameterName": "endDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.location_id in ?",
+        "conditionExpression": "e.location_id in ?",
         "parameterName": "locations"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id"]
+    "columns": ["e.encounter_id"]
   }
 }
