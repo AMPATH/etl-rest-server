@@ -1,4 +1,3 @@
-import { LogLevel } from '@slack/client';
 import { FamilyTestingService } from '../family-history/family-history.service';
 var authorizer = require('../../authorization/etl-authorizer');
 var privileges = authorizer.getAllPrivileges();

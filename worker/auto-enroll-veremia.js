@@ -1,9 +1,8 @@
 const db = require('../etl-db'),
   Promise = require('bluebird'),
-  https = require('http'),
   config = require('../conf/config'),
   moment = require('moment'),
-  curl = require('curlrequest'),
+  axios = require('axios'),
   _ = require('underscore'),
   program_config = require('../programs/patient-program-config'),
   patient_programs = require('../dao/enrollment/enrollment-patient-program-dao'),
@@ -112,28 +111,34 @@ var App = {
       config.eidSyncCredentials.password;
     var auth = 'Basic ' + Buffer.from(usernamePass).toString('base64');
 
-    var options = {
-      url: url,
-      data: payload,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: auth
-      },
-      method: 'POST'
-    };
-
     return new Promise(function (resolve, reject) {
-      curl.request(options, function (err, parts) {
-        if (err || (parts && JSON.parse(parts).error)) {
-          console.log(parts && JSON.parse(parts).error);
+      axios({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth
+        },
+        transformResponse: [(d) => d]
+      })
+        .then(function (res) {
+          var parts = res.data;
+          if (parts && JSON.parse(parts).error) {
+            console.log(parts && JSON.parse(parts).error);
+            console.log('error unenrolling to program');
+            reject('error unenrolling patient from program');
+            //log error to file or db
+          } else {
+            console.log('unenrolling to  program: ');
+            resolve('str');
+          }
+        })
+        .catch(function (err) {
+          console.log(err.message || err);
           console.log('error unenrolling to program');
-          reject(err);
-          //log error to file or db
-        } else {
-          console.log('unenrolling to  program: ');
-          resolve('str');
-        }
-      });
+          reject(err.message || err);
+        });
     });
   },
 
@@ -165,27 +170,34 @@ var App = {
 
     payload = JSON.stringify(payload);
 
-    var options = {
-      url: url,
-      data: payload,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: auth
-      },
-      method: 'POST'
-    };
     return new Promise(function (resolve, reject) {
-      curl.request(options, function (err, parts) {
-        if (err || (parts && JSON.parse(parts).error)) {
-          console.log(parts && JSON.parse(parts).error);
+      axios({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: auth
+        },
+        transformResponse: [(d) => d]
+      })
+        .then(function (res) {
+          var parts = res.data;
+          if (parts && JSON.parse(parts).error) {
+            console.log(parts && JSON.parse(parts).error);
+            console.log('error enrolling patient into program');
+            //log to file or database
+            reject('error enrolling patient into viremia');
+          } else {
+            console.log('Enrolled Patient Into Standard HIV Treatment');
+            resolve('Enrolled Patient Into Program');
+          }
+        })
+        .catch(function (err) {
+          console.log(err.message || err);
           console.log('error enrolling patient into program');
-          //log to file or database
           reject('error enrolling patient into viremia');
-        } else {
-          console.log('Enrolled Patient Into Standard HIV Treatment');
-          resolve('Enrolled Patient Into Program');
-        }
-      });
+        });
     });
   },
   deleteProcessed: function (data) {

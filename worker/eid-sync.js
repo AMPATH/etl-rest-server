@@ -1,9 +1,8 @@
 var db = require('../etl-db'),
   Promise = require('bluebird'),
-  https = require('http'),
+  axios = require('axios'),
   config = require('../conf/config'),
-  moment = require('moment'),
-  curl = require('curlrequest');
+  moment = require('moment');
 
 var Sync = {
   timeout: 3000,
@@ -19,10 +18,6 @@ var Sync = {
     if (!config.eidSyncCredentials) {
       console.log('openmrs sync user credentials should be provided');
       process.exit(1);
-    }
-
-    if (config.etl.tls) {
-      https = require('https');
     }
 
     // load records from sync queue
@@ -126,53 +121,62 @@ var Sync = {
       config.eidSyncCredentials.username +
       ':' +
       config.eidSyncCredentials.password;
-    var auth = 'Basic ' + new Buffer(usernamePass).toString('base64');
-
-    var options = {
-      url: url,
-      headers: {
-        Authorization: auth
-      }
-    };
+    var auth = 'Basic ' + Buffer.from(usernamePass).toString('base64');
 
     return new Promise(function (resolve, reject) {
-      curl.request(options, function (err, parts) {
-        if (err) {
-          if (err === 'Failed to connect to host.') {
+      axios
+        .get(url, {
+          headers: { Authorization: auth },
+          timeout: 30000
+        })
+        .then(function () {
+          console.log('syncing single record done. ' + patientUuId);
+          resolve('str');
+        })
+        .catch(function (err) {
+          var connectionFailure =
+            !err.response &&
+            err.code &&
+            [
+              'ECONNREFUSED',
+              'ETIMEDOUT',
+              'ENOTFOUND',
+              'ECONNRESET',
+              'EHOSTUNREACH',
+              'EAI_AGAIN'
+            ].indexOf(err.code) > -1;
+
+          if (connectionFailure) {
             console.error('ETL Backend Service might be down.');
             Sync.nextSyncDateTime = moment().add(10, 'minute');
           }
 
+          var errorMessage = err.response
+            ? 'HTTP ' + err.response.status + ' from ETL server'
+            : err.code || err.message || 'Unknown sync error';
+
           console.log(
             'error while syncing ' + patientUuId + '. Logging error.'
           );
-          Sync.logError(patientUuId, err)
+          Sync.logError(patientUuId, errorMessage)
             .then(function () {
               resolve('str');
             })
             .catch(function (err) {
               resolve('str');
             });
-        } else {
-          console.log('syncing single record done. ' + patientUuId);
-          resolve('str');
-        }
-      });
+        });
     });
   },
 
   logError: function (patientUuId, error) {
     var sql =
       'INSERT INTO etl.eid_sync_queue_errors(person_uuid, error, date_created)' +
-      " VALUES('" +
-      patientUuId +
-      "','" +
-      error +
-      "', NOW())";
+      ' VALUES(?, ?, NOW())';
 
     var queryObject = {
       query: sql,
-      sqlParams: []
+      sqlParams: [patientUuId, String(error).substring(0, 2000)]
     };
 
     return new Promise(function (resolve, reject) {

@@ -1,6 +1,8 @@
 'use strict';
-var redis = require('redis');
-var client = redis.createClient();
+var Redis = require('ioredis');
+var client = new Redis();
+
+function noop() {}
 
 function getOptions(server) {
   return {
@@ -25,13 +27,13 @@ function getOptions(server) {
       console.log('client', socket.id, 'has sent message', message);
       //save the message to redis
       var str = JSON.stringify(message);
-      client.RPUSH('broadcast:messages', str); // notification history
-      client.LRANGE('broadcast:messages', 0, -1, function (err, data) {
+      client.rpush('broadcast:messages', str, noop); // notification history
+      client.lrange('broadcast:messages', 0, -1, function (err, data) {
         if (data) {
           var lastElement = data[data.length - 1];
           var jsonMessage = JSON.parse(lastElement);
-          client.set('broadcast:messages:latest', lastElement, redis.print);
-          client.expire('broadcast:messages:latest', jsonMessage.expire);
+          client.set('broadcast:messages:latest', lastElement, noop);
+          client.expire('broadcast:messages:latest', jsonMessage.expire, noop);
         }
       });
       //relay the message to connected clients
