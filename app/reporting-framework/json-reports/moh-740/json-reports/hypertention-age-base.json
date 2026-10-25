@@ -54,6 +54,22 @@
     },
     {
       "type": "derived_column",
+      "alias": "newly_diagnosed_htn_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.newly_diagnosed_htn_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_known_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.htn_type = 7286 AND mdh.revisit_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "tbs_status",
       "expressionType": "case_statement",
       "expressionOptions": {
@@ -88,23 +104,23 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 0 AND 9",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 0 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 9",
             "value": "0_to_9"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 10 AND 19",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 10 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 19",
             "value": "10_to_19"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 20 AND 35",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 20 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 35",
             "value": "20_to_35"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 36 AND 60",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 36 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 60",
             "value": "36_to_60"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) > 60",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 61",
             "value": "61_and_above"
           }
         ]
@@ -127,6 +143,10 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "mdh.has_htn = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.revisit_this_month = 1 OR mdh.newly_diagnosed_htn_this_month = 1"
       }
     ]
   },

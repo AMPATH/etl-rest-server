@@ -1,0 +1,215 @@
+{
+  "name": "diabetesGestationalBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.monthly_diabetes_and_hypertention_report",
+      "alias": "mdh"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "inner",
+        "joinCondition": "mdh.location_id = l.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "mdh.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "mdh.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "mdh.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "mdh.endDate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "mdh.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "height",
+      "column": "mdh.height"
+    },
+    {
+      "type": "simple_column",
+      "alias": "bmi",
+      "column": "mdh.bmi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(mdh.systolic,' / ',mdh.diastolic)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtc_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(mdh.rtc_date,'%Y-%m-%d')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "htn",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.htn_type = 7285",
+            "value": "a"
+          },
+          {
+            "condition": "mdh.htn_type = 7286",
+            "value": "b"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diabetes",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.diabetes_status = 7281",
+            "value": "Newly Diagnosed"
+          },
+          {
+            "condition": "mdh.diabetes_status = 7282",
+            "value": "Previously Known diagnosis"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tbs_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.tb_screening_status = 1107",
+            "value": "No signs"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6176",
+            "value": "On TB Treatment"
+          },
+          {
+            "condition": "mdh.tb_screening_status = 6971",
+            "value": "Presumed TB"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_for_tb",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.screened_for_tb_this_month = 1",
+            "value": "Yes"
+          },
+          {
+            "condition": "mdh.screened_for_tb_this_month = 0",
+            "value": "No"
+          },
+          {
+            "condition": "mdh.screened_for_tb_this_month IS NULL",
+            "value": "No"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(mdh.systolic,' / ',mdh.diastolic)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "both_htn_and_diabetic",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.co_morbid_type = 1154",
+            "value": "Newly Diagnosed"
+          },
+          {
+            "condition": "mdh.diabetes_status = 12778",
+            "value": "Previously Known diagnosis"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gestatational_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 8879,1,NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.location_id in ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.diabetes_mellitus_type = 8879"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.revisit_this_month = 1 OR mdh.newly_diagnosed_diabetes_this_month = 1"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["person_id"]
+  }
+}

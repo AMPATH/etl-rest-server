@@ -82,7 +82,7 @@
       "alias": "cumulative_htn_patient",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.has_htn = 1 OR mdh.is_co_morbid = 1,1,NULL)"
+        "expression": "IF(mdh.has_htn = 1,1,NULL)"
       }
     },
     {
@@ -161,6 +161,14 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gestatational_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 8879 AND revisit_this_month = 1,1,NULL)"
       }
     },
     {

@@ -6,6 +6,7 @@
     "diabetesType1AgeDisaggregation",
     "diabetesType2AgeGenderDisaggregation",
     "diabetesType2AgeDisaggregation",
+    "diabetesGestationalGenderDisaggregation",
     "hypertentionAgeGenderDisaggregation",
     "hypertentionAgeDisaggregation"
   ]

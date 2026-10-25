@@ -51,7 +51,7 @@
   ],
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["gender", "age_range", "location_id", "has_htn"],
+    "columns": ["gender", "age_range", "location_id"],
     "excludeParam": "excludeParam"
   },
   "transFormDirectives": {
