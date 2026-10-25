@@ -1,6 +1,6 @@
 const config = require('../conf/config');
 const Promise = require('bluebird');
-const rp = require('request-promise');
+const axios = require('axios');
 
 export class SlackService {
   getBaseUrl() {
@@ -11,22 +11,17 @@ export class SlackService {
   //post and get from a poc
   postFeedbackToPoc(message) {
     var url = this.getBaseUrl() + '/posttopoc';
-    var options = {
-      method: 'POST',
-      uri: url,
-      body: {
-        name: message.name,
-        location: message.location,
-        phone: message.phone,
-        department: message.department,
-        message: message.message
-      },
-      json: true
-    };
 
     return new Promise(function (resolve, reject) {
-      rp(options)
-        .then(function (parsedBody) {
+      axios
+        .post(url, {
+          name: message.name,
+          location: message.location,
+          phone: message.phone,
+          department: message.department,
+          message: message.message
+        })
+        .then(function () {
           resolve({ status: 'okay' });
         })
         .catch(function (err) {
@@ -39,9 +34,10 @@ export class SlackService {
     var geturl = this.getBaseUrl() + '/pocfeedback/' + count + '/' + oldest;
 
     return new Promise(function (resolve, reject) {
-      rp(geturl)
-        .then(function (data) {
-          resolve(data);
+      axios
+        .get(geturl)
+        .then(function (response) {
+          resolve(response.data);
         })
         .catch(function (err) {
           console.log(err);
@@ -51,23 +47,18 @@ export class SlackService {
   }
   postToChannels(message, channel) {
     var url = this.getBaseUrl() + '/posttochannel';
-    var options = {
-      method: 'POST',
-      uri: url,
-      body: {
-        name: message.name,
-        location: message.location,
-        phone: message.phone,
-        department: message.department,
-        message: message.message,
-        channel: channel
-      },
-      json: true
-    };
 
     return new Promise(function (resolve, reject) {
-      rp(options)
-        .then(function (parsedBody) {
+      axios
+        .post(url, {
+          name: message.name,
+          location: message.location,
+          phone: message.phone,
+          department: message.department,
+          message: message.message,
+          channel: channel
+        })
+        .then(function () {
           resolve({ status: 'okay' });
         })
         .catch(function (err) {
@@ -78,23 +69,18 @@ export class SlackService {
   }
   postToGroups(message, group) {
     var url = this.getBaseUrl() + '/posttogroup';
-    var options = {
-      method: 'POST',
-      uri: url,
-      body: {
-        name: message.name,
-        location: message.location,
-        phone: message.phone,
-        department: message.department,
-        message: message.message,
-        group: group
-      },
-      json: true
-    };
 
     return new Promise(function (resolve, reject) {
-      rp(options)
-        .then(function (parsedBody) {
+      axios
+        .post(url, {
+          name: message.name,
+          location: message.location,
+          phone: message.phone,
+          department: message.department,
+          message: message.message,
+          group: group
+        })
+        .then(function () {
           resolve({ status: 'okay' });
         })
         .catch(function (err) {
@@ -108,9 +94,10 @@ export class SlackService {
       this.getBaseUrl() + '/channel-slackmessages/' + count + '/' + oldest;
 
     return new Promise(function (resolve, reject) {
-      rp(geturl)
-        .then(function (data) {
-          resolve(data);
+      axios
+        .get(geturl)
+        .then(function (response) {
+          resolve(response.data);
         })
         .catch(function (err) {
           console.log(err);
@@ -131,9 +118,10 @@ export class SlackService {
       oldest;
 
     return new Promise(function (resolve, reject) {
-      rp(geturl)
-        .then(function (data) {
-          resolve(data);
+      axios
+        .get(geturl)
+        .then(function (response) {
+          resolve(response.data);
         })
         .catch(function (err) {
           console.log(err);
@@ -153,9 +141,10 @@ export class SlackService {
       oldest;
 
     return new Promise(function (resolve, reject) {
-      rp(geturl)
-        .then(function (data) {
-          resolve(data);
+      axios
+        .get(geturl)
+        .then(function (response) {
+          resolve(response.data);
         })
         .catch(function (err) {
           console.log(err);

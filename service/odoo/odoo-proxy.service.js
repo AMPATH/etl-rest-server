@@ -1,7 +1,12 @@
 'use strict';
 
-var rp = require('request-promise');
+var axios = require('axios');
+var https = require('https');
 var config = require('../../conf/config');
+
+// Odoo runs behind a self-signed certificate in internal deployments; keep
+// the TLS behavior the previous request-promise client had.
+var odooHttpsAgent = new https.Agent({ rejectUnauthorized: false });
 
 function getOdooConfig() {
   var odooConfig = config.odoo || {};
@@ -22,6 +27,26 @@ function authHeaders(odooConfig) {
   };
 }
 
+/**
+ * Shared request helper. Resolves with the parsed response body, matching
+ * the previous request-promise (json: true) behavior.
+ */
+function odooRequest(method, url, options) {
+  options = options || {};
+  return axios
+    .request({
+      method: method,
+      url: url,
+      params: options.qs,
+      data: options.body,
+      headers: options.headers,
+      httpsAgent: odooHttpsAgent
+    })
+    .then(function (response) {
+      return response.data;
+    });
+}
+
 // ------------------------------------------------------------------
 // Billing status endpoints  (ampath_billing controller)
 // ------------------------------------------------------------------
@@ -34,16 +59,13 @@ function authHeaders(odooConfig) {
  */
 function getBillingByPatient(patientExternalId) {
   var odooConfig = getOdooConfig();
-  return rp({
-    method: 'GET',
-    uri:
-      odooConfig.host +
+  return odooRequest(
+    'GET',
+    odooConfig.host +
       '/ampath/billing/patient/' +
       encodeURIComponent(patientExternalId),
-    headers: authHeaders(odooConfig),
-    json: true,
-    rejectUnauthorized: false
-  });
+    { headers: authHeaders(odooConfig) }
+  );
 }
 
 /**
@@ -54,13 +76,13 @@ function getBillingByPatient(patientExternalId) {
  */
 function getBillingByOrder(orderId) {
   var odooConfig = getOdooConfig();
-  return rp({
-    method: 'GET',
-    uri: odooConfig.host + '/ampath/billing/order/' + orderId,
-    headers: authHeaders(odooConfig),
-    json: true,
-    rejectUnauthorized: false
-  });
+  return odooRequest(
+    'GET',
+    odooConfig.host + '/ampath/billing/order/' + orderId,
+    {
+      headers: authHeaders(odooConfig)
+    }
+  );
 }
 
 /**
@@ -87,13 +109,9 @@ function listOrders(filters) {
     if (filters.limit !== undefined) qs.limit = filters.limit;
     if (filters.offset !== undefined) qs.offset = filters.offset;
   }
-  return rp({
-    method: 'GET',
-    uri: odooConfig.host + '/ampath/billing/orders',
+  return odooRequest('GET', odooConfig.host + '/ampath/billing/orders', {
     qs: qs,
-    headers: authHeaders(odooConfig),
-    json: true,
-    rejectUnauthorized: false
+    headers: authHeaders(odooConfig)
   });
 }
 
@@ -153,13 +171,9 @@ function inventoryGet(path, filters, options) {
       qs.company_external_id = filters.company_external_id;
     if (includeLotName && filters.lot_name) qs.lot_name = filters.lot_name;
   }
-  return rp({
-    method: 'GET',
-    uri: odooConfig.host + path,
+  return odooRequest('GET', odooConfig.host + path, {
     qs: qs,
-    headers: authHeaders(odooConfig),
-    json: true,
-    rejectUnauthorized: false
+    headers: authHeaders(odooConfig)
   });
 }
 
@@ -171,13 +185,9 @@ function inventoryGet(path, filters, options) {
  */
 function dispenseInventory(body) {
   var odooConfig = getOdooConfig();
-  return rp({
-    method: 'POST',
-    uri: odooConfig.host + '/ampath/inventory/dispense',
+  return odooRequest('POST', odooConfig.host + '/ampath/inventory/dispense', {
     headers: authHeaders(odooConfig),
-    body: body || {},
-    json: true,
-    rejectUnauthorized: false
+    body: body || {}
   });
 }
 
@@ -190,13 +200,9 @@ function dispenseInventory(body) {
  */
 function reverseInventory(body) {
   var odooConfig = getOdooConfig();
-  return rp({
-    method: 'POST',
-    uri: odooConfig.host + '/ampath/inventory/reverse',
+  return odooRequest('POST', odooConfig.host + '/ampath/inventory/reverse', {
     headers: authHeaders(odooConfig),
-    body: body || {},
-    json: true,
-    rejectUnauthorized: false
+    body: body || {}
   });
 }
 

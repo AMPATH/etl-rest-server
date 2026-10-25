@@ -1,7 +1,7 @@
 const fs = require('fs');
 const csv = require('@fast-csv/parse');
 
-const curl = require('curlrequest');
+const axios = require('axios');
 const config = require('../../conf/config.json');
 const e = require('express');
 
@@ -53,28 +53,32 @@ csv
 function checkIfIdentifierExists(patientUuid) {
   const config = setupAmrs(patientUuid);
 
-  var options = {
-    url: config.url,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: config.auth
-    },
-    method: 'GET'
-  };
   return new Promise(function (resolve, reject) {
-    curl.request(options, function (err, data) {
-      const res = JSON.parse(data);
-      res.results.forEach((identifier) => {
-        if (
-          identifier.identifierType.uuid ==
-          'f2d6ff1a-8440-4d35-a150-1d4b5a930c5e'
-        ) {
-          resolve(identifier);
-        } else {
-          resolve(false);
-        }
+    axios
+      .get(config.url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: config.auth
+        },
+        transformResponse: [(d) => d]
+      })
+      .then(function (res) {
+        const resBody = JSON.parse(res.data);
+        resBody.results.forEach((identifier) => {
+          if (
+            identifier.identifierType.uuid ==
+            'f2d6ff1a-8440-4d35-a150-1d4b5a930c5e'
+          ) {
+            resolve(identifier);
+          } else {
+            resolve(false);
+          }
+        });
+      })
+      .catch(function (err) {
+        console.log('err ', err.message || err);
+        reject(err);
       });
-    });
   });
 }
 
@@ -84,24 +88,22 @@ function updateIdentifier(patientId, uuid) {
 
   const url = config.url + '/' + uuid;
 
-  var options = {
-    url: url,
-    data: payload,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: config.auth
-    },
-    method: 'POST'
-  };
   return new Promise(function (resolve, reject) {
-    try {
-      curl.request(options, function (err, data) {
-        resolve(JSON.parse(data));
+    axios
+      .post(url, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: config.auth
+        },
+        transformResponse: [(d) => d]
+      })
+      .then(function (res) {
+        resolve(JSON.parse(res.data));
+      })
+      .catch(function (err) {
+        console.log('err ', err.message || err);
+        reject(err);
       });
-    } catch (e) {
-      console.log('err ', e);
-      reject(e);
-    }
   });
 }
 
@@ -111,24 +113,22 @@ function postIdentifier(patientId) {
 
   console.log(config.url);
 
-  var options = {
-    url: config.url,
-    data: payload,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: config.auth
-    },
-    method: 'POST'
-  };
   return new Promise(function (resolve, reject) {
-    try {
-      curl.request(options, function (err, data) {
-        resolve(JSON.parse(data));
+    axios
+      .post(config.url, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: config.auth
+        },
+        transformResponse: [(d) => d]
+      })
+      .then(function (res) {
+        resolve(JSON.parse(res.data));
+      })
+      .catch(function (err) {
+        console.log('err ', err.message || err);
+        reject(err);
       });
-    } catch (e) {
-      console.log('err ', e);
-      reject(e);
-    }
   });
 }
 
@@ -138,7 +138,7 @@ function setupAmrs(uuid) {
 
   var usernamePass =
     'username:password'; /* REPLACE WITH AMRS USERNAME AND PASSWORD HERE */
-  var auth = 'Basic ' + new Buffer(usernamePass).toString('base64');
+  var auth = 'Basic ' + Buffer.from(usernamePass).toString('base64');
 
   return { url: url, auth: auth };
 }

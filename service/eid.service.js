@@ -14,7 +14,7 @@ var Promise = require('bluebird'),
   patientService = require('./openmrs-rest/patient.service'),
   etlLogger = require('../etl-file-logger'),
   db = require('../etl-db'),
-  curl = require('curlrequest'),
+  axios = require('axios'),
   eidResultsSchema = require('../eid-lab-results');
 
 var logger = etlLogger.logger(
@@ -446,24 +446,30 @@ function listReachableServers(filter_locations) {
   return Promise.reduce(
     locations,
     function (previous, row) {
-      return new Promise(function (resolve, reject) {
-        var url = row.host + '/' + port + '/eid/orders/api.php';
+      var url = row.host + '/' + port + '/eid/orders/api.php';
 
-        curl.request({ url: url, pretend: true }, function (err, stdout, meta) {
-          if (err) {
-            resolve(reachable_servers);
-          } else {
-            if (filter_locations && filter_locations.length > 0) {
-              if (_.indexOf(filter_locations, row.name) > -1)
-                reachable_servers.push(row);
-            } else {
-              reachable_servers.push(row);
-            }
-
-            resolve(reachable_servers);
+      // Reachability check: any HTTP response means the host is up.
+      // Transport failures (connection refused, timeout, DNS) mark it down.
+      return axios
+        .get(url, {
+          timeout: 10000,
+          validateStatus: function () {
+            return true;
           }
+        })
+        .then(function () {
+          if (filter_locations && filter_locations.length > 0) {
+            if (_.indexOf(filter_locations, row.name) > -1)
+              reachable_servers.push(row);
+          } else {
+            reachable_servers.push(row);
+          }
+
+          return reachable_servers;
+        })
+        .catch(function () {
+          return reachable_servers;
         });
-      });
     },
     0
   );

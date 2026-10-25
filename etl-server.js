@@ -7,6 +7,28 @@ try {
   // var etlBroadcast =require('./etl-broadcast');
   var https = require('http');
   var config = require('./conf/config');
+
+  // Security: squel 5.x does not escape single quotes in values by default
+  // (GHSA-4qhx-g9wp-g9m6), so any user-controlled value could break out of
+  // the generated SQL. Registering a global String value handler escapes
+  // every string value before it is inlined. Note: a custom handler replaces
+  // squel's default formatting entirely, so this handler must emit the full
+  // SQL literal, including the surrounding quotes.
+  require('squel').registerValueHandler('string', function (
+    value,
+    asParam,
+    formattingOptions
+  ) {
+    if (asParam) {
+      return value; // bind parameter: the driver escapes it
+    }
+    var escaped = String(value).replace(/'/g, "''");
+    if (formattingOptions && formattingOptions.dontQuote) {
+      return escaped;
+    }
+    return "'" + escaped + "'";
+  });
+
   var requestConfig = require('./request-config');
   var corsHeaders = require('hapi-cors-headers');
   var _ = require('underscore');
@@ -25,7 +47,6 @@ try {
   var os = require('os');
   var locationAuthorizer = require('./authorization/location-authorizer.plugin');
   var cache = require('./session-cache');
-  var request = require('request');
   var numCPUs = os.cpus().length;
   var authencticated = false;
   var server = new Hapi.Server({

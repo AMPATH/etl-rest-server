@@ -5,7 +5,6 @@
   var _ = require('underscore');
   var moment = require('moment');
   var utils = require('./utils.js');
-  var math = require('math');
 
   var DEFAULT_NO_NOTES = 40;
   var TB_PROPHY_PERIOD = 6; // In months.
@@ -233,7 +232,7 @@
       // Calculate BMI
       var bmi = noInfo;
       try {
-        bmi = math.round(utils.calculateBMI(vitals.weight, vitals.height), 1);
+        bmi = Math.round(utils.calculateBMI(vitals.weight, vitals.height));
       } catch (err) {
         // Do nothing
       }

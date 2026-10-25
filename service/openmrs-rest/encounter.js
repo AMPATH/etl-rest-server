@@ -1,5 +1,4 @@
 (function () {
-  var rp = require('request-promise');
   var _ = require('underscore');
   var Promise = require('bluebird');
   var config = require('../../conf/config');

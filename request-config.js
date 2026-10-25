@@ -1,22 +1,28 @@
 'use strict';
-var rp = require('request-promise');
+var axios = require('axios');
+var https = require('https');
 var cache = require('./session-cache');
 module.exports = (function () {
   var sessionCookie = '';
+
+  // OpenMRS may run behind a self-signed certificate in internal deployments;
+  // keep the TLS behavior the previous request-promise client had.
+  var httpsAgent = new https.Agent({ rejectUnauthorized: false });
+
   return {
     getRequestPromise: function getRequestPromise(queryString, url) {
-      var options = {
-        uri: url,
-        qs: queryString,
-        headers: {
-          'User-Agent': 'Request-Promise',
-          Cookie: sessionCookie
-        },
-        json: true,
-        rejectUnauthorized: false,
-        requestCert: true
-      };
-      return rp(options);
+      return axios
+        .get(url, {
+          params: queryString,
+          headers: {
+            'User-Agent': 'Request-Promise',
+            Cookie: sessionCookie
+          },
+          httpsAgent: httpsAgent
+        })
+        .then(function (response) {
+          return response.data;
+        });
     },
     setAuthorization: function (authorization) {
       sessionCookie = authorization;
@@ -25,30 +31,29 @@ module.exports = (function () {
       return sessionCookie;
     },
     postRequestPromise: function postRequestPromise(payload, uri) {
-      var options = {
-        method: 'POST',
-        uri: uri,
-        headers: {
-          'User-Agent': 'Request-Promise',
-          Cookie: sessionCookie,
-          'content-type': 'application/json'
-        },
-        body: payload,
-        json: true
-      };
-      return rp(options);
+      return axios
+        .post(uri, payload, {
+          headers: {
+            'User-Agent': 'Request-Promise',
+            Cookie: sessionCookie,
+            'content-type': 'application/json'
+          },
+          httpsAgent: httpsAgent
+        })
+        .then(function (response) {
+          return response.data;
+        });
     },
     deleteRequestPromise: function deleteRequestPromise(uri) {
-      var options = {
-        method: 'DELETE',
+      // Resolves with the full response (status, headers, data), matching
+      // the previous resolveWithFullResponse behavior.
+      return axios.delete(uri, {
         headers: {
           'User-Agent': 'Request-Promise',
           Cookie: sessionCookie
         },
-        uri: uri,
-        resolveWithFullResponse: true
-      };
-      return rp(options);
+        httpsAgent: httpsAgent
+      });
     }
   };
 })();

@@ -2,7 +2,7 @@ var fs = require('fs'),
   util = require('util'),
   stream = require('stream'),
   moment = require('moment'),
-  curl = require('curlrequest'),
+  axios = require('axios'),
   es = require('event-stream');
 
 var https = require('http');
@@ -70,34 +70,44 @@ var s = fs
               config.eidSyncCredentials.username +
               ':' +
               config.eidSyncCredentials.password;
-            var auth = 'Basic ' + new Buffer(usernamePass).toString('base64');
+            var auth = 'Basic ' + Buffer.from(usernamePass).toString('base64');
 
-            var options = {
+            axios({
+              method: 'POST',
               url: url,
               data: payload,
               headers: {
                 'Content-Type': 'application/json',
                 Authorization: auth
               },
-              method: 'POST'
-            };
+              transformResponse: [(d) => d]
+            })
+              .then(function (res) {
+                var parts = res.data;
+                if (parts && JSON.parse(parts).error) {
+                  console.log(
+                    'error enrolling a patient into program: ' + line,
+                    JSON.parse(parts).error
+                  );
+                  fs.appendFileSync(error_file, line + '\r\n');
+                } else {
+                  console.log(
+                    'Enrolled Patient Into Standard HIV Treatment: ' + line
+                  );
+                }
 
-            curl.request(options, function (err, parts) {
-              if (err || (parts && JSON.parse(parts).error)) {
+                // resume the readstream, possibly from a callback
+                s.resume();
+              })
+              .catch(function (err) {
                 console.log(
                   'error enrolling a patient into program: ' + line,
-                  err || JSON.parse(parts).error
+                  err.message || err
                 );
                 fs.appendFileSync(error_file, line + '\r\n');
-              } else {
-                console.log(
-                  'Enrolled Patient Into Standard HIV Treatment: ' + line
-                );
-              }
-
-              // resume the readstream, possibly from a callback
-              s.resume();
-            });
+                // resume the readstream, possibly from a callback
+                s.resume();
+              });
           }
         } catch (error) {
           console.error(error);

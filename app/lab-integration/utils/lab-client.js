@@ -1,4 +1,5 @@
-const rp = require('request-promise');
+const axios = require('axios');
+const querystring = require('querystring');
 const eidFacilityMap = require('../../../service/eid/eid-facility-mappings');
 const db = require('../../../etl-db');
 // import formurlencoded from 'form-urlencoded';
@@ -91,18 +92,15 @@ export class LabClient {
   }
   getPostRequest(payload, endpoint) {
     try {
-      const options = {
-        uri: endpoint,
+      return axios.post(endpoint, querystring.stringify(payload), {
         headers: {
           apikey: this.config.apiKey,
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        method: 'POST',
-        // json: true,
-        form: payload,
-        timeout: 40000
-      };
-      return rp(options);
+        timeout: 40000,
+        // request-promise (without json: true) resolved with the raw body string
+        transformResponse: [(data) => data]
+      });
     } catch (error) {
       console.log('getPostRequestError', error.message);
     }
@@ -127,15 +125,18 @@ export class LabClient {
         Connection: 'keep-alive',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      json: true,
-      insecure: true,
       method: 'POST',
       timeout: 40000,
       form: filterOptions
     };
     return new Promise((resolve, reject) => {
-      rp(options)
-        .then((response) => {
+      axios
+        .post(options.uri, querystring.stringify(filterOptions), {
+          headers: options.headers,
+          timeout: options.timeout
+        })
+        .then((res) => {
+          const response = res.data;
           var unknownMFL = [];
           if (Array.isArray(response.data) && response.data.length > 0) {
             response.data = response.data.filter((item) => {
@@ -193,15 +194,11 @@ export class LabClient {
     // console.log('Logging lab request error...', error);
     var sql =
       'INSERT INTO etl.eid_lab_request_errors(error,options)' +
-      " VALUES('" +
-      error +
-      "','" +
-      JSON.stringify(options) +
-      "');";
+      ' VALUES(?, ?);';
 
     var queryObject = {
       query: sql,
-      sqlParams: []
+      sqlParams: [String(error), JSON.stringify(options)]
     };
 
     return new Promise(function (resolve, reject) {

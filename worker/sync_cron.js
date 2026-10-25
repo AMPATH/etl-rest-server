@@ -1,8 +1,7 @@
 var db = require('../etl-db'),
   Promise = require('bluebird'),
-  http = require('http'),
+  axios = require('axios'),
   config = require('../conf/config'),
-  curl = require('curlrequest'),
   _ = require('underscore'),
   format = require('date-format'),
   etlLogger = require('../etl-file-logger');
@@ -65,23 +64,20 @@ var App = {
       config.eidSyncCredentials.username +
       ':' +
       config.eidSyncCredentials.password;
-    var auth = 'Basic ' + new Buffer(usernamePass).toString('base64');
-
-    var options = {
-      url: url,
-      headers: {
-        Authorization: auth
-      }
-    };
+    var auth = 'Basic ' + Buffer.from(usernamePass).toString('base64');
 
     return new Promise(function (resolve, reject) {
-      curl.request(options, function (err, parts) {
-        if (!err) {
-          resolve(parts);
-        } else {
-          reject(err);
-        }
-      });
+      axios
+        .get(url, {
+          headers: { Authorization: auth },
+          transformResponse: [(d) => d]
+        })
+        .then(function (res) {
+          resolve(res.data);
+        })
+        .catch(function (err) {
+          reject(err.message || err);
+        });
     });
   },
 
@@ -90,13 +86,24 @@ var App = {
 
     console.log('Results...', results);
 
+    var uuids = results.split(',').map(function (uuid) {
+      return uuid.trim().replace(/^['"]|['"]$/g, '');
+    });
+
+    var placeholders = uuids
+      .map(function () {
+        return '?';
+      })
+      .join(',');
+
     var sql =
-      'replace into etl.eid_sync_queue(person_uuid) select distinct p.uuid from amrs.person p left join amrs.patient_identifier i on p.person_id = i.patient_id where identifier in (?)';
-    sql = sql.replace('?', results);
+      'replace into etl.eid_sync_queue(person_uuid) select distinct p.uuid from amrs.person p left join amrs.patient_identifier i on p.person_id = i.patient_id where identifier in (' +
+      placeholders +
+      ')';
 
     var queryObject = {
       query: sql,
-      sqlParams: []
+      sqlParams: uuids
     };
 
     return new Promise(function (resolve, reject) {

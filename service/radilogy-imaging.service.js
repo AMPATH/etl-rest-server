@@ -2,10 +2,14 @@
 'use strict';
 
 var Promise = require('bluebird'),
-  config = require('../conf/config'),
-  curl = require('curlrequest');
-var rp = require('request-promise');
+  axios = require('axios'),
+  https = require('https'),
+  config = require('../conf/config');
 var _ = require('lodash');
+
+// RefPACS runs behind a self-signed certificate in internal deployments;
+// keep the TLS behavior the previous request-promise client had.
+var imagingHttpsAgent = new https.Agent({ rejectUnauthorized: false });
 var connection = require('../dao/connection/mysql-connection-service');
 var authorizer = require('../authorization/etl-authorizer');
 var squel = require('squel');
@@ -37,20 +41,19 @@ function getAllPatientImages(queryString) {
 function getRequestPromise(queryString, resource) {
   console.log('resource.apiKey', resource.apiKey);
   console.log('resource.url', resource.url);
-  var options = {
-    uri: resource.url,
-    qs: queryString,
-    headers: {
-      'User-Agent': 'Request-Promise',
-      authorization: authorizationHeader,
-      'x-api-key': resource.apiKey
-    },
-    json: true,
-    rejectUnauthorized: false,
-    requestCert: true
-  };
-  var ret = rp(options);
-  return ret;
+  return axios
+    .get(resource.url, {
+      params: queryString,
+      headers: {
+        'User-Agent': 'Request-Promise',
+        authorization: authorizationHeader,
+        'x-api-key': resource.apiKey
+      },
+      httpsAgent: imagingHttpsAgent
+    })
+    .then(function (response) {
+      return response.data;
+    });
 }
 
 function getRefpacsServerUrl() {

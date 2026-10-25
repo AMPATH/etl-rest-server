@@ -2,7 +2,7 @@ var fs = require('fs'),
   util = require('util'),
   stream = require('stream'),
   moment = require('moment'),
-  curl = require('curlrequest'),
+  axios = require('axios'),
   es = require('event-stream');
 
 var https = require('http');
@@ -54,30 +54,37 @@ var s = fs
               config.eidSyncCredentials.username +
               ':' +
               config.eidSyncCredentials.password;
-            var auth = 'Basic ' + new Buffer(usernamePass).toString('base64');
+            var auth = 'Basic ' + Buffer.from(usernamePass).toString('base64');
 
-            var options = {
+            axios({
+              method: 'DELETE',
               url: url,
               headers: {
                 Authorization: auth
               },
-              method: 'DELETE'
-            };
+              transformResponse: [(d) => d]
+            })
+              .then(function (res) {
+                var parts = res.data;
+                if (parts && JSON.parse(parts).error) {
+                  console.log(
+                    'error voiding: ' + line,
+                    JSON.parse(parts).error
+                  );
+                  fs.appendFileSync(error_file, line + '\r\n');
+                } else {
+                  console.log('voided: ' + line);
+                }
 
-            curl.request(options, function (err, parts) {
-              if (err || (parts && JSON.parse(parts).error)) {
-                console.log(
-                  'error voiding: ' + line,
-                  err || JSON.parse(parts).error
-                );
+                // resume the readstream, possibly from a callback
+                s.resume();
+              })
+              .catch(function (err) {
+                console.log('error voiding: ' + line, err.message || err);
                 fs.appendFileSync(error_file, line + '\r\n');
-              } else {
-                console.log('voided: ' + line);
-              }
-
-              // resume the readstream, possibly from a callback
-              s.resume();
-            });
+                // resume the readstream, possibly from a callback
+                s.resume();
+              });
           }
         } catch (error) {
           console.error(error);

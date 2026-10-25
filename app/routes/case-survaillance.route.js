@@ -5,7 +5,7 @@ const preRequest = require('../../pre-request-processing');
 const {
   CaseSurveillanceService
 } = require('../../service/case-surveillance/case-surveillance.service');
-const { E } = require('math');
+const E = Math.E;
 const routes = [
   {
     method: 'GET',
