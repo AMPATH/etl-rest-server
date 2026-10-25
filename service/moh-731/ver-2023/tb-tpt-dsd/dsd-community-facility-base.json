@@ -2,7 +2,7 @@
   "name": "moh731V2023DsdCommunityFacilityBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 3.5 Differentiated Service Delivery, HV03-035 Community and HV03-036 Facility, step 2: one row per client, their latest DSD observation, classified with the earlier O3 dataset's community and facility rules. Carries those two flags, which the aggregate sums and the patient list filters on, so each figure lists exactly the clients it counts.",
+  "description": "MOH 731 (Ver. July 2023) 3.5 Differentiated Service Delivery, HV03-035 Community and HV03-036 Facility, step 2: one row per client, their latest DSD observation, classified with the earlier O3 dataset's community and facility rules. Carries those two flags, which the aggregate sums and the patient list filters on, so each figure lists exactly the clients it counts. Standard care (10989) and Fast track care (10990) count as facility.",
   "uses": [
     {
       "name": "moh731V2023DsdLatestObs",
@@ -156,7 +156,7 @@
       "alias": "facility",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(ob.concept_id = 11931 OR (ob.concept_id = 10988 and ob.value_coded = 11931) OR (ob.concept_id = 10988 and ob.value_coded = 10991) OR (ob.concept_id = 10988 and ob.value_coded = 10992) OR (ob.concept_id = 10988 and ob.value_coded = 11940) OR (ob.concept_id = 10988 and ob.value_coded = 11938), 1, NULL)"
+        "expression": "if(ob.concept_id = 11931 OR (ob.concept_id = 10988 and ob.value_coded = 11931) OR (ob.concept_id = 10988 and ob.value_coded = 10991) OR (ob.concept_id = 10988 and ob.value_coded = 10992) OR (ob.concept_id = 10988 and ob.value_coded = 11940) OR (ob.concept_id = 10988 and ob.value_coded = 11938) OR (ob.concept_id = 10988 and ob.value_coded IN (10989, 10990)), 1, NULL)"
       }
     }
   ],

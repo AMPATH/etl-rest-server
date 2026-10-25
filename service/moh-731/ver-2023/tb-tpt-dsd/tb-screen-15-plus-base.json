@@ -2,7 +2,7 @@
   "name": "moh731V2023TbScreen15PlusBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 3.3 TB Screening, HV03-030 Screened for TB_15+: a copy of the earlier O3 dataset tbScreen731Base3X -- the same sources, filters and grouping, so the same clients -- with the figure's flag named as its indicator and the client's name, identifiers and location for the linelist.",
+  "description": "MOH 731 (Ver. July 2023) 3.3 TB Screening, HV03-030 Screened for TB_15+: a copy of the earlier O3 dataset tbScreen731Base3X -- the same sources, filters and grouping, so the same clients -- with the figure's flag named as its indicator and the client's name, identifiers and location for the linelist. Clients of 3.1 Starting ART (active, started ART this month, male or female) screened for TB at this month's visit, 15 and over -- so 3.3 is a subset of 3.1.",
   "uses": [],
   "sources": [
     {
@@ -161,7 +161,12 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.tb_screened_this_visit_this_month = 1"
+        "conditionExpression": "hmrd.location_id in ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.status = 'active'"
       },
       {
         "filterType": "tableColumns",
@@ -169,12 +174,15 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.age >= 15"
+        "conditionExpression": "hmrd.gender IN ('M', 'F')"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "hmrd.location_id in ?",
-        "parameterName": "locations"
+        "conditionExpression": "hmrd.tb_screened_this_visit_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmrd.age >= 15"
       }
     ]
   },

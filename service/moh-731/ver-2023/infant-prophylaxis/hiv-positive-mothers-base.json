@@ -2,17 +2,17 @@
   "name": "moh731V2023HivPositiveMothersBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 2.6 Infant Prophylaxis, step 2: the common list of HIV-positive pregnant and postnatal women -- women whose test at ANC, L&D or PNC came back positive (the 1.1 HIV Tests rules), and women known positive at an ANC visit -- one row per encounter, with which of the two each row is and whether infant prophylaxis was given. Carries a flag per 2.6 figure (prophylaxis given, by service), which the aggregate sums and the patient list filters on.",
+  "description": "MOH 731 (Ver. July 2023) 2.6 Infant Prophylaxis, step 3: the common list of HIV-positive pregnant and postnatal women -- women whose test at ANC, L&D or PNC came back positive (the 1.1 HIV Tests rules), and women known positive at an ANC visit -- one row per encounter and at most one per woman per day (moh731V2023HivPositiveMotherDays), with which of the two each row is and whether infant prophylaxis was given. Carries a flag per 2.6 figure (prophylaxis given, by service), which the aggregate sums and the patient list filters on.",
   "uses": [
     {
-      "name": "moh731V2023HivPositiveMotherEncounters",
+      "name": "moh731V2023HivPositiveMotherDays",
       "version": "1.0",
       "type": "dataset_def"
     }
   ],
   "sources": [
     {
-      "dataSet": "moh731V2023HivPositiveMotherEncounters",
+      "dataSet": "moh731V2023HivPositiveMotherDays",
       "alias": "b"
     },
     {
@@ -288,6 +288,10 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "((b.res_id IS NOT NULL AND fr.value_coded = 703 AND ((b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))) OR (b.service = 'ANC' AND b.kp_12019 = 1))"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.day_rank = 1"
       }
     ]
   },

@@ -2,8 +2,14 @@
   "name": "moh731V2023DsdEstablishedBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 3.5 Differentiated Service Delivery, HV03-033 Established and HV03-034 Not Established: a copy of the earlier O3 dataset establishedBase3X -- the same sources, filters and grouping, so the same clients -- with the figure's flag named as its indicator and the client's name, identifiers and location for the linelist.",
-  "uses": [],
+  "description": "MOH 731 (Ver. July 2023) 3.5 Differentiated Service Delivery, HV03-033 Established and HV03-034 Not Established: the clients of the earlier O3 dataset establishedBase3X (active and on ART this month, as 3.2), with stability read from amrs.obs at the client's clinical encounter -- the latest non-voided 12108 (stability) and 12127 obs, one each, rather than from etl.flat_obs -- with the figure's flag named as its indicator and the client's name, identifiers and location for the linelist. For the Summary only, the clients are also split three ways that never overlap and together are every client on ART (3.2): established, not_established_recorded (recorded as not established, and not as established), and dsd_not_categorized (no stability recorded, or a value that is neither) -- the form's not_established counts the last two together. It also carries each client's latest DSD model (moh731V2023DsdLatestObs, classified by the HV03-035/036 rules, with Standard care (10989) and Fast track care (10990) also counted as facility), split into dsd_community_on_art, dsd_facility_on_art and dsd_model_not_categorized (no model recorded at the locations, or one that is neither). These never overlap and together are every client on ART (3.2). The form's community / facility figures count anyone whose latest model is recorded there, on ART or not.",
+  "uses": [
+    {
+      "name": "moh731V2023DsdLatestObs",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
   "sources": [
     {
       "table": "etl.hiv_monthly_report_dataset_frozen",
@@ -18,11 +24,19 @@
       }
     },
     {
-      "table": "etl.flat_obs",
-      "alias": "fo",
+      "table": "amrs.obs",
+      "alias": "stab",
       "join": {
         "type": "LEFT",
-        "joinCondition": "fo.encounter_id = fhs.encounter_id"
+        "joinCondition": "stab.obs_id = (SELECT MAX(o.obs_id) FROM amrs.obs o WHERE o.encounter_id = fhs.encounter_id AND o.concept_id = 12108 AND o.voided = 0)"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "nes",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nes.obs_id = (SELECT MAX(o.obs_id) FROM amrs.obs o WHERE o.encounter_id = fhs.encounter_id AND o.concept_id = 12127 AND o.voided = 0)"
       }
     },
     {
@@ -30,7 +44,7 @@
       "alias": "flat_identifiers",
       "join": {
         "type": "LEFT",
-        "joinCondition": "fo.person_id = flat_identifiers.patient_id"
+        "joinCondition": "fr.person_id = flat_identifiers.patient_id"
       }
     },
     {
@@ -56,13 +70,37 @@
         "type": "LEFT",
         "joinCondition": "l.location_id = fr.location_id"
       }
+    },
+    {
+      "dataSet": "moh731V2023DsdLatestObs",
+      "alias": "dlo",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "dlo.person_id = fr.person_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "mob",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mob.obs_id = dlo.latest_obs_id"
+      }
+    },
+    {
+      "table": "amrs.concept_name",
+      "alias": "mob_cn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mob_cn.concept_id = IF(mob.concept_id = 10988, mob.value_coded, mob.concept_id) AND mob_cn.locale_preferred = 1 AND mob_cn.voided = 0"
+      }
     }
   ],
   "columns": [
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "fo.person_id"
+      "column": "fr.person_id"
     },
     {
       "type": "simple_column",
@@ -77,14 +115,14 @@
     {
       "type": "simple_column",
       "alias": "encounter_id",
-      "column": "fo.encounter_id"
+      "column": "fhs.encounter_id"
     },
     {
       "type": "derived_column",
       "alias": "established",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE WHEN (fo.obs REGEXP '!!12108=') AND etl.getValues(fo.obs,12108) = 12106 THEN 1 ELSE NULL END"
+        "expression": "IF(COALESCE(stab.value_coded = 12106, 0) = 1, 1, NULL)"
       }
     },
     {
@@ -92,7 +130,23 @@
       "alias": "not_established",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE WHEN (fo.obs REGEXP '!!12108=' OR fo.obs REGEXP '!!12127=') THEN (CASE WHEN etl.getValues(fo.obs,12108) = 12107 OR etl.getValues(fo.obs,12127) = 9070 OR etl.getValues(fo.obs,12127) = 12266 THEN 1 ELSE NULL END) ELSE 1 END"
+        "expression": "IF((stab.obs_id IS NOT NULL OR nes.obs_id IS NOT NULL), IF(COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1, 1, NULL), 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_established_recorded",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(stab.value_coded = 12106, 0) = 0 AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_not_categorized",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(stab.value_coded = 12106, 0) = 0 AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 0, 1, NULL)"
       }
     },
     {
@@ -163,7 +217,47 @@
       "alias": "dsd_status",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE WHEN (fo.obs REGEXP '!!12108=') AND etl.getValues(fo.obs,12108) = 12106 THEN 'Established' WHEN (fo.obs REGEXP '!!12108=' OR fo.obs REGEXP '!!12127=') THEN 'Not established' END"
+        "expression": "CASE WHEN COALESCE(stab.value_coded = 12106, 0) = 1 THEN 'Established' WHEN COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1 THEN 'Not established' ELSE 'Not categorized' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_model",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mob_cn.name"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_obs_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(mob.obs_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_community_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(mob.concept_id = 11932 OR (mob.concept_id = 10988 and mob.value_coded = 11932) OR (mob.concept_id = 10988 and mob.value_coded = 10993) OR (mob.concept_id = 10988 and mob.value_coded = 11937) OR (mob.concept_id = 10988 and mob.value_coded = 11936), 0), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_facility_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(mob.concept_id = 11932 OR (mob.concept_id = 10988 and mob.value_coded = 11932) OR (mob.concept_id = 10988 and mob.value_coded = 10993) OR (mob.concept_id = 10988 and mob.value_coded = 11937) OR (mob.concept_id = 10988 and mob.value_coded = 11936), 0) = 0 AND COALESCE(mob.concept_id = 11931 OR (mob.concept_id = 10988 and mob.value_coded = 11931) OR (mob.concept_id = 10988 and mob.value_coded = 10991) OR (mob.concept_id = 10988 and mob.value_coded = 10992) OR (mob.concept_id = 10988 and mob.value_coded = 11940) OR (mob.concept_id = 10988 and mob.value_coded = 11938) OR (mob.concept_id = 10988 and mob.value_coded IN (10989, 10990)), 0), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_model_not_categorized",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(mob.concept_id = 11932 OR (mob.concept_id = 10988 and mob.value_coded = 11932) OR (mob.concept_id = 10988 and mob.value_coded = 10993) OR (mob.concept_id = 10988 and mob.value_coded = 11937) OR (mob.concept_id = 10988 and mob.value_coded = 11936), 0) = 0 AND COALESCE(mob.concept_id = 11931 OR (mob.concept_id = 10988 and mob.value_coded = 11931) OR (mob.concept_id = 10988 and mob.value_coded = 10991) OR (mob.concept_id = 10988 and mob.value_coded = 10992) OR (mob.concept_id = 10988 and mob.value_coded = 11940) OR (mob.concept_id = 10988 and mob.value_coded = 11938) OR (mob.concept_id = 10988 and mob.value_coded IN (10989, 10990)), 0) = 0, 1, NULL)"
       }
     }
   ],

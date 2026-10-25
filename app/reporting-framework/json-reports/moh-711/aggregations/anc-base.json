@@ -481,7 +481,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "m.encounter_type in (264, 265, 313)"
+        "conditionExpression": "m.encounter_type in (195,264, 265)"
       },
       {
         "filterType": "tableColumns",

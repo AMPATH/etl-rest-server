@@ -2,10 +2,10 @@
   "name": "moh731V2023AncHbvBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 2.4 HBV Screening at ANC, step 2: the ANC visits that are an ANC test (as in 1.1 HIV Tests) or a known-positive visit (as in Known Positive at 1st ANC) -- one row per visit, a visit that is both listed once -- with the client's HBV screening in the period. Carries the HV02-19 (screened) and HV02-20 (HBV positive) flags, which the aggregate sums and the patient list filters on.",
+  "description": "MOH 731 (Ver. July 2023) 2.4 HBV Screening at ANC, step 3: the ANC visits that are an ANC test (as in 1.1 HIV Tests) or a known-positive visit (as in Known Positive at 1st ANC) -- one row per visit and at most one per client per day (moh731V2023AncHbvDays), a visit that is both listed once -- with the client's HBV screening in the period. Carries the HV02-19 (screened) and HV02-20 (HBV positive) flags, which the aggregate sums and the patient list filters on.",
   "uses": [
     {
-      "name": "moh731V2023AncHbvEncounters",
+      "name": "moh731V2023AncHbvDays",
       "version": "1.0",
       "type": "dataset_def"
     },
@@ -17,7 +17,7 @@
   ],
   "sources": [
     {
-      "dataSet": "moh731V2023AncHbvEncounters",
+      "dataSet": "moh731V2023AncHbvDays",
       "alias": "b"
     },
     {
@@ -257,6 +257,10 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "((b.res_id IS NOT NULL AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.kp_12019 = 1))"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.day_rank = 1"
       }
     ]
   },

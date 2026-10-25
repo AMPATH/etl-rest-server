@@ -2,7 +2,7 @@
   "name": "moh731V2023MaternalHivTestingAggregate",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 2.1 Maternal HIV Testing, HV02-02 to HV02-09: the PMTCT tests among the same tested clients as 1.1 (moh731V2023HivTestsBase), by where they were tested (ANC, L&D, PNC) and initial or retest. PNC tests are split at 42 days after the delivery date; a PNC test without a delivery date is in neither PNC figure. 0 when there are none.",
+  "description": "MOH 731 (Ver. July 2023) 2.1 Maternal HIV Testing, HV02-02 to HV02-09: the PMTCT tests among the same tested clients as 1.1 (moh731V2023HivTestsBase), by where they were tested (ANC, L&D, PNC) and initial or retest. PNC tests are split at 42 days after the delivery date; a PNC test without a delivery date (or with one after the test) is in neither PNC figure; it is counted in initial_test_pnc_no_delivery_date / retest_pnc_no_delivery_date instead, for data cleanup on the Summary only (not a form box). 0 when there are none.",
   "uses": [
     {
       "name": "moh731V2023HivTestsBase",
@@ -79,6 +79,22 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COALESCE(SUM(hts.retest_pnc_greater_6_weeks), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "initial_test_pnc_no_delivery_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.initial_test_pnc_no_delivery_date), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_pnc_no_delivery_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(hts.retest_pnc_no_delivery_date), 0)"
       }
     }
   ],

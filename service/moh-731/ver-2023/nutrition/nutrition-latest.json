@@ -1,0 +1,98 @@
+{
+  "name": "moh731V2023NutritionLatest",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 731 (Ver. July 2023) 3.6 Nutrition and HIV, step 2: the encounters with a nutrition status, ranked per client by status_rank (latest encounter first), so the base keeps each client's latest status in the period -- the source query's NOT EXISTS on a later status.",
+  "uses": [
+    {
+      "name": "moh731V2023NutritionEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023NutritionEncounters",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "b.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "b.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "b.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "creator",
+      "column": "b.creator"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_created",
+      "column": "b.date_created"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_months",
+      "column": "b.age_months"
+    },
+    {
+      "type": "simple_column",
+      "alias": "status_id",
+      "column": "b.status_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "on_therapeutic",
+      "column": "b.on_therapeutic"
+    },
+    {
+      "type": "simple_column",
+      "alias": "on_supplemental",
+      "column": "b.on_supplemental"
+    },
+    {
+      "type": "simple_column",
+      "alias": "preg_lact",
+      "column": "b.preg_lact"
+    },
+    {
+      "type": "derived_column",
+      "alias": "status_rank",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ROW_NUMBER() OVER (PARTITION BY b.patient_id ORDER BY b.encounter_datetime DESC, b.encounter_id DESC)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.status_id IS NOT NULL"
+      }
+    ]
+  }
+}

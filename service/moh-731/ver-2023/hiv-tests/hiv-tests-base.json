@@ -2,10 +2,10 @@
   "name": "moh731V2023HivTestsBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 1.1 HIV Tests, step 2: the tested clients -- one row per qualifying test with its result, setting, population type, HBV screening in the period and the client's identifiers. Applies the source query's encounter rules (its HAVING) to the encounter dataset, and carries a flag column per HV01 figure (1.1 HIV Tests, 1.2 HIV Positive Results 2.1 Maternal HIV Testing, 2.2 HIV Positive Results and 2.3 Start HAART at ANC, L&D and PNC, and 2.5 AGYW), which the aggregate sums and the patient list filters on, so a figure and its linelist are always the same rows.",
+  "description": "MOH 731 (Ver. July 2023) 1.1 HIV Tests, step 3: the tested clients -- one row per qualifying test, at most one per client per day (moh731V2023HivTestDays), with its result, setting, population type, HBV screening in the period and the client's identifiers. Carries a flag column per HV01 figure (1.1 HIV Tests, 1.2 HIV Positive Results 2.1 Maternal HIV Testing, 2.2 HIV Positive Results and 2.3 Start HAART at ANC, L&D and PNC, and 2.5 AGYW), which the aggregate sums and the patient list filters on, so a figure and its linelist are always the same rows.",
   "uses": [
     {
-      "name": "moh731V2023HivTestEncounters",
+      "name": "moh731V2023HivTestDays",
       "version": "1.0",
       "type": "dataset_def"
     },
@@ -17,7 +17,7 @@
   ],
   "sources": [
     {
-      "dataSet": "moh731V2023HivTestEncounters",
+      "dataSet": "moh731V2023HivTestDays",
       "alias": "b"
     },
     {
@@ -580,6 +580,22 @@
     },
     {
       "type": "derived_column",
+      "alias": "initial_test_pnc_no_delivery_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Initial' AND (dd.value_datetime IS NULL OR DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) < 0), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "retest_pnc_no_delivery_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.service = 'PNC' AND (CASE WHEN b.service = 'HTS' THEN CASE b.encounter_type WHEN 296 THEN 'Initial' WHEN 297 THEN 'Retest' END WHEN b.service = 'Maternity' THEN CASE WHEN b.has_initial = 1 THEN 'Initial' ELSE 'Retest' END ELSE CASE tt.value_coded WHEN 10434 THEN 'Initial' WHEN 10200 THEN 'Retest' WHEN 10973 THEN 'Revisit' ELSE COALESCE(cn.name, tt.value_coded) END END) = 'Retest' AND (dd.value_datetime IS NULL OR DATEDIFF(DATE(b.encounter_datetime), DATE(dd.value_datetime)) < 0), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "positive_anc",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -680,11 +696,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "b.res_id IS NOT NULL"
-      },
-      {
-        "filterType": "tableColumns",
-        "conditionExpression": "((b.service = 'HTS' AND NOT (b.encounter_type = 297 AND b.has_positive = 1)) OR (b.service = 'Maternity' AND b.has_valid_tt = 1 AND NOT (b.has_initial = 0 AND b.has_positive = 1)) OR (b.service = 'ANC' AND b.tt_id IS NOT NULL AND b.has_revisit = 0) OR (b.service = 'PNC' AND b.tt_id IS NOT NULL))"
+        "conditionExpression": "b.day_rank = 1"
       }
     ]
   },

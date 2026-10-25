@@ -4,7 +4,7 @@
     "moh731V2023AncKnownPositiveAggregate",
     "moh731V2023MaternalHaartAggregate",
     "moh731V2023MaternalHaartStartAggregate",
-    "731NutritionAggregate3X",
+    "moh731V2023NutritionAggregate",
     "moh731V2023CurrentlyOnArtAggregate",
     "moh731V2023HivPositiveResultsAggregate",
     "moh731V2023MaternalHivTestingAggregate",
@@ -12,7 +12,7 @@
     "moh731V2023PrepInitiatedAggregate",
     "moh731V2023PrepStiAggregate",
     "moh731V2023PrepSeroconvertedAggregate",
-    "731PostExposureAggregate3X",
+    "moh731V2023PepAggregate",
     "moh731V2023StartingArtAggregate",
     "moh731V2023TbScreen15PlusAggregate",
     "moh731V2023HivTestsAggregate",
@@ -23,8 +23,6 @@
     "moh731V2023HbvScreeningAggregate",
     "moh731V2023InfantProphylaxisAggregate",
     "moh731V2023DsdCommunityFacilityAggregate",
-    "tbAggregate3X",
-    "moh731V2023TbScreenUnder15Aggregate",
-    "nutritionMamAggregate3X"
+    "moh731V2023TbScreenUnder15Aggregate"
   ]
 }

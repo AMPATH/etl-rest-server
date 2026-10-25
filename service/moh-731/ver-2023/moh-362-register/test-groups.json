@@ -1,0 +1,103 @@
+{
+  "name": "moh731V2023Moh362TestGroups",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 362 HTS lab register, step 1: one row per HIV rapid test recorded (obs group 10868) at the locations in the period -- which test it is by its result concept (1040 HIV rapid test 1, 1326 test 2, 12461 test 3), its result, and the kit (2343), lot (10412) and expiry (10413) recorded in the same group. The concept test on g is written `g.concept_id + 0` so MariaDB drives from the period's encounters (encounter index) instead of every 10868 obs ever recorded (it otherwise merges the concept and voided indexes: 2 minutes instead of under a second).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "g",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "g.encounter_id = e.encounter_id AND g.concept_id + 0 = 10868 AND g.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "m",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.obs_group_id = g.obs_id AND m.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "test_no",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE m.concept_id WHEN 1040 THEN 1 WHEN 1326 THEN 2 WHEN 12461 THEN 3 END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN m.concept_id IN (1040, 1326, 12461) THEN m.value_coded END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN m.concept_id = 2343 THEN m.value_coded END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "lot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN m.concept_id = 10412 THEN TRIM(m.value_text) END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "expiry",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN m.concept_id = 10413 THEN DATE(m.value_datetime) END)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["g.obs_id"]
+  }
+}
