@@ -6,37 +6,43 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/case-management',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewPatient
         }
       },
-      handler: function (request, reply) {
-        let params = {
-          minDefaultPeriod: request.query.minDefaultPeriod,
-          maxDefaultPeriod: request.query.maxDefaultPeriod,
-          minFollowupPeriod: request.query.minFollowupPeriod,
-          maxFollowupPeriod: request.query.maxFollowupPeriod,
-          rtcStartDate: request.query.rtcStartDate,
-          rtcEndDate: request.query.rtcEndDate,
-          phoneFollowUpStartDate: request.query.phoneFollowUpStartDate,
-          locationUuid: request.query.locationUuid,
-          hasCaseManager: request.query.hasCaseManager,
-          hasPhoneRTC: request.query.hasPhoneRTC,
-          elevatedVL: request.query.elevatedVL,
-          dueForVl: request.query.dueForVl,
-          caseManagerUserId: request.query.caseManagerUserId,
-          isNewlyEnrolled: request.query.isNewlyEnrolled,
-          startIndex: request.query.startIndex,
-          limit: request.query.limit
-        };
-        caseManagementData.getCaseManagementData(params, (result) => {
-          if (result.error) {
-            reply(result);
-          } else {
-            reply(result);
-          }
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let params = {
+            minDefaultPeriod: request.query.minDefaultPeriod,
+            maxDefaultPeriod: request.query.maxDefaultPeriod,
+            minFollowupPeriod: request.query.minFollowupPeriod,
+            maxFollowupPeriod: request.query.maxFollowupPeriod,
+            rtcStartDate: request.query.rtcStartDate,
+            rtcEndDate: request.query.rtcEndDate,
+            phoneFollowUpStartDate: request.query.phoneFollowUpStartDate,
+            locationUuid: request.query.locationUuid,
+            hasCaseManager: request.query.hasCaseManager,
+            hasPhoneRTC: request.query.hasPhoneRTC,
+            elevatedVL: request.query.elevatedVL,
+            dueForVl: request.query.dueForVl,
+            caseManagerUserId: request.query.caseManagerUserId,
+            isNewlyEnrolled: request.query.isNewlyEnrolled,
+            startIndex: request.query.startIndex,
+            limit: request.query.limit
+          };
+          caseManagementData.getCaseManagementData(params, (result) => {
+            if (result.error) {
+              reply(result);
+            } else {
+              reply(result);
+            }
+          });
         });
       },
       description: 'Case Management Data',
@@ -53,24 +59,30 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/case-managers',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewPatient
         }
       },
-      handler: function (request, reply) {
-        let params = {
-          locationUuid: request.query.locationUuid
-        };
-        caseManagementData
-          .getCaseManagers(params)
-          .then((result) => {
-            reply(result);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let params = {
+            locationUuid: request.query.locationUuid
+          };
+          caseManagementData
+            .getCaseManagers(params)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description: 'List of case management providers filtered by locations',
       notes: 'Returns providers list',
@@ -86,39 +98,45 @@ const routes = [
   {
     method: 'POST',
     path: '/etl/assign-patients',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewPatient
         }
       },
-      handler: function (request, reply) {
-        let payload = {
-          patients: request.payload.patients,
-          caseManagers: request.payload.caseManagers
-        };
-        caseManagementData
-          .assignPatientsToCaseManagers(payload)
-          .then((result) => {
-            let response = {};
-            if (result.length > 0) {
-              response = {
-                type: 'Error',
-                code: 500,
-                body: result
-              };
-            } else {
-              response = {
-                type: 'Success',
-                code: 200,
-                message: 'All patients successfully assigned'
-              };
-            }
-            reply(response);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let payload = {
+            patients: request.payload.patients,
+            caseManagers: request.payload.caseManagers
+          };
+          caseManagementData
+            .assignPatientsToCaseManagers(payload)
+            .then((result) => {
+              let response = {};
+              if (result.length > 0) {
+                response = {
+                  type: 'Error',
+                  code: 500,
+                  body: result
+                };
+              } else {
+                response = {
+                  type: 'Success',
+                  code: 200,
+                  message: 'All patients successfully assigned'
+                };
+              }
+              reply(response);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description: 'Used for massive asignments of patients to case managers',
       notes: 'Returns assignment response',
@@ -134,38 +152,44 @@ const routes = [
   {
     method: 'POST',
     path: '/etl/unassign-patients',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewPatient
         }
       },
-      handler: function (request, reply) {
-        let payload = {
-          patients: request.payload.patients
-        };
-        caseManagementData
-          .unAssignPatients(payload.patients)
-          .then((result) => {
-            let response = {};
-            if (result.length > 0) {
-              response = {
-                type: 'Error',
-                code: 500,
-                body: result
-              };
-            } else {
-              response = {
-                type: 'Success',
-                code: 200,
-                message: 'All patients were successfully unassigned'
-              };
-            }
-            reply(response);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let payload = {
+            patients: request.payload.patients
+          };
+          caseManagementData
+            .unAssignPatients(payload.patients)
+            .then((result) => {
+              let response = {};
+              if (result.length > 0) {
+                response = {
+                  type: 'Error',
+                  code: 500,
+                  body: result
+                };
+              } else {
+                response = {
+                  type: 'Success',
+                  code: 200,
+                  message: 'All patients were successfully unassigned'
+                };
+              }
+              reply(response);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description: 'Used for massive asignments of patients to case managers',
       notes: 'Returns assignment response',
@@ -181,17 +205,23 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/case-management/indicators',
-    config: {
+    options: {
       plugins: {},
-      handler: function (request, reply) {
-        definitions
-          .getIndicatorDefinitions()
-          .then((result) => {
-            reply(result);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          definitions
+            .getIndicatorDefinitions()
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description: 'List of case management indicators and their definitions',
       notes: 'Returns Case Management indicators',

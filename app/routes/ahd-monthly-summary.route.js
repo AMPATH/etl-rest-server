@@ -7,33 +7,43 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/ahd-monthly-summary',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'ahd-monthly-summary',
-            ['endDate', 'startDate', 'locationUuids'],
-            requestParams
-          );
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new AHDMonthlySummaryService(
-            'ahd-monthly-summary',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'ahd-monthly-summary',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+
+            let service = new AHDMonthlySummaryService(
+              'ahd-monthly-summary',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'ahd monthly summary dataset',
@@ -50,36 +60,47 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/ahd-monthly-summary-patient-list',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        request.query.reportName = 'ahd-monthly-summary';
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let requestCopy = _.cloneDeep(requestParams);
-          let reportParams = etlHelpers.getReportParams(
-            request.query.reportName,
-            ['startDate', 'endDate', 'locationUuids', 'locations'],
-            requestParams
-          );
-          requestCopy.locationUuids = reportParams.requestParams.locationUuids;
-          const ahdService = new AHDMonthlySummaryService(
-            'ahd-monthly-summary',
-            requestCopy
-          );
-          ahdService
-            .generatePatientListReport(reportParams.requestParams)
-            .then((results) => {
-              reply(results);
-            })
-            .catch((err) => {
-              reply(err);
-            });
+          request.query.reportName = 'ahd-monthly-summary';
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+
+            let requestCopy = _.cloneDeep(requestParams);
+            let reportParams = etlHelpers.getReportParams(
+              request.query.reportName,
+              ['startDate', 'endDate', 'locationUuids', 'locations'],
+              requestParams
+            );
+            requestCopy.locationUuids =
+              reportParams.requestParams.locationUuids;
+            const ahdService = new AHDMonthlySummaryService(
+              'ahd-monthly-summary',
+              requestCopy
+            );
+            ahdService
+              .generatePatientListReport(reportParams.requestParams)
+              .then((results) => {
+                reply(results);
+              })
+              .catch((err) => {
+                reply(err);
+              });
+          });
         });
       },
       description:

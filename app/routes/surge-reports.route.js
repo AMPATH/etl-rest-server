@@ -5,19 +5,25 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/surge-weeks',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewPatient
         }
       },
-      handler: function (request, reply) {
-        surge_weeks
-          .getSurgeWeeks()
-          .then((result) => {
-            reply(result);
-          })
-          .catch((err) => console.log('ERROR', err));
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          surge_weeks
+            .getSurgeWeeks()
+            .then((result) => {
+              reply(result);
+            })
+            .catch((err) => console.log('ERROR', err));
+        });
       },
       description: 'Surge weeks',
       notes: 'Surge weekst',

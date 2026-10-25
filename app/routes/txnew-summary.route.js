@@ -9,34 +9,44 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/txnew-summary',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'txnew-summary-report',
-            ['endDate', 'locationUuids'],
-            requestParams
-          );
-          reportParams.requestParams.isAggregated = true;
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new TXNEWSummaryReportService(
-            'txnew-summary-report',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'txnew-summary-report',
+              ['endDate', 'locationUuids'],
+              requestParams
+            );
+            reportParams.requestParams.isAggregated = true;
+
+            let service = new TXNEWSummaryReportService(
+              'txnew-summary-report',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'txnew quarterly summary dataset',
@@ -53,40 +63,46 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/txnew-summary-patient-list',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'txnew-summary-report',
-              ['endDate', 'locationUuids'],
-              requestParams
-            );
-            delete reportParams.requestParams['gender'];
-            const txmlReportService = new TXNEWSummaryReportService(
-              'txnew-summary-report',
-              reportParams.requestParams
-            );
-            txmlReportService
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'txnew-summary-report',
+                ['endDate', 'locationUuids'],
+                requestParams
+              );
+              delete reportParams.requestParams['gender'];
+              const txmlReportService = new TXNEWSummaryReportService(
+                'txnew-summary-report',
+                reportParams.requestParams
+              );
+              txmlReportService
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       description:
         'Get patient list for txnew summary report of the location and month provided',

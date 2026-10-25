@@ -3,10 +3,10 @@
 var Joi = require('joi');
 var odooProxyService = require('../../service/odoo/odoo-proxy.service');
 
-function handleError(err, reply) {
+function handleError(err, h) {
   var statusCode = (err && err.statusCode) || 500;
   var message = (err && err.message) || 'Error communicating with Odoo';
-  reply({ error: message }).code(statusCode);
+  return h.response({ error: message }).code(statusCode);
 }
 
 var inventoryStockQuery = {
@@ -23,16 +23,22 @@ var routes = [
   {
     method: 'GET',
     path: '/etl/odoo/billing/patient/{patientId}',
-    config: {
-      handler: function (request, reply) {
-        odooProxyService
-          .getBillingByPatient(request.params.patientId)
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          odooProxyService
+            .getBillingByPatient(request.params.patientId)
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description: 'Get full billing status for a patient',
       notes:
@@ -52,24 +58,30 @@ var routes = [
   {
     method: 'GET',
     path: '/etl/odoo/billing/orders',
-    config: {
-      handler: function (request, reply) {
-        var q = request.query;
-        odooProxyService
-          .listOrders({
-            company_external_id: q.company_external_id,
-            date_from: q.date_from,
-            date_to: q.date_to,
-            state: q.state,
-            limit: q.limit,
-            offset: q.offset
-          })
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          var q = request.query;
+          odooProxyService
+            .listOrders({
+              company_external_id: q.company_external_id,
+              date_from: q.date_from,
+              date_to: q.date_to,
+              state: q.state,
+              limit: q.limit,
+              offset: q.offset
+            })
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description: 'List sale orders with optional filters',
       notes:
@@ -110,22 +122,30 @@ var routes = [
   {
     method: 'GET',
     path: '/etl/odoo/billing/order/{id}',
-    config: {
-      handler: function (request, reply) {
-        var orderId = parseInt(request.params.id, 10);
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-        if (isNaN(orderId)) {
-          return reply({ error: 'Order id must be a number' }).code(400);
-        }
+          var orderId = parseInt(request.params.id, 10);
 
-        odooProxyService
-          .getBillingByOrder(orderId)
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+          if (isNaN(orderId)) {
+            return resolve(
+              h.response({ error: 'Order id must be a number' }).code(400)
+            );
+          }
+
+          odooProxyService
+            .getBillingByOrder(orderId)
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description: 'Get full billing detail for a single sale order',
       notes:
@@ -146,21 +166,27 @@ var routes = [
   {
     method: 'GET',
     path: '/etl/odoo/inventory/stock',
-    config: {
-      handler: function (request, reply) {
-        var q = request.query;
-        odooProxyService
-          .getInventoryStock({
-            openmrs_drug_uuid: q.openmrs_drug_uuid,
-            company_external_id: q.company_external_id,
-            lot_name: q.lot_name
-          })
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          var q = request.query;
+          odooProxyService
+            .getInventoryStock({
+              openmrs_drug_uuid: q.openmrs_drug_uuid,
+              company_external_id: q.company_external_id,
+              lot_name: q.lot_name
+            })
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description:
         'Get Odoo on-hand stock for a drug at an OpenMRS location warehouse',
@@ -178,21 +204,27 @@ var routes = [
   {
     method: 'GET',
     path: '/etl/odoo/inventory/batches',
-    config: {
-      handler: function (request, reply) {
-        var q = request.query;
-        odooProxyService
-          .getInventoryBatches({
-            openmrs_drug_uuid: q.openmrs_drug_uuid,
-            company_external_id: q.company_external_id,
-            lot_name: q.lot_name
-          })
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          var q = request.query;
+          odooProxyService
+            .getInventoryBatches({
+              openmrs_drug_uuid: q.openmrs_drug_uuid,
+              company_external_id: q.company_external_id,
+              lot_name: q.lot_name
+            })
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description: 'Get Odoo lot/batch list for a drug at a warehouse',
       notes:
@@ -208,20 +240,26 @@ var routes = [
   {
     method: 'GET',
     path: '/etl/odoo/inventory/quantity',
-    config: {
-      handler: function (request, reply) {
-        var q = request.query;
-        odooProxyService
-          .getInventoryQuantity({
-            openmrs_drug_uuid: q.openmrs_drug_uuid,
-            company_external_id: q.company_external_id
-          })
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          var q = request.query;
+          odooProxyService
+            .getInventoryQuantity({
+              openmrs_drug_uuid: q.openmrs_drug_uuid,
+              company_external_id: q.company_external_id
+            })
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description: 'Get Odoo quantity available for a drug at a warehouse',
       notes:
@@ -245,16 +283,22 @@ var routes = [
   {
     method: 'POST',
     path: '/etl/odoo/inventory/dispense',
-    config: {
-      handler: function (request, reply) {
-        odooProxyService
-          .dispenseInventory(request.payload)
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          odooProxyService
+            .dispenseInventory(request.payload)
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description: 'Dispense/decrement Odoo stock via outgoing picking',
       notes:
@@ -280,16 +324,22 @@ var routes = [
   {
     method: 'POST',
     path: '/etl/odoo/inventory/reverse',
-    config: {
-      handler: function (request, reply) {
-        odooProxyService
-          .reverseInventory(request.payload)
-          .then(function (result) {
-            reply(result);
-          })
-          .catch(function (err) {
-            handleError(err, reply);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          odooProxyService
+            .reverseInventory(request.payload)
+            .then(function (result) {
+              reply(result);
+            })
+            .catch(function (err) {
+              resolve(handleError(err, h));
+            });
+        });
       },
       description: 'Reverse a prior Odoo inventory dispense',
       notes:
