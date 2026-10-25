@@ -4,19 +4,25 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/hts-summary/{patient_uuid}',
-    config: {
+    options: {
       plugins: {},
-      handler: function (request, reply) {
-        const { patient_uuid } = request.params;
-        const hts_summary = new HTSModuleService();
-        hts_summary
-          .getHTSSummary(patient_uuid)
-          .then((result) => {
-            reply(result);
-          })
-          .catch(function (error) {
-            reply(new Boom(500, 'Internal server error.', '', '', error));
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          const { patient_uuid } = request.params;
+          const hts_summary = new HTSModuleService();
+          hts_summary
+            .getHTSSummary(patient_uuid)
+            .then((result) => {
+              reply(result);
+            })
+            .catch(function (error) {
+              reply(new Boom(500, 'Internal server error.', '', '', error));
+            });
+        });
       },
       description: 'HTS Summary',
       notes: 'HTS Summary',
@@ -26,19 +32,25 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/hts-latest-encounter/{patient_uuid}',
-    config: {
+    options: {
       plugins: {},
-      handler: function (request, reply) {
-        const { patient_uuid } = request.params;
-        const hts_summary = new HTSModuleService();
-        hts_summary
-          .getHTSLastEncounterDetails(patient_uuid)
-          .then((result) => {
-            reply(result);
-          })
-          .catch(function (error) {
-            reply(new Boom(500, 'Internal server error.', '', '', error));
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          const { patient_uuid } = request.params;
+          const hts_summary = new HTSModuleService();
+          hts_summary
+            .getHTSLastEncounterDetails(patient_uuid)
+            .then((result) => {
+              reply(result);
+            })
+            .catch(function (error) {
+              reply(new Boom(500, 'Internal server error.', '', '', error));
+            });
+        });
       },
       description: 'HTS Last Encounter',
       notes: 'HTS Last Encounter',

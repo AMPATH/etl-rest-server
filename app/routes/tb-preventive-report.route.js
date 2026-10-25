@@ -7,38 +7,48 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/tb-preventive-monthly-summary',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'tb-preventive-monthly-summary',
-            ['endDate', 'locationUuids'],
-            requestParams
-          );
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          console.log(
-            'reportParams.requestParams ',
-            reportParams.requestParams
-          );
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'tb-preventive-monthly-summary',
+              ['endDate', 'locationUuids'],
+              requestParams
+            );
 
-          let service = new HivTBReport(
-            'TbPreventiveReport',
-            reportParams.requestParams
-          );
-          service
-            .generateAggregateReport()
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+            console.log(
+              'reportParams.requestParams ',
+              reportParams.requestParams
+            );
+
+            let service = new HivTBReport(
+              'TbPreventiveReport',
+              reportParams.requestParams
+            );
+            service
+              .generateAggregateReport()
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'tb preventive monthly summary dataset',
@@ -55,39 +65,50 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/tb-preventive-monthly-summary-patient-list',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        request.query.reportName = 'tb-preventive-summary-patient-list';
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let requestCopy = _.cloneDeep(requestParams);
-          let reportParams = etlHelpers.getReportParams(
-            request.query.reportName,
-            ['startDate', 'endDate', 'locationUuids', 'locations'],
-            requestParams
-          );
-          requestCopy.locationUuids = reportParams.requestParams.locationUuids;
-          const service = new HivTBReport('TbPreventiveReport', requestCopy);
-          service
-            .generatePatientListReport(requestParams.indicators.split(','))
-            .then((results) => {
-              _.each(results.result, (item) => {
-                item.arv_first_regimen = etlHelpers.getARVNames(
-                  item.arv_first_regimen
-                );
-                item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+          request.query.reportName = 'tb-preventive-summary-patient-list';
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+
+            let requestCopy = _.cloneDeep(requestParams);
+            let reportParams = etlHelpers.getReportParams(
+              request.query.reportName,
+              ['startDate', 'endDate', 'locationUuids', 'locations'],
+              requestParams
+            );
+            requestCopy.locationUuids =
+              reportParams.requestParams.locationUuids;
+            const service = new HivTBReport('TbPreventiveReport', requestCopy);
+            service
+              .generatePatientListReport(requestParams.indicators.split(','))
+              .then((results) => {
+                _.each(results.result, (item) => {
+                  item.arv_first_regimen = etlHelpers.getARVNames(
+                    item.arv_first_regimen
+                  );
+                  item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                });
+                reply(results);
+              })
+              .catch((err) => {
+                reply(err);
               });
-              reply(results);
-            })
-            .catch((err) => {
-              reply(err);
-            });
+          });
         });
       },
       description:

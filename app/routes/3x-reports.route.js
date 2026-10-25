@@ -15,35 +15,45 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-710',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let reportParams = etlHelpers.getReportParams(
-            'moh710Report',
-            ['endDate', 'startDate', 'locationUuids'],
-            requestParams
-          );
-          reportParams.requestParams.isAggregated = true;
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
 
-          let service = new MOH710Service(
-            'moh710Report',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+            let reportParams = etlHelpers.getReportParams(
+              'moh710Report',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+            reportParams.requestParams.isAggregated = true;
+
+            let service = new MOH710Service(
+              'moh710Report',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'Get MOH 710 REPORT',
@@ -60,34 +70,44 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-711',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'moh711Report',
-            ['endDate', 'startDate', 'locationUuids'],
-            requestParams
-          );
-          reportParams.requestParams.isAggregated = true;
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new MOH711Service(
-            'moh711Report',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'moh711Report',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+            reportParams.requestParams.isAggregated = true;
+
+            let service = new MOH711Service(
+              'moh711Report',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'Get MOH 711 REPORT',
@@ -104,34 +124,44 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-717',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'moh717Report',
-            ['endDate', 'startDate', 'locationUuids'],
-            requestParams
-          );
-          reportParams.requestParams.isAggregated = true;
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new MOH717Service(
-            'moh717Report',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'moh717Report',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+            reportParams.requestParams.isAggregated = true;
+
+            let service = new MOH717Service(
+              'moh717Report',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'Get MOH 717 REPORT',
@@ -148,34 +178,44 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-745',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'moh745Report',
-            ['endDate', 'startDate', 'locationUuids'],
-            requestParams
-          );
-          reportParams.requestParams.isAggregated = true;
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new MOH745Service(
-            'moh745Report',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'moh745Report',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+            reportParams.requestParams.isAggregated = true;
+
+            let service = new MOH745Service(
+              'moh745Report',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'Get MOH 717 REPORT',
@@ -192,34 +232,44 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-705a',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'moh705AReport',
-            ['endDate', 'startDate', 'locationUuids'],
-            requestParams
-          );
-          reportParams.requestParams.isAggregated = true;
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new MOH705AService(
-            'moh705AReport',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'moh705AReport',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+            reportParams.requestParams.isAggregated = true;
+
+            let service = new MOH705AService(
+              'moh705AReport',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'Get MOH 717 REPORT',
@@ -236,43 +286,49 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-705a-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              'moh705AReport',
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                'moh705AReport',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let moh705AService = new MOH705AService(
-              'moh705AReport',
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+              let moh705AService = new MOH705AService(
+                'moh705AReport',
+                reportParams.requestParams
+              );
 
-            moh705AService
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+
+              moh705AService
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -298,34 +354,44 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-705b',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'moh705BReport',
-            ['endDate', 'startDate', 'locationUuids'],
-            requestParams
-          );
-          reportParams.requestParams.isAggregated = true;
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new MOH705BService(
-            'moh705BReport',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'moh705BReport',
+              ['endDate', 'startDate', 'locationUuids'],
+              requestParams
+            );
+            reportParams.requestParams.isAggregated = true;
+
+            let service = new MOH705BService(
+              'moh705BReport',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'Get MOH 717 REPORT',
@@ -342,43 +408,49 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-705b-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              'moh705BReport',
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                'moh705BReport',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let moh705BService = new MOH705BService(
-              'moh705BReport',
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+              let moh705BService = new MOH705BService(
+                'moh705BReport',
+                reportParams.requestParams
+              );
 
-            moh705BService
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+
+              moh705BService
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -405,44 +477,50 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-406-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          const reportName = request.query.reportName;
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              reportName,
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            const reportName = request.query.reportName;
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                reportName,
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let service = new MOH711Service(
-              reportName,
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+              let service = new MOH711Service(
+                reportName,
+                reportParams.requestParams
+              );
 
-            service
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+
+              service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -468,44 +546,50 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-405-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          const reportName = request.query.reportName;
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              reportName,
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            const reportName = request.query.reportName;
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                reportName,
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let service = new MOH711Service(
-              reportName,
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+              let service = new MOH711Service(
+                reportName,
+                reportParams.requestParams
+              );
 
-            service
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+
+              service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -531,44 +615,50 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-333-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          const reportName = request.query.reportName;
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              reportName,
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            const reportName = request.query.reportName;
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                reportName,
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let service = new MOH711Service(
-              reportName,
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+              let service = new MOH711Service(
+                reportName,
+                reportParams.requestParams
+              );
 
-            service
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+
+              service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -594,44 +684,50 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-511-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            const reportName = request.query.reportName;
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              reportName,
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              const reportName = request.query.reportName;
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                reportName,
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let service = new MOH711Service(
-              reportName,
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+              let service = new MOH711Service(
+                reportName,
+                reportParams.requestParams
+              );
 
-            service
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+
+              service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -657,43 +753,49 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-412-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              'moh745Report',
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                'moh745Report',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let service = new MOH745Service(
-              'moh745Report',
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
+              let service = new MOH745Service(
+                'moh745Report',
+                reportParams.requestParams
+              );
 
-            service
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+
+              service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -719,38 +821,44 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-731-monthly-summary',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'moh731MonthlyReport',
-              ['endDate', 'startDate', 'locationUuids'],
-              requestParams
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            reportParams.requestParams.isAggregated = true;
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'moh731MonthlyReport',
+                ['endDate', 'startDate', 'locationUuids'],
+                requestParams
+              );
 
-            let moh731Service = new MOH731Service(
-              'moh731MonthlyReport',
-              reportParams.requestParams
-            );
+              reportParams.requestParams.isAggregated = true;
 
-            moh731Service
-              .generateReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              let moh731Service = new MOH731Service(
+                'moh731MonthlyReport',
+                reportParams.requestParams
+              );
+
+              moh731Service
+                .generateReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -771,44 +879,50 @@ const routes = [
   {
     method: 'GET',
     path: '/moh-731-monthly-summary-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              'moh731MonthlyReport',
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                'moh731MonthlyReport',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let moh731Service = new MOH731Service(
-              'moh731MonthlyReport',
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
-            delete reportParams.requestParams['gender'];
+              let moh731Service = new MOH731Service(
+                'moh731MonthlyReport',
+                reportParams.requestParams
+              );
 
-            moh731Service
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+              delete reportParams.requestParams['gender'];
+
+              moh731Service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -834,44 +948,50 @@ const routes = [
   {
     method: 'GET',
     path: '/prep-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              'moh731MonthlyReport',
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                'moh731MonthlyReport',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let moh731Service = new MOH731Service(
-              'moh731MonthlyReport',
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
-            // delete reportParams.requestParams['gender'];
+              let moh731Service = new MOH731Service(
+                'moh731MonthlyReport',
+                reportParams.requestParams
+              );
 
-            moh731Service
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+              // delete reportParams.requestParams['gender'];
+
+              moh731Service
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {

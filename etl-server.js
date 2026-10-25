@@ -1,22 +1,41 @@
-const { Promise } = require('bluebird');
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 
 try {
-  var Hapi = require('hapi');
-  var Good = require('good');
+  var Hapi = require('@hapi/hapi');
   var requestConfig = require('./request-config');
   var https = require('http');
   var config = require('./conf/config');
-  var requestConfig = require('./request-config');
-  var corsHeaders = require('hapi-cors-headers');
+
+  // Security: squel 5.x does not escape single quotes in values by default
+  // (GHSA-4qhx-g9wp-g9m6), so any user-controlled value could break out of
+  // the generated SQL. Registering a global String value handler escapes
+  // every string value before it is inlined. Note: a custom handler replaces
+  // squel's default formatting entirely, so this handler must emit the full
+  // SQL literal, including the surrounding quotes.
+  require('squel').registerValueHandler('string', function (
+    value,
+    asParam,
+    formattingOptions
+  ) {
+    if (asParam) {
+      return value; // bind parameter: the driver escapes it
+    }
+    var escaped = String(value).replace(/'/g, "''");
+    if (formattingOptions && formattingOptions.dontQuote) {
+      return escaped;
+    }
+    return "'" + escaped + "'";
+  });
+
+  var corsHeaders = require('./lib/hapi-cors-headers');
   var _ = require('underscore');
   var moment = require('moment');
   var tls = require('tls');
   var fs = require('fs');
   var routes = require('./etl-routes');
   var elasticRoutes = require('./elastic/routes/care.treatment.routes');
-  var Inert = require('inert');
-  var Vision = require('vision');
+  var Inert = require('@hapi/inert');
+  var Vision = require('@hapi/vision');
   var HapiSwagger = require('hapi-swagger');
   var Pack = require('./package');
   var hapiAuthorization = require('hapi-authorization');
@@ -26,13 +45,16 @@ try {
   var locationAuthorizer = require('./authorization/location-authorizer.plugin');
   var cache = require('./session-cache');
   var numCPUs = os.cpus().length;
-  var server = new Hapi.Server({
-    connections: {
-      //routes: {cors:{origin:["https://amrs.ampath.or.ke:8443"]}}
-      routes: {
-        cors: {
-          additionalHeaders: ['JSNLog-RequestId']
-        }
+  var server = Hapi.server({
+    host: config.etl.host,
+    port: config.etl.port,
+    tls: false,
+    routes: {
+      log: {
+        collect: true
+      },
+      cors: {
+        additionalHeaders: ['JSNLog-RequestId']
       }
     }
   });
@@ -43,18 +65,12 @@ try {
       key: fs.readFileSync(config.etl.key),
       cert: fs.readFileSync(config.etl.cert)
     });
+    server.options.tls = tls_config;
   }
 
   if (config.testMode === true) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   }
-
-  server.connection({
-    port: config.etl.port,
-    host: config.etl.host,
-    tls: tls_config,
-    routes: { log: true }
-  });
 
   const authenticateWithCookie = (cookie) => {
     const contextPath = config.openmrs.applicationName || 'amrs';
@@ -209,176 +225,172 @@ try {
         name: 'location'
       }
     ],
-    sortEndpoints: 'path'
+    sortEndpoints: 'alpha'
   };
 
-  server.register(
-    [
+  server.validator(require('joi'));
+
+  // hapi 21 asserts validate.params/path on paths without {param} placeholders.
+  // These rules were inert under hapi 16 (nothing to validate), so drop them
+  // at registration to preserve behavior.
+  function sanitizeRoute(route) {
+    var opts = route.options || route.config;
+    if (opts && opts.validate && !/\{[^}]+\}/.test(route.path)) {
+      delete opts.validate.params;
+      delete opts.validate.path;
+    }
+    return route;
+  }
+
+  async function main() {
+    await server.register([
       Inert,
       Vision,
       {
-        register: HapiSwagger,
+        plugin: HapiSwagger,
         options: HapiSwaggerOptions
       },
       {
-        register: require('hapi-routes'),
+        plugin: require('./lib/hapi-routes-loader'),
         options: {
           dir: `${__dirname}/app/routes`
         }
       },
       {
-        register: hapiAuthorization,
+        plugin: hapiAuthorization,
         options: {
           roles: authorizer.getAllPrivilegesArray()
         }
       },
       {
-        register: Good,
-        options: {
-          reporters: []
-        }
-      },
-      {
-        register: locationAuthorizer,
+        plugin: locationAuthorizer,
         options: {}
       }
-    ],
+    ]);
 
-    function (err) {
-      if (err) {
-        console.error(err);
-        throw err; // something bad happened loading the plugin
-      }
+    const getCookieValue = (name) =>
+      name.match(/(^|;)\s*JSESSIONID\s*=\s*([^;]+)/)?.pop() || '';
 
-      const getCookieValue = (name) =>
-        name.match(/(^|;)\s*JSESSIONID\s*=\s*([^;]+)/)?.pop() || '';
-
-      const scheme = function (server, options) {
-        return {
-          authenticate: function (request, reply) {
-            const req = request.raw.req;
-            const cookieHeader = req.headers.cookie;
-            // Extract JSessionID from the cookie
-            if (!cookieHeader) {
-              return reply(Boom.unauthorized('No cookie header', null));
-            }
-            const cookie = getCookieValue(cookieHeader);
-            if (!cookie) {
-              return reply(
-                Boom.unauthorized(null, 'Invalid cookie/No cookie set!')
-              );
-            }
-            //Construct valid cookie
-            const validCookie = 'JSESSIONID=' + cookie;
-
-            authenticateWithCookie(validCookie)
-              .then((data) => {
-                if (!data) {
-                  return reply(
-                    Boom.unauthorized('User not authenticated!'),
-                    null,
-                    {}
-                  );
-                }
-
-                try {
-                  const result = data;
-                  console.log('Current user: ', result.currentUser);
-                  if (result.authenticated === true) {
-                    //Authentication successful
-                    return reply.continue({
-                      isAuthenticated: true,
-                      credentials: result.currentUser
-                    });
-                  } else {
-                    //Authentication unsuccessful - reject the request
-                    return reply(
-                      Boom.unauthorized('User not authenticated!'),
-                      null,
-                      {}
-                    );
-                  }
-                } catch (error) {
-                  console.log('Oop error!', error);
-                  return reply(
-                    Boom.unauthorized('User not authenticated!'),
-                    null,
-                    {}
-                  );
-                }
-              })
-              .catch((error) => {
-                console.error('Authentication error:', error);
-                return reply(
-                  Boom.unauthorized('Authentication failed!'),
-                  null,
-                  {}
-                );
-              });
+    const scheme = function (srv, options) {
+      return {
+        authenticate: function (request, h) {
+          const req = request.raw.req;
+          const cookieHeader = req.headers.cookie;
+          // Extract JSessionID from the cookie
+          if (!cookieHeader) {
+            return h.unauthenticated(Boom.unauthorized('No cookie header'));
           }
-        };
+          const cookie = getCookieValue(cookieHeader);
+          if (!cookie) {
+            return h.unauthenticated(
+              Boom.unauthorized(null, 'Invalid cookie/No cookie set!')
+            );
+          }
+          //Construct valid cookie
+          const validCookie = 'JSESSIONID=' + cookie;
+
+          return authenticateWithCookie(validCookie)
+            .then((data) => {
+              if (!data) {
+                return h.unauthenticated(
+                  Boom.unauthorized('User not authenticated!')
+                );
+              }
+
+              try {
+                const result = data;
+                console.log('Current user: ', result.currentUser);
+                if (result.authenticated === true) {
+                  //Authentication successful
+                  return h.authenticated({
+                    credentials: result.currentUser
+                  });
+                } else {
+                  //Authentication unsuccessful - reject the request
+                  return h.unauthenticated(
+                    Boom.unauthorized('User not authenticated!')
+                  );
+                }
+              } catch (error) {
+                console.log('Oop error!', error);
+                return h.unauthenticated(
+                  Boom.unauthorized('User not authenticated!')
+                );
+              }
+            })
+            .catch((error) => {
+              console.error('Authentication error:', error);
+              return h.unauthenticated(
+                Boom.unauthorized('Authentication failed!')
+              );
+            });
+        }
       };
+    };
 
-      server.auth.scheme('custom', scheme);
-      server.auth.strategy('default', 'custom', 'required');
+    server.auth.scheme('custom', scheme);
+    server.auth.strategy('default', 'custom');
+    server.auth.default('default');
 
-      //Adding routes
-      for (var route in routes) {
-        try {
-          server.route(routes[route]);
-        } catch (badThing) {
-          console.error(badThing);
-        }
-      }
-
-      for (var route in elasticRoutes) {
-        server.route(elasticRoutes[route]);
-      }
-
-      server.on('response', function (request) {
-        if (request.response === undefined || request.response === null) {
-          console.log('No response');
-        } else {
-          var user = '';
-          if (request.auth && request.auth.credentials)
-            user = request.auth.credentials.username;
-          console.log(
-            'Username:',
-            user +
-              '\n' +
-              moment().local().format('YYYY-MM-DD HH:mm:ss') +
-              ': ' +
-              server.info.uri +
-              ': ' +
-              request.method.toUpperCase() +
-              ' ' +
-              request.url.path +
-              ' \n ' +
-              request.response.statusCode
-          );
-        }
-      });
-
-      server.ext('onPreResponse', corsHeaders);
-
-      if (config.clusteringEnabled === true && cluster.isMaster) {
-        for (var i = 0; i < numCPUs; i++) {
-          cluster.fork();
-        }
-
-        cluster.on('exit', function (worker, code, signal) {
-          //refork the cluster
-          //cluster.fork();
-        });
-      } else {
-        //TODO start HAPI server here
-        server.start(function () {
-          console.log('info', 'Server running at: ' + server.info.uri);
-          server.log('info', 'Server running at: ' + server.info.uri);
-        });
+    //Adding routes
+    for (var route in routes) {
+      try {
+        server.route(sanitizeRoute(routes[route]));
+      } catch (badThing) {
+        console.error(badThing);
       }
     }
-  );
+
+    for (var route in elasticRoutes) {
+      server.route(sanitizeRoute(elasticRoutes[route]));
+    }
+
+    server.events.on('response', function (request) {
+      if (request.response === undefined || request.response === null) {
+        console.log('No response');
+      } else {
+        var user = '';
+        if (request.auth && request.auth.credentials)
+          user = request.auth.credentials.username;
+        console.log(
+          'Username:',
+          user +
+            '\n' +
+            moment().local().format('YYYY-MM-DD HH:mm:ss') +
+            ': ' +
+            server.info.uri +
+            ': ' +
+            request.method.toUpperCase() +
+            ' ' +
+            request.url.path +
+            ': ' +
+            request.response.statusCode
+        );
+      }
+    });
+
+    server.ext('onPreResponse', corsHeaders);
+
+    if (config.clusteringEnabled === true && cluster.isMaster) {
+      for (var i = 0; i < numCPUs; i++) {
+        cluster.fork();
+      }
+
+      cluster.on('exit', function (worker, code, signal) {
+        //refork the cluster
+        //cluster.fork();
+      });
+    } else {
+      await server.start();
+      console.log('info', 'Server running at: ' + server.info.uri);
+      server.log('info', 'Server running at: ' + server.info.uri);
+    }
+  }
+
+  main().catch(function (err) {
+    console.error('error-starting', err);
+    throw err;
+  });
   module.exports = server;
 } catch (error) {
   console.log('error-starting', error);

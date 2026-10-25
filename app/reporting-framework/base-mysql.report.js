@@ -719,8 +719,8 @@ import * as claims_summary_patient_list_template from './json-reports/claims-sum
 import * as claims_summary from './json-reports/claims-summary/claims-summary.json';
 
 // MOH 706 report
-import * as lab_706_base from './json-reports/lab-706-base.json';
-import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
+// removed duplicate import of lab_706_base (duplicate of line 571) — pre-existing on cookie-auth base, breaks Babel parse
+// removed duplicate import of lab_706_aggregate (duplicate of line 572) — pre-existing on cookie-auth base, breaks Babel parse
 import * as lab_706_patient_list from './json-reports/lab-706-patient-list.json';
 
 export class BaseMysqlReport {
@@ -2704,6 +2704,8 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(moh_505_disaggregation),
             moh505ReportBase: this.cloneJsonSchema(moh_505_base)
+          });
+          break;
         case 'moh710Report':
           resolve({
             main: this.cloneJsonSchema(moh_710_report)

@@ -3,16 +3,22 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/administrative-units',
-    config: {
-      handler: function (request, reply) {
-        let service = new AdministrativeUnitsDao();
-        service
-          .getAllCounties()
-          .then((res) => reply(res))
-          .catch((err) => {
-            console.log('ERROR ', err);
-            reply(err);
-          });
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let service = new AdministrativeUnitsDao();
+          service
+            .getAllCounties()
+            .then((res) => reply(res))
+            .catch((err) => {
+              console.log('ERROR ', err);
+              reply(err);
+            });
+        });
       },
       description: 'Get all counties ',
       notes: 'Returns all counties',
