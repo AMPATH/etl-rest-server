@@ -66,9 +66,12 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "women_couselled_on_post_partum_fp",
-      "column": "p.women_couselled_on_post_partum_fp"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(p.women_couselled_on_post_partum_fp = 'Y', 1, 0)"
+      }
     },
     {
       "type": "simple_column",

@@ -197,17 +197,20 @@
     {
       "type": "simple_column",
       "alias": "breast_exam",
-      "column": "a.breast_exam"
+      "column": "a.breast_exam_done"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "fgm",
-      "column": "null"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(a.fgm_complications_reported, 'Y', 'N')"
+      }
     },
     {
       "type": "simple_column",
       "alias": "fgm_complications",
-      "column": "a.fgm_complications"
+      "column": "a.fgm_complications_reported"
     },
     {
       "type": "simple_column",
