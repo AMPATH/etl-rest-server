@@ -150,15 +150,15 @@
       "expressionOptions": {
         "caseOptions": [
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 0 AND 18",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 0 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 18",
             "value": "0_to_18"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 19 AND 35",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 19 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 35",
             "value": "19_to_35"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 36 AND 60",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 36 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 60",
             "value": "36_to_60"
           },
           {
@@ -189,6 +189,14 @@
         "filterType": "tableColumns",
         "conditionExpression": "mdh.location_id in ?",
         "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.diabetes_mellitus_type = 9326"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.revisit_this_month = 1 OR mdh.newly_diagnosed_diabetes_this_month = 1"
       }
     ]
   },

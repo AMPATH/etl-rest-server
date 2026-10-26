@@ -187,19 +187,19 @@
             "value": "0_to_5"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 6 AND 9",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 6 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 9",
             "value": "6_to_9"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 10 AND 19",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 10 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 19",
             "value": "10_to_19"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) between 20 AND 35",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) >= 20 AND TIMESTAMPDIFF(YEAR,mdh.birthdate,mdh.endDate) <= 35",
             "value": "20_to_35"
           },
           {
-            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) > 35",
+            "condition": "TIMESTAMPDIFF(YEAR,mdh.birthdate, mdh.endDate) >= 36",
             "value": "36_and_above"
           }
         ]
@@ -226,6 +226,14 @@
         "filterType": "tableColumns",
         "conditionExpression": "mdh.location_id in ?",
         "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.diabetes_mellitus_type = 9325"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.revisit_this_month = 1 OR mdh.newly_diagnosed_diabetes_this_month = 1"
       }
     ]
   },

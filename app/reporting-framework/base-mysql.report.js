@@ -648,6 +648,8 @@ import * as moh_740_report_aggregation from './json-reports/moh-740/json-reports
 import * as moh_740_report_base from './json-reports/moh-740/json-reports/moh-740-report-base.json';
 import * as diabetes_type_1_age_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-1-age-disaggregate.json';
 import * as diabetes_type_2_age_disaggregation from './json-reports/moh-740/json-reports/diabetes-type-2-age-disaggregate.json';
+import * as diabetes_gestational_gender_disaggregation from './json-reports/moh-740/json-reports/diabetes-gestational-gender-disaggregate.json';
+import * as diabetes_gestational_base from './json-reports/moh-740/json-reports/diabetes-gestational-base.json';
 
 import * as moh_705a_patient_list_template from './json-reports/moh-705/moh-705A-patient-list-template.json';
 import * as moh_705b_patient_list_template from './json-reports/moh-705/moh-705B-patient-list-template.json';
@@ -2963,6 +2965,16 @@ export class BaseMysqlReport {
               diabetes_type_2_age_gender_disaggregation
             ),
             diabetesType2AgeBase: this.cloneJsonSchema(diabetes_type_2_age_base)
+          });
+          break;
+        case 'diabetesGestationalGenderDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(
+              diabetes_gestational_gender_disaggregation
+            ),
+            diabetesGestationalBase: this.cloneJsonSchema(
+              diabetes_gestational_base
+            )
           });
           break;
         case 'hypertentionAgeGenderDisaggregation':
