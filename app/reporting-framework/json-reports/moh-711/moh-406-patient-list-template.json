@@ -346,6 +346,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "women_couselled_on_post_partum_fp",
+      "column": "a.women_couselled_on_post_partum_fp"
+    },
+    {
+      "type": "simple_column",
       "alias": "maternal_haart",
       "column": "a.maternal_haart"
     },

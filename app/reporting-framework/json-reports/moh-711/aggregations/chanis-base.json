@@ -87,7 +87,7 @@
       "alias": "severely_underweight_0_6_months_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, 0)"
       }
     },
     {
@@ -95,7 +95,7 @@
       "alias": "severely_underweight_0_6_months_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, 0)"
       }
     },
     {
@@ -103,7 +103,7 @@
       "alias": "overweight_0_6_months_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, 0)"
       }
     },
     {
@@ -111,7 +111,7 @@
       "alias": "overweight_0_6_months_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, 0)"
       }
     },
     {
@@ -119,7 +119,7 @@
       "alias": "obese_0_6_months_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, 0)"
       }
     },
     {
@@ -127,7 +127,7 @@
       "alias": "obese_0_6_months_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, 0)"
       }
     },
     {
@@ -135,7 +135,7 @@
       "alias": "normal_weight_6_23_months_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, NULL)"
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, 0)"
       }
     },
     {
