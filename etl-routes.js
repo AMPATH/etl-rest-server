@@ -13,7 +13,7 @@ var Joi = require('joi');
 var eidLabData = require('./eid-data-synchronization/eid-lab-results');
 var eidService = require('./service/eid.service');
 var patientListCompare = require('./service/patient-list-compare.service.js');
-var Boom = require('boom');
+var Boom = require('@hapi/boom');
 var authorizer = require('./authorization/etl-authorizer');
 var config = require('./conf/config');
 var privileges = authorizer.getAllPrivileges();
@@ -52,6 +52,7 @@ import { patientMedicationHistService } from './service/patient-medication-histo
 import { PatientMedicalHistoryService } from './service/patient-medical-history.service';
 
 import { Moh731Report } from './app/reporting-framework/hiv/moh-731.report';
+import { Moh7312023Report } from './app/reporting-framework/hiv/moh-731-2023.report';
 import { BreastCancerMonthlySummaryService } from './service/breast-cancer-monthly-summary.service';
 import { CervicalCancerMonthlySummaryService } from './service/cervical-cancer-monthly-summary.service';
 
@@ -99,21 +100,28 @@ import {
 import SmsService from './service/login-otp/sms.service.js';
 import { DashboardSummaryService } from './service/dashboard-summary/dashboard-summary.service.js';
 import { ServiceQueueDailyReportService } from './service/queues/queue-entry/service-queue-report.service.js';
+import { FacilityProvidersService } from './service/facility-providers/facility-providers.service.js';
 
 module.exports = (function () {
   var routes = [
     {
       method: 'GET',
       path: '/',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: false
         },
-        handler: function (request, reply) {
-          console.log('default route', request.path);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          reply('Welcome to Ampath ETL service.');
-          //return reply(Boom.forbidden('Not this end point bruh'));
+            console.log('default route', request.path);
+
+            reply('Welcome to Ampath ETL service.');
+            //return reply(Boom.forbidden('Not this end point bruh'));
+          });
         },
         description: 'Home',
         notes: 'Returns a message that shows ETL service is running.',
@@ -123,22 +131,28 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/user-feedback',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: false
         },
         auth: false,
-        handler: function (request, reply) {
-          var message = request.payload;
-          let service = new SlackService();
-          service
-            .postFeedbackToPoc(message)
-            .then((success) => {
-              reply(success);
-            })
-            .catch((err) => {
-              reply(Boom.badData(error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var message = request.payload;
+            let service = new SlackService();
+            service
+              .postFeedbackToPoc(message)
+              .then((success) => {
+                reply(success);
+              })
+              .catch((err) => {
+                reply(Boom.badData(error));
+              });
+          });
         },
         description: 'Endpoint that receives feedback from a private channel',
         notes:
@@ -149,7 +163,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinic-lab-orders',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -163,37 +177,46 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              request.query.groupBy = 'groupByPerson,groupByd';
-              let compineRequestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'clinic-lab-orders-report',
-                ['startDate', 'endDate', 'locations', 'groupBy'],
-                compineRequestParams
-              );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              dao
-                .runReport(reportParams)
-                .then((result) => {
-                  _.each(result.result, (row) => {
-                    row.order_type = etlHelpers.getTestsOrderedNames(
-                      row.order_type
-                    );
-                    row.cur_meds = etlHelpers.getARVNames(row.cur_meds);
-                  });
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  request.query.groupBy = 'groupByPerson,groupByd';
+                  let compineRequestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'clinic-lab-orders-report',
+                    ['startDate', 'endDate', 'locations', 'groupBy'],
+                    compineRequestParams
+                  );
+
+                  dao
+                    .runReport(reportParams)
+                    .then((result) => {
+                      _.each(result.result, (row) => {
+                        row.order_type = etlHelpers.getTestsOrderedNames(
+                          row.order_type
+                        );
+                        row.cur_meds = etlHelpers.getARVNames(row.cur_meds);
+                      });
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
+              );
+            }
+          });
         },
         description:
           'Get a list of patients who made lab orders on a selected date',
@@ -205,22 +228,28 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/poc-user-feedback/{count*2}',
-      config: {
+      options: {
         auth: false,
-        handler: function (request, reply) {
-          let service = new SlackService();
-          const urlparts = request.params.count.split('/');
-          service
-            .getPocMessages(
-              encodeURIComponent(urlparts[0]),
-              encodeURIComponent(urlparts[1])
-            )
-            .then((res) => {
-              reply(res);
-            })
-            .catch((error) => {
-              reply(Boom.badData(error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let service = new SlackService();
+            const urlparts = request.params.count.split('/');
+            service
+              .getPocMessages(
+                encodeURIComponent(urlparts[0]),
+                encodeURIComponent(urlparts[1])
+              )
+              .then((res) => {
+                reply(res);
+              })
+              .catch((error) => {
+                reply(Boom.badData(error));
+              });
+          });
         },
         description: 'Endpoint that gets user feedback from poc',
         notes:
@@ -231,23 +260,29 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/posttochannel',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: false
         },
         auth: false,
-        handler: function (request, reply) {
-          var message = request.payload;
-          var channel = request.payload.channel;
-          let service = new SlackService();
-          service
-            .postToChannels(message, channel)
-            .then(function (success) {
-              reply(success);
-            })
-            .catch((err) => {
-              reply(Boom.badData(error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var message = request.payload;
+            var channel = request.payload.channel;
+            let service = new SlackService();
+            service
+              .postToChannels(message, channel)
+              .then(function (success) {
+                reply(success);
+              })
+              .catch((err) => {
+                reply(Boom.badData(error));
+              });
+          });
         },
         description:
           'Endpoint that post user feedback from client to  a public slack channel',
@@ -258,23 +293,29 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/posttogroup',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: false
         },
         auth: false,
-        handler: function (request, reply) {
-          var message = request.payload;
-          var channel = request.payload.group;
-          let service = new SlackService();
-          service
-            .postToGroups(message, channel)
-            .then(function (success) {
-              reply(success);
-            })
-            .catch((err) => {
-              reply(Boom.badData(error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var message = request.payload;
+            var channel = request.payload.group;
+            let service = new SlackService();
+            service
+              .postToGroups(message, channel)
+              .then(function (success) {
+                reply(success);
+              })
+              .catch((err) => {
+                reply(Boom.badData(error));
+              });
+          });
         },
         description:
           'Endpoint that post user feedback from client to  a private slack channel',
@@ -287,22 +328,28 @@ module.exports = (function () {
       method: 'GET',
       path: '/channel-user-feedback/{count*2}',
       /*  /channel-user-feedback/10/1504081732.000145   */
-      config: {
+      options: {
         auth: false,
-        handler: function (request, reply) {
-          let service = new SlackService();
-          const urlparts = request.params.count.split('/');
-          service
-            .getChannelMessages(
-              encodeURIComponent(urlparts[0]),
-              encodeURIComponent(urlparts[1])
-            )
-            .then((res) => {
-              reply(res);
-            })
-            .catch((error) => {
-              reply(Boom.badData(error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let service = new SlackService();
+            const urlparts = request.params.count.split('/');
+            service
+              .getChannelMessages(
+                encodeURIComponent(urlparts[0]),
+                encodeURIComponent(urlparts[1])
+              )
+              .then((res) => {
+                reply(res);
+              })
+              .catch((error) => {
+                reply(Boom.badData(error));
+              });
+          });
         },
         description: 'Endpoint that receives feedback from a public channel',
         notes:
@@ -314,23 +361,29 @@ module.exports = (function () {
       method: 'GET',
       path: '/channel-user-feedback/{count*3}',
       /*  /channel-user-feedback/poc-user-feedback/10/1504081732.000145   */
-      config: {
+      options: {
         auth: false,
-        handler: function (request, reply) {
-          let service = new SlackService();
-          const urlparts = request.params.count.split('/');
-          service
-            .getFromChannel(
-              encodeURIComponent(urlparts[0]),
-              encodeURIComponent(urlparts[1]),
-              encodeURIComponent(urlparts[2])
-            )
-            .then((res) => {
-              reply(res);
-            })
-            .catch((error) => {
-              reply(Boom.badData(error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let service = new SlackService();
+            const urlparts = request.params.count.split('/');
+            service
+              .getFromChannel(
+                encodeURIComponent(urlparts[0]),
+                encodeURIComponent(urlparts[1]),
+                encodeURIComponent(urlparts[2])
+              )
+              .then((res) => {
+                reply(res);
+              })
+              .catch((error) => {
+                reply(Boom.badData(error));
+              });
+          });
         },
         description: 'Endpoint that receives feedback from a public channel',
         notes:
@@ -342,23 +395,29 @@ module.exports = (function () {
       method: 'GET',
       path: '/group-user-feedback/{count*3}',
       /*  /channel-user-feedback/poc-user-feedback/10/1504081732.000145   */
-      config: {
+      options: {
         auth: false,
-        handler: function (request, reply) {
-          let service = new SlackService();
-          const urlparts = request.params.count.split('/');
-          service
-            .getFromGroup(
-              encodeURIComponent(urlparts[0]),
-              encodeURIComponent(urlparts[1]),
-              encodeURIComponent(urlparts[2])
-            )
-            .then((res) => {
-              reply(JSON.parse(res));
-            })
-            .catch((error) => {
-              reply(Boom.badData(error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let service = new SlackService();
+            const urlparts = request.params.count.split('/');
+            service
+              .getFromGroup(
+                encodeURIComponent(urlparts[0]),
+                encodeURIComponent(urlparts[1]),
+                encodeURIComponent(urlparts[2])
+              )
+              .then((res) => {
+                reply(JSON.parse(res));
+              })
+              .catch((error) => {
+                reply(Boom.badData(error));
+              });
+          });
         },
         description: 'Endpoint that receives feedback from a private channel',
         notes:
@@ -369,7 +428,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/get-monthly-schedule',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -383,50 +442,56 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            programVisitEncounterResolver
-              .resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-              .then((resolve) => {
-                let encounterIds = resolve.encounterTypeIds;
-                let visitTypeIds = resolve.visitTypesIds;
-                let programTypeIds = resolve.programTypeIds;
-                if (encounterIds.length > 0) {
-                  request.query.encounterIds = encounterIds;
-                }
-                if (visitTypeIds.length > 0) {
-                  request.query.visitTypeIds = visitTypeIds;
-                }
-                if (programTypeIds.length > 0) {
-                  request.query.programTypeIds = programTypeIds;
-                }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-                return resolveLocationUuidToId.resolveLocationUuidsParamsToIds(
-                  request.query
-                );
-              })
-              .then((result) => {
-                let locationIds = result;
-                request.query.locations = locationIds;
-                let combineRequestParams = Object.assign(
-                  {},
-                  request.query,
-                  request.params
-                );
-                let service = new MonthlyScheduleService();
-                service
-                  .getMonthlyScheduled(combineRequestParams)
-                  .then((result) => {
-                    reply(result);
-                  })
-                  .catch((error) => {
-                    reply(error);
-                  });
-              })
-              .then((error) => {
-                console.log(error);
-              });
-          }
+            if (request.query.locationUuids) {
+              programVisitEncounterResolver
+                .resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
+                .then((resolve) => {
+                  let encounterIds = resolve.encounterTypeIds;
+                  let visitTypeIds = resolve.visitTypesIds;
+                  let programTypeIds = resolve.programTypeIds;
+                  if (encounterIds.length > 0) {
+                    request.query.encounterIds = encounterIds;
+                  }
+                  if (visitTypeIds.length > 0) {
+                    request.query.visitTypeIds = visitTypeIds;
+                  }
+                  if (programTypeIds.length > 0) {
+                    request.query.programTypeIds = programTypeIds;
+                  }
+
+                  return resolveLocationUuidToId.resolveLocationUuidsParamsToIds(
+                    request.query
+                  );
+                })
+                .then((result) => {
+                  let locationIds = result;
+                  request.query.locations = locationIds;
+                  let combineRequestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let service = new MonthlyScheduleService();
+                  service
+                    .getMonthlyScheduled(combineRequestParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                })
+                .then((error) => {
+                  console.log(error);
+                });
+            }
+          });
         },
         description: 'Get monthly schedule',
         notes: 'Returns a list of appointments,visits and has not returned',
@@ -436,7 +501,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/daily-appointments/{startDate}',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -450,62 +515,77 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              request.query.groupBy = 'groupByPerson,groupByd';
-              programVisitEncounterResolver
-                .resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                .then((resolve) => {
-                  // console.log('Daily appointments', resolve);
-                  let encounterIds = resolve.encounterTypeIds;
-                  let visitTypeIds = resolve.visitTypesIds;
-                  let programTypeIds = resolve.programTypeIds;
-                  if (programTypeIds.length > 0) {
-                    request.query.programTypeIds = programTypeIds;
-                  }
-                  if (visitTypeIds.length > 0) {
-                    request.query.visitTypeIds = visitTypeIds;
-                  }
-                  if (encounterIds.length > 0) {
-                    request.query.encounterIds = encounterIds;
-                  }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-                  let combineRequestParams = Object.assign(
-                    {},
-                    request.query,
-                    request.params
-                  );
-                  // let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
-                  combineRequestParams.limitParam = combineRequestParams.limit;
-                  combineRequestParams.offSetParam =
-                    combineRequestParams.startIndex;
-                  combineRequestParams.endDate = combineRequestParams.startDate;
-                  let service = new PatientlistMysqlReport(
-                    'dailyAppointmentsAggregate',
-                    combineRequestParams
-                  );
-                  service
-                    .generatePatientListReport(['patients'])
-                    .then((result) => {
-                      let returnedResult = {};
-                      returnedResult.schemas = result.schemas;
-                      returnedResult.sqlQuery = result.sqlQuery;
-                      returnedResult.result = result.results.results;
-                      _.each(returnedResult.result, (item) => {
-                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                      });
-                      reply(returnedResult);
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  request.query.groupBy = 'groupByPerson,groupByd';
+                  programVisitEncounterResolver
+                    .resolveProgramVisitTypeEncounterUuidsParamsToIds(
+                      request.query
+                    )
+                    .then((resolve) => {
+                      // console.log('Daily appointments', resolve);
+                      let encounterIds = resolve.encounterTypeIds;
+                      let visitTypeIds = resolve.visitTypesIds;
+                      let programTypeIds = resolve.programTypeIds;
+                      if (programTypeIds.length > 0) {
+                        request.query.programTypeIds = programTypeIds;
+                      }
+                      if (visitTypeIds.length > 0) {
+                        request.query.visitTypeIds = visitTypeIds;
+                      }
+                      if (encounterIds.length > 0) {
+                        request.query.encounterIds = encounterIds;
+                      }
+
+                      let combineRequestParams = Object.assign(
+                        {},
+                        request.query,
+                        request.params
+                      );
+                      // let reportParams = etlHelpers.getReportParams('daily-appointments', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
+                      combineRequestParams.limitParam =
+                        combineRequestParams.limit;
+                      combineRequestParams.offSetParam =
+                        combineRequestParams.startIndex;
+                      combineRequestParams.endDate =
+                        combineRequestParams.startDate;
+                      let service = new PatientlistMysqlReport(
+                        'dailyAppointmentsAggregate',
+                        combineRequestParams
+                      );
+                      service
+                        .generatePatientListReport(['patients'])
+                        .then((result) => {
+                          let returnedResult = {};
+                          returnedResult.schemas = result.schemas;
+                          returnedResult.sqlQuery = result.sqlQuery;
+                          returnedResult.result = result.results.results;
+                          _.each(returnedResult.result, (item) => {
+                            item.cur_meds = etlHelpers.getARVNames(
+                              item.cur_meds
+                            );
+                          });
+                          reply(returnedResult);
+                        })
+                        .catch((error) => {
+                          reply(error);
+                        });
                     })
                     .catch((error) => {
-                      reply(error);
+                      console.log(error);
                     });
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            });
-          }
+                }
+              );
+            }
+          });
         },
         description: 'Get daily appointments list',
         notes: 'Returns a list of patients with appointments',
@@ -515,7 +595,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/daily-visits/{startDate}',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -529,58 +609,72 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              request.query.groupBy = 'groupByPerson,groupByd';
-              programVisitEncounterResolver
-                .resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                .then((resolve) => {
-                  let encounterIds = resolve.encounterTypeIds;
-                  let visitTypeIds = resolve.visitTypesIds;
-                  let programTypeIds = resolve.programTypeIds;
-                  if (programTypeIds.length > 0) {
-                    request.query.programTypeIds = programTypeIds;
-                  }
-                  if (visitTypeIds.length > 0) {
-                    request.query.visitTypeIds = visitTypeIds;
-                  }
-                  if (encounterIds.length > 0) {
-                    request.query.encounterIds = encounterIds;
-                  }
-                  let compineRequestParams = Object.assign(
-                    {},
-                    request.query,
-                    request.params
-                  );
-                  compineRequestParams.limitParam = compineRequestParams.limit;
-                  compineRequestParams.offSetParam =
-                    compineRequestParams.startIndex;
-                  let service = new PatientlistMysqlReport(
-                    'dailyAttendanceAggregate',
-                    compineRequestParams
-                  );
-                  service
-                    .generatePatientListReport(['patients'])
-                    .then((result) => {
-                      let returnedResult = {};
-                      returnedResult.schemas = result.schemas;
-                      returnedResult.sqlQuery = result.sqlQuery;
-                      returnedResult.result = result.results.results;
-                      _.each(returnedResult.result, (item) => {
-                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                      });
-                      reply(returnedResult);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  request.query.groupBy = 'groupByPerson,groupByd';
+                  programVisitEncounterResolver
+                    .resolveProgramVisitTypeEncounterUuidsParamsToIds(
+                      request.query
+                    )
+                    .then((resolve) => {
+                      let encounterIds = resolve.encounterTypeIds;
+                      let visitTypeIds = resolve.visitTypesIds;
+                      let programTypeIds = resolve.programTypeIds;
+                      if (programTypeIds.length > 0) {
+                        request.query.programTypeIds = programTypeIds;
+                      }
+                      if (visitTypeIds.length > 0) {
+                        request.query.visitTypeIds = visitTypeIds;
+                      }
+                      if (encounterIds.length > 0) {
+                        request.query.encounterIds = encounterIds;
+                      }
+                      let compineRequestParams = Object.assign(
+                        {},
+                        request.query,
+                        request.params
+                      );
+                      compineRequestParams.limitParam =
+                        compineRequestParams.limit;
+                      compineRequestParams.offSetParam =
+                        compineRequestParams.startIndex;
+                      let service = new PatientlistMysqlReport(
+                        'dailyAttendanceAggregate',
+                        compineRequestParams
+                      );
+                      service
+                        .generatePatientListReport(['patients'])
+                        .then((result) => {
+                          let returnedResult = {};
+                          returnedResult.schemas = result.schemas;
+                          returnedResult.sqlQuery = result.sqlQuery;
+                          returnedResult.result = result.results.results;
+                          _.each(returnedResult.result, (item) => {
+                            item.cur_meds = etlHelpers.getARVNames(
+                              item.cur_meds
+                            );
+                          });
+                          reply(returnedResult);
+                        })
+                        .catch((error) => {
+                          reply(error);
+                        });
                     })
                     .catch((error) => {
-                      reply(error);
+                      console.log(error);
                     });
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            });
-          }
+                }
+              );
+            }
+          });
         },
         description: 'Get daily attendance list',
         notes: 'Returns a facility daily attendance list',
@@ -590,7 +684,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/daily-has-not-returned/{startDate}',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -604,62 +698,77 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              request.query.groupBy = 'groupByPerson,groupByd';
-              programVisitEncounterResolver
-                .resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                .then((resolve) => {
-                  let encounterIds = resolve.encounterTypeIds;
-                  let visitTypeIds = resolve.visitTypesIds;
-                  let programTypeIds = resolve.programTypeIds;
-                  if (programTypeIds.length > 0) {
-                    request.query.programTypeIds = programTypeIds;
-                  }
-                  if (visitTypeIds.length > 0) {
-                    request.query.visitTypeIds = visitTypeIds;
-                  }
-                  if (encounterIds.length > 0) {
-                    request.query.encounterIds = encounterIds;
-                  }
-                  let combineRequestParams = Object.assign(
-                    {},
-                    request.query,
-                    request.params
-                  );
-                  combineRequestParams.limitParam = combineRequestParams.limit;
-                  combineRequestParams.offSetParam =
-                    combineRequestParams.startIndex;
-                  combineRequestParams.endDate = combineRequestParams.startDate;
-                  //let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
-                  //reportParams.limit = 100000;
-                  let service = new PatientlistMysqlReport(
-                    'dailyHasNotReturnedAggregate',
-                    combineRequestParams
-                  );
-                  service
-                    .generatePatientListReport(['patients'])
-                    .then((result) => {
-                      let returnedResult = {};
-                      returnedResult.schemas = result.schemas;
-                      returnedResult.sqlQuery = result.sqlQuery;
-                      returnedResult.result = result.results.results;
-                      _.each(returnedResult.result, (item) => {
-                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                      });
-                      reply(returnedResult);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  request.query.groupBy = 'groupByPerson,groupByd';
+                  programVisitEncounterResolver
+                    .resolveProgramVisitTypeEncounterUuidsParamsToIds(
+                      request.query
+                    )
+                    .then((resolve) => {
+                      let encounterIds = resolve.encounterTypeIds;
+                      let visitTypeIds = resolve.visitTypesIds;
+                      let programTypeIds = resolve.programTypeIds;
+                      if (programTypeIds.length > 0) {
+                        request.query.programTypeIds = programTypeIds;
+                      }
+                      if (visitTypeIds.length > 0) {
+                        request.query.visitTypeIds = visitTypeIds;
+                      }
+                      if (encounterIds.length > 0) {
+                        request.query.encounterIds = encounterIds;
+                      }
+                      let combineRequestParams = Object.assign(
+                        {},
+                        request.query,
+                        request.params
+                      );
+                      combineRequestParams.limitParam =
+                        combineRequestParams.limit;
+                      combineRequestParams.offSetParam =
+                        combineRequestParams.startIndex;
+                      combineRequestParams.endDate =
+                        combineRequestParams.startDate;
+                      //let reportParams = etlHelpers.getReportParams('daily-has-not-returned', ['startDate', 'locations', 'encounterIds', 'visitTypeIds', 'programTypeIds', 'groupBy'], compineRequestParams);
+                      //reportParams.limit = 100000;
+                      let service = new PatientlistMysqlReport(
+                        'dailyHasNotReturnedAggregate',
+                        combineRequestParams
+                      );
+                      service
+                        .generatePatientListReport(['patients'])
+                        .then((result) => {
+                          let returnedResult = {};
+                          returnedResult.schemas = result.schemas;
+                          returnedResult.sqlQuery = result.sqlQuery;
+                          returnedResult.result = result.results.results;
+                          _.each(returnedResult.result, (item) => {
+                            item.cur_meds = etlHelpers.getARVNames(
+                              item.cur_meds
+                            );
+                          });
+                          reply(returnedResult);
+                        })
+                        .catch((error) => {
+                          reply(error);
+                        });
                     })
                     .catch((error) => {
+                      console.log('Error', error);
                       reply(error);
                     });
-                })
-                .catch((error) => {
-                  console.log('Error', error);
-                  reply(error);
-                });
-            });
-          }
+                }
+              );
+            }
+          });
         },
         description:
           'Get a list of patients who did not attend a scheduled visit',
@@ -671,7 +780,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinic-lab-orders/{dateActivated}',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -685,41 +794,50 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              request.query.groupBy = 'groupByPerson,groupByd';
-              let compineRequestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  request.query.groupBy = 'groupByPerson,groupByd';
+                  let compineRequestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'clinic-lab-orders-report',
+                    ['dateActivated', 'locations', 'groupBy'],
+                    compineRequestParams
+                  );
+                  let report = new BaseMysqlReport(
+                    'clinicLabOrdersReport',
+                    reportParams.requestParams
+                  );
+                  report
+                    .generateReport()
+                    .then((results) => {
+                      _.each(results.results.results, (row) => {
+                        row.order_type = etlHelpers.getTestsOrderedNames(
+                          row.order_type
+                        );
+                      });
+                      results.result = results.results.results;
+                      delete results['results'];
+                      reply(results);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-              let reportParams = etlHelpers.getReportParams(
-                'clinic-lab-orders-report',
-                ['dateActivated', 'locations', 'groupBy'],
-                compineRequestParams
-              );
-              let report = new BaseMysqlReport(
-                'clinicLabOrdersReport',
-                reportParams.requestParams
-              );
-              report
-                .generateReport()
-                .then((results) => {
-                  _.each(results.results.results, (row) => {
-                    row.order_type = etlHelpers.getTestsOrderedNames(
-                      row.order_type
-                    );
-                  });
-                  results.result = results.results.results;
-                  delete results['results'];
-                  reply(results);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         description:
           'Get a list of patients who made lab orders on a selected date',
@@ -731,40 +849,49 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/defaulter-list',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            request.query.reportName = 'defaulter-list';
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              request.query.reportName = 'defaulter-list';
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+
+                  let requestCopy = _.cloneDeep(requestParams);
+                  let reportParams = etlHelpers.getReportParams(
+                    request.query.reportName,
+                    ['locationUuids', 'locations'],
+                    requestParams
+                  );
+
+                  const defaulterService = new DefaulterListService();
+
+                  defaulterService
+                    .getPatientListReport(requestParams)
+                    .then((results) => {
+                      _.each(results.result, (item) => {
+                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                      });
+                      reply(results);
+                    })
+                    .catch((err) => {
+                      reply(Boom.internal('An error occured', err));
+                    });
+                }
               );
-
-              let requestCopy = _.cloneDeep(requestParams);
-              let reportParams = etlHelpers.getReportParams(
-                request.query.reportName,
-                ['locationUuids', 'locations'],
-                requestParams
-              );
-
-              const defaulterService = new DefaulterListService();
-
-              defaulterService
-                .getPatientListReport(requestParams)
-                .then((results) => {
-                  _.each(results.result, (item) => {
-                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                  });
-                  reply(results);
-                })
-                .catch((err) => {
-                  reply(Boom.internal('An error occured', err));
-                });
-            });
-          }
+            }
+          });
         },
         plugins: {
           hapiAuthorization: {
@@ -792,24 +919,34 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{patientUuids}/cdm-summary',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let service = new CDMReportingService();
-          service
-            .getPatientSummaryReport(requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let service = new CDMReportingService();
+            service
+              .getPatientSummaryReport(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get patient CDM summary',
         notes:
@@ -832,24 +969,34 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{patientUuids}/medication-change',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let service = new CDMReportingService();
-          service
-            .getPatientMedicationHistoryReport(requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let service = new CDMReportingService();
+            service
+              .getPatientMedicationHistoryReport(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get patient medication history',
         notes:
@@ -872,127 +1019,136 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{patientUuid}/hiv-clinical-reminder/{referenceDate}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          let combineRequestParams = Object.assign(
-            {},
-            request.query,
-            request.params
-          );
-          combineRequestParams.limitParam = 1;
-          let prepReminder = new PrepReminderService();
-          prepReminder.isPatientEnrolledInPrep(request.params).then((b) => {
-            if (b) {
-              let reportParams = etlHelpers.getReportParams(
-                'prepClinicalReminder',
-                ['referenceDate', 'patientUuid', 'offSetParam', 'limitParam'],
-                combineRequestParams
-              );
-              let report = new BaseMysqlReport(
-                'prepClinicalReminderReport',
-                reportParams.requestParams
-              );
-              report
-                .generateReport()
-                .then((results) => {
-                  try {
-                    if (results.results.results.length > 0) {
-                      let processedResults = prepReminder.generateReminders(
-                        results.results.results
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let combineRequestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            combineRequestParams.limitParam = 1;
+            let prepReminder = new PrepReminderService();
+            prepReminder.isPatientEnrolledInPrep(request.params).then((b) => {
+              if (b) {
+                let reportParams = etlHelpers.getReportParams(
+                  'prepClinicalReminder',
+                  ['referenceDate', 'patientUuid', 'offSetParam', 'limitParam'],
+                  combineRequestParams
+                );
+                let report = new BaseMysqlReport(
+                  'prepClinicalReminderReport',
+                  reportParams.requestParams
+                );
+                report
+                  .generateReport()
+                  .then((results) => {
+                    try {
+                      if (results.results.results.length > 0) {
+                        let processedResults = prepReminder.generateReminders(
+                          results.results.results
+                        );
+                        results.result = {
+                          person_id: results.results.results[0].person_id,
+                          person_uuid: results.results.results[0].uuid,
+                          reminders: processedResults
+                        };
+                      } else {
+                        results.result = {
+                          person_uuid: combineRequestParams.patientUuid,
+                          reminders: []
+                        };
+                      }
+                      reply(results);
+                    } catch (error) {
+                      console.log('Error generating prep reminders', error);
+                      reply(
+                        Boom.badImplementation('An internal error occurred')
                       );
-                      results.result = {
-                        person_id: results.results.results[0].person_id,
-                        person_uuid: results.results.results[0].uuid,
-                        reminders: processedResults
-                      };
-                    } else {
-                      results.result = {
-                        person_uuid: combineRequestParams.patientUuid,
-                        reminders: []
-                      };
                     }
-                    reply(results);
-                  } catch (error) {
+                  })
+                  .catch((error) => {
                     console.log('Error generating prep reminders', error);
                     reply(Boom.badImplementation('An internal error occurred'));
-                  }
-                })
-                .catch((error) => {
-                  console.log('Error generating prep reminders', error);
-                  reply(Boom.badImplementation('An internal error occurred'));
-                });
-            } else {
-              let EIDLabReminderService = require('./service/eid/eid-lab-reminder.service');
-              EIDLabReminderService.pendingEIDReminders(
-                request.params,
-                config.hivLabSystem
-              )
-                .then((eidReminders) => {
-                  combineRequestParams.referenceDate =
-                    combineRequestParams.referenceDate + ' 23:59:59';
-                  let reportParams = etlHelpers.getReportParams(
-                    'clinical-reminder-report',
-                    [
-                      'referenceDate',
-                      'patientUuid',
-                      'offSetParam',
-                      'limitParam'
-                    ],
-                    combineRequestParams
-                  );
-                  let report = new BaseMysqlReport(
-                    'clinicalReminderReport',
-                    reportParams.requestParams
-                  );
-                  report
-                    .generateReport()
-                    .then((results) => {
-                      try {
-                        if (
-                          results.results.results.length > 0 &&
-                          results.results.results[0].hide_patient_reminder === 0
-                        ) {
-                          patientReminderService
-                            .generateReminders(
-                              results.results.results,
-                              eidReminders
-                            )
-                            .then((res) => {
-                              results.result = res;
-                              reply(results);
-                            });
-                        } else {
-                          results.result = {
-                            person_uuid: combineRequestParams.person_uuid,
-                            reminders: []
-                          };
-                          reply(results);
+                  });
+              } else {
+                let EIDLabReminderService = require('./service/eid/eid-lab-reminder.service');
+                EIDLabReminderService.pendingEIDReminders(
+                  request.params,
+                  config.hivLabSystem
+                )
+                  .then((eidReminders) => {
+                    combineRequestParams.referenceDate =
+                      combineRequestParams.referenceDate + ' 23:59:59';
+                    let reportParams = etlHelpers.getReportParams(
+                      'clinical-reminder-report',
+                      [
+                        'referenceDate',
+                        'patientUuid',
+                        'offSetParam',
+                        'limitParam'
+                      ],
+                      combineRequestParams
+                    );
+                    let report = new BaseMysqlReport(
+                      'clinicalReminderReport',
+                      reportParams.requestParams
+                    );
+                    report
+                      .generateReport()
+                      .then((results) => {
+                        try {
+                          if (
+                            results.results.results.length > 0 &&
+                            results.results.results[0].hide_patient_reminder ===
+                              0
+                          ) {
+                            patientReminderService
+                              .generateReminders(
+                                results.results.results,
+                                eidReminders
+                              )
+                              .then((res) => {
+                                results.result = res;
+                                reply(results);
+                              });
+                          } else {
+                            results.result = {
+                              person_uuid: combineRequestParams.person_uuid,
+                              reminders: []
+                            };
+                            reply(results);
+                          }
+                        } catch (error) {
+                          console.log('Error generating reminders', error);
+                          reply(
+                            Boom.badImplementation('An internal error occurred')
+                          );
                         }
-                      } catch (error) {
+                      })
+                      .catch((error) => {
                         console.log('Error generating reminders', error);
                         reply(
                           Boom.badImplementation('An internal error occurred')
                         );
-                      }
-                    })
-                    .catch((error) => {
-                      console.log('Error generating reminders', error);
-                      reply(
-                        Boom.badImplementation('An internal error occurred')
-                      );
-                    });
-                })
-                .catch((err) => {
-                  console.log('EID lab results err', err);
-                  reply(err);
-                });
-            }
+                      });
+                  })
+                  .catch((err) => {
+                    console.log('EID lab results err', err);
+                    reply(err);
+                  });
+              }
+            });
           });
         },
         description:
@@ -1005,39 +1161,51 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/forms/error',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          dao.logError(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.logError(request, reply);
+          });
         }
       }
     },
     {
       method: 'POST',
       path: '/javascript-errors',
-      config: {
-        handler: function (request, reply) {
-          if (request.payload) {
-            var logger = new winston.Logger({
-              transports: [
-                new winston.transports.File({
-                  level: 'info',
-                  filename: 'client-logs.log',
-                  handleExceptions: true,
-                  json: true,
-                  colorize: false
-                })
-              ],
-              exitOnError: false
-            });
-            logger.add(require('winston-daily-rotate-file'), {
-              filename: path.join(__dirname, 'logs', 'client-logs.log')
-            });
-            logger.info(request.payload);
-          }
+      options: {
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          reply({
-            message: 'ok'
+            if (request.payload) {
+              var logger = new winston.Logger({
+                transports: [
+                  new winston.transports.File({
+                    level: 'info',
+                    filename: 'client-logs.log',
+                    handleExceptions: true,
+                    json: true,
+                    colorize: false
+                  })
+                ],
+                exitOnError: false
+              });
+              logger.add(require('winston-daily-rotate-file'), {
+                filename: path.join(__dirname, 'logs', 'client-logs.log')
+              });
+              logger.info(request.payload);
+            }
+
+            reply({
+              message: 'ok'
+            });
           });
         }
       }
@@ -1045,27 +1213,39 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{uuid}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          dao.getPatient(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatient(request, reply);
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/program-visit-configs',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          // var requestParams = Object.assign({}, request.query, request.params);
-          reply(patientProgramService.getAllProgramsConfig());
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            // var requestParams = Object.assign({}, request.query, request.params);
+            reply(patientProgramService.getAllProgramsConfig());
+          });
         },
         description: 'Get a list of programs ',
         notes: 'Returns a  list of programs',
@@ -1086,42 +1266,48 @@ module.exports = (function () {
       method: 'GET',
       path:
         '/patient/{patientUuid}/program/{programUuid}/enrollment/{enrollmentUuid}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          const requestParams = Object.assign(
-            {},
-            request.query,
-            request.params
-          );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          const patientUuid = requestParams.patientUuid;
-          const programUuid = requestParams.programUuid;
-          const enrollment = requestParams.enrollmentUuid;
-          const locationUuid = requestParams.intendedLocationUuid || '';
-          const retroSpective = requestParams.retroSpective;
-          const visitDate = requestParams.visitDate;
+            const requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
 
-          patientProgramService
-            .getPatientProgramVisits(
-              patientUuid,
-              programUuid,
-              enrollment,
-              locationUuid,
-              retroSpective,
-              visitDate
-            )
-            .then((programVisits) => {
-              reply(programVisits);
-            })
-            .catch((error) => {
-              reply(Boom.badImplementation('An internal error occurred'));
-            });
+            const patientUuid = requestParams.patientUuid;
+            const programUuid = requestParams.programUuid;
+            const enrollment = requestParams.enrollmentUuid;
+            const locationUuid = requestParams.intendedLocationUuid || '';
+            const retroSpective = requestParams.retroSpective;
+            const visitDate = requestParams.visitDate;
+
+            patientProgramService
+              .getPatientProgramVisits(
+                patientUuid,
+                programUuid,
+                enrollment,
+                locationUuid,
+                retroSpective,
+                visitDate
+              )
+              .then((programVisits) => {
+                reply(programVisits);
+              })
+              .catch((error) => {
+                reply(Boom.badImplementation('An internal error occurred'));
+              });
+          });
         },
         description: 'Get program config of a patient',
         notes: 'Returns program config  of a patient',
@@ -1151,15 +1337,21 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{uuid}/clinical-notes',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicalNotes(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicalNotes(request, reply);
+          });
         },
         description: 'Get patient clinical notes',
         notes:
@@ -1181,45 +1373,63 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{uuid}/hiv-patient-clinical-summary',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
           }
         },
-        handler: function (request, reply) {
-          dao.getHivPatientClinicalSummary(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getHivPatientClinicalSummary(request, reply);
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/location/{id}/hiv-patient-clinical-summary',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
           }
         },
-        handler: function (request, reply) {
-          dao.getHivPatientClinicalSummary(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getHivPatientClinicalSummary(request, reply);
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/patient/{uuid}/vitals',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          dao.getPatientVitals(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatientVitals(request, reply);
+          });
         },
         description: 'Get patient vitals',
         notes:
@@ -1240,15 +1450,21 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{uuid}/data',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          dao.getPatientData(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatientData(request, reply);
+          });
         },
         description: 'Get patient lab test data',
         notes:
@@ -1269,22 +1485,28 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{uuid}/hiv-summary',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          dao.getPatientHivSummary(request).then((summary) => {
-            if (summary.result && summary.result.length > 0) {
-              const transformed = etlHelpers.transformMedicalRefillToClinical(
-                summary.result
-              );
-              summary.result = transformed;
-            }
-            reply(summary);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatientHivSummary(request).then((summary) => {
+              if (summary.result && summary.result.length > 0) {
+                const transformed = etlHelpers.transformMedicalRefillToClinical(
+                  summary.result
+                );
+                summary.result = transformed;
+              }
+              reply(summary);
+            });
           });
         },
         description: 'Get patient HIV summary',
@@ -1308,15 +1530,21 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{uuid}/oncology/summary',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          dao.getPatientOncologySummary(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatientOncologySummary(request, reply);
+          });
         },
         description: 'Get patient Oncology summary',
         notes:
@@ -1339,16 +1567,22 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{uuid}/patient-summary',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          dao.getHivNegativesPatientSummary(request).then((summary) => {
-            reply(summary);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getHivNegativesPatientSummary(request).then((summary) => {
+              reply(summary);
+            });
           });
         },
         description: 'Get patient summary',
@@ -1372,7 +1606,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/clinic-encounter-data',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -1387,36 +1621,48 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicEncounterData(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicEncounterData(request, reply);
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/patient-program-config',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          var requestParams = Object.assign({}, request.query);
-          if (!requestParams.patientUuid) {
-            reply(
-              Boom.badImplementation(
-                "The patient's uuid(universally unique " +
-                  'identifier must be provided as a query param'
-              )
-            );
-          }
-          patientProgramService
-            .validateEnrollmentOptions(requestParams.patientUuid)
-            .then(function (programConfigs) {
-              reply(programConfigs);
-            })
-            .catch(function (err) {
-              console.log('there is an error', err);
-              reply(Boom.badImplementation(err));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var requestParams = Object.assign({}, request.query);
+            if (!requestParams.patientUuid) {
+              reply(
+                Boom.badImplementation(
+                  "The patient's uuid(universally unique " +
+                    'identifier must be provided as a query param'
+                )
+              );
+            }
+            patientProgramService
+              .validateEnrollmentOptions(requestParams.patientUuid)
+              .then(function (programConfigs) {
+                reply(programConfigs);
+              })
+              .catch(function (err) {
+                console.log('there is an error', err);
+                reply(Boom.badImplementation(err));
+              });
+          });
         },
         description: 'Get a list of programs ',
         notes: 'Returns a  list of programs',
@@ -1432,7 +1678,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/monthly-appointment-visits',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -1447,8 +1693,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicMonthlySummary(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicMonthlySummary(request, reply);
+          });
         },
         description: "Get a location's monthly appointment visits",
         notes:
@@ -1471,7 +1723,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/hiv-summary-indicators',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -1486,8 +1738,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicHivSummayIndicators(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicHivSummayIndicators(request, reply);
+          });
         },
         description: "Get a location's HIV summary indicators",
         notes: "Returns a location's HIV summary indicators.",
@@ -1509,7 +1767,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinical-hiv-comparative-overview',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -1524,40 +1782,47 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'clinical-hiv-comparative-overview-report';
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let compineRequestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'clinical-hiv-comparative-overview-report',
-              [
-                'startDate',
-                'endDate',
-                'indicator',
-                'locationUuids',
-                'locations',
-                'order',
-                'gender'
-              ],
-              compineRequestParams
-            );
-            console.log('Params', compineRequestParams);
-            let service = new hivComparativeOverviewService();
-            service
-              .getAggregateReport(compineRequestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'clinical-hiv-comparative-overview-report';
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let compineRequestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'clinical-hiv-comparative-overview-report',
+                [
+                  'startDate',
+                  'endDate',
+                  'indicator',
+                  'locationUuids',
+                  'locations',
+                  'order',
+                  'gender'
+                ],
+                compineRequestParams
+              );
+              console.log('Params', compineRequestParams);
+              let service = new hivComparativeOverviewService();
+              service
+                .getAggregateReport(compineRequestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get the clinical hiv comparative overview summary',
@@ -1570,7 +1835,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinical-hiv-comparative-overview/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -1585,28 +1850,35 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'clinical-hiv-comparative-overview-report';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            requestParams.limitParam = requestParams.limit;
-            requestParams.offSetParam = requestParams.startIndex;
-            let service = new hivComparativeOverviewService();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                _.each(result.result, (item) => {
-                  item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'clinical-hiv-comparative-overview-report';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              requestParams.limitParam = requestParams.limit;
+              requestParams.offSetParam = requestParams.startIndex;
+              let service = new hivComparativeOverviewService();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  _.each(result.result, (item) => {
+                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                  });
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
                 });
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+            });
           });
         },
         description: 'Get the clinical hiv comparative overview patient',
@@ -1643,7 +1915,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-referrals',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -1663,29 +1935,35 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          request.query.reportName = 'patient-referral-report';
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new PatientReferralService();
-            // remove gender filter
-            delete requestParams['gender'];
-            service
-              .getAggregateReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            //security check
+            request.query.reportName = 'patient-referral-report';
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new PatientReferralService();
+              // remove gender filter
+              delete requestParams['gender'];
+              service
+                .getAggregateReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get patient referral for selected clinic',
@@ -1716,7 +1994,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/referral-patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -1736,23 +2014,33 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          request.query.reportName = 'patient-referral-report';
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          let requestParams = Object.assign({}, request.query, request.params);
-          requestParams.reportName = 'referralAggregate';
-          let service = new PatientReferralService();
-          service
-            .getReferralPatientListReport(requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            //security check
+            request.query.reportName = 'patient-referral-report';
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            requestParams.reportName = 'referralAggregate';
+            let service = new PatientReferralService();
+            service
+              .getReferralPatientListReport(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get patient referral for selected clinic',
         notes:
@@ -1785,21 +2073,27 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-referral-details/{locationUuid}/{enrollmentUuid}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          patientReferralDao
-            .getPatientReferralByEnrollmentUuid(
-              request.params['locationUuid'],
-              request.params['enrollmentUuid']
-            )
-            .then(function (referralLocation) {
-              reply(referralLocation);
-            })
-            .catch(function (error) {
-              reply(new Boom(500, 'Internal server error.', '', '', error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            patientReferralDao
+              .getPatientReferralByEnrollmentUuid(
+                request.params['locationUuid'],
+                request.params['enrollmentUuid']
+              )
+              .then(function (referralLocation) {
+                reply(referralLocation);
+              })
+              .catch(function (error) {
+                reply(new Boom(500, 'Internal server error.', '', '', error));
+              });
+          });
         },
         description: 'Get patient referral details by program enrollment uuid',
         notes:
@@ -1810,25 +2104,33 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/patient-referral',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          patientReferralDao
-            .createPatientReferral(request.payload)
-            .then(function (newCohortReferral) {
-              reply(newCohortReferral);
-            })
-            .catch(function (error) {
-              if (error && error.isValid === false) {
-                reply(
-                  Boom.badRequest('Validation errors:' + JSON.stringify(error))
-                );
-              } else {
-                console.error(error);
-                reply(new Boom(500, 'Internal server error.', '', '', error));
-              }
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            patientReferralDao
+              .createPatientReferral(request.payload)
+              .then(function (newCohortReferral) {
+                reply(newCohortReferral);
+              })
+              .catch(function (error) {
+                if (error && error.isValid === false) {
+                  reply(
+                    Boom.badRequest(
+                      'Validation errors:' + JSON.stringify(error)
+                    )
+                  );
+                } else {
+                  console.error(error);
+                  reply(new Boom(500, 'Internal server error.', '', '', error));
+                }
+              });
+          });
         },
         description: 'Post patient referrals for a given referral',
         notes: 'Api endpoint that posts patient referrals',
@@ -1838,28 +2140,36 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/patient-referral/{patientReferralId}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          // console.log('xxxxxxxxxxxx', request)
-          patientReferralDao
-            .updatePatientReferralNotification(
-              request.params['patientReferralId'],
-              request.payload
-            )
-            .then(function (updatedPatientReferral) {
-              reply(updatedPatientReferral);
-            })
-            .catch(function (error) {
-              if (error && error.isValid === false) {
-                reply(
-                  Boom.badRequest('Validation errors:' + JSON.stringify(error))
-                );
-              } else {
-                reply(new Boom(500, 'Internal server error.', '', '', error));
-              }
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            // console.log('xxxxxxxxxxxx', request)
+            patientReferralDao
+              .updatePatientReferralNotification(
+                request.params['patientReferralId'],
+                request.payload
+              )
+              .then(function (updatedPatientReferral) {
+                reply(updatedPatientReferral);
+              })
+              .catch(function (error) {
+                if (error && error.isValid === false) {
+                  reply(
+                    Boom.badRequest(
+                      'Validation errors:' + JSON.stringify(error)
+                    )
+                  );
+                } else {
+                  reply(new Boom(500, 'Internal server error.', '', '', error));
+                }
+              });
+          });
         },
         description: 'Update patient referral notification status',
         notes:
@@ -1870,7 +2180,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinical-patient-care-status-overview',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -1885,36 +2195,42 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName =
-            'clinical-patient-care-status-overview-report';
-          let compineRequestParams = Object.assign(
-            {},
-            request.query,
-            request.params
-          );
-          let reportParams = etlHelpers.getReportParams(
-            'clinical-patient-care-status-overview-report',
-            [
-              'startDate',
-              'endDate',
-              'indicator',
-              'locationUuids',
-              'order',
-              'gender'
-            ],
-            compineRequestParams
-          );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          let service = new clinicalPatientCareStatusOverviewService();
-          service
-            .getAggregateReport(reportParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+            request.query.reportName =
+              'clinical-patient-care-status-overview-report';
+            let compineRequestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'clinical-patient-care-status-overview-report',
+              [
+                'startDate',
+                'endDate',
+                'indicator',
+                'locationUuids',
+                'order',
+                'gender'
+              ],
+              compineRequestParams
+            );
+
+            let service = new clinicalPatientCareStatusOverviewService();
+            service
+              .getAggregateReport(reportParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get the clinical patint care status patient list',
         notes:
@@ -1926,7 +2242,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinical-patient-care-status-overview/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -1941,19 +2257,29 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName =
-            'clinical-patient-care-status-overview-report';
-          let requestParams = Object.assign({}, request.query, request.params);
-          let service = new PatientStatusChangeTrackerService();
-          service
-            .getPatientListReport(requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'clinical-patient-care-status-overview-report';
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let service = new PatientStatusChangeTrackerService();
+            service
+              .getPatientListReport(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description:
           'Get the clinical-patient-care-status-overview patient list',
@@ -1988,7 +2314,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinical-art-overview',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2003,35 +2329,41 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'clinical-art-overview-report';
-          let compineRequestParams = Object.assign(
-            {},
-            request.query,
-            request.params
-          );
-          let reportParams = etlHelpers.getReportParams(
-            'clinical-art-overview-report',
-            [
-              'startDate',
-              'endDate',
-              'indicator',
-              'locationUuids',
-              'order',
-              'gender'
-            ],
-            compineRequestParams
-          );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          let service = new clinicalArtOverviewService();
-          service
-            .getAggregateReport(reportParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+            request.query.reportName = 'clinical-art-overview-report';
+            let compineRequestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'clinical-art-overview-report',
+              [
+                'startDate',
+                'endDate',
+                'indicator',
+                'locationUuids',
+                'order',
+                'gender'
+              ],
+              compineRequestParams
+            );
+
+            let service = new clinicalArtOverviewService();
+            service
+              .getAggregateReport(reportParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get the clinical art  overview summary',
         notes:
@@ -2043,7 +2375,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinical-art-overview/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2058,18 +2390,28 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'clinical-art-overview-report';
-          let requestParams = Object.assign({}, request.query, request.params);
-          let service = new clinicalArtOverviewService();
-          service
-            .getPatientListReport(requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'clinical-art-overview-report';
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let service = new clinicalArtOverviewService();
+            service
+              .getPatientListReport(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get the  clinical art overview patient list',
         notes: 'Returns the patient list for clinical-art-overview report',
@@ -2104,7 +2446,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/appointment-schedule',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2119,8 +2461,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicAppointmentSchedule(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicAppointmentSchedule(request, reply);
+          });
         },
         description: "Get a location's appointment schedule",
         notes:
@@ -2143,7 +2491,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-flow-data',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2158,9 +2506,15 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            dao.getPatientFlowData(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              dao.getPatientFlowData(request, reply);
+            });
           });
         },
         description: "Get a location's patient movement and waiting time data",
@@ -2178,26 +2532,36 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinic-flow-provider-statistics/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
           }
         },
-        handler: function (request, reply) {
-          let requestParams = Object.assign({}, request.query, request.params);
-          requestParams.reportName = 'clinic-flow-provider-statistics-report';
-          const clinicFlowService = new ClinicFlowService();
-          clinicFlowService
-            .getPatientListReport(requestParams)
-            .then((results) => {
-              reply(results);
-            })
-            .catch((error) => {
-              console.error(error);
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            requestParams.reportName = 'clinic-flow-provider-statistics-report';
+            const clinicFlowService = new ClinicFlowService();
+            clinicFlowService
+              .getPatientListReport(requestParams)
+              .then((results) => {
+                reply(results);
+              })
+              .catch((error) => {
+                console.error(error);
+                reply(error);
+              });
+          });
         },
         description:
           'Get patient list for the provider statistics in clinic flow',
@@ -2215,7 +2579,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/clinic-lab-orders-data',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2230,9 +2594,15 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            dao.getClinicLabOrdersData(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              dao.getClinicLabOrdersData(request, reply);
+            });
           });
         },
         description: "Get a location's lab orders data",
@@ -2250,24 +2620,30 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{patient_uuid}/monthly-care-status',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          let history = new PatientMonthlyStatusHistory();
-          history
-            .getPatientMonthlyStatusHistory(
-              request.params.patient_uuid,
-              request.query.startDate,
-              request.query.endDate
-            )
-            .then((result) => {
-              reply(result);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let history = new PatientMonthlyStatusHistory();
+            history
+              .getPatientMonthlyStatusHistory(
+                request.params.patient_uuid,
+                request.query.startDate,
+                request.query.endDate
+              )
+              .then((result) => {
+                reply(result);
+              });
+          });
         },
         description: 'Get the the care status of patient on a monthly basis',
         notes:
@@ -2284,33 +2660,43 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{patient_uuid}/daily-care-status',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          let requestParams = Object.assign({}, request.query, request.params);
-          // let reportParams = etlHelpers.getReportParams('patient-daily-care-status', ['referenceDate', 'patient_uuid'],
-          //     requestParams);
-          reportParams.limitParam = reportParams.limit;
-          reportParams.offSetParam = reportParams.startIndex;
-          let report = new BaseMysqlReport(
-            'patientDailyCareStatus',
-            reportParams
-          );
-          report
-            .generateReport()
-            .then((results) => {
-              results.result = results.results.results;
-              delete results['results'];
-              reply(results);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            // let reportParams = etlHelpers.getReportParams('patient-daily-care-status', ['referenceDate', 'patient_uuid'],
+            //     requestParams);
+            reportParams.limitParam = reportParams.limit;
+            reportParams.offSetParam = reportParams.startIndex;
+            let report = new BaseMysqlReport(
+              'patientDailyCareStatus',
+              reportParams
+            );
+            report
+              .generateReport()
+              .then((results) => {
+                results.result = results.results.results;
+                delete results['results'];
+                reply(results);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get the the care status of patient on a given date',
         notes: 'Returns the care status of a patient on a given day',
@@ -2326,7 +2712,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/daily-visits',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2341,8 +2727,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicDailyVisits(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicDailyVisits(request, reply);
+          });
         },
         description: "Get a location's daily visits",
         notes:
@@ -2365,7 +2757,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/has-not-returned',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2380,8 +2772,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getHasNotReturned(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getHasNotReturned(request, reply);
+          });
         },
         description: "Get a location's not returned visits",
         notes:
@@ -2404,7 +2802,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/monthly-appointment-schedule',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2419,8 +2817,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicMonthlyAppointmentSchedule(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicMonthlyAppointmentSchedule(request, reply);
+          });
         },
         description: "Get a location's monthly appointment schedule",
         notes: "Returns a location's monthly appointment schedule.",
@@ -2442,7 +2846,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/monthly-visits',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2457,8 +2861,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getClinicMonthlyVisits(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicMonthlyVisits(request, reply);
+          });
         },
         description: "Get a location's monthly visits",
         notes:
@@ -2481,10 +2891,16 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{uuid}/defaulter-list',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          dao.getClinicDefaulterList(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getClinicDefaulterList(request, reply);
+          });
         },
         plugins: {
           hapiAuthorization: {
@@ -2519,31 +2935,43 @@ module.exports = (function () {
     {
       method: 'OPTIONS',
       path: '/{param*}',
-      handler: function (request, reply) {
-        // echo request headers back to caller (allow any requested)
-        var additionalHeaders = [];
-        if (request.headers['access-control-request-headers']) {
-          additionalHeaders = request.headers[
-            'access-control-request-headers'
-          ].split(', ');
-        }
-        var headers = _.union(
-          'Authorization, Content-Type, If-None-Match'.split(', '),
-          additionalHeaders
-        );
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-        reply()
-          .type('text/plain')
-          .header('Access-Control-Allow-Headers', headers.join(', '));
+          // echo request headers back to caller (allow any requested)
+          var additionalHeaders = [];
+          if (request.headers['access-control-request-headers']) {
+            additionalHeaders = request.headers[
+              'access-control-request-headers'
+            ].split(', ');
+          }
+          var headers = _.union(
+            'Authorization, Content-Type, If-None-Match'.split(', '),
+            additionalHeaders
+          );
+
+          reply()
+            .type('text/plain')
+            .header('Access-Control-Allow-Headers', headers.join(', '));
+        });
       }
     },
     {
       method: 'GET',
       path: '/custom_data/{userParams*3}',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          dao.getCustomData(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getCustomData(request, reply);
+          });
         }
         /*
                      the rest request and query expression should be
@@ -2556,7 +2984,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/creation/statistics',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2571,8 +2999,14 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          dao.getPatientCountGroupedByLocation(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatientCountGroupedByLocation(request, reply);
+          });
         },
         description: 'Get patients created by period',
         notes:
@@ -2596,15 +3030,21 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{location}/patient/creation/statistics',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewDataEntryStats, privileges.canViewPatient]
           }
         },
-        handler: function (request, reply) {
-          dao.getPatientDetailsGroupedByLocation(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatientDetailsGroupedByLocation(request, reply);
+          });
         },
         description: 'Get details of patient created in a location',
         notes: 'Returns details of patient created in a location',
@@ -2632,7 +3072,7 @@ module.exports = (function () {
 
       method: 'GET',
       path: '/get-report-by-report-name',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -2705,44 +3145,50 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          if (!authorizer.hasReportAccess(request.query.report)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              request.query.report,
-              [
-                'startDate',
-                'endDate',
-                'indicator',
-                'locationUuids',
-                'locations',
-                'referenceDate',
-                'patientUuid',
-                'startAge',
-                'endAge',
-                'age',
-                'order',
-                'gender'
-              ],
-              requestParams
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            dao
-              .runReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+            //security check
+            if (!authorizer.hasReportAccess(request.query.report)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                request.query.report,
+                [
+                  'startDate',
+                  'endDate',
+                  'indicator',
+                  'locationUuids',
+                  'locations',
+                  'referenceDate',
+                  'patientUuid',
+                  'startAge',
+                  'endAge',
+                  'age',
+                  'order',
+                  'gender'
+                ],
+                requestParams
+              );
+
+              dao
+                .runReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get report ',
@@ -2766,7 +3212,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/MOH-731-report',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -2791,60 +3237,66 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            // console.log('requestParams', requestParams);
-            let reportParams = etlHelpers.getReportParams(
-              request.query.reportName,
-              [
-                'startDate',
-                'endDate',
-                'locationUuids',
-                'locations',
-                'isAggregated'
-              ],
-              requestParams
-            );
-            console.log('report params=>>', reportParams);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            if (request.query.reportName === 'MOH-731-report-2017') {
-              let moh731 = new Moh731Report(
-                'MOH-731-greencard',
-                reportParams.requestParams
-              );
-
-              moh731
-                .generateReport()
-                .then((results) => {
-                  reply(results);
-                })
-                .catch((err) => {
-                  reply(Boom.internal('An error occured', err));
-                });
-            } else {
-              let moh731 = new Moh731Report(
-                'MOH-731-bluecard',
-                reportParams.requestParams
-              );
-
-              moh731
-                .generateReport()
-                .then((results) => {
-                  reply(results);
-                })
-                .catch((err) => {
-                  reply(Boom.internal('An error occured', err));
-                });
+            //security check
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
             }
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              // console.log('requestParams', requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                request.query.reportName,
+                [
+                  'startDate',
+                  'endDate',
+                  'locationUuids',
+                  'locations',
+                  'isAggregated'
+                ],
+                requestParams
+              );
+              console.log('report params=>>', reportParams);
+
+              if (request.query.reportName === 'MOH-731-report-2017') {
+                let moh731 = new Moh731Report(
+                  'MOH-731-greencard',
+                  reportParams.requestParams
+                );
+
+                moh731
+                  .generateReport()
+                  .then((results) => {
+                    reply(results);
+                  })
+                  .catch((err) => {
+                    reply(Boom.internal('An error occured', err));
+                  });
+              } else {
+                let moh731 = new Moh731Report(
+                  'MOH-731-bluecard',
+                  reportParams.requestParams
+                );
+
+                moh731
+                  .generateReport()
+                  .then((results) => {
+                    reply(results);
+                  })
+                  .catch((err) => {
+                    reply(Boom.internal('An error occured', err));
+                  });
+              }
+            });
           });
         },
         description: 'Get the MOH 731 report',
@@ -2878,7 +3330,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/MOH-731-report/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -2893,59 +3345,65 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-
-            let requestCopy = _.cloneDeep(requestParams);
-            // console.log('requestParams', requestParams);
-            let reportParams = etlHelpers.getReportParams(
-              request.query.reportName,
-              [
-                'startDate',
-                'endDate',
-                'locationUuids',
-                'locations',
-                'isAggregated'
-              ],
-              requestParams
-            );
-            requestCopy.locations = reportParams.requestParams.locations;
-            // console.log('report params', reportParams)
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
-            if (request.query.reportName === 'MOH-731-report-2017') {
-              let moh731 = new Moh731Report('MOH-731-greencard', requestCopy);
-
-              moh731
-                .generatePatientListReport(requestParams.indicator.split(','))
-                .then((results) => {
-                  reply(results);
-                })
-                .catch((err) => {
-                  reply(Boom.internal('An error occured', err));
-                });
-            } else {
-              let moh731 = new Moh731Report('MOH-731-bluecard', requestCopy);
-
-              moh731
-                .generatePatientListReport(requestParams.indicator.split(','))
-                .then((results) => {
-                  reply(results);
-                })
-                .catch((err) => {
-                  reply(Boom.internal('An error occured', err));
-                });
+            //security check
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
             }
+
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+
+              let requestCopy = _.cloneDeep(requestParams);
+              // console.log('requestParams', requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                request.query.reportName,
+                [
+                  'startDate',
+                  'endDate',
+                  'locationUuids',
+                  'locations',
+                  'isAggregated'
+                ],
+                requestParams
+              );
+              requestCopy.locations = reportParams.requestParams.locations;
+              // console.log('report params', reportParams)
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+              if (request.query.reportName === 'MOH-731-report-2017') {
+                let moh731 = new Moh731Report('MOH-731-greencard', requestCopy);
+
+                moh731
+                  .generatePatientListReport(requestParams.indicator.split(','))
+                  .then((results) => {
+                    reply(results);
+                  })
+                  .catch((err) => {
+                    reply(Boom.internal('An error occured', err));
+                  });
+              } else {
+                let moh731 = new Moh731Report('MOH-731-bluecard', requestCopy);
+
+                moh731
+                  .generatePatientListReport(requestParams.indicator.split(','))
+                  .then((results) => {
+                    reply(results);
+                  })
+                  .catch((err) => {
+                    reply(Boom.internal('An error occured', err));
+                  });
+              }
+            });
           });
         },
         description: 'Get the MOH 731 patient list',
@@ -2981,7 +3439,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-status-change-tracking',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -3001,42 +3459,51 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'patient-status-change-tracker-report';
-          //security check
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                request.query.reportName,
-                [
-                  'startDate',
-                  'endDate',
-                  'locationUuids',
-                  'locations',
-                  'analysis'
-                ],
-                requestParams
-              );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              let service = new PatientStatusChangeTrackerService();
-              service
-                .getAggregateReport(reportParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            request.query.reportName = 'patient-status-change-tracker-report';
+            //security check
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    request.query.reportName,
+                    [
+                      'startDate',
+                      'endDate',
+                      'locationUuids',
+                      'locations',
+                      'analysis'
+                    ],
+                    requestParams
+                  );
+
+                  let service = new PatientStatusChangeTrackerService();
+                  service
+                    .getAggregateReport(reportParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
+              );
+            }
+          });
         },
         description: 'Get the Patient Status report',
         notes: 'Api endpoint that returns Patient Status Change Tracker Report',
@@ -3062,36 +3529,45 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-status-change-tracking/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'patient-status-change-tracker-report';
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'patient-status-change-tracker-report';
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let service = new PatientStatusChangeTrackerService();
+                  service
+                    .getPatientListReport(requestParams)
+                    .then((result) => {
+                      _.each(result.result, (item) => {
+                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                      });
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-              let service = new PatientStatusChangeTrackerService();
-              service
-                .getPatientListReport(requestParams)
-                .then((result) => {
-                  _.each(result.result, (item) => {
-                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                  });
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         description: 'Get Patient Status report patient list',
         notes: 'Returns the patient list for Patient Status report',
@@ -3126,32 +3602,42 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/user-cohorts',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          request.query.reportName = 'cohort-report';
-          //security check
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          request.params.limit = 1000;
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'cohort-report',
-            ['userUuid'],
-            requestParams
-          );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          let service = new cohortUserService();
-          service
-            .getAggregateReport(reportParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+            request.query.reportName = 'cohort-report';
+            //security check
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            request.params.limit = 1000;
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'cohort-report',
+              ['userUuid'],
+              requestParams
+            );
+
+            let service = new cohortUserService();
+            service
+              .getAggregateReport(reportParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get cohort(s) based on user uuid',
         notes: 'Api endpoint that returns cohort(s) based on the user uuid',
@@ -3161,22 +3647,28 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/cohort-user/{cohortUserId}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          patientList
-            .getCohortUser(request.params['cohortUserId'])
-            .then(function (cohortUser) {
-              if (cohortUser === null) {
-                reply(Boom.notFound('Resource does not exist'));
-              } else {
-                reply(cohortUser);
-              }
-            })
-            .catch(function (error) {
-              reply(new Boom(500, 'Internal server error.', '', '', error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            patientList
+              .getCohortUser(request.params['cohortUserId'])
+              .then(function (cohortUser) {
+                if (cohortUser === null) {
+                  reply(Boom.notFound('Resource does not exist'));
+                } else {
+                  reply(cohortUser);
+                }
+              })
+              .catch(function (error) {
+                reply(new Boom(500, 'Internal server error.', '', '', error));
+              });
+          });
         },
         description: 'Get cohort users for a certain cohort',
         notes:
@@ -3187,18 +3679,24 @@ module.exports = (function () {
     {
       method: 'DELETE',
       path: '/cohort-user/{cohortUserId}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          patientList
-            .voidCohortUser(request.params['cohortUserId'])
-            .then(function (message) {
-              reply(message);
-            })
-            .catch(function (error) {
-              reply(new Boom(500, 'Internal server error.', '', '', error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            patientList
+              .voidCohortUser(request.params['cohortUserId'])
+              .then(function (message) {
+                reply(message);
+              })
+              .catch(function (error) {
+                reply(new Boom(500, 'Internal server error.', '', '', error));
+              });
+          });
         },
         description: 'Get cohort users for a certain cohort',
         notes:
@@ -3209,24 +3707,32 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/cohort-user/{cohortUserId}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          patientList
-            .updateCohortUser(request.params['cohortUserId'], request.payload)
-            .then(function (updatedCohortUser) {
-              reply(updatedCohortUser);
-            })
-            .catch(function (error) {
-              if (error && error.isValid === false) {
-                reply(
-                  Boom.badRequest('Validation errors:' + JSON.stringify(error))
-                );
-              } else {
-                reply(new Boom(500, 'Internal server error.', '', '', error));
-              }
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            patientList
+              .updateCohortUser(request.params['cohortUserId'], request.payload)
+              .then(function (updatedCohortUser) {
+                reply(updatedCohortUser);
+              })
+              .catch(function (error) {
+                if (error && error.isValid === false) {
+                  reply(
+                    Boom.badRequest(
+                      'Validation errors:' + JSON.stringify(error)
+                    )
+                  );
+                } else {
+                  reply(new Boom(500, 'Internal server error.', '', '', error));
+                }
+              });
+          });
         },
         description: 'Get cohort users for a certain cohort',
         notes:
@@ -3237,25 +3743,33 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/cohort-user',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          patientList
-            .createCohortUser(request.payload)
-            .then(function (newCohortUser) {
-              reply(newCohortUser);
-            })
-            .catch(function (error) {
-              if (error && error.isValid === false) {
-                reply(
-                  Boom.badRequest('Validation errors:' + JSON.stringify(error))
-                );
-              } else {
-                console.error(error);
-                reply(new Boom(500, 'Internal server error.', '', '', error));
-              }
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            patientList
+              .createCohortUser(request.payload)
+              .then(function (newCohortUser) {
+                reply(newCohortUser);
+              })
+              .catch(function (error) {
+                if (error && error.isValid === false) {
+                  reply(
+                    Boom.badRequest(
+                      'Validation errors:' + JSON.stringify(error)
+                    )
+                  );
+                } else {
+                  console.error(error);
+                  reply(new Boom(500, 'Internal server error.', '', '', error));
+                }
+              });
+          });
         },
         description: 'Get cohort users for a certain cohort',
         notes:
@@ -3266,18 +3780,24 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/cohort/{cohortUuid}/cohort-users',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          patientList
-            .getCohortUsersByCohortUuid(request.params['cohortUuid'])
-            .then(function (cohortUsers) {
-              reply(cohortUsers);
-            })
-            .catch(function (error) {
-              reply(new Boom(500, 'Internal server error.', '', '', error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            patientList
+              .getCohortUsersByCohortUuid(request.params['cohortUuid'])
+              .then(function (cohortUsers) {
+                reply(cohortUsers);
+              })
+              .catch(function (error) {
+                reply(new Boom(500, 'Internal server error.', '', '', error));
+              });
+          });
         },
         description: 'Get cohort users for a certain cohort',
         notes:
@@ -3288,7 +3808,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-register-report',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -3302,43 +3822,52 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                request.query.reportName,
-                [
-                  'startDate',
-                  'endDate',
-                  'indicators',
-                  'locationUuids',
-                  'groupBy',
-                  'limit',
-                  'startAge',
-                  'endAge',
-                  'order',
-                  'gender',
-                  'countBy'
-                ],
-                requestParams
-              );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              let service = new PatientRegisterReportService();
-              service
-                .getAggregateReport(reportParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    request.query.reportName,
+                    [
+                      'startDate',
+                      'endDate',
+                      'indicators',
+                      'locationUuids',
+                      'groupBy',
+                      'limit',
+                      'startAge',
+                      'endAge',
+                      'order',
+                      'gender',
+                      'countBy'
+                    ],
+                    requestParams
+                  );
+
+                  let service = new PatientRegisterReportService();
+                  service
+                    .getAggregateReport(reportParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
+              );
+            }
+          });
         },
         description: 'Get the Patient Register report',
         notes: 'Api endpoint that returns Patient Register report.',
@@ -3348,7 +3877,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/hiv-summary-indicators',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -3368,43 +3897,49 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          request.query.reportName = 'hiv-summary-report';
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'hiv-summary-report',
-              [
-                'startDate',
-                'endDate',
-                'locationUuids',
-                'locations',
-                'indicators',
-                'gender',
-                'startAge',
-                'endAge'
-              ],
-              requestParams
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let service = new HivSummaryIndicatorsService();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error loading HIV Summary:', error);
-                reply(error);
-              });
+            //security check
+            request.query.reportName = 'hiv-summary-report';
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'hiv-summary-report',
+                [
+                  'startDate',
+                  'endDate',
+                  'locationUuids',
+                  'locations',
+                  'indicators',
+                  'gender',
+                  'startAge',
+                  'endAge'
+                ],
+                requestParams
+              );
+
+              let service = new HivSummaryIndicatorsService();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error loading HIV Summary:', error);
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get hiv summary indicators for selected clinic',
@@ -3441,7 +3976,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/hiv-summary-indicators/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -3456,33 +3991,39 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'hiv-summary-report';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let locations = [];
-            if (request.query.locations) {
-              _.each(request.query.locations.split(','), function (loc) {
-                locations.push(Number(loc));
-              });
-              request.query.locations = locations;
-            }
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new HivSummaryIndicatorsService();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                _.each(result.result, (item) => {
-                  item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'hiv-summary-report';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let locations = [];
+              if (request.query.locations) {
+                _.each(request.query.locations.split(','), function (loc) {
+                  locations.push(Number(loc));
                 });
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+                request.query.locations = locations;
+              }
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new HivSummaryIndicatorsService();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  _.each(result.result, (item) => {
+                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                  });
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -3526,7 +4067,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/hiv-summary-monthly-indicators',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -3546,42 +4087,48 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          request.query.reportName = 'hiv-summary-monthly-report';
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'hiv-summary-monthly-report',
-              [
-                'startDate',
-                'endDate',
-                'locationUuids',
-                'indicators',
-                'gender',
-                'startAge',
-                'endAge'
-              ],
-              requestParams
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let service = new HivSummaryMonthlyIndicatorsService();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error fetching HIV summary', error);
-                reply(Boom.badImplementation('An error occured', error));
-              });
+            //security check
+            request.query.reportName = 'hiv-summary-monthly-report';
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'hiv-summary-monthly-report',
+                [
+                  'startDate',
+                  'endDate',
+                  'locationUuids',
+                  'indicators',
+                  'gender',
+                  'startAge',
+                  'endAge'
+                ],
+                requestParams
+              );
+
+              let service = new HivSummaryMonthlyIndicatorsService();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error fetching HIV summary', error);
+                  reply(Boom.badImplementation('An error occured', error));
+                });
+            });
           });
         },
         description: 'Get hiv summary monthly indicators for  selected clinic',
@@ -3618,7 +4165,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/hiv-summary-monthly-indicators/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -3633,20 +4180,30 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'hiv-summary-monthly-report';
-          let requestParams = Object.assign({}, request.query, request.params);
-          let service = new HivSummaryMonthlyIndicatorsService();
-          service
-            .getPatientListReport(requestParams)
-            .then((result) => {
-              console.log('result', result);
-              reply(result);
-            })
-            .catch((error) => {
-              console.error('Error fetching HIV summary', error);
-              reply(Boom.badImplementation('An error occured', error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'hiv-summary-monthly-report';
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let service = new HivSummaryMonthlyIndicatorsService();
+            service
+              .getPatientListReport(requestParams)
+              .then((result) => {
+                console.log('result', result);
+                reply(result);
+              })
+              .catch((error) => {
+                console.error('Error fetching HIV summary', error);
+                reply(Boom.badImplementation('An error occured', error));
+              });
+          });
         },
         description:
           "Get hiv summary monthly indicator's patient list for selected clinic",
@@ -3689,26 +4246,32 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/location/{locationUuids}/patient-by-indicator',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'hiv-summary-report';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            dao
-              .getPatientListReport(
-                Object.assign({}, request.query, request.params)
-              )
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(Boom.badRequest(error.toString()));
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'hiv-summary-report';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              dao
+                .getPatientListReport(
+                  Object.assign({}, request.query, request.params)
+                )
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(Boom.badRequest(error.toString()));
+                });
+            });
           });
         },
         description: 'Get patient list by indicator',
@@ -3736,26 +4299,32 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-by-indicator',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'hiv-summary-monthly-report';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            dao
-              .getPatientListReport(
-                Object.assign({}, request.query, request.params)
-              )
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(Boom.badRequest(error.toString()));
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'hiv-summary-monthly-report';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              dao
+                .getPatientListReport(
+                  Object.assign({}, request.query, request.params)
+                )
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(Boom.badRequest(error.toString()));
+                });
+            });
           });
         },
         description: 'Get patient',
@@ -3779,7 +4348,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/data-entry-statistics/{sub}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -3794,83 +4363,89 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          if (
-            request.params.sub === 'patientList' &&
-            !authorizer.hasPrivilege(privileges.canViewPatient)
-          ) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          var asyncRequests = 0; //this should be the number of async requests needed before they are triggered
-
-          var onResolvedPromise = function (promise) {
-            asyncRequests--;
-            if (asyncRequests <= 0) {
-              //voting process to ensure all pre-processing of request async operations are complete
-              dao.getDataEntryIndicators(request.params.sub, request, reply);
+            if (
+              request.params.sub === 'patientList' &&
+              !authorizer.hasPrivilege(privileges.canViewPatient)
+            ) {
+              return reply(Boom.forbidden('Unauthorized'));
             }
-          };
 
-          //establish the number of asyncRequests
-          //this is done prior to avoid any race conditions
-          if (request.query.formUuids) {
-            asyncRequests++;
-          }
-          if (request.query.encounterTypeUuids) {
-            asyncRequests++;
-          }
-          if (request.query.locationUuids) {
-            asyncRequests++;
-          }
+            var asyncRequests = 0; //this should be the number of async requests needed before they are triggered
 
-          if (asyncRequests === 0)
-            dao.getDataEntryIndicators(request.params.sub, request, reply);
+            var onResolvedPromise = function (promise) {
+              asyncRequests--;
+              if (asyncRequests <= 0) {
+                //voting process to ensure all pre-processing of request async operations are complete
+                dao.getDataEntryIndicators(request.params.sub, request, reply);
+              }
+            };
 
-          if (request.query.formUuids) {
-            dao.getIdsByUuidAsyc(
-              'amrs.form',
-              'form_id',
-              'uuid',
-              request.query.formUuids,
-              function (results) {
-                request.query.formIds = results;
-              }
-            ).onResolved = onResolvedPromise;
-          }
-          if (request.query.encounterTypeUuids) {
-            dao.getIdsByUuidAsyc(
-              'amrs.encounter_type',
-              'encounter_type_id',
-              'uuid',
-              request.query.encounterTypeUuids,
-              function (results) {
-                request.query.encounterTypeIds = results;
-              }
-            ).onResolved = onResolvedPromise;
-          }
-          if (request.query.visitTypeUuids) {
-            dao.getIdsByUuidAsyc(
-              'amrs.visit_type',
-              'visit_type_id',
-              'uuid',
-              request.query.visitTypeUuids,
-              function (results) {
-                request.query.visitTypeIds = results;
-              }
-            ).onResolved = onResolvedPromise;
-          }
-          if (request.query.locationUuids) {
-            dao.getIdsByUuidAsyc(
-              'amrs.location',
-              'location_id',
-              'uuid',
-              request.query.locationUuids,
-              function (results) {
-                request.query.locationIds = results;
-              }
-            ).onResolved = onResolvedPromise;
-          }
+            //establish the number of asyncRequests
+            //this is done prior to avoid any race conditions
+            if (request.query.formUuids) {
+              asyncRequests++;
+            }
+            if (request.query.encounterTypeUuids) {
+              asyncRequests++;
+            }
+            if (request.query.locationUuids) {
+              asyncRequests++;
+            }
+
+            if (asyncRequests === 0)
+              dao.getDataEntryIndicators(request.params.sub, request, reply);
+
+            if (request.query.formUuids) {
+              dao.getIdsByUuidAsyc(
+                'amrs.form',
+                'form_id',
+                'uuid',
+                request.query.formUuids,
+                function (results) {
+                  request.query.formIds = results;
+                }
+              ).onResolved = onResolvedPromise;
+            }
+            if (request.query.encounterTypeUuids) {
+              dao.getIdsByUuidAsyc(
+                'amrs.encounter_type',
+                'encounter_type_id',
+                'uuid',
+                request.query.encounterTypeUuids,
+                function (results) {
+                  request.query.encounterTypeIds = results;
+                }
+              ).onResolved = onResolvedPromise;
+            }
+            if (request.query.visitTypeUuids) {
+              dao.getIdsByUuidAsyc(
+                'amrs.visit_type',
+                'visit_type_id',
+                'uuid',
+                request.query.visitTypeUuids,
+                function (results) {
+                  request.query.visitTypeIds = results;
+                }
+              ).onResolved = onResolvedPromise;
+            }
+            if (request.query.locationUuids) {
+              dao.getIdsByUuidAsyc(
+                'amrs.location',
+                'location_id',
+                'uuid',
+                request.query.locationUuids,
+                function (results) {
+                  request.query.locationIds = results;
+                }
+              ).onResolved = onResolvedPromise;
+            }
+          });
         }
       }
     },
@@ -3882,20 +4457,26 @@ module.exports = (function () {
 
       method: 'GET',
       path: '/indicators-schema',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
           }
         },
-        handler: function (request, reply) {
-          //security check
-          if (!authorizer.hasReportAccess(request.query.report)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          dao.getIndicatorsSchema(request, reply);
+            //security check
+            if (!authorizer.hasReportAccess(request.query.report)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+
+            dao.getIndicatorsSchema(request, reply);
+          });
         },
         description: 'Get HIV monthly summary indicator schema',
         notes: 'Returns HIV monthly summary indicator schema. ',
@@ -3915,101 +4496,125 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/indicators-schema-with-sections',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewDataAnalytics
           }
         },
-        handler: function (request, reply) {
-          dao.getIndicatorsSchemaWithSections(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getIndicatorsSchemaWithSections(request, reply);
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/hiv-summary-data',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
           }
         },
-        handler: function (request, reply) {
-          dao.getHivSummaryData(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getHivSummaryData(request, reply);
+          });
         }
       }
     },
     {
       method: 'POST',
       path: '/compare-patient-lists',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          var r = request;
-          var handler;
-          _.each(routes, function (route) {
-            if (route.path === request.payload.path) {
-              handler = route.config.handler;
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var r = request;
+            var handler;
+            _.each(routes, function (route) {
+              if (route.path === request.payload.path) {
+                handler = route.config.handler;
+              }
+            });
+
+            var requestObject = {
+              query: request.payload.query,
+              params: request.payload.params
+            };
+
+            if (handler) {
+              patientListCompare
+                .fetchAndCompareList(
+                  request.payload.patientList,
+                  requestObject,
+                  handler
+                )
+                .then(function (comparison) {
+                  if (
+                    request.query.includeBoth === true ||
+                    request.query.includeBoth === 'true'
+                  ) {
+                    reply(comparison);
+                  } else {
+                    delete comparison.both;
+                    reply(comparison);
+                  }
+                })
+                .catch(function (error) {
+                  reply(Boom.badImplementation('An internal error occured'));
+                });
+            } else {
+              reply(Boom.badRequest('Unknown patient list etl path'));
             }
           });
-
-          var requestObject = {
-            query: request.payload.query,
-            params: request.payload.params
-          };
-
-          if (handler) {
-            patientListCompare
-              .fetchAndCompareList(
-                request.payload.patientList,
-                requestObject,
-                handler
-              )
-              .then(function (comparison) {
-                if (
-                  request.query.includeBoth === true ||
-                  request.query.includeBoth === 'true'
-                ) {
-                  reply(comparison);
-                } else {
-                  delete comparison.both;
-                  reply(comparison);
-                }
-              })
-              .catch(function (error) {
-                reply(Boom.badImplementation('An internal error occured'));
-              });
-          } else {
-            reply(Boom.badRequest('Unknown patient list etl path'));
-          }
         }
       }
     },
     {
       method: 'GET',
       path: '/patient-list-by-indicator',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             roles: [privileges.canViewPatient, privileges.canViewDataAnalytics]
           }
         },
-        handler: function (request, reply) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            dao
-              .getPatientListReport(
-                Object.assign({}, request.query, request.params)
-              )
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(Boom.badRequest(JSON.stringify(error)));
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              dao
+                .getPatientListReport(
+                  Object.assign({}, request.query, request.params)
+                )
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(Boom.badRequest(JSON.stringify(error)));
+                });
+            });
           });
         },
         description: 'Get patient list',
@@ -4043,119 +4648,146 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-lab-orders',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (config.eidSyncOn === true) {
-            const labSyncService = new LabSyncService();
-            labSyncService.syncAllLabsByPatientUuid(
-              request.query.patientUuId,
-              reply
-            );
-          } else {
-            reply(
-              Boom.notImplemented(
-                'Sorry, sync service temporarily unavailable.'
-              )
-            );
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (config.eidSyncOn === true) {
+              const labSyncService = new LabSyncService();
+              labSyncService.syncAllLabsByPatientUuid(
+                request.query.patientUuId,
+                reply
+              );
+            } else {
+              reply(
+                Boom.notImplemented(
+                  'Sorry, sync service temporarily unavailable.'
+                )
+              );
+            }
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/sync-patient-labs',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (config.eidSyncOn === true) {
-            const labSyncService = new LabSyncService();
-            labSyncService.syncAllLabsByPatientUuid(
-              request.query.patientUuid,
-              reply
-            );
-          } else
-            reply(
-              Boom.notImplemented(
-                'Sorry, sync service temporarily unavailable.'
-              )
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (config.eidSyncOn === true) {
+              const labSyncService = new LabSyncService();
+              labSyncService.syncAllLabsByPatientUuid(
+                request.query.patientUuid,
+                reply
+              );
+            } else reply(Boom.notImplemented('Sorry, sync service temporarily unavailable.'));
+          });
         }
       }
     },
     {
       method: 'POST',
       path: '/eid/order/{lab}',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          if (request.params.lab !== '') {
-            var rawPayload = JSON.parse(JSON.stringify(request.payload));
-            var labName = request.params.lab;
-            pocEidPayloadHelper
-              .generatePocToEidPayLoad(rawPayload)
-              .then((eidPayLoad) => {
-                let configObj = config.hivLabSystem[labName];
-                if (typeof configObj !== 'undefined') {
-                  let client = new LabClient(configObj);
-                  return client.postLabPayload(eidPayLoad);
-                } else {
-                  console.error('Undefined Lab Configuration');
-                }
-              })
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                try {
-                  let errorObject = JSON.parse(error.error);
-                  console.error('Error', errorObject);
-                  reply(errorObject.error).code(error.statusCode);
-                } catch (err) {
-                  console.error('Error', error);
-                  throw Boom.badImplementation(error);
-                }
-              });
-          } else {
-            console.error('No Lab Specified');
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.params.lab !== '') {
+              var rawPayload = JSON.parse(JSON.stringify(request.payload));
+              var labName = request.params.lab;
+              pocEidPayloadHelper
+                .generatePocToEidPayLoad(rawPayload)
+                .then((eidPayLoad) => {
+                  let configObj = config.hivLabSystem[labName];
+                  if (typeof configObj !== 'undefined') {
+                    let client = new LabClient(configObj);
+                    return client.postLabPayload(eidPayLoad);
+                  } else {
+                    console.error('Undefined Lab Configuration');
+                  }
+                })
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  try {
+                    let errorObject = JSON.parse(error.error);
+                    console.error('Error', errorObject);
+                    resolve(
+                      h.response(errorObject.error).code(error.statusCode)
+                    );
+                  } catch (err) {
+                    console.error('Error', error);
+                    throw Boom.badImplementation(error);
+                  }
+                });
+            } else {
+              console.error('No Lab Specified');
+            }
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/session/invalidate',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          dao.invalidateUserSession(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.invalidateUserSession(request, reply);
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/lab-cohorts',
-      config: {
+      options: {
         auth: false,
         plugins: {
           hapiAuthorization: false
         },
-        handler: function (request, reply) {
-          var eidSyncApiKey = config.eidSyncApiKey;
-          var headers = request.headers;
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          var h_eidSyncApiKey = request.headers.eidsyncapikey;
+            var eidSyncApiKey = config.eidSyncApiKey;
+            var headers = request.headers;
 
-          if (eidSyncApiKey === h_eidSyncApiKey) {
-            dao.loadLabCohorts(request, reply);
-          } else {
-            reply(Boom.unauthorized('invalid api key'));
-          }
+            var h_eidSyncApiKey = request.headers.eidsyncapikey;
+
+            if (eidSyncApiKey === h_eidSyncApiKey) {
+              dao.loadLabCohorts(request, reply);
+            } else {
+              reply(Boom.unauthorized('invalid api key'));
+            }
+          });
         },
         description: 'Home',
         notes: 'Returns a message that shows ETL service is running.',
@@ -4178,22 +4810,28 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/lab-cohorts-sync',
-      config: {
+      options: {
         auth: false,
         plugins: {
           hapiAuthorization: false
         },
-        handler: function (request, reply) {
-          var eidSyncApiKey = config.eidSyncApiKey;
-          var headers = request.headers;
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          var h_eidSyncApiKey = request.headers.eidsyncapikey;
+            var eidSyncApiKey = config.eidSyncApiKey;
+            var headers = request.headers;
 
-          if (eidSyncApiKey === h_eidSyncApiKey) {
-            dao.syncLabCohorts(request, reply);
-          } else {
-            reply(Boom.unauthorized('invalid api key'));
-          }
+            var h_eidSyncApiKey = request.headers.eidsyncapikey;
+
+            if (eidSyncApiKey === h_eidSyncApiKey) {
+              dao.syncLabCohorts(request, reply);
+            } else {
+              reply(Boom.unauthorized('invalid api key'));
+            }
+          });
         },
         description: 'Home',
         notes: 'Returns a message that shows ETL service is running.',
@@ -4203,10 +4841,16 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/eid/load-order-justifications',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          dao.loadOrderJustifications(request, reply);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.loadOrderJustifications(request, reply);
+          });
         },
         description: 'Justifications',
         notes: 'Returns order justification(s)',
@@ -4216,63 +4860,69 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/fileupload',
-      config: {
+      options: {
         auth: 'default',
         payload: {
           maxBytes: 5000000
         },
-        handler: function (request, reply) {
-          let replyPayload = {};
-          let data;
-          if (request.payload.data) {
-            data = request.payload.data;
-          } else if (request.payload._imageAsDataUrl) {
-            data = request.payload._imageAsDataUrl;
-          }
-          const image = etlHelpers.decodeBase64Image(data);
-          const imageTypeRegularExpression = /\/(.*?)$/;
-          const imageTypeDetected = image.type.match(
-            imageTypeRegularExpression
-          );
-          const seed = crypto.randomBytes(20);
-          var uniqueSHA1String = crypto
-            .createHash('sha1')
-            .update(seed)
-            .digest('hex');
-          var userUploadedImagePath =
-            config.etl.uploadsDirectory +
-            uniqueSHA1String +
-            '.' +
-            imageTypeDetected[1];
-          try {
-            require('fs').writeFile(
-              userUploadedImagePath,
-              image.data,
-              function () {
-                replyPayload = {
-                  image: uniqueSHA1String + '.' + imageTypeDetected[1]
-                };
-                reply(replyPayload);
-                console.log(
-                  'DEBUG - feed:message: Saved to disk image attached by user:',
-                  userUploadedImagePath
-                );
-              }
-            );
-          } catch (error) {
-            console.log('ERROR:', error);
-            replyPayload = {
-              error: 'Error Uploading image'
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
             };
-            reply(replyPayload);
-          }
+
+            let replyPayload = {};
+            let data;
+            if (request.payload.data) {
+              data = request.payload.data;
+            } else if (request.payload._imageAsDataUrl) {
+              data = request.payload._imageAsDataUrl;
+            }
+            const image = etlHelpers.decodeBase64Image(data);
+            const imageTypeRegularExpression = /\/(.*?)$/;
+            const imageTypeDetected = image.type.match(
+              imageTypeRegularExpression
+            );
+            const seed = crypto.randomBytes(20);
+            var uniqueSHA1String = crypto
+              .createHash('sha1')
+              .update(seed)
+              .digest('hex');
+            var userUploadedImagePath =
+              config.etl.uploadsDirectory +
+              uniqueSHA1String +
+              '.' +
+              imageTypeDetected[1];
+            try {
+              require('fs').writeFile(
+                userUploadedImagePath,
+                image.data,
+                function () {
+                  replyPayload = {
+                    image: uniqueSHA1String + '.' + imageTypeDetected[1]
+                  };
+                  reply(replyPayload);
+                  console.log(
+                    'DEBUG - feed:message: Saved to disk image attached by user:',
+                    userUploadedImagePath
+                  );
+                }
+              );
+            } catch (error) {
+              console.log('ERROR:', error);
+              replyPayload = {
+                error: 'Error Uploading image'
+              };
+              reply(replyPayload);
+            }
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/files/{param*}',
-      config: {
+      options: {
         auth: 'default',
         handler: {
           directory: {
@@ -4286,51 +4936,63 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/eid/patients-with-results',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: false
         },
-        handler: function (request, reply) {
-          if (request.query.startDate && request.query.endDate) {
-            eidService
-              .getPatientIdentifiersFromEIDResults(
-                request.query.startDate,
-                request.query.endDate
-              )
-              .then(function (response) {
-                reply(response);
-              })
-              .catch(function (error) {
-                reply(Boom.badImplementation('A server error occured'));
-              });
-          } else {
-            reply(Boom.badRequest('startDate and endDate required'));
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.startDate && request.query.endDate) {
+              eidService
+                .getPatientIdentifiersFromEIDResults(
+                  request.query.startDate,
+                  request.query.endDate
+                )
+                .then(function (response) {
+                  reply(response);
+                })
+                .catch(function (error) {
+                  reply(Boom.badImplementation('A server error occured'));
+                });
+            } else {
+              reply(Boom.badRequest('startDate and endDate required'));
+            }
+          });
         }
       }
     },
     {
       method: 'GET',
       path: '/motdNotifications',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: false
         },
-        handler: function (request, reply) {
-          motd
-            .getMotdNotifications()
-            .then(function (motdNotifications) {
-              if (motdNotifications === null) {
-                reply(Boom.notFound('Resource does not exist'));
-              } else {
-                reply(motdNotifications);
-              }
-            })
-            .catch(function (error) {
-              reply(new Boom(500, 'Internal server error.', '', '', error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            motd
+              .getMotdNotifications()
+              .then(function (motdNotifications) {
+                if (motdNotifications === null) {
+                  reply(Boom.notFound('Resource does not exist'));
+                } else {
+                  reply(motdNotifications);
+                }
+              })
+              .catch(function (error) {
+                reply(new Boom(500, 'Internal server error.', '', '', error));
+              });
+          });
         },
         description: 'Daily Message Alerts',
         notes: 'Returns Messages to be shown to users on login'
@@ -4339,7 +5001,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patients-requiring-viral-load-order',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -4354,27 +5016,33 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.indicator = 'needs_vl_in_period';
-          request.query.reportName = 'labs-report';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new patientsRequiringVLService();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                _.each(result.result, (item) => {
-                  item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.indicator = 'needs_vl_in_period';
+            request.query.reportName = 'labs-report';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new patientsRequiringVLService();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  _.each(result.result, (item) => {
+                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                  });
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
                 });
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+            });
           });
         },
         description: 'Gets patients Requiring VL list', //patientsRequiringVLService
@@ -4405,7 +5073,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-care-cascade-analysis',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -4420,40 +5088,46 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'patient-care-cascade-report';
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let compineRequestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              request.query.reportName,
-              [
-                'startDate',
-                'endDate',
-                'indicator',
-                'locationUuids',
-                'locations',
-                'order',
-                'gender'
-              ],
-              compineRequestParams
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let service = new patientCareCascadeService();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+            request.query.reportName = 'patient-care-cascade-report';
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let compineRequestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                request.query.reportName,
+                [
+                  'startDate',
+                  'endDate',
+                  'indicator',
+                  'locationUuids',
+                  'locations',
+                  'order',
+                  'gender'
+                ],
+                compineRequestParams
+              );
+
+              let service = new patientCareCascadeService();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Gets patient-care-cascade-report',
@@ -4466,7 +5140,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-care-cascade-analysis/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -4481,23 +5155,29 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'patient-care-cascade-report';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new patientCareCascadeService();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'patient-care-cascade-report';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new patientCareCascadeService();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get the clinical hiv comparative overview patient',
@@ -4531,12 +5211,18 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/indicator-disaggregation-filter-options',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          reply(
-            require('./service/indicator-processor/indicator-filter-options.json')
-          );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            reply(
+              require('./service/indicator-processor/indicator-filter-options.json')
+            );
+          });
         },
         description: 'Get indicator disaggregation options',
         notes: 'Returns an array of filter options',
@@ -4549,37 +5235,47 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient/{patientUuid}/medical-history-report',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          request.query.groupBy = 'groupByCurArvMeds,groupByPrevArvMeds';
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'medical-history-report',
-            ['patientUuid'],
-            requestParams
-          );
-          let report = new PatientMedicalHistoryService(
-            'medicalHistoryReport',
-            reportParams.requestParams
-          );
-          report
-            .generateReport()
-            .then((result) => {
-              let medicalHist = new patientMedicationHistService();
-              let processedResults = medicalHist.processMedicationHistory(
-                result
-              );
-              reply(processedResults);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.groupBy = 'groupByCurArvMeds,groupByPrevArvMeds';
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'medical-history-report',
+              ['patientUuid'],
+              requestParams
+            );
+            let report = new PatientMedicalHistoryService(
+              'medicalHistoryReport',
+              reportParams.requestParams
+            );
+            report
+              .generateReport()
+              .then((result) => {
+                let medicalHist = new patientMedicationHistService();
+                let processedResults = medicalHist.processMedicationHistory(
+                  result
+                );
+                reply(processedResults);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get the medical history report',
         notes: 'Returns the the medical history of the selected patient',
@@ -4595,11 +5291,17 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/departments-programs-config',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          reply(departmentProgramsService.getAllDepartmentsConfig());
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            reply(departmentProgramsService.getAllDepartmentsConfig());
+          });
         },
         description: 'Get a list of Departments and their programs ',
         notes: 'Returns a  list of Departments and their programs',
@@ -4615,20 +5317,26 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/department-programs',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          let department = request.query.department;
-          let departmentPrograms = departmentProgramsService
-            .getDepartmentPrograms(department)
-            .then((response) => {
-              reply(response);
-            })
-            .catch((error) => {
-              console.error('ERROR : DepartmentPrograms Error', error);
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let department = request.query.department;
+            let departmentPrograms = departmentProgramsService
+              .getDepartmentPrograms(department)
+              .then((response) => {
+                reply(response);
+              })
+              .catch((error) => {
+                console.error('ERROR : DepartmentPrograms Error', error);
+                reply(error);
+              });
+          });
         },
         description: 'Get a list of Programs for a Department',
         notes: 'Returns a  list of Programs for a Departments',
@@ -4644,7 +5352,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-program-enrollments',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -4658,34 +5366,42 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          resolveLocationUuidToId
-            .resolveLocationUuidsParamsToIds(request.query)
-            .then((result) => {
-              let locationIds = result;
-              request.query.locations = locationIds;
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              resolveProgramEnrollmentFilterParams
-                .resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                .then((resolve) => {
-                  let programTypeIds = resolve.programTypeIds;
-                  request.query.programTypeIds = programTypeIds;
-                  enrollmentService
-                    .getActiveProgramEnrollmentSummary(request.query)
-                    .then((result) => {
-                      reply(result);
-                    })
-                    .catch((error) => {
-                      reply(error);
-                    });
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+            resolveLocationUuidToId
+              .resolveLocationUuidsParamsToIds(request.query)
+              .then((result) => {
+                let locationIds = result;
+                request.query.locations = locationIds;
+
+                resolveProgramEnrollmentFilterParams
+                  .resolveProgramVisitTypeEncounterUuidsParamsToIds(
+                    request.query
+                  )
+                  .then((resolve) => {
+                    let programTypeIds = resolve.programTypeIds;
+                    request.query.programTypeIds = programTypeIds;
+                    enrollmentService
+                      .getActiveProgramEnrollmentSummary(request.query)
+                      .then((result) => {
+                        reply(result);
+                      })
+                      .catch((error) => {
+                        reply(error);
+                      });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
         },
         description:
           'Get enrollment summary details based on location and time filters',
@@ -4696,7 +5412,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/lab-orders-by-patient',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -4706,29 +5422,39 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'clinic-lab-orders-report';
-          //security check
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          request.params.limit = 1000;
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'clinic-lab-orders-report',
-            ['patientUuid'],
-            requestParams
-          );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          let service = new labOrdersService();
-          service
-            .getAggregateReport(reportParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+            request.query.reportName = 'clinic-lab-orders-report';
+            //security check
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            request.params.limit = 1000;
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'clinic-lab-orders-report',
+              ['patientUuid'],
+              requestParams
+            );
+
+            let service = new labOrdersService();
+            service
+              .getAggregateReport(reportParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get lab orders based on patient uuid',
         notes:
@@ -4752,7 +5478,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/program-enrollment/patient-list',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
@@ -4766,37 +5492,45 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          resolveLocationUuidToId
-            .resolveLocationUuidsParamsToIds(request.query)
-            .then((result) => {
-              let locationIds = result;
-              request.query.locations = locationIds;
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              resolveProgramEnrollmentFilterParams
-                .resolveProgramVisitTypeEncounterUuidsParamsToIds(request.query)
-                .then((resolve) => {
-                  let programTypeIds = resolve.programTypeIds;
-                  request.query.programTypeIds = programTypeIds;
-                  enrollmentService
-                    .getActiveProgramEnrollmentsPatientList(request.query)
-                    .then((result) => {
-                      _.each(result.result, (item) => {
-                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+            resolveLocationUuidToId
+              .resolveLocationUuidsParamsToIds(request.query)
+              .then((result) => {
+                let locationIds = result;
+                request.query.locations = locationIds;
+
+                resolveProgramEnrollmentFilterParams
+                  .resolveProgramVisitTypeEncounterUuidsParamsToIds(
+                    request.query
+                  )
+                  .then((resolve) => {
+                    let programTypeIds = resolve.programTypeIds;
+                    request.query.programTypeIds = programTypeIds;
+                    enrollmentService
+                      .getActiveProgramEnrollmentsPatientList(request.query)
+                      .then((result) => {
+                        _.each(result.result, (item) => {
+                          item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                        });
+                        reply(result);
+                      })
+                      .catch((error) => {
+                        reply(error);
                       });
-                      reply(result);
-                    })
-                    .catch((error) => {
-                      reply(error);
-                    });
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          });
         },
         description:
           'Get a list of patients enrolled in a program in a location in a certain period',
@@ -4807,25 +5541,31 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/radiology-diagnostic-report',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          var requestParams = request.query;
-          console.log('requestParams', requestParams);
-          imagingService
-            .getImagingResultsByPatientIdentifier(requestParams)
-            .then(function (results) {
-              if (results === null) {
-                reply(Boom.notFound('Resource does not exist'));
-              } else {
-                reply(results);
-              }
-            })
-            .catch(function (error) {
-              console.error(error);
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var requestParams = request.query;
+            console.log('requestParams', requestParams);
+            imagingService
+              .getImagingResultsByPatientIdentifier(requestParams)
+              .then(function (results) {
+                if (results === null) {
+                  reply(Boom.notFound('Resource does not exist'));
+                } else {
+                  reply(results);
+                }
+              })
+              .catch(function (error) {
+                console.error(error);
+                reply(error);
+              });
+          });
         },
         description: 'Get particular patient imaging report',
         notes:
@@ -4836,23 +5576,29 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/radiology-images',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          var requestParams = request.query;
-          //  console.log('requestParams=====>>>',requestParams);
-          imagingService
-            .getPatientImagesByPatientIdentifier(requestParams)
-            .then(function (results) {
-              //        console.log('results',results);
-              imagingService.constructWadoUrl(results).then(function (res) {
-                reply(res);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var requestParams = request.query;
+            //  console.log('requestParams=====>>>',requestParams);
+            imagingService
+              .getPatientImagesByPatientIdentifier(requestParams)
+              .then(function (results) {
+                //        console.log('results',results);
+                imagingService.constructWadoUrl(results).then(function (res) {
+                  reply(res);
+                });
+              })
+              .catch(function (error) {
+                reply(error);
               });
-            })
-            .catch(function (error) {
-              reply(error);
-            });
+          });
         },
         description: 'Get particular radiology patient images',
         notes:
@@ -4863,19 +5609,25 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/radiology-all-patient-images',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          var requestParams = request.query;
-          imagingService
-            .getAllPatientImages(requestParams)
-            .then(function (results) {
-              reply(results);
-            })
-            .catch(function (error) {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var requestParams = request.query;
+            imagingService
+              .getAllPatientImages(requestParams)
+              .then(function (results) {
+                reply(results);
+              })
+              .catch(function (error) {
+                reply(error);
+              });
+          });
         },
         description: 'Get particular radiology patient images',
         notes:
@@ -4886,19 +5638,25 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/radiology-comments',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          var payload = request.payload;
-          imagingService
-            .postRadiologyImagingComments(payload)
-            .then(function (results) {
-              reply(results);
-            })
-            .catch(function (error) {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            var payload = request.payload;
+            imagingService
+              .postRadiologyImagingComments(payload)
+              .then(function (results) {
+                reply(results);
+              })
+              .catch(function (error) {
+                reply(error);
+              });
+          });
         },
         description: 'Post Radiology imaging comments',
         notes: 'Api endpoint that post comments on a particular image',
@@ -4908,18 +5666,24 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/oncology-reports',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          oncologyReportsService
-            .getOncologyReports()
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            oncologyReportsService
+              .getOncologyReports()
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get a list of Oncology reports ',
         notes: 'Returns a  list of Oncology program reports',
@@ -4935,24 +5699,30 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/oncology-report',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          if (request.query.reportUuid) {
-            let reportUuid = request.query.reportUuid;
-            oncologyReportsService
-              .getSpecificOncologyReport(reportUuid)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          } else {
-            reply('ERROR:Report uuid Undefined');
-            console.error('ERROR:Report uuid Undefined');
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.reportUuid) {
+              let reportUuid = request.query.reportUuid;
+              oncologyReportsService
+                .getSpecificOncologyReport(reportUuid)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            } else {
+              reply('ERROR:Report uuid Undefined');
+              console.error('ERROR:Report uuid Undefined');
+            }
+          });
         },
         description: 'Get a specific Oncology report',
         notes: 'Returns a specific Oncology program report',
@@ -4968,7 +5738,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/breast-cancer-screening-numbers',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -4983,38 +5753,44 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'breast-cancer-monthly-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'breast-cancer-summary-dataset',
-              [
-                'startDate',
-                'endDate',
-                'period',
-                'locationUuids',
-                'indicators',
-                'genders',
-                'startAge',
-                'endAge'
-              ],
-              requestParams
-            );
-            let service = new BreastCancerMonthlySummaryService();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'breast-cancer-monthly-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'breast-cancer-summary-dataset',
+                [
+                  'startDate',
+                  'endDate',
+                  'period',
+                  'locationUuids',
+                  'indicators',
+                  'genders',
+                  'startAge',
+                  'endAge'
+                ],
+                requestParams
+              );
+              let service = new BreastCancerMonthlySummaryService();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5026,7 +5802,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/breast-cancer-screening-numbers-patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -5038,23 +5814,30 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'breast-cancer-monthly-screening-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new BreastCancerMonthlySummaryService();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'breast-cancer-monthly-screening-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new BreastCancerMonthlySummaryService();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5067,7 +5850,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/combined-breast-cervical-cancer-screening-numbers',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -5082,39 +5865,45 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName =
-            'combined-breast-cervical-cancer-monthly-screening-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'breast-cancer-summary-dataset',
-              [
-                'startDate',
-                'endDate',
-                'period',
-                'locationUuids',
-                'indicators',
-                'genders',
-                'startAge',
-                'endAge'
-              ],
-              requestParams
-            );
-            let service = new CombinedBreastCervicalCancerMonthlySummary();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'combined-breast-cervical-cancer-monthly-screening-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'breast-cancer-summary-dataset',
+                [
+                  'startDate',
+                  'endDate',
+                  'period',
+                  'locationUuids',
+                  'indicators',
+                  'genders',
+                  'startAge',
+                  'endAge'
+                ],
+                requestParams
+              );
+              let service = new CombinedBreastCervicalCancerMonthlySummary();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5127,7 +5916,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/combined-breast-cervical-cancer-screening-numbers-patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -5139,24 +5928,30 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName =
-            'combined-breast-cervical-cancer-monthly-screening-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new CombinedBreastCervicalCancerMonthlySummary();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'combined-breast-cervical-cancer-monthly-screening-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new CombinedBreastCervicalCancerMonthlySummary();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5169,7 +5964,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/cervical-cancer-screening-numbers',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -5184,39 +5979,45 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName =
-            'cervical-cancer-monthly-screening-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'cervical-cancer-monthly-summary',
-              [
-                'startDate',
-                'endDate',
-                'period',
-                'locationUuids',
-                'indicators',
-                'genders',
-                'startAge',
-                'endAge'
-              ],
-              requestParams
-            );
-            let service = new CervicalCancerMonthlySummaryService();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'cervical-cancer-monthly-screening-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'cervical-cancer-monthly-summary',
+                [
+                  'startDate',
+                  'endDate',
+                  'period',
+                  'locationUuids',
+                  'indicators',
+                  'genders',
+                  'startAge',
+                  'endAge'
+                ],
+                requestParams
+              );
+              let service = new CervicalCancerMonthlySummaryService();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5228,7 +6029,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/cervical-cancer-screening-numbers-patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -5240,24 +6041,30 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName =
-            'cervical-cancer-monthly-screening-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new CervicalCancerMonthlySummaryService();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName =
+              'cervical-cancer-monthly-screening-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new CervicalCancerMonthlySummaryService();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5270,7 +6077,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/lung-cancer-screening-numbers',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -5285,38 +6092,44 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'lung-cancer-monthly-screening-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'lung-cancer-monthly-summary',
-              [
-                'startDate',
-                'endDate',
-                'period',
-                'locationUuids',
-                'indicators',
-                'genders',
-                'startAge',
-                'endAge'
-              ],
-              requestParams
-            );
-            let service = new LungCancerMonthlySummaryService();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'lung-cancer-monthly-screening-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'lung-cancer-monthly-summary',
+                [
+                  'startDate',
+                  'endDate',
+                  'period',
+                  'locationUuids',
+                  'indicators',
+                  'genders',
+                  'startAge',
+                  'endAge'
+                ],
+                requestParams
+              );
+              let service = new LungCancerMonthlySummaryService();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5328,7 +6141,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/lung-cancer-screening-numbers-patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -5340,23 +6153,29 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'lung-cancer-monthly-screening-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new LungCancerMonthlySummaryService();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'lung-cancer-monthly-screening-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new LungCancerMonthlySummaryService();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5369,7 +6188,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/lung-cancer-treatment-numbers',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
@@ -5384,39 +6203,45 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'lung-cancer-treatment-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'breast-cancer-summary-dataset',
-              [
-                'startDate',
-                'endDate',
-                'period',
-                'locationUuids',
-                'indicators',
-                'genders',
-                'startAge',
-                'endAge'
-              ],
-              requestParams
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let service = new LungCancerTreatmentSummary();
-            service
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+            request.query.reportName = 'lung-cancer-treatment-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'breast-cancer-summary-dataset',
+                [
+                  'startDate',
+                  'endDate',
+                  'period',
+                  'locationUuids',
+                  'indicators',
+                  'genders',
+                  'startAge',
+                  'endAge'
+                ],
+                requestParams
+              );
+
+              let service = new LungCancerTreatmentSummary();
+              service
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5428,7 +6253,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/lung-cancer-treatment-numbers-patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -5440,23 +6265,29 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          request.query.reportName = 'lung-cancer-treatment-summary';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let service = new LungCancerTreatmentSummary();
-            service
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            request.query.reportName = 'lung-cancer-treatment-summary';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let service = new LungCancerTreatmentSummary();
+              service
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
           });
         },
         description:
@@ -5469,23 +6300,29 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/kibana-dashboards',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
           }
         },
-        handler: function (request, reply) {
-          let kibanaDashboard = kibanaService
-            .getKibanaDashboards()
-            .then((result) => {
-              console.log('Kibana Dashboard', result);
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let kibanaDashboard = kibanaService
+              .getKibanaDashboards()
+              .then((result) => {
+                console.log('Kibana Dashboard', result);
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get a list of Kibana Dashboards',
         notes: 'Returns a list of links for Kibana Dashboards',
@@ -5495,58 +6332,66 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/differentiated-care-program/patient-list',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewPatient
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            resolveLocationUuidToId
-              .resolveLocationUuidsParamsToIds(request.query)
-              .then((result) => {
-                let requestParams = Object.assign(
-                  {},
-                  request.query,
-                  request.params
-                );
-                let locationUuids = request.query.locationUuids.split(',');
-                requestParams.startDate = requestParams.startDate.split('T')[0];
-                requestParams.endDate = requestParams.endDate.split('T')[0];
-                requestParams.limitParam = requestParams.limit;
-                requestParams.offSetParam = requestParams.startIndex;
-                let indicators = [];
-                if (requestParams.indicators) {
-                  indicators = requestParams.indicators.split(',');
-                }
-                requestParams.locationUuids = locationUuids;
-                requestParams.locationIds = result;
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-                let report = new PatientlistMysqlReport(
-                  'differentiatedCareProgramAggregate',
-                  requestParams
-                );
-                report
-                  .generatePatientListReport(indicators)
-                  .then((result) => {
-                    if (result.results.results.length > 0) {
-                      _.each(result.results.results, (item) => {
-                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                        item.vl_1_date = moment(item.vl_1_date).format(
-                          'DD-MM-YYYY'
-                        );
-                      });
-                      reply(result);
-                    } else {
-                      reply(result);
-                    }
-                  })
-                  .catch((error) => {
-                    reply(error);
-                  });
-              });
-          }
+            if (request.query.locationUuids) {
+              resolveLocationUuidToId
+                .resolveLocationUuidsParamsToIds(request.query)
+                .then((result) => {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let locationUuids = request.query.locationUuids.split(',');
+                  requestParams.startDate = requestParams.startDate.split(
+                    'T'
+                  )[0];
+                  requestParams.endDate = requestParams.endDate.split('T')[0];
+                  requestParams.limitParam = requestParams.limit;
+                  requestParams.offSetParam = requestParams.startIndex;
+                  let indicators = [];
+                  if (requestParams.indicators) {
+                    indicators = requestParams.indicators.split(',');
+                  }
+                  requestParams.locationUuids = locationUuids;
+                  requestParams.locationIds = result;
+
+                  let report = new PatientlistMysqlReport(
+                    'differentiatedCareProgramAggregate',
+                    requestParams
+                  );
+                  report
+                    .generatePatientListReport(indicators)
+                    .then((result) => {
+                      if (result.results.results.length > 0) {
+                        _.each(result.results.results, (item) => {
+                          item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                          item.vl_1_date = moment(item.vl_1_date).format(
+                            'DD-MM-YYYY'
+                          );
+                        });
+                        reply(result);
+                      } else {
+                        reply(result);
+                      }
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                });
+            }
+          });
         },
         description: 'Get the medical history report',
         notes: 'Returns the the medical history of the selected patient',
@@ -5562,7 +6407,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/patient-referrals-peer-navigator',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           openmrsLocationAuthorizer: {
@@ -5582,24 +6427,34 @@ module.exports = (function () {
             ]
           }
         },
-        handler: function (request, reply) {
-          //security check
-          request.query.reportName = 'patient-referral-report';
-          if (!authorizer.hasReportAccess(request.query.reportName)) {
-            return reply(Boom.forbidden('Unauthorized'));
-          }
-          let requestParams = Object.assign({}, request.query, request.params);
-          requestParams.reportName = 'referral-patient-peer-navigator-list';
-          let service = new PatientReferralService();
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          service
-            .getPeerNavigatorReferralPatientList(requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+            //security check
+            request.query.reportName = 'patient-referral-report';
+            if (!authorizer.hasReportAccess(request.query.reportName)) {
+              return reply(Boom.forbidden('Unauthorized'));
+            }
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            requestParams.reportName = 'referral-patient-peer-navigator-list';
+            let service = new PatientReferralService();
+
+            service
+              .getPeerNavigatorReferralPatientList(requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         },
         description: 'Get the patient list for CDM strengths study',
         notes:
@@ -5632,35 +6487,41 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/surge-report',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {}
         },
-        handler: function (request, reply) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'surge',
-              ['startDate', 'endDate', 'locationUuids'],
-              requestParams
-            );
-            let surgeService = new SurgeService(
-              'surge',
-              reportParams.requestParams
-            );
-            surgeService
-              .generateReport()
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'surge',
+                ['startDate', 'endDate', 'locationUuids'],
+                requestParams
+              );
+              let surgeService = new SurgeService(
+                'surge',
+                reportParams.requestParams
+              );
+              surgeService
+                .generateReport()
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get the week surge report',
@@ -5677,29 +6538,35 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/surge-report-patient-list',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {}
         },
-        handler: function (request, reply) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let surgeService = new SurgeService('', requestParams);
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            surgeService
-              .getPatientListReport(requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+              let surgeService = new SurgeService('', requestParams);
+
+              surgeService
+                .getPatientListReport(requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get the week surge report patient list',
@@ -5716,51 +6583,60 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/retention-summary-report',
-      config: {
+      options: {
         auth: 'default',
         plugins: {
           hapiAuthorization: {
             role: privileges.canViewClinicDashBoard
           }
         },
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  // console.log('requestParams', requestParams);
+                  let reportParams = etlHelpers.getReportParams(
+                    'retention-summary-report',
+                    [
+                      'startDate',
+                      'endDate',
+                      'period',
+                      'locations',
+                      'indicators',
+                      'genders',
+                      'startAge',
+                      'endAge'
+                    ],
+                    requestParams
+                  );
+                  let retentionService = new RetentionAppointmentTracingService(
+                    'retention-report',
+                    reportParams.requestParams
+                  );
+                  retentionService
+                    .generateReport()
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      console.error('Error: ', error);
+                      reply(error);
+                    });
+                }
               );
-              // console.log('requestParams', requestParams);
-              let reportParams = etlHelpers.getReportParams(
-                'retention-summary-report',
-                [
-                  'startDate',
-                  'endDate',
-                  'period',
-                  'locations',
-                  'indicators',
-                  'genders',
-                  'startAge',
-                  'endAge'
-                ],
-                requestParams
-              );
-              let retentionService = new RetentionAppointmentTracingService(
-                'retention-report',
-                reportParams.requestParams
-              );
-              retentionService
-                .generateReport()
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  console.error('Error: ', error);
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         description: 'Get Retention report aggregate data',
         notes: 'Returns Retention summary aggregate',
@@ -5770,38 +6646,76 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/retention-summary-report/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          request.query.reportName = 'retention-summary-report';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let requestCopy = _.cloneDeep(requestParams);
-            let reportParams = etlHelpers.getReportParams(
-              request.query.reportName,
-              ['startDate', 'endDate', 'locationUuids', 'locations'],
-              requestParams
-            );
-            requestCopy.locations = reportParams.requestParams.locations;
+            request.query.reportName = 'retention-summary-report';
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let retentionService = new RetentionAppointmentTracingService(
-              'retention-report',
-              requestCopy
-            );
+              let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                request.query.reportName,
+                ['startDate', 'endDate', 'locationUuids', 'locations'],
+                requestParams
+              );
+              requestCopy.locations = reportParams.requestParams.locations;
 
-            retentionService
-              .generatePatientListReport(requestParams.indicators.split(','))
-              .then((results) => {
-                reply(results);
+              let retentionService = new RetentionAppointmentTracingService(
+                'retention-report',
+                requestCopy
+              );
+
+              retentionService
+                .generatePatientListReport(requestParams.indicators.split(','))
+                .then((results) => {
+                  reply(results);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
+          });
+        },
+        description: 'Get Retention report Patient list',
+        notes: 'Returns Retention Report Patient List',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/retention-summary-report/indicator-definitions',
+      options: {
+        auth: 'default',
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewClinicDashBoard
+          }
+        },
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            let service = new RetentionAppointmentTracingService();
+            service
+              .getIndicatorDefinitions()
+              .then((result) => {
+                reply(result);
               })
               .catch((error) => {
-                console.error('Error: ', error);
                 reply(error);
               });
           });
@@ -5813,63 +6727,43 @@ module.exports = (function () {
     },
     {
       method: 'GET',
-      path: '/retention-summary-report/indicator-definitions',
-      config: {
-        auth: 'default',
-        plugins: {
-          hapiAuthorization: {
-            role: privileges.canViewClinicDashBoard
-          }
-        },
-        handler: function (request, reply) {
-          let service = new RetentionAppointmentTracingService();
-          service
-            .getIndicatorDefinitions()
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
-        },
-        description: 'Get Retention report Patient list',
-        notes: 'Returns Retention Report Patient List',
-        tags: ['api']
-      }
-    },
-    {
-      method: 'GET',
       path: '/hei-monthly-summary',
-      config: {
+      options: {
         plugins: {
           hapiAuthorization: {}
         },
-        handler: function (request, reply) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'hei-monthly-summary',
-              ['startDate', 'endDate', 'locationUuids'],
-              requestParams
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let heiSummaryService = new HeiSummaryService(
-              'MOH-408',
-              reportParams.requestParams
-            );
-            heiSummaryService
-              .generateReport()
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'hei-monthly-summary',
+                ['startDate', 'endDate', 'locationUuids'],
+                requestParams
+              );
+
+              let heiSummaryService = new HeiSummaryService(
+                'MOH-408',
+                reportParams.requestParams
+              );
+              heiSummaryService
+                .generateReport()
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            });
           });
         },
         description: 'Get the monthly hei monthly summary report',
@@ -5886,204 +6780,16 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/hei-monthly-summary/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          request.query.reportName = 'hei-summary-patient-list';
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let requestCopy = _.cloneDeep(requestParams);
-            let reportParams = etlHelpers.getReportParams(
-              request.query.reportName,
-              ['startDate', 'endDate', 'locationUuids', 'locations'],
-              requestParams
-            );
-            const moh408Service = new HeiSummaryService('MOH-408', requestCopy);
-
-            moh408Service
-              .generatePatientListReport(requestParams.indicators.split(','))
-              .then((results) => {
-                reply(results);
-              })
-              .catch((err) => {
-                reply(Boom.internal('An error occured', err));
-              });
-          });
-        },
-        description: 'HEI summary Patient list',
-        notes: 'Returns HEI summary patient list',
-        tags: ['api']
-      }
-    },
-    {
-      method: 'GET',
-      path: '/patient-gain-loses-numbers',
-      config: {
-        auth: 'default',
-        plugins: {},
-        handler: function (request, reply) {
-          if (request.query.locationUuid) {
-            request.query.locationUuids = request.query.locationUuid;
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'monthly-gains-and-losses',
-                ['startDate', 'endDate', 'locations'],
-                requestParams
-              );
-              let hivGainsLossesService = new HIVGainsAndLossesService(
-                'monthly-gains-and-losses',
-                reportParams.requestParams
-              );
-              hivGainsLossesService
-                .generateReport()
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  console.error('Error: ', error);
-                  reply(error);
-                });
-            });
-          }
-        },
-        description: 'HIV Gains annd losses report',
-        notes: 'HIV Gains annd losses report',
-        tags: ['api']
-      }
-    },
-    {
-      method: 'GET',
-      path: '/patient-gain-loses-patient-list',
-      config: {
-        auth: 'default',
-        plugins: {},
-        handler: function (request, reply) {
-          if (request.query.locationUuid) {
-            request.query.locationUuids = request.query.locationUuid;
-            request.query.reportName = 'monthly-gains-and-losses';
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              console.log('requestParams', requestParams);
-              let requestCopy = _.cloneDeep(requestParams);
-              let reportParams = etlHelpers.getReportParams(
-                request.query.reportName,
-                ['startDate', 'endDate', 'locationUuids', 'genders'],
-                requestParams
-              );
-              requestCopy.locations = reportParams.requestParams.locations;
-
-              let hivGainsLossesService = new HIVGainsAndLossesService(
-                'monthly-gains-and-losses',
-                requestCopy
-              );
-
-              hivGainsLossesService
-                .generatePatientListReport(requestParams.indicators.split(','))
-                .then((results) => {
-                  reply(results);
-                })
-                .catch((err) => {
-                  reply(Boom.internal('An error occured', err));
-                });
-            });
-          }
-        },
-        description: 'HIV Gains annd losses Patient list',
-        notes: 'Returns HIV Gains annd losses Patient List',
-        tags: ['api']
-      }
-    },
-    {
-      method: 'GET',
-      path: '/patient-cervical-cancer-screening-summary',
-      config: {
-        auth: 'default',
-        plugins: {},
-        handler: function (request, reply) {
-          const patientUuid = request.query.uuid;
-          cervicalCancerScreeningService
-            .getPatientCervicalCancerScreeningSummary(patientUuid)
-            .then((results) => {
-              reply(results);
-            })
-            .catch((error) => {
-              reply(Boom.internal('An error occured', error));
-            });
-        }
-      }
-    },
-    {
-      method: 'GET',
-      path: '/moh-412-report',
-      config: {
-        auth: 'default',
-        plugins: {},
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'hiv-cervical-cancer-screening-monthly-report',
-                ['startDate', 'endDate', 'locationUuids'],
-                requestParams
-              );
-              let report = 'MOH-412-report';
-              if (request.query.locationType === 'primary_care_facility') {
-                reportParams.requestParams['primaryCareLocations'] =
-                  reportParams.requestParams.locations;
-                delete reportParams.requestParams.locations;
-                report = 'MOH-412-PCF-report';
-              }
-
-              const moh412Service = new MOH412Service(
-                report,
-                reportParams.requestParams
-              );
-              moh412Service
-                .generateReport()
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
-        },
-        description: 'MOH-412 Report',
-        notes: 'Returns Report for HIV Cervical Cancer Screening',
-        tags: ['api']
-      }
-    },
-    {
-      method: 'GET',
-      path: '/moh-412-report/patient-list',
-      config: {
-        auth: 'default',
-        plugins: {},
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            request.query.reportName =
-              'hiv-cervical-cancer-screening-monthly-report';
+            request.query.reportName = 'hei-summary-patient-list';
             preRequest.resolveLocationIdsToLocationUuids(request, function () {
               let requestParams = Object.assign(
                 {},
@@ -6097,19 +6803,13 @@ module.exports = (function () {
                 ['startDate', 'endDate', 'locationUuids', 'locations'],
                 requestParams
               );
-              let report = 'MOH-412-report';
-              if (request.query.locationType === 'primary_care_facility') {
-                requestCopy['primaryCareLocations'] =
-                  reportParams.requestParams.locations;
-                delete requestCopy.locations;
-                report = 'MOH-412-PCF-report';
-              } else {
-                requestCopy.locations = reportParams.requestParams.locations;
-              }
-              let moh412Service = new MOH412Service(report, requestCopy);
+              const moh408Service = new HeiSummaryService(
+                'MOH-408',
+                requestCopy
+              );
 
-              moh412Service
-                .getPatientListReport(requestParams)
+              moh408Service
+                .generatePatientListReport(requestParams.indicators.split(','))
                 .then((results) => {
                   reply(results);
                 })
@@ -6117,7 +6817,255 @@ module.exports = (function () {
                   reply(Boom.internal('An error occured', err));
                 });
             });
-          }
+          });
+        },
+        description: 'HEI summary Patient list',
+        notes: 'Returns HEI summary patient list',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/patient-gain-loses-numbers',
+      options: {
+        auth: 'default',
+        plugins: {},
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuid) {
+              request.query.locationUuids = request.query.locationUuid;
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'monthly-gains-and-losses',
+                    ['startDate', 'endDate', 'locations'],
+                    requestParams
+                  );
+                  let hivGainsLossesService = new HIVGainsAndLossesService(
+                    'monthly-gains-and-losses',
+                    reportParams.requestParams
+                  );
+                  hivGainsLossesService
+                    .generateReport()
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      console.error('Error: ', error);
+                      reply(error);
+                    });
+                }
+              );
+            }
+          });
+        },
+        description: 'HIV Gains annd losses report',
+        notes: 'HIV Gains annd losses report',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/patient-gain-loses-patient-list',
+      options: {
+        auth: 'default',
+        plugins: {},
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuid) {
+              request.query.locationUuids = request.query.locationUuid;
+              request.query.reportName = 'monthly-gains-and-losses';
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  console.log('requestParams', requestParams);
+                  let requestCopy = _.cloneDeep(requestParams);
+                  let reportParams = etlHelpers.getReportParams(
+                    request.query.reportName,
+                    ['startDate', 'endDate', 'locationUuids', 'genders'],
+                    requestParams
+                  );
+                  requestCopy.locations = reportParams.requestParams.locations;
+
+                  let hivGainsLossesService = new HIVGainsAndLossesService(
+                    'monthly-gains-and-losses',
+                    requestCopy
+                  );
+
+                  hivGainsLossesService
+                    .generatePatientListReport(
+                      requestParams.indicators.split(',')
+                    )
+                    .then((results) => {
+                      reply(results);
+                    })
+                    .catch((err) => {
+                      reply(Boom.internal('An error occured', err));
+                    });
+                }
+              );
+            }
+          });
+        },
+        description: 'HIV Gains annd losses Patient list',
+        notes: 'Returns HIV Gains annd losses Patient List',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/patient-cervical-cancer-screening-summary',
+      options: {
+        auth: 'default',
+        plugins: {},
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            const patientUuid = request.query.uuid;
+            cervicalCancerScreeningService
+              .getPatientCervicalCancerScreeningSummary(patientUuid)
+              .then((results) => {
+                reply(results);
+              })
+              .catch((error) => {
+                reply(Boom.internal('An error occured', error));
+              });
+          });
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/moh-412-report',
+      options: {
+        auth: 'default',
+        plugins: {},
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'hiv-cervical-cancer-screening-monthly-report',
+                    ['startDate', 'endDate', 'locationUuids'],
+                    requestParams
+                  );
+                  let report = 'MOH-412-report';
+                  if (request.query.locationType === 'primary_care_facility') {
+                    reportParams.requestParams['primaryCareLocations'] =
+                      reportParams.requestParams.locations;
+                    delete reportParams.requestParams.locations;
+                    report = 'MOH-412-PCF-report';
+                  }
+
+                  const moh412Service = new MOH412Service(
+                    report,
+                    reportParams.requestParams
+                  );
+                  moh412Service
+                    .generateReport()
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
+              );
+            }
+          });
+        },
+        description: 'MOH-412 Report',
+        notes: 'Returns Report for HIV Cervical Cancer Screening',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/moh-412-report/patient-list',
+      options: {
+        auth: 'default',
+        plugins: {},
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              request.query.reportName =
+                'hiv-cervical-cancer-screening-monthly-report';
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+
+                  let requestCopy = _.cloneDeep(requestParams);
+                  let reportParams = etlHelpers.getReportParams(
+                    request.query.reportName,
+                    ['startDate', 'endDate', 'locationUuids', 'locations'],
+                    requestParams
+                  );
+                  let report = 'MOH-412-report';
+                  if (request.query.locationType === 'primary_care_facility') {
+                    requestCopy['primaryCareLocations'] =
+                      reportParams.requestParams.locations;
+                    delete requestCopy.locations;
+                    report = 'MOH-412-PCF-report';
+                  } else {
+                    requestCopy.locations =
+                      reportParams.requestParams.locations;
+                  }
+                  let moh412Service = new MOH412Service(report, requestCopy);
+
+                  moh412Service
+                    .getPatientListReport(requestParams)
+                    .then((results) => {
+                      reply(results);
+                    })
+                    .catch((err) => {
+                      reply(Boom.internal('An error occured', err));
+                    });
+                }
+              );
+            }
+          });
         },
         description: 'MOH-412 Report',
         notes: 'Returns Report for HIV Cervical Cancer Screening',
@@ -6127,22 +7075,28 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/covid-vaccination-status',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          if (request.query.patientUuid) {
-            const patientUuid = request.query.patientUuid;
-            getPatientCovidVaccinationStatus(patientUuid)
-              .then((results) => {
-                reply(results);
-              })
-              .catch((error) => {
-                reply(Boom.internal('An error occured', error));
-              });
-          } else {
-            reply(Boom.internal('Request misssing patient uuid'));
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.patientUuid) {
+              const patientUuid = request.query.patientUuid;
+              getPatientCovidVaccinationStatus(patientUuid)
+                .then((results) => {
+                  reply(results);
+                })
+                .catch((error) => {
+                  reply(Boom.internal('An error occured', error));
+                });
+            } else {
+              reply(Boom.internal('Request misssing patient uuid'));
+            }
+          });
         },
         description: 'COVID-19 Vaccination Status',
         notes: 'Returns the patients covid 19 vaccination status',
@@ -6152,36 +7106,45 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/covid-19-monthly-vaccination-report',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'covid-19-monthly-report',
+                    ['endingMonth', 'locationUuids', 'locations'],
+                    requestParams
+                  );
+                  const covid19MonthlyReport = new Covid19MonthlyReport(
+                    'covid-19-monthly-report',
+                    reportParams.requestParams
+                  );
+                  covid19MonthlyReport
+                    .generateReport(reportParams.requestParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-              let reportParams = etlHelpers.getReportParams(
-                'covid-19-monthly-report',
-                ['endingMonth', 'locationUuids', 'locations'],
-                requestParams
-              );
-              const covid19MonthlyReport = new Covid19MonthlyReport(
-                'covid-19-monthly-report',
-                reportParams.requestParams
-              );
-              covid19MonthlyReport
-                .generateReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         description: 'COVID-19 Monthly Report',
         notes:
@@ -6192,37 +7155,46 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/covid-19-monthly-vaccination-report/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'covid-19-monthly-report',
+                    ['endingMonth', 'locationUuids', 'locations'],
+                    requestParams
+                  );
+                  delete reportParams.requestParams['gender'];
+                  const covid19MonthlyReport = new Covid19MonthlyReport(
+                    'covid-19-monthly-report',
+                    reportParams.requestParams
+                  );
+                  covid19MonthlyReport
+                    .generatePatientListReport(reportParams.requestParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-              let reportParams = etlHelpers.getReportParams(
-                'covid-19-monthly-report',
-                ['endingMonth', 'locationUuids', 'locations'],
-                requestParams
-              );
-              delete reportParams.requestParams['gender'];
-              const covid19MonthlyReport = new Covid19MonthlyReport(
-                'covid-19-monthly-report',
-                reportParams.requestParams
-              );
-              covid19MonthlyReport
-                .generatePatientListReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         description: 'COVID-19 Monthly Report Patient List',
         notes:
@@ -6233,33 +7205,42 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/ml-weekly-predictions',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            request.query.reportName = 'defaulter-list';
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              request.query.reportName = 'defaulter-list';
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+
+                  const mlWeeklyPredictionsService = new MlWeeklyPredictionsService();
+
+                  mlWeeklyPredictionsService
+                    .getPatientListReport(requestParams)
+                    .then((results) => {
+                      _.each(results.result, (item) => {
+                        item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
+                      });
+                      reply(results);
+                    })
+                    .catch((err) => {
+                      reply(Boom.internal('An error occured', err));
+                    });
+                }
               );
-
-              const mlWeeklyPredictionsService = new MlWeeklyPredictionsService();
-
-              mlWeeklyPredictionsService
-                .getPatientListReport(requestParams)
-                .then((results) => {
-                  _.each(results.result, (item) => {
-                    item.cur_meds = etlHelpers.getARVNames(item.cur_meds);
-                  });
-                  reply(results);
-                })
-                .catch((err) => {
-                  reply(Boom.internal('An error occured', err));
-                });
-            });
-          }
+            }
+          });
         },
         plugins: {
           hapiAuthorization: {
@@ -6287,22 +7268,28 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/predicted-score',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          if (request.query.patientUuid) {
-            const patientUuid = request.query.patientUuid;
-            getPatientPredictedScore(patientUuid)
-              .then((results) => {
-                reply(results);
-              })
-              .catch((error) => {
-                reply(Boom.internal('An error occured', error));
-              });
-          } else {
-            reply(Boom.internal('Request misssing patient uuid'));
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.patientUuid) {
+              const patientUuid = request.query.patientUuid;
+              getPatientPredictedScore(patientUuid)
+                .then((results) => {
+                  reply(results);
+                })
+                .catch((error) => {
+                  reply(Boom.internal('An error occured', error));
+                });
+            } else {
+              reply(Boom.internal('Request misssing patient uuid'));
+            }
+          });
         },
         description: 'Patient predicted score of missing appointment.',
         notes: 'Returns the patients predictions data.',
@@ -6312,12 +7299,18 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/hiv-latest-summaries',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          dao.getPatientsLatestHivSummmary(request).then((summary) => {
-            reply(summary);
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            dao.getPatientsLatestHivSummmary(request).then((summary) => {
+              reply(summary);
+            });
           });
         },
         description: 'Get cohort hiv summaries',
@@ -6328,20 +7321,26 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/viral-load-suppression-rate',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          const { uuid } = request.query;
-          const cohortService = new CohortModuleService();
-          cohortService
-            .getCohortSummary(uuid)
-            .then(function (cohortUsers) {
-              reply(cohortUsers);
-            })
-            .catch(function (error) {
-              reply(new Boom(500, 'Internal server error.', '', '', error));
-            });
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            const { uuid } = request.query;
+            const cohortService = new CohortModuleService();
+            cohortService
+              .getCohortSummary(uuid)
+              .then(function (cohortUsers) {
+                reply(cohortUsers);
+              })
+              .catch(function (error) {
+                reply(new Boom(500, 'Internal server error.', '', '', error));
+              });
+          });
         },
         description: 'Get cohort viral load suppression rate',
         notes: 'Api endpoint that returns cohort viral load suppression rate',
@@ -6351,26 +7350,32 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/amrs_id',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: async function (request, reply) {
-          const axios = require('axios');
-          try {
-            const querystring = require('querystring');
-            const formData = {
-              user: '1'
+        handler: async function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
             };
-            const formBody = querystring.stringify(formData);
-            request = await axios.post(
-              'https://ngx.ampath.or.ke/amrs-id-generator/generateidentifier',
-              formBody
-            );
-            const identifier = request.data.identifier;
-            reply.response(identifier);
-          } catch (error) {
-            reply.response('Internal Server Error').code(500);
-          }
+
+            const axios = require('axios');
+            try {
+              const querystring = require('querystring');
+              const formData = {
+                user: '1'
+              };
+              const formBody = querystring.stringify(formData);
+              request = await axios.post(
+                'https://ngx.ampath.or.ke/amrs-id-generator/generateidentifier',
+                formBody
+              );
+              const identifier = request.data.identifier;
+              resolve(h.response(identifier));
+            } catch (error) {
+              resolve(h.response('Internal Server Error').code(500));
+            }
+          });
         },
         description: 'Get AMRS ID For AMRS 3.X Use Auto generation',
         notes: 'Api endpoint that returns AMRS ID in string format',
@@ -6380,39 +7385,48 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/ml-summary',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'mlMonthlySummaryAggregate',
-                ['endDate', 'startDate', 'locationUuids'],
-                requestParams
-              );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              reportParams.requestParams.isAggregated = true;
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'mlMonthlySummaryAggregate',
+                    ['endDate', 'startDate', 'locationUuids'],
+                    requestParams
+                  );
 
-              let mlMonthlySummaryService = new MlMonthlySummaryService(
-                'mlMonthlySummaryAggregate',
-                reportParams.requestParams
+                  reportParams.requestParams.isAggregated = true;
+
+                  let mlMonthlySummaryService = new MlMonthlySummaryService(
+                    'mlMonthlySummaryAggregate',
+                    reportParams.requestParams
+                  );
+
+                  mlMonthlySummaryService
+                    .generateReport(reportParams.requestParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-
-              mlMonthlySummaryService
-                .generateReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         plugins: {
           hapiAuthorization: {
@@ -6433,39 +7447,48 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/ml-summary-patient-list',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'mlMonthlySummaryAggregate',
-                ['startDate', 'endDate', 'locationUuids'],
-                requestParams
-              );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              delete reportParams.requestParams['gender'];
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'mlMonthlySummaryAggregate',
+                    ['startDate', 'endDate', 'locationUuids'],
+                    requestParams
+                  );
 
-              let mlMonthlySummaryService = new MlMonthlySummaryService(
-                'mlMonthlySummaryAggregate',
-                reportParams.requestParams
+                  delete reportParams.requestParams['gender'];
+
+                  let mlMonthlySummaryService = new MlMonthlySummaryService(
+                    'mlMonthlySummaryAggregate',
+                    reportParams.requestParams
+                  );
+
+                  mlMonthlySummaryService
+                    .generatePatientListReport(reportParams.requestParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-
-              mlMonthlySummaryService
-                .generatePatientListReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         plugins: {
           hapiAuthorization: {
@@ -6486,39 +7509,48 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/moh-731',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
-              );
-              let reportParams = etlHelpers.getReportParams(
-                'moh731Report',
-                ['endDate', 'startDate', 'locationUuids'],
-                requestParams
-              );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-              reportParams.requestParams.isAggregated = true;
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+                  let reportParams = etlHelpers.getReportParams(
+                    'moh731Report',
+                    ['endDate', 'startDate', 'locationUuids'],
+                    requestParams
+                  );
 
-              let moh731Service = new MOH731Service(
-                'moh731Report',
-                reportParams.requestParams
+                  reportParams.requestParams.isAggregated = true;
+
+                  let moh731Service = new MOH731Service(
+                    'moh731Report',
+                    reportParams.requestParams
+                  );
+
+                  moh731Service
+                    .generateReport(reportParams.requestParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-
-              moh731Service
-                .generateReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         plugins: {
           hapiAuthorization: {
@@ -6539,46 +7571,55 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/moh-731-patient-list',
-      config: {
+      options: {
         auth: 'default',
-        handler: function (request, reply) {
-          if (request.query.locationUuids) {
-            preRequest.resolveLocationIdsToLocationUuids(request, function () {
-              let requestParams = Object.assign(
-                {},
-                request.query,
-                request.params
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query.locationUuids) {
+              preRequest.resolveLocationIdsToLocationUuids(
+                request,
+                function () {
+                  let requestParams = Object.assign(
+                    {},
+                    request.query,
+                    request.params
+                  );
+
+                  let reportParams = etlHelpers.getReportParams(
+                    'moh731Report',
+                    ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                    requestParams
+                  );
+
+                  let requestCopy = _.cloneDeep(requestParams);
+
+                  let moh731Service = new MOH731Service(
+                    'moh731Report',
+                    reportParams.requestParams
+                  );
+
+                  requestCopy.locations = reportParams.requestParams.locations;
+                  requestCopy.limitParam = requestParams.limit;
+                  requestCopy.offSetParam = requestParams.startIndex;
+                  delete reportParams.requestParams['gender'];
+                  console.log('REQUEST: ' + JSON.stringify(requestCopy));
+
+                  moh731Service
+                    .generatePatientListReport(reportParams.requestParams)
+                    .then((result) => {
+                      reply(result);
+                    })
+                    .catch((error) => {
+                      reply(error);
+                    });
+                }
               );
-
-              let reportParams = etlHelpers.getReportParams(
-                'moh731Report',
-                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-                requestParams
-              );
-
-              let requestCopy = _.cloneDeep(requestParams);
-
-              let moh731Service = new MOH731Service(
-                'moh731Report',
-                reportParams.requestParams
-              );
-
-              requestCopy.locations = reportParams.requestParams.locations;
-              requestCopy.limitParam = requestParams.limit;
-              requestCopy.offSetParam = requestParams.startIndex;
-              delete reportParams.requestParams['gender'];
-              console.log('REQUEST: ' + JSON.stringify(requestCopy));
-
-              moh731Service
-                .generatePatientListReport(reportParams.requestParams)
-                .then((result) => {
-                  reply(result);
-                })
-                .catch((error) => {
-                  reply(error);
-                });
-            });
-          }
+            }
+          });
         },
         plugins: {
           hapiAuthorization: {
@@ -6604,28 +7645,34 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/queue-entry',
-      config: {
+      options: {
         auth: 'default',
-        handler: async function (request, reply) {
-          const queueService = new ServiceEntry();
-          if (request.query.locationUuid && request.query.serviceUuid) {
-            const locationUuid = request.query.locationUuid;
-            const serviceUuid = request.query.serviceUuid;
-            try {
-              const res = await queueService.getQueueEntriesByLocationAndService(
-                locationUuid,
-                serviceUuid
-              );
-              reply({
-                data: res
-              });
-            } catch (error) {
-              console.error({ error });
+        handler: async function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            const queueService = new ServiceEntry();
+            if (request.query.locationUuid && request.query.serviceUuid) {
+              const locationUuid = request.query.locationUuid;
+              const serviceUuid = request.query.serviceUuid;
+              try {
+                const res = await queueService.getQueueEntriesByLocationAndService(
+                  locationUuid,
+                  serviceUuid
+                );
+                reply({
+                  data: res
+                });
+              } catch (error) {
+                console.error({ error });
+                reply(Boom.badData());
+              }
+            } else {
               reply(Boom.badData());
             }
-          } else {
-            reply(Boom.badData());
-          }
+          });
         },
         plugins: {},
         description: "Get a location's service queue",
@@ -6636,84 +7683,104 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/otp',
-      config: {
+      options: {
         auth: 'default',
-        handler: async function (request, reply) {
-          const otpService = new OtpService();
-          const smsService = new SmsService();
-          const emailService = new EmailService();
-          const otpStore = new OtpStore();
+        handler: async function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          const { username, email, phone, key } = request.query;
+            const otpService = new OtpService();
+            const smsService = new SmsService();
+            const emailService = new EmailService();
+            const otpStore = new OtpStore();
 
-          if (!otpService.isSecretValid(key)) {
-            return reply({
-              success: false,
-              message: 'Unauthorized: Invalid security key'
-            }).code(401);
-          }
+            const { username, email, phone, key } = request.query;
 
-          const otp = otpService.generateOtp(5);
-          const otpExpiry = otpService.getOtpExpiry(120);
-          const message = `Your OTP code is: ${otp}. It expires after 2 minutes`;
+            if (!otpService.isSecretValid(key)) {
+              return resolve(
+                h
+                  .response({
+                    success: false,
+                    message: 'Unauthorized: Invalid security key'
+                  })
+                  .code(401)
+              );
+            }
 
-          try {
-            await otpStore.storeOtp(username, otp, otpExpiry, message);
-          } catch (err) {
-            console.error('Failed to store OTP:', err);
-            return reply({
-              success: false,
-              message: 'Failed to generate OTP'
-            }).code(500);
-          }
+            const otp = otpService.generateOtp(5);
+            const otpExpiry = otpService.getOtpExpiry(120);
+            const message = `Your OTP code is: ${otp}. It expires after 2 minutes`;
 
-          const sentTo = [];
+            try {
+              await otpStore.storeOtp(username, otp, otpExpiry, message);
+            } catch (err) {
+              console.error('Failed to store OTP:', err);
+              return resolve(
+                h
+                  .response({
+                    success: false,
+                    message: 'Failed to generate OTP'
+                  })
+                  .code(500)
+              );
+            }
 
-          const sendPromises = [];
+            const sentTo = [];
 
-          if (email) {
-            sendPromises.push(
-              emailService.sendOtp(email, message).then((res) => {
-                if (res.success) sentTo.push(`email (${email})`);
-                else
-                  console.error(
-                    `Email failed for ${email}:`,
-                    res.error || res.message
-                  );
+            const sendPromises = [];
+
+            if (email) {
+              sendPromises.push(
+                emailService.sendOtp(email, message).then((res) => {
+                  if (res.success) sentTo.push(`email (${email})`);
+                  else
+                    console.error(
+                      `Email failed for ${email}:`,
+                      res.error || res.message
+                    );
+                })
+              );
+            }
+
+            if (phone) {
+              sendPromises.push(
+                smsService.sendOtp(phone, message).then((res) => {
+                  if (res.success) sentTo.push(`phone number (${phone})`);
+                  else
+                    console.error(
+                      `SMS failed for ${phone}:`,
+                      res.error || res.message
+                    );
+                })
+              );
+            }
+
+            await Promise.all(sendPromises);
+
+            if (sentTo.length === 0) {
+              return resolve(
+                h
+                  .response({
+                    success: false,
+                    message: 'OTP could not be sent to email or phone number'
+                  })
+                  .code(500)
+              );
+            }
+
+            const ackMessage =
+              sentTo.length === 1
+                ? `OTP successfully sent to your ${sentTo[0]}`
+                : `OTP successfully sent to your ${sentTo.join(' and ')}`;
+
+            return resolve(
+              h.response({
+                success: true,
+                data: ackMessage
               })
             );
-          }
-
-          if (phone) {
-            sendPromises.push(
-              smsService.sendOtp(phone, message).then((res) => {
-                if (res.success) sentTo.push(`phone number (${phone})`);
-                else
-                  console.error(
-                    `SMS failed for ${phone}:`,
-                    res.error || res.message
-                  );
-              })
-            );
-          }
-
-          await Promise.all(sendPromises);
-
-          if (sentTo.length === 0) {
-            return reply({
-              success: false,
-              message: 'OTP could not be sent to email or phone number'
-            }).code(500);
-          }
-
-          const ackMessage =
-            sentTo.length === 1
-              ? `OTP successfully sent to your ${sentTo[0]}`
-              : `OTP successfully sent to your ${sentTo.join(' and ')}`;
-
-          return reply({
-            success: true,
-            data: ackMessage
           });
         },
         plugins: {},
@@ -6725,25 +7792,33 @@ module.exports = (function () {
     {
       method: 'POST',
       path: '/verify-otp',
-      config: {
+      options: {
         auth: 'default',
-        handler: async function (request, reply) {
-          const otpStore = new OtpStore();
-          const { username, otp } = request.payload || {};
-          try {
-            const res = await otpStore.verify(username, otp);
-            reply({
-              data: res,
-              code: 200
-            });
-          } catch (err) {
-            return reply
-              .response({
-                success: false,
-                message: err.message
-              })
-              .code(400);
-          }
+        handler: async function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            const otpStore = new OtpStore();
+            const { username, otp } = request.payload || {};
+            try {
+              const res = await otpStore.verify(username, otp);
+              reply({
+                data: res,
+                code: 200
+              });
+            } catch (err) {
+              return resolve(
+                h
+                  .response({
+                    success: false,
+                    message: err.message
+                  })
+                  .code(400)
+              );
+            }
+          });
         },
         plugins: {},
         description: "Get a user's email",
@@ -6753,7 +7828,7 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/county-logo',
-      config: {
+      options: {
         auth: 'default',
         handler: async function (request, h) {
           let logo = null;
@@ -6783,27 +7858,39 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/superset-token',
-      config: {
+      options: {
         auth: 'default',
-        handler: async function (request, reply) {
-          const locationUuid = request.query.locationUuid;
-          const supersetService = new SupersetService();
-          try {
-            await loadAndMaplocationUuidToId();
-            const locationId = await getlocationIdFromUuid(locationUuid);
-            const res = await supersetService.getSupersetGuestToken(locationId);
-            reply({
-              access_token: res,
-              code: 200
-            });
-          } catch (err) {
-            return reply
-              .response({
-                success: false,
-                message: err.message
-              })
-              .code(400);
-          }
+        handler: async function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            const locationUuid = request.query.locationUuid;
+            const dashboardId = request.query.dashboardId;
+            const supersetService = new SupersetService();
+            try {
+              await loadAndMaplocationUuidToId();
+              const locationId = await getlocationIdFromUuid(locationUuid);
+              const res = await supersetService.getSupersetGuestToken(
+                locationId,
+                dashboardId
+              );
+              reply({
+                access_token: res,
+                code: 200
+              });
+            } catch (err) {
+              return resolve(
+                h
+                  .response({
+                    success: false,
+                    message: err.message
+                  })
+                  .code(400)
+              );
+            }
+          });
         },
         plugins: {},
         description: 'Get superset guest token',
@@ -6813,33 +7900,41 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/dashboard-summary',
-      config: {
+      options: {
         auth: 'default',
-        handler: async function (request, reply) {
-          const locationUuid = request.query.locationUuid;
-          const dashboardSummaryService = new DashboardSummaryService();
+        handler: async function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-          try {
-            await loadAndMaplocationUuidToId();
-            const locationId = await getlocationIdFromUuid(locationUuid);
-            const res = await dashboardSummaryService.getDashboardSummary(
-              locationId
-            );
-            reply({
-              success: true,
-              data: res,
-              code: 200
-            });
-          } catch (err) {
-            return reply
-              .response({
-                success: false,
-                data:
-                  err.message ||
-                  'An unexpected error occurred while fetching dashboard summary.'
-              })
-              .code(500);
-          }
+            const locationUuid = request.query.locationUuid;
+            const dashboardSummaryService = new DashboardSummaryService();
+
+            try {
+              await loadAndMaplocationUuidToId();
+              const locationId = await getlocationIdFromUuid(locationUuid);
+              const res = await dashboardSummaryService.getDashboardSummary(
+                locationId
+              );
+              reply({
+                success: true,
+                data: res,
+                code: 200
+              });
+            } catch (err) {
+              return resolve(
+                h
+                  .response({
+                    success: false,
+                    data:
+                      err.message ||
+                      'An unexpected error occurred while fetching dashboard summary.'
+                  })
+                  .code(500)
+              );
+            }
+          });
         },
         plugins: {},
         description: 'Get Dashboard summary for a location',
@@ -6849,37 +7944,43 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/service-queue-daily-report',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          if (request.query['locationUuid'] && request.query['serviceUuid']) {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'service-queue-daily-report',
-              [],
-              requestParams
-            );
-            let serviceQueueDailyService = new ServiceQueueDailyReportService(
-              'service-queue-daily-report',
-              reportParams.requestParams
-            );
-            serviceQueueDailyService
-              .getAggregateReport(reportParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
-          } else {
-            reply(Boom.badData('Misssing location or service params'));
-          }
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            if (request.query['locationUuid'] && request.query['serviceUuid']) {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'service-queue-daily-report',
+                [],
+                requestParams
+              );
+              let serviceQueueDailyService = new ServiceQueueDailyReportService(
+                'service-queue-daily-report',
+                reportParams.requestParams
+              );
+              serviceQueueDailyService
+                .getAggregateReport(reportParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            } else {
+              reply(Boom.badData('Misssing location or service params'));
+            }
+          });
         },
         description: 'Service Queue Daily report',
         notes: 'Service Queue Daily report',
@@ -6889,45 +7990,81 @@ module.exports = (function () {
     {
       method: 'GET',
       path: '/service-queue-daily-report/patient-list',
-      config: {
+      options: {
         auth: 'default',
         plugins: {},
-        handler: function (request, reply) {
-          if (request.query['locationUuid'] && request.query['serviceUuid']) {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            let reportParams = etlHelpers.getReportParams(
-              'service-queue-daily-report',
-              [],
-              requestParams
-            );
+        handler: function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
 
-            let serviceQueueDailyService = new ServiceQueueDailyReportService(
-              'service-queue-daily-report',
-              reportParams.requestParams
-            );
+            if (request.query['locationUuid'] && request.query['serviceUuid']) {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              let reportParams = etlHelpers.getReportParams(
+                'service-queue-daily-report',
+                [],
+                requestParams
+              );
 
-            delete reportParams.requestParams['gender'];
-            delete reportParams.requestParams['genders'];
-            serviceQueueDailyService
-              .getPatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                console.error('Error: ', error);
-                reply(error);
-              });
-          } else {
-            reply(Boom.badData('Misssing location or service params'));
-          }
+              let serviceQueueDailyService = new ServiceQueueDailyReportService(
+                'service-queue-daily-report',
+                reportParams.requestParams
+              );
+
+              delete reportParams.requestParams['gender'];
+              delete reportParams.requestParams['genders'];
+              serviceQueueDailyService
+                .getPatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  console.error('Error: ', error);
+                  reply(error);
+                });
+            } else {
+              reply(Boom.badData('Misssing location or service params'));
+            }
+          });
         },
         description: 'Service Queue Daily report Patient List',
         notes: 'Service Queue Daily report Patient List',
         tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
+      path: '/etl/facility-providers',
+      options: {
+        auth: 'default',
+        handler: async function (request, h) {
+          return new Promise(async function (resolve) {
+            var reply = function (payload) {
+              return resolve(payload);
+            };
+
+            const facilityProvidersService = new FacilityProvidersService();
+            if (request.query.locationUuid) {
+              const locationUuid = request.query.locationUuid;
+              const res = await facilityProvidersService.getFacilityActiveProvidersByLocationUuid(
+                locationUuid
+              );
+              reply({
+                data: res
+              });
+            } else {
+              reply(Boom.badData('Missing facility'));
+            }
+          });
+        },
+        plugins: {},
+        description: 'Get Active providers in a facility',
+        notes: 'Returns a list of active providers for a facility'
       }
     }
   ];

@@ -1,0 +1,73 @@
+{
+  "name": "mortuaryAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "mortuaryBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "mortuaryBase",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "mortuary_body_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.mortuary_body_days)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mortuary_embalment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.mortuary_embalment)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mortuary_postmortem",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.mortuary_postmortem)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mortuary_unclaimed_bodies",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(m.mortuary_unclaimed_bodies)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

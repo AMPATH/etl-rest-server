@@ -5,24 +5,30 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/surge-daily-report',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        let requestParams = Object.assign({}, request.query, request.params);
-        requestParams.reportName = 'surgeDailyReport';
-        let service = new SurgeDailyReportService();
-        service
-          .getAggregateReport(requestParams)
-          .then((result) => {
-            reply(result);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let requestParams = Object.assign({}, request.query, request.params);
+          requestParams.reportName = 'surgeDailyReport';
+          let service = new SurgeDailyReportService();
+          service
+            .getAggregateReport(requestParams)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description:
         'Get aggregates of surge daily report of a given date  and location ',
@@ -39,24 +45,30 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/surge-daily-report-patient-list',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        let requestParams = Object.assign({}, request.query, request.params);
-        requestParams.reportName = 'surgeDailyReport';
-        let service = new SurgeDailyReportService();
-        service
-          .getPatientListReport(requestParams)
-          .then((result) => {
-            reply(result);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let requestParams = Object.assign({}, request.query, request.params);
+          requestParams.reportName = 'surgeDailyReport';
+          let service = new SurgeDailyReportService();
+          service
+            .getPatientListReport(requestParams)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description:
         'Get patient list for surge indicators report of the location and date provided',

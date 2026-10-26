@@ -1,0 +1,233 @@
+{
+  "name": "colorectalCancerAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "colorectalCancerBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "colorectalCancerBase",
+      "alias": "c"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_positive_45_54_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_positive_55_64_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_positive_65_74_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_positive_total)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_negative_45_54_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_negative_55_64_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_negative_65_74_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.forbt_negative_total)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_no_abnormality_45_54_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_no_abnormality_55_64_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_no_abnormality_65_74_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_no_abnormality_total)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_polyps_45_54_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_polyps_55_64_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_polyps_65_74_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_polyps_total)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_cancer_45_54_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_cancer_55_64_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_cancer_65_74_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_cancer_total)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_other_abnormalities_45_54_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_other_abnormalities_55_64_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_other_abnormalities_65_74_yrs)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(c.colonoscopy_other_abnormalities_total)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "reports": [
+    "ancAggregate",
+    "gbvAggregate",
+    "maternityAggregate",
+    "cervicalCancerAggregate",
+    "familyPlanningAggregate",
+    "pncAggregate",
+    "socialWorkAggregate",
+    "tbScreeningAggregate",
+    "chanisAggregate"
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "name": "ancBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "m"
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.person_id = flat_identifiers.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "m.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "m.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "m.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.new_anc_clients"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.revisit_anc_clients"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.first_ipt_dose = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "second_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.second_ipt_dose = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "third_ipt_dose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.third_ipt_dose = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "Hb_less_11g",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hb < 11, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_anc_contact_12_or_less_weeks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.maturity_in_weeks <= 12, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "completing_4_anc_visits",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.anc_visit_number = 4, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "completing_8_anc_contact",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.anc_visit_number = 8, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "llins_children_less_than_one",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.llins_children = 1 AND m.age < 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "llins_anc_clients",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.llins_anc_clients"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anc_clients_tested_syphilis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.anc_clients_tested_syphilis = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "syphilis_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.syphilis_positive = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breast_exam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.breast_exam"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolesc_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(m.age BETWEEN 10 AND 14 AND m.encounter_type = 265, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adolesc_15_19",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(m.age BETWEEN 15 AND 19 AND m.encounter_type = 265, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "youth_20_24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 20 AND 24 AND m.encounter_type = 265, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.iron = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "folic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.folic = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_and_folate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.iron = 1 AND m.folic = 1 || m.iron_and_folate = 1, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fgm_complications",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.fgm_complications = 1, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["m.person_id", "m.encounter_datetime"]
+  }
+}

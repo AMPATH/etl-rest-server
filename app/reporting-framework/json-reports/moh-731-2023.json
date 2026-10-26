@@ -1,0 +1,4 @@
+{
+  "comment": "One aggregation per section of the MOH 731 (Ver. July 2023) form. The multi dataset runner executes these concurrently, so a section costs one pass of its source and the report costs the slowest section rather than their sum. Sections are added here as their indicators are defined.",
+  "reports": ["Moh7312023Section3Aggregation", "Moh7312023NutritionAggregation"]
+}

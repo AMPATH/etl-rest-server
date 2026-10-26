@@ -1,0 +1,184 @@
+{
+  "name": "prep_patient_list_template",
+  "version": "1.0",
+  "tag": "prep_patient_list_template",
+  "description": "prep_patient_list_template",
+  "sources": [
+    {
+      "table": "etl.flat_prep_summary_v1_1",
+      "alias": "ps"
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pi.patient_id = ps.person_id AND pi.identifier_type = 44"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi2",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pi2.patient_id = ps.person_id AND pi2.identifier_type = 44"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi3",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pi3.patient_id = ps.person_id AND pi3.identifier_type = 44"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "pi4",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pi4.patient_id = ps.person_id AND pi4.identifier_type = 44"
+      }
+    },
+    {
+      "table": "(SELECT o.person_id, o.value_text FROM amrs.obs o INNER JOIN (SELECT person_id, MAX(CONCAT(obs_datetime, LPAD(obs_id, 10, '0'))) AS max_key FROM amrs.obs WHERE concept_id = 7222 GROUP BY person_id) latest ON latest.person_id = o.person_id AND latest.max_key = CONCAT(o.obs_datetime, LPAD(o.obs_id, 10, '0')) WHERE o.concept_id = 7222)",
+      "alias": "oa_latest",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ps.person_id = oa_latest.person_id"
+      }
+    },
+    {
+      "table": "(SELECT person_id, CASE WHEN value_coded = 12430 THEN 1 WHEN value_coded = 7447 THEN 1 WHEN value_coded = 12431 THEN 2 WHEN value_coded = 12432 THEN 3 WHEN value_coded = 12433 THEN 4 ELSE '' END AS prep_method FROM (SELECT *, ROW_NUMBER() OVER (PARTITION BY person_id ORDER BY obs_datetime DESC) AS rn FROM amrs.obs WHERE concept_id IN (12444, 12443, 12442)) ranked_obs WHERE rn = 1)",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = ps.person_id"
+      }
+    },
+    {
+      "table": "(SELECT x.* FROM etl.flat_prep_summary_v1_1 x INNER JOIN (SELECT person_id, MAX(encounter_datetime) AS latest_encounter FROM etl.flat_prep_summary_v1_1 WHERE population_type IS NOT NULL GROUP BY person_id) latest ON latest.person_id = x.person_id AND latest.latest_encounter = x.encounter_datetime)",
+      "alias": "t2",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t2.person_id = ps.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "ps.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "ps.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "PrEP_Number",
+      "column": "pi.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "National_ID",
+      "column": "pi2.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "NUPI",
+      "column": "pi3.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrsId",
+      "column": "pi4.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "Date_Of_Visit",
+      "column": "ps.encounter_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, ps.birthdate, ps.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "prep_method",
+      "column": "o.prep_method"
+    },
+    {
+      "type": "simple_column",
+      "alias": "Sex",
+      "column": "ps.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "population_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN t2.population_type = 3 THEN '1'  WHEN t2.population_type = 10 THEN '1' WHEN t2.population_type = 1 THEN '2' WHEN t2.population_type = 5 THEN '3' WHEN t2.population_type = 6 THEN '4' WHEN t2.population_type = 7 THEN '5' WHEN t2.population_type = 8 THEN '6' WHEN t2.population_type = 11 THEN '6' ELSE '' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_prep_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN ps.encounter_type = 133 THEN 'N' WHEN ps.discontinued_prep = 1 THEN 'D' WHEN ps.discontinued_prep IS NULL AND ps.encounter_type <> 133 THEN 'C' WHEN ps.prev_discontinued_prep = 1 AND ps.discontinued_prep <> 1 THEN 'R' ELSE '' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "HIV_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN COALESCE(ps.hiv_rapid_test_result) = 664 THEN 'N' WHEN COALESCE(ps.hiv_rapid_test_result) = 703 THEN 'P' ELSE '' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "with_STI",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "case when ps.has_sti=1 then 'Y' else 'N' end"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "remarks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TRIM(SUBSTRING_INDEX(REPLACE(REPLACE(REPLACE(oa_latest.value_text, '\r\n', '\n'),',', '\n'),'.', '\n'),'\n', 1))"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["ps.person_id", "o.person_id"]
+  },
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "ps.encounter_type in (133, 134,261,262,263,280,281,282,292,302,303,304)"
+      }
+    ]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "ps.encounter_datetime",
+        "order": "desc"
+      }
+    ]
+  }
+}

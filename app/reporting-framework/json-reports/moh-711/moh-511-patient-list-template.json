@@ -1,0 +1,264 @@
+{
+  "name": "moh_511_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_511_patient_list_template",
+  "description": "MOH 511 Patient list template",
+  "sources": [
+    {
+      "table": "etl.flat_moh_710",
+      "alias": "mh"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "t1",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "t1.person_id = mh.person_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "amrs_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "amrs_id.patient_id = mh.person_id AND amrs_id.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "cr_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "cr_id.patient_id = mh.person_id AND cr_id.identifier_type = 55"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mh.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "attribute",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "attribute.person_id = mh.person_id AND attribute.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "en",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "en.encounter_id = mh.encounter_id AND en.encounter_type in (4,110,167,313)"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mh.person_id = pa.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "mh.person_id"
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "visit_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(mh.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cwc_number_new",
+      "column": "amrs_id.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cwc_number_revisit",
+      "column": "cr_id.identifier"
+    },
+    {
+      "type": "derived_column",
+      "alias": "birth_notification_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "mh.age_in_months"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "t1.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "county_sub_county",
+      "column": "pa.county_district"
+    },
+    {
+      "type": "simple_column",
+      "alias": "village_estate_landmark",
+      "column": "pa.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "phone_number",
+      "column": "attribute.value"
+    },
+    {
+      "type": "derived_column",
+      "alias": "weight",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.weight"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "weight_category",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.weight_category"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "height",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.height"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "height_category",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.height_category"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.muac"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "exclusive_breastfeeding_less_6_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.exclusive_breastfeeding_less_6_months"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_A_supplementation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.vitamin_a"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dewormed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.dewormed"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mnps_supplimentation",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "mh.mnps_supplimentation"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "developmental_milestones",
+      "column": "mh.developmental_milestones"
+    },
+    {
+      "type": "simple_column",
+      "alias": "danger_signs",
+      "column": "mh.danger_signs"
+    },
+    {
+      "type": "simple_column",
+      "alias": "disability",
+      "column": "mh.disability"
+    },
+    {
+      "type": "simple_column",
+      "alias": "immunization_status_up_to_date",
+      "column": "mh.immunization_status_up_to_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "llin_supplimentation_given",
+      "column": "mh.llin_supplimentation_given"
+    },
+    {
+      "type": "simple_column",
+      "alias": "follow_up",
+      "column": "mh.follow_up"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referred_from",
+      "column": "mh.referred_from"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referred_to",
+      "column": "mh.referred_to"
+    },
+    {
+      "type": "simple_column",
+      "alias": "remarks",
+      "column": "mh.remarks"
+    }
+  ],
+  "groupBy": {
+    "columns": ["mh.person_id"]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "mh.encounter_datetime",
+        "order": "asc"
+      }
+    ]
+  }
+}

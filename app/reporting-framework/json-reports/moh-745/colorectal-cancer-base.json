@@ -1,0 +1,274 @@
+{
+  "name": "colorectalCancerBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_positive_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "forbt_negative_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_no_abnormality_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_polyps_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_cancer_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_45_54_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 34, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_55_64_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) BETWEEN 25 AND 49, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_65_74_yrs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) >= 50, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "colonoscopy_other_abnormalities_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((o.concept_id = 10402 AND o.value_coded in (9434, 2322, 10420)) AND TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 25, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (69)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id"]
+  }
+}

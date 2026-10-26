@@ -113,5 +113,12 @@
     "port": "85",
     "generalPath": "",
     "cd4PanelPath": ""
+  },
+  "odoo": {
+    "host": "http://localhost:8069",
+    "username": "admin",
+    "password": "admin",
+    "db": "odoo",
+    "apiKeyCacheTtlMs": 3600000
   }
 }

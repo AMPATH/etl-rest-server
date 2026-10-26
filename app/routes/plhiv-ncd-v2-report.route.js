@@ -9,35 +9,45 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/plhiv-ncd-v2-monthly-report',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          requestParams.visitState =
-            requestParams.currentView === 'monthly' ? [0, 1] : [1];
-          let reportParams = etlHelpers.getReportParams(
-            'plhiv-ncd-v2-monthly-report',
-            ['startDate', 'endDate', 'locationUuids'],
-            requestParams
-          );
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new PLHIVNCDv2SummaryReportService(
-            'plhiv-ncd-v2-monthly-report',
-            reportParams.requestParams
-          );
-          service
-            .generateReport(reportParams.requestParams)
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            requestParams.visitState =
+              requestParams.currentView === 'monthly' ? [0, 1] : [1];
+            let reportParams = etlHelpers.getReportParams(
+              'plhiv-ncd-v2-monthly-report',
+              ['startDate', 'endDate', 'locationUuids'],
+              requestParams
+            );
+
+            let service = new PLHIVNCDv2SummaryReportService(
+              'plhiv-ncd-v2-monthly-report',
+              reportParams.requestParams
+            );
+            service
+              .generateReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'plhiv-ncd summary dataset',
@@ -54,42 +64,48 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/plhiv-ncd-v2-monthly-report-patient-list',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            requestParams.visitState =
-              requestParams.currentView === 'monthly' ? [0, 1] : [1];
-            let reportParams = etlHelpers.getReportParams(
-              'plhiv-ncd-v2-monthly-report',
-              ['startDate', 'endDate', 'locationUuids'],
-              requestParams
-            );
-            delete reportParams.requestParams['gender'];
-            const plhivncdV2ReportService = new PLHIVNCDv2SummaryReportService(
-              'plhiv-ncd-v2-monthly-report',
-              reportParams.requestParams
-            );
-            plhivncdV2ReportService
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              requestParams.visitState =
+                requestParams.currentView === 'monthly' ? [0, 1] : [1];
+              let reportParams = etlHelpers.getReportParams(
+                'plhiv-ncd-v2-monthly-report',
+                ['startDate', 'endDate', 'locationUuids'],
+                requestParams
+              );
+              delete reportParams.requestParams['gender'];
+              const plhivncdV2ReportService = new PLHIVNCDv2SummaryReportService(
+                'plhiv-ncd-v2-monthly-report',
+                reportParams.requestParams
+              );
+              plhivncdV2ReportService
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       description:
         'Get patient list for plhiv-ncd summary report of the location and month provided',

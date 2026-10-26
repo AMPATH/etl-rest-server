@@ -1,0 +1,233 @@
+{
+  "name": "orthopaedicTraumaAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "orthopaedicTraumaBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "orthopaedicTraumaBase",
+      "alias": "ot"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "casts_fixed_less_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.casts_fixed_less_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "casts_fixed_less_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.casts_fixed_less_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "casts_fixed_over_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.casts_fixed_over_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "casts_fixed_over_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.casts_fixed_over_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tractions_fixed_less_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.tractions_fixed_less_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tractions_fixed_less_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.tractions_fixed_less_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tractions_fixed_over_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.tractions_fixed_over_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tractions_fixed_over_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.tractions_fixed_over_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "closed_reductions_less_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.closed_reductions_less_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "closed_reductions_less_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.closed_reductions_less_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "closed_reductions_over_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.closed_reductions_over_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "closed_reductions_over_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.closed_reductions_over_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_assisted_in_theatre_less_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.orthopaedic_assisted_in_theatre_less_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_assisted_in_theatre_less_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.orthopaedic_assisted_in_theatre_less_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_assisted_in_theatre_over_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.orthopaedic_assisted_in_theatre_over_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "orthopaedic_assisted_in_theatre_over_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.orthopaedic_assisted_in_theatre_over_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "club_foot_seen_less_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.club_foot_seen_less_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "club_foot_seen_less_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.club_foot_seen_less_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "club_foot_seen_over_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.club_foot_seen_over_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "club_foot_seen_over_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.club_foot_seen_over_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crepe_bandages_applied_less_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.crepe_bandages_applied_less_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crepe_bandages_applied_less_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.crepe_bandages_applied_less_5_years_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crepe_bandages_applied_over_5_years_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.crepe_bandages_applied_over_5_years_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crepe_bandages_applied_over_5_years_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(ot.crepe_bandages_applied_over_5_years_revisit)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

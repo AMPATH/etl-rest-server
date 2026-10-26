@@ -1,0 +1,219 @@
+{
+  "name": "Moh7312023SetBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "Row set behind the MOH 731 (Ver. July 2023) report. One row per patient per location for the reporting month, carrying every flag the form's sections count and nothing a count does not need. Shared by all of the report's section aggregations so the monthly dataset is read once per section rather than once per indicator; drilling into a box reads Moh7312023PatientListBase instead.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "<<hivMonthlyDatasetSource>>",
+      "alias": "hmsd"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = hmsd.location_id"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_categorization_models",
+      "alias": "fcm",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "hmsd.person_id = fcm.person_id AND fcm.next_encounter_datetime IS NULL"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "hmsd.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "hmsd.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "hmsd.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "hmsd.age"
+    },
+    {
+      "comment": "The July 2023 form splits the old 1-9 band into 1-4 and 5-9. Every band states its own range, including the last: a fall through would be inverted into a test of all the others when a band is drilled into.",
+      "type": "derived_column",
+      "alias": "age_range",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "hmsd.age < 1",
+            "value": "0_to_1"
+          },
+          {
+            "condition": "hmsd.age between 1 and 4",
+            "value": "1_to_4"
+          },
+          {
+            "condition": "hmsd.age between 5 and 9",
+            "value": "5_to_9"
+          },
+          {
+            "condition": "hmsd.age between 10 and 14",
+            "value": "10_to_14"
+          },
+          {
+            "condition": "hmsd.age between 15 and 19",
+            "value": "15_to_19"
+          },
+          {
+            "condition": "hmsd.age between 20 and 24",
+            "value": "20_to_24"
+          },
+          {
+            "condition": "hmsd.age >= 25",
+            "value": "older_than_24"
+          }
+        ]
+      }
+    },
+    {
+      "comment": "3.3 and 3.4 split at 15 rather than on the form's age bands.",
+      "type": "derived_column",
+      "alias": "age_group_15",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmsd.age < 15, 'below_15', '15_and_above')"
+      }
+    },
+    {
+      "comment": "3.1 Starting ART",
+      "type": "simple_column",
+      "alias": "started_art",
+      "column": "hmsd.started_art_this_month"
+    },
+    {
+      "comment": "3.2 Currently on ART",
+      "type": "simple_column",
+      "alias": "on_art",
+      "column": "hmsd.on_art_this_month"
+    },
+    {
+      "comment": "3.3 TB screening",
+      "type": "simple_column",
+      "alias": "screened_for_tb",
+      "column": "hmsd.tb_screened_active_this_month"
+    },
+    {
+      "comment": "3.4 Starting TPT",
+      "type": "simple_column",
+      "alias": "started_tpt",
+      "column": "hmsd.started_ipt_this_month"
+    },
+    {
+      "comment": "3.5 Differentiated service delivery, off the categorization model",
+      "type": "derived_column",
+      "alias": "is_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fcm.patient_categorization like '%12106%', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_not_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fcm.patient_categorization like '%12107%', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_community_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fcm.service_delivery_model like '%11932%', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_facility_delivery",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(fcm.service_delivery_model like '%11931%', 1, 0)"
+      }
+    },
+    {
+      "comment": "3.7 HIV in the TB clinic. started_tb_tx_this_month already means the patient's TB treatment began inside the reporting period, so it stands in for the period test the form's definitions are written with, and the rest of the section is read off the dates either side of it.",
+      "type": "simple_column",
+      "alias": "started_tb_tx",
+      "column": "hmsd.started_tb_tx_this_month"
+    },
+    {
+      "comment": "HV03-062: in HIV care before TB was diagnosed, so a known positive.",
+      "type": "derived_column",
+      "alias": "tb_known_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmsd.started_tb_tx_this_month = 1 and hmsd.enrollment_date is not null and date(hmsd.enrollment_date) < date(hmsd.tb_tx_start_date), 1, 0)"
+      }
+    },
+    {
+      "comment": "HV03-063: HIV found at or after the TB diagnosis, so newly positive.",
+      "type": "derived_column",
+      "alias": "tb_new_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmsd.started_tb_tx_this_month = 1 and hmsd.enrollment_date is not null and date(hmsd.enrollment_date) >= date(hmsd.tb_tx_start_date), 1, 0)"
+      }
+    },
+    {
+      "comment": "HV03-064: already on HAART when TB was diagnosed.",
+      "type": "derived_column",
+      "alias": "tb_on_art_at_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(hmsd.started_tb_tx_this_month = 1 and hmsd.arv_first_regimen_start_date is not null and date(hmsd.arv_first_regimen_start_date) < date(hmsd.tb_tx_start_date), 1, 0)"
+      }
+    },
+    {
+      "comment": "HV03-065: started HAART while on TB treatment.",
+      "type": "simple_column",
+      "alias": "started_art_and_has_tb",
+      "column": "hmsd.on_tb_tx_and_started_art_this_month"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "hmsd.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  }
+}

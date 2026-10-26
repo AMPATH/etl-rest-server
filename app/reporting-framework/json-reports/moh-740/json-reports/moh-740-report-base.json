@@ -1,0 +1,373 @@
+{
+  "name": "moh740ReportBase",
+  "version": "1.0",
+  "tag": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.monthly_diabetes_and_hypertention_report",
+      "alias": "mdh"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "mdh.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "mdh.endDate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "facility",
+      "column": "mdh.facility"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mfl_code",
+      "column": "mdh.mfl_code"
+    },
+    {
+      "type": "simple_column",
+      "alias": "county",
+      "column": "mdh.county"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sub_county",
+      "column": "mdh.sub_county"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cumulative_in_care",
+      "column": "mdh.cumulative_in_care"
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_diagnosed_diabetes_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.newly_diagnosed_diabetes_this_month = 1, 1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_to_clinic_known_dm",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.ncd_visit_type = 2345 AND mdh.diabetes_status = 7282, 1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_1_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_2_diabetes",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cumulative_htn_patient",
+      "column": "mdh.cumulative_htn_patient"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "mdh.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "mdh.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_date",
+      "column": "DATE_FORMAT(mdh.encounter_date, '%Y-%m-%d')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "endDate",
+      "column": "mdh.endDate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "covered_by_shif",
+      "column": "mdh.covered_by_shif"
+    },
+    {
+      "type": "simple_column",
+      "alias": "screened_for_tb_this_month",
+      "column": "mdh.screened_for_tb_this_month"
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_postive_for_tb_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_tb_this_month = 1 AND mdh.tb_screening_status IN (6176,6971),1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_for_diabetic_foot_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_diabetic_foot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_diabetic_foot_this_month = 1 AND mdh.has_diabetic_foot = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_1_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9325,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_2_diabetes_mellitus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.diabetes_mellitus_type = 9326,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "amputation_due_to_diabetic_foot",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.amputation_due_to_diabetic_foot = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stroke_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.stroke_diagnosis = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ischemic_heart_disease_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.ischemic_heart_disease_diagnosis = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "heart_failure_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.heart_failure_diagnosis = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_neuropathies",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.has_neuropathies = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_diagnosed_htn_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.newly_diagnosed_htn_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_known_htn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.htn_type = 7286,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_co_morbid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.is_co_morbid = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "revisit_known_co_morbid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.is_co_morbid = 1 AND mdh.co_morbid_type = 12778,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "newly_diagnosed_co_morbid_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.newly_diagnosed_co_morbid_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_insulin_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_insulin_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_ogla_meds_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_ogla_meds_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_both_insulin_and_ogla_meds_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_insulin_this_month = 1 AND mdh.on_ogla_meds_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "done_hba1c_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.done_hba1c_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hba1c_less_than_7_percent_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.done_hba1c_this_month = 1 AND mdh.hba1c < 7,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_exercise_and_diet",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_exercise = 1 AND mdh.on_diet = 1 ,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_antihypertensives_this_month",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.on_antihypertensives_this_month = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "high_bp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.systolic >= 140 OR mdh.diastolic >= 90 ,1,NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "enrollment_date",
+      "column": "DATE_FORMAT(mdh.enrollment_date, '%Y-%m-%d')"
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnosis_at_enrollment",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment = 9325",
+            "value": "a"
+          },
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment IN (9326,44193)",
+            "value": "b"
+          },
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment = 8879",
+            "value": "c"
+          },
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment IN(903,38566,38559,38557,38550,38543,38541)",
+            "value": "d"
+          },
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment = 47",
+            "value": "e"
+          },
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment = 1456",
+            "value": "f"
+          },
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment = 7996",
+            "value": "g"
+          },
+          {
+            "condition": "mdh.primary_diagnosis_at_enrollment = 8087",
+            "value": "h"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "year_of_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "extract(year from (from_days(datediff(endDate,enrollment_date))))"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mdh.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["person_id"]
+  }
+}

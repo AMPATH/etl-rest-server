@@ -1,0 +1,89 @@
+{
+  "name": "orthopaedicRemovalAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "orthopaedicRemovalBase",
+      "version": "1.0",
+      "type": "orthopaedicRemovalBase"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "orthopaedicRemovalBase",
+      "alias": "op"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "removals_done_cast_less_5_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.removals_done_cast_less_5_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "removals_done_cast_over_5_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.removals_done_cast_over_5_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "removals_done_tractions_less_5_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.removals_done_tractions_less_5_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "removals_done_tractions_over_5_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.removals_done_tractions_over_5_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ex_fixator_removed_less_5_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.ex_fixator_removed_less_5_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ex_fixator_removed_over_5_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(op.ex_fixator_removed_over_5_years)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

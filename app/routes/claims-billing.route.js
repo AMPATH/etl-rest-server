@@ -1,0 +1,517 @@
+import {
+  getFacilityBills,
+  getPatientFacilityBillDetails,
+  getPatientBillPayments,
+  getPatientDiagnosis,
+  getActiveProviders,
+  getFacilityEncounterBills,
+  getDischargeDiagnisisAndDictor,
+  getPatientFacilityPreAuthBills,
+  getActiveBillVisits,
+  getActiveCashVisits,
+  getAllBills,
+  getPendingBillLineItems,
+  getPatientEncounterDiagnosis,
+  getPatientVisits,
+  getPatientVisitBills
+} from '../../service/claims-and-billing/claims-and-billing.service';
+var Boom = require('@hapi/boom');
+const routes = [
+  {
+    method: 'GET',
+    path: '/etl/facility/bills',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.locationUuid || !request.query.billingDate) {
+            throw new Error('Missing location or billing params');
+          }
+          const locationUuid = request.query.locationUuid ?? null;
+          const billingDate = request.query.billingDate ?? null;
+          try {
+            const results = await getFacilityBills(locationUuid, billingDate);
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility bills',
+      notes: 'Returns all facility bills for a date',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/patient/bill',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.visitUuid) {
+            throw new Error('Missing visitUuid params');
+          }
+
+          const visitUuid = request.query.visitUuid ?? null;
+          try {
+            const results = await getPatientVisitBills(visitUuid);
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Patients Facility bills',
+      notes: 'Returns all facility bills for a patient for a specific date',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/bill/patient/payment',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.billingDate || !request.query.patientUuid) {
+            throw new Error('Missing patientId,billigDate params');
+          }
+          const billingDate = request.query.billingDate ?? null;
+          const patientUuid = request.query.patientUuid ?? null;
+          try {
+            const results = await getPatientBillPayments(
+              billingDate,
+              patientUuid
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Patients Bill Payments',
+      notes: 'Returns all patient bill payments for a bill on a given date',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/patient/diagnosis',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (
+            !request.query.visitDate ||
+            !request.query.patientUuid ||
+            !request.query.locationUuid
+          ) {
+            throw new Error('Missing patientId,visitDate,locationUuid params');
+          }
+          console.log('here...');
+          const visitDate = request.query.visitDate ?? null;
+          const patientUuid = request.query.patientUuid ?? null;
+          const locationUuid = request.query.locationUuid ?? null;
+          try {
+            const results = await getPatientDiagnosis(
+              visitDate,
+              patientUuid,
+              locationUuid
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            console.log({ error });
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Patients visit diagnosis',
+      notes: 'Returns a patients visit disgnosos',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/providers/licensed',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          try {
+            const results = await getActiveProviders();
+            reply({
+              results: results
+            });
+          } catch (error) {
+            console.log({ error });
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description:
+        'Get licensed Providers as well as their speciality and license status details in form of display and uuid',
+      notes: 'Returns a list of active providers',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/encounter-bills',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (
+            !request.query.locationUuid ||
+            !request.query.encounterTypeUuid ||
+            !request.query.billingFrom
+          ) {
+            throw new Error(
+              'Missing location, encounter type or billing params'
+            );
+          }
+          const locationUuid = request.query.locationUuid ?? null;
+          const billingFrom = request.query.billingFrom ?? null;
+          const encounterTypeUuid = request.query.encounterTypeUuid ?? null;
+
+          try {
+            const results = await getFacilityEncounterBills(
+              locationUuid,
+              encounterTypeUuid,
+              billingFrom
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility encounter bills',
+      notes: 'Returns all facility encounter bills for a date',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/maternity-diagnosis-doctor',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.patientUuid || !request.query.billingDate) {
+            throw new Error('Missing billing date or patientUuid');
+          }
+          const patientUuid = request.query.patientUuid ?? null;
+          const billingDate = request.query.billingDate ?? null;
+
+          try {
+            const results = await getDischargeDiagnisisAndDictor(
+              patientUuid,
+              billingDate
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility encounter bills',
+      notes: 'Returns all facility encounter bills for a date',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/pre-auth-bills',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.locationUuid || !request.query.billingDate) {
+            throw new Error('Missing location or billing params');
+          }
+          const locationUuid = request.query.locationUuid ?? null;
+          const billingDate = request.query.billingDate ?? null;
+          try {
+            const results = await getPatientFacilityPreAuthBills(
+              locationUuid,
+              billingDate
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility pre-auth bills',
+      notes: 'Returns all pre-auth facility bills for a facility',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/active-bill-visits',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.locationUuid || !request.query.billingDate) {
+            throw new Error('Missing location or billing params');
+          }
+          const locationUuid = request.query.locationUuid ?? null;
+          const billingDate = request.query.billingDate ?? null;
+          try {
+            const results = await getActiveBillVisits(
+              locationUuid,
+              billingDate
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility active visits with bill status',
+      notes: 'Returns all facility active visits with their bill status',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/active-cash-visits',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.locationUuid || !request.query.billingDate) {
+            throw new Error('Missing location or billing params');
+          }
+          const locationUuid = request.query.locationUuid ?? null;
+          const billingDate = request.query.billingDate ?? null;
+          try {
+            const results = await getActiveCashVisits(
+              locationUuid,
+              billingDate
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility active cash visits',
+      notes: 'Returns all facility active cash visits',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/facility-bills',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.locationUuid || !request.query.billingDate) {
+            throw new Error('Missing location or billing params');
+          }
+          const locationUuid = request.query.locationUuid ?? null;
+          const billingDate = request.query.billingDate ?? null;
+          try {
+            const results = await getFacilityBills(locationUuid, billingDate);
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility bills',
+      notes: 'Returns all facility bills',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/facility/bill-line-item',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (!request.query.locationUuid || !request.query.billingDate) {
+            throw new Error('Missing location or billing params');
+          }
+          const locationUuid = request.query.locationUuid ?? null;
+          const billingDate = request.query.billingDate ?? null;
+          try {
+            const results = await getPendingBillLineItems(
+              locationUuid,
+              billingDate
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Facility bill line items',
+      notes: 'Returns all facility bill line items',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/patient/encounter-diagnosis',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (
+            !request.query.visitDate ||
+            !request.query.patientUuid ||
+            !request.query.locationUuid
+          ) {
+            throw new Error('Missing patientId,visitDate,locationUuid params');
+          }
+          const visitDate = request.query.visitDate ?? null;
+          const patientUuid = request.query.patientUuid ?? null;
+          const locationUuid = request.query.locationUuid ?? null;
+          try {
+            const results = await getPatientEncounterDiagnosis(
+              visitDate,
+              patientUuid,
+              locationUuid
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            console.log({ error });
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Patient encounter diagnosis',
+      notes:
+        'Returns a patients encounter disgnosis and doctor who filled the form',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/patient/patient-visits',
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          if (
+            !request.query.billingDate ||
+            !request.query.patientUuid ||
+            !request.query.locationUuid
+          ) {
+            throw new Error(
+              'Missing patientId,billingDate,locationUuid params'
+            );
+          }
+          const billingDate = request.query.billingDate ?? null;
+          const patientUuid = request.query.patientUuid ?? null;
+          const locationUuid = request.query.locationUuid ?? null;
+          try {
+            const results = await getPatientVisits(
+              locationUuid,
+              billingDate,
+              patientUuid
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            console.log({ error });
+            reply(Boom.badRequest());
+          }
+        });
+      },
+      description: 'Get Patient visits',
+      notes: 'Returns patient visits for a given date',
+      tags: ['api'],
+      validate: {}
+    }
+  }
+];
+exports.routes = (server) => server.route(routes);

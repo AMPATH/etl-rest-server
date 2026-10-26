@@ -1,0 +1,754 @@
+{
+  "name": "chanisBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "o.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id AND p.voided = 0"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) <= 6)  AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) <= 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) <= 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded in (10277, 9472), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded in (10277, 9472), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) < 6) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23)  AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded in (10277, 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded in (10277, 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_weight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 1115, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded in (10277, 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "underweight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded in (10277, 9472), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_underweight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 9471, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 6895, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "obese_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 10213 AND o.value_coded = 7764, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_normal_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 59) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric >= 12.5, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_normal_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 59) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric >= 125, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_moderate_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 59) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric > 115 AND o.value_numeric < 125, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_moderate_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 59) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric > 115 AND o.value_numeric < 125, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_severe_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 59) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric < 115, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "muac_6_59_months_severe_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 59) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric < 115, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "height_for_age_0_6_months_normal_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric >= -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "height_for_age_0_6_months_normal_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric >= -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric > -3 AND o.value_numeric < -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric > -3 AND o.value_numeric < -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric < -3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric < -3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric >= -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric >= -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric > -3 AND o.value_numeric < -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric > -3 AND o.value_numeric < -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric < -3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric < -3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric >= -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "normal_height_for_age_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric >= -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric > -3 AND o.value_numeric < -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stunted_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric > -3 AND o.value_numeric < -2, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_24_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'M' AND o.concept_id = 1343 AND o.value_numeric < -3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "severely_stunted_24_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 24 AND 59) AND p.gender = 'F' AND o.concept_id = 1343 AND o.value_numeric < -3, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_visits_0_59_months_attending_cwc_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'M' AND o.concept_id = 1838 AND o.value_coded = 7850, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_visits_0_59_months_attending_cwc_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'F' AND o.concept_id = 1838 AND o.value_coded = 7850, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kwashiokor_0_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'M' AND o.concept_id = 10218, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kwashiokor_0_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'F' AND o.concept_id = 10218, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "marasmus_0_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'M' AND o.concept_id = 10219, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "marasmus_0_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'F' AND o.concept_id = 10219, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "faltering_growth_0_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'M' AND o.concept_id = 2187 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "faltering_growth_0_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 59) AND p.gender = 'F' AND o.concept_id = 2187 AND o.value_coded = 1065, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "exclusive_breastfeeding_0_6_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'M' AND o.concept_id = 985 AND o.value_coded = 5526, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "exclusive_breastfeeding_0_6_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 0 AND 6) AND p.gender = 'F' AND o.concept_id = 985 AND o.value_coded = 5526, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dewormed_12_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dewormed_12_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mnps_supplimentation_6_23_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'M' AND o.concept_id = 9487 AND o.value_coded = 9488, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mnps_supplimentation_6_23_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(MONTH, p.birthdate, CURDATE()) BETWEEN 6 AND 23) AND p.gender = 'F' AND o.concept_id = 9487 AND o.value_coded = 9488, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_severe_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'M' AND o.concept_id = 7457, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_severe_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'F' AND o.concept_id = 7457, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_some_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_some_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_no_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'M' AND o.concept_id = 13128, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_no_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'F' AND o.concept_id = 13128, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diarhoea_treated_with_ors_zinc_dehydration_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'F' AND o.concept_id in (7586, 351), 1, NULL)"
+      }
+    },
+    {
+      "type": "under_five_pneumomia_male",
+      "alias": "diarhoea_treated_with_ors_zinc_dehydration_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'M' AND o.concept_id in (7586, 351), 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_pneumomia_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'M' AND o.concept_id = 9487 AND o.value_coded = 9488, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_pneumomia_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'F' AND o.concept_id = 9487 AND o.value_coded = 9488, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_deaths_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'M' AND o.concept_id = 9082 AND o.value_coded = 159, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_deaths_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'F' AND o.concept_id = 9082 AND o.value_coded = 159, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_disability_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'M' AND o.concept_id = 12248 AND o.value_coded = 7900, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_disability_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'F' AND o.concept_id = 12248 AND o.value_coded = 7900, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_delayed_development_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'M' AND o.concept_id = 1189 AND o.value_coded = 6022, 1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "under_five_delayed_development_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE()) < 5) AND p.gender = 'F' AND o.concept_id = 1189 AND o.value_coded = 6022, 1, NULL)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type in (4,110,167,313)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.concept_id"]
+  }
+}

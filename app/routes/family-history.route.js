@@ -9,40 +9,51 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/family-history-patient-list',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let requestCopy = _.cloneDeep(requestParams);
-          let reportParams = etlHelpers.getReportParams(
-            '',
-            ['startDate', 'endDate', 'locationUuid', 'locations'],
-            requestParams
-          );
-
-          requestCopy.locationUuids = reportParams.requestParams.locationUuids;
-          let familyTestingService = new FamilyTestingService();
-          let params = {
-            locations: reportParams.requestParams.locations,
-            eligible: request.query.eligible,
-            start_date: request.query.start_date,
-            end_date: request.query.end_date,
-            programs: request.query.programType,
-            child_status: request.query.child_status,
-            elicited_clients: request.query.elicited_clients,
-            startIndex: request.query.startIndex
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
           };
-          familyTestingService.getPatientList(params).then((result) => {
-            if (result.error) {
-              reply(result);
-            } else {
-              reply(result);
-            }
+
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let requestCopy = _.cloneDeep(requestParams);
+            let reportParams = etlHelpers.getReportParams(
+              '',
+              ['startDate', 'endDate', 'locationUuid', 'locations'],
+              requestParams
+            );
+
+            requestCopy.locationUuids =
+              reportParams.requestParams.locationUuids;
+            let familyTestingService = new FamilyTestingService();
+            let params = {
+              locations: reportParams.requestParams.locations,
+              eligible: request.query.eligible,
+              start_date: request.query.start_date,
+              end_date: request.query.end_date,
+              programs: request.query.programType,
+              child_status: request.query.child_status,
+              elicited_clients: request.query.elicited_clients,
+              startIndex: request.query.startIndex
+            };
+            familyTestingService.getPatientList(params).then((result) => {
+              if (result.error) {
+                reply(result);
+              } else {
+                reply(result);
+              }
+            });
           });
         });
       },
@@ -61,23 +72,29 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/patient-family-history',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        let familyTestingService = new FamilyTestingService();
-        familyTestingService
-          .getPatientContacts(request.query)
-          .then((result) => {
-            if (result.error) {
-              reply(result);
-            } else {
-              reply(result);
-            }
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          let familyTestingService = new FamilyTestingService();
+          familyTestingService
+            .getPatientContacts(request.query)
+            .then((result) => {
+              if (result.error) {
+                reply(result);
+              } else {
+                reply(result);
+              }
+            });
+        });
       },
       description: 'Family testing patient list',
       notes: 'Family testing patient list',
@@ -93,7 +110,7 @@ const routes = [
   {
     method: 'PUT',
     path: '/etl/update-contact',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
@@ -130,7 +147,7 @@ const routes = [
   {
     method: 'POST',
     path: '/etl/contact-tracing',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
@@ -169,7 +186,7 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/contact-tracing-history',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
@@ -200,7 +217,7 @@ const routes = [
   {
     method: 'DELETE',
     path: '/etl/contact',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard

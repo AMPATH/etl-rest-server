@@ -1,0 +1,177 @@
+{
+  "name": "Moh7312023NutritionBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "Nutrition assessments behind section 3.6 of the MOH 731 (Ver. July 2023) form. One row per patient per location: the malnutrition finding and the feeding support sit on separate observations, so they are folded onto the patient before either is counted. Concepts are the ones the register already reads - 7369 carries the finding (9471 severe, 9472 moderate) and 5484 the supplement (2355).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.obs",
+      "alias": "o"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.person_id = p.person_id and p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = o.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "o.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_uuid",
+      "column": "l.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "comment": "Banded on the patient's age when they were assessed rather than when the report is run, so a report of a past month does not move its patients between bands as time passes.",
+      "type": "derived_column",
+      "alias": "sam_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9471 and timestampdiff(month, p.birthdate, o.obs_datetime) between 0 and 5, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9471 and timestampdiff(month, p.birthdate, o.obs_datetime) between 6 and 59, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9471 and timestampdiff(year, p.birthdate, o.obs_datetime) between 5 and 9, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9471 and timestampdiff(year, p.birthdate, o.obs_datetime) between 10 and 17, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9471 and timestampdiff(year, p.birthdate, o.obs_datetime) >= 18, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9472 and timestampdiff(month, p.birthdate, o.obs_datetime) between 0 and 5, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9472 and timestampdiff(month, p.birthdate, o.obs_datetime) between 6 and 59, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9472 and timestampdiff(year, p.birthdate, o.obs_datetime) between 5 and 9, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9472 and timestampdiff(year, p.birthdate, o.obs_datetime) between 10 and 17, 1, 0))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_18_and_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 7369 and o.value_coded = 9472 and timestampdiff(year, p.birthdate, o.obs_datetime) >= 18, 1, 0))"
+      }
+    },
+    {
+      "comment": "Recorded against the patient rather than against the finding, which is why the two are folded together here before being counted.",
+      "type": "derived_column",
+      "alias": "has_supplement",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "max(if(o.concept_id = 5484 and o.value_coded = 2355, 1, 0))"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.concept_id in (7369, 5484)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.value_coded in (9471, 9472, 2355)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.obs_datetime <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "o.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["o.person_id", "o.location_id"]
+  }
+}

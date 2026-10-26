@@ -1,0 +1,377 @@
+{
+  "name": "familyPlanningAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "familyPlanningBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "familyPlanningBase",
+      "alias": "f"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "first_users_contraceptive_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.first_users_contraceptive_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_users_contraceptive_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.first_users_contraceptive_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pills_progestine_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.pills_progestine AND f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pills_progestine_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.pills_progestine AND f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pills_combined_oral_contraceptive_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.pills_combined_oral_contraceptive and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pills_combined_oral_contraceptive_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.pills_combined_oral_contraceptive and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "emergency_contraceptive_pill_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.emergency_contraceptive_pill and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "emergency_contraceptive_pill_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.emergency_contraceptive_pill and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_injections_dmpa_im",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_injections_dmpa_im)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_injections_dmpa_sc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_injections_dmpa_sc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_condoms_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.male_condoms and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_condoms_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.male_condoms and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_condoms_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.female_condoms and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "female_condoms_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.female_condoms and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_and_female_condoms_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.male_and_female_condoms and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "male_and_female_condoms_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.male_and_female_condoms and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "counselled_for_natural_family_planning_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.counselled_for_natural_family_planning and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "counselled_for_natural_family_planning_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.counselled_for_natural_family_planning and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cycle_beads_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.cycle_beads and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cycle_beads_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.cycle_beads and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "implants_insertion_1_rod",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.implants_insertion_1_rod)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "implants_insertion_2_rod",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.implants_insertion_2_rod)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iucd_hormonal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.iucd_hormonal)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iucd_non_hormonal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.iucd_non_hormonal)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "surgical_contraception_btl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.surgical_contraception_btl)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vasectomy",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.vasectomy)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iucd_removals",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.iucd_removals)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "implants_removal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.implants_removal)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_10_14_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_10_14 and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_10_14_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_10_14 and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_15_19_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_15_19 and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_15_19_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_15_19 and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_20_24_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_20_24 and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_20_24_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_20_24 and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_25_plus_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_25_plus and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fp_adolescent_25_plus_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.fp_adolescent_25_plus and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_48_hours_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.post_partum_fp_48_hours and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_48_hours_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.post_partum_fp_48_hours and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_4_6_weeks_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.post_partum_fp_4_6_weeks and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_partum_fp_4_6_weeks_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.post_partum_fp_4_6_weeks and f.revisit_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_abortion_fp_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.post_abortion_fp and f.new_clients)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "post_abortion_fp_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(f.post_abortion_fp and f.revisit_clients)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "patient-list-template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

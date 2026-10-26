@@ -1,0 +1,548 @@
+{
+  "name": "immunizationBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_710",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "m.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "m.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "m.age_in_years"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_in_months",
+      "column": "m.age_in_months"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bcg_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.bcg_vaccine && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bcg_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.bcg_vaccine && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv_vaccine_greater_1_year",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv_vaccine_less_1_year",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv1_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose =1 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv1_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose =1 && m.age_in_years > 1"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "opv2_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose =2 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv2_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose =2 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv2_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose = 2"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv3_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose = 3 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv3_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose = 3 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv3_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.opv_vaccine && m.opv_dose = 3"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv1_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.ipv_vaccine && m.ipv_dose =1 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv1_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.ipv_vaccine && m.ipv_dose =1 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv1_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.ipv_vaccine && m.ipv_dose =1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv2_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.ipv_vaccine && m.ipv_dose =2 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv2_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.ipv_vaccine && m.ipv_dose =2 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ipv2_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.ipv_vaccine && m.ipv_dose =2"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine1_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose =1 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine1_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose =1 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine2_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose =2 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine2_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose =2 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine3_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose =3 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dpt_hep_vaccine3_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.dpt_hep_vaccine && m.dpt_hep_dose =3 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine1_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose =1 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine1_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose =1 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine2_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose =2 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine2_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose =2 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine3_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose =3 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pneumococal_vaccine3_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.pneumococal_vaccine && m.pneumococal_dose =3 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine1_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =1 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine1_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =1 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine2_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =2 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine2_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =2 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =2"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine3_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =3 && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine3_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =3 && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rotavirus_vaccine3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.rotavirus_vaccine && m.rotavirus_dose =3"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_12_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.vitamin_a && m.age_in_years >= 1 && m.age_in_years < 5"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.vitamin_a && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitaminA_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.vitamin_a && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.yellow_fever_vaccine"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.yellow_fever_vaccine && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.yellow_fever_vaccine && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.measles_vaccine"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.measles_vaccine && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.measles_vaccine && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_rubella_greater_2_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.measles_vaccine && m.age_in_years > 2"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_conjugate_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.typhoid_conjugate_vaccine"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_conjugate_vaccine_age_greater_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.typhoid_conjugate_vaccine && m.age_in_years > 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_conjugate_vaccine_age_less_than_1yr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.typhoid_conjugate_vaccine && m.age_in_years < 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "fully_immunized_children",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.fully_immunized_children"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_12_17",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.covid_19 && m.age_in_years >= 12 && m.age_in_years <= 17"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_18_59",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.covid_19 && m.age_in_years >= 18 && m.age_in_years <= 59"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "covid_19_vaccine_60_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.covid_19 && m.age_in_years >= 60"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "squint_white_eye_reflection",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.squint_white_eye_reflection"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "adverse_event_after_vaccination",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.adverse_event_after_vaccination"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.hpv"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(m.encounter_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(m.encounter_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["m.person_id", "m.encounter_datetime"]
+  }
+}

@@ -7,33 +7,43 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/prep-monthly-summary',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
-          let reportParams = etlHelpers.getReportParams(
-            'prep-monthly-summary',
-            ['endDate', 'locationUuids'],
-            requestParams
-          );
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let service = new PrepMonthlySummaryService(
-            'prepMonthlySummaryReport',
-            reportParams.requestParams
-          );
-          service
-            .getAggregateReport()
-            .then((result) => {
-              reply(result);
-            })
-            .catch((error) => {
-              reply(error);
-            });
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+            let reportParams = etlHelpers.getReportParams(
+              'prep-monthly-summary',
+              ['endDate', 'locationUuids'],
+              requestParams
+            );
+
+            let service = new PrepMonthlySummaryService(
+              'prepMonthlySummaryReport',
+              reportParams.requestParams
+            );
+            service
+              .getAggregateReport()
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
         });
       },
       description: 'prep monthly summary dataset',
@@ -50,37 +60,48 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/prep-monthly-summary-patient-list',
-    config: {
+    options: {
       plugins: {
         hapiAuthorization: {
           role: privileges.canViewClinicDashBoard
         }
       },
-      handler: function (request, reply) {
-        request.query.reportName = 'prep-summary-patient-list';
-        preRequest.resolveLocationIdsToLocationUuids(request, function () {
-          let requestParams = Object.assign({}, request.query, request.params);
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-          let requestCopy = _.cloneDeep(requestParams);
-          let reportParams = etlHelpers.getReportParams(
-            request.query.reportName,
-            ['startDate', 'endDate', 'locationUuids', 'locations'],
-            requestParams
-          );
-          requestCopy.locationUuids = reportParams.requestParams.locationUuids;
-          const prepService = new PrepMonthlySummaryService(
-            'prepMonthlySummaryReport',
-            requestCopy
-          );
+          request.query.reportName = 'prep-summary-patient-list';
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
 
-          prepService
-            .generatePatientList(requestParams.indicators.split(','))
-            .then((results) => {
-              reply(results);
-            })
-            .catch((err) => {
-              reply(err);
-            });
+            let requestCopy = _.cloneDeep(requestParams);
+            let reportParams = etlHelpers.getReportParams(
+              request.query.reportName,
+              ['startDate', 'endDate', 'locationUuids', 'locations'],
+              requestParams
+            );
+            requestCopy.locationUuids =
+              reportParams.requestParams.locationUuids;
+            const prepService = new PrepMonthlySummaryService(
+              'prepMonthlySummaryReport',
+              requestCopy
+            );
+
+            prepService
+              .generatePatientList(requestParams.indicators.split(','))
+              .then((results) => {
+                reply(results);
+              })
+              .catch((err) => {
+                reply(err);
+              });
+          });
         });
       },
       description:

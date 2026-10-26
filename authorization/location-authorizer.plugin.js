@@ -1,11 +1,12 @@
 'use strict';
 /**
  * This is a hapi js plugin that extends the route end points to allow
- * location based authorization.
+ * location based authorization. Rewritten for the hapi 17+/21 plugin API;
+ * all location-authorization logic is preserved from the hapi 16 original.
  */
 // External modules
-var Boom = require('boom');
-var Hoek = require('hoek');
+var Boom = require('@hapi/boom');
+var Hoek = require('@hapi/hoek');
 var _ = require('underscore');
 
 var pluginName = 'openmrsLocationAuthorizer';
@@ -23,12 +24,13 @@ var internals = {
 /**
  * Registers the plugin
  *
- * @param plugin
+ * @param server
  * @param options
- * @param next
  */
-exports.register = function (server, options, next) {
-  try {
+exports.plugin = {
+  name: pluginName,
+  version: '1.0.0',
+  register: function (server, options) {
     var settings = Hoek.applyToDefaults(internals.defaults, options || {});
 
     server.bind({
@@ -36,91 +38,62 @@ exports.register = function (server, options, next) {
     });
 
     // Validate the server options on the routes
-    if (server.after) {
-      // Support for hapi < 11
-      server.after(internals.validateRoutes);
-    } else {
-      server.ext('onPreStart', internals.validateRoutes);
-    }
+    server.ext('onPreStart', internals.validateRoutes);
     server.ext('onPreHandler', internals.onPreHandler);
-
-    next();
-  } catch (e) {
-    next(e);
   }
-};
-
-/**
- * Gets the name and version of the hapi plugin
- * TODO: Return contents of a valid package.json
- */
-exports.register.attributes = {
-  name: pluginName,
-  version: '1.0.0'
 };
 
 /**
  * Runs on server start and validates that every route that has openmrsLocationAuthorizer params is valid
  *
  * @param server
- * @param next
  */
-internals.validateRoutes = function (server, next) {
-  try {
-    // Loop through each connection in the server
-    server.connections.forEach(function (connection) {
-      var routes = connection.routingTable
-        ? connection.routingTable()
-        : connection.table();
+internals.validateRoutes = function (server) {
+  var routes = server.table();
 
-      // Loop through each route
-      routes.forEach(function (route) {
-        var locationAuthorizerParams = route.settings.plugins[pluginName]
-          ? route.settings.plugins[pluginName]
-          : false;
+  // Loop through each route
+  routes.forEach(function (route) {
+    var locationAuthorizerParams = route.settings.plugins[pluginName]
+      ? route.settings.plugins[pluginName]
+      : false;
 
-        // If there are openmrsLocationAuthorizer params and are not disabled by using "false", validate em
-        if (locationAuthorizerParams !== false) {
-          // If there is a default auth
-          if (connection.auth.settings.default) {
-            // If there is also an auth on the route, make sure it's not false or null
-            if (route.settings.auth !== undefined) {
-              // Make sure that there is either a default auth being set, or that there is an auth specified on every route with locationAuthorizer plugin params
-              Hoek.assert(
-                route.settings.auth !== null && route.settings.auth !== false,
-                'openmrsLocationAuthorizer can be enabled only for secured route'
-              );
-            }
-          }
-          // Else there is no default auth set, so validate each route's auth
-          else {
-            // Make sure that there is either a default auth being set, or that there is an auth specified on every route with locationAuthorizer plugin params
-            Hoek.assert(
-              route.settings.auth &&
-                route.settings.auth !== null &&
-                route.settings.auth !== false,
-              'openmrsLocationAuthorizer can be enabled only for secured route'
-            );
-          }
+    // If there are openmrsLocationAuthorizer params and are not disabled by using "false", validate em
+    if (locationAuthorizerParams !== false) {
+      // If there is a default auth
+      if (server.auth.settings.default) {
+        // If there is also an auth on the route, make sure it's not false or null
+        if (route.settings.auth !== undefined) {
+          // Make sure that there is either a default auth being set, or that there is an auth specified on every route with locationAuthorizer plugin params
+          Hoek.assert(
+            route.settings.auth !== null && route.settings.auth !== false,
+            'openmrsLocationAuthorizer can be enabled only for secured route'
+          );
         }
-      });
-    });
-    next();
-  } catch (err) {
-    next(err);
-  }
+      }
+      // Else there is no default auth set, so validate each route's auth
+      else {
+        // Make sure that there is either a default auth being set, or that there is an auth specified on every route with locationAuthorizer plugin params
+        Hoek.assert(
+          route.settings.auth &&
+            route.settings.auth !== null &&
+            route.settings.auth !== false,
+          'openmrsLocationAuthorizer can be enabled only for secured route'
+        );
+      }
+    }
+  });
 };
 
 /**
  * Checks if openmrsLocationAuthorizer is active for the current route and execute the necessary steps accordingly.
  *
  * @param request
- * @param reply
+ * @param h
  */
-internals.onPreHandler = function (request, reply) {
+internals.onPreHandler = function (request, h) {
   // Ignore OPTIONS requests
   if (request.route.method === 'options') {
-    return reply.continue();
+    return h.continue;
   }
 
   var params;
@@ -128,7 +101,7 @@ internals.onPreHandler = function (request, reply) {
     // Check if the current route is openmrsLocationAuthorizer enabled
     params = internals.getRouteParams(request);
   } catch (err) {
-    return reply(Boom.badRequest(err.message));
+    return Boom.badRequest(err.message);
   }
 
   // if openmrsLocationAuthorizer is enabled, get the user
@@ -236,7 +209,7 @@ internals.onPreHandler = function (request, reply) {
           });
         }
       }
-      //if any of the passed location is unauthorised then boom.forbidden() else reply.continue()
+      //if any of the passed location is unauthorised then boom.forbidden() else continue
       if (unAuthorisedOperationalLocations.length > 0) {
         //construct message appropriately
         var authorisedOperationLocations = [];
@@ -246,17 +219,13 @@ internals.onPreHandler = function (request, reply) {
           }
         });
         if (authorisedOperationLocations.length > 0) {
-          return reply(
-            Boom.forbidden(
-              'You are only allowed to view operational data in ' +
-                authorisedOperationLocations.toString() || '' + ' location(s)'
-            )
+          return Boom.forbidden(
+            'You are only allowed to view operational data in ' +
+              authorisedOperationLocations.toString() || '' + ' location(s)'
           );
         } else {
-          return reply(
-            Boom.forbidden(
-              'You are not allowed to view operational data in any location '
-            )
+          return Boom.forbidden(
+            'You are not allowed to view operational data in any location '
           );
         }
       } else if (unAuthorisedAggregateLocations.length > 0) {
@@ -267,33 +236,27 @@ internals.onPreHandler = function (request, reply) {
           }
         });
         if (authorisedAggregateLocations.length > 0) {
-          return reply(
-            Boom.forbidden(
-              'You are only allowed to view aggregate data in ' +
-                authorisedAggregateLocations.toString() || '' + ' location(s)'
-            )
+          return Boom.forbidden(
+            'You are only allowed to view aggregate data in ' +
+              authorisedAggregateLocations.toString() || '' + ' location(s)'
           );
         } else {
-          return reply(
-            Boom.forbidden(
-              'You are not allowed to view aggregate data in any location '
-            )
+          return Boom.forbidden(
+            'You are not allowed to view aggregate data in any location '
           );
         }
       } else {
-        reply.continue();
+        return h.continue;
       }
     } else {
       //user is not authorised to any location
-      return reply(
-        Boom.forbidden(
-          'You are not Authorised to view data in any location. Please contact your system ' +
-            'administrator to grant you access to the selected location(s)'
-        )
+      return Boom.forbidden(
+        'You are not Authorised to view data in any location. Please contact your system ' +
+          'administrator to grant you access to the selected location(s)'
       );
     }
   } else {
-    reply.continue();
+    return h.continue;
   }
 };
 

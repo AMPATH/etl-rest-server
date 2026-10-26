@@ -1,0 +1,53 @@
+{
+  "patientListCols": [
+    {
+      "headerName": "Draft",
+      "field": "draft",
+      "width": 150,
+      "pinned": true
+    },
+    {
+      "headerName": "Submitted",
+      "field": "submitted",
+      "width": 100,
+      "pinned": true
+    },
+    {
+      "headerName": "Failed to Submmit",
+      "field": "failed_to_submmit",
+      "width": 150,
+      "pinned": true
+    },
+    {
+      "headerName": "Closed",
+      "field": "closed",
+      "width": 100
+    },
+    {
+      "headerName": "Approved",
+      "field": "approved",
+      "width": 100
+    },
+    {
+      "headerName": "Rejected",
+      "field": "rejected",
+      "width": 100
+    },
+    {
+      "headerName": "In Riview",
+      "field": "in_review",
+      "width": 150
+    },
+    {
+      "headerName": "Sent Back",
+      "field": "sent_back",
+      "width": 100
+    },
+    {
+      "headerName": "Paid",
+      "field": "paid",
+      "width": 100,
+      "hide": true
+    }
+  ]
+}

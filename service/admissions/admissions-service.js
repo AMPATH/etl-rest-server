@@ -49,4 +49,246 @@ WHERE
     });
   });
 }
-module.exports = { getPatientAdmissionHistory };
+function getAdmissionRequests(locationUuid) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const ADMISSSION_LOCATION_CONCEPT_UUID =
+      'b9cd9e47-da43-4a46-8f3c-e30ec9209cc7';
+    const INPATIENT_PATIENT_DISPOSITION_CONCEPT_UUID =
+      'ce085d74-323c-4c9a-9fdf-051de81dd020';
+    const ADMIT_TO_HOSPITAL_CONCEPT_UUID =
+      '77eafb3f-58d3-4397-a6dc-d2c06e9062f3';
+    const sql = `SELECT 
+    obs.obs_datetime AS 'admission_request_date',
+    l.name AS 'admission_location',
+    CONCAT(cr.identifier, ' , ', id.identifier) AS 'identifiers',
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), p.birthdate)))) AS age,
+    p.gender,
+    l.uuid AS location_uuid,
+    p.uuid patient_uuid,
+    v.uuid AS visit_uuid,
+    vt.name AS 'visit_type'
+FROM
+    amrs.obs obs
+        JOIN
+    amrs.concept obs_concept ON (obs.concept_id = obs_concept.concept_id)
+        JOIN
+    amrs.concept concept_value_coded ON (obs.value_coded = concept_value_coded.concept_id)
+        JOIN
+    amrs.obs al ON (obs.obs_group_id = al.obs_group_id
+        AND obs.voided = 0)
+        JOIN
+    amrs.concept alc ON (al.concept_id = alc.concept_id
+        AND alc.uuid = '${ADMISSSION_LOCATION_CONCEPT_UUID}')
+        JOIN
+    amrs.encounter re ON (re.encounter_id = obs.encounter_id)
+        JOIN
+    amrs.visit v ON (v.visit_id = re.visit_id)
+        JOIN
+    amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
+        JOIN
+    amrs.location l ON (l.location_id = al.value_text)
+        JOIN
+    amrs.person p ON (p.person_id = obs.person_id
+        AND p.voided = 0)
+        INNER JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.encounter ae ON (ae.encounter_type = 318
+        AND ae.encounter_datetime > obs.obs_datetime
+        AND ae.voided = 0
+        AND ae.patient_id = obs.person_id)
+        LEFT JOIN
+    amrs.encounter ce ON (ce.encounter_type = 323
+        AND ce.encounter_datetime > obs.obs_datetime
+        AND ce.voided = 0
+        AND ce.patient_id = obs.person_id)
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = obs.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = obs.person_id
+        AND id.identifier_type = 5
+        AND id.voided = 0)
+WHERE
+    obs_concept.uuid = '${INPATIENT_PATIENT_DISPOSITION_CONCEPT_UUID}'
+        AND concept_value_coded.uuid = '${ADMIT_TO_HOSPITAL_CONCEPT_UUID}'
+        AND obs.voided = 0
+        AND l.uuid = '${locationUuid}'
+        AND ae.encounter_id IS NULL
+        AND ce.encounter_id IS NULL
+GROUP BY obs.person_id;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
+function getAdmittedPatients(locationUuid) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  const admissionEncounterTypeUuid = 'e22e39fd-7db2-45e7-80f1-60fa0d5a4378';
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    id.identifier AS 'national_id',
+    cr.identifier AS 'cr_id',
+    e.encounter_datetime AS 'admision_date',
+    et.name AS 'encounter_type',
+    l.name AS 'location',
+    l.uuid AS 'location_uuid',
+    p.gender,
+    EXTRACT(YEAR FROM (FROM_DAYS(DATEDIFF(NOW(), p.birthdate)))) AS age,
+    b.bed_number,
+    b.status AS bed_status,
+    b.bed_id
+FROM
+    amrs.encounter e
+        JOIN
+    amrs.encounter_type et ON (e.encounter_type = et.encounter_type_id
+        AND et.uuid = '${admissionEncounterTypeUuid}')
+        JOIN
+    amrs.location l ON (l.location_id = e.location_id)
+        INNER JOIN
+    amrs.person p ON (p.person_id = e.patient_id
+        AND p.voided = 0)
+        INNER JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = p.person_id
+        AND id.identifier_type = 5
+        AND id.voided = 0)
+        LEFT JOIN
+    amrs.encounter ce ON (e.patient_id = ce.patient_id
+        AND ce.encounter_type = 3
+        AND ce.encounter_datetime > e.encounter_datetime
+        AND ce.voided = 0)
+        LEFT JOIN
+    amrs.encounter mde ON (mde.patient_id = e.patient_id
+        AND mde.encounter_type = 274
+        AND mde.encounter_datetime > e.encounter_datetime
+        AND mde.voided = 0)
+        LEFT JOIN
+    amrs.encounter de ON (de.patient_id = e.patient_id
+        AND de.encounter_type = 319
+        AND de.encounter_datetime > e.encounter_datetime
+        AND de.voided = 0)
+        LEFT JOIN
+    amrs.bed_patient_assignment_map ba ON (ba.patient_id = p.person_id
+        AND ba.date_stopped IS NULL)
+        LEFT JOIN
+    amrs.bed b ON (b.bed_id = ba.bed_id)
+WHERE
+    l.uuid = '${locationUuid}'
+        AND e.voided = 0
+        AND ce.encounter_id IS NULL
+        AND mde.encounter_id IS NULL
+        AND de.encounter_id IS NULL
+GROUP BY p.person_id`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+
+function getAwaitingDischarge(locationUuid) {
+  if (!locationUuid) {
+    throw new Error('Location not defined');
+  }
+  const MATERNITYDISCHARGE_UUID = 'e3c2a17f-4d58-4725-b702-a5d75a2231d0';
+  const GENERALDISCHARGE_UUID = '7649d97d-ac9f-444d-877c-7468ef286e7e';
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT 
+    l.name AS 'location',
+    bam.bed_id,
+    UPPER(CONCAT_WS(' ',
+                    pn.given_name,
+                    pn.middle_name,
+                    pn.family_name)) AS patient_name,
+    id.identifier AS 'national_id',
+    cr.identifier AS 'cr_id',
+    p.uuid AS 'person_uuid',
+    bam.date_started AS 'admission_date',
+    l.uuid AS 'location_uuid',
+    et.name AS 'encounter_type',
+    de.encounter_datetime AS 'discharge_date',
+    CASE
+        WHEN cb.bill_id THEN cb.status
+        WHEN cb.bill_id IS NULL THEN 'NO PENDING BILL'
+    END AS 'bill_status'
+FROM
+    amrs.bed_patient_assignment_map bam
+        JOIN
+    amrs.encounter e ON (bam.encounter_id = e.encounter_id)
+        JOIN
+    amrs.encounter de ON (de.patient_id = bam.patient_id
+        AND bam.date_started <= de.encounter_datetime)
+        JOIN
+    amrs.encounter_type et ON (de.encounter_type = et.encounter_type_id)
+        JOIN
+    amrs.person p ON (bam.patient_id = p.person_id
+        AND p.voided = 0)
+        JOIN
+    amrs.location l ON (l.location_id = e.location_id
+        AND l.retired = 0)
+        INNER JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = p.person_id
+        AND id.identifier_type = 5
+        AND id.voided = 0)
+        LEFT JOIN
+    amrs.cashier_bill cb ON (cb.patient_id = p.person_id
+        AND cb.voided = 0
+        AND cb.status = 'PENDING')
+WHERE
+    bam.date_stopped IS NULL
+        AND bam.voided = 0
+        AND et.uuid in ('${MATERNITYDISCHARGE_UUID}','${GENERALDISCHARGE_UUID}')
+        AND l.uuid = '${locationUuid}'
+        group by p.person_id, l.location_id;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result);
+    });
+  });
+}
+module.exports = {
+  getPatientAdmissionHistory,
+  getAdmissionRequests,
+  getAdmittedPatients,
+  getAwaitingDischarge
+};

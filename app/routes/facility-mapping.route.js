@@ -6,17 +6,23 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/parentlocations',
-    config: {
+    options: {
       plugins: {},
-      handler: function (request, reply) {
-        facilitymappings
-          .getParentLocations(request.query.p)
-          .then((result) => {
-            reply(result);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          facilitymappings
+            .getParentLocations(request.query.p)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description: 'List of facilities with MFL code',
       notes: 'Returns facilities list',
@@ -32,17 +38,23 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/childlocations',
-    config: {
+    options: {
       plugins: {},
-      handler: function (request, reply) {
-        facilitymappings
-          .getChildLocations(request.query)
-          .then((result) => {
-            reply(result);
-          })
-          .catch((error) => {
-            reply(error);
-          });
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          facilitymappings
+            .getChildLocations(request.query)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
       },
       description: 'List of facilities with MFL code',
       notes: 'Returns facilities list',
