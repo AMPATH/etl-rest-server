@@ -1,25 +1,31 @@
-var Boom = require('boom');
+var Boom = require('@hapi/boom');
 import { ServiceEntry } from '../../service/queues/queue-entry/queue-entry.service';
 const routes = [
   {
     method: 'GET',
     path: '/etl/queue-entry',
-    config: {
-      handler: async function (request, reply) {
-        const queueService = new ServiceEntry();
-        if (request.query.locationUuid && request.query.serviceUuid) {
-          const locationUuid = request.query.locationUuid;
-          const serviceUuid = request.query.serviceUuid;
-          const res = await queueService.getQueueEntriesByLocationAndService(
-            locationUuid,
-            serviceUuid
-          );
-          reply({
-            data: res
-          });
-        } else {
-          reply(Boom.badData());
-        }
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          const queueService = new ServiceEntry();
+          if (request.query.locationUuid && request.query.serviceUuid) {
+            const locationUuid = request.query.locationUuid;
+            const serviceUuid = request.query.serviceUuid;
+            const res = await queueService.getQueueEntriesByLocationAndService(
+              locationUuid,
+              serviceUuid
+            );
+            reply({
+              data: res
+            });
+          } else {
+            reply(Boom.badData());
+          }
+        });
       },
       plugins: {},
       description: "Get a location's service queue",
@@ -30,28 +36,34 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/queue-entry/registration',
-    config: {
-      handler: async function (request, reply) {
-        const queueService = new ServiceEntry();
-        if (
-          request.query.locationUuid &&
-          request.query.startDate &&
-          request.query.endDate
-        ) {
-          const locationUuid = request.query.locationUuid;
-          const startDate = request.query.startDate;
-          const endDate = request.query.endDate;
-          const res = await queueService.getQueueEntriesByLocationAndDateRange(
-            locationUuid,
-            startDate,
-            endDate
-          );
-          reply({
-            data: res
-          });
-        } else {
-          reply(Boom.badData());
-        }
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          const queueService = new ServiceEntry();
+          if (
+            request.query.locationUuid &&
+            request.query.startDate &&
+            request.query.endDate
+          ) {
+            const locationUuid = request.query.locationUuid;
+            const startDate = request.query.startDate;
+            const endDate = request.query.endDate;
+            const res = await queueService.getQueueEntriesByLocationAndDateRange(
+              locationUuid,
+              startDate,
+              endDate
+            );
+            reply({
+              data: res
+            });
+          } else {
+            reply(Boom.badData());
+          }
+        });
       },
       plugins: {},
       description: 'Get patient served for a given date range',

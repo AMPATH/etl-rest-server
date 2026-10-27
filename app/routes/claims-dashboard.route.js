@@ -1,4 +1,4 @@
-var Boom = require('boom');
+var Boom = require('@hapi/boom');
 var preRequest = require('../../pre-request-processing');
 var authorizer = require('../../authorization/etl-authorizer');
 var privileges = authorizer.getAllPrivileges();
@@ -13,39 +13,45 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/claims-dashboard',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
-            console.log('PARAMS: ', request.query);
-            let reportParams = etlHelpers.getReportParams(
-              'claimsSummary',
-              ['endDate', 'startDate', 'locationUuids'],
-              requestParams
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            reportParams.requestParams.isAggregated = true;
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
+              console.log('PARAMS: ', request.query);
+              let reportParams = etlHelpers.getReportParams(
+                'claimsSummary',
+                ['endDate', 'startDate', 'locationUuids'],
+                requestParams
+              );
 
-            let claimsSummaryService = new ClaimsDashboardSummaryService(
-              'claimsSummary',
-              reportParams.requestParams
-            );
+              reportParams.requestParams.isAggregated = true;
 
-            claimsSummaryService
-              .generateReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              let claimsSummaryService = new ClaimsDashboardSummaryService(
+                'claimsSummary',
+                reportParams.requestParams
+              );
+
+              claimsSummaryService
+                .generateReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {
@@ -66,44 +72,50 @@ const routes = [
   {
     method: 'GET',
     path: '/etl/claims-dahsboard-patient-list',
-    config: {
-      handler: function (request, reply) {
-        if (request.query.locationUuids) {
-          preRequest.resolveLocationIdsToLocationUuids(request, function () {
-            let requestParams = Object.assign(
-              {},
-              request.query,
-              request.params
-            );
+    options: {
+      handler: function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
 
-            let reportParams = etlHelpers.getReportParams(
-              'claimsSummary',
-              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
-              requestParams
-            );
+          if (request.query.locationUuids) {
+            preRequest.resolveLocationIdsToLocationUuids(request, function () {
+              let requestParams = Object.assign(
+                {},
+                request.query,
+                request.params
+              );
 
-            let requestCopy = _.cloneDeep(requestParams);
+              let reportParams = etlHelpers.getReportParams(
+                'claimsSummary',
+                ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+                requestParams
+              );
 
-            let claimsSummaryService = new ClaimsDashboardSummaryService(
-              'claimsSummary',
-              reportParams.requestParams
-            );
+              let requestCopy = _.cloneDeep(requestParams);
 
-            requestCopy.locations = reportParams.requestParams.locations;
-            requestCopy.limitParam = requestParams.limit;
-            requestCopy.offSetParam = requestParams.startIndex;
-            delete reportParams.requestParams['gender'];
+              let claimsSummaryService = new ClaimsDashboardSummaryService(
+                'claimsSummary',
+                reportParams.requestParams
+              );
 
-            claimsSummaryService
-              .generatePatientListReport(reportParams.requestParams)
-              .then((result) => {
-                reply(result);
-              })
-              .catch((error) => {
-                reply(error);
-              });
-          });
-        }
+              requestCopy.locations = reportParams.requestParams.locations;
+              requestCopy.limitParam = requestParams.limit;
+              requestCopy.offSetParam = requestParams.startIndex;
+              delete reportParams.requestParams['gender'];
+
+              claimsSummaryService
+                .generatePatientListReport(reportParams.requestParams)
+                .then((result) => {
+                  reply(result);
+                })
+                .catch((error) => {
+                  reply(error);
+                });
+            });
+          }
+        });
       },
       plugins: {
         hapiAuthorization: {

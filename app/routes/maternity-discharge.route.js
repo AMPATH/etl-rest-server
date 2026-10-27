@@ -1,4 +1,4 @@
-var Boom = require('boom');
+var Boom = require('@hapi/boom');
 
 const {
   DischargeSummaryService
@@ -7,22 +7,27 @@ const routes = [
   {
     method: 'GET',
     path: '/discharge-summary',
-    config: {
-      auth: false,
-      handler: async function (request, reply) {
-        const { crId, amrsId } = request.query;
-        try {
-          const dischargeSummaryService = new DischargeSummaryService();
-          const results = await dischargeSummaryService.getDischargeSummary(
-            crId,
-            amrsId
-          );
-          reply({
-            results: results
-          });
-        } catch (error) {
-          reply(Boom.badRequest());
-        }
+    options: {
+      handler: async function (request, h) {
+        return new Promise(async function (resolve) {
+          var reply = function (payload) {
+            return resolve(payload);
+          };
+
+          const { crId, amrsId } = request.query;
+          try {
+            const dischargeSummaryService = new DischargeSummaryService();
+            const results = await dischargeSummaryService.getDischargeSummary(
+              crId,
+              amrsId
+            );
+            reply({
+              results: results
+            });
+          } catch (error) {
+            reply(Boom.badRequest());
+          }
+        });
       },
       description: 'Get patient maternity discharge encounter',
       notes: 'Get patient maternity discharge encounter',
