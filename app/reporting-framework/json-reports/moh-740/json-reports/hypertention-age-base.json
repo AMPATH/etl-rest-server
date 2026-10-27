@@ -49,7 +49,7 @@
       "alias": "has_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.has_htn = 1,1,NULL)"
+        "expression": "IF(mdh.has_htn = 1 AND mdh.revisit_this_month = 1,1,NULL)"
       }
     },
     {
@@ -142,7 +142,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "mdh.has_htn = 1"
+        "conditionExpression": "mdh.revisit_this_month = 1 OR mdh.newly_diagnosed_htn_this_month = 0"
       },
       {
         "filterType": "tableColumns",
