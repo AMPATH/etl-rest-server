@@ -5,6 +5,48 @@ var preRequest = require('../../pre-request-processing');
 import { Lab706Service } from '../../service/lab-706.service';
 import { PatientlistMysqlReport } from '../reporting-framework/patientlist-mysql.report';
 
+// Analyte drill-downs over panel tests (urinalysis members, lipid members,
+// the FBC Hb bands) select panel order rows, but the register should read as
+// the single indicator the user clicked, not the whole panel readout.  Map
+// each member-scoped indicator to its analyte concept(s) and a display
+// label; the patient-list template renders them through the {memberConceptCsv}
+// / {memberLabel} expression injections.  'NULL' / 'NONE' sentinels keep
+// whole-panel drill-downs unscoped (the injector leaves falsy values
+// unsubstituted, so the params must always be set to something truthy).
+const MEMBER_SCOPED_INDICATORS = {
+  urine_glucose: { concepts: [2340], label: 'Glucose' },
+  urine_ketones: { concepts: [7276], label: 'Ketones' },
+  urine_proteins: { concepts: [2339], label: 'Proteins' },
+  urine_pus_cells: { concepts: [1984], label: 'Pus cells' },
+  urine_rbc: { concepts: [1985], label: 'RBC' },
+  urine_t_vaginalis: { concepts: [15086], label: 'T. vaginalis' },
+  urine_yeast_cells: { concepts: [15084], label: 'Yeast cells' },
+  urine_microscopy: {
+    concepts: [1984, 1985, 15086, 15084],
+    label: 'Urine microscopy'
+  },
+  cholesterol: { concepts: [1006], label: 'Total cholesterol' },
+  triglycerides: { concepts: [1009], label: 'Triglycerides' },
+  ldl: { concepts: [1008], label: 'LDL' },
+  fbc_hb: { concepts: [21], label: 'HB (FBC)' }
+};
+
+function resolveMemberScope(indicators) {
+  for (let indicator of indicators) {
+    let base = indicator
+      .replace(/^(total_|positive_|min_|max_)/, '')
+      .replace(/_with_members$/, '');
+    if (base.startsWith('fbc_hb_')) {
+      base = 'fbc_hb';
+    }
+    let scope = MEMBER_SCOPED_INDICATORS[base];
+    if (scope) {
+      return scope;
+    }
+  }
+  return null;
+}
+
 const routes = [
   {
     method: 'GET',
@@ -71,6 +113,12 @@ const routes = [
         requestParams.endDate = requestParams.endDate.split('T')[0];
         requestParams.startIndex = Number(requestParams.startIndex || 0);
         requestParams.limit = Number(requestParams.limit || 50);
+
+        let memberScope = resolveMemberScope(indicators);
+        requestParams.memberConceptCsv = memberScope
+          ? memberScope.concepts.join(',')
+          : 'NULL';
+        requestParams.memberLabel = memberScope ? memberScope.label : 'NONE';
 
         let report = new PatientlistMysqlReport(
           'lab706Aggregate',
