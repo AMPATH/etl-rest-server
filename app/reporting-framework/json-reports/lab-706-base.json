@@ -1,8 +1,8 @@
 {
   "name": "lab706Base",
-  "version": "2.6",
+  "version": "2.8",
   "tag": "lab-706-blood-chemistry",
-  "description": "v2.6: endDate filter widened to < DATE_ADD(endDate, INTERVAL 1 DAY) - test_datetime is a DATETIME and the routes send date-only params, so a plain <= endDate collapsed same-day windows to midnight-only matches and silently dropped the final day of every multi-day range. Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept. v2.4: reference-range banding - every numeric slot gains _low/_high flags (tumour markers high-only) banded against etl.reference_ranges (seeded from amrs.concept_numeric; NULL bounds read 0) - see MOH-706-REFERENCE-RANGE-BANDING-PLAN.md. v2.5: additional reportable concepts (1.10 bacteria 53247, 2.24/2.26 tumour markers CA 15-3 53248 / CA 125 53249 with max/min/total + high-only banding, 4.8 coagulation profile 53250 counted through member results like the panels, 5.2-5.8 bacteriology specimens 53311-53315, 5.12-5.28 epidemic-prone organisms 53269/53270/53316/53279-53288 with positive_ = result_concept_id 703, 6.4-6.25 histology/cytology specimen sites 53289-53307, 7.8 hepatitis A 53309); coded slots carry result_concept_id and every count flag uses the 4-way has-result check so text/numeric answers still count; 5.15 V. cholerae O139 shares concept 53316 with 5.14 and has no register line until its own concept exists - see moh-706-additional-concepts-plan.md in the etl repo.",
+  "description": "v2.6: endDate filter widened to < DATE_ADD(endDate, INTERVAL 1 DAY) - test_datetime is a DATETIME and the routes send date-only params, so a plain <= endDate collapsed same-day windows to midnight-only matches and silently dropped the final day of every multi-day range. Base dataset for the MOH 706 report over the order-grain flat_moh_706_report table (grain + raw facts only). Test slots carry raw values keyed by concept id: coded slots carry result_concept_id so the aggregate's = 703 positivity rules work, numeric slots carry result_numeric so banding and MAX/MIN work. The 0/1 flag columns mirror the aggregate indicator aliases so patient-list drill-downs filter rows. Register presentation (names, translation, layout) lives in lab-706-patient-list.json, translated through etl.concept_value_map at request time. v2.2: panel tests (CBC 1019, URINALYSIS 302, LIPID PANEL 1010) no longer rely on the order row's single raw result - member-aware flags probe etl.flat_moh_706_report_results by primary key (report_id[, member_concept_id]), one B-tree lookup per matching row, no grain change. fbc_hgb carries the HGB (21) member value for the Hb bands (previously the bands read the panel row's value, i.e. one arbitrary member). The *_with_members flags count standalone orders PLUS urinalysis-member occurrences - new aliases alongside the legacy ones pending counting-semantics sign-off; legacy aliases are unchanged. v2.3: reportable-concept expansion (electrolytes, tumour markers, proteins, glucose, taenia, sickling, reticulocyte, HB estimation, TPHA, ASOT, HIV 12019, VDRL 299 alongside 11868, bacteriology/cytology specimen counts); hiv is order-backed (status re-entries on encounter forms are not lab workload); hiv_new_diagnosis counts patients whose flat_hiv_summary_v15b enrollment_date (first diagnosis, enrollment location) falls in the reporting period; a static has-result filter drops rows where no test was actually done (panel parents survive through their member results). v2.3.1: with_members flags for the microscopy analytes and a total_urine_microscopy flag, so the urine-analysis rows count panel members (the legacy standalone-only aliases stay for comparability); urine_s_haematobium still has no source concept. v2.4: reference-range banding - every numeric slot gains _low/_high flags (tumour markers high-only) banded against etl.reference_ranges (seeded from amrs.concept_numeric; NULL bounds read 0) - see MOH-706-REFERENCE-RANGE-BANDING-PLAN.md. v2.5: additional reportable concepts (1.10 bacteria 53247, 2.24/2.26 tumour markers CA 15-3 53248 / CA 125 53249 with max/min/total + high-only banding, 4.8 coagulation profile 53250 counted through member results like the panels, 5.2-5.8 bacteriology specimens 53311-53315, 5.12-5.28 epidemic-prone organisms 53269/53270/53316/53279-53288 with positive_ = result_concept_id 703, 6.4-6.25 histology/cytology specimen sites 53289-53307, 7.8 hepatitis A 53309); coded slots carry result_concept_id and every count flag uses the 4-way has-result check so text/numeric answers still count; 5.15 V. cholerae O139 shares concept 53316 with 5.14 and has no register line until its own concept exists - see moh-706-additional-concepts-plan.md in the etl repo. v2.7: lipid analytes (total cholesterol, triglycerides, LDL) get member-aware *_with_members value slots and flags - standalone value COALESCEd with the LIPID PANEL (1010) member value - so Total/Low/High count panel-recorded results, not just standalone orders; the existing low/high banding flags read the same combined value. v2.8: TB SMEAR (307) slot - positivity is any non-negative coded answer (scanty and graded positives carry their own codes, not 703).",
   "uses": [],
   "sources": [
     {
@@ -2852,7 +2852,7 @@
       "alias": "total_cholesterol_low",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1006) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
+        "expression": "IF((IF(fbc.concept_id IN (1006), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1006 LIMIT 1), NULL))) < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
       }
     },
     {
@@ -2860,7 +2860,7 @@
       "alias": "total_cholesterol_high",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1006) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
+        "expression": "IF((IF(fbc.concept_id IN (1006), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1006 LIMIT 1), NULL))) > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1006), 1, 0)"
       }
     },
     {
@@ -2868,7 +2868,7 @@
       "alias": "triglycerides_low",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
+        "expression": "IF((IF(fbc.concept_id IN (1009), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1009 LIMIT 1), NULL))) < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
       }
     },
     {
@@ -2876,7 +2876,7 @@
       "alias": "triglycerides_high",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1009) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
+        "expression": "IF((IF(fbc.concept_id IN (1009), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1009 LIMIT 1), NULL))) > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1009), 1, 0)"
       }
     },
     {
@@ -2884,7 +2884,7 @@
       "alias": "ldl_low",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1008) AND fbc.result_numeric < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
+        "expression": "IF((IF(fbc.concept_id IN (1008), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1008 LIMIT 1), NULL))) < (SELECT rr.low_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
       }
     },
     {
@@ -2892,7 +2892,7 @@
       "alias": "ldl_high",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(fbc.concept_id IN (1008) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
+        "expression": "IF((IF(fbc.concept_id IN (1008), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1008 LIMIT 1), NULL))) > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 1008), 1, 0)"
       }
     },
     {
@@ -3101,6 +3101,78 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(fbc.concept_id IN (53249) AND fbc.result_numeric > (SELECT rr.high_value FROM etl.reference_ranges rr WHERE rr.concept_id = 53249), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cholesterol_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1006), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1006 LIMIT 1), NULL))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_cholesterol_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1006) AND fbc.result_numeric IS NOT NULL OR (fbc.concept_id IN (1010) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1006 AND rr.result_numeric IS NOT NULL))), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "triglycerides_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1009), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1009 LIMIT 1), NULL))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_triglycerides_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1009) AND fbc.result_numeric IS NOT NULL OR (fbc.concept_id IN (1010) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1009 AND rr.result_numeric IS NOT NULL))), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ldl_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (1008), fbc.result_numeric, IF(fbc.concept_id IN (1010), (SELECT rr.result_numeric FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1008 LIMIT 1), NULL))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_ldl_with_members",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((fbc.concept_id IN (1008) AND fbc.result_numeric IS NOT NULL OR (fbc.concept_id IN (1010) AND EXISTS(SELECT 1 FROM etl.flat_moh_706_report_results rr WHERE rr.report_id = fbc.report_id AND rr.member_concept_id = 1008 AND rr.result_numeric IS NOT NULL))), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_smear",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (307), fbc.result_concept_id, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_tb_smear",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (307) AND fbc.result_concept_id IS NOT NULL, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "positive_tb_smear",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fbc.concept_id IN (307) AND fbc.result_concept_id IS NOT NULL AND fbc.result_concept_id <> 704, 1, 0)"
       }
     }
   ],
