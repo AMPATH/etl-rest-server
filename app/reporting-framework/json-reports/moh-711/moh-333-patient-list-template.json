@@ -252,7 +252,7 @@
     {
       "type": "simple_column",
       "alias": "apgar_score",
-      "column": "a.apgar_score"
+      "column": "a.apgar_score_at_5_min"
     },
     {
       "type": "simple_column",
@@ -267,7 +267,7 @@
     {
       "type": "simple_column",
       "alias": "sex",
-      "column": "pn.gender"
+      "column": "pn.child_gender"
     },
     {
       "type": "simple_column",

@@ -1,0 +1,337 @@
+{
+  "name": "moh_512_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_512_patient_list_template",
+  "description": "MOH 512 Patient list template",
+  "uses": [
+    {
+      "name": "familyPlanningBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "familyPlanningBase",
+      "alias": "a"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pn",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pn.person_id = a.person_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "cr_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mat_number.patient_id = a.person_id AND mat_number.identifier_type = 55"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "nupi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "a.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "attribute",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "amrs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = pa.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "a.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "a.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "a.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date",
+      "column": "a.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_id",
+      "column": "amrs.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cr_id",
+      "column": "cr_id.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nupi",
+      "column": "nupi.identifier"
+    },
+    {
+      "type": "derived_column",
+      "alias": "name_of_client",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_birth",
+      "column": "pn.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "a.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "county_sub_county",
+      "column": "pa.county_district"
+    },
+    {
+      "type": "simple_column",
+      "alias": "village_estate_landmark",
+      "column": "pa.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "phone_number",
+      "column": "attribute.value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "client_type",
+      "column": "a.client_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "first_ever_use_of_contraceptive",
+      "column": "a.first_ever_use_of_contraceptive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "pn.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "disability_status",
+      "column": "a.disability_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counselled_on_fp",
+      "column": "a.counseled_on_fp"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_visit_for_method_combined_oral_contraceptive",
+      "column": "a.type_of_visit_for_method_combined_oral_contraceptive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_combined_oral_contraceptive",
+      "column": "a.quantity_dispensed_combined_oral_contraceptive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_visit_for_method_progestine",
+      "column": "a.type_of_visit_for_method_progestine"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_progestine",
+      "column": "a.quantity_dispensed_progestine"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_emergency_contraceptive_pills",
+      "column": "a.quantity_dispensed_emergency_contraceptive_pills"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_visit_for_method_1_rod",
+      "column": "a.type_of_visit_for_method_1_rod"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_1_rod",
+      "column": "a.quantity_dispensed_1_rod"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_visit_for_method_2_rod",
+      "column": "a.type_of_visit_for_method_2_rod"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_2_rod",
+      "column": "a.quantity_dispensed_2_rod"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_visit_for_method_iud",
+      "column": "a.type_of_visit_for_method_iud"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_hormonal",
+      "column": "a.quantity_dispensed_hormonal"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_non_hormonal",
+      "column": "a.quantity_dispensed_non_hormonal"
+    },
+    {
+      "type": "simple_column",
+      "alias": "reason_for_larc_removal",
+      "column": "a.reason_for_larc_removal"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_condom",
+      "column": "a.type_of_condom"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_male_condoms",
+      "column": "a.quantity_dispensed_male_condoms"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity_dispensed_female_condoms",
+      "column": "a.quantity_dispensed_female_condoms"
+    },
+    {
+      "type": "simple_column",
+      "alias": "voluntary_surgical_contraception",
+      "column": "a.voluntary_surgical_contraception"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counseled_on_natural_fp",
+      "column": "a.counseled_on_natural_fp"
+    },
+    {
+      "type": "simple_column",
+      "alias": "given_cycle_beads",
+      "column": "a.given_cycle_beads"
+    },
+    {
+      "type": "simple_column",
+      "alias": "received_post_partum_fp",
+      "column": "a.post_abortion_fp_method"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_screening",
+      "column": "a.tb_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counselled_on_hiv",
+      "column": "a.counseled_on_hiv"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tested_for_hiv",
+      "column": "a.counseled_on_hiv_and_tested"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_results",
+      "column": "a.hiv_results"
+    },
+    {
+      "type": "simple_column",
+      "alias": "intimate_partner_violence",
+      "column": "a.intimate_partner_violence"
+    },
+    {
+      "type": "simple_column",
+      "alias": "screened_for_cervical_cancer",
+      "column": "a.screened_for_cervical_cancer"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cervical_cancer_screening_result",
+      "column": "a.cervical_cancer_screening_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_from",
+      "column": "a.referred_from"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_to",
+      "column": "a.referred_to"
+    },
+    {
+      "type": "simple_column",
+      "alias": "reason_for_referral",
+      "column": "a.reason_for_referral"
+    },
+    {
+      "type": "simple_column",
+      "alias": "comments",
+      "column": "a.remarks"
+    }
+  ],
+  "groupBy": {
+    "columns": ["a.person_id"]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "a.encounter_datetime",
+        "order": "asc"
+      }
+    ]
+  }
+}

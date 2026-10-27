@@ -379,7 +379,7 @@
       "alias": "low_birth_weight",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.child_birth_weight < 2500, 1, NULL)"
+        "expression": "if(m.child_birth_weight < 2500, 1, 0)"
       }
     },
     {
@@ -387,7 +387,7 @@
       "alias": "low_apgar_score",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.apgar_score <= 6, 1, NULL)"
+        "expression": "if(m.apgar_score <= 6, 1, 0)"
       }
     },
     {
@@ -515,7 +515,7 @@
       "alias": "ante_partum_haemorrage",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.maternal_complications = 'ante_partum_haemorrage', 1, NULL)"
+        "expression": "if(m.maternal_complications = 'ante_partum_haemorrage', 1, 0)"
       }
     },
     {
@@ -523,7 +523,7 @@
       "alias": "post_partum_haemorrage",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.maternal_complications = 'post_partum_haemorrage', 1, NULL)"
+        "expression": "if(m.maternal_complications = 'post_partum_haemorrage', 1, 0)"
       }
     },
     {
@@ -531,7 +531,7 @@
       "alias": "eclampsia",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.maternal_complications = 'eclampsia', 1, NULL)"
+        "expression": "if(m.maternal_complications = 'eclampsia', 1, 0)"
       }
     },
     {
@@ -539,7 +539,7 @@
       "alias": "ruptured_uterus",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.maternal_complications = 'ruptured_uterus', 1, NULL)"
+        "expression": "if(m.maternal_complications = 'ruptured_uterus', 1, 0)"
       }
     },
     {
@@ -547,7 +547,7 @@
       "alias": "obstructed_labour",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.maternal_complications = 'obstructed_labour', 1, NULL)"
+        "expression": "if(m.maternal_complications = 'obstructed_labour', 1, 0)"
       }
     },
     {
@@ -555,7 +555,7 @@
       "alias": "sepsis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.maternal_complications = 'sepsis', 1, NULL)"
+        "expression": "if(m.maternal_complications = 'sepsis', 1, 0)"
       }
     },
     {
@@ -563,7 +563,7 @@
       "alias": "fgm_delivery_complications",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.maternal_complications = 'fgm_delivery_complications', 1, NULL)"
+        "expression": "if(m.maternal_complications = 'fgm_delivery_complications', 1, 0)"
       }
     },
     {
@@ -571,7 +571,7 @@
       "alias": "neonatal_deaths_sepsis",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.neonatal_death = 'sepsis', 1, NULL)"
+        "expression": "if(m.neonatal_death = 'sepsis', 1, 0)"
       }
     },
     {
@@ -579,7 +579,7 @@
       "alias": "neonatal_deaths_prematurity",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.neonatal_death = 'prematurity', 1, NULL)"
+        "expression": "if(m.neonatal_death = 'prematurity', 1, 0)"
       }
     },
     {
@@ -587,7 +587,7 @@
       "alias": "neonatal_deaths_asphyxia",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.neonatal_death = 'asphyxia', 1, NULL)"
+        "expression": "if(m.neonatal_death = 'asphyxia', 1, 0)"
       }
     },
     {
@@ -600,7 +600,7 @@
       "alias": "referrals_from_other_health_facility",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.referred_from = 'HEALTH FACILITY', 1, NULL)"
+        "expression": "if(m.referred_from = 'HEALTH FACILITY', 1, 0)"
       }
     },
     {
@@ -608,7 +608,7 @@
       "alias": "referrals_to_other_health_facility",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.referred_to = 'HEALTH FACILITY', 1, NULL)"
+        "expression": "if(m.referred_to = 'HEALTH FACILITY', 1, 0)"
       }
     },
     {
@@ -616,7 +616,7 @@
       "alias": "referrals_from_community",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.referred_from = 'COMMUNITY', 1, NULL)"
+        "expression": "if(m.referred_from = 'COMMUNITY', 1, 0)"
       }
     },
     {
@@ -624,7 +624,7 @@
       "alias": "referrals_to_community",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.referred_to = 'COMMUNITY', 1, NULL)"
+        "expression": "if(m.referred_to = 'COMMUNITY', 1, 0)"
       }
     }
   ],

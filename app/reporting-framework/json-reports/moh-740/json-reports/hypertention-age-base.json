@@ -65,7 +65,7 @@
       "alias": "revisit_known_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.htn_type = 7286 AND mdh.revisit_this_month = 1,1,NULL)"
+        "expression": "IF(mdh.revisit_this_month = 1 AND mdh.newly_diagnosed_htn_this_month = 0,1,NULL)"
       }
     },
     {
@@ -146,7 +146,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "mdh.revisit_this_month = 1 OR mdh.newly_diagnosed_htn_this_month = 1"
+        "conditionExpression": "mdh.has_htn = 1"
       }
     ]
   },

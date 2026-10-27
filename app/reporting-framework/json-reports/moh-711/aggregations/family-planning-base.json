@@ -53,6 +53,16 @@
       "column": "f.encounter_datetime"
     },
     {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "f.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "f.encounter_id"
+    },
+    {
       "type": "derived_column",
       "alias": "new_clients",
       "expressionType": "simple_expression",
@@ -483,6 +493,231 @@
       "expressionOptions": {
         "expression": "null"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "client_type",
+      "column": "f.client_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "first_ever_use_of_contraceptive",
+      "column": "f.first_ever_use_of_contraceptive"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "pn.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "disability_status",
+      "column": "f.disability_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counselled_on_fp",
+      "column": "f.counseled_on_fp"
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_of_visit_for_method_combined_oral_contraceptive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'COMBINED ORAL CONTRACEPTIVE PILLS', f.type_of_visit_for_method, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_combined_oral_contraceptive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'COMBINED ORAL CONTRACEPTIVE PILLS', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_of_visit_for_method_progestine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'PROGESTIN PILLS', f.type_of_visit_for_method, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_progestine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'PROGESTIN PILLS', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_emergency_contraceptive_pills",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'EMERGENCY CONTRACEPTIVE PILLS', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_of_visit_for_method_1_rod",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_1_rod",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_of_visit_for_method_2_rod",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = '5-YEAR IMPLANT', f.type_of_visit_for_method, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_2_rod",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = '5-YEAR IMPLANT', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "type_of_visit_for_method_iud",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'HORMONAL IUCD' || f.contraceptive_dispensed = 'IUCD NON HORMONAL', f.type_of_visit_for_method, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_hormonal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'HORMONAL IUCD', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_non_hormonal",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'IUCD NON HORMONAL', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "reason_for_larc_removal",
+      "column": "f.reason_for_larc_removal"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_condom",
+      "column": "f.type_of_condom"
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_male_condoms",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.type_of_condom = 'M', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "quantity_dispensed_female_condoms",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.type_of_condom = 'F', f.quantity_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "voluntary_surgical_contraception",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.contraceptive_dispensed = 'FEMALE STERILIZATION BTL' OR f.contraceptive_dispensed = 'VASECTOMY', f.contraceptive_dispensed, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "counseled_on_natural_fp",
+      "column": "f.counseled_on_natural_fp"
+    },
+    {
+      "type": "simple_column",
+      "alias": "given_cycle_beads",
+      "column": "f.given_cycle_beads"
+    },
+    {
+      "type": "simple_column",
+      "alias": "received_post_partum_fp",
+      "column": "f.post_abortion_fp_method"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tb_screening",
+      "column": "f.tb_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "counselled_on_hiv",
+      "column": "f.counseled_on_hiv"
+    },
+    {
+      "type": "simple_column",
+      "alias": "tested_for_hiv",
+      "column": "f.counseled_on_hiv_and_tested"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_results",
+      "column": "f.hiv_results"
+    },
+    {
+      "type": "simple_column",
+      "alias": "intimate_partner_violence",
+      "column": "f.intimate_partner_violence"
+    },
+    {
+      "type": "simple_column",
+      "alias": "screened_for_cervical_cancer",
+      "column": "f.screened_for_cervical_cancer"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cervical_cancer_screening_result",
+      "column": "f.cervical_cancer_screening_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_from",
+      "column": "f.referred_from"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_to",
+      "column": "f.referred_to"
+    },
+    {
+      "type": "derived_column",
+      "alias": "reason_for_referral",
+      "column": "f.reason_for_referral"
+    },
+    {
+      "type": "simple_column",
+      "alias": "comments",
+      "column": "f.remarks"
     }
   ],
   "filters": {
