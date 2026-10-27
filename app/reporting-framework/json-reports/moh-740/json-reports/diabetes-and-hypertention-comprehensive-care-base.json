@@ -36,7 +36,7 @@
       "alias": "revisit_to_clinic_known_dm",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.revisit_this_month = 1 AND mdh.diabetes_status = 7282 AND mdh.diabetes_mellitus_type IS NOT NULL, 1,NULL)"
+        "expression": "IF(mdh.revisit_this_month = 1 AND mdh.newly_diagnosed_diabetes_this_month = 0 AND mdh.diabetes_mellitus_type IN (9325,9326,8879), 1,NULL)"
       }
     },
     {
@@ -84,7 +84,7 @@
       "alias": "revisit_known_htn",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.htn_type = 7286 AND mdh.revisit_this_month = 1,1,NULL)"
+        "expression": "IF(mdh.revisit_this_month = 1 AND mdh.newly_diagnosed_htn_this_month = 0 and mdh.has_htn = 1,1,NULL)"
       }
     },
     {
