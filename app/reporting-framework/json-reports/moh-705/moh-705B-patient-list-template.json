@@ -80,7 +80,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "TIMESTAMPDIFF(YEAR, t1.birthdate, CURDATE())"
+        "expression": "TIMESTAMPDIFF(YEAR, t1.birthdate, et.encounter_datetime)"
       }
     },
     {
@@ -224,7 +224,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, CURDATE()) > 5"
+        "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, et.encounter_datetime) >= 5"
       }
     ]
   },

@@ -80,7 +80,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CONCAT(FLOOR(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12), ' ', MOD(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()), 12), '/12')"
+        "expression": "CONCAT(FLOOR(TIMESTAMPDIFF(MONTH, t1.birthdate, et.encounter_datetime) / 12), ' ', MOD(TIMESTAMPDIFF(MONTH, t1.birthdate, et.encounter_datetime), 12), '/12')"
       }
     },
     {
@@ -225,7 +225,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, CURDATE()) <= 5"
+        "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, et.encounter_datetime) < 5"
       }
     ]
   },
