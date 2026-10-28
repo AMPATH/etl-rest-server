@@ -81,7 +81,7 @@
       "alias": "cumulative_htn_patient",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.has_htn = 1 OR mdh.is_co_morbid = 1,1,NULL)"
+        "expression": "IF(mdh.has_htn = 1,1,NULL)"
       }
     },
     {
