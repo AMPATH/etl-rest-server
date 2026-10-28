@@ -80,7 +80,7 @@
       "alias": "age",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CONCAT(FLOOR(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()) / 12), ' ', MOD(TIMESTAMPDIFF(MONTH, t1.birthdate, CURDATE()), 12), '/12')"
+        "expression": "CONCAT(FLOOR(TIMESTAMPDIFF(MONTH, t1.birthdate, et.encounter_datetime) / 12), ' ', MOD(TIMESTAMPDIFF(MONTH, t1.birthdate, et.encounter_datetime), 12), '/12')"
       }
     },
     {
@@ -172,7 +172,7 @@
     {
       "type": "simple_column",
       "alias": "all_other_treatments_precribed",
-      "column": "(SELECT GROUP_CONCAT(DISTINCT COALESCE(NULLIF(d.name, ''), cn.name) ORDER BY COALESCE(NULLIF(d.name, ''), cn.name) SEPARATOR '; ') FROM amrs.orders o INNER JOIN amrs.drug_order dro ON dro.order_id = o.order_id LEFT JOIN amrs.drug d ON d.drug_id = dro.drug_inventory_id LEFT JOIN amrs.concept_name cn ON cn.concept_id = COALESCE(d.concept_id, o.concept_id) AND cn.locale = 'en' AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE o.encounter_id = et.encounter_id AND o.voided = 0 AND COALESCE(o.order_action, 'NEW') <> 'DISCONTINUE')"
+      "column": "(SELECT GROUP_CONCAT(DISTINCT COALESCE(NULLIF(d.name, ''), cn.name) ORDER BY COALESCE(NULLIF(d.name, ''), cn.name) SEPARATOR '; ') FROM amrs.orders o INNER JOIN amrs.drug_order dro ON dro.order_id = o.order_id LEFT JOIN amrs.drug d ON d.drug_id = dro.drug_inventory_id LEFT JOIN amrs.concept_name cn ON cn.concept_id = COALESCE(d.concept_id, o.concept_id) AND cn.locale = 'en' AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE o.encounter_id IN (SELECT ev.encounter_id FROM amrs.encounter ev WHERE ev.visit_id = et.visit_id AND ev.voided = 0) AND o.voided = 0 AND COALESCE(o.order_action, 'NEW') <> 'DISCONTINUE')"
     },
     {
       "type": "derived_column",
@@ -225,7 +225,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, CURDATE()) <= 5"
+        "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, et.encounter_datetime) < 5"
       }
     ]
   },

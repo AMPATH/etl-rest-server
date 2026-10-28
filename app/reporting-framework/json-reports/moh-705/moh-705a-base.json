@@ -6,23 +6,15 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.encounter_diagnosis",
+      "table": "etl.flat_moh_705_a",
       "alias": "ed"
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = ed.encounter_id AND e.voided = 0"
-      }
     },
     {
       "table": "amrs.person",
       "alias": "p",
       "join": {
         "type": "INNER",
-        "joinCondition": "ed.patient_id = p.person_id AND p.voided = 0"
+        "joinCondition": "ed.person_id = p.person_id AND p.voided = 0"
       }
     },
     {
@@ -30,7 +22,7 @@
       "alias": "l",
       "join": {
         "type": "INNER",
-        "joinCondition": "l.location_id = e.location_id"
+        "joinCondition": "l.location_id = ed.location_id"
       }
     }
   ],
@@ -53,22 +45,22 @@
     {
       "type": "simple_column",
       "alias": "location_id",
-      "column": "l.location_id"
+      "column": "ed.location_id"
     },
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "ed.patient_id"
+      "column": "ed.person_id"
     },
     {
       "type": "simple_column",
       "alias": "encounter_id",
-      "column": "e.encounter_id"
+      "column": "ed.encounter_id"
     },
     {
       "type": "simple_column",
       "alias": "diarrhoea_with_no_dehydration",
-      "column": "if(ed.diagnosis_coded in (18,26901,26903), 1, 0)"
+      "column": "ed.diarrhoea_with_no_dehydration"
     },
     {
       "type": "simple_column",
@@ -83,192 +75,192 @@
     {
       "type": "simple_column",
       "alias": "cholera",
-      "column": "if(ed.diagnosis_coded in (198,49049), 1, 0)"
+      "column": "ed.cholera"
     },
     {
       "type": "simple_column",
       "alias": "dysentry",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs stool_exam WHERE stool_exam.encounter_id = e.encounter_id AND stool_exam.concept_id = 304 AND stool_exam.value_coded = 709 AND stool_exam.voided = 0) AND EXISTS (SELECT 1 FROM amrs.obs stool_appearance WHERE stool_appearance.encounter_id = e.encounter_id AND stool_appearance.concept_id = 15229 AND stool_appearance.value_coded IN (26801,6787) AND stool_appearance.voided = 0), 1, 0)"
+      "column": "ed.dysentry"
     },
     {
       "type": "simple_column",
       "alias": "gastroenterities",
-      "column": "if(ed.diagnosis_coded in (197,48936), 1, 0)"
+      "column": "ed.gastroenterities"
     },
     {
       "type": "simple_column",
       "alias": "pneumonia",
-      "column": "if(ed.diagnosis_coded in (43,37288,37246), 1, 0)"
+      "column": "ed.pneumonia"
     },
     {
       "type": "simple_column",
       "alias": "severe_pneumonia",
-      "column": "if(ed.diagnosis_coded = 37246, 1, 0)"
+      "column": "ed.severe_pneumonia"
     },
     {
       "type": "simple_column",
       "alias": "upper_respiratory_tract_infections",
-      "column": "if(ed.diagnosis_coded in (106,37206,37486,37388), 1, 0)"
+      "column": "ed.upper_respiratory_tract_infections"
     },
     {
       "type": "simple_column",
       "alias": "lower_respiratory_tract_infections",
-      "column": "if(ed.diagnosis_coded in (998,37290), 1, 0)"
+      "column": "ed.lower_respiratory_tract_infections"
     },
     {
       "type": "simple_column",
       "alias": "asthma",
-      "column": "if(ed.diagnosis_coded = 37350, 1, 0)"
+      "column": "ed.asthma"
     },
     {
       "type": "simple_column",
       "alias": "presumed_tuberculosis",
-      "column": "if(ed.diagnosis_coded = 19699, 1, 0)"
+      "column": "ed.presumed_tuberculosis"
     },
     {
       "type": "simple_column",
       "alias": "suspected_malaria",
-      "column": "if(ed.diagnosis_coded = 47626, 1, 0)"
+      "column": "ed.suspected_malaria"
     },
     {
       "type": "simple_column",
       "alias": "tested_for_malaria",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs malaria_smear WHERE malaria_smear.encounter_id = e.encounter_id AND malaria_smear.concept_id = 32 AND malaria_smear.voided = 0 AND NOT EXISTS (SELECT 1 FROM amrs.concept_name malaria_smear_status WHERE malaria_smear_status.concept_id = malaria_smear.value_coded AND malaria_smear_status.locale_preferred = 1 AND malaria_smear_status.voided = 0 AND UPPER(malaria_smear_status.name) = 'NOT DONE')), 1, 0)"
+      "column": "ed.tested_for_malaria"
     },
     {
       "type": "simple_column",
       "alias": "confirmed_malaria",
-      "column": "if(ed.diagnosis_coded = 47628, 1, 0)"
+      "column": "ed.confirmed_malaria"
     },
     {
       "type": "simple_column",
       "alias": "ear_infection",
-      "column": "if(ed.diagnosis_coded = 38752, 1, 0)"
+      "column": "ed.ear_infection"
     },
     {
       "type": "simple_column",
       "alias": "malnutrition",
-      "column": "if(ed.diagnosis_coded in (68,43802), 1, 0)"
+      "column": "ed.malnutrition"
     },
     {
       "type": "simple_column",
       "alias": "anaemia",
-      "column": "if(ed.diagnosis_coded = 44911, 1, 0)"
+      "column": "ed.anaemia"
     },
     {
       "type": "simple_column",
       "alias": "meningococcal_meningitis",
-      "column": "if(ed.diagnosis_coded in (48462,48475), 1, 0)"
+      "column": "ed.meningococcal_meningitis"
     },
     {
       "type": "simple_column",
       "alias": "other_meningitis",
-      "column": "if(ed.diagnosis_coded = 48464, 1, 0)"
+      "column": "ed.other_meningitis"
     },
     {
       "type": "simple_column",
       "alias": "neonatal_sepsis",
-      "column": "if(ed.diagnosis_coded in (226, 30931), 1, 0)"
+      "column": "ed.neonatal_sepsis"
     },
     {
       "type": "simple_column",
       "alias": "neonatal_tetanus",
-      "column": "if(ed.diagnosis_coded = 48525, 1, 0)"
+      "column": "ed.neonatal_tetanus"
     },
     {
       "type": "simple_column",
       "alias": "poliomyelitis",
-      "column": "if(ed.diagnosis_coded in (5258,48305), 1, 0)"
+      "column": "ed.poliomyelitis"
     },
     {
       "type": "simple_column",
       "alias": "chicken_pox",
-      "column": "if(ed.diagnosis_coded = 47976, 1, 0)"
+      "column": "ed.chicken_pox"
     },
     {
       "type": "simple_column",
       "alias": "measles",
-      "column": "if(ed.diagnosis_coded = 47857, 1, 0)"
+      "column": "ed.measles"
     },
     {
       "type": "simple_column",
       "alias": "hepatitis",
-      "column": "if(ed.diagnosis_coded = 15933, 1, 0)"
+      "column": "ed.hepatitis"
     },
     {
       "type": "simple_column",
       "alias": "amoebiasis",
-      "column": "if(ed.diagnosis_coded = 48961, 1, 0)"
+      "column": "ed.amoebiasis"
     },
     {
       "type": "simple_column",
       "alias": "mumps",
-      "column": "if(ed.diagnosis_coded = 48071, 1, 0)"
+      "column": "ed.mumps"
     },
     {
       "type": "simple_column",
       "alias": "typhoid_fever",
-      "column": "if(ed.diagnosis_coded = 49026, 1, 0)"
+      "column": "ed.typhoid_fever"
     },
     {
       "type": "simple_column",
       "alias": "bilharzia",
-      "column": "if(ed.diagnosis_coded = 47432, 1, 0)"
+      "column": "ed.bilharzia"
     },
     {
       "type": "simple_column",
       "alias": "intestinal_worms",
-      "column": "if(ed.diagnosis_coded = 47409, 1, 0)"
+      "column": "ed.intestinal_worms"
     },
     {
       "type": "simple_column",
       "alias": "eye_infections",
-      "column": "if(ed.diagnosis_coded = 39323, 1, 0)"
+      "column": "ed.eye_infections"
     },
     {
       "type": "simple_column",
       "alias": "tonsilities",
-      "column": "if(ed.diagnosis_coded = 37516, 1, 0)"
+      "column": "ed.tonsilities"
     },
     {
       "type": "simple_column",
       "alias": "urinary_tract_infections",
-      "column": "if(ed.diagnosis_coded = 32449, 1, 0)"
+      "column": "ed.urinary_tract_infections"
     },
     {
       "type": "simple_column",
       "alias": "mental_disorders",
-      "column": "if(ed.diagnosis_coded = 43173, 1, 0)"
+      "column": "ed.mental_disorders"
     },
     {
       "type": "simple_column",
       "alias": "dental_disorders",
-      "column": "if(ed.diagnosis_coded = 36699, 1, 0)"
+      "column": "ed.dental_disorders"
     },
     {
       "type": "simple_column",
       "alias": "jiggers_infestation",
-      "column": "if(ed.diagnosis_coded in (47371, 6847), 1, 0)"
+      "column": "ed.jiggers_infestation"
     },
     {
       "type": "simple_column",
       "alias": "diseases_of_the_skin",
-      "column": "if(ed.diagnosis_coded in (33964,26705,43708,48360,47378), 1, 0)"
+      "column": "ed.diseases_of_the_skin"
     },
     {
       "type": "simple_column",
       "alias": "downs_syndrome",
-      "column": "if(ed.diagnosis_coded in (28410, 8343), 1, 0)"
+      "column": "ed.downs_syndrome"
     },
     {
       "type": "simple_column",
       "alias": "poisoning",
-      "column": "if(ed.diagnosis_coded = 22593, 1, 0)"
+      "column": "ed.poisoning"
     },
     {
       "type": "simple_column",
       "alias": "road_traffic_injuries",
-      "column": "if(ed.diagnosis_coded in (22353), 1, 0)"
+      "column": "ed.road_traffic_injuries"
     },
     {
       "type": "simple_column",
@@ -278,32 +270,32 @@
     {
       "type": "simple_column",
       "alias": "violence_related_injuries",
-      "column": "if(ed.diagnosis_coded in (21739,27702), 1, 0)"
+      "column": "ed.violence_related_injuries"
     },
     {
       "type": "simple_column",
       "alias": "other_injuries",
-      "column": "if(ed.diagnosis_coded in (22836,22817), 1, 0)"
+      "column": "ed.other_injuries"
     },
     {
       "type": "simple_column",
       "alias": "sexual_violence",
-      "column": "if(ed.diagnosis_coded in (20702,35024), 1, 0)"
+      "column": "ed.sexual_violence"
     },
     {
       "type": "simple_column",
       "alias": "burns",
-      "column": "if(ed.diagnosis_coded = 22603, 1, 0)"
+      "column": "ed.burns"
     },
     {
       "type": "simple_column",
       "alias": "snake_bites",
-      "column": "if(ed.diagnosis_coded = 22233, 1, 0)"
+      "column": "ed.snake_bites"
     },
     {
       "type": "simple_column",
       "alias": "dog_bites",
-      "column": "if(ed.diagnosis_coded = 22238, 1, 0)"
+      "column": "ed.dog_bites"
     },
     {
       "type": "simple_column",
@@ -313,132 +305,132 @@
     {
       "type": "simple_column",
       "alias": "diabetes",
-      "column": "if(ed.diagnosis_coded = 30535, 1, 0)"
+      "column": "ed.diabetes"
     },
     {
       "type": "simple_column",
       "alias": "epilepsy",
-      "column": "if(ed.diagnosis_coded = 41034, 1, 0)"
+      "column": "ed.epilepsy"
     },
     {
       "type": "simple_column",
       "alias": "other_convulsive_disorders",
-      "column": "if(ed.diagnosis_coded = 41037, 1, 0)"
+      "column": "ed.other_convulsive_disorders"
     },
     {
       "type": "simple_column",
       "alias": "rheumatic_fever",
-      "column": "if(ed.diagnosis_coded = 26681, 1, 0)"
+      "column": "ed.rheumatic_fever"
     },
     {
       "type": "simple_column",
       "alias": "brucellosis",
-      "column": "if(ed.diagnosis_coded = 48568, 1, 0)"
+      "column": "ed.brucellosis"
     },
     {
       "type": "simple_column",
       "alias": "rickets",
-      "column": "if(ed.diagnosis_coded = 43899, 1, 0)"
+      "column": "ed.rickets"
     },
     {
       "type": "simple_column",
       "alias": "cerebral_palsy",
-      "column": "if(ed.diagnosis_coded = 40393, 1, 0)"
+      "column": "ed.cerebral_palsy"
     },
     {
       "type": "simple_column",
       "alias": "autism",
-      "column": "if(ed.diagnosis_coded = 43131, 1, 0)"
+      "column": "ed.autism"
     },
     {
       "type": "simple_column",
       "alias": "tryponosomiasis",
-      "column": "if(ed.diagnosis_coded = 47604, 1, 0)"
+      "column": "ed.tryponosomiasis"
     },
     {
       "type": "simple_column",
       "alias": "yellow_fever",
-      "column": "if(ed.diagnosis_coded in (57, 15473), 1, 0)"
+      "column": "ed.yellow_fever"
     },
     {
       "type": "simple_column",
       "alias": "viral_haemorrhagic_fever",
-      "column": "if(ed.diagnosis_coded in (48016,48126,48118,48123,48116,48119,16129,47333,15573,48125), 1, 0)"
+      "column": "ed.viral_haemorrhagic_fever"
     },
     {
       "type": "simple_column",
       "alias": "rift_valley_fever",
-      "column": "if(ed.diagnosis_coded = 48151, 1, 0)"
+      "column": "ed.rift_valley_fever"
     },
     {
       "type": "simple_column",
       "alias": "chikungunya",
-      "column": "if(ed.diagnosis_coded in (15860, 48158), 1, 0)"
+      "column": "ed.chikungunya"
     },
     {
       "type": "simple_column",
       "alias": "dengue_fever",
-      "column": "if(ed.diagnosis_coded = 48159, 1, 0)"
+      "column": "ed.dengue_fever"
     },
     {
       "type": "simple_column",
       "alias": "leishmaniasis",
-      "column": "if(ed.diagnosis_coded = 47581, 1, 0)"
+      "column": "ed.leishmaniasis"
     },
     {
       "type": "simple_column",
       "alias": "cutaneous_leishmaniasis",
-      "column": "if(ed.diagnosis_coded in (47585, 47583), 1, 0)"
+      "column": "ed.cutaneous_leishmaniasis"
     },
     {
       "type": "simple_column",
       "alias": "suspected_anthrax",
-      "column": "if(ed.diagnosis_coded = 48565, 1, 0)"
+      "column": "ed.suspected_anthrax"
     },
     {
       "type": "simple_column",
       "alias": "suspected_childhood_cancers",
-      "column": "if(ed.diagnosis_coded = 45517, 1, 0)"
+      "column": "ed.suspected_childhood_cancers"
     },
     {
       "type": "simple_column",
       "alias": "hypoxaemia",
-      "column": "if(ed.diagnosis_coded = 27066, 1, 0)"
+      "column": "ed.hypoxaemia"
     },
     {
       "type": "simple_column",
       "alias": "all_other_diseases",
-      "column": "IF(ed.diagnosis_coded IS NOT NULL AND ed.diagnosis_coded NOT IN (18,43,57,68,106,197,198,226,998,5258,6847,8343,15473,15860,15933,19699,20702,21739,22233,22238,22353,22593,22603,22817,22836,26681,26705,26901,26903,27066,27702,28410,30535,30931,32449,33964,35024,36699,37206,37246,37288,37290,37350,37388,37486,37516,38752,39323,40393,41034,41037,43131,43173,43708,43802,43899,44911,45517,47371,47378,47409,47432,47581,47583,47585,47604,47626,47628,47857,47976,48016,48071,48151,48158,48159,48305,48360,48462,48464,48475,48525,48565,48568,48936,48961,49026,49049), 1, 0)"
+      "column": "ed.all_other_diseases"
     },
     {
       "type": "simple_column",
       "alias": "new_attendances",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs attendance WHERE attendance.encounter_id = e.encounter_id AND attendance.concept_id = 1839 AND attendance.value_coded = 7850 AND attendance.voided = 0), 1, 0)"
+      "column": "ed.new_attendance"
     },
     {
       "type": "simple_column",
       "alias": "re_attendances",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs attendance WHERE attendance.encounter_id = e.encounter_id AND attendance.concept_id = 1839 AND attendance.value_coded = 11233 AND attendance.voided = 0), 1, 0)"
+      "column": "ed.re_attendance"
     },
     {
       "type": "simple_column",
       "alias": "referrals_from_other_health_facility",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 10926 AND referral_from.value_coded = 7308 AND referral_from.voided = 0), 1, 0)"
+      "column": "ed.referral_from_facility"
     },
     {
       "type": "simple_column",
       "alias": "referrals_to_other_health_facility",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_to WHERE referral_to.encounter_id = e.encounter_id AND referral_to.concept_id = 10927 AND referral_to.value_coded = 7308 AND referral_to.voided = 0), 1, 0)"
+      "column": "ed.referral_to_facility"
     },
     {
       "type": "simple_column",
       "alias": "referrals_from_community_unit",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_from WHERE referral_from.encounter_id = e.encounter_id AND referral_from.concept_id = 10926 AND referral_from.value_coded = 12646 AND referral_from.voided = 0), 1, 0)"
+      "column": "ed.referral_from_community"
     },
     {
       "type": "simple_column",
       "alias": "referrals_to_community_unit",
-      "column": "IF(EXISTS (SELECT 1 FROM amrs.obs referral_to WHERE referral_to.encounter_id = e.encounter_id AND referral_to.concept_id = 10927 AND referral_to.value_coded = 12646 AND referral_to.voided = 0), 1, 0)"
+      "column": "ed.referral_to_community"
     }
   ],
   "filters": {
@@ -456,22 +448,22 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "l.location_id in ?",
+        "conditionExpression": "ed.location_id in ?",
         "parameterName": "locations"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "TIMESTAMPDIFF(YEAR, p.birthdate, ed.date_created) < 5"
+        "conditionExpression": "ed.age_in_years < 5"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
     "columns": [
-      "ed.patient_id",
+      "ed.person_id",
       "ed.diagnosis_coded",
       "DATE(ed.date_created)",
-      "l.location_id"
+      "ed.location_id"
     ]
   }
 }
