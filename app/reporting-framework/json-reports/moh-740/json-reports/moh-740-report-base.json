@@ -47,6 +47,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "cumulative_all",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.person_id IS NOT NULL,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "newly_diagnosed_diabetes_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
