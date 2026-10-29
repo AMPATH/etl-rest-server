@@ -1,0 +1,229 @@
+{
+  "name": "moh_413_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_413_patient_list_template",
+  "description": "MOH 510 Patient list template",
+  "uses": [
+    {
+      "name": "immunizationBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "immunizationBase",
+      "alias": "a"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pn",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pn.person_id = a.person_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "nupi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "a.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "attribute",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "amrs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "cr_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = cr_id.patient_id AND (cr_id.voided IS NULL || cr_id.voided = 0) AND cr_id.identifier_type = 55"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = pa.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "mother",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = mother.person_id AND mother.person_attribute_type_id = 4"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "father",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = father.person_id AND father.person_attribute_type_id = 4"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "a.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "pn.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "a.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "a.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date",
+      "column": "a.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_id",
+      "column": "amrs.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cr_id",
+      "column": "cr_id.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nemis_number",
+      "column": "cr_id.identifier"
+    },
+    {
+      "type": "derived_column",
+      "alias": "child_names",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "pn.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_birth",
+      "column": "pn.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "a.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "name_of_school",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "class",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_first_seen",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "parent_name",
+      "column": "mother.value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "parent_phone_number",
+      "column": "attribute.value"
+    },
+    {
+      "type": "simple_column",
+      "alias": "address",
+      "column": "pa.city_village"
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hpv_1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(a.hpv1, a.date_immunization_given, null)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv_2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(a.hpv2, a.date_immunization_given, null)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "remarks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "null"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_immunization_given",
+      "column": "m.date_immunization_given"
+    }
+  ],
+  "groupBy": {
+    "columns": ["a.person_id"]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "a.encounter_datetime",
+        "order": "asc"
+      }
+    ]
+  }
+}

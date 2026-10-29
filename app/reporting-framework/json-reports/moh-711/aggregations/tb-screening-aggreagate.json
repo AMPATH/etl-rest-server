@@ -22,7 +22,7 @@
       "alias": "total_screened_for_tb_0_to_14",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.total_screened_for_tb_0_to_14)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.total_screened_for_tb_0_to_14 = 1 THEN t.person_id END)"
       }
     },
     {
@@ -30,7 +30,7 @@
       "alias": "total_screened_for_tb_15_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.total_screened_for_tb_15_above)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.total_screened_for_tb_15_above = 1 THEN t.person_id END)"
       }
     },
     {
@@ -38,7 +38,7 @@
       "alias": "total_screened_for_tb",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.total_screened_for_tb)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.total_screened_for_tb = 1 THEN t.person_id END)"
       }
     },
     {
@@ -46,7 +46,7 @@
       "alias": "total_presumptive_tb_cases_0_14",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.total_presumptive_tb_cases_0_14)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.total_presumptive_tb_cases_0_14 = 1 THEN t.person_id END)"
       }
     },
     {
@@ -54,7 +54,7 @@
       "alias": "total_presumptive_tb_cases_15_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.total_presumptive_tb_cases_15_above)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.total_presumptive_tb_cases_15_above = 1 THEN t.person_id END)"
       }
     },
     {
@@ -62,7 +62,7 @@
       "alias": "total_presumptive_tb_cases",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.total_presumptive_tb_cases)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.total_presumptive_tb_cases = 1 THEN t.person_id END)"
       }
     },
     {
@@ -70,7 +70,7 @@
       "alias": "already_on_tb_treatment_0_14",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.already_on_tb_treatment_0_14)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.already_on_tb_treatment_0_14 = 1 THEN t.person_id END)"
       }
     },
     {
@@ -78,7 +78,7 @@
       "alias": "already_on_tb_treatment_15_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.already_on_tb_treatment_15_above)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.already_on_tb_treatment_15_above = 1 THEN t.person_id END)"
       }
     },
     {
@@ -86,7 +86,7 @@
       "alias": "already_on_tb_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.already_on_tb_treatment)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.already_on_tb_treatment = 1 THEN t.person_id END)"
       }
     },
     {
@@ -94,7 +94,7 @@
       "alias": "not_screened_for_tb_0_14",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.not_screened_for_tb_0_14)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.not_screened_for_tb_0_14 = 1 THEN t.person_id END)"
       }
     },
     {
@@ -102,7 +102,7 @@
       "alias": "not_screened_for_tb_15_above",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.not_screened_for_tb_15_above)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.not_screened_for_tb_15_above = 1 THEN t.person_id END)"
       }
     },
     {
@@ -110,7 +110,7 @@
       "alias": "not_screened_for_tb",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(t.not_screened_for_tb)"
+        "expression": "COUNT(DISTINCT CASE WHEN t.not_screened_for_tb = 1 THEN t.person_id END)"
       }
     }
   ],

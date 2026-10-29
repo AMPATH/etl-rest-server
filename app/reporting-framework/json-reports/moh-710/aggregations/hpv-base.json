@@ -1,0 +1,130 @@
+{
+  "name": "hpvBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_710",
+      "alias": "m"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "m.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "m.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "m.age_in_years"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_in_months",
+      "column": "m.age_in_months"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "m.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "m.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "m.encounter_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hpv AND m.hpv_dose_received = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1_10_and_below",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hpv AND m.hpv_dose_received = 1 AND m.age_in_years <= 10, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1_10_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hpv AND m.hpv_dose_received = 1 AND m.age_in_years > 10, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv2_10_and_below",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hpv AND m.hpv_dose_received = 2 AND m.age_in_years <= 10, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv2_10_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hpv AND m.hpv_dose_received = 2 AND m.age_in_years > 10, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hpv AND m.hpv_dose_received = 1 AND m.age_in_years BETWEEN 10 AND 14, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.hpv AND m.hpv_dose_received = 2, 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(m.encounter_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(m.encounter_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["m.person_id", "m.encounter_datetime"]
+  }
+}

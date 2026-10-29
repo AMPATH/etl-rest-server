@@ -1,0 +1,97 @@
+{
+  "name": "hpvAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "hpvBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "hpvBase",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "hpv1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1_10_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv1_10_14)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1_10_and_below",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv1_10_and_below)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1_10_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv1_10_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv2_10_and_below",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv2_10_and_below)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv2_10_and_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv2_10_and_above)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hpv2)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh_413_patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

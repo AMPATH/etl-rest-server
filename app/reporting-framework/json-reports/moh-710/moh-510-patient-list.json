@@ -56,11 +56,27 @@
       }
     },
     {
+      "table": "amrs.patient_identifier",
+      "alias": "cr_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = cr_id.patient_id AND (cr_id.voided IS NULL || cr_id.voided = 0) AND cr_id.identifier_type = 55"
+      }
+    },
+    {
       "table": "amrs.person_address",
       "alias": "pa",
       "join": {
         "type": "LEFT",
         "joinCondition": "a.person_id = pa.person_id"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "mother",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = mother.person_id AND mother.person_attribute_type_id = 4"
       }
     }
   ],
@@ -87,7 +103,7 @@
     },
     {
       "type": "simple_column",
-      "alias": "date",
+      "alias": "encounter_datetime",
       "column": "a.encounter_datetime"
     },
     {
@@ -97,8 +113,13 @@
     },
     {
       "type": "simple_column",
+      "alias": "cr_id",
+      "column": "cr_id.identifier"
+    },
+    {
+      "type": "simple_column",
       "alias": "child_number",
-      "column": "null"
+      "column": "cr_id.identifier"
     },
     {
       "type": "derived_column",
@@ -124,20 +145,14 @@
       "column": "null"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "father_names",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
-      }
+      "column": "null"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "mother_names",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
-      }
+      "column": "mother.value"
     },
     {
       "type": "simple_column",
@@ -151,154 +166,154 @@
     },
     {
       "type": "derived_column",
-      "alias": "bcg",
+      "alias": "bcg_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.bcg_vaccine, a.encounter_datetime, NULL)"
+        "column": "IF(a.bcg_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "polio_birth_dose",
+      "alias": "polio_birth_dose_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_vaccine, a.encounter_datetime, NULL)"
+        "column": "IF(a.opv_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "opv_1",
+      "alias": "opv_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_1, a.encounter_datetime, NULL)"
+        "column": "IF(a.opv_1, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "opv_2",
+      "alias": "opv_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_2, a.encounter_datetime, NULL)"
+        "column": "IF(a.opv_2, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "opv_3",
+      "alias": "opv_3_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_3, a.encounter_datetime, NULL)"
+        "column": "IF(a.opv_3, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "ipv",
+      "alias": "ipv_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.ipv_vaccine, a.encounter_datetime, NULL)"
+        "column": "IF(a.ipv_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "dpt_hep_1",
+      "alias": "dpt_hep_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_1, a.encounter_datetime, NULL)"
+        "column": "IF(a.dpt_hep_1, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "dpt_hep_2",
+      "alias": "dpt_hep_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_2, a.encounter_datetime, NULL)"
+        "column": "IF(a.dpt_hep_2, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "dpt_hep_3",
+      "alias": "dpt_hep_3_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_3, a.encounter_datetime, NULL)"
+        "column": "IF(a.dpt_hep_3, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pneumococcal_1",
+      "alias": "pneumococcal_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.pneumococcal_1, a.encounter_datetime, NULL)"
+        "column": "IF(a.pneumococcal_1, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pneumococcal_2",
+      "alias": "pneumococcal_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.pneumococcal_2, a.encounter_datetime, NULL)"
+        "column": "IF(a.pneumococcal_2, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "pneumococcal_3",
+      "alias": "pneumococcal_3_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_3, a.encounter_datetime, NULL)"
+        "column": "IF(a.dpt_hep_3, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "rotavirus_1",
+      "alias": "rotavirus_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.rotavirus_vaccine1, a.encounter_datetime, NULL)"
+        "column": "IF(a.rotavirus_vaccine1, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "rotavirus_2",
+      "alias": "rotavirus_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.rotavirus_vaccine2, a.encounter_datetime, NULL)"
+        "column": "IF(a.rotavirus_vaccine2, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "vitamin_a_6_11_months",
+      "alias": "vitamin_a_6_11_months_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.vitaminA_6_11_months, a.encounter_datetime, NULL)"
+        "column": "IF(a.vitaminA_6_11_months, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "measles_rubella_1",
+      "alias": "measles_rubella_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.measles_rubela_1, a.encounter_datetime, NULL)"
+        "column": "IF(a.measles_rubela_1, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "measles_rubella_2",
+      "alias": "measles_rubella_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.measles_rubela_2, a.encounter_datetime, NULL)"
+        "column": "IF(a.measles_rubela_2, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "yellow_fever",
+      "alias": "yellow_fever_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.yellow_fever_vaccine, a.encounter_datetime, NULL)"
+        "column": "IF(a.yellow_fever_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "fully_immunized_child",
+      "alias": "fully_immunized_child_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.fully_immunized_children, a.encounter_datetime, NULL)"
+        "column": "IF(a.fully_immunized_children, a.date_immunization_given, NULL)"
       }
     },
     {

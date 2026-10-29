@@ -46,7 +46,7 @@
       "alias": "total_screened_for_tb_0_to_14",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(t.tb_screening IS NOT NULL  AND TRIM(t.tb_screening) != ''   AND t.age <= 14, 1, 0)"
+        "expression": "if(t.tb_screening IS NOT NULL  AND TRIM(t.tb_screening) != ''  AND t.age <= 14, 1, 0)"
       }
     },
     {
@@ -158,12 +158,12 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "t.encounter_datetime >= ?",
+        "conditionExpression": "DATE(t.encounter_datetime) >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "t.encounter_datetime <= ?",
+        "conditionExpression": "DATE(t.encounter_datetime) <= ?",
         "parameterName": "endDate"
       },
       {
@@ -172,9 +172,5 @@
         "parameterName": "locations"
       }
     ]
-  },
-  "groupBy": {
-    "groupParam": "groupByParam",
-    "columns": ["t.person_id"]
   }
 }

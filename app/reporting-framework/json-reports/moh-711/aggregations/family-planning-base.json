@@ -456,7 +456,7 @@
       "alias": "post_partum_fp_48_hours_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(f.post_partum_timing_mother = '0-48 HOURS' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
@@ -464,7 +464,7 @@
       "alias": "post_partum_fp_48_hours_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(f.post_partum_timing_mother = '0-48 HOURS' AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
@@ -472,7 +472,7 @@
       "alias": "post_partum_fp_3days_6_weeks_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(f.post_partum_timing_mother = '0-48 HOURS' AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
@@ -480,7 +480,7 @@
       "alias": "post_partum_fp_3days_6_weeks_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(f.post_partum_timing_mother = '3 DAYS TO 6 WEEKS' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
@@ -488,7 +488,7 @@
       "alias": "post_abortion_fp_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(f.post_partum_timing_mother = 'MORE THAN SIX WEEKS' AND f.client_type = 'new', 1, 0)"
       }
     },
     {
@@ -496,7 +496,7 @@
       "alias": "post_abortion_fp_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "IF(f.post_partum_timing_mother = 'MORE THAN SIX WEEKS' AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {

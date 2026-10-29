@@ -107,7 +107,7 @@
       "alias": "chlorhexidine_applied",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.chlorhexidine_applied)"
+        "expression": "SUM(m.chlorhexidine_applied_on_cord_stamp)"
       }
     },
     {
@@ -147,7 +147,7 @@
       "alias": "bf_within_1_hour",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.bf_within_1_hour)"
+        "expression": "SUM(m.initiated_on_bf_in_1_hour)"
       }
     },
     {
@@ -323,7 +323,7 @@
       "alias": "kangaroo_mother_care",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.kangaroo_mother_care)"
+        "expression": "SUM(m.kangaroo_mother_care_given)"
       }
     },
     {

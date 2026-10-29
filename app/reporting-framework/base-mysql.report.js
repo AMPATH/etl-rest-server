@@ -749,6 +749,10 @@ import * as lab_706_patient_list from './json-reports/lab-706-patient-list.json'
 import * as moh_510_patient_list_template from './json-reports/moh-710/moh-510-patient-list.json';
 import * as moh_512_patient_list_template from './json-reports/moh-711/moh-512-patient-list-template.json';
 import * as tb_patient_list_template from './json-reports/moh-711/tb-patient-list-template.json';
+import * as moh_413_patient_list_template from './json-reports/moh-710/moh-413-patient-list.json';
+
+import * as hpv_710_agregate from './json-reports/moh-710/aggregations/hpv-aggregate.json';
+import * as hpv_710_base from './json-reports/moh-710/aggregations/hpv-base.json';
 
 export class BaseMysqlReport {
   constructor(reportName, params) {
@@ -3563,6 +3567,17 @@ export class BaseMysqlReport {
         case 'tb_patient_list_template':
           resolve({
             main: this.cloneJsonSchema(tb_patient_list_template)
+          });
+          break;
+        case 'moh_413_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_413_patient_list_template)
+          });
+          break;
+        case 'hpvAggregate':
+          resolve({
+            main: this.cloneJsonSchema(hpv_710_agregate),
+            hpvBase: this.cloneJsonSchema(hpv_710_base)
           });
           break;
         default:

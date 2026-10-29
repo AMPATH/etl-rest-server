@@ -28,6 +28,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "child_gender",
+      "column": "m.child_gender"
+    },
+    {
+      "type": "simple_column",
       "alias": "age",
       "column": "m.age"
     },
@@ -155,9 +160,12 @@
       "column": "m.child_birth_weight"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "initiated_on_bf_in_1_hour",
-      "column": "m.bf_within_1_hour"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.bf_within_1_hour = 'Y', 1, 0)"
+      }
     },
     {
       "type": "simple_column",
@@ -165,9 +173,12 @@
       "column": "m.tetracycline_given"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "chlorhexidine_applied_on_cord_stamp",
-      "column": "m.chlorhexidine_applied"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.chlorhexidine_applied = 'Y', 1, 0)"
+      }
     },
     {
       "type": "simple_column",
@@ -400,17 +411,24 @@
       "alias": "chlorhexidine_applied",
       "column": "m.chlorhexidine_applied"
     },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_k",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.vitamin_k, 'Y', 'N')"
+      }
+    },
 
     {
-      "type": "simple_column",
-      "alias": "vitamin_k",
-      "column": "m.vitamin_k"
-    },
-    {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "tetracycline_given",
-      "column": "m.tetracycline_given"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.tetracycline_given = 'Y', 1, 0)"
+      }
     },
+
     {
       "type": "simple_column",
       "alias": "pre_term_babies",
@@ -591,6 +609,14 @@
       }
     },
     {
+      "type": "derived_column",
+      "alias": "kangaroo_mother_care_given",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.kangaroo_mother_care = 'Y', 1, 0)"
+      }
+    },
+    {
       "type": "simple_column",
       "alias": "kangaroo_mother_care",
       "column": "m.kangaroo_mother_care"
@@ -626,6 +652,11 @@
       "expressionOptions": {
         "expression": "if(m.referred_to = 'COMMUNITY', 1, 0)"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "maternity_admission_date",
+      "column": "m.maternity_admission_date"
     }
   ],
   "filters": {

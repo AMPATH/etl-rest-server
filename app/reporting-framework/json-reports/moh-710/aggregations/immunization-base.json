@@ -628,18 +628,40 @@
     },
     {
       "type": "derived_column",
-      "alias": "adverse_event_after_vaccination",
+      "alias": "adverse_event_after_vaccination_above_1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "m.adverse_event_after_vaccination"
+        "expression": "m.adverse_event_after_vaccination  AND m.age_in_years >= 1"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hpv",
+      "alias": "adverse_event_after_vaccination_below_1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "m.hpv"
+        "expression": "m.adverse_event_after_vaccination AND m.age_in_years < 1"
+      }
+    },
+
+    {
+      "type": "simple_column",
+      "alias": "date_immunization_given",
+      "column": "m.date_immunization_given"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.hpv AND m.hpv_dose = 1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hpv2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.hpv AND m.hpv_dose = 2"
       }
     }
   ],

@@ -56,54 +56,6 @@
       "expressionOptions": {
         "expression": "SUM(s.tetanus_toxoid5)"
       }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hpv_vaccine1_10_14_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(s.hpv_vaccine1 AND s.age >= 10 AND s.age < 15)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hpv_vaccine2",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(s.hpv_vaccine2)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hpv_vaccine1_10_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(s.hpv_vaccine1 AND s.age = 10)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hpv_vaccine2_10_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(s.hpv_vaccine2 AND s.age = 10)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hpv_vaccine1_greater_10_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(s.hpv_vaccine1 AND s.age > 10)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hpv_vaccine2_greater_10_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(s.hpv_vaccine2 AND s.age > 10)"
-      }
     }
   ],
   "transFormDirectives": {
