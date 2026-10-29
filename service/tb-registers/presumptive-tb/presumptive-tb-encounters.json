@@ -2,7 +2,7 @@
   "name": "presumptiveTbEncounters",
   "version": "1.0",
   "tag": "tb_registers",
-  "description": "Presumptive TB Register (MOH/REG/DNTLDP/02), step 1: one row per TB encounter (331) at the locations in the period, with its obs pivoted -- referred by (6749), HIV result (6709) and test date (10790), smear method (9044) and result (307), smear and culture dates (10752 in groups 10750 / 10753), chest X-ray (12), culture (10742), resistance (10754), TB type (2225) and treatment start (1113).",
+  "description": "Presumptive TB Register (MOH/REG/DNTLDP/02), step 1: one row per TB encounter (331) at the locations in the period, with its obs pivoted -- referred by (6749), smear method (9044) and result (307), smear and culture dates (10752 in groups 10750 / 10753), chest X-ray (12), culture (10742), resistance (10754), TB type (2225) and treatment start (1113).",
   "uses": [],
   "sources": [
     {
@@ -14,7 +14,7 @@
       "alias": "o",
       "join": {
         "type": "LEFT",
-        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (6749, 6709, 10790, 9044, 307, 10752, 12, 10742, 10754, 2225, 1113)"
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (6749, 9044, 307, 10752, 12, 10742, 10754, 2225, 1113)"
       }
     },
     {
@@ -51,22 +51,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "MAX(CASE WHEN o.concept_id = 6749 THEN CASE o.value_coded WHEN 978 THEN 'SR' WHEN 1862 THEN 'CHV' WHEN 5619 THEN 'Other (HCW)' ELSE 'Other (dept)' END END)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hiv_code",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "MAX(CASE WHEN o.concept_id = 6709 THEN CASE o.value_coded WHEN 703 THEN 'Positive' WHEN 664 THEN 'Negative' ELSE 'Not Done' END END)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "hiv_test_date",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "MAX(IF(o.concept_id = 10790, DATE(o.value_datetime), NULL))"
       }
     },
     {

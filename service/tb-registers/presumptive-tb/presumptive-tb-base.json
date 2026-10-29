@@ -2,7 +2,7 @@
   "name": "presumptiveTbRegisterBase",
   "version": "1.0",
   "tag": "tb_registers",
-  "description": "Presumptive TB Register (MOH/REG/DNTLDP/02): one row per TB encounter (presumptiveTbEncounters), oldest first, in the register's columns (the names of PresumptiveTbRow in the O3 register). (B) CCC number (28, else 50); (G) national ID (5) and Client Registry number (55) on their own lines; (H) nearest landmark (attribute 31) and village, and phone (10); (J) HIV result in full -- Positive / Negative / Not Done -- and the test date; (K) Sputum where a smear was done; (L) chest X-ray N / SG / AO / ND; (N) culture result with any resistance (R, H, Z, E) and date; (O) smear method and result (FM / ZN, 0 / Scanty / + / ++ / +++) and date; (P) DRTB where resistance is recorded, DSTB where smear or culture is positive or a TB type is recorded, No TB where the smear is negative, culture not positive and the X-ray normal or not done; (Q) started on anti-TB treatment (1113) and its date. Sample date, other radiology, TPT and remarks are not recorded yet.",
+  "description": "Presumptive TB Register (MOH/REG/DNTLDP/02): one row per TB encounter (presumptiveTbEncounters), oldest first, in the register's columns (the names of PresumptiveTbRow in the O3 register). (B) CCC number (28, else 50); (G) national ID (5) and Client Registry number (55) on their own lines; (H) nearest landmark (attribute 31) and village, and phone (10); (J) the latest HTS HIV result (296 / 297, 1357) on or before the encounter, in full -- Positive / Negative / Inconclusive / Not Done -- and its date; (K) Sputum where a smear was done; (L) chest X-ray N / SG / AO / ND; (N) culture result with any resistance (R, H, Z, E) and date; (O) smear method and result (FM / ZN, 0 / Scanty / + / ++ / +++) and date; (P) DRTB where resistance is recorded, DSTB where smear or culture is positive or a TB type is recorded, No TB where the smear is negative, culture not positive and the X-ray normal or not done; (Q) started on anti-TB treatment (1113) and its date. Sample date, other radiology, TPT and remarks are not recorded yet.",
   "uses": [
     {
       "name": "presumptiveTbEncounters",
@@ -145,13 +145,18 @@
       "alias": "hiv_result",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IFNULL(t.hiv_code, 'Not Done')"
-      }
+        "expression": "CASE (SELECT ho.value_coded FROM amrs.encounter h JOIN amrs.obs ho ON ho.encounter_id = h.encounter_id AND ho.concept_id = 1357 AND ho.voided = 0 WHERE h.patient_id = t.patient_id AND h.encounter_type IN (296, 297) AND h.voided = 0 AND h.encounter_datetime < DATE_ADD(t.enc_date, INTERVAL 1 DAY) ORDER BY h.encounter_datetime DESC, ho.obs_id DESC LIMIT 1) WHEN 703 THEN 'Positive' WHEN 664 THEN 'Negative' WHEN 1138 THEN 'Inconclusive' ELSE 'Not Done' END"
+      },
+      "comment": "(J) upper: the latest HTS result (encounters 296, 297; final result 1357) on or before the TB encounter, at any facility -- in full; Not Done without one"
     },
     {
-      "type": "simple_column",
+      "comment": "(J) lower: the date of that HTS test",
+      "type": "derived_column",
       "alias": "hiv_test_date",
-      "column": "t.hiv_test_date"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT DATE(h.encounter_datetime) FROM amrs.encounter h JOIN amrs.obs ho ON ho.encounter_id = h.encounter_id AND ho.concept_id = 1357 AND ho.voided = 0 WHERE h.patient_id = t.patient_id AND h.encounter_type IN (296, 297) AND h.voided = 0 AND h.encounter_datetime < DATE_ADD(t.enc_date, INTERVAL 1 DAY) ORDER BY h.encounter_datetime DESC, ho.obs_id DESC LIMIT 1)"
+      }
     },
     {
       "type": "derived_column",
