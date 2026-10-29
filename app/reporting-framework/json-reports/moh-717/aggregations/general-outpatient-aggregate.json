@@ -51,38 +51,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "opd_attendance_less_5yrs_male_new",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(o.opd_attendance_less_5yrs_male_new)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "opd_attendance_less_5yrs_male_revisit",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(o.opd_attendance_less_5yrs_male_revisit)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "opd_attendance_less_5yrs_female_new",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(o.opd_attendance_less_5yrs_female_new)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "opd_attendance_less_5yrs_female_revisit",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(o.opd_attendance_less_5yrs_female_revisit)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "over_60_years_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -122,14 +90,14 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "patient_list_template",
+      "useTemplate": "moh_705B_patient_list_template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {
           "joinType": "INNER",
           "joinCondition": "<<base_column>> = <<template_column>>",
-          "baseColumn": "person_id",
-          "templateColumn": "person_id"
+          "baseColumn": "encounter_id",
+          "templateColumn": "encounter_id"
         }
       }
     }
