@@ -1,0 +1,212 @@
+{
+  "name": "moh_407_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_407_patient_list_template",
+  "description": "MOH 407 Patient list template",
+
+  "sources": [
+    {
+      "dataSet": "etl.flat_moh_711",
+      "alias": "a"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pn",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pn.person_id = a.person_id"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "cr_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "cr_id.patient_id = a.person_id AND cr_id.identifier_type = 55"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "national_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "national_id.patient_id = a.person_id AND national_id.identifier_type = 5"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "nupi",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "person_name",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "a.person_id = person_name.person_id AND (person_name.voided IS NULL || person_name.voided = 0) AND person_name.preferred = 1"
+      }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "attribute",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "amrs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
+      }
+    },
+    {
+      "table": "amrs.patient_identifier",
+      "alias": "cr_id",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = cr_id.patient_id AND (cr_id.voided IS NULL || cr_id.voided = 0) AND cr_id.identifier_type = 55"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "a.person_id = pa.person_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "a.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "a.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "a.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date",
+      "column": "a.date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_id",
+      "column": "amrs.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cr_id",
+      "column": "cr_id.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "national_identification_number",
+      "column": "national_id.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nupi",
+      "column": "nupi.identifier"
+    },
+    {
+      "type": "derived_column",
+      "alias": "patient_names",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " CONCAT_WS(' ', COALESCE(person_name.given_name, ''), COALESCE(person_name.middle_name, ''), COALESCE(person_name.family_name, ''))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_visit",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "residence",
+      "column": "pa.city_village"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "pn.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_years",
+      "column": "a.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_months",
+      "column": "a.age_in_months"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pregnant_or_breastfeeding",
+      "column": "a.pregnant_or_breastfeeding"
+    },
+    {
+      "type": "simple_column",
+      "alias": "z_score",
+      "column": "a.z_score"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nutrition_status",
+      "column": "a.nutrition_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "serostatus",
+      "column": "a.serostatus"
+    },
+    {
+      "type": "simple_column",
+      "alias": "medical_condition",
+      "column": "a.medical_condition"
+    },
+    {
+      "type": "simple_column",
+      "alias": "food_secure",
+      "column": "a.food_secure"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nutrition_intervention",
+      "column": "a.nutrition_intervention"
+    },
+    {
+      "type": "simple_column",
+      "alias": "remarks",
+      "column": "a.remarks"
+    }
+  ],
+  "groupBy": {
+    "columns": ["a.person_id"]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "a.encounter_datetime",
+        "order": "asc"
+      }
+    ]
+  }
+}

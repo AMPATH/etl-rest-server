@@ -76,7 +76,6 @@
     {
       "type": "simple_column",
       "alias": "women_received_post_partum_fp",
-      "expressionType": "simple_expression",
       "column": "p.women_received_post_partum_fp"
     },
     {
