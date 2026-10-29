@@ -746,6 +746,8 @@ import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
 import * as lab_706_patient_list from './json-reports/lab-706-patient-list.json';
 
 import * as moh_510_patient_list_template from './json-reports/moh-710/moh-510-patient-list.json';
+import * as moh_512_patient_list_template from './json-reports/moh-711/moh-512-patient-list-template.json';
+import * as tb_patient_list_template from './json-reports/moh-711/tb-patient-list-template.json';
 
 export class BaseMysqlReport {
   constructor(reportName, params) {
@@ -3540,6 +3542,16 @@ export class BaseMysqlReport {
         case 'moh_510_patient_list_template':
           resolve({
             main: this.cloneJsonSchema(moh_510_patient_list_template)
+          });
+          break;
+        case 'moh_512_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_512_patient_list_template)
+          });
+          break;
+        case 'tb_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(tb_patient_list_template)
           });
           break;
         default:

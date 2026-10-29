@@ -28,7 +28,7 @@
       "alias": "cr_id",
       "join": {
         "type": "LEFT",
-        "joinCondition": "mat_number.patient_id = a.person_id AND mat_number.identifier_type = 55"
+        "joinCondition": "cr_id.patient_id = a.person_id AND cr_id.identifier_type = 55"
       }
     },
     {

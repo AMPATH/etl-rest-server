@@ -142,7 +142,7 @@
     {
       "type": "simple_column",
       "alias": "apgar_score",
-      "column": "m.apgar_score"
+      "column": "m.apgar_score_at_5_min"
     },
     {
       "type": "simple_column",
@@ -387,7 +387,7 @@
       "alias": "low_apgar_score",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.apgar_score <= 6, 1, 0)"
+        "expression": "if(m.apgar_score_at_5_min <= 6, 1, 0)"
       }
     },
     {

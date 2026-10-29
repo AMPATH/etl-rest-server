@@ -59,6 +59,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "age",
+      "column": "f.age"
+    },
+    {
+      "type": "simple_column",
       "alias": "encounter_id",
       "column": "f.encounter_id"
     },
@@ -503,11 +508,6 @@
       "type": "simple_column",
       "alias": "first_ever_use_of_contraceptive",
       "column": "f.first_ever_use_of_contraceptive"
-    },
-    {
-      "type": "simple_column",
-      "alias": "sex",
-      "column": "pn.gender"
     },
     {
       "type": "simple_column",
