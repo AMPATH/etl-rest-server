@@ -74,6 +74,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "cumulative_all",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.person_id IS NOT NULL,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "age_range",
       "expressionType": "case_statement",
       "expressionOptions": {

@@ -67,6 +67,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "cumulative_all",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.cumulative_all)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "hiv_positive_screened",
       "expressionType": "simple_expression",
       "expressionOptions": {
