@@ -57,10 +57,10 @@
     },
     {
       "table": "amrs.patient_identifier",
-      "alias": "amrs",
+      "alias": "cr",
       "join": {
         "type": "LEFT",
-        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
+        "joinCondition": "a.person_id = cr.patient_id AND (cr.voided IS NULL || cr.voided = 0) AND cr.identifier_type = 55"
       }
     },
     {
@@ -100,8 +100,8 @@
     },
     {
       "type": "simple_column",
-      "alias": "amrs_id",
-      "column": "amrs.identifier"
+      "alias": "cr_id",
+      "column": "cr.identifier"
     },
     {
       "type": "derived_column",
