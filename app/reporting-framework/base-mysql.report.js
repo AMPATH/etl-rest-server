@@ -753,6 +753,7 @@ import * as moh_413_patient_list_template from './json-reports/moh-710/moh-413-p
 
 import * as hpv_710_agregate from './json-reports/moh-710/aggregations/hpv-aggregate.json';
 import * as hpv_710_base from './json-reports/moh-710/aggregations/hpv-base.json';
+import * as moh_407_patient_list_template from './json-reports/moh-711/moh-407-patient-list-template.json';
 
 export class BaseMysqlReport {
   constructor(reportName, params) {
@@ -3578,6 +3579,11 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(hpv_710_agregate),
             hpvBase: this.cloneJsonSchema(hpv_710_base)
+          });
+          break;
+        case 'moh_407_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_407_patient_list_template)
           });
           break;
         default:

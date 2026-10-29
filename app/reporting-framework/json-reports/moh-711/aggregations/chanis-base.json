@@ -42,6 +42,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "date",
+      "column": "o.obs_datetime"
+    },
+    {
+      "type": "simple_column",
       "alias": "ccc_number",
       "column": "flat_identifiers.ccc"
     },

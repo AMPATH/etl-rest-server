@@ -49,7 +49,10 @@ export class MOH711Service extends MultiDatasetPatientlistReport {
   }
 
   generatePatientListReport(reportParams) {
-    const indicators = reportParams.indicator.split(',') || [];
+    const indicators = (reportParams.indicator || '')
+      .split(',')
+      .map((indicator) => indicator.trim())
+      .filter(Boolean);
     let self = this;
     return new Promise((resolve, reject) => {
       super

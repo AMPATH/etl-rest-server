@@ -1220,6 +1220,69 @@ const routes = [
         params: {}
       }
     }
+  },
+  {
+    method: 'GET',
+    path: '/moh-407-patient-list',
+    config: {
+      handler: function (request, reply) {
+        if (request.query.locationUuids) {
+          const reportName = request.query.reportName;
+          preRequest.resolveLocationIdsToLocationUuids(request, function () {
+            let requestParams = Object.assign(
+              {},
+              request.query,
+              request.params
+            );
+
+            let reportParams = etlHelpers.getReportParams(
+              reportName,
+              ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+              requestParams
+            );
+
+            let requestCopy = _.cloneDeep(requestParams);
+
+            let service = new MOH711Service(
+              reportName,
+              reportParams.requestParams
+            );
+
+            requestCopy.locations = reportParams.requestParams.locations;
+            requestCopy.limitParam = requestParams.limit;
+            requestCopy.offSetParam = requestParams.startIndex;
+
+            service
+              .generatePatientListReport(reportParams.requestParams)
+              .then((result) => {
+                reply(result);
+              })
+              .catch((error) => {
+                reply(error);
+              });
+          });
+        }
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get MOH 407 PATIENT LIST',
+      notes: 'Returns MOH 407 Patient List',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        query: {
+          limit: Joi.number()
+            .required()
+            .description('The offset to control pagination')
+        },
+        params: {}
+      }
+    }
   }
 ];
 
