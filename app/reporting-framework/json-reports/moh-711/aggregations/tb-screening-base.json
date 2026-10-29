@@ -18,15 +18,67 @@
     },
     {
       "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "t.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date",
+      "column": "t.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "t.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "t.encounter_type"
+    },
+    {
+      "type": "simple_column",
       "alias": "encounter_datetime",
       "column": "t.encounter_datetime"
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_screened_for_tb_0_to_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(t.tb_screening IS NOT NULL  AND TRIM(t.tb_screening) != ''   AND t.age <= 14, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_screened_for_tb_15_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(t.tb_screening IS NOT NULL AND TRIM(t.tb_screening) != '' AND t.age >= 15, 1, 0)"
+      }
     },
     {
       "type": "derived_column",
       "alias": "total_screened_for_tb",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(t.tb_screening IS NOT NULL, 1, 0)"
+        "expression": "if(t.tb_screening IS NOT NULL AND TRIM(t.tb_screening) != '', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_presumptive_tb_cases_0_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(t.tb_status = 'Presumed TB' AND t.age <= 14, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "total_presumptive_tb_cases_15_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(t.tb_status = 'Presumed TB' AND t.age >= 15, 1, 0)"
       }
     },
     {
@@ -34,7 +86,23 @@
       "alias": "total_presumptive_tb_cases",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(T.tb_screening = 'Presumed TB', 1, 0)"
+        "expression": "if(t.tb_status = 'Presumed TB', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "already_on_tb_treatment_0_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(t.tb_status = 'On TB treatment' AND t.age <= 14, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "already_on_tb_treatment_15_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(t.tb_status = 'On TB treatment' AND t.age >= 15, 1, 0)"
       }
     },
     {
@@ -42,7 +110,23 @@
       "alias": "already_on_tb_treatment",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(T.tb_screening = 'On TB treatment', 1, 0)"
+        "expression": "if(t.tb_status = 'On TB treatment', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_screened_for_tb_0_14",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((t.tb_screening IS NULL || TRIM(t.tb_screening) = '') AND t.age <= 14, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_screened_for_tb_15_above",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if((t.tb_screening IS NULL || TRIM(t.tb_screening) = '') AND t.age >= 15, 1, 0)"
       }
     },
     {
@@ -50,7 +134,7 @@
       "alias": "not_screened_for_tb",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(t.tb_screening IS NULL, 1, 0)"
+        "expression": "if(t.tb_screening IS NULL || TRIM(t.tb_screening) = '', 1, 0)"
       }
     },
     {
