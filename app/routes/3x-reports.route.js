@@ -153,6 +153,54 @@ const routes = [
   },
   {
     method: 'GET',
+    path: '/moh-717-patient-list',
+    config: {
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          let requestParams = Object.assign({}, request.query, request.params);
+          let reportParams = etlHelpers.getReportParams(
+            'moh717Report',
+            ['endDate', 'startDate', 'locationUuids', 'isAggregated'],
+            requestParams
+          );
+          reportParams.requestParams.limitParam = requestParams.limit;
+          reportParams.requestParams.offSetParam = requestParams.startIndex;
+
+          let service = new MOH717Service(
+            'moh717Report',
+            reportParams.requestParams
+          );
+          service
+            .generatePatientListReport(reportParams.requestParams)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
+      },
+      description: 'Get MOH 717 (204A / 204B) patient list',
+      notes: 'Returns MOH 717 204A/204B patient list for an indicator',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        query: {
+          limit: Joi.number().required()
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
     path: '/moh-745',
     config: {
       handler: function (request, reply) {

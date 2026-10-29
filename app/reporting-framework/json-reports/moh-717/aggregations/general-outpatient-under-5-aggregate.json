@@ -1,0 +1,73 @@
+{
+  "name": "generalOutpatientUnder5Aggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "generalOutpatientBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "generalOutpatientBase",
+      "alias": "o"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "opd_attendance_less_5yrs_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(o.opd_attendance_less_5yrs_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_attendance_less_5yrs_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(o.opd_attendance_less_5yrs_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_attendance_less_5yrs_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(o.opd_attendance_less_5yrs_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opd_attendance_less_5yrs_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(o.opd_attendance_less_5yrs_female_revisit)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh_705A_patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "encounter_id",
+          "templateColumn": "encounter_id"
+        }
+      }
+    }
+  }
+}

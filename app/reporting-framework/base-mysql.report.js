@@ -584,6 +584,7 @@ import * as chanis_711_aggregate from './json-reports/moh-711/aggregations/chani
 import * as chanis_711_base from './json-reports/moh-711/aggregations/chanis-base.json';
 import * as moh_717_report from './json-reports/moh-717/moh-717-summary.json';
 import * as general_outpatient_717_aggregate from './json-reports/moh-717/aggregations/general-outpatient-aggregate.json';
+import * as general_outpatient_under_5_717_aggregate from './json-reports/moh-717/aggregations/general-outpatient-under-5-aggregate.json';
 import * as general_outpatient_717_base from './json-reports/moh-717/aggregations/general-outpatient-base.json';
 import * as special_clinics_717_aggregate from './json-reports/moh-717/aggregations/special-clinics-aggregate.json';
 import * as special_clinics_717_base from './json-reports/moh-717/aggregations/special-clinics-base.json';
@@ -2781,6 +2782,16 @@ export class BaseMysqlReport {
         case 'generalOutpatientAggregate':
           resolve({
             main: this.cloneJsonSchema(general_outpatient_717_aggregate),
+            generalOutpatientBase: this.cloneJsonSchema(
+              general_outpatient_717_base
+            )
+          });
+          break;
+        case 'generalOutpatientUnder5Aggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              general_outpatient_under_5_717_aggregate
+            ),
             generalOutpatientBase: this.cloneJsonSchema(
               general_outpatient_717_base
             )
