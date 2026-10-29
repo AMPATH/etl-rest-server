@@ -16,6 +16,18 @@ const { MOH745Service } = require('../../service/moh-745/moh-745.service');
 const {
   getMoh362Register
 } = require('../../service/moh-731/ver-2023/moh-362-register.service');
+const {
+  getMoh267Register
+} = require('../../service/moh-731/ver-2023/moh-267-register.service');
+const {
+  getMoh729b
+} = require('../../service/moh-731/ver-2023/moh-729b.service');
+const {
+  getPresumptiveTbRegister
+} = require('../../service/tb-registers/presumptive-tb-register.service');
+const {
+  getTbPresumptiveRegister
+} = require('../../service/tb-presumptive-register.service');
 
 const routes = [
   {
@@ -1023,6 +1035,153 @@ const routes = [
       description: 'Get the MOH 362 HTS lab, referral and linkage register',
       notes:
         'Returns one row per HTS client tested in the period, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/moh-267-register',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getMoh267Register({
+            startDate: request.query.startDate,
+            endDate: request.query.endDate,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the MOH 267 PrEP daily activity register',
+      notes:
+        'Returns one row per PrEP visit in the period (the MOH 731 PrEP visits), for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/moh-729b',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getMoh729b({
+            endDate: request.query.endDate,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the MOH 729B F-MAPS clients on ART by regimen code',
+      notes:
+        'Returns one row per client active on ART in the month ending on endDate, with the form regimen code, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/tb-presumptive-register',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getTbPresumptiveRegister({
+            startDate: request.query.startDate,
+            endDate: request.query.endDate,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the TB presumptive register',
+      notes:
+        'Returns one row per TB presumptive encounter in the period, with the register columns A to R, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/presumptive-tb-register',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getPresumptiveTbRegister({
+            startDate: request.query.startDate,
+            endDate: request.query.endDate,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the Presumptive TB Register',
+      notes:
+        'Returns one row per TB encounter (331) in the period, for the whole facility of the location, in the register columns',
       tags: ['api'],
       validate: {
         options: {

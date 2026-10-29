@@ -1,0 +1,116 @@
+{
+  "name": "moh731V2023Moh729bPrepBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, PrEP: the MOH 731 PrEP visits in the reporting month (moh731V2023PrepVisitsBase -- its facility scope, one visit per client per day, Follow-ups unless PrEP was not prescribed, each client's latest Initial where PrEP was prescribed), with the form's PrEP regimen code: CAB-LA -> PRP1E (Cabotegravir), Dapivirine ring -> PRP1D, oral PrEP by the drug prescribed (9774): EMTRICITABINE AND TENOFOVIR 6180 -> PRP1A (TDF + FTC), LAMIVUDINE AND TENOFOVIR 1400 -> PRP1B (TDF + 3TC), Lenacapavir -> PRP1F (added to the form's codes), anything else (oral with no drug recorded) -> PRP1X. One row per visit, oldest first: the service keeps each client's latest visit of the month and drops those discontinued, leaving the current active PrEP clients.",
+  "uses": [
+    {
+      "name": "moh731V2023PrepVisitsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023PrepVisitsBase",
+      "alias": "v"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "v.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "v.patient_uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = v.patient_id AND pi.identifier_type = 44 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_number",
+      "column": "v.amrs_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "v.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "v.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(v.birthdate)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "v.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "last_visit_date",
+      "column": "v.visit_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN v.visit = 'Initial' THEN CASE WHEN v.transfer_in = 'Yes' THEN 'Continuing' ELSE 'New' END WHEN v.prep_status IN ('CONTINUE REGIMEN', 'CHANGE REGIMEN') THEN 'Continuing' WHEN v.prep_status = 'DRUG RESTART' THEN 'Restart' WHEN v.prep_status IN ('DISCONTINUE', 'TRANSFER OUT') THEN 'Discontinued' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "'PrEP'"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN v.prep_type = 'CAB-LA' THEN 'Cabotegravir' WHEN v.prep_type = 'Dapivirine ring' THEN 'Dapivirine ring' WHEN v.prep_type = 'Lenacapavir' THEN 'Lenacapavir' WHEN v.prep_type = 'Oral' AND EXISTS (SELECT 1 FROM amrs.obs o WHERE o.encounter_id = v.encounter_id AND o.concept_id = 9774 AND o.value_coded = 6180 AND o.voided = 0) THEN 'TDF + FTC' WHEN v.prep_type = 'Oral' AND EXISTS (SELECT 1 FROM amrs.obs o WHERE o.encounter_id = v.encounter_id AND o.concept_id = 9774 AND o.value_coded = 1400 AND o.voided = 0) THEN 'TDF + 3TC' ELSE COALESCE(v.regimen, 'Not recorded') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN v.prep_type = 'CAB-LA' THEN 'PRP1E' WHEN v.prep_type = 'Dapivirine ring' THEN 'PRP1D' WHEN v.prep_type = 'Lenacapavir' THEN 'PRP1F' WHEN v.prep_type = 'Oral' AND EXISTS (SELECT 1 FROM amrs.obs o WHERE o.encounter_id = v.encounter_id AND o.concept_id = 9774 AND o.value_coded = 6180 AND o.voided = 0) THEN 'PRP1A' WHEN v.prep_type = 'Oral' AND EXISTS (SELECT 1 FROM amrs.obs o WHERE o.encounter_id = v.encounter_id AND o.concept_id = 9774 AND o.value_coded = 1400 AND o.voided = 0) THEN 'PRP1B' ELSE 'PRP1X' END"
+      }
+    }
+  ],
+  "orderBy": {
+    "columns": [
+      {
+        "column": "v.visit_date",
+        "order": "asc"
+      },
+      {
+        "column": "v.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

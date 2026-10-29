@@ -1,0 +1,161 @@
+{
+  "name": "moh731V2023Moh729bArtBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, ART clients: the clients active and on ART this month in the HIV monthly report dataset (etl.hiv_monthly_report_dataset_frozen) for the month ending on the period's end date, at the requested locations -- one row per client -- with their current ARVs from their latest clinical HIV summary (flat_hiv_summary_v15b, next_clinical_datetime_hiv IS NULL). cur_arv_meds holds concept ids joined by ' ## ', single drugs or fixed-dose combinations, so the same regimen can be stored either way; regimen_signature breaks it into its components in a fixed order (e.g. TDF+3TC+DTG whether stored as 628 ## 802 ## 9759 or as the combination concept DTG/3TC/TDF (10268)), with OTHER for any concept not known as an ARV.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "f"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = f.person_id"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "s",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "s.person_id = f.person_id AND s.is_clinical_encounter = 1 AND s.next_clinical_datetime_hiv IS NULL"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = f.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "f.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "f.person_uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = f.person_id AND pi.identifier_type = 28 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = f.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(p.birthdate)"
+      }
+    },
+    {
+      "comment": "Age at the end of the reporting month, so a month reads the same whenever it is run.",
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, f.endDate)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "s.weight"
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.gender = 'F' AND f.pregnant_this_month = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtc_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(s.rtc_date)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_meds",
+      "column": "s.cur_arv_meds"
+    },
+    {
+      "comment": "The line as reported at the visit (filled for every client, where cur_arv_line often is not); 1st line when unknown.",
+      "type": "derived_column",
+      "alias": "arv_line",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "LEAST(GREATEST(COALESCE(s.cur_arv_line_reported, f.cur_arv_line_reported, s.cur_arv_line, 1), 1), 3)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_signature",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',') = '' THEN '' ELSE CONCAT_WS('+', IF((FIND_IN_SET('802', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('1400', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6180', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6964', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10795', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10796', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9055', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10268', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'TDF', NULL), IF((FIND_IN_SET('12469', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'TAF', NULL), IF((FIND_IN_SET('797', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('630', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('817', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6467', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'AZT', NULL), IF((FIND_IN_SET('814', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6679', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('817', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10986', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9050', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9051', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'ABC', NULL), IF((FIND_IN_SET('625', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('792', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6965', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9052', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'D4T', NULL), IF((FIND_IN_SET('628', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('630', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('1400', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6467', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6679', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6964', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6965', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('817', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('792', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10795', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9055', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9050', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9051', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9052', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10986', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('12469', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10268', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), '3TC', NULL), IF((FIND_IN_SET('791', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6180', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10796', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'FTC', NULL), IF((FIND_IN_SET('9759', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10986', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('12469', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10268', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'DTG', NULL), IF((FIND_IN_SET('633', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6964', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10795', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('10796', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9052', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'EFV', NULL), IF((FIND_IN_SET('631', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('792', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6467', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9050', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'NVP', NULL), IF((FIND_IN_SET('10090', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('12053', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'RPV', NULL), IF((FIND_IN_SET('12053', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'CAB', NULL), IF((FIND_IN_SET('6158', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'ETV', NULL), IF((FIND_IN_SET('6159', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6160', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'ATV', NULL), IF((FIND_IN_SET('794', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9026', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9055', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9051', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'LPV', NULL), IF((FIND_IN_SET('6157', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('12692', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'DRV', NULL), IF((FIND_IN_SET('795', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('6160', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('794', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('12692', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9055', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0 OR FIND_IN_SET('9051', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'RTV', NULL), IF((FIND_IN_SET('6156', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0), 'RAL', NULL), IF((LENGTH(REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) - LENGTH(REPLACE(REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ','), ',', '')) + 1) > ((FIND_IN_SET('625', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('628', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('630', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('631', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('633', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('791', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('792', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('794', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('795', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('797', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('802', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('814', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('817', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('1400', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6156', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6157', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6158', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6159', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6160', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6180', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6467', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6679', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6964', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('6965', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('9026', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('9050', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('9051', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('9052', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('9055', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('9759', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('10090', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('10268', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('10795', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('10796', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('10986', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('12053', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('12469', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0) + (FIND_IN_SET('12692', REPLACE(REPLACE(COALESCE(s.cur_arv_meds, ''), ' ', ''), '##', ',')) > 0)), 'OTHER', NULL)) END"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "f.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "f.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "f.on_art_this_month = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "f.status = 'active'"
+      }
+    ]
+  }
+}

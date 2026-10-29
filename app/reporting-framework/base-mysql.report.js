@@ -688,6 +688,19 @@ import * as moh_731_v2023_moh_362_test_groups from '../../service/moh-731/ver-20
 import * as moh_731_v2023_moh_362_tests from '../../service/moh-731/ver-2023/moh-362-register/tests.json';
 import * as moh_731_v2023_moh_362_encounter_obs from '../../service/moh-731/ver-2023/moh-362-register/encounter-obs.json';
 import * as moh_731_v2023_moh_362_base from '../../service/moh-731/ver-2023/moh-362-register/moh-362-base.json';
+import * as moh_731_v2023_moh_267_base from '../../service/moh-731/ver-2023/moh-267-register/moh-267-base.json';
+import * as tb_presumptive_base from '../../service/tb-presumptive-register/tb-presumptive-base.json';
+import * as tb_presumptive_encounter_obs from '../../service/tb-presumptive-register/tb-presumptive-encounter-obs.json';
+import * as moh_731_v2023_moh_729b_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-base.json';
+import * as moh_731_v2023_moh_729b_art_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-art-base.json';
+import * as moh_731_v2023_moh_729b_prep_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-prep-base.json';
+import * as moh_731_v2023_moh_729b_pep_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-pep-base.json';
+import * as moh_731_v2023_moh_729b_pep_signature from '../../service/moh-731/ver-2023/moh-729b/moh-729b-pep-signature.json';
+import * as moh_731_v2023_moh_729b_pep_meds from '../../service/moh-731/ver-2023/moh-729b/moh-729b-pep-meds.json';
+import * as moh_731_v2023_moh_729b_hbv_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-hbv-base.json';
+import * as moh_731_v2023_moh_729b_tpt_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-tpt-base.json';
+import * as presumptive_tb_encounters from '../../service/tb-registers/presumptive-tb/presumptive-tb-encounters.json';
+import * as presumptive_tb_base from '../../service/tb-registers/presumptive-tb/presumptive-tb-base.json';
 import * as moh_731_v2023_art_monthly_base from '../../service/moh-731/ver-2023/art/art-monthly-base.json';
 import * as moh_731_v2023_starting_art_aggregate from '../../service/moh-731/ver-2023/art/starting-art-aggregate.json';
 import * as moh_731_v2023_currently_on_art_aggregate from '../../service/moh-731/ver-2023/art/currently-on-art-aggregate.json';
@@ -3501,6 +3514,106 @@ export class BaseMysqlReport {
             ),
             moh731V2023Moh362EncounterObs: this.cloneJsonSchema(
               moh_731_v2023_moh_362_encounter_obs
+            )
+          });
+          break;
+        /* MOH 267 register: the MOH 731 PrEP visits base, one row per visit,
+           with the register's columns */
+        case 'moh731V2023Moh267Register':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_267_base),
+            moh731V2023PrepVisitsBase: this.cloneJsonSchema(
+              moh_731_v2023_prep_visits_base
+            ),
+            moh731V2023PrepEncounters: this.cloneJsonSchema(
+              moh_731_v2023_prep_encounters
+            ),
+            moh731V2023PrepLatestPerDay: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_per_day
+            ),
+            moh731V2023PrepLatestInitial: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_initial
+            )
+          });
+          break;
+        /* TB presumptive register: one row per TB presumptive encounter, with
+           the form's answers pivoted per encounter */
+        case 'tbPresumptiveRegister':
+          resolve({
+            main: this.cloneJsonSchema(tb_presumptive_base),
+            tbPresumptiveEncounterObs: this.cloneJsonSchema(
+              tb_presumptive_encounter_obs
+            )
+          });
+          break;
+        case 'moh731V2023Moh729b':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_base),
+            moh731V2023Moh729bArtBase: this.cloneJsonSchema(
+              moh_731_v2023_moh_729b_art_base
+            )
+          });
+          break;
+        case 'moh731V2023Moh729bPrep':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_prep_base),
+            moh731V2023PrepVisitsBase: this.cloneJsonSchema(
+              moh_731_v2023_prep_visits_base
+            ),
+            moh731V2023PrepEncounters: this.cloneJsonSchema(
+              moh_731_v2023_prep_encounters
+            ),
+            moh731V2023PrepLatestPerDay: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_per_day
+            ),
+            moh731V2023PrepLatestInitial: this.cloneJsonSchema(
+              moh_731_v2023_prep_latest_initial
+            )
+          });
+          break;
+        case 'moh731V2023Moh729bPep':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_pep_base),
+            moh731V2023Moh729bPepSignature: this.cloneJsonSchema(
+              moh_731_v2023_moh_729b_pep_signature
+            ),
+            moh731V2023Moh729bPepMeds: this.cloneJsonSchema(
+              moh_731_v2023_moh_729b_pep_meds
+            ),
+            moh731V2023PepBase: this.cloneJsonSchema(moh_731_v2023_pep_base),
+            moh731V2023PepDays: this.cloneJsonSchema(moh_731_v2023_pep_days),
+            moh731V2023PepEncounters: this.cloneJsonSchema(
+              moh_731_v2023_pep_encounters
+            )
+          });
+          break;
+        case 'moh731V2023Moh729bHbv':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_hbv_base),
+            moh731V2023AncHbvBase: this.cloneJsonSchema(
+              moh_731_v2023_anc_hbv_base
+            ),
+            moh731V2023AncHbvDays: this.cloneJsonSchema(
+              moh_731_v2023_anc_hbv_days
+            ),
+            moh731V2023AncHbvEncounters: this.cloneJsonSchema(
+              moh_731_v2023_anc_hbv_encounters
+            ),
+            moh731V2023HbvScreening: this.cloneJsonSchema(
+              moh_731_v2023_hbv_screening
+            )
+          });
+          break;
+        case 'moh731V2023Moh729bTpt':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_tpt_base)
+          });
+          break;
+        case 'presumptiveTbRegister':
+          resolve({
+            main: this.cloneJsonSchema(presumptive_tb_base),
+            presumptiveTbEncounters: this.cloneJsonSchema(
+              presumptive_tb_encounters
             )
           });
           break;
