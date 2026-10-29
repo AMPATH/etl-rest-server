@@ -411,18 +411,18 @@
     },
     {
       "type": "derived_column",
-      "alias": "adverse_event_after_vaccination",
+      "alias": "adverse_event_after_vaccination_above_1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.adverse_event_after_vaccination)"
+        "expression": "SUM(s.adverse_event_after_vaccination_above_1)"
       }
     },
     {
       "type": "derived_column",
-      "alias": "hpv",
+      "alias": "adverse_event_after_vaccination_below_1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.hpv)"
+        "expression": "SUM(s.adverse_event_after_vaccination_below_1)"
       }
     }
   ],

@@ -57,10 +57,10 @@
     },
     {
       "table": "amrs.patient_identifier",
-      "alias": "amrs",
+      "alias": "cr_id",
       "join": {
         "type": "LEFT",
-        "joinCondition": "a.person_id = amrs.patient_id AND (amrs.voided IS NULL || amrs.voided = 0) AND amrs.identifier_type = 8"
+        "joinCondition": "a.person_id = cr_id.patient_id AND (cr_id.voided IS NULL || cr_id.voided = 0) AND cr_id.identifier_type = 55"
       }
     },
     {
@@ -91,12 +91,12 @@
     {
       "type": "simple_column",
       "alias": "admission_date",
-      "column": "a.encounter_datetime"
+      "column": "a.maternity_admission_date"
     },
     {
       "type": "simple_column",
-      "alias": "amrs_id",
-      "column": "amrs.identifier"
+      "alias": "cr_id",
+      "column": "cr_id.identifier"
     },
     {
       "type": "simple_column",
@@ -267,7 +267,7 @@
     {
       "type": "simple_column",
       "alias": "sex",
-      "column": "pn.child_gender"
+      "column": "a.child_gender"
     },
     {
       "type": "simple_column",
@@ -275,28 +275,19 @@
       "column": "a.bf_within_1_hour"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "kangaroo_mother_care",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.kangaroo_mother_care, 'Y', 'N')"
-      }
+      "column": "a.kangaroo_mother_care"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "teo_given_at_birth",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.tetracycline_given, 'Y', 'N')"
-      }
+      "column": "a.teo_given_at_birth"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "chlorhexidine_applied_on_cord_stamp",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.chlorhexidine_applied, 'Y', 'N')"
-      }
+      "column": "a.chlorhexidine_applied"
     },
     {
       "type": "simple_column",
@@ -311,7 +302,7 @@
     {
       "type": "simple_column",
       "alias": "vitamin_k_given",
-      "column": "a.vitamin_k"
+      "column": "a.vitamin_k_given"
     },
     {
       "type": "simple_column",
