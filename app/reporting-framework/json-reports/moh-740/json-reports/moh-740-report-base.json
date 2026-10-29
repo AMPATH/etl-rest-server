@@ -127,9 +127,12 @@
       "column": "mdh.covered_by_shif"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "screened_for_tb_this_month",
-      "column": "mdh.screened_for_tb_this_month"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(mdh.screened_for_tb_this_month = 1,1,NULL)"
+      }
     },
     {
       "type": "derived_column",
@@ -240,7 +243,7 @@
       "alias": "is_co_morbid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.is_co_morbid = 1,1,NULL)"
+        "expression": "IF(mdh.is_co_morbid = 1 OR (mdh.has_htn AND mdh.diabetes_status IS NOT NULL),1,NULL)"
       }
     },
     {
@@ -248,7 +251,7 @@
       "alias": "revisit_known_co_morbid",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.is_co_morbid = 1 AND mdh.co_morbid_type = 12778,1,NULL)"
+        "expression": "IF(mdh.is_co_morbid = 1 AND mdh.co_morbid_type = 12778 AND mdh.revisit_this_month = 1,1,NULL)"
       }
     },
     {
@@ -304,7 +307,7 @@
       "alias": "on_exercise_and_diet",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.on_exercise = 1 AND mdh.on_diet = 1 ,1,NULL)"
+        "expression": "IF(mdh.on_exercise = 1 AND mdh.on_diet = 1 AND mdh.revisit_this_month = 1,1,NULL)"
       }
     },
     {
@@ -312,7 +315,7 @@
       "alias": "on_antihypertensives_this_month",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.on_antihypertensives_this_month = 1,1,NULL)"
+        "expression": "IF(mdh.on_antihypertensives_this_month = 1 AND revisit_this_month = 1,1,NULL)"
       }
     },
     {
@@ -320,7 +323,7 @@
       "alias": "high_bp",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(mdh.systolic >= 140 OR mdh.diastolic >= 90 ,1,NULL)"
+        "expression": "IF((mdh.systolic >= 140 OR mdh.diastolic >= 90)  AND revisit_this_month = 1,1,NULL)"
       }
     },
     {
