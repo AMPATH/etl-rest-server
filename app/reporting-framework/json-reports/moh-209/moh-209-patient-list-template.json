@@ -1,0 +1,185 @@
+{
+  "name": "moh_209_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_209_patient_list_template",
+  "description": "MOH 209 Radiology Register patient list template",
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "et"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "t1",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "t1.person_id = et.patient_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "t1.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "t1.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "et.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "date",
+      "column": "DATE_FORMAT(et.encounter_datetime, '%d/%m/%Y')"
+    },
+    {
+      "type": "simple_column",
+      "alias": "opd_ip_number",
+      "column": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t1.person_id AND pi.identifier_type = 55 AND (pi.voided IS NULL OR pi.voided = 0) ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "radiology_number",
+      "column": "null"
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_names",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(' ', COALESCE(pn.given_name, ''), COALESCE(pn.middle_name, ''), COALESCE(pn.family_name, '')) FROM amrs.person_name pn WHERE pn.person_id = t1.person_id AND (pn.voided IS NULL OR pn.voided = 0) AND pn.preferred = 1 ORDER BY pn.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, t1.birthdate, et.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "t1.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "residence_village_estate_landmark",
+      "column": "(SELECT pa.city_village FROM amrs.person_address pa WHERE pa.person_id = t1.person_id ORDER BY pa.preferred DESC, pa.person_address_id DESC LIMIT 1)"
+    },
+    {
+      "type": "simple_column",
+      "alias": "telephone_number",
+      "column": "(SELECT pa.value FROM amrs.person_attribute pa WHERE pa.person_id = t1.person_id AND pa.person_attribute_type_id = 10 AND (pa.voided IS NULL OR pa.voided = 0) ORDER BY pa.person_attribute_id DESC LIMIT 1)"
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_referred_from",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT COALESCE(cn.name, CAST(o.value_coded AS CHAR), o.value_text) FROM amrs.obs o LEFT JOIN amrs.concept_name cn ON cn.concept_id = o.value_coded AND cn.locale_preferred = 1 AND cn.voided = 0 WHERE o.encounter_id = et.encounter_id AND o.concept_id = 6749 AND o.voided = 0 ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "previous_report",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_examination",
+      "column": "null"
+    },
+    {
+      "type": "derived_column",
+      "alias": "provisional_diagnosis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT GROUP_CONCAT(DISTINCT COALESCE(cvm.name, CAST(ed.diagnosis_coded AS CHAR)) ORDER BY ed.dx_rank SEPARATOR '; ') FROM amrs.encounter_diagnosis ed LEFT JOIN etl.concept_value_map cvm ON cvm.concept_id = ed.diagnosis_coded WHERE ed.patient_id = t1.person_id AND ed.encounter_id = et.encounter_id AND ed.voided = 0)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "receiving_radiotherapy",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "receiving_interventional_radiology",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "current_report",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_direction",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "referral_reason",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "film_recording_plate_size",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amount_charged",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "receipt_number",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "requesting_clinician",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "radiographer_name",
+      "column": "null"
+    },
+    {
+      "type": "simple_column",
+      "alias": "radiologist_name",
+      "column": "null"
+    }
+  ],
+  "groupBy": {
+    "columns": ["et.encounter_id"]
+  },
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "et.voided = 0"
+      }
+    ]
+  },
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "et.encounter_datetime",
+        "order": "desc"
+      }
+    ]
+  }
+}
