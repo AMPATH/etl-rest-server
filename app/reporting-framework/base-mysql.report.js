@@ -667,6 +667,7 @@ import * as moh_643_patient_list_template from './json-reports/moh-643/moh-643-p
 
 import * as moh_705a_patient_list_template from './json-reports/moh-705/moh-705A-patient-list-template.json';
 import * as moh_705b_patient_list_template from './json-reports/moh-705/moh-705B-patient-list-template.json';
+import * as moh_209_patient_list_template from './json-reports/moh-209/moh-209-patient-list-template.json';
 import * as moh_333_patient_list_template from './json-reports/moh-711/moh-333-patient-list-template.json';
 import * as moh_405_patient_list_template from './json-reports/moh-711/moh-405-patient-list-template.json';
 import * as moh_406_patient_list_template from './json-reports/moh-711/moh-406-patient-list-template.json';
@@ -3075,6 +3076,11 @@ export class BaseMysqlReport {
         case 'moh_705B_patient_list_template':
           resolve({
             main: this.cloneJsonSchema(moh_705b_patient_list_template)
+          });
+          break;
+        case 'moh_209_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_209_patient_list_template)
           });
           break;
         case 'moh_333_patient_list_template':
