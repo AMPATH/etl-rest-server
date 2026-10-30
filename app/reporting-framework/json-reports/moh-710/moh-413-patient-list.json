@@ -211,9 +211,18 @@
     {
       "type": "simple_column",
       "alias": "date_immunization_given",
-      "column": "m.date_immunization_given"
+      "column": "a.date_immunization_given"
     }
   ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "a.date_immunization_given IS NOT NULL"
+      }
+    ]
+  },
   "groupBy": {
     "columns": ["a.person_id"]
   },
