@@ -1,0 +1,436 @@
+{
+  "name": "moh643MonthlyAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "MOH 643 monthly totals: number of tests done and quantity used (same count).",
+  "uses": [
+    {
+      "name": "moh643TestsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh643TestsBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hiv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_hiv_rapid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hiv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_hiv_rapid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hbv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_hbv_rapid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hbv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_hbv_rapid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_cd4)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_cd4)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_viral_load",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_viral_load)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_viral_load",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_viral_load)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_crag",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_crag)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_crag",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_crag)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_fbc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_fbc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_fbc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_fbc)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_hb)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_hb)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_albumin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_albumin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_alp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_alp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_alp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_alp)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_alt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_alt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_creatinine)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_creatinine)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_potassium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_potassium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_sodium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_sodium)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_chloride",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_chloride)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_chloride",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_chloride)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_ggt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_ggt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_ggt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_ggt)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_glucose)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_glucose)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hdl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_hdl)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hdl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_hdl)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hcg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_hcg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hcg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_hcg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_amylase",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_amylase)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_amylase",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_amylase)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_protein)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_protein)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_cholesterol)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_cholesterol)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_triglycerides)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_triglycerides)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_bilirubin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_bilirubin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_bilirubin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_bilirubin)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.tests_urea)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.qty_used_urea)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "joinColumnParam",
+    "skipColumns": [],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh-643-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "skipParams": ["gender", "genders", "startAge", "endAge"],
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

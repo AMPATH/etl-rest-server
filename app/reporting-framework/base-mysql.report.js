@@ -653,6 +653,18 @@ import * as diabetes_type_2_age_disaggregation from './json-reports/moh-740/json
 import * as diabetes_gestational_gender_disaggregation from './json-reports/moh-740/json-reports/diabetes-gestational-gender-disaggregate.json';
 import * as diabetes_gestational_base from './json-reports/moh-740/json-reports/diabetes-gestational-base.json';
 
+import * as moh_645_report from './json-reports/moh-645/moh-645-report.json';
+import * as moh_645_monthly_aggregate from './json-reports/moh-645/moh-645-monthly-aggregate.json';
+import * as moh_645_activity_base from './json-reports/moh-645/moh-645-activity-base.json';
+import * as moh_645_diagnostics_aggregate from './json-reports/moh-645/moh-645-diagnostics-aggregate.json';
+import * as moh_645_diagnostics_base from './json-reports/moh-645/moh-645-diagnostics-base.json';
+import * as moh_645_patient_list_template from './json-reports/moh-645/moh-645-patient-list-template.json';
+
+import * as moh_643_report from './json-reports/moh-643/moh-643-report.json';
+import * as moh_643_monthly_aggregate from './json-reports/moh-643/moh-643-monthly-aggregate.json';
+import * as moh_643_tests_base from './json-reports/moh-643/moh-643-tests-base.json';
+import * as moh_643_patient_list_template from './json-reports/moh-643/moh-643-patient-list-template.json';
+
 import * as moh_705a_patient_list_template from './json-reports/moh-705/moh-705A-patient-list-template.json';
 import * as moh_705b_patient_list_template from './json-reports/moh-705/moh-705B-patient-list-template.json';
 import * as moh_333_patient_list_template from './json-reports/moh-711/moh-333-patient-list-template.json';
@@ -3708,6 +3720,46 @@ export class BaseMysqlReport {
         case 'moh_407_patient_list_template':
           resolve({
             main: this.cloneJsonSchema(moh_407_patient_list_template)
+          });
+          break;
+        case 'MOH-645-report':
+          resolve({
+            main: this.cloneJsonSchema(moh_645_report)
+          });
+          break;
+        case 'moh645MonthlyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_645_monthly_aggregate),
+            moh645ActivityBase: this.cloneJsonSchema(moh_645_activity_base)
+          });
+          break;
+        case 'moh645DiagnosticsAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_645_diagnostics_aggregate),
+            moh645DiagnosticsBase: this.cloneJsonSchema(
+              moh_645_diagnostics_base
+            )
+          });
+          break;
+        case 'moh-645-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(moh_645_patient_list_template)
+          });
+          break;
+        case 'MOH-643-report':
+          resolve({
+            main: this.cloneJsonSchema(moh_643_report)
+          });
+          break;
+        case 'moh643MonthlyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(moh_643_monthly_aggregate),
+            moh643TestsBase: this.cloneJsonSchema(moh_643_tests_base)
+          });
+          break;
+        case 'moh-643-patient-list-template':
+          resolve({
+            main: this.cloneJsonSchema(moh_643_patient_list_template)
           });
           break;
         default:

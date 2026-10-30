@@ -1,0 +1,161 @@
+{
+  "name": "moh645DiagnosticsBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "Facility malaria diagnostics from etl.flat_moh_706_report. Smear concept 32, RDT concept 9187. Positive 703, negative 664, invalid 1138.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_706_report",
+      "alias": "f"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "f.location_id = l.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "f.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "f.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "order_id",
+      "column": "f.order_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "report_id",
+      "column": "f.report_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "facility",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_date",
+      "column": "DATE(f.test_datetime)"
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 32 AND f.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 32 AND f.result_concept_id = 664, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_total_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 32, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 9187 AND f.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 9187 AND f.result_concept_id = 664, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_invalid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 9187 AND f.result_concept_id = 1138, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_total_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 9187, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnostics_total_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.result_concept_id = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnostics_total_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.result_concept_id = 664, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnostics_total_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id IN (32, 9187), 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "f.concept_id IN (32, 9187)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(f.test_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(f.test_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid in ?",
+        "parameterName": "locationUuids"
+      }
+    ]
+  },
+  "paging": {
+    "offSetParam": "startIndex",
+    "limitParam": "limit"
+  }
+}

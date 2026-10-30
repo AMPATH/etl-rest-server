@@ -1,0 +1,60 @@
+{
+  "name": "moh_643_patient_list_template",
+  "version": "1.0",
+  "tag": "moh_643_patient_list_template",
+  "description": "MOH 643 patient list. One row per patient; test counts are summed on the line.",
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "t1"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "t1.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "t1.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "t1.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_universal_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t1.person_id AND pi.voided = 0 AND pi.identifier_type = 8 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "person_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(' ', COALESCE(pn.given_name, ''), COALESCE(pn.middle_name, ''), COALESCE(pn.family_name, '')) FROM amrs.person_name pn WHERE pn.person_id = t1.person_id AND pn.voided = 0 ORDER BY pn.preferred DESC, pn.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "phone_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT GROUP_CONCAT(DISTINCT c.value SEPARATOR ', ') FROM amrs.person_attribute c WHERE c.person_id = t1.person_id AND c.voided = 0 AND c.person_attribute_type_id IN (10, 48))"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["t1.person_id"]
+  },
+  "paging": {
+    "offSetParam": "startIndex",
+    "limitParam": "limit"
+  }
+}

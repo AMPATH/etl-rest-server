@@ -1,0 +1,326 @@
+{
+  "name": "moh645ActivityBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "MOH 645 AL 20/120 and artesunate 60mg dispenses with same-day malaria smear/RDT from etl.flat_moh_706_report. Drug ids 942/768/67 (AL 20/120 including 54a6c79a-cf10-5f80-9519-9a1765784c23) and 1259/554 (AS 60mg including cb22321f-b0df-56f4-b9e5-581ee8aec8fa).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "p"
+    },
+    {
+      "table": "amrs.orders",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.patient_id = p.person_id AND o.voided = 0 AND o.order_action = 'NEW'"
+      }
+    },
+    {
+      "table": "amrs.drug_order",
+      "alias": "do",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "do.order_id = o.order_id"
+      }
+    },
+    {
+      "table": "amrs.drug",
+      "alias": "d",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "d.drug_id = do.drug_inventory_id"
+      }
+    },
+    {
+      "table": "amrs.encounter",
+      "alias": "e",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "l.location_id = e.location_id"
+      }
+    },
+    {
+      "table": "amrs.visit",
+      "alias": "v",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "v.visit_id = e.visit_id"
+      }
+    },
+    {
+      "table": "amrs.visit_type",
+      "alias": "vt",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "vt.visit_type_id = v.visit_type_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "o.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "order_id",
+      "column": "o.order_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "facility",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_date",
+      "column": "DATE(COALESCE(o.date_activated, e.encounter_datetime))"
+    },
+    {
+      "type": "derived_column",
+      "alias": "ip_op",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN vt.name LIKE '%Inpatient%' THEN 'IP' WHEN vt.name LIKE '%OPD%' THEN 'OP' ELSE vt.name END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_years",
+      "column": "TIMESTAMPDIFF(YEAR, p.birthdate, COALESCE(o.date_activated, e.encounter_datetime))"
+    },
+    {
+      "type": "simple_column",
+      "alias": "drug_id",
+      "column": "d.drug_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "drug_uuid",
+      "column": "d.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "drug_name",
+      "column": "d.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "quantity",
+      "column": "do.quantity"
+    },
+    {
+      "type": "derived_column",
+      "alias": "al_6s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 6, do.quantity, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "al_12s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 12, do.quantity, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "al_18s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 18, do.quantity, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "al_24s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 24, do.quantity, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "artesunate_vials",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (1259, 554), do.quantity, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_6s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 6, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_12s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 12, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_18s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 18, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_24s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 24, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_artesunate_vials",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (1259, 554), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_5_14kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 6, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_15_24kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 12, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_25_34kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 18, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_35kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(d.drug_id IN (942, 768, 67) AND do.quantity = 24, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((SELECT f.result_concept_id FROM etl.flat_moh_706_report f WHERE f.person_id = o.patient_id AND f.concept_id = 32 AND DATE(f.test_datetime) = DATE(COALESCE(o.date_activated, e.encounter_datetime)) ORDER BY f.report_id DESC LIMIT 1) = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((SELECT f.result_concept_id FROM etl.flat_moh_706_report f WHERE f.person_id = o.patient_id AND f.concept_id = 32 AND DATE(f.test_datetime) = DATE(COALESCE(o.date_activated, e.encounter_datetime)) ORDER BY f.report_id DESC LIMIT 1) = 664, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mrdt_pos",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((SELECT f.result_concept_id FROM etl.flat_moh_706_report f WHERE f.person_id = o.patient_id AND f.concept_id = 9187 AND DATE(f.test_datetime) = DATE(COALESCE(o.date_activated, e.encounter_datetime)) ORDER BY f.report_id DESC LIMIT 1) = 703, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mrdt_neg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((SELECT f.result_concept_id FROM etl.flat_moh_706_report f WHERE f.person_id = o.patient_id AND f.concept_id = 9187 AND DATE(f.test_datetime) = DATE(COALESCE(o.date_activated, e.encounter_datetime)) ORDER BY f.report_id DESC LIMIT 1) = 664, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mrdt_inv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF((SELECT f.result_concept_id FROM etl.flat_moh_706_report f WHERE f.person_id = o.patient_id AND f.concept_id = 9187 AND DATE(f.test_datetime) = DATE(COALESCE(o.date_activated, e.encounter_datetime)) ORDER BY f.report_id DESC LIMIT 1) = 1138, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "no_test_done",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(NOT EXISTS (SELECT 1 FROM etl.flat_moh_706_report f WHERE f.person_id = o.patient_id AND f.concept_id IN (32, 9187) AND DATE(f.test_datetime) = DATE(COALESCE(o.date_activated, e.encounter_datetime))), 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "p.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "do.drug_inventory_id IN (942, 768, 67, 1259, 554)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(COALESCE(o.date_activated, e.encounter_datetime)) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(COALESCE(o.date_activated, e.encounter_datetime)) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid in ?",
+        "parameterName": "locationUuids"
+      }
+    ]
+  },
+  "paging": {
+    "offSetParam": "startIndex",
+    "limitParam": "limit"
+  }
+}

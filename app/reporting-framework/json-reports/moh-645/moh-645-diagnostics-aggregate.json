@@ -1,0 +1,132 @@
+{
+  "name": "moh645DiagnosticsAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "Monthly malaria diagnostics table totals (all tests in period/location)",
+  "uses": [
+    {
+      "name": "moh645DiagnosticsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh645DiagnosticsBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.microscopy_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.microscopy_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_total_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.microscopy_total_tested)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.rdt_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.rdt_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_invalid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.rdt_invalid)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rdt_total_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.rdt_total_tested)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnostics_total_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.diagnostics_total_positive)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnostics_total_negative",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.diagnostics_total_negative)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diagnostics_total_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.diagnostics_total_tested)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "joinColumnParam",
+    "skipColumns": [],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh-645-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "skipParams": ["gender", "genders", "startAge", "endAge"],
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
