@@ -54,6 +54,22 @@
     },
     {
       "type": "derived_column",
+      "alias": "screened",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "screened_positive_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(hc.screened_positive_result)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "screened_via_or_via_vili",
       "expressionType": "simple_expression",
       "expressionOptions": {
