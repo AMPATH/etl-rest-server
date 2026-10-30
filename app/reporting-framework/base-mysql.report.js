@@ -625,6 +625,7 @@ import * as moh_745_cervicalCancer_screening_main_datasetBase from './json-repor
 import * as moh_745_cervical_cancer_screening_aggregate from './json-reports/moh-745/moh-745-cervical-cancer-screening-aggregate.json';
 import * as moh_745_cervical_cancer_treatment_monthly_dis_aggregate from './json-reports/moh-745/moh-745-cervical-cancer-treatment-monthly-diasaggregate.json';
 import * as moh_745_cervical_cancer_treatment_monthly_base from './json-reports/moh-745/moh-745-cervical-cancer-treatment-monthly-base.json';
+import * as moh_745_cervical_cancer_treatment_monthly_aggregate from './json-reports/moh-745/moh-745-cervical-cancer-treatment-monthly-aggregate.json';
 
 import * as moh_705a_report from './json-reports/moh-705/moh-705a-summary.json';
 import * as moh_705a_aggregate from './json-reports/moh-705/moh-705a-aggregate.json';
@@ -2941,6 +2942,16 @@ export class BaseMysqlReport {
           resolve({
             main: this.cloneJsonSchema(
               moh_745_cervical_cancer_treatment_monthly_dis_aggregate
+            ),
+            moh745CervicalCancerTreatmentMonthlyBase: this.cloneJsonSchema(
+              moh_745_cervical_cancer_treatment_monthly_base
+            )
+          });
+          break;
+        case 'moh745CervicalCancerTreatmentMonthlyAggregate':
+          resolve({
+            main: this.cloneJsonSchema(
+              moh_745_cervical_cancer_treatment_monthly_aggregate
             ),
             moh745CervicalCancerTreatmentMonthlyBase: this.cloneJsonSchema(
               moh_745_cervical_cancer_treatment_monthly_base

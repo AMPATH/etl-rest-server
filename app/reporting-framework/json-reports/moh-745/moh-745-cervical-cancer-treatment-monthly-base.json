@@ -74,14 +74,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "cumulative_all",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(c.person_id IS NOT NULL,1,NULL)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "age_range",
       "expressionType": "case_statement",
       "expressionOptions": {
@@ -170,6 +162,30 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "IF(c.treatment_method = 2 ,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_cyrotherapy_initial_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 1,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_cyrotherapy_routine_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 2,1,NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treated_via_cyrotherapy_post_treatment_visit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.treatment_method = 2 AND c.reasons_for_current_visit = 3,1,NULL)"
       }
     },
     {

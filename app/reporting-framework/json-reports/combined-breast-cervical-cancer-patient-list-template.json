@@ -23,6 +23,14 @@
         "type": "LEFT",
         "joinCondition": "t1.person_id = id.patient_id AND (id.voided IS NULL || id.voided = 0)"
       }
+    },
+    {
+      "table": "amrs.person_attribute",
+      "alias": "contacts",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = contacts.person_id AND (contacts.voided IS NULL || contacts.voided = 0) AND contacts.person_attribute_type_id in (10, 48)"
+      }
     }
   ],
   "columns": [
@@ -45,6 +53,14 @@
       "type": "simple_column",
       "alias": "birthdate",
       "column": "t1.birthdate"
+    },
+    {
+      "type": "derived_column",
+      "alias": "phone_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": " GROUP_CONCAT(DISTINCT contacts.value SEPARATOR ', ')"
+      }
     },
     {
       "type": "derived_column",
