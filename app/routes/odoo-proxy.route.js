@@ -272,7 +272,9 @@ var routes = [
           openmrs_order_id: Joi.string().optional().allow(null, ''),
           patient_external_id: Joi.string().optional().allow(null, ''),
           lot_id: Joi.number().integer().optional().allow(null),
-          uom_name: Joi.string().optional().allow(null, '')
+          lot_name: Joi.string().optional().allow(null, ''),
+          uom_name: Joi.string().optional().allow(null, ''),
+          quantity_unit_uuid: Joi.string().optional().allow(null, '')
         })
       }
     }

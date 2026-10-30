@@ -1,0 +1,486 @@
+{
+  "name": "moh643TestsBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "MOH 643 lab commodity tests from etl.flat_moh_706_report. qty_used = tests_done (1 test = 1 unit).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_706_report",
+      "alias": "f"
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "f.location_id = l.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "f.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "f.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "order_id",
+      "column": "f.order_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "report_id",
+      "column": "f.report_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "concept_id",
+      "column": "f.concept_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "facility",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_date",
+      "column": "DATE(f.test_datetime)"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, (SELECT p.birthdate FROM amrs.person p WHERE p.person_id = f.person_id), f.test_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "test_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE f.concept_id WHEN 6709 THEN 'Rapid HIV 1+2' WHEN 1322 THEN 'Rapid HBV' WHEN 12078 THEN 'CD4' WHEN 856 THEN 'HIV viral load' WHEN 9812 THEN 'CrAg' WHEN 1019 THEN 'Full haemogram' WHEN 21 THEN 'Haemoglobin' WHEN 848 THEN 'Albumin' WHEN 785 THEN 'Alkaline phosphatase' WHEN 654 THEN 'ALT (SGPT)' WHEN 790 THEN 'Creatinine' WHEN 1133 THEN 'Potassium' WHEN 1132 THEN 'Sodium' WHEN 1134 THEN 'Chloride' WHEN 1299 THEN 'Gamma GT' WHEN 887 THEN 'Glucose' WHEN 1007 THEN 'HDL cholesterol' WHEN 45 THEN 'Pregnancy test' WHEN 1298 THEN 'Serum amylase' WHEN 717 THEN 'Serum protein' WHEN 1006 THEN 'Total cholesterol' WHEN 1009 THEN 'Triglycerides' WHEN 655 THEN 'Bilirubin' WHEN 857 THEN 'Urea' ELSE CAST(f.concept_id AS CHAR) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hiv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 6709, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hiv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 6709, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hbv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1322, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hbv_rapid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1322, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 12078, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 12078, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_viral_load",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 856, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_viral_load",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 856, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_crag",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 9812, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_crag",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 9812, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_fbc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1019, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_fbc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1019, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 21, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 21, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 848, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_albumin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 848, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_alp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 785, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_alp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 785, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 654, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_alt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 654, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 790, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_creatinine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 790, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1133, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_potassium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1133, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1132, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_sodium",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1132, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_chloride",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1134, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_chloride",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1134, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_ggt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1299, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_ggt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1299, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 887, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_glucose",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 887, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hdl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1007, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hdl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1007, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_hcg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 45, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_hcg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 45, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_amylase",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1298, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_amylase",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1298, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 717, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_protein",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 717, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1006, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_cholesterol",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1006, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1009, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_triglycerides",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 1009, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_bilirubin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 655, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_bilirubin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 655, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tests_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 857, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_used_urea",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(f.concept_id = 857, 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "f.concept_id IN (6709, 1322, 12078, 856, 9812, 1019, 21, 848, 785, 654, 790, 1133, 1132, 1134, 1299, 887, 1007, 45, 1298, 717, 1006, 1009, 655, 857)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(f.test_datetime) >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "DATE(f.test_datetime) <= ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "l.uuid in ?",
+        "parameterName": "locationUuids"
+      }
+    ]
+  },
+  "paging": {
+    "offSetParam": "startIndex",
+    "limitParam": "limit"
+  }
+}

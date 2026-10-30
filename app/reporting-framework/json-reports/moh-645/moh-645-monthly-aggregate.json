@@ -1,0 +1,124 @@
+{
+  "name": "moh645MonthlyAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "Monthly malaria commodities column C (qty dispensed) and AL weight-band patient counts",
+  "uses": [
+    {
+      "name": "moh645ActivityBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh645ActivityBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_6s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.al_6s)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_12s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.al_12s)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_18s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.al_18s)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_al_24s",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.al_24s)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "qty_dispensed_artesunate_vials",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.artesunate_vials)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_5_14kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.patients_al_5_14kg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_15_24kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.patients_al_15_24kg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_25_34kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.patients_al_25_34kg)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "patients_al_35kg",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(b.patients_al_35kg)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["b.location_id"],
+    "excludeParam": "excludeParam"
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "joinColumnParam",
+    "skipColumns": [],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh-645-patient-list-template",
+      "useTemplateVersion": "1.0",
+      "skipParams": ["gender", "genders", "startAge", "endAge"],
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
