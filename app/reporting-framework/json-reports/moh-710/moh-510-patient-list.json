@@ -103,6 +103,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "date",
+      "column": "a.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
       "alias": "encounter_datetime",
       "column": "a.encounter_datetime"
     },
@@ -113,7 +118,7 @@
     },
     {
       "type": "simple_column",
-      "alias": "cr_id",
+      "alias": "child_number",
       "column": "cr_id.identifier"
     },
     {
@@ -165,11 +170,16 @@
       "column": "attribute.value"
     },
     {
+      "type": "simple_column",
+      "alias": "date_immunization_given",
+      "column": "a.date_immunization_given"
+    },
+    {
       "type": "derived_column",
       "alias": "bcg_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.bcg_vaccine, a.date_immunization_given, NULL)"
+        "expression": "IF(a.bcg_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -177,7 +187,7 @@
       "alias": "polio_birth_dose_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_vaccine, a.date_immunization_given, NULL)"
+        "expression": "IF(a.opv_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -185,7 +195,7 @@
       "alias": "opv_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_1, a.date_immunization_given, NULL)"
+        "expression": "IF(a.opv1_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -193,7 +203,7 @@
       "alias": "opv_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_2, a.date_immunization_given, NULL)"
+        "expression": "IF(a.opv2_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -201,7 +211,7 @@
       "alias": "opv_3_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.opv_3, a.date_immunization_given, NULL)"
+        "expression": "IF(a.opv3_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -209,7 +219,7 @@
       "alias": "ipv_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.ipv_vaccine, a.date_immunization_given, NULL)"
+        "expression": "IF(a.ipv_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -217,7 +227,7 @@
       "alias": "dpt_hep_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_1, a.date_immunization_given, NULL)"
+        "expression": "IF(a.dpt_hep_1, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -225,7 +235,7 @@
       "alias": "dpt_hep_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_2, a.date_immunization_given, NULL)"
+        "expression": "IF(a.dpt_hep_2, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -233,7 +243,7 @@
       "alias": "dpt_hep_3_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_3, a.date_immunization_given, NULL)"
+        "expression": "IF(a.dpt_hep_3, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -241,7 +251,7 @@
       "alias": "pneumococcal_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.pneumococcal_1, a.date_immunization_given, NULL)"
+        "expression": "IF(a.pneumococcal_1, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -249,7 +259,7 @@
       "alias": "pneumococcal_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.pneumococcal_2, a.date_immunization_given, NULL)"
+        "expression": "IF(a.pneumococcal_2, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -257,7 +267,7 @@
       "alias": "pneumococcal_3_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.dpt_hep_3, a.date_immunization_given, NULL)"
+        "expression": "IF(a.pneumococcal_3, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -265,7 +275,7 @@
       "alias": "rotavirus_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.rotavirus_vaccine1, a.date_immunization_given, NULL)"
+        "expression": "IF(a.rotavirus_vaccine1, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -273,7 +283,7 @@
       "alias": "rotavirus_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.rotavirus_vaccine2, a.date_immunization_given, NULL)"
+        "expression": "IF(a.rotavirus_vaccine2, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -281,7 +291,7 @@
       "alias": "vitamin_a_6_11_months_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.vitaminA_6_11_months, a.date_immunization_given, NULL)"
+        "expression": "IF(a.vitaminA_6_11_months, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -289,7 +299,7 @@
       "alias": "measles_rubella_1_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.measles_rubela_1, a.date_immunization_given, NULL)"
+        "expression": "IF(a.measles_rubela_1, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -297,7 +307,7 @@
       "alias": "measles_rubella_2_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.measles_rubela_2, a.date_immunization_given, NULL)"
+        "expression": "IF(a.measles_rubela_2, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -305,7 +315,7 @@
       "alias": "yellow_fever_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.yellow_fever_vaccine, a.date_immunization_given, NULL)"
+        "expression": "IF(a.yellow_fever_vaccine, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -313,7 +323,7 @@
       "alias": "fully_immunized_child_encounter_datetime",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "column": "IF(a.fully_immunized_children, a.date_immunization_given, NULL)"
+        "expression": "IF(a.fully_immunized_children, a.date_immunization_given, NULL)"
       }
     },
     {
@@ -325,6 +335,15 @@
       }
     }
   ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "a.date_immunization_given IS NOT NULL"
+      }
+    ]
+  },
   "groupBy": {
     "columns": ["a.person_id"]
   },

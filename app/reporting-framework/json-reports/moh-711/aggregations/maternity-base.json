@@ -438,7 +438,7 @@
     {
       "type": "simple_column",
       "alias": "discharge_alive",
-      "column": "m.discharge_alive"
+      "column": "m.live_birth"
     },
 
     {

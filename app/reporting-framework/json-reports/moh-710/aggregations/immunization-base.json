@@ -682,11 +682,15 @@
         "filterType": "tableColumns",
         "conditionExpression": "m.location_id in ?",
         "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.date_immunization_given is not null"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["m.person_id", "m.encounter_datetime"]
+    "columns": ["m.person_id"]
   }
 }
