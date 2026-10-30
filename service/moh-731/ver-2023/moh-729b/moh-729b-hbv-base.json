@@ -1,0 +1,133 @@
+{
+  "name": "moh731V2023Moh729bHbvBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, Hepatitis B patients who are HIV-ve: the clients MOH 731 2.4 HBV Screening at ANC counts as HBV positive (HV02-20, moh731V2023AncHbvBase -- ANC tests and known-positive visits, once per client per day, with an HBV result 1375 = 703 at the locations in the period) whose ANC HIV result is Negative. Hep B regimen: the ARVs recorded for them (1088) in the month up to that visit -- LAMIVUDINE AND TENOFOVIR (1400) -> HPB1A TDF + 3TC, EMTRICITABINE AND TENOFOVIR (6180) -> HPB1B TDF + FTC -- otherwise HPB1C, with the regimen 'Not recorded' (no Hep B treatment is recorded in AMRS today). One row per visit, oldest first: the service keeps each client's latest.",
+  "uses": [
+    {
+      "name": "moh731V2023AncHbvBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023AncHbvBase",
+      "alias": "a"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "a.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "a.patient_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "a.ccc_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_number",
+      "column": "a.amrs_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "a.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "a.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(a.birthdate)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "a.age_at_anc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "anc_date",
+      "column": "a.anc_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_result",
+      "column": "a.hiv_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hbv_result",
+      "column": "a.hbv_result"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hbv_test_date",
+      "column": "a.hbv_test_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "'Hepatitis B'"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN EXISTS (SELECT 1 FROM amrs.obs o JOIN amrs.encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0 WHERE o.person_id = a.patient_id AND o.concept_id = 1088 AND o.value_coded = 1400 AND o.voided = 0 AND e.encounter_datetime < DATE_ADD(a.anc_date, INTERVAL 1 DAY) AND e.encounter_datetime >= DATE_FORMAT(a.anc_date, '%Y-%m-01')) THEN 'TDF + 3TC' WHEN EXISTS (SELECT 1 FROM amrs.obs o JOIN amrs.encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0 WHERE o.person_id = a.patient_id AND o.concept_id = 1088 AND o.value_coded = 6180 AND o.voided = 0 AND e.encounter_datetime < DATE_ADD(a.anc_date, INTERVAL 1 DAY) AND e.encounter_datetime >= DATE_FORMAT(a.anc_date, '%Y-%m-01')) THEN 'TDF + FTC' ELSE 'Not recorded' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN EXISTS (SELECT 1 FROM amrs.obs o JOIN amrs.encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0 WHERE o.person_id = a.patient_id AND o.concept_id = 1088 AND o.value_coded = 1400 AND o.voided = 0 AND e.encounter_datetime < DATE_ADD(a.anc_date, INTERVAL 1 DAY) AND e.encounter_datetime >= DATE_FORMAT(a.anc_date, '%Y-%m-01')) THEN 'HPB1A' WHEN EXISTS (SELECT 1 FROM amrs.obs o JOIN amrs.encounter e ON e.encounter_id = o.encounter_id AND e.voided = 0 WHERE o.person_id = a.patient_id AND o.concept_id = 1088 AND o.value_coded = 6180 AND o.voided = 0 AND e.encounter_datetime < DATE_ADD(a.anc_date, INTERVAL 1 DAY) AND e.encounter_datetime >= DATE_FORMAT(a.anc_date, '%Y-%m-01')) THEN 'HPB1B' ELSE 'HPB1C' END"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "a.hbv_screened_positive_anc = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "a.hiv_result = 'Negative'"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "a.anc_date",
+        "order": "asc"
+      },
+      {
+        "column": "a.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

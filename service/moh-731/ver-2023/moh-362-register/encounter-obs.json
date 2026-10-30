@@ -42,10 +42,10 @@
     },
     {
       "type": "derived_column",
-      "alias": "referral_codes",
+      "alias": "referral_services",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "GROUP_CONCAT(DISTINCT CASE WHEN o.concept_id = 1272 THEN CASE o.value_coded WHEN 9823 THEN 1 WHEN 9822 THEN 2 WHEN 8707 THEN 3 WHEN 9821 THEN 4 END END ORDER BY 1 SEPARATOR ', ')"
+        "expression": "GROUP_CONCAT(DISTINCT CASE WHEN o.concept_id = 1272 THEN CASE o.value_coded WHEN 9823 THEN 'PrEP' WHEN 9822 THEN 'PEP' WHEN 8707 THEN 'VMMC' WHEN 9821 THEN 'PMTCT' END END ORDER BY FIELD(o.value_coded, 9823, 9822, 8707, 9821) SEPARATOR ', ')"
       }
     },
     {

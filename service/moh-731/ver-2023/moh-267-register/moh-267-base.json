@@ -1,0 +1,150 @@
+{
+  "name": "moh731V2023Moh267Base",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 267 PrEP daily activity register: the same PrEP visits as MOH 731 1.3 to 1.5 (moh731V2023PrepVisitsBase -- its facility scope, one visit per client per day, Follow-ups unless PrEP was not prescribed, and each client's latest Initial where PrEP was prescribed), one row per visit, with the form's columns as words: PrEP number, national ID and Client Registry ID, population type, client PrEP status (New, Continuing, Discontinued, Restart), PrEP method, HIV result and STI. Carries the MOH 731 figures' rules (newly initiated, STI, seroconverted) as flags for the register's summary tables.",
+  "uses": [
+    {
+      "name": "moh731V2023PrepVisitsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023PrepVisitsBase",
+      "alias": "v"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "v.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "v.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "v.patient_uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = v.patient_id AND pi.identifier_type = 44 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date_of_visit",
+      "column": "v.visit_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "id_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = v.patient_id AND pi.identifier_type = 5 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = v.patient_id AND pi.identifier_type = 55 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "v.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "v.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "v.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "population_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE v.population_category WHEN 'General popn' THEN 'General Population' WHEN 'AYP (10-24yrs)' THEN 'General Population' WHEN 'Discordant Couple' THEN 'Discordant Couple' WHEN 'MSM/MSW' THEN 'MSM/MSW' WHEN 'FSW' THEN 'FSW' WHEN 'PWID/PWUD' THEN 'PWID/PWUD' WHEN 'Vulnerable Pop.' THEN 'VP' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN v.visit = 'Initial' THEN CASE WHEN v.transfer_in = 'Yes' THEN 'Continuing' ELSE 'New' END WHEN v.prep_status IN ('CONTINUE REGIMEN', 'CHANGE REGIMEN') THEN 'Continuing' WHEN v.prep_status = 'DRUG RESTART' THEN 'Restart' WHEN v.prep_status IN ('DISCONTINUE', 'TRANSFER OUT') THEN 'Discontinued' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prep_method",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN v.prep_type = 'CAB-LA' THEN 'Cabotegravir Injectable' WHEN v.prep_type = 'Dapivirine ring' THEN 'Dapivirine Vaginal ring' WHEN v.prep_type = 'Lenacapavir' THEN 'Lenacapavir' WHEN v.prep_type = 'Oral' THEN CASE WHEN EXISTS (SELECT 1 FROM amrs.obs o WHERE o.encounter_id = v.encounter_id AND o.concept_id = 12443 AND o.value_coded = 12431 AND o.voided = 0) THEN 'Event driven oral PrEP' ELSE 'Daily oral PrEP' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE v.hiv_test WHEN 'NEGATIVE' THEN 'Negative' WHEN 'POSITIVE' THEN 'Positive' WHEN 'INDETERMINATE' THEN 'Inconclusive' WHEN 'NOT DONE' THEN 'NA' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "sti_diagnosed",
+      "column": "v.has_sti"
+    },
+    {
+      "type": "simple_column",
+      "alias": "prep_start_date",
+      "column": "v.prep_start_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(v.visit = 'Initial' AND v.transfer_in = 'No', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_seroconverted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(v.visit = 'Follow-up' AND v.hiv_test = 'POSITIVE', 1, 0)"
+      }
+    }
+  ],
+  "orderBy": {
+    "columns": [
+      {
+        "column": "v.visit_date",
+        "order": "asc"
+      },
+      {
+        "column": "v.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

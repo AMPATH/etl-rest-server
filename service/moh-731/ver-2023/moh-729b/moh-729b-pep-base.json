@@ -1,0 +1,115 @@
+{
+  "name": "moh731V2023Moh729bPepBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, PEP: each client given PEP in the month by MOH 731's PEP section (moh731V2023Moh729bPepSignature) with the form's PEP regimen code -- PEP for Adults (15 years and over) PA3D TDF + 3TC + DTG, PA3C TDF + 3TC + ATV/r, PA1C AZT + 3TC + ATV/r, else PA4X; PEP for Children (under 15) PC3A ABC + 3TC + LPV/r, PC3C ABC + 3TC + DTG, else PC4X. One row per exposure, oldest first: the service keeps each client's latest of the month.",
+  "uses": [
+    {
+      "name": "moh731V2023Moh729bPepSignature",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023Moh729bPepSignature",
+      "alias": "s"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "s.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "s.patient_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "s.ccc_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_number",
+      "column": "s.amrs_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "s.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "s.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "s.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "exposure_date",
+      "column": "s.exposure_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "exposure_type",
+      "column": "s.exposure_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "s.encounter_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cur_arv_meds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "s.pep_meds"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(s.age < 15, 'PEP for Children', 'PEP for Adults')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(REPLACE(REPLACE(REPLACE(NULLIF(s.regimen_signature, ''), 'ATV+RTV', 'ATV/r'), 'LPV+RTV', 'LPV/r'), '+', ' + '), 'Not recorded')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(s.age < 15, CASE s.regimen_signature WHEN 'ABC+3TC+LPV+RTV' THEN 'PC3A' WHEN 'ABC+3TC+DTG' THEN 'PC3C' ELSE 'PC4X' END, CASE s.regimen_signature WHEN 'TDF+3TC+DTG' THEN 'PA3D' WHEN 'TDF+3TC+ATV+RTV' THEN 'PA3C' WHEN 'AZT+3TC+ATV+RTV' THEN 'PA1C' ELSE 'PA4X' END)"
+      }
+    }
+  ],
+  "orderBy": {
+    "columns": [
+      {
+        "column": "s.exposure_date",
+        "order": "asc"
+      },
+      {
+        "column": "s.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

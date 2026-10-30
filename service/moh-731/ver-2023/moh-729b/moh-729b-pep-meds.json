@@ -1,0 +1,88 @@
+{
+  "name": "moh731V2023Moh729bPepMeds",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, PEP step 1: the MOH 731 (Ver. July 2023) PEP exposures where PEP was given (moh731V2023PepBase -- PEP initial encounters 56 with a method of exposure, one per client per day, PEP given 1705 = 1149), with the ARVs prescribed for PEP (7123, one obs per drug or fixed-dose combination) as their concept ids joined by commas.",
+  "uses": [
+    {
+      "name": "moh731V2023PepBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023PepBase",
+      "alias": "pep"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "pep.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "pep.patient_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "pep.ccc_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_number",
+      "column": "pep.amrs_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "pep.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "pep.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "pep.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "exposure_date",
+      "column": "pep.exposure_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "exposure_type",
+      "column": "pep.exposure_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "pep.encounter_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "pep_meds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT GROUP_CONCAT(DISTINCT o.value_coded ORDER BY o.value_coded) FROM amrs.obs o WHERE o.encounter_id = pep.encounter_id AND o.concept_id = 7123 AND o.voided = 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "pep.pep_given_status = 'Yes'"
+      }
+    ]
+  }
+}

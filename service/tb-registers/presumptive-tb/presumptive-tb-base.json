@@ -1,0 +1,303 @@
+{
+  "name": "presumptiveTbRegisterBase",
+  "version": "1.0",
+  "tag": "tb_registers",
+  "description": "Presumptive TB Register (MOH/REG/DNTLDP/02): one row per TB encounter (presumptiveTbEncounters), oldest first, in the register's columns (the names of PresumptiveTbRow in the O3 register). (B) CCC number (28, else 50); (G) national ID (5) and Client Registry number (55) on their own lines; (H) nearest landmark (attribute 31) and village, and phone (10); (J) the latest HTS HIV result (296 / 297, 1357) on or before the encounter, in full -- Positive / Negative / Inconclusive / Not Done -- and its date; (K) Sputum where a smear was done; (L) chest X-ray N / SG / AO / ND; (N) culture result with any resistance (R, H, Z, E) and date; (O) smear method and result (FM / ZN, 0 / Scanty / + / ++ / +++) and date; (P) DRTB where resistance is recorded, DSTB where smear or culture is positive or a TB type is recorded, No TB where the smear is negative, culture not positive and the X-ray normal or not done; (Q) started on anti-TB treatment (1113) and its date. Sample date, other radiology, TPT and remarks are not recorded yet.",
+  "uses": [
+    {
+      "name": "presumptiveTbEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "presumptiveTbEncounters",
+      "alias": "t"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = t.patient_id"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = t.patient_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.person_address",
+      "alias": "pa",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pa.person_address_id = (SELECT pa2.person_address_id FROM amrs.person_address pa2 WHERE pa2.person_id = t.patient_id AND pa2.voided = 0 ORDER BY pa2.preferred DESC, pa2.person_address_id DESC LIMIT 1)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "t.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "t.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "comment": "(A) in the period, oldest first",
+      "type": "derived_column",
+      "alias": "serial_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ROW_NUMBER() OVER (ORDER BY t.enc_date, t.encounter_id)"
+      }
+    },
+    {
+      "comment": "(B) CCC number",
+      "type": "derived_column",
+      "alias": "department_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t.patient_id AND pi.voided = 0 AND pi.identifier_type IN (28, 50) ORDER BY pi.preferred DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "date",
+      "column": "t.enc_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "sex",
+      "column": "p.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(TIMESTAMPDIFF(YEAR, p.birthdate, t.enc_date) < 1, CONCAT(TIMESTAMPDIFF(MONTH, p.birthdate, t.enc_date), ' Mo'), CONCAT(TIMESTAMPDIFF(YEAR, p.birthdate, t.enc_date), ' Yrs'))"
+      }
+    },
+    {
+      "comment": "(G) upper: national ID (identifier type 5)",
+      "type": "derived_column",
+      "alias": "national_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t.patient_id AND pi.voided = 0 AND pi.identifier_type = 5 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "comment": "(G) lower: Client Registry number (identifier type 55), in place of UPI",
+      "type": "derived_column",
+      "alias": "cr_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t.patient_id AND pi.voided = 0 AND pi.identifier_type = 55 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "comment": "(H) nearest landmark and village",
+      "type": "derived_column",
+      "alias": "physical_address",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(CONCAT_WS(', ', (SELECT a.value FROM amrs.person_attribute a WHERE a.person_id = t.patient_id AND a.voided = 0 AND a.person_attribute_type_id = 31 LIMIT 1), pa.city_village), '')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "phone_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT a.value FROM amrs.person_attribute a WHERE a.person_id = t.patient_id AND a.voided = 0 AND a.person_attribute_type_id = 10 LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "referred_by",
+      "column": "t.referred_by"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE (SELECT ho.value_coded FROM amrs.encounter h JOIN amrs.obs ho ON ho.encounter_id = h.encounter_id AND ho.concept_id = 1357 AND ho.voided = 0 WHERE h.patient_id = t.patient_id AND h.encounter_type IN (296, 297) AND h.voided = 0 AND h.encounter_datetime < DATE_ADD(t.enc_date, INTERVAL 1 DAY) ORDER BY h.encounter_datetime DESC, ho.obs_id DESC LIMIT 1) WHEN 703 THEN 'Positive' WHEN 664 THEN 'Negative' WHEN 1138 THEN 'Inconclusive' ELSE 'Not Done' END"
+      },
+      "comment": "(J) upper: the latest HTS result (encounters 296, 297; final result 1357) on or before the TB encounter, at any facility -- in full; Not Done without one"
+    },
+    {
+      "comment": "(J) lower: the date of that HTS test",
+      "type": "derived_column",
+      "alias": "hiv_test_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT DATE(h.encounter_datetime) FROM amrs.encounter h JOIN amrs.obs ho ON ho.encounter_id = h.encounter_id AND ho.concept_id = 1357 AND ho.voided = 0 WHERE h.patient_id = t.patient_id AND h.encounter_type IN (296, 297) AND h.voided = 0 AND h.encounter_datetime < DATE_ADD(t.enc_date, INTERVAL 1 DAY) ORDER BY h.encounter_datetime DESC, ho.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sample_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(t.smear_code IS NOT NULL, 'Sputum', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sample_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "xray_result",
+      "column": "t.xray_code"
+    },
+    {
+      "type": "derived_column",
+      "alias": "xray_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_radiology_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "other_radiology_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "molecular_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(CONCAT_WS('; ', t.culture_text, IF(t.resistant_to IS NOT NULL, CONCAT('Resistant: ', t.resistant_to), NULL)), '')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "molecular_date",
+      "column": "t.culture_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "microscopy_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(CONCAT_WS(' ', t.smear_method, t.smear_code), '')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "microscopy_date",
+      "column": "t.smear_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "outcome",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN t.has_res = 1 THEN 'DRTB' WHEN t.smear_pos = 1 OR t.culture_pos = 1 OR t.has_tb_type = 1 THEN 'DSTB' WHEN t.smear_neg = 1 AND IFNULL(t.culture_pos, 0) = 0 AND (t.xray_code IS NULL OR t.xray_code IN ('N', 'ND')) THEN 'No TB' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_tb_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(t.tx_start IS NOT NULL, 'Yes', 'No')"
+      }
+    },
+    {
+      "comment": "(Q) lower: the treatment start date; no sub-county TB number is recorded",
+      "type": "derived_column",
+      "alias": "tb_registration",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(t.tx_start, '%d/%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_started",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_registration",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "remarks",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "comment": "Bacteriologically confirmed: a positive smear (Scanty, +, ++, +++) or culture growth -- for the ACF Facility Summary Tool (6), and clinically diagnosed (7) is diagnosed without it",
+      "type": "derived_column",
+      "alias": "bact_confirmed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(t.smear_pos = 1 OR t.culture_pos = 1, 1, 0)"
+      }
+    }
+  ],
+  "orderBy": {
+    "columns": [
+      {
+        "column": "t.enc_date",
+        "order": "asc"
+      },
+      {
+        "column": "t.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "name": "moh731V2023Moh729bBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS: each client active on ART this month (moh731V2023Moh729bArtBase) with the form's regimen code -- PMTCT (PM...) for women pregnant this month, Paediatric (CF/CS/CT) under 15 years, otherwise Adult (AF/AS/AT) -- by the reported line and the regimen's components, falling to the group's 'any other' code (AF5X, AS6X, AT2X, CF5X, CS4X, CT3X, PM1X) for any regimen not printed on the form; and, for children, their weight band. One row per client, so the form's counts and its linelists come from the same rows.",
+  "uses": [
+    {
+      "name": "moh731V2023Moh729bArtBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023Moh729bArtBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "b.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "b.patient_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "b.ccc_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_number",
+      "column": "b.amrs_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "b.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "b.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "birthdate",
+      "column": "b.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "b.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "b.weight"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rtc_date",
+      "column": "b.rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_meds",
+      "column": "b.cur_arv_meds"
+    },
+    {
+      "type": "simple_column",
+      "alias": "arv_line",
+      "column": "b.arv_line"
+    },
+    {
+      "type": "derived_column",
+      "alias": "pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(b.is_pregnant = 1, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.is_pregnant = 1 THEN 'PMTCT' WHEN b.age < 15 THEN 'Paediatric' ELSE 'Adult' END"
+      }
+    },
+    {
+      "comment": "The regimen as the form writes it, e.g. TDF + 3TC + ATV/r",
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "REPLACE(REPLACE(REPLACE(NULLIF(b.regimen_signature, ''), 'ATV+RTV', 'ATV/r'), 'LPV+RTV', 'LPV/r'), '+', ' + ')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.is_pregnant = 0 AND b.age >= 15 AND b.arv_line = 1 THEN CASE b.regimen_signature WHEN 'TDF+3TC+DTG' THEN 'AF2E' WHEN 'TDF+3TC+EFV' THEN 'AF2B' WHEN 'AZT+3TC+DTG' THEN 'AF1D' WHEN 'ABC+3TC+DTG' THEN 'AF4C' WHEN 'TDF+3TC+ATV+RTV' THEN 'AF2D' WHEN 'TDF+3TC+LPV+RTV' THEN 'AF2F' WHEN 'TAF+3TC+DTG' THEN 'AF2G' WHEN 'AZT+3TC+LPV+RTV' THEN 'AF1E' WHEN 'AZT+3TC+ATV+RTV' THEN 'AF1F' ELSE 'AF5X' END WHEN b.is_pregnant = 0 AND b.age >= 15 AND b.arv_line = 2 THEN CASE b.regimen_signature WHEN 'AZT+3TC+LPV+RTV' THEN 'AS1A' WHEN 'AZT+3TC+ATV+RTV' THEN 'AS1B' WHEN 'AZT+3TC+DTG' THEN 'AS1C' WHEN 'TDF+3TC+LPV+RTV' THEN 'AS2A' WHEN 'TDF+3TC+DTG' THEN 'AS2B' WHEN 'TDF+3TC+ATV+RTV' THEN 'AS2C' WHEN 'ABC+3TC+LPV+RTV' THEN 'AS5A' WHEN 'ABC+3TC+ATV+RTV' THEN 'AS5B' WHEN 'ABC+3TC+DTG' THEN 'AS5C' ELSE 'AS6X' END WHEN b.is_pregnant = 0 AND b.age >= 15 AND b.arv_line = 3 THEN CASE b.regimen_signature WHEN 'TDF+3TC+DTG+DRV+RTV' THEN 'AT2D' WHEN 'TDF+3TC+DTG+ETV+DRV+RTV' THEN 'AT2F' WHEN 'TDF+3TC+DTG' THEN 'AT2G' WHEN 'AZT+3TC+DTG' THEN 'AT2H' WHEN 'AZT+3TC+DTG+DRV+RTV' THEN 'AT2I' ELSE 'AT2X' END WHEN b.is_pregnant = 0 AND b.age < 15 AND b.arv_line = 1 THEN CASE b.regimen_signature WHEN 'ABC+3TC+DTG' THEN 'CF2G' WHEN 'AZT+3TC+DTG' THEN 'CF1D' WHEN 'TDF+3TC+DTG' THEN 'CF4E' ELSE 'CF5X' END WHEN b.is_pregnant = 0 AND b.age < 15 AND b.arv_line = 2 THEN CASE b.regimen_signature WHEN 'AZT+3TC+LPV+RTV' THEN 'CS1A' WHEN 'AZT+3TC+DTG' THEN 'CS1B' WHEN 'ABC+3TC+LPV+RTV' THEN 'CS2A' WHEN 'ABC+3TC+DTG' THEN 'CS2B' ELSE 'CS4X' END WHEN b.is_pregnant = 0 AND b.age < 15 AND b.arv_line = 3 THEN CASE b.regimen_signature WHEN 'AZT+3TC+DRV+RTV+RAL' THEN 'CT1H' WHEN 'ABC+3TC+DRV+RTV+RAL' THEN 'CT2D' ELSE 'CT3X' END WHEN b.is_pregnant = 1 THEN CASE b.regimen_signature WHEN 'TDF+3TC+EFV' THEN 'PM9' WHEN 'TDF+3TC+DTG' THEN 'PM12' WHEN 'AZT+3TC+DTG' THEN 'PM13' WHEN 'ABC+3TC+DTG' THEN 'PM14' WHEN 'TDF+3TC+ATV+RTV' THEN 'PM11' WHEN 'TDF+3TC+LPV+RTV' THEN 'PM7' WHEN 'AZT+3TC+ATV+RTV' THEN 'PM10' WHEN 'AZT+3TC+LPV+RTV' THEN 'PM5' ELSE 'PM1X' END END"
+      }
+    },
+    {
+      "comment": "Children only, by their weight at their latest clinical visit; the bands as the form heads them",
+      "type": "derived_column",
+      "alias": "weight_band",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.is_pregnant = 1 OR b.age >= 15 OR b.weight IS NULL THEN NULL WHEN b.weight < 6 THEN '3-5.9kg' WHEN b.weight < 10 THEN '6-9.9kg' WHEN b.weight < 14 THEN '10-13.9kg' WHEN b.weight < 20 THEN '14-19.9kg' WHEN b.weight < 25 THEN '20-24.9kg' WHEN b.weight < 30 THEN '25-29.9kgs' ELSE '≥30kgs' END"
+      }
+    }
+  ],
+  "orderBy": {
+    "columns": [
+      {
+        "column": "b.full_name",
+        "order": "asc"
+      }
+    ]
+  }
+}

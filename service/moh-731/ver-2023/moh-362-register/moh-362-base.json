@@ -77,9 +77,12 @@
       "column": "t.patient_id"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "nupi",
-      "column": "t.nupi"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t.patient_id AND pi.identifier_type = 55 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
     },
     {
       "type": "simple_column",
@@ -127,7 +130,7 @@
       "alias": "marital_status",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE (SELECT pa.value FROM amrs.person_attribute pa WHERE pa.person_id = t.patient_id AND pa.person_attribute_type_id = 5 AND pa.voided = 0 ORDER BY pa.person_attribute_id DESC LIMIT 1) WHEN '5555' THEN 1 WHEN '1059' THEN 2 WHEN '1057' THEN 3 WHEN '1058' THEN 4 WHEN '1056' THEN 5 END"
+        "expression": "CASE (SELECT pa.value FROM amrs.person_attribute pa WHERE pa.person_id = t.patient_id AND pa.person_attribute_type_id = 5 AND pa.voided = 0 ORDER BY pa.person_attribute_id DESC LIMIT 1) WHEN '5555' THEN 'Married' WHEN '1059' THEN 'Widowed' WHEN '1057' THEN 'Single' WHEN '1058' THEN 'Divorced' WHEN '1056' THEN 'Separated' END"
       }
     },
     {
@@ -135,7 +138,7 @@
       "alias": "population_type",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE WHEN y.population IN (9783, 1107) THEN 1 WHEN y.population IS NOT NULL THEN 2 END"
+        "expression": "CASE WHEN y.population IN (9783, 1107) THEN 'Gen Pop' WHEN y.population IS NOT NULL THEN 'KVP' END"
       }
     },
     {
@@ -151,13 +154,16 @@
       "alias": "setting",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE t.hts_setting WHEN 'Facility' THEN 1 WHEN 'Community' THEN 2 END"
+        "expression": "CASE WHEN t.hts_setting IN ('Facility', 'Community') THEN t.hts_setting END"
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "hiv_test1",
-      "column": "x.test1"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE x.test1 WHEN 664 THEN 'Negative' WHEN 703 THEN 'Positive' WHEN 1138 THEN 'Inconclusive' END"
+      }
     },
     {
       "type": "derived_column",
@@ -178,9 +184,12 @@
       "column": "x.expiry1"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "hiv_test2",
-      "column": "x.test2"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE x.test2 WHEN 664 THEN 'Negative' WHEN 703 THEN 'Positive' WHEN 1138 THEN 'Inconclusive' END"
+      }
     },
     {
       "type": "derived_column",
@@ -201,9 +210,12 @@
       "column": "x.expiry2"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "hiv_test3",
-      "column": "x.test3"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE x.test3 WHEN 664 THEN 'Negative' WHEN 703 THEN 'Positive' WHEN 1138 THEN 'Inconclusive' END"
+      }
     },
     {
       "type": "derived_column",
@@ -228,7 +240,7 @@
       "alias": "final_result",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE t.final_result WHEN 'Positive' THEN 'P' WHEN 'Negative' THEN 'N' WHEN 'Inconclusive' THEN 'I' END"
+        "expression": "CASE WHEN t.final_result IN ('Positive', 'Negative', 'Inconclusive') THEN t.final_result END"
       }
     },
     {
@@ -236,7 +248,7 @@
       "alias": "discordant_couple",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "CASE y.discordant WHEN 1065 THEN 'Y' WHEN 1066 THEN 'N' WHEN 1175 THEN 'NA' END"
+        "expression": "CASE y.discordant WHEN 1065 THEN 'Yes' WHEN 1066 THEN 'No' WHEN 1175 THEN 'NA' END"
       }
     },
     {
@@ -244,7 +256,7 @@
       "alias": "referral_services",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "COALESCE(y.referral_codes, 'NA')"
+        "expression": "COALESCE(y.referral_services, 'NA')"
       }
     },
     {

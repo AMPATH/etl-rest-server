@@ -1,0 +1,84 @@
+{
+  "name": "moh731V2023Moh729bPepSignature",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, PEP step 2: each PEP exposure (moh731V2023Moh729bPepMeds) with its regimen broken into its components in a fixed order -- the same rule as the ART clients' regimen_signature (moh731V2023Moh729bArtBase), e.g. ABC+3TC+DTG from ABACAVIR AND LAMIVUDINE (6679) with DOLUTEGRAVIR (9759) -- with OTHER for any concept not known as an ARV.",
+  "uses": [
+    {
+      "name": "moh731V2023Moh729bPepMeds",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023Moh729bPepMeds",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "b.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "b.patient_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "b.ccc_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "amrs_number",
+      "column": "b.amrs_number"
+    },
+    {
+      "type": "simple_column",
+      "alias": "full_name",
+      "column": "b.full_name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "b.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "b.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "exposure_date",
+      "column": "b.exposure_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "exposure_type",
+      "column": "b.exposure_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "b.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pep_meds",
+      "column": "b.pep_meds"
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_signature",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN COALESCE(b.pep_meds, '') = '' THEN '' ELSE CONCAT_WS('+', IF((FIND_IN_SET('802', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('1400', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6180', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6964', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10795', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10796', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9055', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10268', COALESCE(b.pep_meds, '')) > 0), 'TDF', NULL), IF((FIND_IN_SET('12469', COALESCE(b.pep_meds, '')) > 0), 'TAF', NULL), IF((FIND_IN_SET('797', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('630', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('817', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6467', COALESCE(b.pep_meds, '')) > 0), 'AZT', NULL), IF((FIND_IN_SET('814', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6679', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('817', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10986', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9050', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9051', COALESCE(b.pep_meds, '')) > 0), 'ABC', NULL), IF((FIND_IN_SET('625', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('792', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6965', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9052', COALESCE(b.pep_meds, '')) > 0), 'D4T', NULL), IF((FIND_IN_SET('628', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('630', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('1400', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6467', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6679', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6964', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6965', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('817', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('792', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10795', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9055', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9050', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9051', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9052', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10986', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('12469', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10268', COALESCE(b.pep_meds, '')) > 0), '3TC', NULL), IF((FIND_IN_SET('791', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6180', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10796', COALESCE(b.pep_meds, '')) > 0), 'FTC', NULL), IF((FIND_IN_SET('9759', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10986', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('12469', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10268', COALESCE(b.pep_meds, '')) > 0), 'DTG', NULL), IF((FIND_IN_SET('633', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6964', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10795', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('10796', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9052', COALESCE(b.pep_meds, '')) > 0), 'EFV', NULL), IF((FIND_IN_SET('631', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('792', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6467', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9050', COALESCE(b.pep_meds, '')) > 0), 'NVP', NULL), IF((FIND_IN_SET('10090', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('12053', COALESCE(b.pep_meds, '')) > 0), 'RPV', NULL), IF((FIND_IN_SET('12053', COALESCE(b.pep_meds, '')) > 0), 'CAB', NULL), IF((FIND_IN_SET('6158', COALESCE(b.pep_meds, '')) > 0), 'ETV', NULL), IF((FIND_IN_SET('6159', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6160', COALESCE(b.pep_meds, '')) > 0), 'ATV', NULL), IF((FIND_IN_SET('794', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9026', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9055', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9051', COALESCE(b.pep_meds, '')) > 0), 'LPV', NULL), IF((FIND_IN_SET('6157', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('12692', COALESCE(b.pep_meds, '')) > 0), 'DRV', NULL), IF((FIND_IN_SET('795', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('6160', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('794', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('12692', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9055', COALESCE(b.pep_meds, '')) > 0 OR FIND_IN_SET('9051', COALESCE(b.pep_meds, '')) > 0), 'RTV', NULL), IF((FIND_IN_SET('6156', COALESCE(b.pep_meds, '')) > 0), 'RAL', NULL), IF((LENGTH(COALESCE(b.pep_meds, '')) - LENGTH(REPLACE(COALESCE(b.pep_meds, ''), ',', '')) + 1) > ((FIND_IN_SET('625', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('628', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('630', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('631', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('633', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('791', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('792', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('794', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('795', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('797', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('802', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('814', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('817', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('1400', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6156', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6157', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6158', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6159', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6160', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6180', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6467', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6679', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6964', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('6965', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('9026', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('9050', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('9051', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('9052', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('9055', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('9759', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('10090', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('10268', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('10795', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('10796', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('10986', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('12053', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('12469', COALESCE(b.pep_meds, '')) > 0) + (FIND_IN_SET('12692', COALESCE(b.pep_meds, '')) > 0)), 'OTHER', NULL)) END"
+      }
+    }
+  ]
+}
