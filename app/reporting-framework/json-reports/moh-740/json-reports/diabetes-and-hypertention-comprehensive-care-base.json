@@ -371,6 +371,21 @@
       "column": "mdh.bmi"
     },
     {
+      "type": "simple_column",
+      "alias": "rbs",
+      "column": "mdh.rbs"
+    },
+    {
+      "type": "simple_column",
+      "alias": "fbs",
+      "column": "mdh.fbs"
+    },
+    {
+      "type": "simple_column",
+      "alias": "waist_circumference",
+      "column": "mdh.waist_circumference"
+    },
+    {
       "type": "derived_column",
       "alias": "bp",
       "expressionType": "simple_expression",
