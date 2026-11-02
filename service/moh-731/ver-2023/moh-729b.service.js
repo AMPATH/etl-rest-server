@@ -17,6 +17,33 @@ const currentOnPrep = (visits) =>
     (visit) => visit.prep_status !== 'Discontinued'
   );
 
+/** Each client's first row (the rows come oldest first) */
+const firstPerClient = (rows) => {
+  const first = new Map();
+  rows.forEach(
+    (row) => first.has(row.person_id) || first.set(row.person_id, row)
+  );
+  return [...first.values()];
+};
+
+/** Each infant's latest row per regimen code and age band (the rows come oldest first) */
+const latestPerClientCodeAndBand = (rows) => {
+  const latest = new Map();
+  rows.forEach((row) =>
+    latest.set(`${row.person_id}|${row.regimen_code}|${row.age_band}`, row)
+  );
+  return [...latest.values()];
+};
+
+/** Each client's latest row per regimen code (the rows come oldest first) */
+const latestPerClientAndCode = (rows) => {
+  const latest = new Map();
+  rows.forEach((row) =>
+    latest.set(`${row.person_id}|${row.regimen_code}`, row)
+  );
+  return [...latest.values()];
+};
+
 /** Each client's latest row (the rows come oldest first) */
 const latestPerClient = (rows) => {
   const latest = new Map();
@@ -39,7 +66,16 @@ const latestPerClient = (rows) => {
  * - Hepatitis B patients who are HIV-ve: the HIV-negative clients MOH 731 2.4
  *   counts as HBV positive at ANC in the month, at their latest visit;
  * - TPT HIV Positive: the clients MOH 731 3.4 counts as starting TPT this
- *   month, by the TPT drug started (6H or 3HP).
+ *   month, by the TPT drug started (6H or 3HP);
+ * - Cryptococcal Meningitis: the clients 15 years and over with a CM
+ *   treatment recorded in the month and none before it, at their first CM
+ *   encounter of the month, by the treatment (OI6B or OI6X);
+ * - Universal prophylaxis: the clients on Cotrimoxazole (adults OI1A,
+ *   children OI1C) or Dapsone (adults OI2A) at a visit in the month, once in
+ *   each code they were on;
+ * - PMTCT Infants: the HIV-exposed infants on ARV prophylaxis at an HEI visit
+ *   in the month, by regimen and feeding (PC8, PC7 or PC1X) and the form's
+ *   age band at the visit, once in each.
  *
  * The form counts these rows by code and its linelists list them, so both
  * always agree. Only plain YYYY-MM-DD dates are accepted (as for MOH 731).
@@ -60,27 +96,54 @@ export function getMoh729b({ endDate, locations }) {
   }
   const art = { endDate, locations: ids };
   const tpt = { endDate, locations: [...ids] };
-  /* PrEP, PEP and Hepatitis B are counted over the calendar month that ends
+  /* PrEP, PEP, Hepatitis B, Cryptococcal Meningitis, universal prophylaxis
+     and PMTCT infants are counted over the calendar month that ends
      the period */
   const month = { startDate: `${endDate.slice(0, 8)}01`, endDate };
   const prep = { ...month, locations: [...ids] };
   const pep = { ...month, locations: [...ids] };
   const hbv = { ...month, locations: [...ids] };
-  return widenToFacility(art, prep, pep, hbv, tpt)
+  const cm = { ...month, locations: [...ids] };
+  const prophylaxis = { ...month, locations: [...ids] };
+  const infants = { ...month, locations: [...ids] };
+  return widenToFacility(art, prep, pep, hbv, tpt, cm, prophylaxis, infants)
     .then(() =>
       Promise.all([
         new BaseMysqlReport('moh731V2023Moh729b', art).generateReport(),
         new BaseMysqlReport('moh731V2023Moh729bPrep', prep).generateReport(),
         new BaseMysqlReport('moh731V2023Moh729bPep', pep).generateReport(),
         new BaseMysqlReport('moh731V2023Moh729bHbv', hbv).generateReport(),
-        new BaseMysqlReport('moh731V2023Moh729bTpt', tpt).generateReport()
+        new BaseMysqlReport('moh731V2023Moh729bTpt', tpt).generateReport(),
+        new BaseMysqlReport('moh731V2023Moh729bCm', cm).generateReport(),
+        new BaseMysqlReport(
+          'moh731V2023Moh729bProphylaxis',
+          prophylaxis
+        ).generateReport(),
+        new BaseMysqlReport(
+          'moh731V2023Moh729bInfant',
+          infants
+        ).generateReport()
       ])
     )
-    .then(([artReport, prepReport, pepReport, hbvReport, tptReport]) => [
-      ...rowsOf(artReport),
-      ...currentOnPrep(rowsOf(prepReport)),
-      ...latestPerClient(rowsOf(pepReport)),
-      ...latestPerClient(rowsOf(hbvReport)),
-      ...rowsOf(tptReport)
-    ]);
+    .then(
+      ([
+        artReport,
+        prepReport,
+        pepReport,
+        hbvReport,
+        tptReport,
+        cmReport,
+        prophylaxisReport,
+        infantReport
+      ]) => [
+        ...rowsOf(artReport),
+        ...currentOnPrep(rowsOf(prepReport)),
+        ...latestPerClient(rowsOf(pepReport)),
+        ...latestPerClient(rowsOf(hbvReport)),
+        ...rowsOf(tptReport),
+        ...firstPerClient(rowsOf(cmReport)),
+        ...latestPerClientAndCode(rowsOf(prophylaxisReport)),
+        ...latestPerClientCodeAndBand(rowsOf(infantReport))
+      ]
+    );
 }

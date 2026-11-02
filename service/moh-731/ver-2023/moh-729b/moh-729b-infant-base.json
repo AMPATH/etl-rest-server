@@ -1,0 +1,175 @@
+{
+  "name": "moh731V2023Moh729bInfantBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, PMTCT Infants: the HEI encounters in the month on ARV prophylaxis -- AZT, NVP or another recorded (moh731V2023Moh729bInfantEncounters) by regimen -- PC1X any other (another drug, or not AZT + NVP and not NVP alone from 6 weeks of age); otherwise PC8 if breastfeeding, PC7 if not (an encounter with no feeding recorded gets no code and is left out) -- and the form's age band at the encounter: 0-12 weeks (under 84 days), 12 weeks-6months (84 days to 6 completed months), 7- 9 months, 10-12 months, Above 12 months. One row per encounter, oldest first: the service keeps each infant's latest per code and band, as COUNT(DISTINCT patient) per cell.",
+  "uses": [
+    {
+      "name": "moh731V2023Moh729bInfantEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023Moh729bInfantEncounters",
+      "alias": "x"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = x.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = x.patient_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = x.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "x.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hei_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = x.patient_id AND pi.identifier_type = 38 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = x.patient_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(p.birthdate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "infant_age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(DATEDIFF(x.encounter_datetime, p.birthdate) < 84, CONCAT(FLOOR(DATEDIFF(x.encounter_datetime, p.birthdate) / 7), ' weeks'), CONCAT(TIMESTAMPDIFF(MONTH, p.birthdate, x.encounter_datetime), ' months'))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_date",
+      "column": "x.encounter_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "feeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN x.breastfeeding = 1 THEN 'Breastfeeding' WHEN x.not_breastfeeding = 1 THEN 'Not breastfeeding' ELSE 'Not recorded' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "'PMTCT Infants'"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(NULLIF(CONCAT_WS(' + ', IF(x.has_azt = 1, 'AZT', NULL), IF(x.has_nvp = 1, 'NVP', NULL), IF(x.has_other = 1, 'Other', NULL)), ''), 'Not recorded')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN x.has_other = 1 OR NOT ((x.has_azt = 1 AND x.has_nvp = 1) OR (x.has_azt = 0 AND x.has_nvp = 1 AND DATEDIFF(x.encounter_datetime, p.birthdate) >= 42)) THEN 'PC1X' WHEN x.breastfeeding = 1 THEN 'PC8' WHEN x.not_breastfeeding = 1 THEN 'PC7' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_band",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN DATEDIFF(x.encounter_datetime, p.birthdate) < 84 THEN '0-12 weeks' WHEN TIMESTAMPDIFF(MONTH, p.birthdate, x.encounter_datetime) < 7 THEN '12 weeks-6months' WHEN TIMESTAMPDIFF(MONTH, p.birthdate, x.encounter_datetime) BETWEEN 7 AND 9 THEN '7- 9 months' WHEN TIMESTAMPDIFF(MONTH, p.birthdate, x.encounter_datetime) BETWEEN 10 AND 12 THEN '10-12 months' ELSE 'Above 12 months' END"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(x.has_azt = 1 OR x.has_nvp = 1 OR x.has_other = 1)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(CASE WHEN x.has_other = 1 OR NOT ((x.has_azt = 1 AND x.has_nvp = 1) OR (x.has_azt = 0 AND x.has_nvp = 1 AND DATEDIFF(x.encounter_datetime, p.birthdate) >= 42)) THEN 'PC1X' WHEN x.breastfeeding = 1 THEN 'PC8' WHEN x.not_breastfeeding = 1 THEN 'PC7' END) IS NOT NULL"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "x.encounter_datetime",
+        "order": "asc"
+      },
+      {
+        "column": "x.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

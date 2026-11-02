@@ -713,6 +713,12 @@ import * as moh_731_v2023_moh_729b_pep_signature from '../../service/moh-731/ver
 import * as moh_731_v2023_moh_729b_pep_meds from '../../service/moh-731/ver-2023/moh-729b/moh-729b-pep-meds.json';
 import * as moh_731_v2023_moh_729b_hbv_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-hbv-base.json';
 import * as moh_731_v2023_moh_729b_tpt_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-tpt-base.json';
+import * as moh_731_v2023_moh_729b_cm_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-cm-base.json';
+import * as moh_731_v2023_moh_729b_cm_encounters from '../../service/moh-731/ver-2023/moh-729b/moh-729b-cm-encounters.json';
+import * as moh_731_v2023_moh_729b_prophylaxis_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-prophylaxis-base.json';
+import * as moh_731_v2023_moh_729b_prophylaxis_encounters from '../../service/moh-731/ver-2023/moh-729b/moh-729b-prophylaxis-encounters.json';
+import * as moh_731_v2023_moh_729b_infant_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-infant-base.json';
+import * as moh_731_v2023_moh_729b_infant_encounters from '../../service/moh-731/ver-2023/moh-729b/moh-729b-infant-encounters.json';
 import * as presumptive_tb_encounters from '../../service/tb-registers/presumptive-tb/presumptive-tb-encounters.json';
 import * as presumptive_tb_base from '../../service/tb-registers/presumptive-tb/presumptive-tb-base.json';
 import * as moh_731_v2023_art_monthly_base from '../../service/moh-731/ver-2023/art/art-monthly-base.json';
@@ -3636,6 +3642,30 @@ export class BaseMysqlReport {
         case 'moh731V2023Moh729bTpt':
           resolve({
             main: this.cloneJsonSchema(moh_731_v2023_moh_729b_tpt_base)
+          });
+          break;
+        case 'moh731V2023Moh729bCm':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_cm_base),
+            moh731V2023Moh729bCmEncounters: this.cloneJsonSchema(
+              moh_731_v2023_moh_729b_cm_encounters
+            )
+          });
+          break;
+        case 'moh731V2023Moh729bProphylaxis':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_prophylaxis_base),
+            moh731V2023Moh729bProphylaxisEncounters: this.cloneJsonSchema(
+              moh_731_v2023_moh_729b_prophylaxis_encounters
+            )
+          });
+          break;
+        case 'moh731V2023Moh729bInfant':
+          resolve({
+            main: this.cloneJsonSchema(moh_731_v2023_moh_729b_infant_base),
+            moh731V2023Moh729bInfantEncounters: this.cloneJsonSchema(
+              moh_731_v2023_moh_729b_infant_encounters
+            )
           });
           break;
         case 'presumptiveTbRegister':

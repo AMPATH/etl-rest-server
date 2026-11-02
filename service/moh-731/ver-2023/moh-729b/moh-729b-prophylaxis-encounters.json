@@ -1,0 +1,97 @@
+{
+  "name": "moh731V2023Moh729bProphylaxisEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, Universal prophylaxis, step 1: one row per encounter at the locations in the period with a prophylaxis obs -- PCP prophylaxis history (1109), plan (1261) or drug started / changed to (1263) -- and the prophylaxis the client is on at it: the new drug (1263) when the plan starts (1256) or changes (1259) it, none when it stops (1260) or is none (1107), otherwise (continue or no plan) the history (1109).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (1109, 1261, 1263)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_datetime",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(e.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(MAX(e.encounter_datetime))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prophylaxis_plan",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE MAX(IF(o.concept_id = 1261, o.value_coded, NULL)) WHEN 1256 THEN 'Start' WHEN 1259 THEN 'Change' WHEN 1257 THEN 'Continue' WHEN 1260 THEN 'Stop' WHEN 1107 THEN 'None' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "drug",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN MAX(IF(o.concept_id = 1261, o.value_coded, NULL)) IN (1256, 1259) THEN MAX(IF(o.concept_id = 1263, o.value_coded, NULL)) WHEN MAX(IF(o.concept_id = 1261, o.value_coded, NULL)) IN (1260, 1107) THEN NULL ELSE MAX(IF(o.concept_id = 1109, o.value_coded, NULL)) END"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}
