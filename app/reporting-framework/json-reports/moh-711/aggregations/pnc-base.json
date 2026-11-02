@@ -74,9 +74,12 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "women_received_post_partum_fp",
-      "column": "p.women_received_post_partum_fp"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(p.women_received_post_partum_fp IS NOT NULL OR p.women_received_post_partum_fp != '', 1, 0)"
+      }
     },
     {
       "type": "derived_column",

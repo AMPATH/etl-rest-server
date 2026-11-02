@@ -6,31 +6,16 @@
   "uses": [],
   "sources": [
     {
-      "table": "amrs.obs",
-      "alias": "o"
+      "table": "etl.flat_moh_710",
+      "alias": "t"
     },
-    {
-      "table": "amrs.obs",
-      "alias": "ob1",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "ob1.encounter_id = o.encounter_id AND ob1.voided = 0"
-      }
-    },
-    {
-      "table": "amrs.encounter",
-      "alias": "e",
-      "join": {
-        "type": "INNER",
-        "joinCondition": "e.encounter_id = o.encounter_id AND e.voided = 0"
-      }
-    },
+
     {
       "table": "amrs.person",
       "alias": "p",
       "join": {
         "type": "INNER",
-        "joinCondition": "o.person_id = p.person_id AND p.voided = 0 AND o.concept_id in (10404, 12059)"
+        "joinCondition": "t.person_id = p.person_id AND p.voided = 0"
       }
     },
     {
@@ -38,32 +23,32 @@
       "alias": "l",
       "join": {
         "type": "INNER",
-        "joinCondition": "l.location_id = o.location_id"
+        "joinCondition": "l.location_id = t.location_id"
       }
     }
   ],
   "columns": [
     {
       "type": "simple_column",
-      "alias": "obs_datetime",
-      "column": "o.obs_datetime"
+      "alias": "encounter_datetime",
+      "column": "t.encounter_datetime"
     },
     {
       "type": "simple_column",
       "alias": "person_id",
-      "column": "o.person_id"
+      "column": "t.person_id"
     },
     {
       "type": "simple_column",
       "alias": "age",
-      "column": "TIMESTAMPDIFF(YEAR, p.birthdate, CURDATE())"
+      "column": "t.age_in_years"
     },
     {
       "type": "derived_column",
       "alias": "tetanus_toxoid1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10404 AND o.value_coded = 8009, 1, 0)"
+        "expression": "if(t.tetanus_toxoid_vaccine = 1, 1, 0)"
       }
     },
     {
@@ -71,7 +56,7 @@
       "alias": "tetanus_toxoid2",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10404 AND o.value_coded = 8010, 1, 0)"
+        "expression": "if(t.tetanus_toxoid_vaccine = 2, 1, 0)"
       }
     },
     {
@@ -79,7 +64,7 @@
       "alias": "tetanus_toxoid3",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10404 AND o.value_coded = 8011, 1, 0)"
+        "expression": "if(t.tetanus_toxoid_vaccine = 3, 1, 0)"
       }
     },
     {
@@ -87,7 +72,7 @@
       "alias": "tetanus_toxoid4",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10404 AND o.value_coded = 8012, 1, 0)"
+        "expression": "if(t.tetanus_toxoid_vaccine = 4, 1, 0)"
       }
     },
     {
@@ -95,7 +80,7 @@
       "alias": "tetanus_toxoid5",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 10404 AND o.value_coded = 8013, 1, 0)"
+        "expression": "if(t.tetanus_toxoid_vaccine = 5, 1, 0)"
       }
     },
     {
@@ -103,7 +88,7 @@
       "alias": "hpv_vaccine1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12059 AND o.value_coded = 1065, 1, 0)"
+        "expression": "null"
       }
     },
     {
@@ -111,7 +96,7 @@
       "alias": "hpv_vaccine2",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(o.concept_id = 12059 AND o.value_coded = 1065, 1, 0)"
+        "expression": "null"
       }
     }
   ],
@@ -120,27 +105,27 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "e.encounter_type in (264,265, 313)"
+        "conditionExpression": "t.encounter_type in (264,265, 313)"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "DATE(o.obs_datetime) >= ?",
+        "conditionExpression": "DATE(t.encounter_datetime) >= ?",
         "parameterName": "startDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "DATE(o.obs_datetime) <= ?",
+        "conditionExpression": "DATE(t.encounter_datetime) <= ?",
         "parameterName": "endDate"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "o.location_id in ?",
+        "conditionExpression": "t.location_id in ?",
         "parameterName": "locations"
       }
     ]
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["o.person_id"]
+    "columns": ["t.person_id"]
   }
 }
