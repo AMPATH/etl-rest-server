@@ -1,7 +1,7 @@
 {
   "name": "lab706PatientList",
-  "version": "1.9",
-  "description": "v1.7: the reporting-period bounds in revisit_no and clinical_diagnosis compare datetimes against < DATE_ADD({endDate}, INTERVAL 1 DAY) instead of <= endDate (base v2.6 does the same for the main filter) - a date-only endDate previously collapsed same-day windows to midnight-only matches. Patient-list template for the MOH 240 laboratory register (A-AA). Joined onto lab706Base per person; every presentation field is derived here from the raw facts - names/addresses/identifiers/telephone as per-row correlated subqueries (safe on a paginated page), coded answers translated through etl.concept_value_map (cvt = the test concept, cvm = the result concept). Panel tests render the FULL analyte list in results, driven by etl.concept_set_map (so an analyte with no result prints 'Not done'), ordered by cs.sort_weight/concept_set, with the order row's own single value appended after ' | ' when present (never dropped); when NO analyte of a mapped panel has a result but the order row carries its own value, the all-'Not done' member list is suppressed and only that value prints (v1.6); unmapped panels fall back to composing the observed member rows of etl.flat_moh_706_report_results, then the single value. amount_charged and receipt_number aggregate the whole encounter's non-voided, non-cancelled bill line items (D7; encounter-level first - this also neutralises the double-count risk of adopted orders on obs-only rows - with the order-level sum as fallback when the row has no encounter). v1.6: results de-noised for panels with nothing itemised - when no analyte of a mapped panel has any result but the order row carries its own value, the 'Not done' member list is suppressed and just the value prints (the full member list still prints when at least one analyte has a result, or when there is no value at all). Names are de-noised as well: a trailing ', DETAILED' dictionary suffix (any spacing, case-insensitive) is stripped from investigation_required and the results member labels, falling back to the raw concept id when nothing remains. v1.5: billing simplified for performance - amount_charged/receipt_number resolve the order's line items by driving FROM hie.bill_orders on bo.order_no (= lab_no, else the order_id-resolved order number; covers adopted obs-only rows) joined to cashier_bill_line_item.uuid and the bill, with the plain order_id sum/receipt as fallback; the encounter-level arms and all CONVERT/COLLATE clauses are gone (production collations are compatible, per the claims service joining the same tables without collation handling) - the v1.4 nested IN-lists were a per-row dependent-subquery blowup on the real database. clinician_name reads amrs.orders.orderer first (D9: the requesting clinician), then the encounter provider, then obs 1496. date_sample_received falls back fhir report_date_created -> orders.date_created (order-placement stamp, labelled as such in the release note) -> obs_datetime (D5); analysed/dispatched keep derived COALESCE chains. testing_officer is the fhir performer when present, else the creator of the result obs resolved through amrs.users (D11; flat v3.2 result_creator). prior_treatment, condition_of_specimen and signature have no standard-model source and stay NULL - DECIDED 2026-10-21 (report owner): no concepts exist for them yet, so blank is the correct output; do not substitute another field. See MOH-706-REGISTER-BLANK-COLUMNS-PLAN.md. Alias names are the app contract - see moh-240.columns.ts. v1.3: clinical_diagnosis no longer keys on the row encounter (often the lab/order encounter): it reads the patient's dx_rank 1-2 encounter diagnoses (dx_rank=2 is the primary diagnosis and is preferred/listed first) from the latest clinical encounter within the reporting period, preferring an encounter at/before the test datetime (fallback: latest in-period one, then the row encounter's own latest diagnosis, dx_rank=2 preferred) - non-coded diagnosis text is printed when no coded answer exists. v1.2: blank-columns release (plan F4/F4.5a/F5/F6). v1.1: revisit_no counts only encounters within the selected reporting period. v1.8: when the route passes memberConceptCsv/memberLabel (analyte drill-downs over panel tests), investigation_required shows the analyte name and results shows only that analyte's member value instead of the whole panel readout; NULL/NONE sentinels leave whole-panel drill-downs unchanged. v1.9: clinician_name exclusively reads the orderer of the row's order (D9, report owner 2026-10-27) - the encounter-provider and obs-1496 fallbacks noted under v1.5 are dropped, so a row whose order has no provider (or an obs-only row with no adoptable order) prints a blank clinician; ideally no order should miss a provider.",
+  "version": "1.10",
+  "description": "v1.10: line-list prefill for the MOH 240 drill-down (DHA minimum line-list requirements) - additive columns only, the register's own A-AA columns are unchanged. lab_no and encounter_type need no new column: the patient-list SQL selects every lab706Base column, so both already flow to the app from the base row. The clinical columns follow the MOH 731 patient-list pattern (latest encounter per patient, marked by the flat table's NULL next-clinical datetime) as per-row correlated subqueries keyed on fbc.person_id, safe on a paginated page: cr_number = client registry identifier_type 55 with the AMRS universal id (type 8) fallback; systolic/diastolic/rbs/rbs_date/rtc_date from the patient's latest clinical etl.flat_cdm encounter (rbs_date is that encounter's datetime, the finest date the flat table carries); tb_screening_date/tb_screening_result from the patient's latest clinical etl.flat_hiv_summary_v15b encounter (result translated through etl.concept_value_map); cervical_screening_date/method/result from the patient's latest etl.flat_cervical_cancer_screening_rc row (method/result translated through etl.concept_value_map, result preferring VIA/VILI, then HPV, then pap smear); nutrition_status = the patient's latest obs 7369 (nutrition status finding) translated through etl.concept_value_map; sha_enrolled = covered_by_shif from the patient's latest etl.monthly_diabetes_and_hypertention_report row, as Y/N. nutrition_assessment_type, nutrition_value, ebola_screening_status and cervical_screening_eligible have no source concept in any flat table yet and stay NULL until the ETL grows them - blank is the correct output, do not substitute another field. v1.7: the reporting-period bounds in revisit_no and clinical_diagnosis compare datetimes against < DATE_ADD({endDate}, INTERVAL 1 DAY) instead of <= endDate (base v2.6 does the same for the main filter) - a date-only endDate previously collapsed same-day windows to midnight-only matches. Patient-list template for the MOH 240 laboratory register (A-AA). Joined onto lab706Base per person; every presentation field is derived here from the raw facts - names/addresses/identifiers/telephone as per-row correlated subqueries (safe on a paginated page), coded answers translated through etl.concept_value_map (cvt = the test concept, cvm = the result concept). Panel tests render the FULL analyte list in results, driven by etl.concept_set_map (so an analyte with no result prints 'Not done'), ordered by cs.sort_weight/concept_set, with the order row's own single value appended after ' | ' when present (never dropped); when NO analyte of a mapped panel has a result but the order row carries its own value, the all-'Not done' member list is suppressed and only that value prints (v1.6); unmapped panels fall back to composing the observed member rows of etl.flat_moh_706_report_results, then the single value. amount_charged and receipt_number aggregate the whole encounter's non-voided, non-cancelled bill line items (D7; encounter-level first - this also neutralises the double-count risk of adopted orders on obs-only rows - with the order-level sum as fallback when the row has no encounter). v1.6: results de-noised for panels with nothing itemised - when no analyte of a mapped panel has any result but the order row carries its own value, the 'Not done' member list is suppressed and just the value prints (the full member list still prints when at least one analyte has a result, or when there is no value at all). Names are de-noised as well: a trailing ', DETAILED' dictionary suffix (any spacing, case-insensitive) is stripped from investigation_required and the results member labels, falling back to the raw concept id when nothing remains. v1.5: billing simplified for performance - amount_charged/receipt_number resolve the order's line items by driving FROM hie.bill_orders on bo.order_no (= lab_no, else the order_id-resolved order number; covers adopted obs-only rows) joined to cashier_bill_line_item.uuid and the bill, with the plain order_id sum/receipt as fallback; the encounter-level arms and all CONVERT/COLLATE clauses are gone (production collations are compatible, per the claims service joining the same tables without collation handling) - the v1.4 nested IN-lists were a per-row dependent-subquery blowup on the real database. clinician_name reads amrs.orders.orderer first (D9: the requesting clinician), then the encounter provider, then obs 1496. date_sample_received falls back fhir report_date_created -> orders.date_created (order-placement stamp, labelled as such in the release note) -> obs_datetime (D5); analysed/dispatched keep derived COALESCE chains. testing_officer is the fhir performer when present, else the creator of the result obs resolved through amrs.users (D11; flat v3.2 result_creator). prior_treatment, condition_of_specimen and signature have no standard-model source and stay NULL - DECIDED 2026-10-21 (report owner): no concepts exist for them yet, so blank is the correct output; do not substitute another field. See MOH-706-REGISTER-BLANK-COLUMNS-PLAN.md. Alias names are the app contract - see moh-240.columns.ts. v1.3: clinical_diagnosis no longer keys on the row encounter (often the lab/order encounter): it reads the patient's dx_rank 1-2 encounter diagnoses (dx_rank=2 is the primary diagnosis and is preferred/listed first) from the latest clinical encounter within the reporting period, preferring an encounter at/before the test datetime (fallback: latest in-period one, then the row encounter's own latest diagnosis, dx_rank=2 preferred) - non-coded diagnosis text is printed when no coded answer exists. v1.2: blank-columns release (plan F4/F4.5a/F5/F6). v1.1: revisit_no counts only encounters within the selected reporting period. v1.8: when the route passes memberConceptCsv/memberLabel (analyte drill-downs over panel tests), investigation_required shows the analyte name and results shows only that analyte's member value instead of the whole panel readout; NULL/NONE sentinels leave whole-panel drill-downs unchanged. v1.9: clinician_name exclusively reads the orderer of the row's order (D9, report owner 2026-10-27) - the encounter-provider and obs-1496 fallbacks noted under v1.5 are dropped, so a row whose order has no provider (or an obs-only row with no adoptable order) prints a blank clinician; ideally no order should miss a provider.",
   "sources": [
     {
       "table": "amrs.person",
@@ -225,6 +225,150 @@
     {
       "type": "derived_column",
       "alias": "signature",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cr_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE((SELECT pi_cr.identifier FROM amrs.patient_identifier pi_cr WHERE pi_cr.patient_id = fbc.person_id AND pi_cr.voided = 0 AND pi_cr.identifier_type = 55 ORDER BY pi_cr.date_created DESC LIMIT 1), (SELECT pi_uni.identifier FROM amrs.patient_identifier pi_uni WHERE pi_uni.patient_id = fbc.person_id AND pi_uni.voided = 0 AND pi_uni.identifier_type = 8 ORDER BY pi_uni.date_created DESC LIMIT 1))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nutrition_assessment_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nutrition_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nutrition_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT COALESCE(cvm_ns.name, CAST(o_ns.value_coded AS CHAR)) FROM amrs.obs o_ns LEFT JOIN etl.concept_value_map cvm_ns ON cvm_ns.concept_id = o_ns.value_coded WHERE o_ns.person_id = fbc.person_id AND o_ns.concept_id = 7369 AND o_ns.voided = 0 ORDER BY o_ns.obs_datetime DESC, o_ns.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "systolic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT fc.sbp FROM etl.flat_cdm fc WHERE fc.person_id = fbc.person_id AND fc.next_clinical_datetime_cdm IS NULL AND fc.is_clinical_encounter = 1 ORDER BY fc.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diastolic",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT fc.dbp FROM etl.flat_cdm fc WHERE fc.person_id = fbc.person_id AND fc.next_clinical_datetime_cdm IS NULL AND fc.is_clinical_encounter = 1 ORDER BY fc.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rbs",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT fc.rbs FROM etl.flat_cdm fc WHERE fc.person_id = fbc.person_id AND fc.next_clinical_datetime_cdm IS NULL AND fc.is_clinical_encounter = 1 ORDER BY fc.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rbs_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT DATE_FORMAT(fc.encounter_datetime, '%d/%m/%Y') FROM etl.flat_cdm fc WHERE fc.person_id = fbc.person_id AND fc.next_clinical_datetime_cdm IS NULL AND fc.is_clinical_encounter = 1 ORDER BY fc.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screening_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT DATE_FORMAT(fh.tb_screening_datetime, '%d/%m/%Y') FROM etl.flat_hiv_summary_v15b fh WHERE fh.person_id = fbc.person_id AND fh.next_clinical_datetime_hiv IS NULL AND fh.is_clinical_encounter = 1 ORDER BY fh.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screening_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT COALESCE(cvm_tsr.name, CAST(fh.tb_screening_result AS CHAR)) FROM etl.flat_hiv_summary_v15b fh LEFT JOIN etl.concept_value_map cvm_tsr ON cvm_tsr.concept_id = fh.tb_screening_result WHERE fh.person_id = fbc.person_id AND fh.next_clinical_datetime_hiv IS NULL AND fh.is_clinical_encounter = 1 ORDER BY fh.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ebola_screening_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cervical_screening_eligible",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULL"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cervical_screening_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT DATE_FORMAT(cs.encounter_datetime, '%d/%m/%Y') FROM etl.flat_cervical_cancer_screening_rc cs WHERE cs.person_id = fbc.person_id AND cs.next_clinical_datetime_cervical_cancer_screening IS NULL ORDER BY cs.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cervical_screening_method",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT COALESCE(cvm_csm.name, CAST(cs.screening_method AS CHAR)) FROM etl.flat_cervical_cancer_screening_rc cs LEFT JOIN etl.concept_value_map cvm_csm ON cvm_csm.concept_id = cs.screening_method WHERE cs.person_id = fbc.person_id AND cs.next_clinical_datetime_cervical_cancer_screening IS NULL ORDER BY cs.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cervical_screening_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT COALESCE(cvm_cs1.name, CAST(cs.via_or_via_vili_test_result AS CHAR), cvm_cs2.name, CAST(cs.hpv_test_result AS CHAR), cvm_cs3.name, CAST(cs.pap_smear_test_result AS CHAR)) FROM etl.flat_cervical_cancer_screening_rc cs LEFT JOIN etl.concept_value_map cvm_cs1 ON cvm_cs1.concept_id = cs.via_or_via_vili_test_result LEFT JOIN etl.concept_value_map cvm_cs2 ON cvm_cs2.concept_id = cs.hpv_test_result LEFT JOIN etl.concept_value_map cvm_cs3 ON cvm_cs3.concept_id = cs.pap_smear_test_result WHERE cs.person_id = fbc.person_id AND cs.next_clinical_datetime_cervical_cancer_screening IS NULL ORDER BY cs.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtc_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT DATE_FORMAT(fc.rtc_date, '%d/%m/%Y') FROM etl.flat_cdm fc WHERE fc.person_id = fbc.person_id AND fc.next_clinical_datetime_cdm IS NULL AND fc.is_clinical_encounter = 1 ORDER BY fc.encounter_datetime DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sha_enrolled",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT IF(mdh.covered_by_shif = 1, 'Y', 'N') FROM etl.monthly_diabetes_and_hypertention_report mdh WHERE mdh.person_id = fbc.person_id ORDER BY mdh.encounter_date DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sha_status",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "NULL"
