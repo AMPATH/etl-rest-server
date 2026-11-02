@@ -8,6 +8,14 @@
     {
       "table": "etl.flat_moh_711",
       "alias": "m"
+    },
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "hiv",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.person_id = hiv.person_id AND hiv.hiv_test_type IS NOT NULL AND hiv.hiv_test_type != ''"
+      }
     }
   ],
   "columns": [
@@ -160,12 +168,9 @@
       "column": "m.child_birth_weight"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "initiated_on_bf_in_1_hour",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.bf_within_1_hour = 'Y', 1, 0)"
-      }
+      "column": "m.bf_within_1_hour"
     },
     {
       "type": "simple_column",
@@ -173,12 +178,9 @@
       "column": "m.tetracycline_given"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "chlorhexidine_applied_on_cord_stamp",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.chlorhexidine_applied = 'Y', 1, 0)"
-      }
+      "column": "m.chlorhexidine_applied"
     },
     {
       "type": "simple_column",
@@ -208,72 +210,72 @@
     {
       "type": "simple_column",
       "alias": "hiv_test_1_kit_name",
-      "column": "m.hiv_test_1_kit_name"
+      "column": "hiv.hiv_test_1_kit_name"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_1_lot_no",
-      "column": "m.hiv_test_1_lot_no"
+      "column": "hiv.hiv_test_1_lot_no"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_1_expiry_date",
-      "column": "m.hiv_test_1_expiry_date"
+      "column": "hiv.hiv_test_1_expiry_date"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_1_test_result",
-      "column": "m.hiv_test_1_test_result"
+      "column": "hiv.hiv_test_1_test_result"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_2_kit_name",
-      "column": "m.hiv_test_2_kit_name"
+      "column": "hiv.hiv_test_2_kit_name"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_2_lot_no",
-      "column": "m.hiv_test_2_lot_no"
+      "column": "hiv.hiv_test_2_lot_no"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_2_expiry_date",
-      "column": "m.hiv_test_2_expiry_date"
+      "column": "hiv.hiv_test_2_expiry_date"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_2_test_result",
-      "column": "m.hiv_test_2_test_result"
+      "column": "hiv.hiv_test_2_test_result"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_3_kit_name",
-      "column": "m.hiv_test_3_kit_name"
+      "column": "hiv.hiv_test_3_kit_name"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_3_lot_no",
-      "column": "m.hiv_test_3_lot_no"
+      "column": "hiv.hiv_test_3_lot_no"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_3_expiry_date",
-      "column": "m.hiv_test_3_expiry_date"
+      "column": "hiv.hiv_test_3_expiry_date"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_3_test_result",
-      "column": "m.hiv_test_3_test_result"
+      "column": "hiv.hiv_test_3_test_result"
     },
     {
       "type": "simple_column",
       "alias": "hiv_result_maternity",
-      "column": "m.hiv_results"
+      "column": "hiv.hiv_results"
     },
     {
       "type": "simple_column",
       "alias": "hiv_test_type",
-      "column": "m.hiv_test_type"
+      "column": "hiv.hiv_test_type"
     },
     {
       "type": "simple_column",
@@ -412,21 +414,15 @@
       "column": "m.chlorhexidine_applied"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "vitamin_k",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.vitamin_k, 'Y', 'N')"
-      }
+      "column": "m.vitamin_k"
     },
 
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "tetracycline_given",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.tetracycline_given = 'Y', 1, 0)"
-      }
+      "column": "m.tetracycline_given"
     },
 
     {
@@ -654,9 +650,12 @@
       }
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "maternity_admission_date",
-      "column": "m.maternity_admission_date"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.encounter_type = 273, m.encounter_datetime, 0)"
+      }
     }
   ],
   "filters": {

@@ -104,9 +104,12 @@
       "column": "cr.identifier"
     },
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "number_of_anc_visits",
-      "column": "a.anc_visit_number"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "m.anc_visit_number"
+      }
     },
     {
       "type": "derived_column",
@@ -399,6 +402,15 @@
       "column": "a.remarks"
     }
   ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_type in (264, 265)"
+      }
+    ]
+  },
   "groupBy": {
     "columns": ["a.person_id"]
   },

@@ -22,7 +22,7 @@
       "alias": "tetanus_toxoid1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(CASE WHEN s.tetanus_toxoid1 = 1 THEN 1 ELSE 0 END)"
+        "expression": "SUM(s.tetanus_toxoid1)"
       }
     },
     {
@@ -30,7 +30,7 @@
       "alias": "tetanus_toxoid2",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(CASE WHEN s.tetanus_toxoid2 = 1 THEN 1 ELSE 0 END)"
+        "expression": "SUM(s.tetanus_toxoid2)"
       }
     },
     {
@@ -66,7 +66,7 @@
   },
   "dynamicJsonQueryGenerationDirectives": {
     "patientListGenerator": {
-      "useTemplate": "moh_511_patient_list_template",
+      "useTemplate": "moh_405_patient_list_template",
       "useTemplateVersion": "1.0",
       "generatingDirectives": {
         "joinDirectives": {

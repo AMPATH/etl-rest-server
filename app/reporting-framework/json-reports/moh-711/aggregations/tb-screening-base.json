@@ -168,6 +168,10 @@
       },
       {
         "filterType": "tableColumns",
+        "conditionExpression": "t.is_clinical_encounter = 1"
+      },
+      {
+        "filterType": "tableColumns",
         "conditionExpression": "t.location_id in ?",
         "parameterName": "locations"
       }
