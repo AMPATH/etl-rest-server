@@ -191,6 +191,16 @@
     },
     {
       "type": "derived_column",
+      "alias": "bp_systolic",
+      "column": "a.bp_systolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_diastolic",
+      "column": "a.bp_diastolic"
+    },
+    {
+      "type": "derived_column",
       "alias": "blood_pressure",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -199,8 +209,13 @@
     },
     {
       "type": "simple_column",
-      "alias": "breast_exam",
+      "alias": "breast_exam_done",
       "column": "a.breast_exam_done"
+    },
+    {
+      "type": "simple_column",
+      "alias": "breast_exam",
+      "column": "a.breast_exam_finding"
     },
     {
       "type": "derived_column",
@@ -400,6 +415,26 @@
       "type": "simple_column",
       "alias": "remarks",
       "column": "a.remarks"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_type",
+      "column": "a.visit_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rtc",
+      "column": "a.rtc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hb",
+      "column": "a.hb"
+    },
+    {
+      "type": "simple_column",
+      "alias": "maturity_in_weeks",
+      "column": "a.maturity_in_weeks"
     }
   ],
   "filters": {

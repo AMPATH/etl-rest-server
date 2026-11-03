@@ -139,7 +139,7 @@
       "alias": "maternal_deaths_notified",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.date_maternal_death_notified is not null, 'Y', 'N')"
+        "expression": "if(m.date_maternal_death_notified is not null, 'Y', 'NA')"
       }
     },
     {

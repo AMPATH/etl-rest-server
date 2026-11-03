@@ -16,6 +16,14 @@
         "type": "LEFT",
         "joinCondition": "p.person_id = flat_identifiers.patient_id"
       }
+    },
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "vitals",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "p.person_id = vitals.person_id AND vitals.bp_systolic IS NOT NULL AND vitals.bp_diastolic IS NOT NULL AND vitals.weight IS NOT NULL AND vitals.height IS NOT NULL"
+      }
     }
   ],
   "columns": [
@@ -400,6 +408,34 @@
       "type": "derived_column",
       "alias": "remarks",
       "column": "p.remarks"
+    },
+    {
+      "type": "derived_column",
+      "alias": "weight",
+      "column": "vitals.weight"
+    },
+    {
+      "type": "derived_column",
+      "alias": "height",
+      "column": "vitals.height"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_systolic",
+      "column": "vitals.bp_systolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_diastolic",
+      "column": "vitals.bp_diastolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(p.encounter_type = 266, 'New', if(p.encounter_type = 267, 'Revisit', NULL))"
+      }
     }
   ],
   "filters": {
