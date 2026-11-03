@@ -718,6 +718,31 @@
       "type": "simple_column",
       "alias": "comments",
       "column": "f.remarks"
+    },
+    {
+      "type": "simple_column",
+      "alias": "height",
+      "column": "f.height"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "f.weight"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_systolic",
+      "column": "f.bp_systolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_diastolic",
+      "column": "f.bp_diastolic"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rtc",
+      "column": "f.rtc"
     }
   ],
   "filters": {

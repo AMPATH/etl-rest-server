@@ -16,6 +16,14 @@
         "type": "LEFT",
         "joinCondition": "m.person_id = flat_identifiers.patient_id"
       }
+    },
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "vitals",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.person_id = vitals.person_id AND vitals.bp_systolic IS NOT NULL AND vitals.bp_diastolic IS NOT NULL AND vitals.weight IS NOT NULL AND vitals.height IS NOT NULL"
+      }
     }
   ],
   "columns": [
@@ -43,6 +51,14 @@
       "type": "simple_column",
       "alias": "upi_number",
       "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "derived_column",
+      "alias": "visit_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.encounter_type = 265, 'Initial', if(m.encounter_type = 264, 'Return', NULL))"
+      }
     },
     {
       "type": "derived_column",
@@ -93,12 +109,22 @@
       }
     },
     {
+      "type": "simple_column",
+      "alias": "hb",
+      "column": "m.haemoglobin"
+    },
+    {
       "type": "derived_column",
       "alias": "first_anc_contact_12_or_less_weeks",
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(m.maturity_in_weeks <= 12 AND m.anc_visit_number = 1, 1, 0)"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "maturity_in_weeks",
+      "column": "m.maturity_in_weeks"
     },
     {
       "type": "derived_column",
@@ -153,8 +179,13 @@
       "alias": "breast_exam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.breast_exam = 'Y', 1, 0)"
+        "expression": "if(m.breast_exam_done = 'Y', 1, 0)"
       }
+    },
+    {
+      "type": "simple_column",
+      "alias": "breast_exam_finding",
+      "column": "m.breast_exam"
     },
     {
       "type": "derived_column",
@@ -260,12 +291,22 @@
     {
       "type": "simple_column",
       "alias": "height",
-      "column": "m.height"
+      "column": "vitals.height"
     },
     {
       "type": "simple_column",
       "alias": "weight",
-      "column": "m.weight"
+      "column": "vitals.weight"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_systolic",
+      "column": "vitals.bp_systolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_diastolic",
+      "column": "vitals.bp_diastolic"
     },
     {
       "type": "derived_column",
@@ -474,6 +515,11 @@
       "type": "simple_column",
       "alias": "remarks",
       "column": "m.remarks"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rtc",
+      "column": "m.rtc"
     }
   ],
   "filters": {

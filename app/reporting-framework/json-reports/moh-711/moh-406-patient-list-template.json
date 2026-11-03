@@ -384,6 +384,36 @@
       "type": "derived_column",
       "alias": "remarks",
       "column": "a.remarks"
+    },
+    {
+      "type": "derived_column",
+      "alias": "weight",
+      "column": "a.weight"
+    },
+    {
+      "type": "derived_column",
+      "alias": "height",
+      "column": "a.height"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_systolic",
+      "column": "a.bp_systolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_diastolic",
+      "column": "a.bp_diastolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_type",
+      "column": "a.client_type"
+    },
+    {
+      "type": "derived_column",
+      "alias": "counselled",
+      "column": "a.counselled"
     }
   ],
   "groupBy": {
