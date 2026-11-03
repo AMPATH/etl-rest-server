@@ -2,7 +2,7 @@
   "name": "moh731V2023Moh729bArtBase",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 729B F-MAPS, ART clients: the clients active and on ART this month in the HIV monthly report dataset (etl.hiv_monthly_report_dataset_frozen) for the month ending on the period's end date, at the requested locations -- one row per client -- with their current ARVs from their latest clinical HIV summary (flat_hiv_summary_v15b, next_clinical_datetime_hiv IS NULL). cur_arv_meds holds concept ids joined by ' ## ', single drugs or fixed-dose combinations, so the same regimen can be stored either way; regimen_signature breaks it into its components in a fixed order (e.g. TDF+3TC+DTG whether stored as 628 ## 802 ## 9759 or as the combination concept DTG/3TC/TDF (10268)), with OTHER for any concept not known as an ARV.",
+  "description": "MOH 729B F-MAPS, ART clients: the clients active and on ART this month in the HIV monthly report dataset (etl.hiv_monthly_report_dataset_frozen) for the month ending on the period's end date, at the requested locations -- one row per client, with age and sex from the dataset as MOH 731 3.2 counts them -- with their current ARVs from their latest clinical HIV summary (flat_hiv_summary_v15b, next_clinical_datetime_hiv IS NULL). cur_arv_meds holds concept ids joined by ' ## ', single drugs or fixed-dose combinations, so the same regimen can be stored either way; regimen_signature breaks it into its components in a fixed order (e.g. TDF+3TC+DTG whether stored as 628 ## 802 ## 9759 or as the combination concept DTG/3TC/TDF (10268)), with OTHER for any concept not known as an ARV.",
   "uses": [],
   "sources": [
     {
@@ -22,8 +22,9 @@
       "alias": "s",
       "join": {
         "type": "LEFT",
-        "joinCondition": "s.person_id = f.person_id AND s.is_clinical_encounter = 1 AND s.next_clinical_datetime_hiv IS NULL"
-      }
+        "joinCondition": "s.person_id = f.person_id AND s.encounter_id = (SELECT MAX(s2.encounter_id) FROM etl.flat_hiv_summary_v15b s2 WHERE s2.person_id = f.person_id AND s2.is_clinical_encounter = 1 AND s2.next_clinical_datetime_hiv IS NULL)"
+      },
+      "comment": "The client's latest clinical HIV summary. A client can have more than one row with next_clinical_datetime_hiv IS NULL, so the latest of them is picked, keeping one row per client as MOH 731 counts them."
     },
     {
       "table": "amrs.person_name",
@@ -70,9 +71,10 @@
       }
     },
     {
+      "comment": "As MOH 731 3.2 counts it: the HIV monthly dataset, not the person record (they can differ)",
       "type": "simple_column",
       "alias": "gender",
-      "column": "p.gender"
+      "column": "f.gender"
     },
     {
       "type": "derived_column",
@@ -83,13 +85,10 @@
       }
     },
     {
-      "comment": "Age at the end of the reporting month, so a month reads the same whenever it is run.",
-      "type": "derived_column",
+      "comment": "As MOH 731 3.2 counts it: the HIV monthly dataset (its age bands and the adult / paediatric split at 15)",
+      "type": "simple_column",
       "alias": "age",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, f.endDate)"
-      }
+      "column": "f.age"
     },
     {
       "type": "simple_column",

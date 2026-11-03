@@ -1,0 +1,125 @@
+{
+  "name": "moh731V2023Moh729bInfantEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, PMTCT Infants, step 1: one row per HEI encounter (115) at the locations in the period with an infant ARV prophylaxis (1250 or 1187) -- ZIDOVUDINE (797), NEVIRAPINE (631) or another (10986, 6467, 5622) -- with the feeding recorded (1151): breastfeeding (5526, 6046, 1402) or not (6985, 6945).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (1250, 1187, 1151)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_datetime",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(e.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(MAX(e.encounter_datetime))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_azt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id IN (1250, 1187) AND o.value_coded = 797)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_nvp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id IN (1250, 1187) AND o.value_coded = 631)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "has_other",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id IN (1250, 1187) AND o.value_coded IN (10986, 6467, 5622))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id = 1151 AND o.value_coded IN (5526, 6046, 1402))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "not_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id = 1151 AND o.value_coded IN (6985, 6945))"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_type = 115"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "name": "moh731V2023Moh729bCmEncounters",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, Cryptococcal Meningitis, step 1: one row per encounter at the locations in the period with a CM treatment recorded -- current treatment (1112) FLUCONAZOLE (747), AMPHOTERICIN B, LIPOSOMAL (49550) or FLUCYTOSINE DRUG (49557); ART deferred (1505) for cryptococcus initial treatment (12045); or a treatment plan (1277) of continue (1257), start (1256), change (1259) or change to maintenance (12126) -- with its obs pivoted: the drugs, treatment phase (12042), start date (12048) and plan.",
+  "uses": [],
+  "sources": [
+    {
+      "table": "amrs.encounter",
+      "alias": "e"
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "o",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "o.encounter_id = e.encounter_id AND o.voided = 0 AND o.concept_id IN (1112, 12042, 12048, 1277, 1505)"
+      }
+    },
+    {
+      "table": "amrs.encounter_type",
+      "alias": "et",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "et.encounter_type_id = e.encounter_type"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_id",
+      "column": "e.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "e.location_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(et.name)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "encounter_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(e.encounter_datetime)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_fluconazole",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id = 1112 AND o.value_coded = 747)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_liposomal_amphotericin",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id = 1112 AND o.value_coded = 49550)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_flucytosine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(o.concept_id = 1112 AND o.value_coded = 49557)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "current_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(CONCAT_WS(' + ', IF(MAX(o.concept_id = 1112 AND o.value_coded = 49550), 'Liposomal Amphotericin B', NULL), IF(MAX(o.concept_id = 1112 AND o.value_coded = 49557), 'Flucytosine', NULL), IF(MAX(o.concept_id = 1112 AND o.value_coded = 747), 'Fluconazole', NULL)), '')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_phase",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE MAX(IF(o.concept_id = 12042, o.value_coded, NULL)) WHEN 8395 THEN 'Induction' WHEN 12043 THEN 'Consolidation' WHEN 12044 THEN 'Maintenance' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(MAX(IF(o.concept_id = 12048, o.value_datetime, NULL)))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "treatment_plan",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE MAX(IF(o.concept_id = 1277, o.value_coded, NULL)) WHEN 1257 THEN 'Continue current' WHEN 1107 THEN 'None' WHEN 1256 THEN 'Start induction' WHEN 1259 THEN 'Change to consolidation' WHEN 12126 THEN 'Change to maintenance' WHEN 1260 THEN 'Stop' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_deferred_for_crypto",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(MAX(o.concept_id = 1505 AND o.value_coded = 12045) = 1, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "is_cm_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX((o.concept_id = 1112 AND o.value_coded IN (747, 49550, 49557)) OR (o.concept_id = 1505 AND o.value_coded = 12045) OR (o.concept_id = 1277 AND o.value_coded IN (1257, 1256, 1259, 12126)))"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "e.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      }
+    ]
+  },
+  "groupBy": {
+    "columns": ["e.encounter_id"]
+  }
+}

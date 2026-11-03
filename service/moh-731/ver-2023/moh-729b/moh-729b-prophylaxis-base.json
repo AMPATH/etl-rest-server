@@ -1,0 +1,165 @@
+{
+  "name": "moh731V2023Moh729bProphylaxisBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, Universal prophylaxis: the encounters in the month (moh731V2023Moh729bProphylaxisEncounters) at which the client is on COTRIMOXAZOLE (916) -- OI1A aged 15 and over at the encounter, OI1C under 15 -- or DAPSONE (92) aged 15 and over -- OI2A. One row per encounter, oldest first: the service keeps each client's latest per code, so a client counts once in each code they were on in the month (as COUNT(DISTINCT patient) per code).",
+  "uses": [
+    {
+      "name": "moh731V2023Moh729bProphylaxisEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023Moh729bProphylaxisEncounters",
+      "alias": "x"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = x.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = x.patient_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "flat_identifiers.patient_id = x.patient_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = x.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "x.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = x.patient_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(p.birthdate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, x.encounter_datetime)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_date",
+      "column": "x.encounter_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "prophylaxis_plan",
+      "column": "x.prophylaxis_plan"
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "'Universal prophylaxis'"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE x.drug WHEN 916 THEN 'Cotrimoxazole' WHEN 92 THEN 'Dapsone' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN x.drug = 916 THEN IF(TIMESTAMPDIFF(YEAR, p.birthdate, x.encounter_datetime) >= 15, 'OI1A', 'OI1C') WHEN x.drug = 92 AND TIMESTAMPDIFF(YEAR, p.birthdate, x.encounter_datetime) >= 15 THEN 'OI2A' END"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(CASE WHEN x.drug = 916 THEN IF(TIMESTAMPDIFF(YEAR, p.birthdate, x.encounter_datetime) >= 15, 'OI1A', 'OI1C') WHEN x.drug = 92 AND TIMESTAMPDIFF(YEAR, p.birthdate, x.encounter_datetime) >= 15 THEN 'OI2A' END) IS NOT NULL"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "x.encounter_datetime",
+        "order": "asc"
+      },
+      {
+        "column": "x.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

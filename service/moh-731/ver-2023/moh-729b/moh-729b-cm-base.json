@@ -1,0 +1,199 @@
+{
+  "name": "moh731V2023Moh729bCmBase",
+  "version": "1.0",
+  "tag": "moh_731_ver_2023",
+  "description": "MOH 729B F-MAPS, Cryptococcal Meningitis New Clients only: the clients 15 years and over (at the end of the period) with a CM treatment encounter in the month (moh731V2023Moh729bCmEncounters) and none recorded before the month -- new CM clients. OI6B if the encounter records liposomal Amphotericin B (49550), Flucytosine (49557) and Fluconazole (747) together, otherwise OI6X (any other treatment). One row per encounter, oldest first: the service keeps each client's first of the month.",
+  "uses": [
+    {
+      "name": "moh731V2023Moh729bCmEncounters",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh731V2023Moh729bCmEncounters",
+      "alias": "c"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "p.person_id = c.patient_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = c.patient_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "flat_identifiers.patient_id = c.patient_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = c.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "c.patient_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "p.uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = c.patient_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "p.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(p.birthdate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, p.birthdate, '{endDate}')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_type",
+      "column": "c.encounter_type"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_date",
+      "column": "c.encounter_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "current_treatment",
+      "column": "c.current_treatment"
+    },
+    {
+      "type": "simple_column",
+      "alias": "treatment_phase",
+      "column": "c.treatment_phase"
+    },
+    {
+      "type": "simple_column",
+      "alias": "treatment_start_date",
+      "column": "c.treatment_start_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "treatment_plan",
+      "column": "c.treatment_plan"
+    },
+    {
+      "type": "simple_column",
+      "alias": "art_deferred_for_crypto",
+      "column": "c.art_deferred_for_crypto"
+    },
+    {
+      "type": "derived_column",
+      "alias": "client_group",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "'Cryptococcal Meningitis'"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.on_liposomal_amphotericin = 1 AND c.on_flucytosine = 1 AND c.on_fluconazole = 1, 'Liposomal Amphotericin B + Flucytosine + Fluconazole', COALESCE(c.current_treatment, 'Not recorded'))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(c.on_liposomal_amphotericin = 1 AND c.on_flucytosine = 1 AND c.on_fluconazole = 1, 'OI6B', 'OI6X')"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "c.is_cm_treatment = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "TIMESTAMPDIFF(YEAR, p.birthdate, '{endDate}') >= 15"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "NOT EXISTS (SELECT 1 FROM amrs.obs o2 WHERE o2.person_id = c.patient_id AND o2.voided = 0 AND o2.obs_datetime < ? AND ((o2.concept_id = 1112 AND o2.value_coded IN (747, 49550, 49557)) OR (o2.concept_id = 1505 AND o2.value_coded = 12045) OR (o2.concept_id = 1277 AND o2.value_coded IN (1257, 1256, 1259, 12126))))",
+        "parameterName": "startDate"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "c.encounter_date",
+        "order": "asc"
+      },
+      {
+        "column": "c.encounter_id",
+        "order": "asc"
+      }
+    ]
+  }
+}
