@@ -14,7 +14,7 @@
       "alias": "hiv",
       "join": {
         "type": "LEFT",
-        "joinCondition": "m.person_id = hiv.person_id AND hiv.hiv_test_type IS NOT NULL AND hiv.hiv_test_type != ''"
+        "joinCondition": "m.person_id = hiv.person_id AND m.encounter_id = hiv.encounter_id  AND hiv.hiv_test_type IS NOT NULL AND hiv.hiv_test_type != ''"
       }
     }
   ],
@@ -654,7 +654,7 @@
       "alias": "maternity_admission_date",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.encounter_type = 273, m.encounter_datetime, 0)"
+        "expression": "if(m.encounter_type = 273, m.encounter_datetime, NULL)"
       }
     }
   ],
@@ -672,7 +672,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "m.encounter_datetime <= ?",
+        "conditionExpression": "m.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
         "parameterName": "endDate"
       },
       {
@@ -684,6 +684,6 @@
   },
   "groupBy": {
     "groupParam": "groupByParam",
-    "columns": ["m.person_id", "m.normal_deliveries"]
+    "columns": ["m.person_id", "m.mode_of_delivery"]
   }
 }

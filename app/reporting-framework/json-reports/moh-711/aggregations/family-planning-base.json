@@ -24,6 +24,14 @@
         "type": "INNER",
         "joinCondition": "f.person_id = p.person_id AND p.voided = 0"
       }
+    },
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "vitals",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "f.person_id = vitals.person_id AND vitals.bp_systolic IS NOT NULL AND vitals.bp_diastolic IS NOT NULL AND vitals.weight IS NOT NULL AND vitals.height IS NOT NULL"
+      }
     }
   ],
   "columns": [
@@ -152,7 +160,7 @@
       "alias": "fp_injections_dmpa_im_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'New', 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'DMPA-IM' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
@@ -160,7 +168,7 @@
       "alias": "fp_injections_dmpa_im_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'Revisit', 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'DMPA-IM' AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
@@ -168,7 +176,7 @@
       "alias": "fp_injections_dmpa_sc_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'New', 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'DMPA-SC' AND f.client_type = 'New', 1, 0)"
       }
     },
     {
@@ -176,7 +184,7 @@
       "alias": "fp_injections_dmpa_sc_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(f.contraceptive_dispensed = 'Injectables-Depo' AND f.client_type = 'Revisit', 1, 0)"
+        "expression": "IF(f.contraceptive_dispensed = 'DMPA-SC' AND f.client_type = 'Revisit', 1, 0)"
       }
     },
     {
@@ -488,7 +496,7 @@
       "alias": "post_abortion_fp_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(f.post_partum_timing_mother = 'MORE THAN SIX WEEKS' AND f.client_type = 'new', 1, 0)"
+        "expression": "IF(f.post_partum_timing_mother = 'LESS THAN SEVEN DAYS' AND f.client_type = 'new', 1, 0)"
       }
     },
     {
@@ -496,7 +504,7 @@
       "alias": "post_abortion_fp_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(f.post_partum_timing_mother = 'MORE THAN SIX WEEKS' AND f.client_type = 'Revisit', 1, 0)"
+        "expression": "null"
       }
     },
     {
@@ -722,22 +730,22 @@
     {
       "type": "simple_column",
       "alias": "height",
-      "column": "f.height"
+      "column": "vitals.height"
     },
     {
       "type": "simple_column",
       "alias": "weight",
-      "column": "f.weight"
+      "column": "vitals.weight"
     },
     {
       "type": "derived_column",
       "alias": "bp_systolic",
-      "column": "f.bp_systolic"
+      "column": "vitals.bp_systolic"
     },
     {
       "type": "derived_column",
       "alias": "bp_diastolic",
-      "column": "f.bp_diastolic"
+      "column": "vitals.bp_diastolic"
     },
     {
       "type": "simple_column",
