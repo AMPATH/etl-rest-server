@@ -56,7 +56,7 @@ class SmsService {
 
     try {
       const url =
-        `${this.baseUrl}/api/services/sendsms?apikey=${this.apiKey}` +
+        `${this.baseUrl}/api/services/sendotp?apikey=${this.apiKey}` +
         `&partnerID=${this.partnerId}` +
         `&message=${encodeURIComponent(message)}` +
         `&shortcode=${this.shortcode}` +
@@ -72,7 +72,7 @@ class SmsService {
       };
     } catch (error) {
       console.error(
-        'SMS sending failed:',
+        'OTP sending failed:',
         error.response?.data || error.message
       );
 
@@ -80,7 +80,7 @@ class SmsService {
         success: false,
         statusCode: error.response?.status || 500,
         error: error.response?.data || error.message,
-        message: 'Failed to send SMS'
+        message: 'Failed to send OTP! Please try again.'
       };
     }
   }
