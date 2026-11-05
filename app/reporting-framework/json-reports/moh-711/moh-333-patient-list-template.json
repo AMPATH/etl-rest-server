@@ -444,6 +444,14 @@
       "type": "simple_column",
       "alias": "comments",
       "column": "a.remarks"
+    },
+    {
+      "type": "derived_column",
+      "alias": "date_of_hiv_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(a.hiv_test_type, a.encounter_datetime, NULL)"
+      }
     }
   ],
   "groupBy": {
