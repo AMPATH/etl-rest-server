@@ -142,7 +142,7 @@
       "alias": "bf_within_1_hour",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.initiated_on_bf_in_1_hour)"
+        "expression": "SUM(m.bf_within_1_hour)"
       }
     },
     {

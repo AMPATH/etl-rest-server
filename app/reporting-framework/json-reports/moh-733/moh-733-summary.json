@@ -1,0 +1,9 @@
+{
+  "reports": [
+    "clientCategoryAggregate",
+    "nutritionInterventionAggregate",
+    "nutritionStatusAggregate",
+    "pregnantBreastfeedingAggregate",
+    "treatmentOutcomeAggregate"
+  ]
+}

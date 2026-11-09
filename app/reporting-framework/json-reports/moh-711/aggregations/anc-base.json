@@ -179,7 +179,7 @@
       "alias": "breast_exam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.breast_exam_done = 'Y', 1, 0)"
+        "expression": "if(m.breast_exam_done = 'YES', 1, 0)"
       }
     },
     {
