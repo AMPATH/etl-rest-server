@@ -1,0 +1,238 @@
+{
+  "name": "moh505AgeDisaggregation",
+  "version": "1.0",
+  "tag": "",
+  "description": "MOH 505 age-band aggregate: pivots the encounter-grain moh505ReportBase rows into one summary row per (location, age band), with every indicator counted as DISTINCT persons flagged positive (COUNT(DISTINCT CASE WHEN flag > 0 THEN person_id END)) so a patient with several flagged encounters in the period counts once - the flat table is encounter-grain, the register counts cases. transFormDirectives pivot age_range into dc__age_range__0_to_4__<indicator> / dc__age_range__5_and_above__<indicator> columns keyed on location_id (report-processor-helpers tranform), which is the app contract the MOH-505 screen binds. Patient-list drill-downs generate from moh505PatientList joined per person.",
+  "uses": [
+    {
+      "name": "moh505ReportBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "moh505ReportBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "b.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_range",
+      "column": "b.age_range"
+    },
+    {
+      "type": "derived_column",
+      "alias": "aefi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.aefi > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "acute_jaundice",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.acute_jaundice > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "acute_malnutrition",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.acute_malnutrition > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "anthrax",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.anthrax > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cholera",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.cholera > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dengue",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.dengue > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dysentery_bacillary",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.dysentery_bacillary > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.measles > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "maternal_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.maternal_deaths > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_deaths",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.neonatal_deaths > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "neonatal_tetanus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.neonatal_tetanus > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "plague",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.plague > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rabies",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.rabies > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.typhoid > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "yellow_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.yellow_fever > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_microscopy_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.malaria_microscopy_tested > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_microscopy_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.malaria_microscopy_positive > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_mrdt_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.malaria_mrdt_tested > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "malaria_mrdt_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.malaria_mrdt_positive > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bacterial_meningitis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.bacterial_meningitis > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "meningitis_no_csf",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.meningitis_no_csf > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_lab_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.typhoid_lab_tested > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "typhoid_lab_positive",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.typhoid_lab_positive > 0 THEN b.person_id END)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["age_range", "location_id"]
+  },
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "skipColumns": [],
+    "disaggregationColumns": ["age_range"]
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh505PatientList",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}
