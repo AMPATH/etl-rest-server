@@ -1,0 +1,61 @@
+{
+  "name": "moh505PatientList",
+  "version": "1.0",
+  "description": "v1.0: Patient-list template for the MOH 505 IDSR weekly report drill-down, rendered through the MOH 240 register columns (moh-240.columns.ts). Joined onto moh505ReportBase per person (fm.person_id = pt.person_id); identity presentation follows the lab706PatientList pattern - names/addresses/telephone as per-row correlated subqueries keyed on the base's person_id, safe on a paginated page. county_sub_county mirrors lab706PatientList's ' / ' order (state_province / county_district) so the same register reads consistently across the lab-706 and 505 drill-downs; flip both together once the person_address convention is verified against live data. The remaining MOH 240 register columns (lab_no, specimen, results...) have no MOH 505 flat-table source and print blank - moh240Columns renders '' for absent fields, which is the correct output until the ETL grows them. Every moh505ReportBase column (person_uuid, year_week, encounter_id, the indicator flags) also flows to the app: the patient-list SQL selects every base column.",
+  "sources": [
+    {
+      "table": "amrs.person",
+      "alias": "pt"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE_FORMAT(fm.encounter_datetime, '%d/%m/%Y')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(' ', pn.given_name, NULLIF(pn.middle_name, ''), pn.family_name) FROM amrs.person_name pn WHERE pn.person_id = fm.person_id AND pn.voided = 0 ORDER BY pn.preferred DESC, pn.person_name_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sex",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "fm.gender"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "county_sub_county",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(' / ', NULLIF(pa.state_province, ''), NULLIF(pa.county_district, '')) FROM amrs.person_address pa WHERE pa.person_id = fm.person_id AND pa.voided = 0 ORDER BY pa.preferred DESC, pa.person_address_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "village_estate_landmark",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT_WS(', ', NULLIF(pa.city_village, ''), NULLIF(pa.address3, '')) FROM amrs.person_address pa WHERE pa.person_id = fm.person_id AND pa.voided = 0 ORDER BY pa.preferred DESC, pa.person_address_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "telephone_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pa.value FROM amrs.person_attribute pa WHERE pa.person_id = fm.person_id AND pa.voided = 0 AND pa.person_attribute_type_id IN (10, 48) ORDER BY pa.person_attribute_id DESC LIMIT 1)"
+      }
+    }
+  ]
+}
