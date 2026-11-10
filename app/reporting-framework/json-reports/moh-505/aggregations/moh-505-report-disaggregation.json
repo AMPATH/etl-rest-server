@@ -149,6 +149,46 @@
     },
     {
       "type": "derived_column",
+      "alias": "poliomyelitis",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.poliomyelitis > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "suspected_malaria",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.suspected_malaria > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rift_valley_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.rift_valley_fever > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "viral_haemorrhagic_fever",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.viral_haemorrhagic_fever > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "all_other_diseases",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COUNT(DISTINCT CASE WHEN b.all_other_diseases > 0 THEN b.person_id END)"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "malaria_microscopy_tested",
       "expressionType": "simple_expression",
       "expressionOptions": {

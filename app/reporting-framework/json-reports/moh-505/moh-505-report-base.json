@@ -128,6 +128,31 @@
     },
     {
       "type": "simple_column",
+      "alias": "poliomyelitis",
+      "column": "fm.poliomyelitis"
+    },
+    {
+      "type": "simple_column",
+      "alias": "suspected_malaria",
+      "column": "fm.suspected_malaria"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rift_valley_fever",
+      "column": "fm.rift_valley_fever"
+    },
+    {
+      "type": "simple_column",
+      "alias": "viral_haemorrhagic_fever",
+      "column": "fm.viral_haemorrhagic_fever"
+    },
+    {
+      "type": "simple_column",
+      "alias": "all_other_diseases",
+      "column": "fm.all_other_diseases"
+    },
+    {
+      "type": "simple_column",
       "alias": "malaria_microscopy_tested",
       "column": "fm.malaria_microscopy_tested"
     },
