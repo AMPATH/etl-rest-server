@@ -18,16 +18,11 @@
   ],
   "columns": [
     {
-      "type": "simple_column",
-      "alias": "encounter_id",
-      "column": "m.encounter_id"
-    },
-    {
       "type": "derived_column",
       "alias": "normal_deliveries",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.normal_deliveries)"
+        "expression": "COUNT(DISTINCT CASE WHEN m.normal_deliveries = 1 THEN m.encounter_id END)"
       }
     },
     {
@@ -35,7 +30,7 @@
       "alias": "caesarian_sections",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.caesarian_sections)"
+        "expression": "COUNT(DISTINCT CASE WHEN m.caesarian_sections = 1 THEN m.encounter_id END)"
       }
     },
     {
@@ -43,7 +38,7 @@
       "alias": "breach_delivery",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.breach_delivery)"
+        "expression": "COUNT(DISTINCT CASE WHEN m.breach_delivery = 1 THEN m.encounter_id END)"
       }
     },
     {
@@ -51,7 +46,7 @@
       "alias": "assisted_vaginal_delivery",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.assisted_vaginal_delivery)"
+        "expression": "COUNT(DISTINCT CASE WHEN m.assisted_vaginal_delivery = 1 THEN m.encounter_id END)"
       }
     },
     {
@@ -147,7 +142,7 @@
       "alias": "bf_within_1_hour",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(m.initiated_on_bf_in_1_hour)"
+        "expression": "SUM(m.bf_within_1_hour)"
       }
     },
     {
@@ -360,7 +355,7 @@
     }
   ],
   "transFormDirectives": {
-    "joinColumn": "location_id",
+    "joinColumn": "person_id",
     "joinColumnParam": "",
     "skipColumns": [""],
     "disaggregationColumns": []

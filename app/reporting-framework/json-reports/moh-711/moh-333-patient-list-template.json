@@ -377,7 +377,7 @@
     {
       "type": "simple_column",
       "alias": "hiv_result_maternity",
-      "column": "a.hiv_results"
+      "column": "a.hiv_result_maternity"
     },
     {
       "type": "simple_column",
@@ -444,8 +444,25 @@
       "type": "simple_column",
       "alias": "comments",
       "column": "a.remarks"
+    },
+    {
+      "type": "derived_column",
+      "alias": "date_of_hiv_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(a.hiv_test_type, a.encounter_datetime, NULL)"
+      }
     }
   ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "a.encounter_type in (196, 274, 273, 269)"
+      }
+    ]
+  },
   "groupBy": {
     "columns": ["a.person_id"]
   },

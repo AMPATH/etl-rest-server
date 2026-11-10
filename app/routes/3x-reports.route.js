@@ -8,6 +8,7 @@ const { MOH711Service } = require('../../service/moh-711.service');
 const { MOH717Service } = require('../../service/moh-717.service');
 const { MOH705AService } = require('../../service/moh-705a.service');
 const { MOH705BService } = require('../../service/moh-705b.service');
+const { MOH733Service } = require('../../service/moh-733.service');
 // MOH 731 (Ver. July 2023) for these O3 routes; the production POC routes keep MOH731Service
 const {
   MOH731Ver2023Service: MOH731Service
@@ -1438,6 +1439,51 @@ const routes = [
           limit: Joi.number()
             .required()
             .description('The offset to control pagination')
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/moh-733',
+    config: {
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          let requestParams = Object.assign({}, request.query, request.params);
+
+          let reportParams = etlHelpers.getReportParams(
+            'moh733Report',
+            ['endDate', 'startDate', 'locationUuids'],
+            requestParams
+          );
+          reportParams.requestParams.isAggregated = true;
+
+          let service = new MOH733Service(
+            'moh733Report',
+            reportParams.requestParams
+          );
+          service
+            .generateReport(reportParams.requestParams)
+            .then((result) => {
+              reply(result);
+            })
+            .catch((error) => {
+              reply(error);
+            });
+        });
+      },
+      description: 'Get MOH 733 REPORT',
+      notes: 'Returns MOH 733 Report',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
         },
         params: {}
       }

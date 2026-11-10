@@ -179,7 +179,7 @@
       "alias": "breast_exam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.breast_exam_done = 'Y', 1, 0)"
+        "expression": "if(m.breast_exam_done = 'YES', 1, 0)"
       }
     },
     {
@@ -536,7 +536,7 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "m.encounter_datetime <= ?",
+        "conditionExpression": "m.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
         "parameterName": "endDate"
       },
       {

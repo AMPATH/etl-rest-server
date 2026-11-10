@@ -1,0 +1,353 @@
+{
+  "name": "pregnantBreastfeedingAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "pregnantBreastfeedingBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "pregnantBreastfeedingBase",
+      "alias": "a"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_sam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_sam)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_sam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_sam)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_sam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_sam)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_mam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_mam)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_mam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_mam)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_mam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_mam)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_sam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_sam_supplimentary_foods)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_sam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_sam_supplimentary_foods)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_sam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_sam_supplimentary_foods)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_mam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_mam_supplimentary_foods)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_mam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_mam_supplimentary_foods)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_mam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_mam_supplimentary_foods)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_vitamin_B6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_vitamin_B6)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_vitamin_B6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_vitamin_B6)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_vitamin_B6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_vitamin_B6)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_iron)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_iron)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_iron)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_defaulted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_defaulted)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_defaulted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_defaulted)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_defaulted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_defaulted)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_cured",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_cured)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cured",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_cured)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_cured",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_cured)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_died)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_died)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_died)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_non_recovered",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_non_recovered)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_non_recovered",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_non_recovered)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_non_recovered",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_non_recovered)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_transferred_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_pop_transferred_out)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_transferred_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_positive_transferred_out)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_transferred_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_tb_positive_transferred_out)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh_407_patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

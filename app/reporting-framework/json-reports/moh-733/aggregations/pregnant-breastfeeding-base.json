@@ -1,0 +1,422 @@
+{
+  "name": "pregnantBreastfeedingBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "m"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "m.person_id = P.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "vitals",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.person_id = vitals.person_id AND vitals.bp_systolic IS NOT NULL AND vitals.bp_diastolic IS NOT NULL AND vitals.weight IS NOT NULL AND vitals.height IS NOT NULL"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "m.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "m.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "m.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_type",
+      "column": "m.visit_type_nutrition"
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_sam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_sam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_sam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_mam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_mam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_mam",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_sam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_sam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_sam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_mam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_mam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_mam_supplimentary_foods",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_vitamin_B6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_vitamin_B6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_vitamin_B6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_iron",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_defaulted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_defaulted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_defaulted",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_cured",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_cured",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_cured",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_non_recovered",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_non_recovered",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_non_recovered",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_pop_transferred_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_positive_transferred_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    },
+
+    {
+      "type": "derived_column",
+      "alias": "hiv_tb_positive_transferred_out",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 , 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_type in (195,264, 265)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["m.person_id"]
+  }
+}

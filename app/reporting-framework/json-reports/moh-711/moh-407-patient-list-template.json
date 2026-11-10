@@ -3,10 +3,17 @@
   "version": "1.0",
   "tag": "moh_407_patient_list_template",
   "description": "MOH 407 Patient list template",
+  "uses": [
+    {
+      "name": "chanisBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
 
   "sources": [
     {
-      "dataSet": "etl.flat_moh_711",
+      "dataSet": "chanisBase",
       "alias": "a"
     },
     {
@@ -14,7 +21,7 @@
       "alias": "pn",
       "join": {
         "type": "INNER",
-        "joinCondition": "pn.person_id = a.person_id"
+        "joinCondition": "pn.person_id = a.person_id AND pn.voided = 0"
       }
     },
     {
@@ -22,7 +29,7 @@
       "alias": "cr_id",
       "join": {
         "type": "LEFT",
-        "joinCondition": "cr_id.patient_id = a.person_id AND cr_id.identifier_type = 55"
+        "joinCondition": "cr_id.patient_id = a.person_id AND cr_id.identifier_type = 55 AND cr_id.voided = 0"
       }
     },
     {
@@ -30,7 +37,7 @@
       "alias": "national_id",
       "join": {
         "type": "LEFT",
-        "joinCondition": "national_id.patient_id = a.person_id AND national_id.identifier_type = 5"
+        "joinCondition": "national_id.patient_id = a.person_id AND national_id.identifier_type = 5 AND national_id.voided = 0"
       }
     },
     {
@@ -38,7 +45,7 @@
       "alias": "nupi",
       "join": {
         "type": "LEFT",
-        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45"
+        "joinCondition": "nupi.patient_id = a.person_id AND nupi.identifier_type = 45 AND nupi.voided = 0"
       }
     },
     {
@@ -66,19 +73,11 @@
       }
     },
     {
-      "table": "amrs.patient_identifier",
-      "alias": "cr_id",
-      "join": {
-        "type": "LEFT",
-        "joinCondition": "a.person_id = cr_id.patient_id AND (cr_id.voided IS NULL || cr_id.voided = 0) AND cr_id.identifier_type = 55"
-      }
-    },
-    {
       "table": "amrs.person_address",
       "alias": "pa",
       "join": {
         "type": "LEFT",
-        "joinCondition": "a.person_id = pa.person_id"
+        "joinCondition": "a.person_id = pa.person_id AND pa.voided = 0"
       }
     }
   ],
@@ -95,13 +94,8 @@
     },
     {
       "type": "simple_column",
-      "alias": "encounter_id",
-      "column": "a.encounter_id"
-    },
-    {
-      "type": "simple_column",
       "alias": "date",
-      "column": "a.date"
+      "column": "a.encounter_datetime"
     },
     {
       "type": "simple_column",
@@ -148,13 +142,43 @@
     },
     {
       "type": "simple_column",
+      "alias": "date_of_birth",
+      "column": "pn.birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "height",
+      "column": "a.height"
+    },
+    {
+      "type": "simple_column",
+      "alias": "weight",
+      "column": "a.weight"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_systolic",
+      "column": "a.bp_systolic"
+    },
+    {
+      "type": "derived_column",
+      "alias": "bp_diastolic",
+      "column": "a.bp_diastolic"
+    },
+    {
+      "type": "simple_column",
       "alias": "age_years",
       "column": "a.age"
     },
     {
       "type": "simple_column",
-      "alias": "age_months",
+      "alias": "age_in_months",
       "column": "a.age_in_months"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_in_years",
+      "column": "a.age"
     },
     {
       "type": "simple_column",

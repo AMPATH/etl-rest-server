@@ -366,7 +366,7 @@
       "alias": "measles_rubella_1_2_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "SUM(s.measles_vaccine AND s.age >= 1 AND s.age < 2)"
+        "expression": "SUM(s.measles_rubella_1_2_years)"
       }
     },
     {
@@ -424,10 +424,18 @@
       "expressionOptions": {
         "expression": "SUM(s.adverse_event_after_vaccination_below_1)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "opv_birth_doses",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.opv_birth_doses)"
+      }
     }
   ],
   "transFormDirectives": {
-    "joinColumn": "location_id",
+    "joinColumn": "person_id",
     "joinColumnParam": "",
     "skipColumns": [""],
     "disaggregationColumns": []

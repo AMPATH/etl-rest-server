@@ -214,7 +214,7 @@
     },
     {
       "type": "simple_column",
-      "alias": "breast_exam",
+      "alias": "breast_exam_finding",
       "column": "a.breast_exam_finding"
     },
     {

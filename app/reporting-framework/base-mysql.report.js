@@ -779,6 +779,12 @@ import * as lab_706_base from './json-reports/lab-706-base.json';
 import * as lab_706_aggregate from './json-reports/lab-706-aggregate.json';
 import * as lab_706_patient_list from './json-reports/lab-706-patient-list.json';
 
+// MOH 505 report
+import * as moh_505_report from './json-reports/moh-505/moh-505-report.json';
+import * as moh_505_base from './json-reports/moh-505/moh-505-report-base.json';
+import * as moh_505_disaggregation from './json-reports/moh-505/aggregations/moh-505-report-disaggregation.json';
+import * as moh_505_patient_list from './json-reports/moh-505/moh-505-patient-list-template.json';
+
 import * as moh_510_patient_list_template from './json-reports/moh-710/moh-510-patient-list.json';
 import * as moh_512_patient_list_template from './json-reports/moh-711/moh-512-patient-list-template.json';
 import * as tb_patient_list_template from './json-reports/moh-711/tb-patient-list-template.json';
@@ -787,6 +793,18 @@ import * as moh_413_patient_list_template from './json-reports/moh-710/moh-413-p
 import * as hpv_710_agregate from './json-reports/moh-710/aggregations/hpv-aggregate.json';
 import * as hpv_710_base from './json-reports/moh-710/aggregations/hpv-base.json';
 import * as moh_407_patient_list_template from './json-reports/moh-711/moh-407-patient-list-template.json';
+
+import * as moh_733_report from './json-reports/moh-733/moh-733-summary.json';
+import * as client_category_733_aggregate from './json-reports/moh-733/aggregations/client-category-aggregate.json';
+import * as client_category_733_base from './json-reports/moh-733/aggregations/client-category-base.json';
+import * as nutrition_intervention_733_aggregate from './json-reports/moh-733/aggregations/nutrition-intervention-aggregate.json';
+import * as nutrition_intervention_733_base from './json-reports/moh-733/aggregations/nutrition-intervention-base.json';
+import * as nutrition_status_733_aggregate from './json-reports/moh-733/aggregations/nutrition-status-aggregate.json';
+import * as nutrition_status_733_base from './json-reports/moh-733/aggregations/nutrition-status-base.json';
+import * as pregnant_breastfeeding_733_aggregate from './json-reports/moh-733/aggregations/pregnant-breastfeeding-aggregate.json';
+import * as pregnant_breastfeeding_733_base from './json-reports/moh-733/aggregations/pregnant-breastfeeding-base.json';
+import * as treatment_outcome_733_aggregate from './json-reports/moh-733/aggregations/treatment-outcome-aggregate.json';
+import * as treatment_outcome_733_base from './json-reports/moh-733/aggregations/treatment-outcome-base.json';
 
 export class BaseMysqlReport {
   constructor(reportName, params) {
@@ -3727,6 +3745,22 @@ export class BaseMysqlReport {
             lab706Base: this.cloneJsonSchema(lab_706_base)
           });
           break;
+        case 'MOH-505-report':
+          resolve({
+            main: this.cloneJsonSchema(moh_505_report)
+          });
+          break;
+        case 'moh505AgeDisaggregation':
+          resolve({
+            main: this.cloneJsonSchema(moh_505_disaggregation),
+            moh505ReportBase: this.cloneJsonSchema(moh_505_base)
+          });
+          break;
+        case 'moh505PatientList':
+          resolve({
+            main: this.cloneJsonSchema(moh_505_patient_list)
+          });
+          break;
         case 'moh_510_patient_list_template':
           resolve({
             main: this.cloneJsonSchema(moh_510_patient_list_template)
@@ -3796,6 +3830,47 @@ export class BaseMysqlReport {
         case 'moh-643-patient-list-template':
           resolve({
             main: this.cloneJsonSchema(moh_643_patient_list_template)
+          });
+          break;
+        case 'moh733Report':
+          resolve({
+            main: this.cloneJsonSchema(moh_733_report)
+          });
+          break;
+        case 'clientCategoryAggregate':
+          resolve({
+            main: this.cloneJsonSchema(client_category_733_aggregate),
+            clientCategoryBase: this.cloneJsonSchema(client_category_733_base)
+          });
+          break;
+        case 'nutritionInterventionAggregate':
+          resolve({
+            main: this.cloneJsonSchema(nutrition_intervention_733_aggregate),
+            nutritionInterventionBase: this.cloneJsonSchema(
+              nutrition_intervention_733_base
+            )
+          });
+          break;
+        case 'nutritionStatusAggregate':
+          resolve({
+            main: this.cloneJsonSchema(nutrition_status_733_aggregate),
+            nutritionStatusBase: this.cloneJsonSchema(nutrition_status_733_base)
+          });
+          break;
+        case 'pregnantBreastfeedingAggregate':
+          resolve({
+            main: this.cloneJsonSchema(pregnant_breastfeeding_733_aggregate),
+            pregnantBreastfeedingBase: this.cloneJsonSchema(
+              pregnant_breastfeeding_733_base
+            )
+          });
+          break;
+        case 'treatmentOutcomeAggregate':
+          resolve({
+            main: this.cloneJsonSchema(treatment_outcome_733_aggregate),
+            treatmentOutcomeBase: this.cloneJsonSchema(
+              treatment_outcome_733_base
+            )
           });
           break;
         default:

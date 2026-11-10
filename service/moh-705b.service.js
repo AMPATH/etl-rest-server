@@ -35,7 +35,10 @@ export class MOH705BService extends MultiDatasetPatientlistReport {
   }
 
   generatePatientListReport(reportParams) {
-    const indicators = reportParams.indicator.split(',') || [];
+    const indicators =
+      reportParams && reportParams.indicator
+        ? reportParams.indicator.split(',')
+        : [];
     let self = this;
     return new Promise((resolve, reject) => {
       super
