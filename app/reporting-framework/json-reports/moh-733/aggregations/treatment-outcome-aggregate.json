@@ -1,0 +1,281 @@
+{
+  "name": "treatmentOutcomeAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "treatmentOutcomeBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "treatmentOutcomeBase",
+      "alias": "a"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "cured_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cured_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "defaulted_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.defaulted_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "died_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.died_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "non_recovered_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.non_recovered_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transferred_out_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.transferred_out_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cured_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cured_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "defaulted_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.defaulted_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "died_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.died_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "non_recovered_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.non_recovered_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transferred_out_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.transferred_out_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cured_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cured_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "defaulted_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.defaulted_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "died_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.died_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "non_recovered_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.non_recovered_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transferred_out_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.transferred_out_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cured_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cured_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "defaulted_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.defaulted_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "died_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.died_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "non_recovered_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.non_recovered_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transferred_out_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.transferred_out_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cured_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cured_18_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "defaulted_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.defaulted_18_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "died_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.died_18_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "non_recovered_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.non_recovered_18_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transferred_out_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.transferred_out_18_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cured_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.cured_18_above_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "defaulted_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.defaulted_18_above_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "died_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.died_18_above_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "non_recovered_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.non_recovered_18_above_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transferred_out_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.transferred_out_18_above_years)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh_407_patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

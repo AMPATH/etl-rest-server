@@ -1,0 +1,809 @@
+{
+  "name": "clientCategoryAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [
+    {
+      "name": "clientCategoryBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "clientCategoryBase",
+      "alias": "a"
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "hiv_0_5_months_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_0_5_months_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_0_5_months_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_0_5_months_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_0_5_months_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_0_5_months_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_0_5_months_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_0_5_months_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_0_5_months_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_0_5_months_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_0_5_months_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_0_5_months_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_0_5_months_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_0_5_months_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_0_5_months_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_0_5_months_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_0_5_months_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_0_5_months_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_0_5_months_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_0_5_months_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_0_5_months_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_0_5_months_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_0_5_months_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_0_5_months_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_6_59_months_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_6_59_months_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_6_59_months_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_6_59_months_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_6_59_months_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_6_59_months_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_6_59_months_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_6_59_months_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_6_59_months_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_6_59_months_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_6_59_months_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_6_59_months_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_6_59_months_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_6_59_months_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_6_59_months_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_6_59_months_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_6_59_months_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_6_59_months_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_6_59_months_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_6_59_months_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_6_59_months_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_6_59_months_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_6_59_months_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_6_59_months_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_5_9_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_5_9_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_5_9_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_5_9_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_5_9_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_5_9_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_5_9_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_5_9_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_5_9_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_5_9_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_5_9_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_5_9_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_5_9_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_5_9_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_5_9_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_5_9_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_5_9_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_5_9_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_5_9_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_5_9_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_5_9_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_5_9_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_5_9_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_5_9_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_10_17_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_10_17_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_10_17_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_10_17_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_10_17_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_10_17_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_10_17_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_10_17_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_10_17_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_10_17_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_10_17_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_10_17_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_10_17_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_10_17_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_10_17_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_10_17_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_10_17_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_10_17_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_10_17_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_10_17_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_19_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_19_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_19_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_19_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_19_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_19_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_19_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_19_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_19_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_19_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_19_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_19_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_19_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_19_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_19_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_19_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_19_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_19_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_19_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_19_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_above_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_above_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_above_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_above_years_male_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_above_years_male_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_above_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_above_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_above_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_above_years_male_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_above_years_male_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_above_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_above_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_above_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_above_years_female_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_above_years_female_new)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_18_above_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_18_above_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.gen_population_18_above_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_and_tb_18_above_years_female_revisit",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.hiv_and_tb_18_above_years_female_revisit)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_0_5_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_0_5_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_0_5_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_0_5_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_0_5_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_0_5_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_0_5_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_0_5_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_6_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_6_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_6_59_months_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_6_59_months_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_6_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_6_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_6_59_months_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_6_59_months_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_5_9_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_5_9_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_5_9_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_5_9_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_5_9_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_5_9_years_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_5_9_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_5_9_years_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_5_17_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_5_17_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_5_17_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_5_17_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_5_17_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_5_17_years_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_5_17_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_5_17_years_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_18_19_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_18_19_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_18_19_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_18_19_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_18_19_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_18_19_years_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_18_19_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_18_19_years_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_18_above_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_18_above_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_18_above_years_male",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_18_above_years_male)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_new_18_above_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_new_18_above_years_female)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_revisit_18_above_years_female",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.tb_revisit_18_above_years_female)"
+      }
+    }
+  ],
+  "transFormDirectives": {
+    "joinColumn": "location_id",
+    "joinColumnParam": "",
+    "skipColumns": [""],
+    "disaggregationColumns": []
+  },
+  "dynamicJsonQueryGenerationDirectives": {
+    "patientListGenerator": {
+      "useTemplate": "moh_407_patient_list_template",
+      "useTemplateVersion": "1.0",
+      "generatingDirectives": {
+        "joinDirectives": {
+          "joinType": "INNER",
+          "joinCondition": "<<base_column>> = <<template_column>>",
+          "baseColumn": "person_id",
+          "templateColumn": "person_id"
+        }
+      }
+    }
+  }
+}

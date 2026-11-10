@@ -436,12 +436,15 @@
       "alias": "discharge_alive",
       "column": "m.live_birth"
     },
-
     {
-      "type": "simple_column",
+      "type": "derived_column",
       "alias": "bf_within_1_hour",
-      "column": "m.bf_within_1_hour"
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.bf_within_1_hour = 'Y', 1, 0)"
+      }
     },
+
     {
       "type": "simple_column",
       "alias": "deliveries_from_positive_women",
