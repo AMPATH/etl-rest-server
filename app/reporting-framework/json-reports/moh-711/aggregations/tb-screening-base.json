@@ -172,6 +172,10 @@
       },
       {
         "filterType": "tableColumns",
+        "conditionExpression": "t.encounter_type NOT IN (80,168,195,313,314)"
+      },
+      {
+        "filterType": "tableColumns",
         "conditionExpression": "t.location_id in ?",
         "parameterName": "locations"
       }

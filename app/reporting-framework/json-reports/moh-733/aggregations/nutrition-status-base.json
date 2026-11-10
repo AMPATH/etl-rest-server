@@ -1,0 +1,1633 @@
+{
+  "name": "nutritionStatusBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "m"
+    },
+    {
+      "table": "etl.person",
+      "alias": "p",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "m.person_id = p.person_id AND p.voided = 0"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "flat_identifiers",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.person_id = flat_identifiers.patient_id"
+      }
+    },
+    {
+      "table": "etl.flat_moh_711",
+      "alias": "vitals",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m.person_id = vitals.person_id AND vitals.bp_systolic IS NOT NULL AND vitals.bp_diastolic IS NOT NULL AND vitals.weight IS NOT NULL AND vitals.height IS NOT NULL"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "m.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location_id",
+      "column": "m.location_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "encounter_datetime",
+      "column": "m.encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_number",
+      "column": "flat_identifiers.ccc"
+    },
+    {
+      "type": "simple_column",
+      "alias": "upi_number",
+      "column": "flat_identifiers.nupi"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_type",
+      "column": "m.visit_type_nutrition"
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_Male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_years BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "same_gen_population_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F'1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_gen_population_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_hiv_and_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "sam_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_hiv_and_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mam_gen_population_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_hiv_and_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "undernutrition_risk_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_male_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_female_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_male_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_female_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_male_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_female_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_male_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_female_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_male_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_female_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_male_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "gen_population_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_hiv_and_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "overweight_obese_tb_female_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_type in (195,264, 265)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_datetime >= ?",
+        "parameterName": "startDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.encounter_datetime < DATE_ADD(?, INTERVAL 1 DAY)",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.location_id in ?",
+        "parameterName": "locations"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["m.person_id"]
+  }
+}
