@@ -411,14 +411,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "mam_gen_population_male_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.mam_gen_population_male_0_5_months)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -795,14 +787,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "mam_gen_population_male_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.mam_gen_population_male_0_5_months)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "undernutrition_risk_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -823,14 +807,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.undernutrition_risk_hiv_female_0_5_months)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "mam_gen_population_female_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.mam_gen_population_female_0_5_months)"
       }
     },
     {
@@ -859,14 +835,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "mam_gen_population_male_6_59_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.mam_gen_population_male_6_59_months)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "undernutrition_risk_hiv_and_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -891,14 +859,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "mam_gen_population_female_6_59_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.mam_gen_population_female_6_59_months)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "undernutrition_risk_hiv_and_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -919,14 +879,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.undernutrition_risk_hiv_male_5_9_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "mam_gen_population_male_5_9_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.mam_gen_population_male_5_9_years)"
       }
     },
     {
@@ -1019,14 +971,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_10_17_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_10_17_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "undernutrition_risk_hiv_and_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1079,14 +1023,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.undernutrition_risk_hiv_female_18_19_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_18_19_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_18_19_years)"
       }
     },
     {
@@ -1147,14 +1083,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_18_above_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_18_above_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "undernutrition_risk_hiv_and_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1207,14 +1135,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.overweight_obese_hiv_female_0_5_months)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_0_5_months)"
       }
     },
     {
@@ -1275,14 +1195,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_6_59_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_6_59_months)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "overweight_obese_hiv_and_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1303,14 +1215,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.overweight_obese_hiv_male_5_9_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_5_9_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_5_9_years)"
       }
     },
     {
@@ -1339,14 +1243,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_5_9_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_5_9_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "overweight_obese_hiv_and_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1367,14 +1263,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.overweight_obese_hiv_male_10_17_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_10_17_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_10_17_years)"
       }
     },
     {
@@ -1403,14 +1291,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_10_17_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_10_17_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "overweight_obese_hiv_and_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1431,14 +1311,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.overweight_obese_hiv_male_18_19_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_18_19_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_18_19_years)"
       }
     },
     {
@@ -1467,14 +1339,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_18_19_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_18_19_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "overweight_obese_hiv_and_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1499,14 +1363,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_18_above_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_18_above_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "overweight_obese_hiv_and_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -1527,14 +1383,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.overweight_obese_hiv_female_18_above_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_18_above_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_18_above_years)"
       }
     },
     {
