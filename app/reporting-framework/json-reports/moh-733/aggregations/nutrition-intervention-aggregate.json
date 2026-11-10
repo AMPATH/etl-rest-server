@@ -832,6 +832,102 @@
       "expressionOptions": {
         "expression": "SUM(a.vitamin_A_18_above_years)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_B6_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.vitamin_B6_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_B6_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.vitamin_B6_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_B6_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.vitamin_B6_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_B6_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.vitamin_B6_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_B6_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.vitamin_B6_18_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vitamin_B6_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.vitamin_B6_18_above_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_0_5_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron_0_5_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_6_59_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron_6_59_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_5_9_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron_5_9_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_10_17_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron_10_17_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_18_19_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron_18_19_years)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "iron_18_above_years",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(a.iron_18_above_years)"
+      }
     }
   ],
   "transFormDirectives": {

@@ -70,7 +70,7 @@
       "alias": "cured_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.nutrition_outcome = 'CURED', 1, 0)"
       }
     },
     {
@@ -78,16 +78,15 @@
       "alias": "defaulted_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.nutrition_outcome = 'DEFAULTED', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "died_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.nutrition_outcome = 'DECEASED', 1, 0)"
       }
     },
     {
@@ -95,7 +94,7 @@
       "alias": "non_recovered_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.nutrition_outcome = 'NOT-RECOVERED', 1, 0)"
       }
     },
     {
@@ -103,7 +102,7 @@
       "alias": "transferred_out_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.nutrition_outcome = 'TRANSFER OUT', 1, 0)"
       }
     },
     {
@@ -111,7 +110,7 @@
       "alias": "cured_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND m.nutrition_outcome = 'CURED', 1, 0)"
       }
     },
     {
@@ -119,16 +118,15 @@
       "alias": "defaulted_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND m.nutrition_outcome = 'DEFAULTED', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "died_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND m.nutrition_outcome = 'DECEASED', 1, 0)"
       }
     },
     {
@@ -136,7 +134,7 @@
       "alias": "non_recovered_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND m.nutrition_outcome = 'NOT-RECOVERED', 1, 0)"
       }
     },
     {
@@ -144,7 +142,7 @@
       "alias": "transferred_out_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND m.nutrition_outcome = 'TRANSFER OUT', 1, 0)"
       }
     },
     {
@@ -152,7 +150,7 @@
       "alias": "cured_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND m.nutrition_outcome = 'CURED', 1, 0)"
       }
     },
     {
@@ -160,16 +158,15 @@
       "alias": "defaulted_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND m.nutrition_outcome = 'DEFAULTED', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "died_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND m.nutrition_outcome = 'DECEASED', 1, 0)"
       }
     },
     {
@@ -177,7 +174,7 @@
       "alias": "non_recovered_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND m.nutrition_outcome = 'NOT-RECOVERED', 1, 0)"
       }
     },
     {
@@ -185,7 +182,7 @@
       "alias": "transferred_out_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND m.nutrition_outcome = 'TRANSFER OUT', 1, 0)"
       }
     },
     {
@@ -193,7 +190,7 @@
       "alias": "cured_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND m.nutrition_outcome = 'CURED', 1, 0)"
       }
     },
     {
@@ -201,16 +198,15 @@
       "alias": "defaulted_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND m.nutrition_outcome = 'DEFAULTED', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "died_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND m.nutrition_outcome = 'DECEASED', 1, 0)"
       }
     },
     {
@@ -218,7 +214,7 @@
       "alias": "non_recovered_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND m.nutrition_outcome = 'NOT-RECOVERED', 1, 0)"
       }
     },
     {
@@ -226,7 +222,7 @@
       "alias": "transferred_out_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND m.nutrition_outcome = 'TRANSFER OUT', 1, 0)"
       }
     },
     {
@@ -234,7 +230,7 @@
       "alias": "cured_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND m.nutrition_outcome = 'CURED', 1, 0)"
       }
     },
     {
@@ -242,16 +238,15 @@
       "alias": "defaulted_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND m.nutrition_outcome = 'DEFAULTED', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "died_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND m.nutrition_outcome = 'DECEASED', 1, 0)"
       }
     },
     {
@@ -259,7 +254,7 @@
       "alias": "non_recovered_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND m.nutrition_outcome = 'NOT-RECOVERED', 1, 0)"
       }
     },
     {
@@ -267,16 +262,15 @@
       "alias": "transferred_out_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND m.nutrition_outcome = 'TRANSFER OUT', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "cured_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND m.nutrition_outcome = 'CURED', 1, 0)"
       }
     },
     {
@@ -284,7 +278,7 @@
       "alias": "defaulted_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND m.nutrition_outcome = 'DEFAULTED', 1, 0)"
       }
     },
     {
@@ -292,7 +286,7 @@
       "alias": "died_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND m.nutrition_outcome = 'DECEASED', 1, 0)"
       }
     },
     {
@@ -300,7 +294,7 @@
       "alias": "non_recovered_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND m.nutrition_outcome = 'NOT-RECOVERED', 1, 0)"
       }
     },
     {
@@ -308,7 +302,7 @@
       "alias": "transferred_out_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND m.nutrition_outcome = 'TRANSFER OUT', 1, 0)"
       }
     }
   ],
@@ -317,7 +311,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "m.encounter_type in (195,264, 265)"
+        "conditionExpression": "m.encounter_type in (80,168)"
       },
       {
         "filterType": "tableColumns",
