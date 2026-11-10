@@ -128,7 +128,7 @@
     {
       "type": "simple_column",
       "alias": "patient_visit",
-      "column": "null"
+      "column": "a.visit_type"
     },
     {
       "type": "simple_column",
@@ -167,7 +167,7 @@
     },
     {
       "type": "simple_column",
-      "alias": "age_years",
+      "alias": "age",
       "column": "a.age"
     },
     {

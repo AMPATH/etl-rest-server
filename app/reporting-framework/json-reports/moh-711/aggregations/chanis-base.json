@@ -770,7 +770,7 @@
     {
       "type": "simple_column",
       "alias": "pregnant_or_breastfeeding",
-      "column": "null"
+      "column": "c.pregnant_breastfeeding"
     },
     {
       "type": "simple_column",
@@ -780,22 +780,27 @@
     {
       "type": "simple_column",
       "alias": "nutrition_status",
-      "column": "null"
+      "column": "c.nutrition_status"
     },
     {
       "type": "simple_column",
       "alias": "serostatus",
-      "column": "null"
+      "column": "c.serostatus"
     },
     {
       "type": "simple_column",
       "alias": "medical_condition",
-      "column": "null"
+      "column": "c.medical_conditions"
     },
     {
       "type": "simple_column",
       "alias": "food_secure",
-      "column": "null"
+      "column": "c.food_secure"
+    },
+    {
+      "type": "simple_column",
+      "alias": "visit_type",
+      "column": "c.visit_type_nutrition"
     },
     {
       "type": "simple_column",
@@ -808,7 +813,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "c.encounter_type in (168)"
+        "conditionExpression": "c.encounter_type in (80,168)"
       },
       {
         "filterType": "tableColumns",

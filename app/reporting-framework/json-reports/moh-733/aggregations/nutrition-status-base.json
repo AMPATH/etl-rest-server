@@ -70,7 +70,7 @@
       "alias": "sam_hiv_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -78,7 +78,7 @@
       "alias": "sam_gen_population_Male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -86,7 +86,7 @@
       "alias": "sam_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -94,7 +94,7 @@
       "alias": "sam_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -102,7 +102,7 @@
       "alias": "sam_hiv_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -110,7 +110,7 @@
       "alias": "sam_gen_population_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -118,7 +118,7 @@
       "alias": "sam_hiv_and_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -126,7 +126,7 @@
       "alias": "sam_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -134,7 +134,7 @@
       "alias": "sam_hiv_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -142,7 +142,7 @@
       "alias": "sam_gen_population_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -150,7 +150,7 @@
       "alias": "sam_hiv_and_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -158,7 +158,7 @@
       "alias": "sam_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -166,7 +166,7 @@
       "alias": "sam_hiv_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -174,7 +174,7 @@
       "alias": "sam_gen_population_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -182,7 +182,7 @@
       "alias": "sam_hiv_and_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -190,7 +190,7 @@
       "alias": "sam_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -198,7 +198,7 @@
       "alias": "sam_hiv_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_years BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -206,7 +206,7 @@
       "alias": "sam_gen_population_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -214,7 +214,7 @@
       "alias": "sam_hiv_and_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -222,7 +222,7 @@
       "alias": "sam_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -230,7 +230,7 @@
       "alias": "sam_hiv_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -238,7 +238,7 @@
       "alias": "sam_gen_population_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -246,7 +246,7 @@
       "alias": "sam_hiv_and_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -254,7 +254,7 @@
       "alias": "sam_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -262,7 +262,7 @@
       "alias": "sam_hiv_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -270,7 +270,7 @@
       "alias": "sam_gen_population_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -278,7 +278,7 @@
       "alias": "sam_hiv_and_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -286,7 +286,7 @@
       "alias": "sam_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -294,7 +294,7 @@
       "alias": "sam_hiv_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -302,7 +302,7 @@
       "alias": "same_gen_population_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -310,7 +310,7 @@
       "alias": "sam_hiv_and_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -318,7 +318,7 @@
       "alias": "sam_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F'1, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -326,7 +326,7 @@
       "alias": "sam_hiv_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -334,7 +334,7 @@
       "alias": "sam_gen_population_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -342,7 +342,7 @@
       "alias": "sam_hiv_and_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -350,7 +350,7 @@
       "alias": "sam_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -358,7 +358,7 @@
       "alias": "sam_hiv_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -366,7 +366,7 @@
       "alias": "sam_gen_population_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -374,7 +374,7 @@
       "alias": "sam_hiv_and_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -382,7 +382,7 @@
       "alias": "sam_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -390,7 +390,7 @@
       "alias": "sam_hiv_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -398,7 +398,7 @@
       "alias": "sam_gen_population_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -406,7 +406,7 @@
       "alias": "sam_hiv_and_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -414,7 +414,7 @@
       "alias": "sam_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -422,7 +422,7 @@
       "alias": "sam_hiv_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -430,7 +430,7 @@
       "alias": "sam_gen_population_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -438,7 +438,7 @@
       "alias": "sam_hiv_and_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -446,7 +446,7 @@
       "alias": "sam_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -454,7 +454,7 @@
       "alias": "mam_hiv_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -462,7 +462,7 @@
       "alias": "mam_gen_population_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -470,7 +470,7 @@
       "alias": "mam_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -478,7 +478,7 @@
       "alias": "mam_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -486,7 +486,7 @@
       "alias": "mam_hiv_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -494,7 +494,7 @@
       "alias": "mam_gen_population_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -502,7 +502,7 @@
       "alias": "mam_hiv_and_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -510,7 +510,7 @@
       "alias": "mam_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -518,7 +518,7 @@
       "alias": "mam_hiv_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -526,7 +526,7 @@
       "alias": "mam_gen_population_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -534,7 +534,7 @@
       "alias": "mam_hiv_and_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -542,7 +542,7 @@
       "alias": "mam_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -550,7 +550,7 @@
       "alias": "mam_hiv_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -558,7 +558,7 @@
       "alias": "mam_gen_population_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -566,7 +566,7 @@
       "alias": "mam_hiv_and_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -574,7 +574,7 @@
       "alias": "mam_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -582,7 +582,7 @@
       "alias": "mam_hiv_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -590,7 +590,7 @@
       "alias": "mam_gen_population_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -598,7 +598,7 @@
       "alias": "mam_hiv_and_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -606,7 +606,7 @@
       "alias": "mam_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -614,7 +614,7 @@
       "alias": "mam_hiv_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -622,7 +622,7 @@
       "alias": "mam_gen_population_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -630,7 +630,7 @@
       "alias": "mam_hiv_and_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -638,7 +638,7 @@
       "alias": "mam_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -646,7 +646,7 @@
       "alias": "mam_hiv_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -654,7 +654,7 @@
       "alias": "mam_gen_population_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -662,7 +662,7 @@
       "alias": "mam_hiv_and_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -670,7 +670,7 @@
       "alias": "mam_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -678,7 +678,7 @@
       "alias": "mam_hiv_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -686,7 +686,7 @@
       "alias": "mam_gen_population_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -694,7 +694,7 @@
       "alias": "mam_hiv_and_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -702,7 +702,7 @@
       "alias": "mam_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -710,7 +710,7 @@
       "alias": "mam_hiv_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -718,7 +718,7 @@
       "alias": "mam_gen_population_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -726,7 +726,7 @@
       "alias": "mam_hiv_and_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -734,7 +734,7 @@
       "alias": "mam_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -742,7 +742,7 @@
       "alias": "mam_hiv_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -750,7 +750,7 @@
       "alias": "mam_gen_population_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -758,7 +758,7 @@
       "alias": "mam_hiv_and_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -766,7 +766,7 @@
       "alias": "mam_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -774,7 +774,7 @@
       "alias": "mam_hiv_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -782,7 +782,7 @@
       "alias": "mam_gen_population_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -790,7 +790,7 @@
       "alias": "mam_hiv_and_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -798,7 +798,7 @@
       "alias": "mam_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -806,7 +806,7 @@
       "alias": "mam_hiv_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -814,7 +814,7 @@
       "alias": "mam_gen_population_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -822,7 +822,7 @@
       "alias": "mam_hiv_and_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -830,7 +830,7 @@
       "alias": "mam_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -838,7 +838,7 @@
       "alias": "undernutrition_risk_hiv_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -846,7 +846,7 @@
       "alias": "mam_gen_population_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -854,7 +854,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -862,7 +862,7 @@
       "alias": "undernutrition_risk_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -870,7 +870,7 @@
       "alias": "undernutrition_risk_hiv_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -878,7 +878,7 @@
       "alias": "mam_gen_population_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -886,7 +886,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -894,7 +894,7 @@
       "alias": "undernutrition_risk_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -902,7 +902,7 @@
       "alias": "undernutrition_risk_hiv_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -910,7 +910,7 @@
       "alias": "mam_gen_population_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -918,7 +918,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -926,7 +926,7 @@
       "alias": "undernutrition_risk_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -934,7 +934,7 @@
       "alias": "undernutrition_risk_hiv_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -942,7 +942,7 @@
       "alias": "mam_gen_population_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -950,7 +950,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -958,7 +958,7 @@
       "alias": "undernutrition_risk_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -966,7 +966,7 @@
       "alias": "undernutrition_risk_hiv_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -974,7 +974,7 @@
       "alias": "mam_gen_population_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -982,7 +982,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -990,7 +990,7 @@
       "alias": "undernutrition_risk_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -998,7 +998,7 @@
       "alias": "undernutrition_risk_hiv_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1006,7 +1006,7 @@
       "alias": "gen_population_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1014,7 +1014,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1022,7 +1022,7 @@
       "alias": "undernutrition_risk_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1030,7 +1030,7 @@
       "alias": "undernutrition_risk_hiv_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1038,7 +1038,7 @@
       "alias": "gen_population_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1046,7 +1046,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1054,7 +1054,7 @@
       "alias": "undernutrition_risk_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1062,7 +1062,7 @@
       "alias": "undernutrition_risk_hiv_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1070,7 +1070,7 @@
       "alias": "gen_population_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1078,7 +1078,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1086,7 +1086,7 @@
       "alias": "undernutrition_risk_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1094,7 +1094,7 @@
       "alias": "undernutrition_risk_hiv_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1102,7 +1102,7 @@
       "alias": "gen_population_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1110,7 +1110,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1118,7 +1118,7 @@
       "alias": "undernutrition_risk_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1126,7 +1126,7 @@
       "alias": "undernutrition_risk_hiv_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1134,7 +1134,7 @@
       "alias": "gen_population_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1142,7 +1142,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1150,7 +1150,7 @@
       "alias": "undernutrition_risk_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1158,7 +1158,7 @@
       "alias": "undernutrition_risk_hiv_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1166,7 +1166,7 @@
       "alias": "gen_population_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1174,7 +1174,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1182,7 +1182,7 @@
       "alias": "undernutrition_risk_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1190,7 +1190,7 @@
       "alias": "undernutrition_risk_hiv_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1198,7 +1198,7 @@
       "alias": "gen_population_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1206,7 +1206,7 @@
       "alias": "undernutrition_risk_hiv_and_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1214,7 +1214,7 @@
       "alias": "undernutrition_risk_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age = 'UNDERWEIGHT' OR m.weight_for_height IN ('SAM', 'MAM', 'MILD ACUTE MALNUTRITION')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1222,7 +1222,7 @@
       "alias": "overweight_obese_hiv_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1230,7 +1230,7 @@
       "alias": "gen_population_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5, 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1238,7 +1238,7 @@
       "alias": "overweight_obese_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1246,7 +1246,7 @@
       "alias": "overweight_obese_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1254,7 +1254,7 @@
       "alias": "overweight_obese_hiv_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1262,7 +1262,7 @@
       "alias": "gen_population_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5, 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1270,7 +1270,7 @@
       "alias": "overweight_obese_hiv_and_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1278,7 +1278,7 @@
       "alias": "overweight_obese_tb_female_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 0 AND 5 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1286,7 +1286,7 @@
       "alias": "overweight_obese_hiv_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1294,7 +1294,7 @@
       "alias": "gen_population_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1302,7 +1302,7 @@
       "alias": "overweight_obese_hiv_and_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1310,7 +1310,7 @@
       "alias": "overweight_obese_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1318,7 +1318,7 @@
       "alias": "overweight_obese_hiv_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1326,7 +1326,7 @@
       "alias": "gen_population_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59, 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1334,7 +1334,7 @@
       "alias": "overweight_obese_hiv_and_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1342,7 +1342,7 @@
       "alias": "overweight_obese_tb_female_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1350,7 +1350,7 @@
       "alias": "overweight_obese_hiv_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1358,7 +1358,7 @@
       "alias": "gen_population_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1366,7 +1366,7 @@
       "alias": "overweight_obese_hiv_and_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1374,7 +1374,7 @@
       "alias": "overweight_obese_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1382,7 +1382,7 @@
       "alias": "overweight_obese_hiv_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1390,7 +1390,7 @@
       "alias": "gen_population_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9, 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1398,7 +1398,7 @@
       "alias": "overweight_obese_hiv_and_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1406,7 +1406,7 @@
       "alias": "overweight_obese_tb_female_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1414,7 +1414,7 @@
       "alias": "overweight_obese_hiv_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1422,7 +1422,7 @@
       "alias": "gen_population_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1430,7 +1430,7 @@
       "alias": "overweight_obese_hiv_and_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1438,7 +1438,7 @@
       "alias": "overweight_obese_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1446,7 +1446,7 @@
       "alias": "overweight_obese_hiv_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1454,7 +1454,7 @@
       "alias": "gen_population_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17, 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1462,7 +1462,7 @@
       "alias": "overweight_obese_hiv_and_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1470,7 +1470,7 @@
       "alias": "overweight_obese_tb_female_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1478,7 +1478,7 @@
       "alias": "overweight_obese_hiv_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1486,7 +1486,7 @@
       "alias": "gen_population_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1494,7 +1494,7 @@
       "alias": "overweight_obese_hiv_and_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1502,7 +1502,7 @@
       "alias": "overweight_obese_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1510,7 +1510,7 @@
       "alias": "overweight_obese_hiv_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1518,7 +1518,7 @@
       "alias": "gen_population_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19, 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1526,7 +1526,7 @@
       "alias": "overweight_obese_hiv_and_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1534,7 +1534,7 @@
       "alias": "overweight_obese_tb_female_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1542,7 +1542,7 @@
       "alias": "overweight_obese_hiv_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1550,7 +1550,7 @@
       "alias": "gen_population_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1558,7 +1558,7 @@
       "alias": "overweight_obese_hiv_and_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1566,7 +1566,7 @@
       "alias": "overweight_obese_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'M' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1574,7 +1574,7 @@
       "alias": "overweight_obese_hiv_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
     {
@@ -1582,7 +1582,7 @@
       "alias": "gen_population_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18, 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -1590,7 +1590,7 @@
       "alias": "overweight_obese_hiv_and_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -1598,7 +1598,7 @@
       "alias": "overweight_obese_tb_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F', 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND (m.weight_for_age IN ('OVERWEIGHT', 'OBESE') OR m.weight_for_height IN ('OBESE', 'OVERWEIGHT')) AND m.medical_conditions = 'TB', 1, 0)"
       }
     }
   ],
@@ -1607,7 +1607,7 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "m.encounter_type in (195,264, 265)"
+        "conditionExpression": "m.encounter_type in (80,168)"
       },
       {
         "filterType": "tableColumns",

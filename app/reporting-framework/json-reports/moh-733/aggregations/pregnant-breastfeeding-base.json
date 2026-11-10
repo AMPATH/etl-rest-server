@@ -70,7 +70,7 @@
       "alias": "gen_pop_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.visit_type_nutrition = 'NEW' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -78,16 +78,15 @@
       "alias": "hiv_positive_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.visit_type_nutrition = 'NEW' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.visit_type_nutrition = 'NEW' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -95,7 +94,7 @@
       "alias": "gen_pop_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.visit_type_nutrition = 'REVISIT' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -103,16 +102,15 @@
       "alias": "hiv_positive_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.visit_type_nutrition = 'REVISIT' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_revisit",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.age_in_months < 6 AND m.visit_type_nutrition = 'REVISIT' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -120,7 +118,7 @@
       "alias": "gen_pop_sam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -128,16 +126,15 @@
       "alias": "hiv_positive_sam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_sam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'SAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -145,7 +142,7 @@
       "alias": "gen_pop_mam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -153,16 +150,15 @@
       "alias": "hiv_positive_mam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_mam",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -170,7 +166,7 @@
       "alias": "gen_pop_sam_supplimentary_foods",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'SAM' AND m.supplimental_foods != 'NONE' AND m.supplimental_foods IS NOT NULL AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -178,16 +174,15 @@
       "alias": "hiv_positive_sam_supplimentary_foods",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'SAM' AND m.supplimental_foods != 'NONE' AND m.supplimental_foods IS NOT NULL AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_sam_supplimentary_foods",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'SAM' AND m.supplimental_foods != 'NONE' AND m.supplimental_foods IS NOT NULL AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -195,7 +190,7 @@
       "alias": "gen_pop_mam_supplimentary_foods",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'MAM' AND m.supplimental_foods != 'NONE' AND m.supplimental_foods IS NOT NULL AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -203,16 +198,15 @@
       "alias": "hiv_positive_mam_supplimentary_foods",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'MAM' AND m.supplimental_foods != 'NONE' AND m.supplimental_foods IS NOT NULL AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_mam_supplimentary_foods",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_status = 'MAM' AND m.supplimental_foods != 'NONE' AND m.supplimental_foods IS NOT NULL AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -220,7 +214,7 @@
       "alias": "gen_pop_vitamin_B6",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_micronutrients = 'B6' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -228,16 +222,15 @@
       "alias": "hiv_positive_vitamin_B6",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_micronutrients = 'B6' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_vitamin_B6",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_micronutrients = 'B6' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -245,7 +238,7 @@
       "alias": "gen_pop_iron",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_micronutrients = 'IRON' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -253,16 +246,15 @@
       "alias": "hiv_positive_iron",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_micronutrients = 'IRON' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_iron",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_micronutrients = 'IRON' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -270,7 +262,7 @@
       "alias": "gen_pop_defaulted",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'DEFAULTED' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -278,16 +270,15 @@
       "alias": "hiv_positive_defaulted",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'DEFAULTED' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_defaulted",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'DEFAULTED' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -295,7 +286,7 @@
       "alias": "gen_pop_cured",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'CURED' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -303,16 +294,15 @@
       "alias": "hiv_positive_cured",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'CURED' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_cured",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'CURED' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -320,7 +310,7 @@
       "alias": "gen_pop_died",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'DECEASED' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -328,16 +318,15 @@
       "alias": "hiv_positive_died",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'DECEASED' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_died",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'DECEASED' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -345,7 +334,7 @@
       "alias": "gen_pop_non_recovered",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'NOT-RECOVERED' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -353,16 +342,15 @@
       "alias": "hiv_positive_non_recovered",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'NOT-RECOVERED' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_non_recovered",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'NOT-RECOVERED' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     },
     {
@@ -370,7 +358,7 @@
       "alias": "gen_pop_transferred_out",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'TRANSFER OUT' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB', 1, 0)"
       }
     },
     {
@@ -378,16 +366,15 @@
       "alias": "hiv_positive_transferred_out",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'TRANSFER OUT' AND m.serostatus = 'POSITIVE', 1, 0)"
       }
     },
-
     {
       "type": "derived_column",
       "alias": "hiv_tb_positive_transferred_out",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 , 1, 0)"
+        "expression": "if(m.nutrition_outcome = 'TRANSFER OUT' AND m.serostatus = 'POSITIVE' AND m.medical_conditions = 'TB', 1, 0)"
       }
     }
   ],
@@ -396,7 +383,11 @@
     "conditions": [
       {
         "filterType": "tableColumns",
-        "conditionExpression": "m.encounter_type in (195,264, 265)"
+        "conditionExpression": "m.encounter_type in (80,168)"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "m.pregnant_breastfeeding = 'YES'"
       },
       {
         "filterType": "tableColumns",
@@ -414,9 +405,5 @@
         "parameterName": "locations"
       }
     ]
-  },
-  "groupBy": {
-    "groupParam": "groupByParam",
-    "columns": ["m.person_id"]
   }
 }
