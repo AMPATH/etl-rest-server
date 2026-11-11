@@ -177,6 +177,14 @@
     },
     {
       "type": "derived_column",
+      "alias": "anc_visit_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN b.service = 'ANC' THEN (SELECT o.value_numeric FROM amrs.obs o WHERE o.encounter_id = b.encounter_id AND o.concept_id = 7086 AND o.voided = 0 ORDER BY o.obs_id DESC LIMIT 1) END"
+      }
+    },
+    {
+      "type": "derived_column",
       "alias": "test_type",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -246,7 +254,7 @@
       "alias": "nupi",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 55 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
       }
     },
     {

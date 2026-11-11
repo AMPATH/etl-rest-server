@@ -2,7 +2,7 @@
   "name": "moh731V2023PrepInitiatedAggregate",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 731 (Ver. July 2023) 1.3 No. Initiated on PrEP (NEW), HV01-19 to HV01-31: each client's latest Initial PrEP visit in the period where PrEP was prescribed, by population category and sex, excluding transfer-ins -- a client who transferred in had already started PrEP elsewhere, so is not newly initiated here. Pregnant and breastfeeding women (HV01-31) are counted from is_pbfw. 0 when there are none.",
+  "description": "MOH 731 (Ver. July 2023) 1.3 No. Initiated on PrEP (NEW), HV01-19 to HV01-31: each client's latest Initial PrEP visit in the period where PrEP was prescribed, by population category and sex, excluding transfer-ins -- a client who transferred in had already started PrEP elsewhere, so is not newly initiated here. Pregnant and breastfeeding women (HV01-31) are counted from is_pbfw, and left out of General popn Female (HV01-20) so they are not reported twice. 0 when there are none.",
   "uses": [
     {
       "name": "moh731V2023PrepVisitsBase",

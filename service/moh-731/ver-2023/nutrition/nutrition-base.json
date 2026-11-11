@@ -129,7 +129,7 @@
       "alias": "nupi",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 45 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = p.person_id AND pi.identifier_type = 55 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
       }
     },
     {
