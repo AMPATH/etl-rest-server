@@ -831,9 +831,5 @@
         "parameterName": "locations"
       }
     ]
-  },
-  "groupBy": {
-    "groupParam": "groupByParam",
-    "columns": ["c.person_id"]
   }
 }
