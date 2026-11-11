@@ -5,8 +5,9 @@ const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
  * MOH 362 HTS lab, referral and linkage register for O3: one row per test, the
- * same tests as MOH 731 1.1 HIV Tests (its datasets, test rules and one test
- * per client per day), for the whole facility of the requested locations, with
+ * MOH 731 1.1 HIV Tests done at HTS (its datasets, test rules and one test per
+ * client per day; ANC, Maternity and PNC tests go to their own registers), for
+ * the whole facility of the requested locations, with
  * the register's details. The referral and linkage register is the positive
  * rows with an ART start date.
  *

@@ -2,7 +2,7 @@
   "name": "moh731V2023Moh362Base",
   "version": "1.0",
   "tag": "moh_731_ver_2023",
-  "description": "MOH 362 HTS lab, referral and linkage register: the same tests as MOH 731 1.1 HIV Tests (moh731V2023HivTestsBase -- its facility scope, test rules and one test per client per day), one row per test, with the form's details: the three HIV tests and their kits, population and KVP code, discordant couple, prevention services referred to, HTS provider, and for the referral and linkage register the identification strategy, referred to, handed over to, residence, ART start and CCC number. The referral and linkage register is the positives with an ART start date.",
+  "description": "MOH 362 HTS lab, referral and linkage register: the MOH 731 1.1 HIV Tests done at HTS (moh731V2023HivTestsBase with service 'HTS', encounter types 296/297 -- its facility scope, test rules and one test per client per day; ANC, Maternity and PNC tests belong to their own registers), one row per test, with the form's details: the three HIV tests and their kits, population and KVP code, discordant couple, prevention services referred to, HTS provider, and for the referral and linkage register the identification strategy, referred to, handed over to, residence, ART start and CCC number. The referral and linkage register is the positives with an ART start date.",
   "uses": [
     {
       "name": "moh731V2023HivTestsBase",
@@ -42,6 +42,15 @@
       }
     }
   ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "t.service = 'HTS'"
+      }
+    ]
+  },
   "columns": [
     {
       "type": "derived_column",
