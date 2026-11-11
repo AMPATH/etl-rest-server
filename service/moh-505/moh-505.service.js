@@ -14,6 +14,21 @@ export class Moh505Service extends MultiDatasetPatientlistReport {
           if (additionalParams && additionalParams.type === 'patient-list') {
             resolve(results);
           } else {
+            // runMultipleReports drops rejected handlers, so an empty
+            // results array means EVERY dataset failed (commonly: the JSON
+            // references a flat-table column the table does not have yet -
+            // e.g. the borrowed indicators before the DDL migration ran).
+            // Fail loudly instead of resolving an empty result that is
+            // indistinguishable from "no data in the period"; the underlying
+            // cause is in the server log's "Report failed:" lines.
+            if (!results || results.length === 0) {
+              reject(
+                new Error(
+                  'every MOH 505 report handler failed - see the "Report failed: moh505AgeDisaggregation" lines in the server log for the underlying error (commonly a column the etl.flat_moh_505_weekly_v2 table does not have yet)'
+                )
+              );
+              return;
+            }
             // One summary row per (location, age band) after the
             // disaggregation pivot; the app merges them into one object.
             let finalResult = [];
