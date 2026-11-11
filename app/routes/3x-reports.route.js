@@ -9,6 +9,7 @@ const { MOH717Service } = require('../../service/moh-717.service');
 const { MOH705AService } = require('../../service/moh-705a.service');
 const { MOH705BService } = require('../../service/moh-705b.service');
 const { MOH733Service } = require('../../service/moh-733.service');
+const { MOH511Service } = require('../../service/moh-511/moh-511.service');
 // MOH 731 (Ver. July 2023) for these O3 routes; the production POC routes keep MOH731Service
 const {
   MOH731Ver2023Service: MOH731Service
@@ -1550,6 +1551,44 @@ const routes = [
         },
         params: {}
       }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/moh-511-register',
+    config: {
+      handler: async function (request, reply) {
+        const service = new MOH511Service();
+        console.log(
+          'PARAMS: ',
+          request.query.locationUuids,
+          request.query.startDate,
+          request.query.endDate
+        );
+        if (
+          request.query.locationUuids &&
+          request.query.startDate &&
+          request.query.endDate
+        ) {
+          const locationUuid = request.query.locationUuids;
+          const startDate = request.query.startDate;
+          const endDate = request.query.endDate;
+          const res = await service.getMoh511Register(
+            locationUuid,
+            startDate,
+            endDate
+          );
+          reply({
+            data: res
+          });
+        } else {
+          reply(Boom.badData());
+        }
+      },
+      plugins: {},
+      description: 'Get moh-511 register',
+      notes: 'Returns moh-511 register',
+      tags: ['api']
     }
   }
 ];
