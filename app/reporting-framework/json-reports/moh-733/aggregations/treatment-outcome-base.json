@@ -14,7 +14,7 @@
       "alias": "p",
       "join": {
         "type": "INNER",
-        "joinCondition": "m.person_id = P.person_id AND p.voided = 0"
+        "joinCondition": "m.person_id = p.person_id AND p.voided = 0"
       }
     },
     {
@@ -329,9 +329,5 @@
         "parameterName": "locations"
       }
     ]
-  },
-  "groupBy": {
-    "groupParam": "groupByParam",
-    "columns": ["m.person_id"]
   }
 }
