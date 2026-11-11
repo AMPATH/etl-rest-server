@@ -1536,7 +1536,6 @@ const routes = [
           });
         }
       },
-      auth: false,
       description: 'Get MOH 733 PATIENT LIST',
       notes: 'Returns MOH 733 Patient List',
       tags: ['api'],
