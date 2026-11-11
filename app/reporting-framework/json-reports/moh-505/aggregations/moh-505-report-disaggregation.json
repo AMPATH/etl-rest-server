@@ -265,6 +265,7 @@
     "patientListGenerator": {
       "useTemplate": "moh505PatientList",
       "useTemplateVersion": "1.0",
+      "skipParams": ["gender"],
       "generatingDirectives": {
         "joinDirectives": {
           "joinType": "INNER",
