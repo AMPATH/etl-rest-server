@@ -13,7 +13,7 @@
 
   "sources": [
     {
-      "dataSet": "chanisBase",
+      "table": "etl.flat_moh_711",
       "alias": "a"
     },
     {
@@ -128,7 +128,7 @@
     {
       "type": "simple_column",
       "alias": "patient_visit",
-      "column": "a.visit_type"
+      "column": "a.visit_type_nutrition"
     },
     {
       "type": "simple_column",
@@ -183,12 +183,12 @@
     {
       "type": "simple_column",
       "alias": "pregnant_or_breastfeeding",
-      "column": "a.pregnant_or_breastfeeding"
+      "column": "a.pregnant_breastfeeding"
     },
     {
       "type": "simple_column",
       "alias": "z_score",
-      "column": "a.z_score"
+      "column": "null"
     },
     {
       "type": "simple_column",
@@ -203,7 +203,7 @@
     {
       "type": "simple_column",
       "alias": "medical_condition",
-      "column": "a.medical_condition"
+      "column": "a.medical_conditions"
     },
     {
       "type": "simple_column",
@@ -213,7 +213,52 @@
     {
       "type": "simple_column",
       "alias": "nutrition_intervention",
-      "column": "a.nutrition_intervention"
+      "column": "a.supplimental_foods"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nutrition_outcome",
+      "column": "a.nutrition_outcome"
+    },
+    {
+      "type": "simple_column",
+      "alias": "therapeutic_foods",
+      "column": "a.therapeutic_foods"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nutrition_micronutrients",
+      "column": "a.nutrition_micronutrients"
+    },
+    {
+      "type": "simple_column",
+      "alias": "admission_criteria",
+      "column": "a.admission_criteria"
+    },
+    {
+      "type": "simple_column",
+      "alias": "type_of_admission",
+      "column": "a.type_of_admission"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cadre",
+      "column": "a.cadre"
+    },
+    {
+      "type": "simple_column",
+      "alias": "serostatus",
+      "column": "a.serostatus"
+    },
+    {
+      "type": "simple_column",
+      "alias": "nutrition_status",
+      "column": "a.nutrition_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "z_score",
+      "column": "a.weight_for_age OR a.weight_for_height OR a.height_for_age"
     },
     {
       "type": "simple_column",
