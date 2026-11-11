@@ -1,7 +1,7 @@
 var authorizer = require('../../authorization/etl-authorizer');
 var etlHelpers = require('../../etl-helpers');
 var preRequest = require('../../pre-request-processing');
-var _ = require('underscore');
+var _ = require('lodash');
 import { Moh505Service } from '../../service/moh-505/moh-505.service';
 
 var privileges = authorizer.getAllPrivileges();
@@ -84,10 +84,15 @@ const routes = [
             requestCopy.limitParam = requestParams.limit;
             requestCopy.offSetParam = requestParams.startIndex;
 
-            let service = new Moh505Service(
-              'moh505AgeDisaggregation',
-              requestCopy
-            );
+            // The patient list must resolve the MOH-505-report stub, not the
+            // disaggregation directly: MultiDatasetPatientlistReport's flow
+            // reads main.reports off the resolved schema, and the
+            // disaggregation JSON has no reports array - resolving it here
+            // threw a TypeError (the 500). Through the stub the framework
+            // wraps moh505AgeDisaggregation as a PatientlistMysqlReport
+            // handler, whose own generatePatientListReport drives the
+            // base + template join (same flow as the moh-705 summary stub).
+            let service = new Moh505Service('MOH-505-report', requestCopy);
 
             service
               .getPatientListReport(requestCopy)

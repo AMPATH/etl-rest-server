@@ -805,6 +805,7 @@ import * as pregnant_breastfeeding_733_aggregate from './json-reports/moh-733/ag
 import * as pregnant_breastfeeding_733_base from './json-reports/moh-733/aggregations/pregnant-breastfeeding-base.json';
 import * as treatment_outcome_733_aggregate from './json-reports/moh-733/aggregations/treatment-outcome-aggregate.json';
 import * as treatment_outcome_733_base from './json-reports/moh-733/aggregations/treatment-outcome-base.json';
+import * as moh_733_patient_list_template from './json-reports/moh-733/moh-733-patient-list-template.json';
 
 export class BaseMysqlReport {
   constructor(reportName, params) {
@@ -3873,6 +3874,10 @@ export class BaseMysqlReport {
             )
           });
           break;
+        case 'moh_733_patient_list_template':
+          resolve({
+            main: this.cloneJsonSchema(moh_733_patient_list_template)
+          });
         default:
           reject('Unknown report ', reportName);
           break;
