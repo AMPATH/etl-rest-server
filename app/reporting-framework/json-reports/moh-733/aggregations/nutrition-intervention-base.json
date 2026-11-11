@@ -430,7 +430,7 @@
       "alias": "gen_population_female_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'SAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
+        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status IN ('SAM', 'MAM') AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -459,14 +459,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -487,14 +479,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age_in_months < 6 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -523,14 +507,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_6_59_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -551,14 +527,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_6_59_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age_in_months BETWEEN 6 AND 59 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -587,14 +555,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_5_9_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -615,14 +575,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_5_9_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age BETWEEN 5 AND 9 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -651,14 +603,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_10_17_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -679,14 +623,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_10_17_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age BETWEEN 10 AND 17 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -715,14 +651,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_18_19_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -743,14 +671,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_18_19_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age BETWEEN 18 AND 19 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
       }
     },
     {
@@ -779,14 +699,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_18_above_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'M' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -807,14 +719,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus = 'POSITIVE' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_18_above_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "if(m.age >= 18 AND p.gender = 'F' AND m.nutrition_status = 'MAM' AND m.serostatus != 'POSITIVE' AND m.medical_conditions != 'TB' AND m.therapeutic_foods != 'NONE' AND m.therapeutic_foods IS NOT NULL, 1, 0)"
       }
     },
     {

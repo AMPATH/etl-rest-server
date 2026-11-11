@@ -411,14 +411,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_male_0_5_months)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_0_5_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -439,14 +431,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.mam_therapeutic_foods_hiv_female_0_5_months)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_0_5_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_female_0_5_months)"
       }
     },
     {
@@ -475,14 +459,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_6_59_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_male_6_59_months)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_6_59_months",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -503,14 +479,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.mam_therapeutic_foods_hiv_female_6_59_months)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_6_59_months",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_female_6_59_months)"
       }
     },
     {
@@ -539,14 +507,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_5_9_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_male_5_9_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_5_9_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -567,14 +527,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.mam_therapeutic_foods_hiv_female_5_9_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_5_9_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_female_5_9_years)"
       }
     },
     {
@@ -603,14 +555,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_10_17_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_male_10_17_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_10_17_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -631,14 +575,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.mam_therapeutic_foods_hiv_female_10_17_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_10_17_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_female_10_17_years)"
       }
     },
     {
@@ -667,14 +603,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_18_19_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_male_18_19_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_18_19_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -695,14 +623,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.mam_therapeutic_foods_hiv_female_18_19_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_18_19_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_female_18_19_years)"
       }
     },
     {
@@ -731,14 +651,6 @@
     },
     {
       "type": "derived_column",
-      "alias": "gen_population_male_18_above_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_male_18_above_years)"
-      }
-    },
-    {
-      "type": "derived_column",
       "alias": "mam_therapeutic_foods_hiv_and_tb_male_18_above_years",
       "expressionType": "simple_expression",
       "expressionOptions": {
@@ -759,14 +671,6 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "SUM(a.mam_therapeutic_foods_hiv_female_18_above_years)"
-      }
-    },
-    {
-      "type": "derived_column",
-      "alias": "gen_population_female_18_above_years",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "SUM(a.gen_population_female_18_above_years)"
       }
     },
     {
