@@ -173,19 +173,20 @@ function readBackupStatus() {
   } catch (e) {
     config = {};
   }
+  // Ops-managed file: known keys get defaults, and any extra keys the
+  // operations team adds (e.g. encryptionDetails, drPlanRef) pass through.
   return {
-    backupSchedule: config.backupSchedule || 'Daily',
-    lastSuccessfulAt: config.lastSuccessfulAt || null,
-    lastRestoreTest: config.lastRestoreTest || { date: null, result: null },
-    offSiteStorage: config.offSiteStorage || {
-      enabled: true,
-      location: null,
-      provider: null
-    },
-    encryptionAtRest: config.encryptionAtRest !== false,
-    rto: config.rto || '8 hours',
-    rpo: config.rpo || '8 hours',
-    note: 'Update conf/backup-status.json to reflect the current backup state.'
+    backupSchedule: 'Daily',
+    lastSuccessfulAt: null,
+    lastRestoreTest: { date: null, result: null },
+    offSiteStorage: { enabled: true, location: null, provider: null },
+    encryptionAtRest: true,
+    rto: '8 hours',
+    rpo: '8 hours',
+    ...config,
+    note:
+      config.note ||
+      'Update conf/backup-status.json to reflect the current backup state.'
   };
 }
 

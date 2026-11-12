@@ -1,0 +1,27 @@
+{
+  "backupSchedule": "Daily",
+  "lastSuccessfulAt": "2026-11-12T02:00:00Z",
+  "lastRestoreTest": {
+    "date": "2026-10-28T02:00:00Z",
+    "result": "success",
+    "restoredDataset": "amrs + etl schemas (sample patient records and report aggregates verified)",
+    "duration": "2h 45m",
+    "testedBy": "MTRH DBA team"
+  },
+  "offSiteStorage": {
+    "enabled": true,
+    "location": "Nairobi secondary data centre",
+    "provider": "REPLACE-ME-OFFSITE-PROVIDER",
+    "retention": "30 daily / 12 monthly / 7 yearly"
+  },
+  "encryptionAtRest": true,
+  "encryptionDetails": {
+    "backupArchives": "AES-256 encrypted",
+    "database": "MariaDB tablespace encryption (AES-256)",
+    "keyManagement": "Keys held by MTRH IT infrastructure; rotated per key-management policy"
+  },
+  "rto": "8 hours",
+  "rpo": "8 hours",
+  "drPlanRef": "MTRH Disaster Recovery Plan v2.1 (2026)",
+  "note": "PLACEHOLDER values for the DHA field test demo — replace conf/backup-status.json with real operational data (and remove the off-site provider placeholder) before production certification."
+}
