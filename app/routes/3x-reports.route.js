@@ -36,11 +36,7 @@ const routes = [
     method: 'GET',
     path: '/moh-710',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -81,11 +77,7 @@ const routes = [
     method: 'GET',
     path: '/moh-711',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -125,11 +117,7 @@ const routes = [
     method: 'GET',
     path: '/moh-717',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -169,11 +157,7 @@ const routes = [
     method: 'GET',
     path: '/moh-717-patient-list',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -217,6 +201,7 @@ const routes = [
     method: 'GET',
     path: '/moh-745',
     config: {
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -256,11 +241,7 @@ const routes = [
     method: 'GET',
     path: '/moh-705a',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -300,6 +281,7 @@ const routes = [
     method: 'GET',
     path: '/moh-705a-patient-list',
     config: {
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
@@ -337,11 +319,6 @@ const routes = [
           });
         }
       },
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
       description: 'Get MOH 204 patient list',
       notes: 'Returns MOH 204 patient list',
       tags: ['api'],
@@ -362,11 +339,7 @@ const routes = [
     method: 'GET',
     path: '/moh-705b',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -406,6 +379,7 @@ const routes = [
     method: 'GET',
     path: '/moh-705b-patient-list',
     config: {
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
@@ -441,11 +415,6 @@ const routes = [
                 reply(error);
               });
           });
-        }
-      },
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
         }
       },
       description: 'Get MOH 705B REPORT',
@@ -772,6 +741,7 @@ const routes = [
     method: 'GET',
     path: '/moh-731-monthly-summary',
     config: {
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
@@ -804,11 +774,6 @@ const routes = [
           });
         }
       },
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
       description: 'Get MOH 731 REPORT',
       notes: 'Returns MOH 731 Report',
       tags: ['api'],
@@ -824,6 +789,7 @@ const routes = [
     method: 'GET',
     path: '/moh-731-monthly-summary-patient-list',
     config: {
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
@@ -860,11 +826,6 @@ const routes = [
                 reply(error);
               });
           });
-        }
-      },
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
         }
       },
       description: 'Get MOH 731 REPORT',

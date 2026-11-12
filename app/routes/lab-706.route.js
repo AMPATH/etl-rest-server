@@ -52,11 +52,7 @@ const routes = [
     method: 'GET',
     path: '/etl/lab-706',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -96,11 +92,7 @@ const routes = [
     method: 'GET',
     path: '/etl/lab-706/patient-list',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         let requestParams = Object.assign({}, request.query, request.params);
         requestParams.locationUuids = request.query.locationUuids.split(',');

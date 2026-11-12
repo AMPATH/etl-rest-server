@@ -6,6 +6,7 @@ const routes = [
     method: 'GET',
     path: '/moh-740-report',
     config: {
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: async function (request, reply) {
         if (request.query.locationUuids) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
@@ -46,6 +47,7 @@ const routes = [
     method: 'GET',
     path: '/moh-740-report/patient-list',
     config: {
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           (request.query.reportName = 'moh-740-report'),

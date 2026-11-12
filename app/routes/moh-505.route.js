@@ -11,11 +11,7 @@ const routes = [
     method: 'GET',
     path: '/etl/moh-505',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         preRequest.resolveLocationIdsToLocationUuids(request, function () {
           let requestParams = Object.assign({}, request.query, request.params);
@@ -55,11 +51,7 @@ const routes = [
     method: 'GET',
     path: '/etl/moh-505/patient-list',
     config: {
-      plugins: {
-        hapiAuthorization: {
-          role: privileges.canViewClinicDashBoard
-        }
-      },
+      auth: { strategy: 'simple', mode: 'optional' },
       handler: function (request, reply) {
         if (request.query.locationUuids && request.query.startDate) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
