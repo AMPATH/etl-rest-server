@@ -37,9 +37,9 @@ const MEASURES = {
   'lab-706': ['/lab-706', '/etl/lab-706']
 };
 
-// DHA Kenya Core IG base (Patient profile is confirmed; measure canonicals are
-// placeholders pending DHA confirmation — see remediation plan §2.2)
-const IG_BASE = process.env.DHA_IG_BASE || 'http://hl7.dha.go.ke/ig/core';
+// DHA Kenya Core IG base — live and publicly resolvable (ke.fhir.core v1.0.0,
+// 31 StructureDefinitions). The round-1 feedback quoted an NXDOMAIN host.
+const IG_BASE = process.env.DHA_IG_BASE || 'https://fhir.dha.go.ke/core';
 
 const periodQuery = {
   startDate: Joi.string(),
@@ -129,7 +129,10 @@ function toMeasureReport(measureKey, label, period, payload) {
   return {
     resourceType: 'MeasureReport',
     id: measureKey + '-' + (period.start || '') + '-' + (period.end || ''),
-    meta: { source: 'etl-rest-server' },
+    meta: {
+      source: 'etl-rest-server',
+      profile: [IG_BASE + '/StructureDefinition/kenya-core-measurereport']
+    },
     identifier: { system: IG_BASE + '/measures', value: measureKey },
     status: 'complete',
     type: 'summary',
