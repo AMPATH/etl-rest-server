@@ -185,7 +185,11 @@ function readBackupStatus() {
     encryptionAtRest: config.encryptionAtRest !== false,
     rto: config.rto || '8 hours',
     rpo: config.rpo || '8 hours',
-    note: 'Update conf/backup-status.json to reflect the current backup state.'
+    // The ops-managed file may carry its own note (e.g. DR-drill context);
+    // the default only applies when the file omits it.
+    note:
+      config.note ||
+      'Update conf/backup-status.json to reflect the current backup state.'
   };
 }
 
