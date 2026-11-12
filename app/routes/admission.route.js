@@ -2,7 +2,8 @@ import {
   getPatientAdmissionHistory,
   getAdmissionRequests,
   getAdmittedPatients,
-  getAwaitingDischarge
+  getAwaitingDischarge,
+  getAdmissionLocations
 } from '../../service/admissions/admissions-service';
 var Boom = require('boom');
 const routes = [
@@ -95,6 +96,38 @@ const routes = [
       description: 'Get patients awaiating discharge',
       notes:
         'Returns a list of patients who have maternity discharge or general discharge',
+      tags: ['api'],
+      validate: {}
+    }
+  },
+  {
+    method: 'GET',
+    path: '/etl/admission-locations',
+    config: {
+      handler: async function (request, reply) {
+        let defaultSessionLocationUuid = '18c343eb-b353-462a-9139-b16606e6b6c2'; // location test
+        let sessionLocationUuid = null;
+        const sessionLocation =
+          request.auth.credentials?.sessionLocation || null;
+        if (sessionLocation) {
+          if (sessionLocation.uuid) {
+            sessionLocationUuid = sessionLocation.uuid;
+          }
+        }
+        console.log(`session location uuid`, sessionLocationUuid);
+        try {
+          const results = await getAdmissionLocations(
+            sessionLocationUuid ?? defaultSessionLocationUuid
+          );
+          reply(results || []);
+        } catch (error) {
+          reply(Boom.badRequest());
+        }
+      },
+      description:
+        'Get patient admission locations with their available bed capacity',
+      notes:
+        'Returns a list of admission locations with their available bed capacity',
       tags: ['api'],
       validate: {}
     }
