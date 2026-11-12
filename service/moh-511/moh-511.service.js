@@ -57,7 +57,7 @@ FROM
         INNER JOIN
     amrs.person p ON p.person_id = a.person_id AND p.voided = 0
         INNER JOIN
-    amrs.location l ON l.location_id = a.location_id AND l.voided = 0
+    amrs.location l ON l.location_id = a.location_id
         LEFT JOIN
     amrs.patient_identifier pi ON pi.patient_id = a.person_id AND pi.identifier_type = 55 AND pi.voided = 0
         INNER JOIN
@@ -68,7 +68,8 @@ FROM
     amrs.person_attribute attribute ON attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10
 WHERE l.uuid IN (?)
   AND DATE(a.encounter_datetime) >= ?
-  AND DATE(a.encounter_datetime) <= ?`;
+  AND DATE(a.encounter_datetime) <= ?
+  group by a.person_id`;
       const queryParts = {
         sql: sql,
         values: [locationUuids, startDate, endDate]
