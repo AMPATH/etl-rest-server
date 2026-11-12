@@ -1,0 +1,214 @@
+{
+  "name": "careTreatmentPatientList",
+  "version": "1.0",
+  "tag": "care_and_treatment",
+  "description": "Care & Treatment and ARV Management linelist: the clients behind one figure ({indicator}, a flag of careTreatmentBase), narrowed to an age band, sex and MCH/PMTCT unless they are 'all', with their names and identifiers. The service checks every value against the known flags and bands before they reach the query, as they are put in as text.",
+  "uses": [
+    {
+      "name": "careTreatmentBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "careTreatmentBase",
+      "alias": "b"
+    },
+    {
+      "table": "amrs.person_name",
+      "alias": "pn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pn.person_name_id = (SELECT pn2.person_name_id FROM amrs.person_name pn2 WHERE pn2.person_id = b.person_id AND pn2.voided = 0 ORDER BY pn2.preferred DESC, pn2.person_name_id DESC LIMIT 1)"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "b.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "b.patient_uuid"
+    },
+    {
+      "type": "derived_column",
+      "alias": "full_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT_WS(' ', pn.given_name, pn.middle_name, pn.family_name)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ccc_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = b.person_id AND pi.identifier_type = 28 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "amrs_number",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = b.person_id AND pi.identifier_type = 8 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nupi",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = b.person_id AND pi.identifier_type = 55 AND pi.voided = 0 ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "b.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age",
+      "column": "b.age"
+    },
+    {
+      "type": "simple_column",
+      "alias": "age_band",
+      "column": "b.age_band"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "b.location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "art_start_date",
+      "column": "b.art_start_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_meds",
+      "column": "b.cur_arv_meds"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_line",
+      "column": "b.cur_arv_line"
+    },
+    {
+      "type": "simple_column",
+      "alias": "last_visit_date",
+      "column": "b.last_visit_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "rtc_date",
+      "column": "b.rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "refill_date",
+      "column": "b.refill_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "months_dispensed",
+      "column": "b.months_dispensed"
+    },
+    {
+      "type": "simple_column",
+      "alias": "who_stage",
+      "column": "b.who_stage"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4",
+      "column": "b.cd4"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_date",
+      "column": "b.cd4_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cd4_percent",
+      "column": "b.cd4_percent"
+    },
+    {
+      "type": "simple_column",
+      "alias": "stability",
+      "column": "b.stability"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pregnant",
+      "column": "b.pregnant"
+    },
+    {
+      "type": "simple_column",
+      "alias": "breastfeeding",
+      "column": "b.breastfeeding"
+    },
+    {
+      "type": "simple_column",
+      "alias": "on_tb_treatment",
+      "column": "b.on_tb_treatment"
+    },
+    {
+      "type": "simple_column",
+      "alias": "started_tpt",
+      "column": "b.started_tpt"
+    },
+    {
+      "type": "simple_column",
+      "alias": "vl_1",
+      "column": "b.vl_1"
+    },
+    {
+      "type": "simple_column",
+      "alias": "vl_1_date",
+      "column": "b.vl_1_date"
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "b.{indicator} = 1"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "('{ageBand}' = 'all' OR b.age_band = '{ageBand}')"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "('{gender}' = 'all' OR b.gender = '{gender}')"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "('{mch}' = 'all' OR b.mch = 1)"
+      }
+    ]
+  },
+  "orderBy": {
+    "columns": [
+      {
+        "column": "full_name",
+        "order": "asc"
+      }
+    ]
+  },
+  "paging": {
+    "offSetParam": "startIndex",
+    "limitParam": "limit"
+  }
+}
