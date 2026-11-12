@@ -1559,12 +1559,6 @@ const routes = [
     config: {
       handler: async function (request, reply) {
         const service = new MOH511Service();
-        console.log(
-          'PARAMS: ',
-          request.query.locationUuids,
-          request.query.startDate,
-          request.query.endDate
-        );
         if (
           request.query.locationUuids &&
           request.query.startDate &&
