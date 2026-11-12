@@ -217,7 +217,7 @@
     }
   ],
   "groupBy": {
-    "columns": ["et.encounter_id"]
+    "columns": []
   },
   "filters": {
     "conditionJoinOperator": "and",
