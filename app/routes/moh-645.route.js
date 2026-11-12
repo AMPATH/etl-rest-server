@@ -20,7 +20,7 @@ const routes = [
     method: 'GET',
     path: '/moh-645-report',
     config: {
-      auth: { strategy: 'simple', mode: 'optional' },
+      auth: false,
       handler: function (request, reply) {
         if (!request.query.locationUuids) {
           return reply({ error: 'locationUuids is required' }).code(400);
@@ -51,7 +51,7 @@ const routes = [
     method: 'GET',
     path: '/moh-645-report/patient-list',
     config: {
-      auth: { strategy: 'simple', mode: 'optional' },
+      auth: false,
       handler: function (request, reply) {
         if (!request.query.locationUuids) {
           return reply({ error: 'locationUuids is required' }).code(400);

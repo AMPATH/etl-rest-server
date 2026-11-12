@@ -11,7 +11,11 @@ const routes = [
     method: 'GET',
     path: '/etl/dqa-chart-abstraction',
     config: {
-      auth: { strategy: 'simple', mode: 'optional' },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewPatient
+        }
+      },
       handler: function (request, reply) {
         if (request.query.locationUuids) {
           resolveLocationUuidToId

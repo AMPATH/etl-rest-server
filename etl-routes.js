@@ -873,7 +873,12 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/patient/{patientUuid}/hiv-clinical-reminder/{referenceDate}',
       config: {
-        auth: { strategy: 'simple', mode: 'optional' },
+        auth: 'simple',
+        plugins: {
+          hapiAuthorization: {
+            role: privileges.canViewPatient
+          }
+        },
         handler: function (request, reply) {
           let combineRequestParams = Object.assign(
             {},
@@ -6034,7 +6039,9 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/hei-monthly-summary',
       config: {
-        auth: { strategy: 'simple', mode: 'optional' },
+        plugins: {
+          hapiAuthorization: {}
+        },
         handler: function (request, reply) {
           preRequest.resolveLocationIdsToLocationUuids(request, function () {
             let requestParams = Object.assign(
@@ -6519,7 +6526,7 @@ module.exports = (function () {
       method: 'GET',
       path: '/etl/viral-load-suppression-rate',
       config: {
-        auth: { strategy: 'simple', mode: 'optional' },
+        auth: 'simple',
         plugins: {},
         handler: function (request, reply) {
           const { uuid } = request.query;
