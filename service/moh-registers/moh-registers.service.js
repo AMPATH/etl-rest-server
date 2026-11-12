@@ -139,6 +139,7 @@ FROM
 WHERE l.uuid IN (?)
   AND DATE(a.encounter_datetime) >= ?
   AND DATE(a.encounter_datetime) <= ?
+  AND a.encounter_type in (80,168)
   group by a.person_id`;
       const queryParts = {
         sql: sql,
