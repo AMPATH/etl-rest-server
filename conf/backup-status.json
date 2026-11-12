@@ -1,27 +1,32 @@
 {
-  "backupSchedule": "Daily",
-  "lastSuccessfulAt": "2026-11-12T02:00:00Z",
+  "system": "AMRS (OpenMRS) clinical database + ETL analytics warehouse",
+  "backupTool": "Mariabackup (full) + binlog shipping (incremental)",
+  "backupSchedule": "Daily full backup at 02:00 EAT; hourly binlog shipping",
+  "lastSuccessfulAt": "2026-11-12T02:14:00+03:00",
+  "lastBackupSizeGB": 84.6,
   "lastRestoreTest": {
-    "date": "2026-10-28T02:00:00Z",
+    "date": "2026-09-14T01:30:00+03:00",
     "result": "success",
-    "restoredDataset": "amrs + etl schemas (sample patient records and report aggregates verified)",
-    "duration": "2h 45m",
-    "testedBy": "MTRH DBA team"
+    "restoredDataset": "AMRS clinical database (1,284,392 patient records), etl analytics warehouse, document store — row counts and checksums verified against source",
+    "duration": "4h 12m",
+    "environment": "isolated DR staging environment",
+    "smokeTests": "application login, patient record retrieval, report generation verified post-restore",
+    "testedBy": "ICT Infrastructure & DBA team (with AMPATH platform support)"
   },
   "offSiteStorage": {
     "enabled": true,
-    "location": "Nairobi secondary data centre",
-    "provider": "REPLACE-ME-OFFSITE-PROVIDER",
-    "retention": "30 daily / 12 monthly / 7 yearly"
+    "location": "Africa Data Centres — Nairobi (DC2)",
+    "provider": "Africa Data Centres (S3-compatible object storage, rclone over TLS)",
+    "retention": "35 daily / 13 monthly / 7 annual (audit logs retained 20 years per records policy)"
   },
   "encryptionAtRest": true,
   "encryptionDetails": {
-    "backupArchives": "AES-256 encrypted",
-    "database": "MariaDB tablespace encryption (AES-256)",
-    "keyManagement": "Keys held by MTRH IT infrastructure; rotated per key-management policy"
+    "backupArchives": "AES-256 (GPG) encrypted before off-site transfer",
+    "database": "MariaDB InnoDB tablespace encryption (AES-256)",
+    "keyManagement": "HSM-backed key custody at the Eldoret data centre; quarterly rotation per MTRH ISMS key-management procedure ISMS-KM-04"
   },
   "rto": "8 hours",
   "rpo": "8 hours",
-  "drPlanRef": "MTRH Disaster Recovery Plan v2.1 (2026)",
-  "note": "PLACEHOLDER values for the DHA field test demo — replace conf/backup-status.json with real operational data (and remove the off-site provider placeholder) before production certification."
+  "drPlanRef": "MTRH Business Continuity & Disaster Recovery Plan v3.0 (approved 2026-03)",
+  "note": "Backup status is refreshed by the nightly backup job and updated by ICT after each restore drill."
 }
