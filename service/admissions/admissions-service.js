@@ -286,9 +286,49 @@ WHERE
     });
   });
 }
+function getAdmissionLocations(sessionLocationUuid) {
+  if (!sessionLocationUuid) {
+    throw new Error('Location not defined');
+  }
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT
+                b.*,
+                CONCAT(b.ward_location,' (',b.available_beds,' Beds Available)') as display
+                FROM(
+                SELECT 
+                    COUNT(IF(bpam.bed_id IS NULL AND blm.location_id IS NOT NULL, 1, NULL)) AS 'available_beds',
+                    sl.name AS 'ward_location',
+                    l.parent_location,
+                    sl.uuid as 'location_uuid',
+                    sl.location_id
+                FROM
+                    amrs.location l
+                        JOIN
+                    amrs.location sl ON (sl.parent_location = l.parent_location
+                        AND sl.retired = 0)
+                        LEFT JOIN
+                    amrs.bed_location_map blm ON (sl.location_id = blm.location_id)
+                        LEFT JOIN
+                    amrs.bed_patient_assignment_map bpam ON (bpam.bed_id = blm.bed_id
+                        AND bpam.date_stopped IS NULL
+                        AND bpam.voided = 0)
+                WHERE
+                    l.uuid = '${sessionLocationUuid}'
+                        AND l.retired = 0
+                GROUP BY sl.location_id) b;`;
+    const queryParts = {
+      sql: sql
+    };
+    db.queryServer(queryParts, function (result) {
+      result.sql = sql;
+      resolve(result.result || []);
+    });
+  });
+}
 module.exports = {
   getPatientAdmissionHistory,
   getAdmissionRequests,
   getAdmittedPatients,
-  getAwaitingDischarge
+  getAwaitingDischarge,
+  getAdmissionLocations
 };
