@@ -1,0 +1,482 @@
+{
+  "name": "careTreatmentBase",
+  "version": "1.0",
+  "tag": "care_and_treatment",
+  "description": "Care & Treatment and ARV Management, sections 1.1-1.4: the active clients at the locations in the HIV monthly report dataset (etl.hiv_monthly_report_dataset_frozen) for the month ending on endDate -- one row per client -- who started ART this month or are on ART this month, as MOH 731 3.1 and 3.2 count them. Active means seen within 30 days of the appointment, so defaulters of 0-30 days are included. Each client carries an age band, sex, whether they count under MCH/PMTCT and a 1/0 flag per figure; the totals sum the flags and the linelist lists the clients with a 1, so the two always agree. WHO stage, CD4, breastfeeding and the refill date come from the client's row in etl.flat_hiv_summary_v15b at that encounter, and stability from its latest non-voided 12108 / 12127 obs (as MOH 731 3.5).",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "h"
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "fhs",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "fhs.encounter_id = h.encounter_id AND fhs.person_id = h.person_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "stab",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "stab.obs_id = (SELECT MAX(o.obs_id) FROM amrs.obs o WHERE o.encounter_id = fhs.encounter_id AND o.concept_id = 12108 AND o.voided = 0)"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "nes",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "nes.obs_id = (SELECT MAX(o.obs_id) FROM amrs.obs o WHERE o.encounter_id = fhs.encounter_id AND o.concept_id = 12127 AND o.voided = 0)"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "l",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "l.location_id = h.location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "person_id",
+      "column": "h.person_id"
+    },
+    {
+      "type": "simple_column",
+      "alias": "patient_uuid",
+      "column": "h.person_uuid"
+    },
+    {
+      "type": "simple_column",
+      "alias": "location",
+      "column": "l.name"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "h.gender"
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "FLOOR(h.age)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age_band",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN FLOOR(h.age) < 1 THEN 'under_1' WHEN FLOOR(h.age) < 5 THEN '1_4' WHEN FLOOR(h.age) < 10 THEN '5_9' WHEN FLOOR(h.age) < 15 THEN '10_14' WHEN FLOOR(h.age) < 20 THEN '15_19' WHEN FLOOR(h.age) < 25 THEN '20_24' WHEN FLOOR(h.age) < 30 THEN '25_29' WHEN FLOOR(h.age) < 35 THEN '30_34' WHEN FLOOR(h.age) < 40 THEN '35_39' WHEN FLOOR(h.age) < 45 THEN '40_44' WHEN FLOOR(h.age) < 50 THEN '45_49' WHEN FLOOR(h.age) < 55 THEN '50_54' WHEN FLOOR(h.age) < 60 THEN '55_59' WHEN FLOOR(h.age) < 65 THEN '60_64' ELSE '65_plus' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mch",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(h.gender = 'F' AND FLOOR(h.age) >= 10 AND (h.pregnant_this_month = 1 OR fhs.is_mother_breastfeeding = 1 OR l.name LIKE '%MCH%'), 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date))"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_meds",
+      "column": "h.cur_arv_meds_names"
+    },
+    {
+      "type": "simple_column",
+      "alias": "cur_arv_line",
+      "column": "h.cur_arv_line"
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_visit_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(h.encounter_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtc_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(h.rtc_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "refill_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(fhs.med_pickup_rtc_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "months_dispensed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1, GREATEST(ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30), 1), NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "who_stage",
+      "column": "fhs.cur_who_stage"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH), fhs.cd4_1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH), DATE(fhs.cd4_1_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_percent",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH), fhs.cd4_percent_1, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "stability",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN COALESCE(stab.value_coded = 12106, 0) = 1 THEN 'Established' WHEN NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1 THEN 'Not established' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "on_tb_treatment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_tb_tx_this_month = 1, 0) = 1, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "started_tpt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_ipt_this_month = 1, 0) = 1, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "alias": "vl_1",
+      "column": "h.vl_1"
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_1_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(h.vl_1_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_lt_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH) AND fhs.cd4_1 < 200, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_ge_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH) AND fhs.cd4_1 >= 200, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_percent",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND NOT (fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)) AND fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND NOT (fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)) AND NOT (fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND h.pregnant_this_month = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND fhs.is_mother_breastfeeding = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND h.on_tb_tx_this_month = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_tpt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND h.started_ipt_this_month = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_lt6m_well",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND fhs.cur_who_stage IN (1, 2), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_lt6m_advanced",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND fhs.cur_who_stage IN (3, 4), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_lt6m_stage_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND COALESCE(fhs.cur_who_stage IN (1, 2, 3, 4), 0) = 0, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_6m_not_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_6m_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND COALESCE(stab.value_coded = 12106, 0) = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_6m_stability_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND NOT (NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) <= 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 2, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 3, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 4, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 5, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) >= 6, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_eligible",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 < 50, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_none",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND NOT (COALESCE(h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL, 0) = 1), 0) = 1, 1, 0)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "h.endDate = ?",
+        "parameterName": "endDate"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "h.location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "h.status = 'active'"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "h.gender IN ('M', 'F')"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(h.started_art_this_month = 1 OR h.on_art_this_month = 1)"
+      }
+    ]
+  }
+}

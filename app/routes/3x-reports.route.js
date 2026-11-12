@@ -27,6 +27,10 @@ const {
   getMoh729b
 } = require('../../service/moh-731/ver-2023/moh-729b.service');
 const {
+  getCareAndTreatment,
+  getCareAndTreatmentPatientList
+} = require('../../service/care-and-treatment/care-and-treatment.service');
+const {
   getPresumptiveTbRegister
 } = require('../../service/tb-registers/presumptive-tb-register.service');
 const {
@@ -1112,6 +1116,80 @@ const routes = [
       description: 'Get the MOH 729B F-MAPS clients on ART by regimen code',
       notes:
         'Returns one row per client active on ART in the month ending on endDate, with the form regimen code, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/care-and-treatment',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getCareAndTreatment({
+            ...request.query,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location|Unknown/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description:
+        'Get the Care & Treatment and ARV Management report, sections 1.1-1.4',
+      notes:
+        'Returns each figure by age band, sex and MCH/PMTCT for the month ending on endDate, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/care-and-treatment-patient-list',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getCareAndTreatmentPatientList({
+            ...request.query,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location|Unknown/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description:
+        'Get the clients behind a Care & Treatment and ARV Management figure',
+      notes:
+        'Returns a page (limit, startIndex) of the clients of one indicator, narrowed to ageBand, gender and mch unless they are all',
       tags: ['api'],
       validate: {
         options: {

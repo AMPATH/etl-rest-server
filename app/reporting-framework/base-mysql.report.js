@@ -719,6 +719,9 @@ import * as moh_731_v2023_moh_729b_prophylaxis_base from '../../service/moh-731/
 import * as moh_731_v2023_moh_729b_prophylaxis_encounters from '../../service/moh-731/ver-2023/moh-729b/moh-729b-prophylaxis-encounters.json';
 import * as moh_731_v2023_moh_729b_infant_base from '../../service/moh-731/ver-2023/moh-729b/moh-729b-infant-base.json';
 import * as moh_731_v2023_moh_729b_infant_encounters from '../../service/moh-731/ver-2023/moh-729b/moh-729b-infant-encounters.json';
+import * as care_and_treatment_base from '../../service/care-and-treatment/care-and-treatment-base.json';
+import * as care_and_treatment_aggregate from '../../service/care-and-treatment/care-and-treatment-aggregate.json';
+import * as care_and_treatment_patient_list from '../../service/care-and-treatment/care-and-treatment-patient-list.json';
 import * as presumptive_tb_encounters from '../../service/tb-registers/presumptive-tb/presumptive-tb-encounters.json';
 import * as presumptive_tb_base from '../../service/tb-registers/presumptive-tb/presumptive-tb-base.json';
 import * as moh_731_v2023_art_monthly_base from '../../service/moh-731/ver-2023/art/art-monthly-base.json';
@@ -3685,6 +3688,18 @@ export class BaseMysqlReport {
             moh731V2023Moh729bInfantEncounters: this.cloneJsonSchema(
               moh_731_v2023_moh_729b_infant_encounters
             )
+          });
+          break;
+        case 'careTreatmentAggregate':
+          resolve({
+            main: this.cloneJsonSchema(care_and_treatment_aggregate),
+            careTreatmentBase: this.cloneJsonSchema(care_and_treatment_base)
+          });
+          break;
+        case 'careTreatmentPatientList':
+          resolve({
+            main: this.cloneJsonSchema(care_and_treatment_patient_list),
+            careTreatmentBase: this.cloneJsonSchema(care_and_treatment_base)
           });
           break;
         case 'presumptiveTbRegister':

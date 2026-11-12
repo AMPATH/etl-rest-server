@@ -1,0 +1,271 @@
+{
+  "name": "careTreatmentAggregate",
+  "version": "1.0",
+  "tag": "care_and_treatment",
+  "description": "Care & Treatment and ARV Management, sections 1.1-1.4: each figure by age band, sex and MCH/PMTCT -- one row per group, a few dozen rows at most -- which the report adds up into its tables. 0 when there are none.",
+  "uses": [
+    {
+      "name": "careTreatmentBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "careTreatmentBase",
+      "alias": "b"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "alias": "age_band",
+      "column": "b.age_band"
+    },
+    {
+      "type": "simple_column",
+      "alias": "gender",
+      "column": "b.gender"
+    },
+    {
+      "type": "simple_column",
+      "alias": "mch",
+      "column": "b.mch"
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_lt_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_cd4_lt_200), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_ge_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_cd4_ge_200), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_percent",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_cd4_percent), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_cd4_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_cd4_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_pregnant), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_breastfeeding",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_breastfeeding), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_tb), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_new_tpt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_new_tpt), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_curr), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_lt6m_well",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_curr_lt6m_well), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_lt6m_advanced",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_curr_lt6m_advanced), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_lt6m_stage_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_curr_lt6m_stage_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_6m_not_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_curr_6m_not_established), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_6m_established",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_curr_6m_established), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tx_curr_6m_stability_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.tx_curr_6m_stability_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_1",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.mmd_1), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_2",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.mmd_2), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.mmd_3), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.mmd_4), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.mmd_5), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.mmd_6_plus), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "mmd_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.mmd_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_eligible",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.vl_eligible), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.vl_lt_50), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.vl_50_199), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.vl_200_999), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.vl_ge_1000), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_none",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.vl_none), 0)"
+      }
+    }
+  ],
+  "groupBy": {
+    "columns": ["b.age_band", "b.gender", "b.mch"]
+  }
+}
