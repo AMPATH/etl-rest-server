@@ -2,7 +2,7 @@
   "name": "careTreatmentBase",
   "version": "1.0",
   "tag": "care_and_treatment",
-  "description": "Care & Treatment and ARV Management, sections 1.1-1.4: the active clients at the locations in the HIV monthly report dataset (etl.hiv_monthly_report_dataset_frozen) for the month ending on endDate -- one row per client -- who started ART this month or are on ART this month, as MOH 731 3.1 and 3.2 count them. Active means seen within 30 days of the appointment, so defaulters of 0-30 days are included. Each client carries an age band, sex, whether they count under MCH/PMTCT and a 1/0 flag per figure; the totals sum the flags and the linelist lists the clients with a 1, so the two always agree. WHO stage, CD4, breastfeeding and the refill date come from the client's row in etl.flat_hiv_summary_v15b at that encounter, and stability from its latest non-voided 12108 / 12127 obs (as MOH 731 3.5).",
+  "description": "Care & Treatment and ARV Management, sections 1.1-1.7 and PMTCT VL tracking: the active clients at the locations in the HIV monthly report dataset (etl.hiv_monthly_report_dataset_frozen) for the month ending on endDate -- one row per client -- who started ART this month or are on ART this month, as MOH 731 3.1 and 3.2 count them. Active means seen within 30 days of the appointment, so defaulters of 0-30 days are included. Each client carries an age band, sex, whether they count under MCH/PMTCT and a 1/0 flag per figure; the totals sum the flags and the linelist lists the clients with a 1, so the two always agree. WHO stage, CD4, breastfeeding and the refill date come from the client's row in etl.flat_hiv_summary_v15b at that encounter, and stability from its latest non-voided 12108 / 12127 obs (as MOH 731 3.5). The inflows and losses (1.5-1.7) compare with the client's row for the month before (p): last month's TX_CURR at this facility (its locations share a parent) who are not on ART now are TX_ML, by their status now; clients back on ART after being a defaulter or LTFU are TX_RTT; and those on ART here now, not last month, who are neither new nor back, transferred in. Losses are kept in the population too, so it is the clients on ART this month or last.",
   "uses": [],
   "sources": [
     {
@@ -14,7 +14,7 @@
       "alias": "fhs",
       "join": {
         "type": "LEFT",
-        "joinCondition": "fhs.encounter_id = h.encounter_id AND fhs.person_id = h.person_id"
+        "joinCondition": "h.status = 'active' AND fhs.encounter_id = h.encounter_id AND fhs.person_id = h.person_id"
       }
     },
     {
@@ -39,6 +39,46 @@
       "join": {
         "type": "LEFT",
         "joinCondition": "l.location_id = h.location_id"
+      }
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "p",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "p.person_id = h.person_id AND p.endDate = LAST_DAY(DATE_SUB(h.endDate, INTERVAL 1 MONTH))"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "pl",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pl.location_id = p.location_id"
+      }
+    },
+    {
+      "table": "amrs.obs",
+      "alias": "cod",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "h.status = 'dead' AND cod.obs_id = (SELECT MAX(o.obs_id) FROM amrs.obs o WHERE o.person_id = h.person_id AND o.concept_id = 1573 AND o.voided = 0)"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "kid",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "h.status = 'active' AND h.gender = 'F' AND kid.person_id = (SELECT r.person_b FROM amrs.relationship r JOIN amrs.person c ON c.person_id = r.person_b WHERE r.person_a = h.person_id AND r.relationship = 2 AND r.voided = 0 AND c.voided = 0 AND c.birthdate BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate ORDER BY c.birthdate DESC LIMIT 1)"
+      }
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pe",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "h.status = 'dead' AND pe.person_id = h.person_id"
       }
     }
   ],
@@ -84,7 +124,7 @@
       "alias": "mch",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(h.gender = 'F' AND FLOOR(h.age) >= 10 AND (h.pregnant_this_month = 1 OR fhs.is_mother_breastfeeding = 1 OR l.name LIKE '%MCH%'), 1, 0)"
+        "expression": "IF(h.gender = 'F' AND FLOOR(h.age) >= 10 AND (COALESCE(h.pregnant_this_month = 1, 0) = 1 OR COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 OR COALESCE(kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate, 0) = 1 OR l.name LIKE '%MCH%'), 1, 0)"
       }
     },
     {
@@ -220,11 +260,133 @@
       }
     },
     {
+      "type": "simple_column",
+      "alias": "status",
+      "column": "h.status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "previous_status",
+      "column": "p.status"
+    },
+    {
+      "type": "derived_column",
+      "alias": "previous_location",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "pl.name"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transfer_in_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(h.transfer_in_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "transfer_out_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(h.transfer_out_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "missed_appointment",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(p.rtc_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "interruption_days",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1, 0) = 1, DATEDIFF(h.encounter_date, p.rtc_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "months_on_art",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(DATEDIFF(h.rtc_date, COALESCE(h.arv_first_regimen_start_date, h.arv_start_date)) >= 0, FLOOR(DATEDIFF(h.rtc_date, COALESCE(h.arv_first_regimen_start_date, h.arv_start_date)) / 30), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "latest_cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "fhs.cd4_1"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "latest_cd4_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(fhs.cd4_1_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "death_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(h.death_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "edd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(fhs.edd)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "child_birthdate",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(kid.birthdate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_diagnosis_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < '9999-12-31', DATE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31'))), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_status",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.status = 'active' AND h.on_art_this_month = 1, IF(COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1, 'Known positive', 'New positive'), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cause_of_death_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(h.status = 'dead', COALESCE(cod.value_coded, pe.cause_of_death), NULL)"
+      }
+    },
+    {
       "type": "derived_column",
       "alias": "tx_new",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -232,7 +394,7 @@
       "alias": "tx_new_cd4_lt_200",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH) AND fhs.cd4_1 < 200, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH) AND fhs.cd4_1 < 200, 0) = 1, 1, 0)"
       }
     },
     {
@@ -240,7 +402,7 @@
       "alias": "tx_new_cd4_ge_200",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH) AND fhs.cd4_1 >= 200, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH) AND fhs.cd4_1 >= 200, 0) = 1, 1, 0)"
       }
     },
     {
@@ -248,7 +410,7 @@
       "alias": "tx_new_cd4_percent",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND NOT (fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)) AND fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH), 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND NOT (fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)) AND fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH), 0) = 1, 1, 0)"
       }
     },
     {
@@ -256,7 +418,7 @@
       "alias": "tx_new_cd4_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND NOT (fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)) AND NOT (fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)), 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND NOT (fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)) AND NOT (fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= DATE_SUB(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), INTERVAL 3 MONTH)), 0) = 1, 1, 0)"
       }
     },
     {
@@ -264,7 +426,7 @@
       "alias": "tx_new_pregnant",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND h.pregnant_this_month = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND h.pregnant_this_month = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -272,7 +434,7 @@
       "alias": "tx_new_breastfeeding",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND fhs.is_mother_breastfeeding = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND fhs.is_mother_breastfeeding = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -280,7 +442,7 @@
       "alias": "tx_new_tb",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND h.on_tb_tx_this_month = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND h.on_tb_tx_this_month = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -288,7 +450,7 @@
       "alias": "tx_new_tpt",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.started_art_this_month = 1 AND h.started_ipt_this_month = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.started_art_this_month = 1 AND h.started_ipt_this_month = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -296,7 +458,7 @@
       "alias": "tx_curr",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -304,7 +466,7 @@
       "alias": "tx_curr_lt6m_well",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND fhs.cur_who_stage IN (1, 2), 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND fhs.cur_who_stage IN (1, 2), 0) = 1, 1, 0)"
       }
     },
     {
@@ -312,7 +474,7 @@
       "alias": "tx_curr_lt6m_advanced",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND fhs.cur_who_stage IN (3, 4), 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND fhs.cur_who_stage IN (3, 4), 0) = 1, 1, 0)"
       }
     },
     {
@@ -320,7 +482,7 @@
       "alias": "tx_curr_lt6m_stage_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND COALESCE(fhs.cur_who_stage IN (1, 2, 3, 4), 0) = 0, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1 AND COALESCE(fhs.cur_who_stage IN (1, 2, 3, 4), 0) = 0, 0) = 1, 1, 0)"
       }
     },
     {
@@ -328,7 +490,7 @@
       "alias": "tx_curr_6m_not_established",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -336,7 +498,7 @@
       "alias": "tx_curr_6m_established",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND COALESCE(stab.value_coded = 12106, 0) = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND COALESCE(stab.value_coded = 12106, 0) = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -344,7 +506,7 @@
       "alias": "tx_curr_6m_stability_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND NOT (NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1), 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND NOT (COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date) > DATE_SUB(h.endDate, INTERVAL 6 MONTH), 0) = 1) AND NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND NOT (NOT (COALESCE(stab.value_coded = 12106, 0) = 1) AND COALESCE(stab.value_coded = 12107 OR nes.value_coded IN (9070, 12266), 0) = 1), 0) = 1, 1, 0)"
       }
     },
     {
@@ -352,7 +514,7 @@
       "alias": "mmd_1",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) <= 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) <= 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -360,7 +522,7 @@
       "alias": "mmd_2",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 2, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 2, 0) = 1, 1, 0)"
       }
     },
     {
@@ -368,7 +530,7 @@
       "alias": "mmd_3",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 3, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 3, 0) = 1, 1, 0)"
       }
     },
     {
@@ -376,7 +538,7 @@
       "alias": "mmd_4",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 4, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 4, 0) = 1, 1, 0)"
       }
     },
     {
@@ -384,7 +546,7 @@
       "alias": "mmd_5",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 5, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) = 5, 0) = 1, 1, 0)"
       }
     },
     {
@@ -392,7 +554,7 @@
       "alias": "mmd_6_plus",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) >= 6, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1 AND ROUND(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) / 30) >= 6, 0) = 1, 1, 0)"
       }
     },
     {
@@ -400,7 +562,7 @@
       "alias": "mmd_unknown",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND NOT (COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1), 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND NOT (COALESCE(DATEDIFF(COALESCE(fhs.med_pickup_rtc_date, h.rtc_date), h.encounter_date) >= 0, 0) = 1), 0) = 1, 1, 0)"
       }
     },
     {
@@ -408,7 +570,7 @@
       "alias": "vl_eligible",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.eligible_for_vl = 1, 0) = 1, 1, 0)"
       }
     },
     {
@@ -416,7 +578,7 @@
       "alias": "vl_lt_50",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 < 50, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 < 50, 0) = 1, 1, 0)"
       }
     },
     {
@@ -424,7 +586,7 @@
       "alias": "vl_50_199",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
       }
     },
     {
@@ -432,7 +594,7 @@
       "alias": "vl_200_999",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
       }
     },
     {
@@ -440,7 +602,7 @@
       "alias": "vl_ge_1000",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
       }
     },
     {
@@ -448,7 +610,447 @@
       "alias": "vl_none",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "IF(COALESCE(h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND NOT (COALESCE(h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL, 0) = 1), 0) = 1, 1, 0)"
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.eligible_for_vl = 1 AND NOT (COALESCE(h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL, 0) = 1), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ti",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1, 0) = 1) AND NOT (COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id), 0) = 1) AND COALESCE(h.transfer_in_this_month = 1 OR p.status = 'transfer_out' OR (p.status = 'active' AND NOT (COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id))), 0) = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_lt3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND NOT COALESCE(DATEDIFF(h.encounter_date, p.rtc_date) >= 90, 0) = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) BETWEEN 90 AND 179, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_lt_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) BETWEEN 90 AND 179 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date AND fhs.cd4_1 < 200, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_ge_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) BETWEEN 90 AND 179 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date AND fhs.cd4_1 >= 200, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_percent",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) BETWEEN 90 AND 179 AND NOT (COALESCE(fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date, 0) = 1) AND fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= p.rtc_date, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) BETWEEN 90 AND 179 AND NOT (COALESCE(fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date, 0) = 1) AND NOT (COALESCE(fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= p.rtc_date, 0) = 1), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) >= 180, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_lt_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) >= 180 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date AND fhs.cd4_1 < 200, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_ge_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) >= 180 AND fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date AND fhs.cd4_1 >= 200, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_percent",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) >= 180 AND NOT (COALESCE(fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date, 0) = 1) AND fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= p.rtc_date, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND COALESCE(h.started_art_this_month, 0) = 0 AND COALESCE(p.status IN ('defaulter', 'ltfu'), 0) = 1 AND DATEDIFF(h.encounter_date, p.rtc_date) >= 180 AND NOT (COALESCE(fhs.cd4_1 IS NOT NULL AND fhs.cd4_1_date >= p.rtc_date, 0) = 1) AND NOT (COALESCE(fhs.cd4_percent_1 IS NOT NULL AND fhs.cd4_percent_1_date >= p.rtc_date, 0) = 1), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_iit_lt3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status IN ('defaulter', 'ltfu') AND DATEDIFF(h.rtc_date, COALESCE(h.arv_first_regimen_start_date, h.arv_start_date)) < 90, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_iit_3_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status IN ('defaulter', 'ltfu') AND DATEDIFF(h.rtc_date, COALESCE(h.arv_first_regimen_start_date, h.arv_start_date)) BETWEEN 90 AND 179, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_iit_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status IN ('defaulter', 'ltfu') AND DATEDIFF(h.rtc_date, COALESCE(h.arv_first_regimen_start_date, h.arv_start_date)) >= 180, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'transfer_out', 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_stopped",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'active', 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead', 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND NOT COALESCE(h.status IN ('transfer_out', 'active', 'dead') OR (h.status IN ('defaulter', 'ltfu') AND DATEDIFF(h.rtc_date, COALESCE(h.arv_first_regimen_start_date, h.arv_start_date)) >= 0), 0) = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead' AND COALESCE(cod.value_coded, pe.cause_of_death) IN (58), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_cancer",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead' AND COALESCE(cod.value_coded, pe.cause_of_death) IN (6483, 10363, 507, 5041), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_hiv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead' AND COALESCE(cod.value_coded, pe.cause_of_death) IN (10364, 123, 43, 60, 16, 2375), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_other_hiv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead' AND COALESCE(cod.value_coded, pe.cause_of_death) IN (10365), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_other_natural",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead' AND COALESCE(cod.value_coded, pe.cause_of_death) IN (10366, 903, 7971, 155, 102, 12038, 1548, 7257, 5547, 12155, 12156, 12157, 7399, 6648, 6650, 5622), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_non_natural",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead' AND COALESCE(cod.value_coded, pe.cause_of_death) IN (10367, 84, 86, 148, 1571, 1572), 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(p.status = 'active' AND p.on_art_this_month = 1 AND COALESCE(pl.parent_location, pl.location_id) = COALESCE(l.parent_location, l.location_id) AND NOT (COALESCE(h.status = 'active' AND h.on_art_this_month = 1, 0) = 1) AND h.status = 'dead' AND NOT COALESCE(COALESCE(cod.value_coded, pe.cause_of_death) IN (58, 6483, 10363, 507, 5041, 10364, 123, 43, 60, 16, 2375, 10365, 10366, 903, 7971, 155, 102, 12038, 1548, 7257, 5547, 12155, 12156, 12157, 7399, 6648, 6650, 5622, 10367, 84, 86, 148, 1571, 1572), 0) = 1, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_vl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 < 50, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 < 50, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND h.pregnant_this_month = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_vl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 < 50, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 < 50, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND fhs.is_mother_breastfeeding = 1 AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_vl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 < 50, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))) AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 < 50, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 BETWEEN 50 AND 199, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 BETWEEN 200 AND 999, 0) = 1, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(COALESCE(h.status = 'active' AND h.on_art_this_month = 1 AND h.gender = 'F' AND FLOOR(h.age) >= 10 AND NOT COALESCE(h.pregnant_this_month = 1, 0) = 1 AND NOT COALESCE(fhs.is_mother_breastfeeding = 1, 0) = 1 AND (kid.person_id IS NOT NULL OR fhs.edd BETWEEN DATE_SUB(h.endDate, INTERVAL 24 MONTH) AND h.endDate) AND h.vl_in_past_year = 1 AND h.vl_1 IS NOT NULL AND NOT COALESCE(LEAST(COALESCE(h.enrollment_date, '9999-12-31'), COALESCE(fhs.hiv_start_date, '9999-12-31'), COALESCE(COALESCE(h.arv_first_regimen_start_date, h.arv_start_date), '9999-12-31')) < IF(COALESCE(h.pregnant_this_month = 1, 0) = 1, COALESCE(DATE_SUB(fhs.edd, INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 9 MONTH)), COALESCE(DATE_SUB(COALESCE(kid.birthdate, fhs.edd), INTERVAL 280 DAY), DATE_SUB(h.endDate, INTERVAL 33 MONTH))), 0) = 1 AND h.vl_1 >= 1000, 0) = 1, 1, 0)"
       }
     }
   ],
@@ -467,15 +1069,11 @@
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "h.status = 'active'"
-      },
-      {
-        "filterType": "tableColumns",
         "conditionExpression": "h.gender IN ('M', 'F')"
       },
       {
         "filterType": "tableColumns",
-        "conditionExpression": "(h.started_art_this_month = 1 OR h.on_art_this_month = 1)"
+        "conditionExpression": "((h.status = 'active' AND h.started_art_this_month = 1) OR (h.status = 'active' AND h.on_art_this_month = 1) OR (p.status = 'active' AND p.on_art_this_month = 1))"
       }
     ]
   }

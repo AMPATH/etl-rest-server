@@ -176,6 +176,89 @@
       "type": "simple_column",
       "alias": "vl_1_date",
       "column": "b.vl_1_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "status",
+      "column": "b.status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "previous_status",
+      "column": "b.previous_status"
+    },
+    {
+      "type": "simple_column",
+      "alias": "previous_location",
+      "column": "b.previous_location"
+    },
+    {
+      "type": "simple_column",
+      "alias": "transfer_in_date",
+      "column": "b.transfer_in_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "transfer_out_date",
+      "column": "b.transfer_out_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "missed_appointment",
+      "column": "b.missed_appointment"
+    },
+    {
+      "type": "simple_column",
+      "alias": "interruption_days",
+      "column": "b.interruption_days"
+    },
+    {
+      "type": "simple_column",
+      "alias": "months_on_art",
+      "column": "b.months_on_art"
+    },
+    {
+      "type": "simple_column",
+      "alias": "latest_cd4",
+      "column": "b.latest_cd4"
+    },
+    {
+      "type": "simple_column",
+      "alias": "latest_cd4_date",
+      "column": "b.latest_cd4_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "death_date",
+      "column": "b.death_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "edd",
+      "column": "b.edd"
+    },
+    {
+      "type": "simple_column",
+      "alias": "child_birthdate",
+      "column": "b.child_birthdate"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hiv_diagnosis_date",
+      "column": "b.hiv_diagnosis_date"
+    },
+    {
+      "type": "simple_column",
+      "alias": "pmtct_status",
+      "column": "b.pmtct_status"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cause_of_death",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT cn.name FROM amrs.concept_name cn WHERE cn.concept_id = b.cause_of_death_id AND cn.voided = 0 ORDER BY cn.locale_preferred DESC, cn.concept_name_id LIMIT 1)"
+      }
     }
   ],
   "filters": {
@@ -206,9 +289,5 @@
         "order": "asc"
       }
     ]
-  },
-  "paging": {
-    "offSetParam": "startIndex",
-    "limitParam": "limit"
   }
 }

@@ -2,7 +2,7 @@
   "name": "careTreatmentAggregate",
   "version": "1.0",
   "tag": "care_and_treatment",
-  "description": "Care & Treatment and ARV Management, sections 1.1-1.4: each figure by age band, sex and MCH/PMTCT -- one row per group, a few dozen rows at most -- which the report adds up into its tables. 0 when there are none.",
+  "description": "Care & Treatment and ARV Management, sections 1.1-1.7 and PMTCT VL tracking: each figure by age band, sex and MCH/PMTCT -- one row per group, a few dozen rows at most -- which the report adds up into its tables. 0 when there are none.",
   "uses": [
     {
       "name": "careTreatmentBase",
@@ -262,6 +262,446 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "COALESCE(SUM(b.vl_none), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ti",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ti), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_lt3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_lt3), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_3_5), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_lt_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_3_5_cd4_lt_200), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_ge_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_3_5_cd4_ge_200), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_percent",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_3_5_cd4_percent), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_3_5_cd4_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_3_5_cd4_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_6_plus), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_lt_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_6_plus_cd4_lt_200), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_ge_200",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_6_plus_cd4_ge_200), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_percent",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_6_plus_cd4_percent), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rtt_6_plus_cd4_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.rtt_6_plus_cd4_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_total",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_total), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_iit_lt3",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_iit_lt3), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_iit_3_5",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_iit_3_5), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_iit_6_plus",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_iit_6_plus), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_to",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_to), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_stopped",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_stopped), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_died",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_died), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ml_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.ml_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_tb",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.cod_tb), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_cancer",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.cod_cancer), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_hiv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.cod_hiv), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_other_hiv",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.cod_other_hiv), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_other_natural",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.cod_other_natural), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_non_natural",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.cod_non_natural), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cod_unknown",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.cod_unknown), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_vl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_vl), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_known_lt_50), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_known_50_199), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_known_200_999), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_known_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_known_ge_1000), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_new_lt_50), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_new_50_199), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_new_200_999), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_pregnant_new_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_pregnant_new_ge_1000), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_vl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_vl), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_known_lt_50), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_known_50_199), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_known_200_999), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_known_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_known_ge_1000), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_new_lt_50), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_new_50_199), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_new_200_999), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_bf_new_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_bf_new_ge_1000), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_vl",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_vl), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_known_lt_50), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_known_50_199), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_known_200_999), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_known_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_known_ge_1000), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_lt_50",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_new_lt_50), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_50_199",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_new_50_199), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_200_999",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_new_200_999), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pmtct_other_new_ge_1000",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(b.pmtct_other_new_ge_1000), 0)"
       }
     }
   ],
