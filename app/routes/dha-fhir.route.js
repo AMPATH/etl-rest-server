@@ -37,6 +37,18 @@ const MEASURES = {
   'lab-706': ['/lab-706', '/etl/lab-706']
 };
 
+// Laboratory-facing measure identifiers (Certification endpoints — Interpretation):
+// e.g. GET /etl/fhir/MeasureReport?measure=idsr-weekly-summary&period=ge{weekStart}&period=le{weekEnd}
+const MEASURE_ALIASES = {
+  'idsr-weekly-summary': 'moh-505',
+  'notifiable-diseases': 'moh-705a',
+  'routine-monthly': 'moh-717'
+};
+
+function resolveMeasure(key) {
+  return MEASURE_ALIASES[key] || key;
+}
+
 // DHA Kenya Core IG base — live and publicly resolvable (ke.fhir.core v1.0.0,
 // 31 StructureDefinitions). The round-1 feedback quoted an NXDOMAIN host.
 const IG_BASE = process.env.DHA_IG_BASE || 'https://fhir.dha.go.ke/core';
@@ -212,21 +224,101 @@ exports.routes = (server) => {
     );
   }
 
+  /** FHIR Measure definitions — the quality measures the system supports (FUNC-QUAL-001). */
+  function toMeasure(key, label) {
+    return {
+      resourceType: 'Measure',
+      id: key,
+      meta: {
+        source: 'etl-rest-server',
+        profile: [IG_BASE + '/StructureDefinition/kenya-core-measure']
+      },
+      url: IG_BASE + '/Measure/' + key,
+      status: 'active',
+      name: key.toUpperCase(),
+      title: label,
+      scoring: {
+        coding: [
+          {
+            system: 'http://terminology.hl7.org/CodeSystem/measure-scoring',
+            code: 'cohort'
+          }
+        ]
+      },
+      group: [
+        {
+          population: [
+            {
+              code: {
+                coding: [
+                  {
+                    system:
+                      'http://terminology.hl7.org/CodeSystem/measure-population',
+                    code: 'numerator'
+                  }
+                ],
+                text:
+                  'indicator counts per disease/attendance column over the reporting period'
+              }
+            }
+          ],
+          description:
+            'Aggregated indicator values from the Kenya MOH ' +
+            key.toUpperCase() +
+            ' report (flat-table ETL). Each population count mirrors one report column.'
+        }
+      ]
+    };
+  }
+
   const routes = [
+    {
+      method: 'GET',
+      path: '/etl/fhir/Measure',
+      config: {
+        description:
+          'DHA: Measure definitions (FUNC-QUAL-001) — measures the system supports',
+        notes:
+          'GET /etl/fhir/Measure?status=active returns one Measure per supported MOH report ' +
+          '(moh-705a, moh-705b, moh-505/idsr-weekly-summary, moh-710, moh-711, moh-717, moh-731, moh-745, lab-706).',
+        tags: ['api'],
+        validate: {
+          query: Object.assign({ status: Joi.string().valid('active') }, {}),
+          options: { allowUnknown: true }
+        }
+      },
+      handler: async function (request, reply) {
+        const measures = Object.keys(MEASURES).map((key) =>
+          toMeasure(key, key.toUpperCase() + ' (Kenya MOH)')
+        );
+        const active = request.query.status
+          ? measures.filter((m) => m.status === request.query.status)
+          : measures;
+        return reply({
+          resourceType: 'Bundle',
+          type: 'searchset',
+          total: active.length,
+          entry: active.map((resource) => ({ resource }))
+        });
+      }
+    },
     {
       method: 'GET',
       path: '/etl/fhir/MeasureReport',
       config: {
-        description: 'DHA: MOH report as a FHIR MeasureReport (summary)',
+        auth: { strategy: 'simple', mode: 'optional' },
+        description:
+          'DHA: MOH report as a FHIR MeasureReport — period/reporter/subject forms',
         notes:
-          'measure keys: moh-705a, moh-705b, moh-505, moh-710, moh-711, moh-717, moh-731, moh-745, lab-706. ' +
-          'FUNC-QUAL-001 / REP-IDSR-001 / REP-ROUT-001 evidence. Authentication: build default ' +
-          '(JSESSIONID cookie on the deployed ETL; the hie-saf gateway mints it from Basic).',
+          'Laboratory forms: GET /etl/fhir/MeasureReport?measure={id}&subject={patientId or Group/{groupId}} · ' +
+          'GET /etl/fhir/MeasureReport?period=ge{start}&period=le{end}&reporter={facilityId} · ' +
+          'measure ids: moh-705a, moh-705b, moh-505, idsr-weekly-summary, moh-710, moh-711, moh-717, moh-731, moh-745, lab-706, notifiable-diseases, routine-monthly. ' +
+          'Authentication: build default (JSESSIONID cookie on the deployed ETL; the hie-saf gateway mints it from Basic).',
         tags: ['api'],
         validate: {
           query: Object.assign(
             {
-              measure: Joi.string().required().valid(Object.keys(MEASURES))
+              measure: Joi.string().required()
             },
             periodQuery
           ),
@@ -234,15 +326,35 @@ exports.routes = (server) => {
         }
       },
       handler: async function (request, reply) {
-        const key = request.query.measure;
-        const period = {
-          start: request.query.startDate,
-          end: request.query.endDate
-        };
+        const key = resolveMeasure(String(request.query.measure));
+        const target = MEASURES[key];
+        if (!target) {
+          return reply(
+            operationOutcome(
+              'error',
+              'not-found',
+              'Unknown measure: ' + String(request.query.measure)
+            )
+          ).code(404);
+        }
+        // hapi may deliver repeated params as arrays (period=ge…&period=le…)
+        const arr = (v) => (Array.isArray(v) ? v : v === undefined ? [] : [v]);
+        const periods = arr(request.query.period);
+        let start = request.query.startDate;
+        let end = request.query.endDate;
+        for (const raw of periods) {
+          const m = /^(ge|le)(.+)$/.exec(String(raw));
+          if (m) {
+            if (m[1] === 'ge') start = m[2];
+            if (m[1] === 'le') end = m[2];
+          }
+        }
+        const period = { start: start, end: end };
         const query = {
-          startDate: request.query.startDate,
-          endDate: request.query.endDate,
-          locationUuids: request.query.locationUuids
+          startDate: start,
+          endDate: end,
+          locationUuids: request.query.reporter || request.query.locationUuids,
+          subject: request.query.subject
         };
         return delegate(request, MEASURES[key], query)
           .then((payload) => {
@@ -252,6 +364,18 @@ exports.routes = (server) => {
               period,
               payload
             );
+            if (query.subject) {
+              report.subject = {
+                reference: String(query.subject).startsWith('Group/')
+                  ? String(query.subject)
+                  : 'Patient/' + String(query.subject)
+              };
+            }
+            if (request.query.reporter) {
+              report.reporter = {
+                reference: 'Organization/' + String(request.query.reporter)
+              };
+            }
             return reply(report);
           })
           .catch((err) =>
