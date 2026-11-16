@@ -31,6 +31,11 @@ const {
   getCareAndTreatmentPatientList
 } = require('../../service/care-and-treatment/care-and-treatment.service');
 const {
+  getQualityImprovement,
+  getQualityImprovementPatientList,
+  getCaseSurveillance
+} = require('../../service/quality-improvement/quality-improvement.service');
+const {
   getPresumptiveTbRegister
 } = require('../../service/tb-registers/presumptive-tb-register.service');
 const {
@@ -1127,6 +1132,114 @@ const routes = [
   },
   {
     method: 'GET',
+    path: '/quality-improvement',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getQualityImprovement({
+            ...request.query,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location|Unknown/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the Quality Improvement report',
+      notes:
+        'Returns the count of clients needing each action for the month ending on endDate, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/quality-improvement-patient-list',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getQualityImprovementPatientList({
+            ...request.query,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location|Unknown/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the clients behind a Quality Improvement indicator',
+      notes:
+        'Returns a page (limit, startIndex) of the clients of one indicator',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
+    path: '/case-surveillance',
+    config: {
+      handler: function (request, reply) {
+        preRequest.resolveLocationIdsToLocationUuids(request, function () {
+          getCaseSurveillance({
+            ...request.query,
+            locations: request.query.locations || []
+          })
+            .then((rows) => reply(rows))
+            .catch((error) => {
+              const message = (error && error.message) || String(error);
+              reply({ error: message }).code(
+                /YYYY-MM-DD|No location|Unknown/.test(message) ? 400 : 500
+              );
+            });
+        });
+      },
+      plugins: {
+        hapiAuthorization: {
+          role: privileges.canViewClinicDashBoard
+        }
+      },
+      description: 'Get the Case Surveillance report',
+      notes:
+        'Returns each gap review card (numerator, denominator and their indicators) for the period, for the whole facility of the location',
+      tags: ['api'],
+      validate: {
+        options: {
+          allowUnknown: true
+        },
+        params: {}
+      }
+    }
+  },
+  {
+    method: 'GET',
     path: '/care-and-treatment',
     config: {
       handler: function (request, reply) {
@@ -1150,7 +1263,7 @@ const routes = [
         }
       },
       description:
-        'Get the Care & Treatment and ARV Management report, sections 1.1-1.4',
+        'Get the Care & Treatment and ARV Management report, sections 1.1-1.7 and PMTCT VL tracking',
       notes:
         'Returns each figure by age band, sex and MCH/PMTCT for the month ending on endDate, for the whole facility of the location',
       tags: ['api'],
