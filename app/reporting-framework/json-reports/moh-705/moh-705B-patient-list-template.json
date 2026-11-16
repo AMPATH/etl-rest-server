@@ -39,6 +39,14 @@
         "type": "LEFT",
         "joinCondition": "t1.person_id = pa.person_id"
       }
+    },
+    {
+      "table": "amrs.visit",
+      "alias": "cv",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "cv.visit_id = et.visit_id AND cv.voided = 0"
+      }
     }
   ],
   "columns": [
@@ -60,12 +68,12 @@
     {
       "type": "simple_column",
       "alias": "opd_number_new_visit",
-      "column": "CASE WHEN (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = et.patient_id AND e_prev.voided = 0 AND (e_prev.encounter_datetime < et.encounter_datetime OR (e_prev.encounter_datetime = et.encounter_datetime AND e_prev.encounter_id <= et.encounter_id))) = 1 THEN (SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t1.person_id AND pi.identifier_type = 55 AND (pi.voided IS NULL OR pi.voided = 0) ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1) ELSE NULL END"
+      "column": "CASE WHEN ((cv.visit_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM amrs.visit pv WHERE pv.patient_id = cv.patient_id AND pv.voided = 0 AND pv.visit_id <> cv.visit_id AND pv.date_created >= MAKEDATE(YEAR(cv.date_created), 1) AND (pv.date_created < cv.date_created OR (pv.date_created = cv.date_created AND pv.visit_id < cv.visit_id)) AND EXISTS (SELECT 1 FROM amrs.encounter pe WHERE pe.visit_id = pv.visit_id AND pe.voided = 0 AND pe.encounter_type = 167))) OR (cv.visit_id IS NULL AND NOT EXISTS (SELECT 1 FROM amrs.encounter pe2 WHERE pe2.patient_id = et.patient_id AND pe2.voided = 0 AND pe2.encounter_type = 167 AND pe2.encounter_id <> et.encounter_id AND pe2.encounter_datetime >= MAKEDATE(YEAR(et.encounter_datetime), 1) AND (pe2.encounter_datetime < et.encounter_datetime OR (pe2.encounter_datetime = et.encounter_datetime AND pe2.encounter_id < et.encounter_id))))) THEN (SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t1.person_id AND pi.identifier_type = 55 AND (pi.voided IS NULL OR pi.voided = 0) ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1) ELSE NULL END"
     },
     {
       "type": "simple_column",
       "alias": "opd_number_return_visit",
-      "column": "CASE WHEN (SELECT COUNT(DISTINCT e_prev.encounter_id) FROM amrs.encounter e_prev WHERE e_prev.patient_id = et.patient_id AND e_prev.voided = 0 AND (e_prev.encounter_datetime < et.encounter_datetime OR (e_prev.encounter_datetime = et.encounter_datetime AND e_prev.encounter_id <= et.encounter_id))) > 1 THEN (SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t1.person_id AND pi.identifier_type = 55 AND (pi.voided IS NULL OR pi.voided = 0) ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1) ELSE NULL END"
+      "column": "CASE WHEN ((cv.visit_id IS NOT NULL AND EXISTS (SELECT 1 FROM amrs.visit pv WHERE pv.patient_id = cv.patient_id AND pv.voided = 0 AND pv.visit_id <> cv.visit_id AND pv.date_created >= MAKEDATE(YEAR(cv.date_created), 1) AND (pv.date_created < cv.date_created OR (pv.date_created = cv.date_created AND pv.visit_id < cv.visit_id)) AND EXISTS (SELECT 1 FROM amrs.encounter pe WHERE pe.visit_id = pv.visit_id AND pe.voided = 0 AND pe.encounter_type = 167))) OR (cv.visit_id IS NULL AND EXISTS (SELECT 1 FROM amrs.encounter pe2 WHERE pe2.patient_id = et.patient_id AND pe2.voided = 0 AND pe2.encounter_type = 167 AND pe2.encounter_id <> et.encounter_id AND pe2.encounter_datetime >= MAKEDATE(YEAR(et.encounter_datetime), 1) AND (pe2.encounter_datetime < et.encounter_datetime OR (pe2.encounter_datetime = et.encounter_datetime AND pe2.encounter_id < et.encounter_id))))) THEN (SELECT pi.identifier FROM amrs.patient_identifier pi WHERE pi.patient_id = t1.person_id AND pi.identifier_type = 55 AND (pi.voided IS NULL OR pi.voided = 0) ORDER BY pi.preferred DESC, pi.patient_identifier_id DESC LIMIT 1) ELSE NULL END"
     },
     {
       "type": "derived_column",
@@ -222,6 +230,14 @@
   "filters": {
     "conditionJoinOperator": "and",
     "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "et.voided = 0"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "et.encounter_type = 167"
+      },
       {
         "filterType": "tableColumns",
         "conditionExpression": "TIMESTAMPDIFF(YEAR, t1.birthdate, et.encounter_datetime) >= 5"
