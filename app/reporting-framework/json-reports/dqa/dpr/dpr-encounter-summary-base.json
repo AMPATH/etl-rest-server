@@ -1,0 +1,310 @@
+{
+  "name": "dprEncounterSummaryBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "DPR: baseline values, TB/TPT/CM dates, contacts and returns per patient",
+  "uses": [
+    {
+      "name": "dprEncounterBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dprEncounterBase",
+      "alias": "e"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "column": "person_id",
+      "alias": "person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_start",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(art_start)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_location_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(art_location_id)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_regimen_raw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(first_regimen_raw)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_regimen_ids",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(first_regimen_ids)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(hiv_start_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cohort",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(cohort)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "end_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(end_6m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "end_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(end_12m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "end_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(end_24m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bl_tb_screened",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base THEN (tb_screen = 1 OR tb_screening_datetime IS NOT NULL) END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bl_crag_tested",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base THEN (cm_test = 1) END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bl_crag_result_raw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base THEN cm_result END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "b_on_tb_tx",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base AND base_rn = 1 THEN on_tb_tx END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "b_tb_screening_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base AND base_rn = 1 THEN tb_screening_result END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "b_tb_tx_end_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base AND base_rn = 1 THEN tb_tx_end_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "b_cur_who_stage",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base AND base_rn = 1 THEN cur_who_stage END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "b_is_pregnant",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base AND base_rn = 1 THEN is_pregnant END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "b_cur_arv_line",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN in_base AND base_rn = 1 THEN cur_arv_line END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_ipt_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN next_encounter_datetime_hiv IS NULL THEN ipt_start_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_init_start",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(CASE WHEN ipt_start_date >= art_start - INTERVAL 1 MONTH AND ipt_start_date < art_start + INTERVAL 3 MONTH + INTERVAL 1 DAY THEN ipt_start_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prior_tpt_completion",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN ipt_completion_date < art_start - INTERVAL 1 MONTH THEN ipt_completion_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_tb_tx_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN next_encounter_datetime_hiv IS NULL THEN tb_tx_start_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_tb_tx_end_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN next_encounter_datetime_hiv IS NULL THEN tb_tx_end_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_on_tb_tx",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN next_encounter_datetime_hiv IS NULL THEN on_tb_tx END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cm_tx_start",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(CASE WHEN cm_treatment_start_date >= art_start - INTERVAL 30 DAY THEN cm_treatment_start_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cm_tx_end",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(CASE WHEN cm_treatment_start_date >= art_start - INTERVAL 30 DAY THEN cm_treatment_end_date END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "clin_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(is_clinical_encounter = 1 AND encounter_datetime >= art_start + INTERVAL 1 MONTH + INTERVAL 1 DAY AND encounter_datetime < end_6m + INTERVAL 1 DAY), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nonclin_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(is_clinical_encounter = 0 AND encounter_datetime >= art_start + INTERVAL 1 MONTH + INTERVAL 1 DAY AND encounter_datetime < end_6m + INTERVAL 1 DAY), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "clin_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(is_clinical_encounter = 1 AND encounter_datetime >= end_6m + INTERVAL 1 DAY AND encounter_datetime < end_12m + INTERVAL 1 DAY), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nonclin_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(is_clinical_encounter = 0 AND encounter_datetime >= end_6m + INTERVAL 1 DAY AND encounter_datetime < end_12m + INTERVAL 1 DAY), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "clin_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(is_clinical_encounter = 1 AND encounter_datetime >= end_12m + INTERVAL 1 DAY AND encounter_datetime < end_24m + INTERVAL 1 DAY), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "nonclin_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(SUM(is_clinical_encounter = 0 AND encounter_datetime >= end_12m + INTERVAL 1 DAY AND encounter_datetime < end_24m + INTERVAL 1 DAY), 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_after_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(CASE WHEN encounter_datetime >= end_6m + INTERVAL 1 DAY THEN DATE(encounter_datetime) END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_after_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(CASE WHEN encounter_datetime >= end_12m + INTERVAL 1 DAY THEN DATE(encounter_datetime) END)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_after_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MIN(CASE WHEN encounter_datetime >= end_24m + INTERVAL 1 DAY THEN DATE(encounter_datetime) END)"
+      }
+    }
+  ],
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["person_id"]
+  }
+}

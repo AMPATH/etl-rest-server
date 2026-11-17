@@ -1,0 +1,543 @@
+{
+  "name": "dprLookupsBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "DPR: demographics, site, frozen monthly status at 6/12/24 months and lab/obs look-ups",
+  "uses": [
+    {
+      "name": "dprEncounterSummaryBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dprEncounterSummaryBase",
+      "alias": "p1"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pe",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "pe.person_id = p1.person_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "loc",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "loc.location_id = p1.art_location_id"
+      }
+    },
+    {
+      "table": "amrs.location",
+      "alias": "ploc",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ploc.location_id = loc.parent_location"
+      }
+    },
+    {
+      "table": "ndwr.mfl_codes",
+      "alias": "mc",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mc.location_id = p1.art_location_id"
+      }
+    },
+    {
+      "table": "(SELECT 7 AS location_id, 'K04' AS site_code UNION ALL SELECT 24, 'K04' UNION ALL SELECT 25, 'K04' UNION ALL SELECT 231, 'K04' UNION ALL SELECT 77, 'U01' UNION ALL SELECT 326, 'U01' UNION ALL SELECT 28, 'U02' UNION ALL SELECT 331, 'U02' UNION ALL SELECT 4, 'U03' UNION ALL SELECT 322, 'U03' UNION ALL SELECT 567, 'U03' UNION ALL SELECT 203, 'U04' UNION ALL SELECT 324, 'U04' UNION ALL SELECT 192, 'U05' UNION ALL SELECT 404, 'U05' UNION ALL SELECT 571, 'U05' UNION ALL SELECT 73, 'U07' UNION ALL SELECT 328, 'U07' UNION ALL SELECT 524, 'U08' UNION ALL SELECT 70, 'U09' UNION ALL SELECT 327, 'U09' UNION ALL SELECT 551, 'U09' UNION ALL SELECT 71, 'UR1' UNION ALL SELECT 325, 'UR1' UNION ALL SELECT 351, 'UR2' UNION ALL SELECT 352, 'UR2' UNION ALL SELECT 575, 'UR2' UNION ALL SELECT 274, 'UR3')",
+      "alias": "st",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "st.location_id = p1.art_location_id"
+      }
+    },
+    {
+      "table": "(SELECT 'K04' AS site_code, 'Kisumu' AS county, 'Kisumu West' AS sub_county, 'Chulaimbo County Hospital' AS facility_name UNION ALL SELECT 'U01', 'Uasin Gishu', 'Moiben', 'Moiben Sub-County Hospital' UNION ALL SELECT 'U02', 'Uasin Gishu', 'Soy', 'Ziwa Sub-County Hospital' UNION ALL SELECT 'U03', 'Uasin Gishu', 'Ainabkoi', 'Burnt Forest Sub-County Hospital' UNION ALL SELECT 'U04', 'Uasin Gishu', 'Kapseret', 'Langas Health Centre' UNION ALL SELECT 'U05', 'Uasin Gishu', 'Ainabkoi', 'Kapsoya Health Centre' UNION ALL SELECT 'U07', 'Uasin Gishu', 'Soy', 'Soy Health Centre' UNION ALL SELECT 'U08', 'Uasin Gishu', 'Soy', 'Kuinet Dispensary' UNION ALL SELECT 'U09', 'Uasin Gishu', 'Kapseret', 'Pioneer Health Centre' UNION ALL SELECT 'UR1', 'Uasin Gishu', 'Soy', 'Moi''s Bridge Health Centre – RESERVE' UNION ALL SELECT 'UR2', 'Uasin Gishu', 'Ainabkoi', 'Chepkanga Health Centre – RESERVE' UNION ALL SELECT 'UR3', 'Uasin Gishu', 'Soy', 'Kabobo Health Centre – RESERVE')",
+      "alias": "sn",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "sn.site_code = st.site_code"
+      }
+    },
+    {
+      "table": "etl.flat_patient_identifiers_v1",
+      "alias": "ids",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ids.patient_id = p1.person_id"
+      }
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "m6",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m6.person_id = p1.person_id AND m6.endDate = p1.end_6m"
+      }
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "m12",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m12.person_id = p1.person_id AND m12.endDate = p1.end_12m"
+      }
+    },
+    {
+      "table": "etl.hiv_monthly_report_dataset_frozen",
+      "alias": "m24",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "m24.person_id = p1.person_id AND m24.endDate = p1.end_24m"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "f6",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "f6.encounter_id = m6.encounter_id"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "f12",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "f12.encounter_id = m12.encounter_id"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "f24",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "f24.encounter_id = m24.encounter_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "column": "p1.*"
+    },
+    {
+      "type": "simple_column",
+      "column": "pe.gender",
+      "alias": "gender"
+    },
+    {
+      "type": "simple_column",
+      "column": "pe.birthdate",
+      "alias": "birthdate"
+    },
+    {
+      "type": "simple_column",
+      "column": "pe.birthdate_estimated",
+      "alias": "birthdate_estimated"
+    },
+    {
+      "type": "simple_column",
+      "column": "loc.name",
+      "alias": "loc_name"
+    },
+    {
+      "type": "simple_column",
+      "column": "mc.mfl_code",
+      "alias": "mfl_code"
+    },
+    {
+      "type": "simple_column",
+      "column": "st.site_code",
+      "alias": "site_code"
+    },
+    {
+      "type": "derived_column",
+      "alias": "site_county",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE(NULLIF(loc.state_province, ''), ploc.state_province)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "sn.sub_county",
+      "alias": "site_sub_county"
+    },
+    {
+      "type": "derived_column",
+      "alias": "site_name",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "COALESCE((SELECT m2.Facility FROM ndwr.mfl_codes m2 WHERE m2.mfl_code = mc.mfl_code AND NULLIF(m2.Facility, '') IS NOT NULL ORDER BY m2.location_id LIMIT 1), loc.name)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "ids.ccc",
+      "alias": "ccc"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.person_id",
+      "alias": "m6_person_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.status",
+      "alias": "m6_status"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.days_since_rtc_date",
+      "alias": "m6_days_since_rtc"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.encounter_date",
+      "alias": "m6_encounter_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.rtc_date",
+      "alias": "m6_rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.pregnant_this_month",
+      "alias": "m6_pregnant"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.transfer_out_date",
+      "alias": "m6_transfer_out_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m6.death_date",
+      "alias": "m6_death_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.person_id",
+      "alias": "m12_person_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.status",
+      "alias": "m12_status"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.days_since_rtc_date",
+      "alias": "m12_days_since_rtc"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.encounter_date",
+      "alias": "m12_encounter_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.rtc_date",
+      "alias": "m12_rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.pregnant_this_month",
+      "alias": "m12_pregnant"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.transfer_out_date",
+      "alias": "m12_transfer_out_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m12.death_date",
+      "alias": "m12_death_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.person_id",
+      "alias": "m24_person_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.status",
+      "alias": "m24_status"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.days_since_rtc_date",
+      "alias": "m24_days_since_rtc"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.encounter_date",
+      "alias": "m24_encounter_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.rtc_date",
+      "alias": "m24_rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.pregnant_this_month",
+      "alias": "m24_pregnant"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.transfer_out_date",
+      "alias": "m24_transfer_out_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "m24.death_date",
+      "alias": "m24_death_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.encounter_id",
+      "alias": "f6_encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.is_pregnant",
+      "alias": "f6_is_pregnant"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.is_mother_breastfeeding",
+      "alias": "f6_breastfeeding"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.med_pickup_rtc_date",
+      "alias": "f6_med_pickup_rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.arv_start_date",
+      "alias": "f6_arv_start_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.cur_arv_line",
+      "alias": "f6_cur_arv_line"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.ipt_start_date",
+      "alias": "f6_ipt_start_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.ipt_completion_date",
+      "alias": "f6_ipt_completion_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.ipt_stop_date",
+      "alias": "f6_ipt_stop_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f6.on_tb_tx",
+      "alias": "f6_on_tb_tx"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.encounter_id",
+      "alias": "f12_encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.is_pregnant",
+      "alias": "f12_is_pregnant"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.is_mother_breastfeeding",
+      "alias": "f12_breastfeeding"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.med_pickup_rtc_date",
+      "alias": "f12_med_pickup_rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.ipt_start_date",
+      "alias": "f12_ipt_start_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.ipt_completion_date",
+      "alias": "f12_ipt_completion_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.ipt_stop_date",
+      "alias": "f12_ipt_stop_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f12.on_tb_tx",
+      "alias": "f12_on_tb_tx"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.encounter_id",
+      "alias": "f24_encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.is_pregnant",
+      "alias": "f24_is_pregnant"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.is_mother_breastfeeding",
+      "alias": "f24_breastfeeding"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.med_pickup_rtc_date",
+      "alias": "f24_med_pickup_rtc_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.ipt_start_date",
+      "alias": "f24_ipt_start_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.ipt_completion_date",
+      "alias": "f24_ipt_completion_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.ipt_stop_date",
+      "alias": "f24_ipt_stop_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f24.on_tb_tx",
+      "alias": "f24_on_tb_tx"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT(DATE(l.test_datetime), '|', l.cd4_count) FROM etl.flat_labs_and_imaging l WHERE l.person_id = p1.person_id AND l.cd4_count IS NOT NULL AND l.test_datetime >= p1.art_start - INTERVAL 90 DAY AND l.test_datetime < p1.art_start + INTERVAL 32 DAY ORDER BY l.test_datetime, l.encounter_id LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT(DATE(l.test_datetime), '|', l.hiv_viral_load) FROM etl.flat_labs_and_imaging l WHERE l.person_id = p1.person_id AND l.hiv_viral_load IS NOT NULL AND l.test_datetime >= p1.art_start + INTERVAL 2 MONTH + INTERVAL 1 DAY AND l.test_datetime < p1.end_6m + INTERVAL 1 DAY ORDER BY l.test_datetime DESC, l.encounter_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl12",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT(DATE(l.test_datetime), '|', l.hiv_viral_load) FROM etl.flat_labs_and_imaging l WHERE l.person_id = p1.person_id AND l.hiv_viral_load IS NOT NULL AND l.test_datetime >= p1.end_6m + INTERVAL 1 DAY AND l.test_datetime < p1.end_12m + INTERVAL 1 DAY ORDER BY l.test_datetime DESC, l.encounter_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT(DATE(l.test_datetime), '|', l.hiv_viral_load) FROM etl.flat_labs_and_imaging l WHERE l.person_id = p1.person_id AND l.hiv_viral_load IS NOT NULL AND l.test_datetime >= p1.end_12m + INTERVAL 1 DAY AND l.test_datetime < p1.end_24m + INTERVAL 1 DAY ORDER BY l.test_datetime DESC, l.encounter_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT o.value_coded FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_6m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT o.value_coded FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_12m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT o.value_coded FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_24m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_reg_init",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT o.value_coded FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 1264 AND o.obs_datetime >= p1.art_start - INTERVAL 1 MONTH AND o.obs_datetime < p1.art_start + INTERVAL 3 MONTH + INTERVAL 1 DAY ORDER BY o.obs_datetime, o.obs_id LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT( IFNULL(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 1264 THEN o.value_coded END ORDER BY o.obs_datetime DESC, o.obs_id DESC), ',', 1), ''), '|', IFNULL(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 1266 THEN o.value_coded END ORDER BY o.obs_datetime DESC, o.obs_id DESC), ',', 1), ''), '|', IFNULL(MAX(o.concept_id = 1265 AND o.obs_datetime >= p1.art_start + INTERVAL 1 MONTH + INTERVAL 1 DAY), 0)) FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND (o.concept_id IN (1264, 1266) OR (o.concept_id = 1265 AND o.value_coded = 1850)) AND o.obs_datetime >= p1.art_start - INTERVAL 1 MONTH AND o.obs_datetime < p1.end_6m + INTERVAL 1 DAY)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt12",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT( IFNULL(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 1264 THEN o.value_coded END ORDER BY o.obs_datetime DESC, o.obs_id DESC), ',', 1), ''), '|', IFNULL(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 1266 THEN o.value_coded END ORDER BY o.obs_datetime DESC, o.obs_id DESC), ',', 1), ''), '|', IFNULL(MAX(o.concept_id = 1265 AND o.obs_datetime >= p1.end_6m + INTERVAL 1 DAY), 0)) FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND (o.concept_id IN (1264, 1266) OR (o.concept_id = 1265 AND o.value_coded = 1850)) AND o.obs_datetime >= p1.art_start - INTERVAL 1 MONTH AND o.obs_datetime < p1.end_12m + INTERVAL 1 DAY)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT( IFNULL(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 1264 THEN o.value_coded END ORDER BY o.obs_datetime DESC, o.obs_id DESC), ',', 1), ''), '|', IFNULL(SUBSTRING_INDEX(GROUP_CONCAT(CASE WHEN o.concept_id = 1266 THEN o.value_coded END ORDER BY o.obs_datetime DESC, o.obs_id DESC), ',', 1), ''), '|', IFNULL(MAX(o.concept_id = 1265 AND o.obs_datetime >= p1.end_12m + INTERVAL 1 DAY), 0)) FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND (o.concept_id IN (1264, 1266) OR (o.concept_id = 1265 AND o.value_coded = 1850)) AND o.obs_datetime >= p1.art_start - INTERVAL 1 MONTH AND o.obs_datetime < p1.end_24m + INTERVAL 1 DAY)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hts",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT( IFNULL(SUBSTRING_INDEX(GROUP_CONCAT( CASE WHEN o.value_coded NOT IN (2177, 2047, 10862, 9613) THEN o.value_coded END ORDER BY o.obs_datetime, o.obs_id), ',', 1), ''), '|', IFNULL(GROUP_CONCAT(DISTINCT o.value_coded), '')) FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 2051 AND o.value_coded IS NOT NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kp",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(SELECT CONCAT( CASE o.value_coded WHEN 1832 THEN 1 WHEN 8291 THEN 2 WHEN 105 THEN 3 WHEN 6096 THEN 6 WHEN 8290 THEN 10 END, '|', DATE(COALESCE(e.encounter_datetime, o.obs_datetime))) FROM amrs.obs o LEFT JOIN amrs.encounter e ON e.encounter_id = o.encounter_id WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 6578 AND o.value_coded IN (1832, 8291, 105, 6096, 8290) ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+      }
+    }
+  ],
+  "paging": {
+    "limitParam": "materializeLimit",
+    "offSetParam": "materializeOffset"
+  }
+}

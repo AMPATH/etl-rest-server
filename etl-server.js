@@ -181,112 +181,121 @@ try {
     sortEndpoints: 'path'
   };
 
-  server.register(
-    [
-      Inert,
-      Vision,
-      {
-        register: HapiSwagger,
-        options: HapiSwaggerOptions
-      },
-      {
-        register: require('hapi-routes'),
-        options: {
-          dir: `${__dirname}/app/routes`
-        }
-      },
-      {
-        register: Basic,
-        options: {}
-      },
-      {
-        register: hapiAuthorization,
-        options: {
-          roles: authorizer.getAllPrivilegesArray()
-        }
-      },
-      {
-        register: Good,
-        options: {
-          reporters: []
-        }
-      },
-      {
-        register: locationAuthorizer,
-        options: {}
-      }
-      // {
-      //   'register': Nes,
-      //   'options': etlBroadcast.getOptions(server)
-      // }
-    ],
-
-    function (err) {
-      if (err) {
-        console.error(err);
-        throw err; // something bad happened loading the plugin
-      }
-      server.auth.strategy('simple', 'basic', 'required', {
-        validateFunc: validate
-      });
-
-      //Adding routes
-      for (var route in routes) {
-        try {
-          server.route(routes[route]);
-        } catch (badThing) {
-          console.error(badThing);
-        }
-      }
-
-      for (var route in elasticRoutes) {
-        server.route(elasticRoutes[route]);
-      }
-
-      server.on('response', function (request) {
-        if (request.response === undefined || request.response === null) {
-          console.log('No response');
-        } else {
-          var user = '';
-          if (request.auth && request.auth.credentials)
-            user = request.auth.credentials.username;
-          console.log(
-            'Username:',
-            user +
-              '\n' +
-              moment().local().format('YYYY-MM-DD HH:mm:ss') +
-              ': ' +
-              server.info.uri +
-              ': ' +
-              request.method.toUpperCase() +
-              ' ' +
-              request.url.path +
-              ' \n ' +
-              request.response.statusCode
-          );
-        }
-      });
-
-      server.ext('onPreResponse', corsHeaders);
-
-      if (config.clusteringEnabled === true && cluster.isMaster) {
-        for (var i = 0; i < numCPUs; i++) {
-          cluster.fork();
-        }
-
-        cluster.on('exit', function (worker, code, signal) {
-          //refork the cluster
-          //cluster.fork();
-        });
-      } else {
-        //TODO start HAPI server here
-        server.start(function () {
-          console.log('info', 'Server running at: ' + server.info.uri);
-          server.log('info', 'Server running at: ' + server.info.uri);
-        });
-      }
+  // Register basic auth and its 'simple' strategy BEFORE the route plugins.
+  // hapi-routes loads app/routes while it registers, and a route that names the
+  // strategy explicitly (dha-fhir MeasureReport: auth.strategy 'simple') throws
+  // "Unknown authentication strategy" if it does not exist yet. hapi swallows
+  // that error, so the server silently never starts. Routes without explicit
+  // auth resolve the default strategy at request time, so they are unaffected.
+  server.register({ register: Basic, options: {} }, function (basicErr) {
+    if (basicErr) {
+      console.error(basicErr);
+      throw basicErr;
     }
-  );
+    server.auth.strategy('simple', 'basic', 'required', {
+      validateFunc: validate
+    });
+
+    server.register(
+      [
+        Inert,
+        Vision,
+        {
+          register: HapiSwagger,
+          options: HapiSwaggerOptions
+        },
+        {
+          register: require('hapi-routes'),
+          options: {
+            dir: `${__dirname}/app/routes`
+          }
+        },
+        {
+          register: hapiAuthorization,
+          options: {
+            roles: authorizer.getAllPrivilegesArray()
+          }
+        },
+        {
+          register: Good,
+          options: {
+            reporters: []
+          }
+        },
+        {
+          register: locationAuthorizer,
+          options: {}
+        }
+        // {
+        //   'register': Nes,
+        //   'options': etlBroadcast.getOptions(server)
+        // }
+      ],
+
+      function (err) {
+        if (err) {
+          console.error(err);
+          throw err; // something bad happened loading the plugin
+        }
+
+        //Adding routes
+        for (var route in routes) {
+          try {
+            server.route(routes[route]);
+          } catch (badThing) {
+            console.error(badThing);
+          }
+        }
+
+        for (var route in elasticRoutes) {
+          server.route(elasticRoutes[route]);
+        }
+
+        server.on('response', function (request) {
+          if (request.response === undefined || request.response === null) {
+            console.log('No response');
+          } else {
+            var user = '';
+            if (request.auth && request.auth.credentials)
+              user = request.auth.credentials.username;
+            console.log(
+              'Username:',
+              user +
+                '\n' +
+                moment().local().format('YYYY-MM-DD HH:mm:ss') +
+                ': ' +
+                server.info.uri +
+                ': ' +
+                request.method.toUpperCase() +
+                ' ' +
+                request.url.path +
+                ' \n ' +
+                request.response.statusCode
+            );
+          }
+        });
+
+        server.ext('onPreResponse', corsHeaders);
+
+        if (config.clusteringEnabled === true && cluster.isMaster) {
+          for (var i = 0; i < numCPUs; i++) {
+            cluster.fork();
+          }
+
+          cluster.on('exit', function (worker, code, signal) {
+            //refork the cluster
+            //cluster.fork();
+          });
+        } else {
+          //TODO start HAPI server here
+          server.start(function () {
+            console.log('info', 'Server running at: ' + server.info.uri);
+            server.log('info', 'Server running at: ' + server.info.uri);
+          });
+        }
+      }
+    );
+  });
   module.exports = server;
 } catch (error) {
   console.log('error-starting', error);

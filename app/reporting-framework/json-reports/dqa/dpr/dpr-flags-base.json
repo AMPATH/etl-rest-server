@@ -1,0 +1,153 @@
+{
+  "name": "dprFlagsBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "DPR: skip logic and reusable flags",
+  "uses": [
+    {
+      "name": "dprStatusBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dprStatusBase",
+      "alias": "p3"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "column": "p3.*"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cs12",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(cs6 IN (4, 5), NULL, cs12_raw)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cs24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(cohort <> 2 OR cs6 IN (4, 5) OR cs12_raw IN (4, 5), NULL, cs24_raw)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "act6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(cs6 = 1 OR (cs6 = 2 AND return_after_6m IS NOT NULL))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "act12",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(cs6 NOT IN (4, 5) AND (cs12_raw = 1 OR (cs12_raw = 2 AND return_after_12m IS NOT NULL)))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "act24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(cohort = 2 AND cs6 NOT IN (4, 5) AND cs12_raw NOT IN (4, 5) AND (cs24_raw = 1 OR (cs24_raw = 2 AND return_after_24m IS NOT NULL)))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ahd",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(cd4_value + 0 < 200 OR TIMESTAMPDIFF(YEAR, birthdate, art_start) < 5)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_tx_in_window",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(DATE(last_tb_tx_start_date) BETWEEN art_start - INTERVAL 30 DAY AND art_start + INTERVAL 3 MONTH)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "reg_changed_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(eac6_n >= 3 AND rvl6_value + 0 >= 1000 AND DATE(f6_arv_start_date) > vl6_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(DATE(f6_ipt_start_date) BETWEEN art_start - INTERVAL 1 MONTH AND end_6m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(DATE(f12_ipt_start_date) BETWEEN art_start - INTERVAL 1 MONTH AND end_12m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(DATE(f24_ipt_start_date) BETWEEN art_start - INTERVAL 1 MONTH AND end_24m)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "prior_tpt",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IFNULL(DATE(prior_tpt_completion) >= art_start - INTERVAL 3 YEAR, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_intro",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(tbres = 1 AND IFNULL(DATE(prior_tpt_completion) >= art_start - INTERVAL 3 YEAR, 0) = 0 AND (tpt_init_start IS NOT NULL OR tpt_reg_init IS NOT NULL))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "contact_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(clin_6m + nonclin_6m > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "contact_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(clin_12m + nonclin_12m > 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "contact_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(clin_24m + nonclin_24m > 0)"
+      }
+    }
+  ]
+}
