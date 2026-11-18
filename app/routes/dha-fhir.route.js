@@ -306,7 +306,9 @@ exports.routes = (server) => {
       method: 'GET',
       path: '/etl/fhir/MeasureReport',
       config: {
-        auth: { strategy: 'simple', mode: 'optional' },
+        // no auth override — inherits the build's global strategy, which is
+        // cookie (JSESSIONID) auth on the deployed ETL and Basic on
+        // master-based builds (see the authentication policy note above)
         description:
           'DHA: MOH report as a FHIR MeasureReport — period/reporter/subject forms',
         notes:
