@@ -1,0 +1,129 @@
+{
+  "name": "dprCohortBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "DPR cohort: patients whose first ART regimen started in the 12- or 24-month cohort window",
+  "uses": [],
+  "sources": [
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "fhs"
+    },
+    {
+      "table": "amrs.person",
+      "alias": "pc",
+      "join": {
+        "type": "INNER",
+        "joinCondition": "pc.person_id = fhs.person_id AND pc.voided = 0"
+      }
+    },
+    {
+      "table": "ndwr.mfl_codes",
+      "alias": "mcf",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "mcf.location_id = fhs.arv_first_regimen_location_id"
+      }
+    },
+    {
+      "table": "(SELECT 7 AS location_id, 'K04' AS site_code UNION ALL SELECT 24, 'K04' UNION ALL SELECT 25, 'K04' UNION ALL SELECT 231, 'K04' UNION ALL SELECT 77, 'U01' UNION ALL SELECT 326, 'U01' UNION ALL SELECT 28, 'U02' UNION ALL SELECT 331, 'U02' UNION ALL SELECT 4, 'U03' UNION ALL SELECT 322, 'U03' UNION ALL SELECT 567, 'U03' UNION ALL SELECT 203, 'U04' UNION ALL SELECT 324, 'U04' UNION ALL SELECT 192, 'U05' UNION ALL SELECT 404, 'U05' UNION ALL SELECT 571, 'U05' UNION ALL SELECT 73, 'U07' UNION ALL SELECT 328, 'U07' UNION ALL SELECT 524, 'U08' UNION ALL SELECT 70, 'U09' UNION ALL SELECT 327, 'U09' UNION ALL SELECT 551, 'U09' UNION ALL SELECT 71, 'UR1' UNION ALL SELECT 325, 'UR1' UNION ALL SELECT 351, 'UR2' UNION ALL SELECT 352, 'UR2' UNION ALL SELECT 575, 'UR2' UNION ALL SELECT 274, 'UR3')",
+      "alias": "sf",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "sf.location_id = fhs.arv_first_regimen_location_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "column": "fhs.person_id",
+      "alias": "person_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_start",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(MAX(fhs.arv_first_regimen_start_date))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_location_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(fhs.arv_first_regimen_location_id)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_regimen_raw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "MAX(fhs.arv_first_regimen)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "first_regimen_ids",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(',', REPLACE(REPLACE(MAX(fhs.arv_first_regimen), ' ## ', ','), ' ', ''), ',')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(MAX(fhs.hiv_start_date))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cohort",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(DATE(MAX(fhs.arv_first_regimen_start_date)) BETWEEN '{m24StartDate}' AND '{m24EndDate}', 2, 1)"
+      }
+    }
+  ],
+  "filters": {
+    "conditionJoinOperator": "and",
+    "conditions": [
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fhs.next_encounter_datetime_hiv IS NULL"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "((fhs.arv_first_regimen_start_date >= '{m24StartDate}' AND fhs.arv_first_regimen_start_date < '{m24EndDate}' + INTERVAL 1 DAY) OR (fhs.arv_first_regimen_start_date >= '{m12StartDate}' AND fhs.arv_first_regimen_start_date < '{m12EndDate}' + INTERVAL 1 DAY))"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "(? = 0 OR sf.location_id IS NOT NULL)",
+        "parameterName": "studySitesOnly"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "sf.site_code IN ?",
+        "parameterName": "siteCodes"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "fhs.arv_first_regimen_location_id IN ?",
+        "parameterName": "locations"
+      },
+      {
+        "filterType": "tableColumns",
+        "conditionExpression": "mcf.mfl_code IN ?",
+        "parameterName": "mflCodes"
+      }
+    ]
+  },
+  "groupBy": {
+    "groupParam": "groupByParam",
+    "columns": ["fhs.person_id"]
+  }
+}

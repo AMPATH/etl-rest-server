@@ -37,13 +37,17 @@ module.exports = (function () {
                 't3',
                 't1.encounter_id = t3.encounter_id'
               ],
+              // One row per patient, mirroring the lab data summary (rows grouped
+              // by test date, MAX(value)): several results on the latest date
+              // used to duplicate every summary row, and the page then showed
+              // whichever came first.
               [
-                '(SELECT flai.person_id, flai.hpv, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hpv IS NOT NULL AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hpv IS NOT NULL ))',
+                '(SELECT flai.person_id, MAX(flai.hpv) AS hpv, MAX(flai.test_datetime) AS test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hpv IS NOT NULL AND DATE(flai.test_datetime) = ( SELECT DATE(MAX(f2.test_datetime)) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hpv IS NOT NULL ) GROUP BY flai.person_id)',
                 't4',
                 't4.person_id = t1.person_id'
               ],
               [
-                '(SELECT flai.person_id, flai.hiv_viral_load, flai.test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hiv_viral_load IS NOT NULL AND flai.test_datetime = ( SELECT MAX(f2.test_datetime) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hiv_viral_load IS NOT NULL ))',
+                '(SELECT flai.person_id, MAX(flai.hiv_viral_load) AS hiv_viral_load, MAX(flai.test_datetime) AS test_datetime FROM etl.flat_labs_and_imaging flai WHERE flai.hiv_viral_load IS NOT NULL AND DATE(flai.test_datetime) = ( SELECT DATE(MAX(f2.test_datetime)) FROM etl.flat_labs_and_imaging f2 WHERE f2.person_id = flai.person_id AND f2.hiv_viral_load IS NOT NULL ) GROUP BY flai.person_id)',
                 't5',
                 't5.person_id = t1.person_id'
               ]

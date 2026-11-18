@@ -1,0 +1,277 @@
+{
+  "name": "dprStatusBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "DPR: unpacked look-ups, repeat VL, EAC sessions, baseline TB result and care status codes",
+  "uses": [
+    {
+      "name": "dprLookupsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dprLookupsBase",
+      "alias": "p2"
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "column": "p2.*"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(SUBSTRING_INDEX(p2.cd4, '|', 1))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.cd4, '|', -1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl6_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(SUBSTRING_INDEX(p2.vl6, '|', 1))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl6_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.vl6, '|', -1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl12_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(SUBSTRING_INDEX(p2.vl12, '|', 1))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl12_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.vl12, '|', -1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl24_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(SUBSTRING_INDEX(p2.vl24, '|', 1))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl24_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.vl24, '|', -1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hts_entry_id",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(p2.hts, '|', 1), '') + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hts_all",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(p2.hts, '|', -1), '')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kp_code",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.kp, '|', 1) + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "kp_encounter_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(SUBSTRING_INDEX(p2.kp, '|', -1))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_reg6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(p2.tpt6, '|', 1), '') + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_stop6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(SUBSTRING_INDEX(p2.tpt6, '|', 2), '|', -1), '') + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_restart6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.tpt6, '|', -1) + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_reg12",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(p2.tpt12, '|', 1), '') + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_stop12",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(SUBSTRING_INDEX(p2.tpt12, '|', 2), '|', -1), '') + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_restart12",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.tpt12, '|', -1) + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_reg24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(p2.tpt24, '|', 1), '') + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_stop24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(SUBSTRING_INDEX(SUBSTRING_INDEX(p2.tpt24, '|', 2), '|', -1), '') + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_restart24",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUBSTRING_INDEX(p2.tpt24, '|', -1) + 0"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rvl6_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(SUBSTRING_INDEX(p2.vl6, '|', -1) + 0 >= 1000, (SELECT l.hiv_viral_load FROM etl.flat_labs_and_imaging l WHERE l.person_id = p2.person_id AND l.hiv_viral_load IS NOT NULL AND l.test_datetime >= DATE(SUBSTRING_INDEX(p2.vl6, '|', 1)) + INTERVAL 1 DAY AND l.test_datetime < DATE(SUBSTRING_INDEX(p2.vl6, '|', 1)) + INTERVAL 6 MONTH + INTERVAL 1 DAY ORDER BY l.test_datetime LIMIT 1), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rvl12_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(SUBSTRING_INDEX(p2.vl12, '|', -1) + 0 >= 1000, (SELECT l.hiv_viral_load FROM etl.flat_labs_and_imaging l WHERE l.person_id = p2.person_id AND l.hiv_viral_load IS NOT NULL AND l.test_datetime >= DATE(SUBSTRING_INDEX(p2.vl12, '|', 1)) + INTERVAL 1 DAY AND l.test_datetime < DATE(SUBSTRING_INDEX(p2.vl12, '|', 1)) + INTERVAL 6 MONTH + INTERVAL 1 DAY ORDER BY l.test_datetime LIMIT 1), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "rvl24_value",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(SUBSTRING_INDEX(p2.vl24, '|', -1) + 0 >= 1000, (SELECT l.hiv_viral_load FROM etl.flat_labs_and_imaging l WHERE l.person_id = p2.person_id AND l.hiv_viral_load IS NOT NULL AND l.test_datetime >= DATE(SUBSTRING_INDEX(p2.vl24, '|', 1)) + INTERVAL 1 DAY AND l.test_datetime < DATE(SUBSTRING_INDEX(p2.vl24, '|', 1)) + INTERVAL 6 MONTH + INTERVAL 1 DAY ORDER BY l.test_datetime LIMIT 1), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac6_n",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(SUBSTRING_INDEX(p2.vl6, '|', -1) + 0 >= 1000, (SELECT COUNT(*) FROM amrs.encounter e WHERE e.patient_id = p2.person_id AND e.voided = 0 AND e.encounter_type = 279 AND e.encounter_datetime >= DATE(SUBSTRING_INDEX(p2.vl6, '|', 1)) AND e.encounter_datetime < DATE(SUBSTRING_INDEX(p2.vl6, '|', 1)) + INTERVAL 6 MONTH + INTERVAL 1 DAY), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac12_n",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(SUBSTRING_INDEX(p2.vl12, '|', -1) + 0 >= 1000, (SELECT COUNT(*) FROM amrs.encounter e WHERE e.patient_id = p2.person_id AND e.voided = 0 AND e.encounter_type = 279 AND e.encounter_datetime >= DATE(SUBSTRING_INDEX(p2.vl12, '|', 1)) AND e.encounter_datetime < DATE(SUBSTRING_INDEX(p2.vl12, '|', 1)) + INTERVAL 6 MONTH + INTERVAL 1 DAY), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac24_n",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(SUBSTRING_INDEX(p2.vl24, '|', -1) + 0 >= 1000, (SELECT COUNT(*) FROM amrs.encounter e WHERE e.patient_id = p2.person_id AND e.voided = 0 AND e.encounter_type = 279 AND e.encounter_datetime >= DATE(SUBSTRING_INDEX(p2.vl24, '|', 1)) AND e.encounter_datetime < DATE(SUBSTRING_INDEX(p2.vl24, '|', 1)) + INTERVAL 6 MONTH + INTERVAL 1 DAY), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tbres",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN COALESCE(p2.bl_tb_screened, 0) = 0 THEN NULL WHEN p2.b_on_tb_tx = 1 THEN 4 WHEN p2.b_tb_screening_result IN (6137, 6176, 10767) THEN 3 WHEN DATE(p2.b_tb_tx_end_date) <= p2.art_start THEN 5 WHEN p2.b_tb_screening_result = 6971 THEN 2 WHEN p2.b_tb_screening_result IN (1107, 10678) THEN 1 ELSE 6 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cs6",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN p2.m6_person_id IS NULL THEN 6 WHEN p2.m6_status = 'active' THEN 1 WHEN p2.m6_status = 'defaulter' THEN IF(COALESCE(p2.m6_days_since_rtc, 0) <= 28, 1, 2) WHEN p2.m6_status = 'ltfu' THEN 2 WHEN p2.m6_status = 'transfer_out' THEN 4 WHEN p2.m6_status = 'dead' THEN 5 ELSE 6 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cs12_raw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN p2.m12_person_id IS NULL THEN 6 WHEN p2.m12_status = 'active' THEN 1 WHEN p2.m12_status = 'defaulter' THEN IF(COALESCE(p2.m12_days_since_rtc, 0) <= 28, 1, 2) WHEN p2.m12_status = 'ltfu' THEN 2 WHEN p2.m12_status = 'transfer_out' THEN 4 WHEN p2.m12_status = 'dead' THEN 5 ELSE 6 END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cs24_raw",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN p2.m24_person_id IS NULL THEN 6 WHEN p2.m24_status = 'active' THEN 1 WHEN p2.m24_status = 'defaulter' THEN IF(COALESCE(p2.m24_days_since_rtc, 0) <= 28, 1, 2) WHEN p2.m24_status = 'ltfu' THEN 2 WHEN p2.m24_status = 'transfer_out' THEN 4 WHEN p2.m24_status = 'dead' THEN 5 ELSE 6 END"
+      }
+    }
+  ],
+  "paging": {
+    "limitParam": "materializeLimit",
+    "offSetParam": "materializeOffset"
+  }
+}

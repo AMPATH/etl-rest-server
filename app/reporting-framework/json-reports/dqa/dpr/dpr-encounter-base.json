@@ -1,0 +1,176 @@
+{
+  "name": "dprEncounterBase",
+  "version": "1.0",
+  "tag": "",
+  "description": "DPR: every HIV-summary encounter of the cohort, flagged for the baseline window",
+  "uses": [
+    {
+      "name": "dprCohortBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dprCohortBase",
+      "alias": "c"
+    },
+    {
+      "table": "etl.flat_hiv_summary_v15b",
+      "alias": "f",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "f.person_id = c.person_id"
+      }
+    },
+    {
+      "table": "etl.flat_hiv_summary_ext_v1",
+      "alias": "x",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "x.encounter_id = f.encounter_id"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "simple_column",
+      "column": "c.*"
+    },
+    {
+      "type": "derived_column",
+      "alias": "end_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "LAST_DAY(c.art_start + INTERVAL 6 MONTH)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "end_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "LAST_DAY(c.art_start + INTERVAL 12 MONTH)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "end_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "LAST_DAY(c.art_start + INTERVAL 24 MONTH)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "f.encounter_id",
+      "alias": "encounter_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.encounter_datetime",
+      "alias": "encounter_datetime"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.is_clinical_encounter",
+      "alias": "is_clinical_encounter"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.next_encounter_datetime_hiv",
+      "alias": "next_encounter_datetime_hiv"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.tb_screen",
+      "alias": "tb_screen"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.tb_screening_datetime",
+      "alias": "tb_screening_datetime"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.tb_screening_result",
+      "alias": "tb_screening_result"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.on_tb_tx",
+      "alias": "on_tb_tx"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.tb_tx_start_date",
+      "alias": "tb_tx_start_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.tb_tx_end_date",
+      "alias": "tb_tx_end_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.ipt_start_date",
+      "alias": "ipt_start_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.ipt_completion_date",
+      "alias": "ipt_completion_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.cur_who_stage",
+      "alias": "cur_who_stage"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.is_pregnant",
+      "alias": "is_pregnant"
+    },
+    {
+      "type": "simple_column",
+      "column": "f.cur_arv_line",
+      "alias": "cur_arv_line"
+    },
+    {
+      "type": "simple_column",
+      "column": "x.cm_test",
+      "alias": "cm_test"
+    },
+    {
+      "type": "simple_column",
+      "column": "x.cm_result",
+      "alias": "cm_result"
+    },
+    {
+      "type": "simple_column",
+      "column": "x.cm_treatment_start_date",
+      "alias": "cm_treatment_start_date"
+    },
+    {
+      "type": "simple_column",
+      "column": "x.cm_treatment_end_date",
+      "alias": "cm_treatment_end_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "in_base",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "(f.is_clinical_encounter = 1 AND f.encounter_datetime >= c.art_start - INTERVAL 30 DAY AND f.encounter_datetime < c.art_start + INTERVAL 32 DAY)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "base_rn",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ROW_NUMBER() OVER ( PARTITION BY f.person_id ORDER BY (f.is_clinical_encounter = 1 AND f.encounter_datetime >= c.art_start - INTERVAL 30 DAY AND f.encounter_datetime < c.art_start + INTERVAL 32 DAY) DESC, f.encounter_datetime, f.encounter_id)"
+      }
+    }
+  ]
+}

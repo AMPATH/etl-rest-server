@@ -1,0 +1,1345 @@
+{
+  "name": "dprAggregate",
+  "version": "1.0",
+  "tag": "",
+  "description": "DPR (Kenya DPR 2026 RoC) line list in data-dictionary column order",
+  "uses": [
+    {
+      "name": "dprFlagsBase",
+      "version": "1.0",
+      "type": "dataset_def"
+    }
+  ],
+  "sources": [
+    {
+      "dataSet": "dprFlagsBase",
+      "alias": "r"
+    },
+    {
+      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 11931, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11932, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model')",
+      "alias": "d6m",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "d6m.concept_id = r.dsd_6m"
+      }
+    },
+    {
+      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 11931, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11932, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model')",
+      "alias": "d12m",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "d12m.concept_id = r.dsd_12m"
+      }
+    },
+    {
+      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 11931, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11932, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model')",
+      "alias": "d24m",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "d24m.concept_id = r.dsd_24m"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "type": "derived_column",
+      "alias": "collection_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CURDATE()"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "r.site_county",
+      "alias": "county"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.site_sub_county",
+      "alias": "sub_county"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.site_name",
+      "alias": "facility"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.site_code",
+      "alias": "site_id"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.mfl_code",
+      "alias": "mfl_code"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.ccc",
+      "alias": "roc_id"
+    },
+    {
+      "type": "derived_column",
+      "alias": "sex",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE r.gender WHEN 'M' THEN 'Male' WHEN 'F' THEN 'Female' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pop_type",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.kp_code IS NOT NULL, 'Key Population', 'General population')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "key_pop_specify",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.kp_code = 1 AND r.gender = 'F' THEN 'Female Sex Worker [FSW]' WHEN r.kp_code = 1 THEN 'Other (specify)' WHEN r.kp_code = 2 THEN 'Men who have sex with Men [MSM]' WHEN r.kp_code = 3 THEN 'Person who Inject Drugs [PWIDs]' WHEN r.kp_code = 6 THEN 'Serodiscordant couples' WHEN r.kp_code = 10 THEN 'Other (specify)' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "r.kp_encounter_date",
+      "alias": "key_pop_encounter_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "dob_documented",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.birthdate IS NOT NULL, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "dob",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(r.birthdate)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "age",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "TIMESTAMPDIFF(YEAR, r.birthdate, r.art_start)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "r.hiv_start_date",
+      "alias": "hiv_pos_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_test_model",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN FIND_IN_SET(9613, r.hts_all) > 0 THEN 'Community Based' WHEN r.hts_all IS NOT NULL THEN 'Facility Based' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_test_approach",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN FIND_IN_SET(2177, r.hts_all) > 0 THEN 'PITC' WHEN FIND_IN_SET(2047, r.hts_all) > 0 THEN 'VCT (RoC-initiated)' ELSE 'Not documented' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_test_entry",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.hts_entry_id IS NULL THEN 'Not documented' WHEN r.hts_entry_id = 1965 THEN 'OPD' WHEN r.hts_entry_id IN (5485, 8349) THEN 'Inpatient ward' WHEN r.hts_entry_id = 2240 THEN 'CCC (ART clinic)' WHEN r.hts_entry_id = 9494 THEN 'Maternity' ELSE 'Other (specify)' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_init_loc_doc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.art_location_id IS NOT NULL, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_init_loc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.art_location_id IS NOT NULL, 'CCC (ART clinic)', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_init_date_doc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.art_start IS NOT NULL, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "r.art_start",
+      "alias": "art_init_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cohort",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cohort = 2, CONCAT('24-months [Started ART in ', '{m24Label}', ']'), CONCAT('12-months [Started ART in ', '{m12Label}', ']'))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_regimen_init",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.first_regimen_raw IS NULL OR r.first_regimen_raw = '' THEN 'Not documented' WHEN r.first_regimen_ids REGEXP ',(802|1400|6964|10268),' AND r.first_regimen_ids REGEXP ',(9759|10268),' THEN 'TDF/3TC/DTG (TLD)' WHEN r.first_regimen_ids REGEXP ',(814|6679),' AND r.first_regimen_ids REGEXP ',(9759|10268),' THEN 'ABC/3TC/DTG' WHEN r.first_regimen_ids REGEXP ',(797|630|9053),' AND r.first_regimen_ids REGEXP ',(9759),' THEN 'AZT/3TC/DTG' WHEN r.first_regimen_ids REGEXP ',(802|1400|6964),' AND r.first_regimen_ids REGEXP ',(633|6964),' THEN 'TDF/3TC/EFV' WHEN r.first_regimen_ids REGEXP ',(814|6679),' AND r.first_regimen_ids REGEXP ',(794),' THEN 'ABC/3TC/LPV/r' WHEN r.first_regimen_ids REGEXP ',(797|630|9053),' AND r.first_regimen_ids REGEXP ',(794),' THEN 'AZT/3TC/LPV/r' ELSE 'Other (specify)' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "baseline_screening",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "NULLIF(CONCAT_WS('; ', IF(r.bl_tb_screened = 1, 'TB Screening', NULL), IF(r.gender = 'F' AND r.b_is_pregnant IS NOT NULL, 'Screening for pregnancy', NULL), IF(COALESCE(r.bl_tb_screened, 0) = 0 AND NOT (r.gender = 'F' AND r.b_is_pregnant IS NOT NULL), 'Not documented', NULL) ), '')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_screen_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ELT(r.tbres, 'No signs', 'TB Presumptive', 'Diagnosed with TB', 'On Anti-TB treatment', 'Completed Anti-TB Treatment', 'Not documented')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_eligible",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE r.tbres WHEN 1 THEN IF(r.prior_tpt, 'No', 'Yes') WHEN 2 THEN 'No' WHEN 6 THEN 'Not documented' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_inelig_reason",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.tbres = 1 AND r.prior_tpt THEN 'TPT completed within the last 3 years' WHEN r.tbres = 2 THEN 'Not documented' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_introduced",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.tbres = 1 AND NOT r.prior_tpt THEN IF(r.tpt_intro, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_status_init",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.tpt_intro THEN CASE r.tpt_reg_init WHEN 656 THEN 'II = INH initiated' WHEN 11883 THEN '3I = 3HP initiated' ELSE 'Not documented' END WHEN r.tbres IN (3, 4, 5) THEN 'Not documented' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_tx_status_last",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.tbres IN (3, 4) THEN CASE WHEN r.last_tb_tx_end_date IS NOT NULL THEN 'Tuberculosis treatment completed' WHEN r.last_on_tb_tx = 1 THEN 'Still on anti-tuberculosis treatment' ELSE 'Not documented' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "who_stage_init",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ELT(IF(r.b_cur_who_stage IN (1, 2, 3, 4), r.b_cur_who_stage, 5), 'WHO stage 1', 'WHO stage 2', 'WHO stage 3', 'WHO stage 4', 'Not documented')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_test_baseline",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cd4_date IS NOT NULL, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "r.cd4_date",
+      "alias": "cd4_test_date"
+    },
+    {
+      "type": "derived_column",
+      "alias": "cd4_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cd4_date IS NULL THEN NULL WHEN r.cd4_value IS NULL OR r.cd4_value = '' THEN 'Missing or rejected result' WHEN r.cd4_value + 0 < 200 THEN '<200' ELSE '≥200' END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "tb_lam_test"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "tb_lam_result"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "xpert_mtb_test"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "xpert_mtb_result"
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_tx_started",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.tb_tx_in_window, 'Yes', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_tx_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.tb_tx_in_window, DATE(r.last_tb_tx_start_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_tx_outcome",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.tb_tx_in_window THEN CASE WHEN r.last_tb_tx_end_date IS NOT NULL THEN 'Tuberculosis treatment completed' WHEN r.last_on_tb_tx = 1 THEN 'Still on anti-tuberculosis treatment' ELSE 'Not documented' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tb_tx_complete_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.tb_tx_in_window, DATE(r.last_tb_tx_end_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_test",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.ahd THEN IF(r.bl_crag_tested = 1, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "crag_result",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.ahd AND r.bl_crag_tested = 1 THEN CASE r.bl_crag_result_raw WHEN 2 THEN 'Positive' WHEN 1 THEN 'Negative' ELSE 'Not documented' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cm_tx_started",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.ahd AND r.bl_crag_tested = 1 AND r.bl_crag_result_raw = 2 THEN IF(r.cm_tx_start IS NOT NULL, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cm_tx_date_doc",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.ahd AND r.bl_crag_tested = 1 AND r.bl_crag_result_raw = 2 AND r.cm_tx_start IS NOT NULL THEN 'Yes' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cm_tx_start_date",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.ahd AND r.bl_crag_tested = 1 AND r.bl_crag_result_raw = 2 THEN DATE(r.cm_tx_start) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "cm_tx_outcome",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.ahd AND r.bl_crag_tested = 1 AND r.bl_crag_result_raw = 2 AND r.cm_tx_start IS NOT NULL THEN IF(r.cm_tx_end IS NOT NULL, 'Completed CM treatment', 'Still on CM treatment') END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "other_oi_baseline"
+    },
+    {
+      "type": "derived_column",
+      "alias": "care_status_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ELT(r.cs6, 'Alive and active on ART', 'LTFU', 'Stopped', 'Transferred out', 'Died', 'Not documented')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_visit_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "DATE(r.m6_encounter_date)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "service_point_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 = 1, 'CCC (ART clinic)', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "next_appt_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 IN (1, 2), DATE(r.m6_rtc_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pregnancy_status_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs6 IN (1, 2) AND r.gender = 'F' THEN CASE WHEN r.m6_pregnant = 1 OR r.f6_is_pregnant = 1 THEN 'Pregnant' WHEN r.f6_breastfeeding = 1 THEN 'Breastfeeding' WHEN TIMESTAMPDIFF(YEAR, r.birthdate, r.end_6m) NOT BETWEEN 10 AND 49 THEN 'Not Applicable (Women<10 years or >49 years)' WHEN r.f6_is_pregnant IS NOT NULL THEN 'Not Pregnant nor Breastfeeding' ELSE 'Not documented (Women 10-49 years)' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ltfu_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 = 2, DATE(r.m6_rtc_date) + INTERVAL 28 DAY, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "art_stop_date_6m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "transfer_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 = 4, DATE(r.m6_transfer_out_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "death_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 = 5, DATE(r.m6_death_date), NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "traced_6m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "resumed_care_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 = 2, IF(r.return_after_6m IS NOT NULL, 'Yes', 'No'), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_date_doc_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 = 2 AND r.return_after_6m IS NOT NULL, 'Yes', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs6 = 2, r.return_after_6m, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_time_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs6 = 2 AND r.return_after_6m IS NOT NULL THEN CASE WHEN DATEDIFF(r.return_after_6m, r.m6_rtc_date) < 28 THEN '<28 days' WHEN DATEDIFF(r.return_after_6m, r.m6_rtc_date) < 61 THEN '28 days-2 months' WHEN DATEDIFF(r.return_after_6m, r.m6_rtc_date) <= 92 THEN '3 months' ELSE '>3 months' END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "ill_on_return_6m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_model_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 THEN IF(r.dsd_6m IS NULL, 'Not documented', COALESCE(d6m.label, 'Other (specify)')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_months_disp_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 THEN IF(r.m6_rtc_date IS NULL, 'Not documented', ELT(LEAST(GREATEST(ROUND(DATEDIFF(COALESCE(r.f6_med_pickup_rtc_date, r.m6_rtc_date), r.m6_encounter_date) / 30), 1), 6), '1 month or less', '2 months', '3 months', '4 months', '5 months', '6 months')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_done_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 THEN IF(r.vl6_date IS NOT NULL, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_sample_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.act6, r.vl6_date, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "vl_result_date_6m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_result_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.vl6_date IS NOT NULL THEN CASE WHEN r.vl6_value IS NULL OR r.vl6_value = '' THEN 'Not documented' WHEN r.vl6_value + 0 < 200 THEN 'Suppressed: <200 copies/mL' WHEN r.vl6_value + 0 < 1000 THEN 'Low-level viremia (LLV): 200-999 copies/mL' ELSE 'Non-suppressed: ≥1,000 copies/mL' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac_received_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.vl6_value + 0 >= 1000 THEN IF(r.eac6_n > 0, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac_complete_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.vl6_value + 0 >= 1000 AND r.eac6_n > 0 THEN IF(r.eac6_n >= 3, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "repeat_vl_done_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.eac6_n >= 3 THEN IF(r.rvl6_value IS NOT NULL, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "repeat_vl_result_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.eac6_n >= 3 AND r.rvl6_value IS NOT NULL THEN CASE WHEN r.rvl6_value + 0 < 200 THEN 'Suppressed: <200 copies/mL' WHEN r.rvl6_value + 0 < 1000 THEN 'Low-level viremia (LLV): 200-999 copies/mL' ELSE 'Non-suppressed: ≥1,000 copies/mL' END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "hivdr_test_done_6m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "hivdr_reviewed_6m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_optimized_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.eac6_n >= 3 AND r.rvl6_value + 0 >= 1000 THEN IF(DATE(r.f6_arv_start_date) > r.vl6_date, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_decision_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.reg_changed_6m THEN IF(r.f6_cur_arv_line > r.b_cur_arv_line, 'Switched', 'Substituted') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_date_doc_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.reg_changed_6m THEN 'Yes' END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "regimen_change_date_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act6 AND r.reg_changed_6m THEN DATE(r.f6_arv_start_date) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_oi_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "'Not documented'"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "oi_diagnoses_6m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "clinical_contact_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.contact_6m, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_renewal_count_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.contact_6m, r.nonclin_6m, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "renew_clinical_count_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.contact_6m, r.clin_6m, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "clinical_services_6m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_received_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.tpt_6m, 'Yes', IF(r.f6_encounter_id IS NULL, 'Not documented', 'No'))"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_status_6m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.tpt_6m THEN CASE WHEN DATE(r.f6_ipt_completion_date) <= r.end_6m OR r.tpt_stop6 = 1267 THEN 'TC = TPT completed' WHEN DATE(r.f6_ipt_stop_date) <= r.end_6m AND (r.tpt_stop6 = 58 OR r.f6_on_tb_tx = 1) THEN 'AT = TPT discontinued due to the RoC''s development of active tuberculosis' WHEN r.tpt_restart6 = 1 THEN CASE r.tpt_reg6 WHEN 656 THEN 'RI = Restart the INH' WHEN 11883 THEN 'R3 = Restart the 3HP' ELSE 'Not documented' END WHEN DATE(r.f6_ipt_stop_date) <= r.end_6m THEN 'Not documented' WHEN DATE(r.f6_ipt_start_date) > r.art_start + INTERVAL 1 MONTH THEN CASE r.tpt_reg6 WHEN 656 THEN 'II = INH initiated' WHEN 11883 THEN '3I = 3HP initiated' ELSE 'Not documented' END ELSE 'CT = continue TPT' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "care_status_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ELT(r.cs12, 'Alive and active on ART', 'LTFU', 'Stopped', 'Transferred out', 'Died', 'Not documented')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_visit_date_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 IS NOT NULL, DATE(r.m12_encounter_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "service_point_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 = 1, 'CCC (ART clinic)', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "next_appt_date_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 IN (1, 2), DATE(r.m12_rtc_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pregnancy_status_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs12 IN (1, 2) AND r.gender = 'F' THEN CASE WHEN r.m12_pregnant = 1 OR r.f12_is_pregnant = 1 THEN 'Pregnant' WHEN r.f12_breastfeeding = 1 THEN 'Breastfeeding' WHEN TIMESTAMPDIFF(YEAR, r.birthdate, r.end_12m) NOT BETWEEN 10 AND 49 THEN 'Not Applicable (Women<10 years or >49 years)' WHEN r.f12_is_pregnant IS NOT NULL THEN 'Not Pregnant nor Breastfeeding' ELSE 'Not documented (Women 10-49 years)' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ltfu_date_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 = 2, DATE(r.m12_rtc_date) + INTERVAL 28 DAY, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "art_stop_date_12m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "transfer_date_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 = 4, DATE(r.m12_transfer_out_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "death_date_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 = 5, DATE(r.m12_death_date), NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "traced_12m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "resumed_care_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 = 2, IF(r.return_after_12m IS NOT NULL, 'Yes', 'No'), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_date_doc_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 = 2 AND r.return_after_12m IS NOT NULL, 'Yes', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_date_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 = 2, r.return_after_12m, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_time_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs12 = 2 AND r.return_after_12m IS NOT NULL THEN CASE WHEN DATEDIFF(r.return_after_12m, r.m12_rtc_date) < 28 THEN '<28 days' WHEN DATEDIFF(r.return_after_12m, r.m12_rtc_date) < 61 THEN '28 days-2 months' WHEN DATEDIFF(r.return_after_12m, r.m12_rtc_date) <= 92 THEN '3 months' ELSE '>3 months' END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "ill_on_return_12m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_model_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 THEN IF(r.dsd_12m IS NULL, 'Not documented', COALESCE(d12m.label, 'Other (specify)')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_months_disp_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 THEN IF(r.m12_rtc_date IS NULL, 'Not documented', ELT(LEAST(GREATEST(ROUND(DATEDIFF(COALESCE(r.f12_med_pickup_rtc_date, r.m12_rtc_date), r.m12_encounter_date) / 30), 1), 6), '1 month or less', '2 months', '3 months', '4 months', '5 months', '6 months')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_done_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 THEN IF(r.vl12_date IS NOT NULL, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_sample_date_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.act12, r.vl12_date, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "vl_result_date_12m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_result_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 AND r.vl12_date IS NOT NULL THEN CASE WHEN r.vl12_value IS NULL OR r.vl12_value = '' THEN 'Not documented' WHEN r.vl12_value + 0 < 200 THEN 'Suppressed: <200 copies/mL' WHEN r.vl12_value + 0 < 1000 THEN 'Low-level viremia (LLV): 200-999 copies/mL' ELSE 'Non-suppressed: ≥1,000 copies/mL' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac_received_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 AND r.vl12_value + 0 >= 1000 THEN IF(r.eac12_n > 0, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac_complete_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 AND r.vl12_value + 0 >= 1000 AND r.eac12_n > 0 THEN IF(r.eac12_n >= 3, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "repeat_vl_done_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 AND r.eac12_n >= 3 THEN IF(r.rvl12_value IS NOT NULL, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "repeat_vl_result_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act12 AND r.eac12_n >= 3 AND r.rvl12_value IS NOT NULL THEN CASE WHEN r.rvl12_value + 0 < 200 THEN 'Suppressed: <200 copies/mL' WHEN r.rvl12_value + 0 < 1000 THEN 'Low-level viremia (LLV): 200-999 copies/mL' ELSE 'Non-suppressed: ≥1,000 copies/mL' END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "hivdr_test_done_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "hivdr_reviewed_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_optimized_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_decision_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_date_doc_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_change_date_12m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_oi_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 IS NOT NULL, 'Not documented', NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "oi_diagnoses_12m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "clinical_contact_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 IS NOT NULL, IF(r.contact_12m, 'Yes', 'No'), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_renewal_count_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 IS NOT NULL AND r.contact_12m, r.nonclin_12m, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "renew_clinical_count_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs12 IS NOT NULL AND r.contact_12m, r.clin_12m, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "clinical_services_12m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_received_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs12 IS NOT NULL THEN IF(r.tpt_12m, 'Yes', IF(r.f12_encounter_id IS NULL, 'Not documented', 'No')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_status_12m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs12 IS NOT NULL AND r.tpt_12m THEN CASE WHEN DATE(r.f12_ipt_completion_date) <= r.end_12m OR r.tpt_stop12 = 1267 THEN 'TC = TPT completed' WHEN DATE(r.f12_ipt_stop_date) <= r.end_12m AND (r.tpt_stop12 = 58 OR r.f12_on_tb_tx = 1) THEN 'AT = TPT discontinued due to the RoC''s development of active tuberculosis' WHEN r.tpt_restart12 = 1 THEN CASE r.tpt_reg12 WHEN 656 THEN 'RI = Restart the INH' WHEN 11883 THEN 'R3 = Restart the 3HP' ELSE 'Not documented' END WHEN DATE(r.f12_ipt_stop_date) <= r.end_12m THEN 'Not documented' WHEN DATE(r.f12_ipt_start_date) > r.end_6m THEN CASE r.tpt_reg12 WHEN 656 THEN 'II = INH initiated' WHEN 11883 THEN '3I = 3HP initiated' ELSE 'Not documented' END ELSE 'CT = continue TPT' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "care_status_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "ELT(r.cs24, 'Alive and active on ART', 'LTFU', 'Stopped', 'Transferred out', 'Died', 'Not documented')"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "last_visit_date_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 IS NOT NULL, DATE(r.m24_encounter_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "service_point_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 = 1, 'CCC (ART clinic)', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "next_appt_date_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 IN (1, 2), DATE(r.m24_rtc_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "pregnancy_status_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs24 IN (1, 2) AND r.gender = 'F' THEN CASE WHEN r.m24_pregnant = 1 OR r.f24_is_pregnant = 1 THEN 'Pregnant' WHEN r.f24_breastfeeding = 1 THEN 'Breastfeeding' WHEN TIMESTAMPDIFF(YEAR, r.birthdate, r.end_24m) NOT BETWEEN 10 AND 49 THEN 'Not Applicable (Women<10 years or >49 years)' WHEN r.f24_is_pregnant IS NOT NULL THEN 'Not Pregnant nor Breastfeeding' ELSE 'Not documented (Women 10-49 years)' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "ltfu_date_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 = 2, DATE(r.m24_rtc_date) + INTERVAL 28 DAY, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "art_stop_date_24m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "transfer_date_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 = 4, DATE(r.m24_transfer_out_date), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "death_date_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 = 5, DATE(r.m24_death_date), NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "traced_24m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "resumed_care_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 = 2, IF(r.return_after_24m IS NOT NULL, 'Yes', 'No'), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_date_doc_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 = 2 AND r.return_after_24m IS NOT NULL, 'Yes', NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_date_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 = 2, r.return_after_24m, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "return_time_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs24 = 2 AND r.return_after_24m IS NOT NULL THEN CASE WHEN DATEDIFF(r.return_after_24m, r.m24_rtc_date) < 28 THEN '<28 days' WHEN DATEDIFF(r.return_after_24m, r.m24_rtc_date) < 61 THEN '28 days-2 months' WHEN DATEDIFF(r.return_after_24m, r.m24_rtc_date) <= 92 THEN '3 months' ELSE '>3 months' END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "ill_on_return_24m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "dsd_model_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 THEN IF(r.dsd_24m IS NULL, 'Not documented', COALESCE(d24m.label, 'Other (specify)')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_months_disp_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 THEN IF(r.m24_rtc_date IS NULL, 'Not documented', ELT(LEAST(GREATEST(ROUND(DATEDIFF(COALESCE(r.f24_med_pickup_rtc_date, r.m24_rtc_date), r.m24_encounter_date) / 30), 1), 6), '1 month or less', '2 months', '3 months', '4 months', '5 months', '6 months')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_done_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 THEN IF(r.vl24_date IS NOT NULL, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_sample_date_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.act24, r.vl24_date, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "vl_result_date_24m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "vl_result_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 AND r.vl24_date IS NOT NULL THEN CASE WHEN r.vl24_value IS NULL OR r.vl24_value = '' THEN 'Not documented' WHEN r.vl24_value + 0 < 200 THEN 'Suppressed: <200 copies/mL' WHEN r.vl24_value + 0 < 1000 THEN 'Low-level viremia (LLV): 200-999 copies/mL' ELSE 'Non-suppressed: ≥1,000 copies/mL' END END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac_received_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 AND r.vl24_value + 0 >= 1000 THEN IF(r.eac24_n > 0, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "eac_complete_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 AND r.vl24_value + 0 >= 1000 AND r.eac24_n > 0 THEN IF(r.eac24_n >= 3, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "repeat_vl_done_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 AND r.eac24_n >= 3 THEN IF(r.rvl24_value IS NOT NULL, 'Yes', 'No') END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "repeat_vl_result_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.act24 AND r.eac24_n >= 3 AND r.rvl24_value IS NOT NULL THEN CASE WHEN r.rvl24_value + 0 < 200 THEN 'Suppressed: <200 copies/mL' WHEN r.rvl24_value + 0 < 1000 THEN 'Low-level viremia (LLV): 200-999 copies/mL' ELSE 'Non-suppressed: ≥1,000 copies/mL' END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "hivdr_test_done_24m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "hivdr_reviewed_24m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_optimized_24m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_decision_24m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_date_doc_24m"
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "regimen_change_date_24m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "new_oi_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 IS NOT NULL, 'Not documented', NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "oi_diagnoses_24m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "clinical_contact_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 IS NOT NULL, IF(r.contact_24m, 'Yes', 'No'), NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "art_renewal_count_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 IS NOT NULL AND r.contact_24m, r.nonclin_24m, NULL)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "renew_clinical_count_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.cs24 IS NOT NULL AND r.contact_24m, r.clin_24m, NULL)"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "NULL",
+      "alias": "clinical_services_24m"
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_received_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs24 IS NOT NULL THEN IF(r.tpt_24m, 'Yes', IF(r.f24_encounter_id IS NULL, 'Not documented', 'No')) END"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "tpt_status_24m",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CASE WHEN r.cs24 IS NOT NULL AND r.tpt_24m THEN CASE WHEN DATE(r.f24_ipt_completion_date) <= r.end_24m OR r.tpt_stop24 = 1267 THEN 'TC = TPT completed' WHEN DATE(r.f24_ipt_stop_date) <= r.end_24m AND (r.tpt_stop24 = 58 OR r.f24_on_tb_tx = 1) THEN 'AT = TPT discontinued due to the RoC''s development of active tuberculosis' WHEN r.tpt_restart24 = 1 THEN CASE r.tpt_reg24 WHEN 656 THEN 'RI = Restart the INH' WHEN 11883 THEN 'R3 = Restart the 3HP' ELSE 'Not documented' END WHEN DATE(r.f24_ipt_stop_date) <= r.end_24m THEN 'Not documented' WHEN DATE(r.f24_ipt_start_date) > r.end_12m THEN CASE r.tpt_reg24 WHEN 656 THEN 'II = INH initiated' WHEN 11883 THEN '3I = 3HP initiated' ELSE 'Not documented' END ELSE 'CT = continue TPT' END END"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "r.loc_name",
+      "alias": "_art_start_location"
+    },
+    {
+      "type": "derived_column",
+      "alias": "_dob_estimated",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(r.birthdate_estimated = 1, 'Yes', 'No')"
+      }
+    },
+    {
+      "type": "simple_column",
+      "column": "r.first_regimen_raw",
+      "alias": "_first_regimen_concept_ids"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.m6_status",
+      "alias": "_status_6m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.m12_status",
+      "alias": "_status_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.m24_status",
+      "alias": "_status_24m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.end_6m",
+      "alias": "_end_6m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.end_12m",
+      "alias": "_end_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.end_24m",
+      "alias": "_end_24m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.vl6_value",
+      "alias": "_vl6"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.vl12_value",
+      "alias": "_vl12"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.vl24_value",
+      "alias": "_vl24"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.cd4_value",
+      "alias": "_cd4"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.kp_code",
+      "alias": "_kp_code"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.eac6_n",
+      "alias": "_eac_sessions_6m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.eac12_n",
+      "alias": "_eac_sessions_12m"
+    },
+    {
+      "type": "simple_column",
+      "column": "r.eac24_n",
+      "alias": "_eac_sessions_24m"
+    }
+  ],
+  "orderBy": {
+    "orderByParam": "orderByParam",
+    "columns": [
+      {
+        "column": "r.site_code",
+        "order": "asc"
+      },
+      {
+        "column": "r.art_start",
+        "order": "asc"
+      },
+      {
+        "column": "r.person_id",
+        "order": "asc"
+      }
+    ]
+  }
+}

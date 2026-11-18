@@ -436,6 +436,16 @@ import * as hei6to8weeks_base_report from './json-reports/case-surveillance/hei-
 import * as caseSuveillance_summary from './json-reports/case-surveillance/summaries/case-surveillance.json';
 import * as cs_patient_list_template from './json-reports/case-surveillance/summaries/case-surveillance-patient-list.json';
 
+//DQA - DPR (Kenya DPR 2026 RoC) report
+import * as dpr_cohort_base from './json-reports/dqa/dpr/dpr-cohort-base.json';
+import * as dpr_encounter_base from './json-reports/dqa/dpr/dpr-encounter-base.json';
+import * as dpr_encounter_summary_base from './json-reports/dqa/dpr/dpr-encounter-summary-base.json';
+import * as dpr_lookups_base from './json-reports/dqa/dpr/dpr-lookups-base.json';
+import * as dpr_status_base from './json-reports/dqa/dpr/dpr-status-base.json';
+import * as dpr_flags_base from './json-reports/dqa/dpr/dpr-flags-base.json';
+import * as dpr_aggregate from './json-reports/dqa/dpr/dpr-aggregate.json';
+import * as dpr_report from './json-reports/dqa/dpr/summaries/dpr-report.json';
+
 //plhiv-ncd report
 import * as plhiv_ncd_v2_monthly_report from './json-reports/plhiv-ncd-v2-reports/plhiv-ncd-v2-report.json';
 
@@ -2418,6 +2428,24 @@ export class BaseMysqlReport {
         case 'case-surveillance-summary-report':
           resolve({
             main: this.cloneJsonSchema(caseSuveillance_summary)
+          });
+          break;
+        case 'dprAggregate':
+          resolve({
+            main: this.cloneJsonSchema(dpr_aggregate),
+            dprFlagsBase: this.cloneJsonSchema(dpr_flags_base),
+            dprStatusBase: this.cloneJsonSchema(dpr_status_base),
+            dprLookupsBase: this.cloneJsonSchema(dpr_lookups_base),
+            dprEncounterSummaryBase: this.cloneJsonSchema(
+              dpr_encounter_summary_base
+            ),
+            dprEncounterBase: this.cloneJsonSchema(dpr_encounter_base),
+            dprCohortBase: this.cloneJsonSchema(dpr_cohort_base)
+          });
+          break;
+        case 'dqa-dpr-report':
+          resolve({
+            main: this.cloneJsonSchema(dpr_report)
           });
           break;
         case 'plhiv-ncd-v2-monthly-report':
