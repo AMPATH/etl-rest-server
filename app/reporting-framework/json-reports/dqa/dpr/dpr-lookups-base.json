@@ -183,6 +183,11 @@
     },
     {
       "type": "simple_column",
+      "column": "ids.joint_identifiers",
+      "alias": "patient_identifiers"
+    },
+    {
+      "type": "simple_column",
       "column": "m6.person_id",
       "alias": "m6_person_id"
     },

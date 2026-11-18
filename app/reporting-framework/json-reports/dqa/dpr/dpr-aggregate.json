@@ -80,6 +80,11 @@
       "alias": "roc_id"
     },
     {
+      "type": "simple_column",
+      "column": "r.patient_identifiers",
+      "alias": "patient_identifiers"
+    },
+    {
       "type": "derived_column",
       "alias": "sex",
       "expressionType": "simple_expression",
