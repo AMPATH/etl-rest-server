@@ -138,17 +138,36 @@ function toMeasureReport(measureKey, label, period, payload) {
       count: firstRow[alias]
     }));
 
-  return {
+  const report = {
     resourceType: 'MeasureReport',
     id: measureKey + '-' + (period.start || '') + '-' + (period.end || ''),
     meta: {
       source: 'etl-rest-server',
       profile: [IG_BASE + '/StructureDefinition/kenya-core-measurereport']
     },
-    identifier: { system: IG_BASE + '/measures', value: measureKey },
+    // R4: identifier is an Array; the kenya-core-measurereport profile
+    // requires identifier.type (min 1) — the lab test bed rejected the
+    // previous single-object identifier (FUNC-QUAL-001, 18 Nov)
+    identifier: [
+      {
+        type: {
+          coding: [
+            {
+              system: 'http://terminology.hl7.org/CodeSystem/v2-0203',
+              code: 'RI',
+              display: 'Resource identifier'
+            }
+          ],
+          text: 'Resource identifier'
+        },
+        system: IG_BASE + '/measures',
+        value: measureKey
+      }
+    ],
     status: 'complete',
     type: 'summary',
     measure: IG_BASE + '/Measure/' + measureKey,
+    date: new Date().toISOString(),
     period: {
       start: period.start || undefined,
       end: period.end || undefined
@@ -160,6 +179,7 @@ function toMeasureReport(measureKey, label, period, payload) {
       }
     ]
   };
+  return report;
 }
 
 function toBundle(measureReport) {
