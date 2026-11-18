@@ -1,0 +1,792 @@
+{
+  "reportName": "dqa-dpr-report",
+  "title": "DPR Report",
+  "description": "Kenya DPR 2026 RoC line list: ART initiation cohorts followed up at 6, 12 and 24 months",
+  "sections": [
+    {
+      "sectionTitle": "Facility",
+      "sectionKey": "grp_facility",
+      "columns": [
+        {
+          "field": "collection_date",
+          "headerName": "Collection date"
+        },
+        {
+          "field": "county",
+          "headerName": "County"
+        },
+        {
+          "field": "sub_county",
+          "headerName": "Sub-county"
+        },
+        {
+          "field": "facility",
+          "headerName": "Facility"
+        },
+        {
+          "field": "site_id",
+          "headerName": "Site ID"
+        },
+        {
+          "field": "mfl_code",
+          "headerName": "MFL code"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Demographics",
+      "sectionKey": "grp_demographics",
+      "columns": [
+        {
+          "field": "roc_id",
+          "headerName": "RoC ID (CCC)"
+        },
+        {
+          "field": "sex",
+          "headerName": "Sex"
+        },
+        {
+          "field": "pop_type",
+          "headerName": "Population type"
+        },
+        {
+          "field": "key_pop_specify",
+          "headerName": "Key population"
+        },
+        {
+          "field": "key_pop_encounter_date",
+          "headerName": "KP encounter date"
+        },
+        {
+          "field": "dob_documented",
+          "headerName": "DOB documented"
+        },
+        {
+          "field": "dob",
+          "headerName": "Date of birth"
+        },
+        {
+          "field": "age",
+          "headerName": "Age at ART start"
+        },
+        {
+          "field": "hiv_pos_date",
+          "headerName": "HIV+ date"
+        },
+        {
+          "field": "hiv_test_model",
+          "headerName": "HIV test model"
+        },
+        {
+          "field": "hiv_test_approach",
+          "headerName": "HIV test approach"
+        },
+        {
+          "field": "hiv_test_entry",
+          "headerName": "HIV test entry point"
+        },
+        {
+          "field": "art_init_loc_doc",
+          "headerName": "ART init location documented"
+        },
+        {
+          "field": "art_init_loc",
+          "headerName": "ART init location"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "ART initiation",
+      "sectionKey": "grp_art_init",
+      "columns": [
+        {
+          "field": "art_init_date_doc",
+          "headerName": "ART init date documented"
+        },
+        {
+          "field": "art_init_date",
+          "headerName": "ART init date"
+        },
+        {
+          "field": "cohort",
+          "headerName": "Cohort"
+        },
+        {
+          "field": "art_regimen_init",
+          "headerName": "Initial regimen"
+        },
+        {
+          "field": "baseline_screening",
+          "headerName": "Baseline screening"
+        },
+        {
+          "field": "tb_screen_result",
+          "headerName": "TB screen result"
+        },
+        {
+          "field": "tpt_eligible",
+          "headerName": "TPT eligible"
+        },
+        {
+          "field": "tpt_inelig_reason",
+          "headerName": "TPT ineligibility reason"
+        },
+        {
+          "field": "tpt_introduced",
+          "headerName": "TPT introduced"
+        },
+        {
+          "field": "tpt_status_init",
+          "headerName": "TPT status at init"
+        },
+        {
+          "field": "tb_tx_status_last",
+          "headerName": "TB treatment status (last)"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "AHD baseline",
+      "sectionKey": "grp_ahd_baseline",
+      "columns": [
+        {
+          "field": "who_stage_init",
+          "headerName": "WHO stage at init"
+        },
+        {
+          "field": "cd4_test_baseline",
+          "headerName": "Baseline CD4 done"
+        },
+        {
+          "field": "cd4_test_date",
+          "headerName": "CD4 test date"
+        },
+        {
+          "field": "cd4_result",
+          "headerName": "CD4 result"
+        },
+        {
+          "field": "tb_lam_test",
+          "headerName": "TB-LAM test"
+        },
+        {
+          "field": "tb_lam_result",
+          "headerName": "TB-LAM result"
+        },
+        {
+          "field": "xpert_mtb_test",
+          "headerName": "Xpert MTB test"
+        },
+        {
+          "field": "xpert_mtb_result",
+          "headerName": "Xpert MTB result"
+        },
+        {
+          "field": "tb_tx_started",
+          "headerName": "TB treatment started"
+        },
+        {
+          "field": "tb_tx_start_date",
+          "headerName": "TB treatment start date"
+        },
+        {
+          "field": "tb_tx_outcome",
+          "headerName": "TB treatment outcome"
+        },
+        {
+          "field": "tb_tx_complete_date",
+          "headerName": "TB treatment completion date"
+        },
+        {
+          "field": "crag_test",
+          "headerName": "CrAg test"
+        },
+        {
+          "field": "crag_result",
+          "headerName": "CrAg result"
+        },
+        {
+          "field": "cm_tx_started",
+          "headerName": "CM treatment started"
+        },
+        {
+          "field": "cm_tx_date_doc",
+          "headerName": "CM treatment date documented"
+        },
+        {
+          "field": "cm_tx_start_date",
+          "headerName": "CM treatment start date"
+        },
+        {
+          "field": "cm_tx_outcome",
+          "headerName": "CM treatment outcome"
+        },
+        {
+          "field": "other_oi_baseline",
+          "headerName": "Other OI at baseline"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "6 months follow-up",
+      "sectionKey": "grp_v_6_months_follow_up",
+      "columns": [
+        {
+          "field": "care_status_6m",
+          "headerName": "Care status (6m)"
+        },
+        {
+          "field": "last_visit_date_6m",
+          "headerName": "Last visit date (6m)"
+        },
+        {
+          "field": "service_point_6m",
+          "headerName": "Service point (6m)"
+        },
+        {
+          "field": "next_appt_date_6m",
+          "headerName": "Next appointment date (6m)"
+        },
+        {
+          "field": "pregnancy_status_6m",
+          "headerName": "Pregnancy status (6m)"
+        },
+        {
+          "field": "ltfu_date_6m",
+          "headerName": "LTFU date (6m)"
+        },
+        {
+          "field": "art_stop_date_6m",
+          "headerName": "ART stop date (6m)"
+        },
+        {
+          "field": "transfer_date_6m",
+          "headerName": "Transfer out date (6m)"
+        },
+        {
+          "field": "death_date_6m",
+          "headerName": "Death date (6m)"
+        },
+        {
+          "field": "traced_6m",
+          "headerName": "Traced (6m)"
+        },
+        {
+          "field": "resumed_care_6m",
+          "headerName": "Resumed care (6m)"
+        },
+        {
+          "field": "return_date_doc_6m",
+          "headerName": "Return date documented (6m)"
+        },
+        {
+          "field": "return_date_6m",
+          "headerName": "Return date (6m)"
+        },
+        {
+          "field": "return_time_6m",
+          "headerName": "Time to return (6m)"
+        },
+        {
+          "field": "ill_on_return_6m",
+          "headerName": "Ill on return (6m)"
+        },
+        {
+          "field": "dsd_model_6m",
+          "headerName": "DSD model (6m)"
+        },
+        {
+          "field": "art_months_disp_6m",
+          "headerName": "ART months dispensed (6m)"
+        },
+        {
+          "field": "vl_done_6m",
+          "headerName": "VL done (6m)"
+        },
+        {
+          "field": "vl_sample_date_6m",
+          "headerName": "VL sample date (6m)"
+        },
+        {
+          "field": "vl_result_date_6m",
+          "headerName": "VL result date (6m)"
+        },
+        {
+          "field": "vl_result_6m",
+          "headerName": "VL result (6m)"
+        },
+        {
+          "field": "eac_received_6m",
+          "headerName": "EAC received (6m)"
+        },
+        {
+          "field": "eac_complete_6m",
+          "headerName": "EAC complete (6m)"
+        },
+        {
+          "field": "repeat_vl_done_6m",
+          "headerName": "Repeat VL done (6m)"
+        },
+        {
+          "field": "repeat_vl_result_6m",
+          "headerName": "Repeat VL result (6m)"
+        },
+        {
+          "field": "hivdr_test_done_6m",
+          "headerName": "HIVDR test done (6m)"
+        },
+        {
+          "field": "hivdr_reviewed_6m",
+          "headerName": "HIVDR reviewed (6m)"
+        },
+        {
+          "field": "regimen_optimized_6m",
+          "headerName": "Regimen optimized (6m)"
+        },
+        {
+          "field": "regimen_decision_6m",
+          "headerName": "Regimen decision (6m)"
+        },
+        {
+          "field": "regimen_date_doc_6m",
+          "headerName": "Regimen change date documented (6m)"
+        },
+        {
+          "field": "regimen_change_date_6m",
+          "headerName": "Regimen change date (6m)"
+        },
+        {
+          "field": "new_oi_6m",
+          "headerName": "New OI (6m)"
+        },
+        {
+          "field": "oi_diagnoses_6m",
+          "headerName": "OI diagnoses (6m)"
+        },
+        {
+          "field": "clinical_contact_6m",
+          "headerName": "Clinical contact (6m)"
+        },
+        {
+          "field": "art_renewal_count_6m",
+          "headerName": "ART renewal count (6m)"
+        },
+        {
+          "field": "renew_clinical_count_6m",
+          "headerName": "Renewal + clinical count (6m)"
+        },
+        {
+          "field": "clinical_services_6m",
+          "headerName": "Clinical services (6m)"
+        },
+        {
+          "field": "tpt_received_6m",
+          "headerName": "TPT received (6m)"
+        },
+        {
+          "field": "tpt_status_6m",
+          "headerName": "TPT status (6m)"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "12 months follow-up",
+      "sectionKey": "grp_v_12_months_follow_up",
+      "columns": [
+        {
+          "field": "care_status_12m",
+          "headerName": "Care status (12m)"
+        },
+        {
+          "field": "last_visit_date_12m",
+          "headerName": "Last visit date (12m)"
+        },
+        {
+          "field": "service_point_12m",
+          "headerName": "Service point (12m)"
+        },
+        {
+          "field": "next_appt_date_12m",
+          "headerName": "Next appointment date (12m)"
+        },
+        {
+          "field": "pregnancy_status_12m",
+          "headerName": "Pregnancy status (12m)"
+        },
+        {
+          "field": "ltfu_date_12m",
+          "headerName": "LTFU date (12m)"
+        },
+        {
+          "field": "art_stop_date_12m",
+          "headerName": "ART stop date (12m)"
+        },
+        {
+          "field": "transfer_date_12m",
+          "headerName": "Transfer out date (12m)"
+        },
+        {
+          "field": "death_date_12m",
+          "headerName": "Death date (12m)"
+        },
+        {
+          "field": "traced_12m",
+          "headerName": "Traced (12m)"
+        },
+        {
+          "field": "resumed_care_12m",
+          "headerName": "Resumed care (12m)"
+        },
+        {
+          "field": "return_date_doc_12m",
+          "headerName": "Return date documented (12m)"
+        },
+        {
+          "field": "return_date_12m",
+          "headerName": "Return date (12m)"
+        },
+        {
+          "field": "return_time_12m",
+          "headerName": "Time to return (12m)"
+        },
+        {
+          "field": "ill_on_return_12m",
+          "headerName": "Ill on return (12m)"
+        },
+        {
+          "field": "dsd_model_12m",
+          "headerName": "DSD model (12m)"
+        },
+        {
+          "field": "art_months_disp_12m",
+          "headerName": "ART months dispensed (12m)"
+        },
+        {
+          "field": "vl_done_12m",
+          "headerName": "VL done (12m)"
+        },
+        {
+          "field": "vl_sample_date_12m",
+          "headerName": "VL sample date (12m)"
+        },
+        {
+          "field": "vl_result_date_12m",
+          "headerName": "VL result date (12m)"
+        },
+        {
+          "field": "vl_result_12m",
+          "headerName": "VL result (12m)"
+        },
+        {
+          "field": "eac_received_12m",
+          "headerName": "EAC received (12m)"
+        },
+        {
+          "field": "eac_complete_12m",
+          "headerName": "EAC complete (12m)"
+        },
+        {
+          "field": "repeat_vl_done_12m",
+          "headerName": "Repeat VL done (12m)"
+        },
+        {
+          "field": "repeat_vl_result_12m",
+          "headerName": "Repeat VL result (12m)"
+        },
+        {
+          "field": "hivdr_test_done_12m",
+          "headerName": "HIVDR test done (12m)"
+        },
+        {
+          "field": "hivdr_reviewed_12m",
+          "headerName": "HIVDR reviewed (12m)"
+        },
+        {
+          "field": "regimen_optimized_12m",
+          "headerName": "Regimen optimized (12m)"
+        },
+        {
+          "field": "regimen_decision_12m",
+          "headerName": "Regimen decision (12m)"
+        },
+        {
+          "field": "regimen_date_doc_12m",
+          "headerName": "Regimen change date documented (12m)"
+        },
+        {
+          "field": "regimen_change_date_12m",
+          "headerName": "Regimen change date (12m)"
+        },
+        {
+          "field": "new_oi_12m",
+          "headerName": "New OI (12m)"
+        },
+        {
+          "field": "oi_diagnoses_12m",
+          "headerName": "OI diagnoses (12m)"
+        },
+        {
+          "field": "clinical_contact_12m",
+          "headerName": "Clinical contact (12m)"
+        },
+        {
+          "field": "art_renewal_count_12m",
+          "headerName": "ART renewal count (12m)"
+        },
+        {
+          "field": "renew_clinical_count_12m",
+          "headerName": "Renewal + clinical count (12m)"
+        },
+        {
+          "field": "clinical_services_12m",
+          "headerName": "Clinical services (12m)"
+        },
+        {
+          "field": "tpt_received_12m",
+          "headerName": "TPT received (12m)"
+        },
+        {
+          "field": "tpt_status_12m",
+          "headerName": "TPT status (12m)"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "24 months follow-up",
+      "sectionKey": "grp_v_24_months_follow_up",
+      "columns": [
+        {
+          "field": "care_status_24m",
+          "headerName": "Care status (24m)"
+        },
+        {
+          "field": "last_visit_date_24m",
+          "headerName": "Last visit date (24m)"
+        },
+        {
+          "field": "service_point_24m",
+          "headerName": "Service point (24m)"
+        },
+        {
+          "field": "next_appt_date_24m",
+          "headerName": "Next appointment date (24m)"
+        },
+        {
+          "field": "pregnancy_status_24m",
+          "headerName": "Pregnancy status (24m)"
+        },
+        {
+          "field": "ltfu_date_24m",
+          "headerName": "LTFU date (24m)"
+        },
+        {
+          "field": "art_stop_date_24m",
+          "headerName": "ART stop date (24m)"
+        },
+        {
+          "field": "transfer_date_24m",
+          "headerName": "Transfer out date (24m)"
+        },
+        {
+          "field": "death_date_24m",
+          "headerName": "Death date (24m)"
+        },
+        {
+          "field": "traced_24m",
+          "headerName": "Traced (24m)"
+        },
+        {
+          "field": "resumed_care_24m",
+          "headerName": "Resumed care (24m)"
+        },
+        {
+          "field": "return_date_doc_24m",
+          "headerName": "Return date documented (24m)"
+        },
+        {
+          "field": "return_date_24m",
+          "headerName": "Return date (24m)"
+        },
+        {
+          "field": "return_time_24m",
+          "headerName": "Time to return (24m)"
+        },
+        {
+          "field": "ill_on_return_24m",
+          "headerName": "Ill on return (24m)"
+        },
+        {
+          "field": "dsd_model_24m",
+          "headerName": "DSD model (24m)"
+        },
+        {
+          "field": "art_months_disp_24m",
+          "headerName": "ART months dispensed (24m)"
+        },
+        {
+          "field": "vl_done_24m",
+          "headerName": "VL done (24m)"
+        },
+        {
+          "field": "vl_sample_date_24m",
+          "headerName": "VL sample date (24m)"
+        },
+        {
+          "field": "vl_result_date_24m",
+          "headerName": "VL result date (24m)"
+        },
+        {
+          "field": "vl_result_24m",
+          "headerName": "VL result (24m)"
+        },
+        {
+          "field": "eac_received_24m",
+          "headerName": "EAC received (24m)"
+        },
+        {
+          "field": "eac_complete_24m",
+          "headerName": "EAC complete (24m)"
+        },
+        {
+          "field": "repeat_vl_done_24m",
+          "headerName": "Repeat VL done (24m)"
+        },
+        {
+          "field": "repeat_vl_result_24m",
+          "headerName": "Repeat VL result (24m)"
+        },
+        {
+          "field": "hivdr_test_done_24m",
+          "headerName": "HIVDR test done (24m)"
+        },
+        {
+          "field": "hivdr_reviewed_24m",
+          "headerName": "HIVDR reviewed (24m)"
+        },
+        {
+          "field": "regimen_optimized_24m",
+          "headerName": "Regimen optimized (24m)"
+        },
+        {
+          "field": "regimen_decision_24m",
+          "headerName": "Regimen decision (24m)"
+        },
+        {
+          "field": "regimen_date_doc_24m",
+          "headerName": "Regimen change date documented (24m)"
+        },
+        {
+          "field": "regimen_change_date_24m",
+          "headerName": "Regimen change date (24m)"
+        },
+        {
+          "field": "new_oi_24m",
+          "headerName": "New OI (24m)"
+        },
+        {
+          "field": "oi_diagnoses_24m",
+          "headerName": "OI diagnoses (24m)"
+        },
+        {
+          "field": "clinical_contact_24m",
+          "headerName": "Clinical contact (24m)"
+        },
+        {
+          "field": "art_renewal_count_24m",
+          "headerName": "ART renewal count (24m)"
+        },
+        {
+          "field": "renew_clinical_count_24m",
+          "headerName": "Renewal + clinical count (24m)"
+        },
+        {
+          "field": "clinical_services_24m",
+          "headerName": "Clinical services (24m)"
+        },
+        {
+          "field": "tpt_received_24m",
+          "headerName": "TPT received (24m)"
+        },
+        {
+          "field": "tpt_status_24m",
+          "headerName": "TPT status (24m)"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "QA columns (drop before sharing)",
+      "sectionKey": "grp_qa",
+      "columns": [
+        {
+          "field": "_art_start_location",
+          "headerName": "ART start location"
+        },
+        {
+          "field": "_dob_estimated",
+          "headerName": "DOB estimated"
+        },
+        {
+          "field": "_first_regimen_concept_ids",
+          "headerName": "First regimen concept IDs"
+        },
+        {
+          "field": "_status_6m",
+          "headerName": "Status 6m"
+        },
+        {
+          "field": "_status_12m",
+          "headerName": "Status 12m"
+        },
+        {
+          "field": "_status_24m",
+          "headerName": "Status 24m"
+        },
+        {
+          "field": "_end_6m",
+          "headerName": "End 6m"
+        },
+        {
+          "field": "_end_12m",
+          "headerName": "End 12m"
+        },
+        {
+          "field": "_end_24m",
+          "headerName": "End 24m"
+        },
+        {
+          "field": "_vl6",
+          "headerName": "VL 6m"
+        },
+        {
+          "field": "_vl12",
+          "headerName": "VL 12m"
+        },
+        {
+          "field": "_vl24",
+          "headerName": "VL 24m"
+        },
+        {
+          "field": "_cd4",
+          "headerName": "CD4"
+        },
+        {
+          "field": "_kp_code",
+          "headerName": "KP code"
+        },
+        {
+          "field": "_eac_sessions_6m",
+          "headerName": "EAC sessions 6m"
+        },
+        {
+          "field": "_eac_sessions_12m",
+          "headerName": "EAC sessions 12m"
+        },
+        {
+          "field": "_eac_sessions_24m",
+          "headerName": "EAC sessions 24m"
+        }
+      ],
+      "qa": true
+    }
+  ]
+}
