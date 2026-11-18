@@ -175,7 +175,11 @@ function toMeasureReport(measureKey, label, period, payload) {
     group: [
       {
         code: { text: label },
-        population: populations
+        // FHIR JSON forbids empty arrays ("Array cannot be empty"): a report
+        // with no rows for the window (e.g. moh-710) has no indicator
+        // columns, so population is omitted (min 0 in kenya-core-measurereport)
+        // rather than sent as [] — FUNC-QUAL-001, 18 Nov
+        population: populations.length ? populations : undefined
       }
     ]
   };
