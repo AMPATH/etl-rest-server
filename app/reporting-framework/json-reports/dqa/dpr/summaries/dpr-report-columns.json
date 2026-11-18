@@ -39,7 +39,11 @@
       "columns": [
         {
           "field": "roc_id",
-          "headerName": "RoC ID (CCC)"
+          "headerName": "CCC number"
+        },
+        {
+          "field": "patient_identifiers",
+          "headerName": "Patient identifiers"
         },
         {
           "field": "sex",
