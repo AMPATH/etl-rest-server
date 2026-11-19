@@ -4309,14 +4309,23 @@ module.exports = (function () {
                 reply(result);
               })
               .catch((error) => {
+                const response = error && error.response;
+                let body = response ? response.data : null;
                 try {
-                  let errorObject = JSON.parse(error.error);
-                  console.error('Error', errorObject);
-                  reply(errorObject.error).code(error.statusCode);
-                } catch (err) {
-                  console.error('Error', error);
-                  throw Boom.badImplementation(error);
+                  body = typeof body === 'string' ? JSON.parse(body) : body;
+                } catch (e) {
+                  // not JSON - keep the raw text
                 }
+                const message =
+                  (body && body.error && body.error.message) ||
+                  (body && body.message) ||
+                  (typeof body === 'string' && body) ||
+                  (error && error.message) ||
+                  'Posting the order to the lab failed.';
+                const status =
+                  response && response.status >= 400 ? response.status : 502;
+                console.error('EID order error', status, message);
+                reply({ message: message, status_code: status }).code(status);
               });
           } else {
             console.error('No Lab Specified');
