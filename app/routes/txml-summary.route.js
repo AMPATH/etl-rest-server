@@ -73,6 +73,15 @@ const routes = [
               requestParams
             );
             delete reportParams.requestParams['gender'];
+            // Optional paging, for clients that load the list a page at a time
+            // (startIndex / limit). Without it the whole list comes back.
+            if (request.query.limit !== undefined) {
+              reportParams.requestParams.limitParam = Number(
+                request.query.limit
+              );
+              reportParams.requestParams.offSetParam =
+                Number(request.query.startIndex) || 0;
+            }
             const txmlReportService = new TXMLSummaryReportService(
               'txml-summary-report',
               reportParams.requestParams

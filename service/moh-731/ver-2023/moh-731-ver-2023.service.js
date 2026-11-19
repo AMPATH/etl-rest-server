@@ -3,6 +3,25 @@ import { MultiDatasetPatientlistReport } from '../../../app/reporting-framework/
 import ReportProcessorHelpersService from '../../../app/reporting-framework/report-processor-helpers.service.js';
 import { widenToFacility } from '../../facility-locations/facility-locations.service';
 import { MOH731Service } from '../../moh-731.service';
+import QueryService from '../../../app/database-access/query.service';
+const Moment = require('moment');
+
+/** Whether the period ends within the months MOH 731 has been released for. */
+function isReleasedPeriod(endDate) {
+  return new QueryService()
+    .executeQuery(
+      'SELECT MAX(last_released_month) AS last_released_month FROM etl.moh_731_last_release_month'
+    )
+    .then((rows) => {
+      const released = rows && rows[0] && rows[0].last_released_month;
+      return (
+        !!released &&
+        !!endDate &&
+        Moment(released).isSameOrAfter(Moment(endDate), 'day')
+      );
+    })
+    .catch(() => false);
+}
 
 /* Some MOH 731 (ver-2023) figures compare against the period's bounds inside a
    column expression -- e.g. ART started by the end of the period -- where the
@@ -40,8 +59,13 @@ export class MOH731Ver2023Service extends MOH731Service {
     const that = this;
     return new Promise((resolve, reject) => {
       assertValidPeriod(this.params, additionalParams);
-      /* linelists come through here too, so they read the same locations */
-      widenToFacility(this.params, additionalParams)
+      /* linelists come through here too, so they read the same locations.
+         exactLocations (POC report-moh-731) reports only the locations chosen
+         in its filter instead of widening them to their whole facility. */
+      (this.params && this.params.exactLocations
+        ? Promise.resolve()
+        : widenToFacility(this.params, additionalParams)
+      )
         .then(() =>
           MultiDatasetPatientlistReport.prototype.generateReport.call(
             this,
@@ -74,9 +98,14 @@ export class MOH731Ver2023Service extends MOH731Service {
               );
             }
           }
-          resolve({
-            result: finalResult
-          });
+          /* isReleased lets the POC sheet say whether the month is final;
+             the O3 report ignores it */
+          return isReleasedPeriod(this.params.endDate).then((isReleased) =>
+            resolve({
+              result: finalResult,
+              isReleased: isReleased
+            })
+          );
         }, reject);
     });
   }
