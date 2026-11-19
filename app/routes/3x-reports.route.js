@@ -798,6 +798,8 @@ const routes = [
             );
 
             reportParams.requestParams.isAggregated = true;
+            reportParams.requestParams.exactLocations =
+              request.query.exactLocations === 'true';
 
             let moh731Service = new MOH731Service(
               'moh731MonthlyReport',
@@ -851,6 +853,8 @@ const routes = [
             );
 
             let requestCopy = _.cloneDeep(requestParams);
+            reportParams.requestParams.exactLocations =
+              request.query.exactLocations === 'true';
 
             let moh731Service = new MOH731Service(
               'moh731MonthlyReport',

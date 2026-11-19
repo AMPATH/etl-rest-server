@@ -16,7 +16,7 @@
       "alias": "r"
     },
     {
-      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 11931, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11932, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model')",
+      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 11937, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11938, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model' UNION ALL SELECT 11931, 'Other (specify): Facility ART refill model, type not recorded' UNION ALL SELECT 11932, 'Other (specify): Community ART refill model, type not recorded' UNION ALL SELECT 11941, 'Other (specify): Family community ART group' UNION ALL SELECT 12284, 'Other (specify): Advanced HIV disease model' UNION ALL SELECT 12290, 'Other (specify): Viremia model' UNION ALL SELECT 12291, 'Other (specify): Multi-month dispensing')",
       "alias": "d6m",
       "join": {
         "type": "LEFT",
@@ -24,7 +24,7 @@
       }
     },
     {
-      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 11931, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11932, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model')",
+      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 11937, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11938, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model' UNION ALL SELECT 11931, 'Other (specify): Facility ART refill model, type not recorded' UNION ALL SELECT 11932, 'Other (specify): Community ART refill model, type not recorded' UNION ALL SELECT 11941, 'Other (specify): Family community ART group' UNION ALL SELECT 12284, 'Other (specify): Advanced HIV disease model' UNION ALL SELECT 12290, 'Other (specify): Viremia model' UNION ALL SELECT 12291, 'Other (specify): Multi-month dispensing')",
       "alias": "d12m",
       "join": {
         "type": "LEFT",
@@ -32,7 +32,7 @@
       }
     },
     {
-      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 11931, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11932, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model')",
+      "table": "(SELECT 10989 AS concept_id, 'Standard Track' AS label UNION ALL SELECT 10990, 'Fast Track (FT)' UNION ALL SELECT 11936, 'Fast Track (FT)' UNION ALL SELECT 10993, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 12254, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 11937, 'Facility ART Distribution Group (FADG)' UNION ALL SELECT 10992, 'Peer-led Community ART Group (CAG)' UNION ALL SELECT 10991, 'HCW-led Community ART Group (CAG)' UNION ALL SELECT 11939, 'Community individual ART distribution' UNION ALL SELECT 11938, 'Community individual ART distribution' UNION ALL SELECT 11940, 'Community pharmacy model' UNION ALL SELECT 11931, 'Other (specify): Facility ART refill model, type not recorded' UNION ALL SELECT 11932, 'Other (specify): Community ART refill model, type not recorded' UNION ALL SELECT 11941, 'Other (specify): Family community ART group' UNION ALL SELECT 12284, 'Other (specify): Advanced HIV disease model' UNION ALL SELECT 12290, 'Other (specify): Viremia model' UNION ALL SELECT 12291, 'Other (specify): Multi-month dispensing')",
       "alias": "d24m",
       "join": {
         "type": "LEFT",
@@ -216,7 +216,7 @@
       "alias": "baseline_screening",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "NULLIF(CONCAT_WS('; ', IF(r.bl_tb_screened = 1, 'TB Screening', NULL), IF(r.gender = 'F' AND r.b_is_pregnant IS NOT NULL, 'Screening for pregnancy', NULL), IF(COALESCE(r.bl_tb_screened, 0) = 0 AND NOT (r.gender = 'F' AND r.b_is_pregnant IS NOT NULL), 'Not documented', NULL) ), '')"
+        "expression": "NULLIF(CONCAT_WS('; ', IF(r.bl_tb_screened = 1, 'TB Screening', NULL), IF(r.gender = 'F' AND r.b_is_pregnant IS NOT NULL, 'Screening for pregnancy', NULL), IF(r.bl_bp_measured = 1, 'Screening for NCDs', NULL), IF(r.bl_nutrition_assessed = 1, 'Nutrition assessment', NULL), IF(COALESCE(r.bl_tb_screened, 0) = 0 AND NOT (r.gender = 'F' AND r.b_is_pregnant IS NOT NULL) AND COALESCE(r.bl_bp_measured, 0) = 0 AND COALESCE(r.bl_nutrition_assessed, 0) = 0, 'Not documented', NULL) ), '')"
       }
     },
     {

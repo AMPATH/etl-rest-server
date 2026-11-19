@@ -44,7 +44,7 @@
       "alias": "prep_summary",
       "join": {
         "type": "LEFT",
-        "joinCondition": "latest_enc.person_id = prep_summary.person_id AND prep_summary.encounter_datetime = latest_enc.latest_encounter_date"
+        "joinCondition": "prep_summary.encounter_id = prep.encounter_id"
       }
     },
     {

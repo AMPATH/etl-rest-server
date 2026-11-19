@@ -473,7 +473,7 @@
       "alias": "dsd_6m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT o.value_coded FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_6m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+        "expression": "(SELECT COALESCE(sub.value_coded, o.value_coded) FROM amrs.obs o LEFT JOIN amrs.obs sub ON sub.encounter_id = o.encounter_id AND sub.voided = 0 AND o.value_coded IN (11931, 11932) AND sub.concept_id = o.value_coded WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_6m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC, sub.obs_id DESC LIMIT 1)"
       }
     },
     {
@@ -481,7 +481,7 @@
       "alias": "dsd_12m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT o.value_coded FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_12m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+        "expression": "(SELECT COALESCE(sub.value_coded, o.value_coded) FROM amrs.obs o LEFT JOIN amrs.obs sub ON sub.encounter_id = o.encounter_id AND sub.voided = 0 AND o.value_coded IN (11931, 11932) AND sub.concept_id = o.value_coded WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_12m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC, sub.obs_id DESC LIMIT 1)"
       }
     },
     {
@@ -489,7 +489,7 @@
       "alias": "dsd_24m",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "(SELECT o.value_coded FROM amrs.obs o WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_24m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+        "expression": "(SELECT COALESCE(sub.value_coded, o.value_coded) FROM amrs.obs o LEFT JOIN amrs.obs sub ON sub.encounter_id = o.encounter_id AND sub.voided = 0 AND o.value_coded IN (11931, 11932) AND sub.concept_id = o.value_coded WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 10988 AND o.obs_datetime < p1.end_24m + INTERVAL 1 DAY ORDER BY o.obs_datetime DESC, o.obs_id DESC, sub.obs_id DESC LIMIT 1)"
       }
     },
     {
@@ -538,6 +538,22 @@
       "expressionType": "simple_expression",
       "expressionOptions": {
         "expression": "(SELECT CONCAT( CASE o.value_coded WHEN 1832 THEN 1 WHEN 8291 THEN 2 WHEN 105 THEN 3 WHEN 6096 THEN 6 WHEN 8290 THEN 10 END, '|', DATE(COALESCE(e.encounter_datetime, o.obs_datetime))) FROM amrs.obs o LEFT JOIN amrs.encounter e ON e.encounter_id = o.encounter_id WHERE o.voided = 0 AND o.person_id = p1.person_id AND o.concept_id = 6578 AND o.value_coded IN (1832, 8291, 105, 6096, 8290) ORDER BY o.obs_datetime DESC, o.obs_id DESC LIMIT 1)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bl_bp_measured",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "EXISTS(SELECT 1 FROM etl.flat_vitals v WHERE v.person_id = p1.person_id AND v.systolic_bp IS NOT NULL AND v.diastolic_bp IS NOT NULL AND v.encounter_datetime >= p1.art_start - INTERVAL 30 DAY AND v.encounter_datetime < p1.art_start + INTERVAL 32 DAY)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "bl_nutrition_assessed",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "EXISTS(SELECT 1 FROM etl.flat_vitals v WHERE v.person_id = p1.person_id AND v.weight IS NOT NULL AND v.height IS NOT NULL AND v.encounter_datetime >= p1.art_start - INTERVAL 30 DAY AND v.encounter_datetime < p1.art_start + INTERVAL 32 DAY)"
       }
     }
   ],
