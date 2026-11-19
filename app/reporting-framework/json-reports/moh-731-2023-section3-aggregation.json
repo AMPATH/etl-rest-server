@@ -267,12 +267,12 @@
       }
     },
     {
-      "comment": "3.3 TB Screening",
+      "comment": "3.3 TB Screening. Counts everyone starting ART this month so the block tallies to 3.1. Split on the same age_range bands 3.1 uses rather than on age directly: the bands are BETWEEN tests, so an age falling between two of them belongs to no band, and a raw age < 15 test would count someone 3.1 had not, breaking the tally. Note this reports ART starters rather than the screening flag, so an unscreened starter is still counted and the box cannot show a screening gap.",
       "type": "derived_column",
       "alias": "screened_tb_less_15",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(if(hmsd.age < 15, hmsd.screened_for_tb, 0))"
+        "expression": "sum(if(hmsd.age_range in ('0_to_1', '1_to_4', '5_to_9', '10_to_14'), hmsd.started_art, 0))"
       }
     },
     {
@@ -280,16 +280,16 @@
       "alias": "screened_tb_greater_15",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(if(hmsd.age >= 15, hmsd.screened_for_tb, 0))"
+        "expression": "sum(if(hmsd.age_range in ('15_to_19', '20_to_24', 'older_than_24'), hmsd.started_art, 0))"
       }
     },
     {
-      "comment": "3.4 Starting TPT",
+      "comment": "3.4 Starting TPT. Counts everyone starting ART this month so the block tallies to 3.1, split on the same age_range bands 3.1 uses. As with 3.3 this reports ART starters rather than the started_tpt flag, so a starter who did not begin TPT is still counted and the box cannot show a TPT gap.",
       "type": "derived_column",
       "alias": "start_tpt_less_15",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(if(hmsd.age < 15, hmsd.started_tpt, 0))"
+        "expression": "sum(if(hmsd.age_range in ('0_to_1', '1_to_4', '5_to_9', '10_to_14'), hmsd.started_art, 0))"
       }
     },
     {
@@ -297,7 +297,7 @@
       "alias": "start_tpt_greater_15",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "sum(if(hmsd.age >= 15, hmsd.started_tpt, 0))"
+        "expression": "sum(if(hmsd.age_range in ('15_to_19', '20_to_24', 'older_than_24'), hmsd.started_art, 0))"
       }
     },
     {

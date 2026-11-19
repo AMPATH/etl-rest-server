@@ -133,7 +133,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["female_died", "male_died"]
+        "indicator": ["female_died", "male_died", "total_died"]
       },
       {
         "label": "Total",
@@ -266,7 +266,11 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["female_iit_less_3", "male_iit_less_3"]
+        "indicator": [
+          "female_iit_less_3",
+          "male_iit_less_3",
+          "total_iit_less_3"
+        ]
       },
       {
         "label": "Total",
@@ -399,7 +403,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["female_iit_3_5", "male_iit_3_5"]
+        "indicator": ["female_iit_3_5", "male_iit_3_5", "total_iit_3_5"]
       },
       {
         "label": "Total",
@@ -532,7 +536,11 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["female_iit_6_plus", "male_iit_6_plus"]
+        "indicator": [
+          "female_iit_6_plus",
+          "male_iit_6_plus",
+          "total_iit_6_plus"
+        ]
       },
       {
         "label": "Total",
@@ -657,7 +665,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["female_to", "male_to"]
+        "indicator": ["female_to", "male_to", "total_to"]
       },
       {
         "label": "Total",
@@ -790,7 +798,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["female_rst", "male_rst"]
+        "indicator": ["female_rst", "male_rst", "total_rst"]
       },
       {
         "label": "Total",

@@ -192,7 +192,6 @@
           }
         ]
       },
-
       {
         "uuid": "d4ac2aa5-2899-42fb-b08a-d40161815b48",
         "name": "Adult HIV Return Visit ",
@@ -1267,7 +1266,7 @@
     ]
   },
   "781d897a-1359-11df-a1f1-0026b9348838": {
-    "name": "PREVENTION OF MOTHER-TO-CHILD TRANSMISSION OF HIV(pMTCT)",
+    "name": "VERTICAL TRANSMISSION PREVENTION(VTP)",
     "dataDependencies": [
       "patient",
       "enrollment",
@@ -2444,7 +2443,6 @@
       }
     ]
   },
-
   "c19aec66-1a40-4588-9b03-b6be55a8dd1d": {
     "name": "PrEP PROGRAM",
     "dataDependencies": [
@@ -2532,7 +2530,9 @@
           },
           {
             "uuid": "00ee2fd6-9c95-4ffc-ab31-6b1ce2dede4d",
-            "display": "PREPINITIAL"
+            "display": "PREPINITIAL",
+            "allowedIf": "isFirstPrEPVisit",
+            "message": "Patient already has a PrEP Initial encounter. Use the PrEP Return form."
           },
           {
             "uuid": "df55584c-1350-11df-a1f1-0026b9348838",
@@ -3552,7 +3552,6 @@
             "uuid": "1469e5fe-ad76-4041-9aa7-650e6afbe3a1",
             "display": "DERMATOLOGYREFERRAL"
           },
-
           {
             "uuid": "ae35ed69-e07c-4209-93ce-f23733aa816b",
             "display": "FAMILYSTATUS"
@@ -5706,7 +5705,6 @@
       "8c1a3a68-d91d-488d-8663-ad572673232b",
       "781d8768-1359-11df-a1f1-0026b9348838"
     ],
-
     "visitTypes": [
       {
         "uuid": "42de8e7e-24b2-4c16-b62b-137eb2c55ede",
@@ -5810,7 +5808,6 @@
       "8c1a3a68-d91d-488d-8663-ad572673232b",
       "781d8768-1359-11df-a1f1-0026b9348838"
     ],
-
     "visitTypes": [
       {
         "uuid": "b1a978ca-9315-4ba2-ac2b-84efb9a68c5c",
@@ -5963,7 +5960,6 @@
       }
     ]
   },
-
   "317f07b1-23f5-43f2-82bc-57a3c3790698": {
     "name": "KP PROGRAM",
     "dataDependencies": [

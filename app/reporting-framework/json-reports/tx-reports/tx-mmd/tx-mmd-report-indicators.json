@@ -133,7 +133,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["1mms_female", "1mms_male"]
+        "indicator": ["1mms_female", "1mms_male", "1mms_total"]
       },
       {
         "label": "Total",
@@ -266,7 +266,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["2mms_female", "2mms_male"]
+        "indicator": ["2mms_female", "2mms_male", "2mms_total"]
       },
       {
         "label": "Total",
@@ -399,7 +399,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["3mmd_female", "3mmd_male"]
+        "indicator": ["3mmd_female", "3mmd_male", "3mmd_total"]
       },
       {
         "label": "Total",
@@ -532,7 +532,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["4mmd_female", "4mmd_male"]
+        "indicator": ["4mmd_female", "4mmd_male", "4mmd_total"]
       },
       {
         "label": "Total",
@@ -665,7 +665,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["5mmd_female", "5mmd_male"]
+        "indicator": ["5mmd_female", "5mmd_male", "5mmd_total"]
       },
       {
         "label": "Total",
@@ -798,7 +798,7 @@
       },
       {
         "label": "Sub total",
-        "indicator": ["6mmd_female", "6mmd_male"]
+        "indicator": ["6mmd_female", "6mmd_male", "6mmd_total"]
       },
       {
         "label": "Total",
