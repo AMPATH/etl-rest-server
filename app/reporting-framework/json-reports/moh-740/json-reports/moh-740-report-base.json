@@ -27,6 +27,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "location",
+      "column": "mdh.facility"
+    },
+    {
+      "type": "simple_column",
       "alias": "mfl_code",
       "column": "mdh.mfl_code"
     },
@@ -404,6 +409,83 @@
       "type": "simple_column",
       "alias": "fbs",
       "column": "mdh.fbs"
+    },
+    {
+      "type": "simple_column",
+      "alias": "systolic",
+      "column": "mdh.systolic"
+    },
+    {
+      "type": "simple_column",
+      "alias": "diastolic",
+      "column": "mdh.diastolic"
+    },
+    {
+      "type": "simple_column",
+      "alias": "hba1c",
+      "column": "mdh.hba1c"
+    },
+    {
+      "type": "derived_column",
+      "alias": "hiv_status",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.hiv_status = 664",
+            "value": "Negative"
+          },
+          {
+            "condition": "mdh.hiv_status = 703",
+            "value": "Positive"
+          },
+          {
+            "condition": "mdh.hiv_status = 1067",
+            "value": "Uknown"
+          },
+          {
+            "condition": "mdh.hiv_status = 10707",
+            "value": "Known Positive"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "disease_type",
+      "expressionType": "case_statement",
+      "expressionOptions": {
+        "caseOptions": [
+          {
+            "condition": "mdh.has_htn = 1 AND mdh.diabetes_mellitus_type is null",
+            "value": "HYPERTENSION"
+          },
+          {
+            "condition": "mdh.has_htn IS NULL AND mdh.diabetes_mellitus_type = 9325",
+            "value": "DIABETES MELLITUS TYPE 1"
+          },
+          {
+            "condition": "mdh.has_htn IS NULL AND mdh.diabetes_mellitus_type = 9326",
+            "value": "DIABETES MELLITUS TYPE 2"
+          },
+          {
+            "condition": "mdh.has_htn IS NULL AND mdh.diabetes_mellitus_type = 8879",
+            "value": "GESTATIONAL DIABETES"
+          },
+          {
+            "condition": "mdh.is_co_morbid = 1",
+            "value": "CORMOBID"
+          }
+        ]
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "diabetes_meds",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "CONCAT(mdh.insulin_meds,' ',mdh.ogla_meds)"
+      }
     },
     {
       "type": "simple_column",

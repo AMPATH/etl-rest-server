@@ -41,6 +41,14 @@
       }
     },
     {
+      "table": "amrs.patient_identifier",
+      "alias": "ccc_no",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "t1.person_id = ccc_no.patient_id AND (ccc_no.voided IS NULL || ccc_no.voided = 0) AND ccc_no.identifier_type = 28"
+      }
+    },
+    {
       "table": "amrs.person_attribute",
       "alias": "contacts",
       "join": {
@@ -85,12 +93,14 @@
       "column": "t1.person_id"
     },
     {
-      "type": "derived_column",
+      "type": "simple_column",
       "alias": "amrs_universal_id",
-      "expressionType": "simple_expression",
-      "expressionOptions": {
-        "expression": "IF(amrs_universal_id.identifier is not null,amrs_universal_id.identifier,cr.identifier)"
-      }
+      "column": "amrs_universal_id.identifier"
+    },
+    {
+      "type": "simple_column",
+      "alias": "ccc_no",
+      "column": "ccc_no.identifier"
     },
     {
       "type": "simple_column",
