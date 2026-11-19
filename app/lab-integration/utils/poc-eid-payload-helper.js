@@ -66,6 +66,7 @@
               lab: '',
               amrs_location: getLocation(payload, 'mrsId')
             };
+            console.log('DNAPCR PAYLOAD: ', eidPayload);
             break;
           case 'CD4':
             eidPayload = {
