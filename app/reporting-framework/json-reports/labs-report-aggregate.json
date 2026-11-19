@@ -72,7 +72,7 @@
       {
         "filterType": "tableColumns",
         "conditionExpression": "(t1.next_clinical_datetime_hiv is null or date(t1.next_clinical_datetime_hiv) > ?)",
-        "parameterName": "endDate"
+        "parameterName": "reportMonth"
       },
       {
         "filterType": "tableColumns",
