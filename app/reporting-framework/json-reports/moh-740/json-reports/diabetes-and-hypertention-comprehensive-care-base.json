@@ -17,6 +17,11 @@
     },
     {
       "type": "simple_column",
+      "alias": "location",
+      "column": "mdh.facility"
+    },
+    {
+      "type": "simple_column",
       "alias": "hba1c",
       "column": "mdh.hba1c"
     },
