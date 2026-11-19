@@ -15,6 +15,14 @@
         "type": "INNER",
         "joinCondition": "t1.person_id = et.patient_id"
       }
+    },
+    {
+      "table": "amrs.orders",
+      "alias": "ord",
+      "join": {
+        "type": "LEFT",
+        "joinCondition": "ord.encounter_id = et.encounter_id AND ord.order_type_id = 4 AND ord.voided = 0"
+      }
     }
   ],
   "columns": [
@@ -46,7 +54,7 @@
     {
       "type": "simple_column",
       "alias": "radiology_number",
-      "column": "null"
+      "column": "ord.order_number"
     },
     {
       "type": "derived_column",
@@ -95,7 +103,7 @@
     {
       "type": "simple_column",
       "alias": "type_of_examination",
-      "column": "null"
+      "column": "COALESCE((SELECT cn.name FROM amrs.concept_name cn WHERE cn.concept_id = ord.concept_id AND cn.locale_preferred = 1 AND (cn.voided IS NULL OR cn.voided = 0) ORDER BY cn.concept_name_id DESC LIMIT 1), CAST(ord.concept_id AS CHAR))"
     },
     {
       "type": "derived_column",
@@ -138,17 +146,17 @@
     {
       "type": "simple_column",
       "alias": "amount_charged",
-      "column": "null"
+      "column": "(SELECT SUM(cbli.price * cbli.quantity) FROM hie.bill_orders bo JOIN amrs.cashier_bill_line_item cbli ON cbli.uuid = bo.line_item_uuid JOIN amrs.cashier_bill cb ON cb.bill_id = cbli.bill_id WHERE bo.order_no = ord.order_number AND cbli.voided = 0 AND cb.voided = 0 AND cbli.status <> 'CANCELLED')"
     },
     {
       "type": "simple_column",
       "alias": "receipt_number",
-      "column": "null"
+      "column": "(SELECT cb.receipt_number FROM hie.bill_orders bo JOIN amrs.cashier_bill_line_item cbli ON cbli.uuid = bo.line_item_uuid JOIN amrs.cashier_bill cb ON cb.bill_id = cbli.bill_id WHERE bo.order_no = ord.order_number AND cb.receipt_number IS NOT NULL AND cbli.voided = 0 AND cb.voided = 0 AND cbli.status <> 'CANCELLED' ORDER BY cb.date_created DESC, bo.id DESC LIMIT 1)"
     },
     {
       "type": "simple_column",
       "alias": "requesting_clinician",
-      "column": "null"
+      "column": "(SELECT CONCAT_WS(' ', COALESCE(pn_req.given_name, ''), COALESCE(pn_req.middle_name, ''), COALESCE(pn_req.family_name, '')) FROM amrs.provider pr_req JOIN amrs.person_name pn_req ON pn_req.person_id = pr_req.person_id WHERE pr_req.provider_id = ord.orderer AND (pn_req.voided IS NULL OR pn_req.voided = 0) AND pn_req.preferred = 1 ORDER BY pn_req.person_name_id DESC LIMIT 1)"
     },
     {
       "type": "simple_column",
@@ -162,7 +170,7 @@
     }
   ],
   "groupBy": {
-    "columns": ["et.encounter_id"]
+    "columns": ["et.encounter_id", "ord.order_id"]
   },
   "filters": {
     "conditionJoinOperator": "and",

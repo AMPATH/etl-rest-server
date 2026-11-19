@@ -29,6 +29,11 @@
   "columns": [
     {
       "type": "simple_column",
+      "alias": "encounter_id",
+      "column": "e.encounter_id"
+    },
+    {
+      "type": "simple_column",
       "alias": "obs_datetime",
       "column": "e.encounter_datetime"
     },
