@@ -646,51 +646,61 @@ function getActiveCashVisits(locationUuid, billingDate) {
     throw new Error('Billing Date not defined');
   }
   return new Promise((resolve, reject) => {
-    const sql = `select 
-                    p.uuid as patient_uuid,
-                    UPPER(CONCAT_WS(' ',
+    const sql = `SELECT 
+    p.uuid AS patient_uuid,
+    l.name AS 'location_name',
+    v.date_started AS 'visit_start_date',
+    l.uuid as 'location_uuid',
+    v.patient_id,
+    UPPER(CONCAT_WS(' ',
                     pn.given_name,
                     pn.middle_name,
                     pn.family_name)) AS patient_name,
-                    CONCAT(cr.identifier, ' , ', uid.identifier) AS 'identifiers',
-                    cpm.name as payment_method,
-                    v.visit_id,
-                    v.uuid as visit_uuid,
+    id.identifier AS 'national_id',
+    cr.identifier AS 'cr_id',
+    v.visit_id,
+    v.uuid as visit_uuid,
                     v.date_started,
                     v.date_stopped,
                     v.location_id,
                     va.value_reference,
                     vt.name as visit_type,
-                    vt.uuid as visit_type_uuid
-                    from 
-                  amrs.visit v
-                  join amrs.visit_attribute va ON va.visit_id = v.visit_id
-                  join amrs.visit_attribute_type vat ON vat.visit_attribute_type_id = va.attribute_type_id AND vat.uuid = '8553afa0-bdb9-4d3c-8a98-05fa9350aa85'
-                  join amrs.cashier_payment_mode cpm ON cpm.uuid = va.value_reference
-                  join amrs.location l ON l.location_id = v.location_id
-                  join amrs.person p ON p.person_id = v.patient_id
-                  join amrs.person_name pn ON pn.person_id = p.person_id
-                  join amrs.visit_type vt oN vt.visit_type_id = v.visit_type_id
-                  left join amrs.patient_identifier cr ON (cr.patient_id = p.person_id
-                    AND cr.identifier_type = 55
-                    AND cr.voided = 0)
-                  left join amrs.patient_identifier uid ON (uid.patient_id = p.person_id
-                    AND uid.identifier_type = 5
-                    AND uid.voided = 0)
-                  WHERE v.voided = 0
-                  AND v.date_stopped is null
-                  AND va.value_reference = '63eff7a4-6f82-43c4-a333-dbcc58fe9f74'
-                  AND DATE(v.date_started) = DATE('${billingDate}')
+                    vt.uuid as visit_type_uuid                
+FROM
+    amrs.visit v
+		JOIN 
+	amrs.visit_attribute va ON va.visit_id = v.visit_id AND v.voided = 0
+        JOIN
+    amrs.location l ON (l.location_id = v.location_id)
+        JOIN
+    amrs.visit_type vt ON (vt.visit_type_id = v.visit_type_id)
+        JOIN
+    amrs.person p ON (p.person_id = v.patient_id)
+        LEFT JOIN
+    amrs.person_name pn ON (pn.person_id = p.person_id
+        AND pn.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier cr ON (cr.patient_id = p.person_id
+        AND cr.identifier_type = 55
+        AND cr.voided = 0)
+        LEFT JOIN
+    amrs.patient_identifier id ON (id.patient_id = p.person_id
+        AND id.identifier_type = 5
+        AND id.voided = 0)
+WHERE
+      DATE(v.date_started) = DATE('${billingDate}')
                   AND l.uuid = '${locationUuid}'
-                  -- EXCLUDE VISITS THAT ALREADY HAVE A BILL
+        AND v.voided = 0
+      -- EXCLUDE VISITS THAT ALREADY HAVE A BILL
                   AND NOT EXISTS (
                   SELECT 1
                   FROM amrs.cashier_bill cb
                   WHERE cb.patient_id = v.patient_id
                     AND DATE(cb.date_created) = DATE(v.date_started)
                     AND cb.voided = 0
-                  )
-                  ORDER BY v.date_started DESC;`;
+			)
+GROUP BY v.patient_id
+ORDER BY v.date_started ASC`;
     const queryParts = {
       sql: sql
     };

@@ -432,6 +432,30 @@
       "expressionOptions": {
         "expression": "SUM(s.opv_birth_doses)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_at_6_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.measles_at_6_months)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hepatitis_B_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hepatitis_B_vaccine)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hepatitis_B_immunoglobulins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "SUM(s.hepatitis_B_immunoglobulins)"
+      }
     }
   ],
   "transFormDirectives": {

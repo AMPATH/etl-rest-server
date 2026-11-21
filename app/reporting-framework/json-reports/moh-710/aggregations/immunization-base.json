@@ -679,6 +679,30 @@
       "expressionOptions": {
         "expression": "IF(m.opv_vaccine AND m.age_in_days BETWEEN 0 AND 7, 1, 0)"
       }
+    },
+    {
+      "type": "derived_column",
+      "alias": "measles_at_6_months",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(m.measles_at_6_months, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hepatitis_B_vaccine",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(m.hepatitis_B_vaccine, 1, 0)"
+      }
+    },
+    {
+      "type": "derived_column",
+      "alias": "hepatitis_B_immunoglobulins",
+      "expressionType": "simple_expression",
+      "expressionOptions": {
+        "expression": "IF(m.hepatitis_B_immunoglobulins, 1, 0)"
+      }
     }
   ],
   "filters": {
