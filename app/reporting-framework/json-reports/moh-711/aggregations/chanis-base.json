@@ -527,7 +527,7 @@
       "alias": "new_visits_0_59_months_attending_cwc_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "if(c.age_in_months < 60 AND c.visit_type_nutrition = 'NEW' AND p.gender = 'M', 1, 0)"
       }
     },
     {
@@ -535,7 +535,7 @@
       "alias": "new_visits_0_59_months_attending_cwc_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "if(c.age_in_months < 60 AND c.visit_type_nutrition = 'NEW' AND p.gender = 'F', 1, 0)"
       }
     },
     {
@@ -591,7 +591,7 @@
       "alias": "exclusive_breastfeeding_0_6_months_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(c.age_in_months < 60 AND p.gender = 'M' AND c.exclusive_breastfeeding_nutrition = 1, 1, 0)"
+        "expression": "if(c.age_in_months < 60 AND p.gender = 'M' AND c.exclusive_breastfeeding_nutrition = 'YES', 1, 0)"
       }
     },
     {
@@ -599,7 +599,7 @@
       "alias": "exclusive_breastfeeding_0_6_months_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "if(c.age_in_months < 60 AND p.gender = 'F' AND c.exclusive_breastfeeding_nutrition = 1, 1, 0)"
+        "expression": "if(c.age_in_months < 60 AND p.gender = 'F' AND c.exclusive_breastfeeding_nutrition = 'YES', 1, 0)"
       }
     },
     {
@@ -607,7 +607,7 @@
       "alias": "dewormed_12_59_months_male",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "if(c.age_in_months < 60 AND p.gender = 'M' AND c.deworming = 'YES', 1, 0)"
       }
     },
     {
@@ -615,7 +615,7 @@
       "alias": "dewormed_12_59_months_female",
       "expressionType": "simple_expression",
       "expressionOptions": {
-        "expression": "null"
+        "expression": "if(c.age_in_months < 60 AND p.gender = 'F' AND c.deworming = 'YES', 1, 0)"
       }
     },
     {
