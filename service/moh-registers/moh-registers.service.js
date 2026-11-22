@@ -121,7 +121,82 @@ WHERE l.uuid IN (?)
     attribute.value as phone_number,
     a.weight as weight_in_kgs,
     a.height as height,
-    a.muac as muac
+    a.muac as muac,
+    null as discharge_weight,
+    null as discharge_height,
+    null as discharge_whz,
+    null as discharge_muac,
+    if(a.nutrition_outcome is not null AND a.nutrition_outcome != '', a.encounter_datetime, null) as exit_date,
+    null as length_of_stay,
+    a.nutrition_outcome,
+    a.remarks
+FROM
+    etl.flat_moh_711 a
+        INNER JOIN
+    amrs.person p ON p.person_id = a.person_id AND p.voided = 0
+        INNER JOIN
+    amrs.location l ON l.location_id = a.location_id
+        LEFT JOIN
+    amrs.patient_identifier pi ON pi.patient_id = a.person_id AND pi.identifier_type = 55 AND pi.voided = 0
+        INNER JOIN
+    amrs.person_name pn ON pn.person_id = a.person_id AND (pn.voided IS NULL || pn.voided = 0) AND pn.preferred = 1
+        LEFT JOIN 
+    amrs.person_address pa ON a.person_id = pa.person_id AND pa.voided = 0
+        LEFT JOIN
+    amrs.person_attribute attribute ON attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10
+WHERE l.uuid IN (?)
+  AND DATE(a.encounter_datetime) >= ?
+  AND DATE(a.encounter_datetime) <= ?
+  AND a.encounter_type in (80,168)
+  group by a.person_id`;
+      const queryParts = {
+        sql: sql,
+        values: [locationUuids, startDate, endDate]
+      };
+      db.queryServer(queryParts, function (result) {
+        result.sql = sql;
+        resolve(result.result);
+      });
+    });
+  }
+
+  getMoh409Register(locationUuid, startDate, endDate) {
+    if (!locationUuid) {
+      throw new Error('Location not defined');
+    }
+    if (!startDate) {
+      throw new Error('startDate not defined');
+    }
+    if (!endDate) {
+      throw new Error('endDate not defined');
+    }
+
+    const locationUuids = (Array.isArray(locationUuid)
+      ? locationUuid
+      : String(locationUuid).split(',')
+    )
+      .map((uuid) => uuid.trim())
+      .filter(Boolean);
+
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT 
+    a.encounter_datetime as date,
+    pi.identifier as cr_id,
+    CONCAT_WS(' ', COALESCE(pn.given_name, ''), COALESCE(pn.middle_name, ''), COALESCE(pn.family_name, '')) as client_name,
+    a.serostatus as serostatus,
+    if(a.therapeutic_foods = 'F-100',f100, null),
+    if(a.therapeutic_foods = 'F-75',f75, null),
+    if(a.therapeutic_foods = 'RUTF',rutf, null),
+    if(a.therapeutic_foods = 'RUSF',rusf, null),
+    null as corn_soy_blend_300g,
+    null as corn_soy_blend_1_5kg,
+    null as fortified_blended_food_children,
+    null as fortified_blended_food_adults,
+    null as fortified_blended_food_pregnant,
+    null as micronutrient_powder,
+    null as others
+
+
 FROM
     etl.flat_moh_711 a
         INNER JOIN

@@ -1813,6 +1813,38 @@ const routes = [
       notes: 'Returns moh-368 register',
       tags: ['api']
     }
+  },
+  {
+    method: 'GET',
+    path: '/moh-409-register',
+    config: {
+      handler: async function (request, reply) {
+        const service = new MOHRegistersService();
+        if (
+          request.query.locationUuids &&
+          request.query.startDate &&
+          request.query.endDate
+        ) {
+          const locationUuid = request.query.locationUuids;
+          const startDate = request.query.startDate;
+          const endDate = request.query.endDate;
+          const res = await service.getMoh409Register(
+            locationUuid,
+            startDate,
+            endDate
+          );
+          reply({
+            data: res
+          });
+        } else {
+          reply(Boom.badData());
+        }
+      },
+      plugins: {},
+      description: 'Get moh-368 register',
+      notes: 'Returns moh-368 register',
+      tags: ['api']
+    }
   }
 ];
 
