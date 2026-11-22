@@ -184,10 +184,10 @@ WHERE l.uuid IN (?)
     pi.identifier as cr_id,
     CONCAT_WS(' ', COALESCE(pn.given_name, ''), COALESCE(pn.middle_name, ''), COALESCE(pn.family_name, '')) as client_name,
     a.serostatus as serostatus,
-    if(a.therapeutic_foods = 'F-100',f100, null),
-    if(a.therapeutic_foods = 'F-75',f75, null),
-    if(a.therapeutic_foods = 'RUTF',rutf, null),
-    if(a.therapeutic_foods = 'RUSF',rusf, null),
+    if(a.therapeutic_foods = 'F-100','f100', null) as f100,
+    if(a.therapeutic_foods = 'F-75','f75', null) as f75,
+    if(a.therapeutic_foods = 'RUTF','rutf', null) as rutf,
+    if(a.therapeutic_foods = 'RUSF','rusf', null) as rusf,
     null as corn_soy_blend_300g,
     null as corn_soy_blend_1_5kg,
     null as fortified_blended_food_children,
@@ -207,10 +207,6 @@ FROM
     amrs.patient_identifier pi ON pi.patient_id = a.person_id AND pi.identifier_type = 55 AND pi.voided = 0
         INNER JOIN
     amrs.person_name pn ON pn.person_id = a.person_id AND (pn.voided IS NULL || pn.voided = 0) AND pn.preferred = 1
-        LEFT JOIN 
-    amrs.person_address pa ON a.person_id = pa.person_id AND pa.voided = 0
-        LEFT JOIN
-    amrs.person_attribute attribute ON attribute.person_id = a.person_id AND attribute.person_attribute_type_id = 10
 WHERE l.uuid IN (?)
   AND DATE(a.encounter_datetime) >= ?
   AND DATE(a.encounter_datetime) <= ?
