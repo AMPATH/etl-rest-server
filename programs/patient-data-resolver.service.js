@@ -56,22 +56,21 @@ module.exports = def;
 function getAllDataDependencies(dataDependenciesKeys, patientUuid, params) {
   return new Promise((success, error) => {
     const dataObject = {};
-    Promise.reduce(
-      dataDependenciesKeys,
-      function (previous, key) {
-        return availableKeys[key](patientUuid, params)
-          .then(function (data) {
-            dataObject[key] = data;
-          })
-          .catch(function (err) {
-            dataObject[key] = {
-              error: 'An error occured',
-              detail: err
-            };
-          });
-      },
-      0
-    )
+    // The dependencies do not depend on each other, so they are fetched at
+    // the same time (they used to be fetched one after another, so the wait
+    // was the sum of all of them). Each still records its own error.
+    Promise.map(dataDependenciesKeys, function (key) {
+      return availableKeys[key](patientUuid, params)
+        .then(function (data) {
+          dataObject[key] = data;
+        })
+        .catch(function (err) {
+          dataObject[key] = {
+            error: 'An error occured',
+            detail: err
+          };
+        });
+    })
       .then(function (data) {
         success(dataObject);
       })

@@ -26,6 +26,7 @@ function buildScope(dataDictionary) {
     showHTSReferral: false,
     showHTSLinkage: false,
     isEligibleForCommunityVisit: false,
+    isEligibleForMedicationRefill: false,
     inPrediction: false,
     showCommunityDSDVisit: false,
     showStandardCommunityVisit: false,

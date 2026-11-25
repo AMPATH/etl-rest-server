@@ -6533,6 +6533,31 @@ module.exports = (function () {
     },
     {
       method: 'GET',
+      path: '/etl/group-meeting-attendance',
+      config: {
+        auth: 'simple',
+        plugins: {},
+        handler: function (request, reply) {
+          const cohortUuid = String(request.query.cohortUuid || '');
+          if (!/^[0-9a-f-]{36}$/i.test(cohortUuid)) {
+            return reply(Boom.badRequest('A valid cohortUuid is required.'));
+          }
+          new CohortModuleService()
+            .getGroupMeetingAttendance(cohortUuid)
+            .then((rows) => reply({ result: rows }))
+            .catch((error) => {
+              console.error('group-meeting-attendance', error);
+              reply(Boom.badImplementation('Could not load group attendance.'));
+            });
+        },
+        description: 'Member visits and encounters of a group, for attendance',
+        notes:
+          'One row per encounter of each member visit of the group meetings',
+        tags: ['api']
+      }
+    },
+    {
+      method: 'GET',
       path: '/etl/viral-load-suppression-rate',
       config: {
         auth: 'simple',
