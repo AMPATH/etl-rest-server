@@ -120,7 +120,17 @@
 
   function getLatestEncounterFromMostRecentCohortVisit(patientUuid, params) {
     const endPoint = '/ws/rest/v1/cohortm/cohortmember/';
-    const requestParam = {
+    // Only what is used below: each meeting's date, visit type, and whether
+    // it has member visits. The full meetings (every member visit with its
+    // visit, encounters and observations) are fetched only if the slim
+    // request is refused.
+    const slimParam = {
+      patient: patientUuid,
+      v:
+        'custom:(cohort:(cohortVisits:(startDate,visitType:(uuid),' +
+        'cohortMemberVisits:(uuid))))'
+    };
+    const fullParam = {
       patient: patientUuid,
       v: 'custom:(cohort:(cohortVisits))'
     };
@@ -129,7 +139,10 @@
 
     return new Promise(function (resolve, reject) {
       requestConfig
-        .getRequestPromise(requestParam, url)
+        .getRequestPromise(slimParam, url)
+        .catch(function () {
+          return requestConfig.getRequestPromise(fullParam, url);
+        })
         .then(function (data) {
           try {
             const cohortVisits = data.results.flatMap(
